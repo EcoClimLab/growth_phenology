@@ -51,3 +51,52 @@ make_growth_list(files, dates)
 Stem <- all_stems_intra[[1]]
 plot(Stem[,13]~as.factor(Stem[,3]), main = unique(Stem[,1]))
 all_stems_intra <- all_stems_intra[-1]
+
+#Compare max growth timing ##
+library("plyr", lib.loc="~/R/win-library/3.5")
+library("dplyr", lib.loc="~/R/win-library/3.5")
+Stem <- all_stems_intra[[1]]
+End <- data.frame()
+#For loop to pull out survey where 25%, 50%, and 75% of total growth were achieved ##
+for (i in c(2011:2020)){
+  Stem1 <- subset(Stem, Stem$year == i)
+  Stem1 <- mutate(Stem1, dif = measure-lag(measure))
+  Stem1[1,32] <- 0
+  Stem1$dif <- ifelse(abs(Stem1$dif) >= 10, 0, Stem1$dif)
+  Stem1$addition <- cumsum(Stem1$dif)
+  Stem1$tot <- sum(Stem1$dif)
+  Stem1$perc <- NA
+  for(j in c(.25,.50,.75)){
+  try <- which(abs(Stem1$addition-Stem1$tot*j)==min(abs(Stem1$addition-Stem1$tot*j)))
+  Stem1$perc[try] <- j
+  }
+  Final <- Stem1[complete.cases(Stem1[ ,35]),]
+  
+  End <- rbind(End, Final)
+  End$tot <- ifelse(End$tot < 0, NA, End$tot)
+  End <- End[complete.cases(End[ ,34]),]
+}
+
+#To do:
+#calculate DOY, plot DOY on Y and year as factor on X then calculate LM for relationship ##
+#Edit for loop to cycle through all trees ##
+#Figure out how to handle years with multiple occurences of .25, .5. or .75 point ##
+
+
+
+
+
+
+
+
+
+
+#Extra code ##
+Stem1$perc <- ifelse(Stem1$addition >= Stem1$tot*.20 & Stem1$addition < Stem1$tot*.3, 25, ifelse(Stem1$addition > Stem1$tot*.4 & Stem1$addition < Stem1$tot*.6, 50, ifelse(Stem1$addition > Stem1$tot*.70 & Stem1$addition < Stem1$tot*.8, 75, 0)))
+try <- which(abs(Stem1$addition-Stem1$tot*.25)==min(abs(Stem1$addition-Stem1$tot*.25)))
+Stem1$perc[try] <- 25
+
+try <- which(abs(Stem1$addition-Stem1$tot*.5)==min(abs(Stem1$addition-Stem1$tot*.5)))
+Stem1$perc[try] <- 50
+try <- which(abs(Stem1$addition-Stem1$tot*.75)==min(abs(Stem1$addition-Stem1$tot*.75)))
+Stem1$perc[try] <- 75
