@@ -56,6 +56,21 @@ all_stems_intra <- all_stems_intra[-1]
 library("plyr", lib.loc="~/R/win-library/3.5")
 library("dplyr", lib.loc="~/R/win-library/3.5")
 Stem <- all_stems_intra[[1]]
+# convert measure to DBH (Use function in Dendrobands/Rscripts/analysis/convert_caliper_meas_to_dbh.R (I pasted it below for now))
+
+#This one works as far as I can tell ##
+for(i in c(1:nrow(Stem))){
+  Stem[i+1,22] <- findDendroDBH(Stem[i,22], Stem[i,13],Stem[i+1,13])
+}
+#I want to add something to check if the band was replaced, and if it was, use the new DBH measurement but this isn't working ##
+for(i in c(1:nrow(Stem))){
+  Stem[i+1,22] <- findDendroDBH(Stem[ifelse(Stem$new.band == 0, Stem[i,22], Stem[i+1,22]),22], Stem[i,13],Stem[i+1,13])
+}
+# heres another way I tried ##
+for(i in c(1:nrow(Stem))){
+  Stem[i+1,22] <- findDendroDBH(ifelse(Stem$new.band != 0, Stem[i+1,22], Stem[i,22]), Stem[i,13],Stem[i+1,13])
+}
+
 End <- data.frame()
 #For loop to pull out survey where 25%, 50%, and 75% of total growth were achieved ##
 for (i in c(2011:2020)){
@@ -84,11 +99,58 @@ for (i in c(2011:2020)){
 
 
 
+#Caliper to DBH function ##
+objectiveFuncDendro= function(diameter2,diameter1,gap1,gap2){
+  if(gap1>diameter1) return(20)
+  if(gap2>diameter2) return(20)
+  
+  delta=abs(diameter1 - diameter2 + (1/pi) * diameter2 * asin(gap2/diameter2) - (1/pi) * diameter1 * asin(gap1/diameter1))
+  
+  return(return(delta))
+}
+
+findOneDendroDBH= function(dbh1,m1,m2,func=objectiveFuncDendro){
+  if(is.na(dbh1)|is.na(m1)|is.na(m2)|dbh1<=0) return(NA)
+  
+  if(m2>0) upper=dbh1+m2
+  else upper=dbh1+1
+  if(m2<m1) lower=0
+  else lower=dbh1
+  
+  result=optimize(f=func,interval=c(lower,upper),diameter1=dbh1,gap1=m1,gap2=m2)
+  return(result$minimum)
+}
+
+findDendroDBH= function(dbh1,m1,m2,func=objectiveFuncDendro){
+  records=max(length(dbh1),length(m1),length(m2))
+  
+  if(length(dbh1)==1) dbh1=rep(dbh1,records)
+  if(length(m1)==1) m1=rep(m1,records)
+  if(length(m2)==1) m2=rep(m2,records)
+  
+  dbh2=numeric()
+  for(i in 1:records) dbh2[i]=findOneDendroDBH(dbh1[i],m1[i],m2[i],func)
+  return(dbh2)
+}
+ ###
 
 
 
 
 
+
+dbh1 = c(100, 200, 300, 100, 200, 300)
+m1 = c(0, 0, 0, 0, 0, 0)
+m2 = c(2, 2, 2, 50, 50, 50)
+dbh2 = findDendroDBH(dbh1, m1, m2)
+data.frame(dbh1, m1, m2, dbh2)
+
+
+dbh2 = findDendroDBH(Stem$dbh, Stem[seq(1,nrow(Stem),1),13], Stem[seq(2,nrow(Stem),1),13])
+
+dbh2 = findDendroDBH(Stem[1,22], Stem[1,13], Stem[2,13])
+dbh3 = findDendroDBH(dbh2, Stem[2,13], Stem[3,13])
+debrah <- unique(Stem$dbh)
 
 
 #Extra code ##
