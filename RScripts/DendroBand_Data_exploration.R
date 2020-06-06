@@ -1,10 +1,13 @@
 ######################################################
-# Purpose: Determine growth over time from dendroband measurements
-# Developed by: Ian McGregor - mcgregori@si.edu
-# R version 3.5.2 - First created March 2018, updated August 2019
+# Purpose: Informal script to explore the SCBI dendroband data
+# Developed by: Cameron Dow - DowC@si.edu
+# R studio version 1.1.456 - First created June 2020, updated 
 ######################################################
 
-#1. format dendroband data ####
+# 
+#1. Taken from: Github/Dendrobands/Rscripts/analysis/growth_over_time.R . 
+#format dendroband data ####
+# You'll have to set your WD to the dendroband repo in your github desktop. Your setwd command will look different than mine #
 setwd("C:/Users/world/Desktop/Github/Dendrobands")
 files <- dir("data", pattern="_20[1-2][0-9]*.csv")
 dates <- c(2010:2020)
@@ -46,60 +49,22 @@ make_growth_list <- function(dirs, years){
 }
 
 make_growth_list(files, dates)
-#######
+####### END OF IAN'S SCRIPT ###
+
 # Graph the dendroband measures by surveyID ##
+# This block of code is only for visualizing individual dendroband measurements, not growth (yet, will convert it later). The final line i this code removes the first "list" in the large list generated, so you'll have to re-run the code to refresh the list before continuing. 
 Stem <- all_stems_intra[[1]]
 plot(Stem[,13]~as.factor(Stem[,3]), main = unique(Stem[,1]))
 all_stems_intra <- all_stems_intra[-1]
 
-#Compare max growth timing ##
-library("plyr", lib.loc="~/R/win-library/3.5")
-library("dplyr", lib.loc="~/R/win-library/3.5")
+# Getting 25 50 75% growth intervals ##
+library(plyr)
+library(dplyr)
+library(tidyverse)
+library(ggplot2)
 Stem <- all_stems_intra[[1]]
 # convert measure to DBH (Use function in Dendrobands/Rscripts/analysis/convert_caliper_meas_to_dbh.R (I pasted it below for now))
-
-#This one works as far as I can tell ##
-for(i in c(1:nrow(Stem))){
-  Stem[i+1,22] <- findDendroDBH(Stem[i,22], Stem[i,13],Stem[i+1,13])
-}
-#I want to add something to check if the band was replaced, and if it was, use the new DBH measurement but this isn't working ##
-for(i in c(1:nrow(Stem))){
-  Stem[i+1,22] <- findDendroDBH(Stem[ifelse(Stem$new.band == 0, Stem[i,22], Stem[i+1,22]),22], Stem[i,13],Stem[i+1,13])
-}
-# heres another way I tried ##
-for(i in c(1:nrow(Stem))){
-  Stem[i+1,22] <- findDendroDBH(ifelse(Stem$new.band != 0, Stem[i+1,22], Stem[i,22]), Stem[i,13],Stem[i+1,13])
-}
-
-End <- data.frame()
-#For loop to pull out survey where 25%, 50%, and 75% of total growth were achieved ##
-for (i in c(2011:2020)){
-  Stem1 <- subset(Stem, Stem$year == i)
-  Stem1 <- mutate(Stem1, dif = measure-lag(measure))
-  Stem1[1,32] <- 0
-  Stem1$dif <- ifelse(abs(Stem1$dif) >= 10, 0, Stem1$dif)
-  Stem1$addition <- cumsum(Stem1$dif)
-  Stem1$tot <- sum(Stem1$dif)
-  Stem1$perc <- NA
-  for(j in c(.25,.50,.75)){
-  try <- which(abs(Stem1$addition-Stem1$tot*j)==min(abs(Stem1$addition-Stem1$tot*j)))
-  Stem1$perc[try] <- j
-  }
-  Final <- Stem1[complete.cases(Stem1[ ,35]),]
-  
-  End <- rbind(End, Final)
-  End$tot <- ifelse(End$tot < 0, NA, End$tot)
-  End <- End[complete.cases(End[ ,34]),]
-}
-
-#To do:
-#calculate DOY, plot DOY on Y and year as factor on X then calculate LM for relationship ##
-#Edit for loop to cycle through all trees ##
-#Figure out how to handle years with multiple occurences of .25, .5. or .75 point ##
-
-
-
-#Caliper to DBH function ##
+#Caliper to DBH function by Ian##
 objectiveFuncDendro= function(diameter2,diameter1,gap1,gap2){
   if(gap1>diameter1) return(20)
   if(gap2>diameter2) return(20)
@@ -132,12 +97,119 @@ findDendroDBH= function(dbh1,m1,m2,func=objectiveFuncDendro){
   for(i in 1:records) dbh2[i]=findOneDendroDBH(dbh1[i],m1[i],m2[i],func)
   return(dbh2)
 }
- ###
+
+#This one works as far as I can tell ##
+#This for loop will change the DBH column in DF: Stem to DBH measures based on caliper measurements ##
+# It acheives this by using Stem[i,22] (Stem$DBH) as DBH1, Stem[i,13] as Meausure 1, and Stem[i+1,13] as Measure 2
+for(i in c(1:nrow(Stem))){
+  Stem[i+1,22]<- findDendroDBH(Stem[i,22], Stem[i,13],Stem[i+1,13])
+}
+
+# If you look at tree 192244 (and others), you'll notice the DBH was remeasured at some point.
+#I want to add something to check if the DBH was remeasured, and if it was, use the new DBH measurement as DBH1 in Ian's function ##
+# there is also a problem when the band is replaced. If you look at tree 192244 you'll notice the band was replaced before the 5/18/2017 measurement, leading to M1 in the previous calculation to = 134.34 while M2 = 11.24. Id like to add another check in the for loop to account for this ##
+for(i in c(1:nrow(Stem))){
+  Stem[i+1,22]<- findDendroDBH(Stem[i,22], #Maybe this should check if the DBH was remeasured since the initial measure, and if it was, it should use the measured DBH instead of calculated? 
+                                ifelse(Stem[i+1,23] == 0, Stem[i,13], Stem[i+1,13]),                #If the band was replaced, shift M1 and M2 down one. Not a perfect solution but it'll be close enough for now. What do you think?
+                                ifelse(Stem[i+1,23] == 0, Stem[i+1,13], Stem[i+2,13]))              # Same deal as above
+}
+
+
+# Graph the DBH ##
+Stem <- Stem[,complete.cases(1)]
+ggplot(Stem, aes(x=survey.ID, y=dbh)) + geom_line(color = "#0c4c8a")+ labs(title = unique(Stem$tag))
+
+
+#For loop to pull out survey where 25%, 50%, and 75% of total growth were achieved ##
+# This is a WiP so wont run correctly ##
+End <- data.frame()
+
+repeat{
+for (i in c(2011:2020)){
+  Stem1 <- subset(Stem, Stem$year == i)
+  Stem1 <- mutate(Stem1, dif = measure-lag(measure))
+  Stem1[1,32] <- 0
+  Stem1$dif <- ifelse(abs(Stem1$dif) >= 10, 0, Stem1$dif)
+  Stem1$addition <- cumsum(Stem1$dif)
+  Stem1$tot <- sum(Stem1$dif)
+  Stem1$perc <- NA
+  for(j in c(.25,.50,.75)){
+  try <- which(abs(Stem1$addition-Stem1$tot*j)==min(abs(Stem1$addition-Stem1$tot*j)))
+  Stem1$perc[try] <- j
+  }
+  Final <- Stem1[complete.cases(Stem1[ ,35]),]
+  
+  End <- rbind(End, Final)
+  End$tot <- ifelse(End$tot < 0, NA, End$tot)
+  End <- End[complete.cases(End[ ,34]),]
+  
+}
+  if (unique(Stem1$year == 2020)){
+all_stems_intra <- all_stems_intra[-1]
+Stem <- all_stems_intra[[1]]
+  }
+if(length(all_stems_intra) == 0)
+  break
+  }
+
+####
+
+1+1
+
+
+
+#To do:
+#calculate DOY, plot DOY on Y and year as factor on X then calculate LM for relationship ##
+#Edit for loop to cycle through all trees ##
+#Figure out how to handle years with multiple occurences of .25, .5. or .75 point ##
+
+x <- 1
+repeat {
+  print(x)
+  x = x+1
+  if (x == 6){
+    break
+  }
+}
+
+
+### Attempt to pull all trees together #
+End <- data.frame()
+repeat {
+  ifelse(unique(as.numeric(Stem$tag)) == unique(as.numeric(all_stems_intra[[1]][["tag"]])),
+         repeat{            
+           for (i in c(2011:2020)){
+             Stem1 <- subset(Stem, Stem$year == i)
+             Stem1 <- mutate(Stem1, dif = measure-lag(measure))
+             Stem1[1,32] <- 0
+             Stem1$dif <- ifelse(abs(Stem1$dif) >= 10, 0, Stem1$dif)
+             Stem1$addition <- cumsum(Stem1$dif)
+             Stem1$tot <- sum(Stem1$dif)
+             Stem1$perc <- NA
+             for(j in c(.25,.50,.75)){
+               try <- which(abs(Stem1$addition-Stem1$tot*j)==min(abs(Stem1$addition-Stem1$tot*j)))
+               Stem1$perc[try] <- j
+             }
+             Final <- Stem1[complete.cases(Stem1[ ,35]),]
+             
+             End <- rbind(End, Final)
+             End$tot <- ifelse(End$tot < 0, NA, End$tot)
+             End <- End[complete.cases(End[ ,34]),]
+             if (unique(as.numeric(Stem1$year)) == 2020){
+               all_stems_intra <- all_stems_intra[-1];
+               break
+             }
+           }}
+         ,  Stem <- all_stems_intra[[1]])
+  if (length(all_stems_intra) == 1){ 
+    break
+  }
+}
 
 
 
 
-
+#Extra code ##
 
 dbh1 = c(100, 200, 300, 100, 200, 300)
 m1 = c(0, 0, 0, 0, 0, 0)
@@ -153,7 +225,7 @@ dbh3 = findDendroDBH(dbh2, Stem[2,13], Stem[3,13])
 debrah <- unique(Stem$dbh)
 
 
-#Extra code ##
+
 Stem1$perc <- ifelse(Stem1$addition >= Stem1$tot*.20 & Stem1$addition < Stem1$tot*.3, 25, ifelse(Stem1$addition > Stem1$tot*.4 & Stem1$addition < Stem1$tot*.6, 50, ifelse(Stem1$addition > Stem1$tot*.70 & Stem1$addition < Stem1$tot*.8, 75, 0)))
 try <- which(abs(Stem1$addition-Stem1$tot*.25)==min(abs(Stem1$addition-Stem1$tot*.25)))
 Stem1$perc[try] <- 25
