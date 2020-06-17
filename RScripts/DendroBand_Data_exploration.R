@@ -5,7 +5,14 @@
 ######################################################
 
 # 
-#1. Taken from: Github/Dendrobands/Rscripts/analysis/growth_over_time.R . 
+library(plyr)
+library(dplyr)
+library(tidyverse)
+library(ggplot2)
+library(RDendrom)
+library(zoo)
+library(lubridate)
+#Taken from: Github/Dendrobands/Rscripts/analysis/growth_over_time.R . 
 #format dendroband data ####
 # You'll have to set your WD to the dendroband repo in your github desktop. Your setwd command will look different than mine #
 setwd("C:/Users/world/Desktop/Github/Dendrobands")
@@ -49,20 +56,7 @@ make_growth_list <- function(dirs, years){
 }
 
 make_growth_list(files, dates)
-####### END OF IAN'S SCRIPT ###
 
-# Graph the dendroband measures by surveyID ##
-# This block of code is only for visualizing individual dendroband measurements, not growth (yet, will convert it later). The final line i this code removes the first "list" in the large list generated, so you'll have to re-run the code to refresh the list before continuing. 
-Stem <- all_stems_intra[[1]]
-plot(Stem[,13]~as.factor(Stem[,3]), main = unique(Stem[,1]))
-all_stems_intra <- all_stems_intra[-1]
-
-# Getting 25 50 75% growth intervals ##
-library(plyr)
-library(dplyr)
-library(tidyverse)
-library(ggplot2)
-Stem <- all_stems_intra[[1]]
 # convert measure to DBH (Use function in Dendrobands/Rscripts/analysis/convert_caliper_meas_to_dbh.R (I pasted it below for now))
 #Caliper to DBH function by Ian##
 objectiveFuncDendro= function(diameter2,diameter1,gap1,gap2){
@@ -98,117 +92,170 @@ findDendroDBH= function(dbh1,m1,m2,func=objectiveFuncDendro){
   return(dbh2)
 }
 
-#This one works as far as I can tell ##
-#This for loop will change the DBH column in DF: Stem to DBH measures based on caliper measurements ##
-# It acheives this by using Stem[i,22] (Stem$DBH) as DBH1, Stem[i,13] as Meausure 1, and Stem[i+1,13] as Measure 2
-for(i in c(1:nrow(Stem))){
-  Stem[i+1,22]<- findDendroDBH(Stem[i,22], Stem[i,13],Stem[i+1,13])
-}
+################################################################################
+#Taken from Ian's growth_over_time.R ##
+#5. loop to create timeseries of dbh measurements manually ####
 
-# If you look at tree 192244 (and others), you'll notice the DBH was remeasured at some point.
-#I want to add something to check if the DBH was remeasured, and if it was, use the new DBH measurement as DBH1 in Ian's function ##
-# there is also a problem when the band is replaced. If you look at tree 192244 you'll notice the band was replaced before the 5/18/2017 measurement, leading to M1 in the previous calculation to = 134.34 while M2 = 11.24. Id like to add another check in the for loop to account for this ##
-for(i in c(1:nrow(Stem))){
-  Stem[i+1,22]<- findDendroDBH(Stem[i,22], #Maybe this should check if the DBH was remeasured since the initial measure, and if it was, it should use the measured DBH instead of calculated? 
-                                ifelse(Stem[i+1,23] == 0, Stem[i,13], Stem[i+1,13]),                #If the band was replaced, shift M1 and M2 down one. Not a perfect solution but it'll be close enough for now. What do you think?
-                                ifelse(Stem[i+1,23] == 0, Stem[i+1,13], Stem[i+2,13]))              # Same deal as above
-}
+##before we knew Sean was working on a package (RDendrom), Valentine and I tried to create the same functionality manually (#5 and #6 in this script). Since we do have RDendrom, this manual work is deprecated, but I've decided to leave it here in case it's needed later.
+## *** to run this section, you need to run section #1 above first. ****
 
+#description of loop ####
+##1. First, assigns the first dbh of the growth column as the first dbh.
+##2. Second, is conditional:
+##2i.If new.band=0 (no band change), we have a measure, and we have a previous dbh2, use Condit's function to determine next dbh2 based on caliper measurement. 
+##2ii. If new.band=0, we have a measure, and the previous dbh2 is NA, use Condit's function by comparing the new measure with the most recent non-NA dbh2.
+##2iii. If new.band=0 and the previous measure is NA, give dbh2 a value of NA.
+##2iv. If new.band=1 (band and measurement change), we have a measure, and there's a new dbh, assign that dbh to dbh2.
+##2v. If new.band=1, we have a measure, and there's no new dbh (indicating a new dbh wasn't recorded when the band was changed), dbh2 is the sum of the differences of the previous dbh2's added to the most recent dbh2.
+##2vi. UNCOMMON If new.band=1 , measure is NA, and the dbh in the original column is unchanged , dbh2 is the sum of the differences of the previous dbh2's added to the most recent dbh2.
+##2vii. UNCOMMON If new.band=1, measure is NA, and dbh is different, dbh2 is the new dbh plus the mean of the differences of the previous dbh2's. 
 
-# Graph the DBH ##
-Stem <- Stem[,complete.cases(1)]
-ggplot(Stem, aes(x=survey.ID, y=dbh)) + geom_line(color = "#0c4c8a")+ labs(title = unique(Stem$tag))
-
-
-#For loop to pull out survey where 25%, 50%, and 75% of total growth were achieved ##
-# This is a WiP so wont run correctly ##
-End <- data.frame()
-
-repeat{
-for (i in c(2011:2020)){
-  Stem1 <- subset(Stem, Stem$year == i)
-  Stem1 <- mutate(Stem1, dif = measure-lag(measure))
-  Stem1[1,32] <- 0
-  Stem1$dif <- ifelse(abs(Stem1$dif) >= 10, 0, Stem1$dif)
-  Stem1$addition <- cumsum(Stem1$dif)
-  Stem1$tot <- sum(Stem1$dif)
-  Stem1$perc <- NA
-  for(j in c(.25,.50,.75)){
-  try <- which(abs(Stem1$addition-Stem1$tot*j)==min(abs(Stem1$addition-Stem1$tot*j)))
-  Stem1$perc[try] <- j
+##intraannual data ####
+for(stems in names(all_stems_intra)) {
+  tree.n <- all_stems_intra[[stems]]
+  tree.n$dbh2 <- NA
+  tree.n$dbh2[1] <- tree.n$dbh[1]
+  
+  tree.n$dbh2 <- as.numeric(tree.n$dbh2)
+  tree.n$measure <- as.numeric(tree.n$measure)
+  tree.n$dbh <- as.numeric(tree.n$dbh)
+  
+  q <- mean(unlist(tapply(tree.n$measure, tree.n$dendroID, diff)), na.rm=TRUE)
+  
+  for(i in 2:(nrow(tree.n))){
+    tree.n$dbh2[[i]] <- 
+      
+      ifelse(tree.n$new.band[[i]] == 0 & tree.n$survey.ID[[i]] == 2014.01 & !identical(tree.n$dbh[[i]], tree.n$dbh[[i-1]]),
+             tree.n$dbh[[i]],
+             
+             ifelse(tree.n$new.band[[i]] == 0 & !is.na(tree.n$measure[[i]]) & !is.na(tree.n$dbh2[[i-1]]),
+                    findDendroDBH(tree.n$dbh2[[i-1]], tree.n$measure[[i-1]], tree.n$measure[[i]]),
+                    
+                    ifelse(tree.n$new.band[[i]] == 0 & !is.na(tree.n$measure[[i]]) & is.na(tree.n$dbh2[[i-1]]), 
+                           findDendroDBH(tail(na.locf(tree.n$dbh2[1:i-1]), n=1), tail(na.locf(tree.n$measure[1:i-1]), n=1), tree.n$measure[[i]]),
+                           
+                           ifelse(tree.n$new.band[[i]] == 0 & is.na(tree.n$measure[[i]]), NA,
+                                  
+                                  ifelse(tree.n$new.band[[i]]==1 & !is.na(tree.n$measure[[i]]) & !identical(tree.n$dbh[[i]], tree.n$dbh[[i-1]]),
+                                         tree.n$dbh[[i]],
+                                         
+                                         ifelse(tree.n$new.band[[i]] == 1 & !is.na(tree.n$measure[[i]]) & identical(tree.n$dbh[[i]], tree.n$dbh[[i-1]]),
+                                                max(tree.n$dbh2[1: i-1], na.rm = T) + mean(diff(tree.n$dbh2[1: i-1]), na.rm = T),
+                                                
+                                                ifelse(tree.n$new.band[[i]] == 1 & is.na(tree.n$measure[[i]]) & identical(tree.n$dbh[[i]], tree.n$dbh[[i-1]]),
+                                                       max(tree.n$dbh2[1: i-1], na.rm = T) + mean(diff(tree.n$dbh2[1:(i-1)]), na.rm=T),
+                                                       
+                                                       ifelse(tree.n$new.band[[i]] == 1 & is.na(tree.n$measure[[i]]) & !identical(tree.n$dbh[[i]], tree.n$dbh[[i-1]]),
+                                                              tree.n$dbh[i] + mean(diff(tree.n$dbh2[1:(i-1)]), na.rm=TRUE),
+                                                              tree.n$dbh2))))))))
   }
-  Final <- Stem1[complete.cases(Stem1[ ,35]),]
-  
-  End <- rbind(End, Final)
-  End$tot <- ifelse(End$tot < 0, NA, End$tot)
-  End <- End[complete.cases(End[ ,34]),]
-  
+  all_stems_intra[[stems]] <- tree.n
 }
-  if (unique(Stem1$year == 2020)){
-all_stems_intra <- all_stems_intra[-1]
+
+
+
+#Loop to pull out survey where 25%, 50%, and 75% of total growth were achieved ##
+#Run these four items before the loop
+
 Stem <- all_stems_intra[[1]]
+End <- data.frame()
+numbers <- c(.25,.50,.75)
+
+for(p in 1:length(all_stems_intra)){ #Loop to cycle through stems in all_stems_intra
+  for (i in c(2011:2019)){ #Loop to cycle through years within a stem
+    Stem1 <- subset(Stem, Stem$year == i)
+    Stem1 <- mutate(Stem1, dif = dbh2-lag(dbh2)) #calculates the differences between subsequent measures
+    Stem1[1,33] <- 0 #make the first measure 0 instead of NA
+    Stem1$dif <- ifelse(abs(Stem1$dif) >= 10, 0, Stem1$dif) #remove any measure greater than 10mm. From what I could tell, these were mostly caused by band replacements or mistakes in data entry of measurement.
+    Stem1$addition <- cumsum(Stem1$dif) #make a rolling total of the differences
+    Stem1$tot <- sum(Stem1$dif) #Find the total change within the year
+    Stem1$perc <- NA #create the row where percentages will be appended
+    for(j in c(.25,.50,.75)){ #Loop to find when 25%, 50%, and 75% of yearly growth occured
+      try <- which(abs(Stem1$addition-Stem1$tot*j)==min(abs(Stem1$addition-Stem1$tot*j))) #find where the absolute value of the rolling total subtracted by the value we want (total*.25, .50, or .75) is closest to zero
+      Stem1$perc[try] <- j #assign the number to the value found above
+      
+    }
+    Final <- Stem1[complete.cases(Stem1[ ,36]),] #remove all rows except those with a value assigned 
+    if(sum(Final$perc) == 1.5){ #ifelse to remove instances where .25, .50, and .75 values could not be found. Some years were returning multiples of each percentage or only 2 out of the 3 percentages.
+      Final <- Final
+    }else{
+      Final <- NULL
+    }
+    End <- rbind(End, Final) #bind the loop DF to the end DF
+    End$tot <- ifelse(End$tot < 0, NA, End$tot)
+    End <- End[complete.cases(End[ ,35]),]
   }
-if(length(all_stems_intra) == 0)
-  break
-  }
+  Stem <- all_stems_intra[[p+1]]
+}
+#End of Loop will give you: Error in all_stems_intra[[p + 1]] : subscript out of bounds. This is expected, it's ok to move on. End dataframe should now be full of all trees from the intraannual DF
+#Check that .25, .50, and .75 occured an equal number of times
+count(End, perc)
 
-####
+#assign DOY to each percentage
+#Change character dates to numeric
+End$month <- ifelse(End$month == "January", 1, 
+                    ifelse(End$month == "February", 2,
+                           ifelse(End$month == "March", 3,
+                                  ifelse(End$month == "April", 4,
+                                         ifelse(End$month == "May", 5,
+                                                ifelse(End$month =="June", 6,
+                                                       ifelse(End$month == "July", 7,
+                                                              ifelse(End$month =="August", 8,
+                                                                     ifelse(End$month =="September", 9,
+                                                                            ifelse(End$month =="October", 10,
+                                                                                   ifelse(End$month =="November", 11,
+                                                                                          ifelse(End$month =="December", 12, End$month))))))))))))
+End$DOY <- as.Date(with(End, paste(year, month, day, sep="-")), "%Y-%m-%d")
+End$DOY <- yday(End$DOY)
 
-1+1
 
+#Start analysis
+#25% growth
+End25 <- subset(End, perc == .25)
+Means25 <- aggregate(DOY~year, data = End25, FUN = "mean")
+plot(Means25$DOY~Means25$year, xlab = "Year", ylab = "Mean Day of Year", main = "Mean DOY where 25% growth was achieved")
 
+abline(lm(Means25$DOY~Means25$year))
+plot(lm(Means25$DOY~Means25$year), 5) #2012 is an outlier year, remove it for this but come back to it later?
+
+Means25 <- Means25[-2,]
+plot(Means25$DOY~Means25$year, xlab = "Year", ylab = "Mean Day of Year", main = "Mean DOY where 25% growth was achieved")
+
+abline(lm(Means25$DOY~Means25$year))
+
+#50% growth
+End50 <- subset(End, perc == .50)
+Means50 <- aggregate(DOY~year, data = End50, FUN = "mean")
+plot(Means50$DOY~Means50$year, xlab = "Year", ylab = "Mean Day of Year", main = "Mean DOY where 50% growth was achieved")
+
+abline(lm(Means50$DOY~Means50$year))
+plot(lm(Means50$DOY~Means50$year), 5) #2019 is an outlier somehow? 
+Means50 <- Means50[-9,]
+plot(Means50$DOY~Means50$year, xlab = "Year", ylab = "Mean Day of Year", main = "Mean DOY where 50% growth was achieved")
+
+abline(lm(Means50$DOY~Means50$year))
+
+#75% growth
+End75 <- subset(End, perc == .75)
+Means75 <- aggregate(DOY~year, data = End75, FUN = "mean")
+plot(Means75$DOY~Means75$year, xlab = "Year", ylab = "Mean Day of Year", main = "Mean DOY where 75% growth was achieved")
+
+abline(lm(Means75$DOY~Means75$year))
+plot(lm(Means75$DOY~Means75$year),5) #again, 2019 is an outlier? I don't understand why.
+Mean75 <- Means75[-9,]
+plot(Means75$DOY~Means75$year, xlab = "Year", ylab = "Mean Day of Year", main = "Mean DOY where 75% growth was achieved")
+
+abline(lm(Means75$DOY~Means75$year))
 
 #To do:
-#calculate DOY, plot DOY on Y and year as factor on X then calculate LM for relationship ##
-#Edit for loop to cycle through all trees ##
-#Figure out how to handle years with multiple occurences of .25, .5. or .75 point ##
-
-x <- 1
-repeat {
-  print(x)
-  x = x+1
-  if (x == 6){
-    break
-  }
-}
-
-
-### Attempt to pull all trees together #
-End <- data.frame()
-repeat {
-  ifelse(unique(as.numeric(Stem$tag)) == unique(as.numeric(all_stems_intra[[1]][["tag"]])),
-         repeat{            
-           for (i in c(2011:2020)){
-             Stem1 <- subset(Stem, Stem$year == i)
-             Stem1 <- mutate(Stem1, dif = measure-lag(measure))
-             Stem1[1,32] <- 0
-             Stem1$dif <- ifelse(abs(Stem1$dif) >= 10, 0, Stem1$dif)
-             Stem1$addition <- cumsum(Stem1$dif)
-             Stem1$tot <- sum(Stem1$dif)
-             Stem1$perc <- NA
-             for(j in c(.25,.50,.75)){
-               try <- which(abs(Stem1$addition-Stem1$tot*j)==min(abs(Stem1$addition-Stem1$tot*j)))
-               Stem1$perc[try] <- j
-             }
-             Final <- Stem1[complete.cases(Stem1[ ,35]),]
-             
-             End <- rbind(End, Final)
-             End$tot <- ifelse(End$tot < 0, NA, End$tot)
-             End <- End[complete.cases(End[ ,34]),]
-             if (unique(as.numeric(Stem1$year)) == 2020){
-               all_stems_intra <- all_stems_intra[-1];
-               break
-             }
-           }}
-         ,  Stem <- all_stems_intra[[1]])
-  if (length(all_stems_intra) == 1){ 
-    break
-  }
-}
-
-
-
-
+#Growth rates
+#Incorporate leaf phenology data. NEON tower and ground observation.
+#Compare ring diffuse / ring porous
+#Reduce everything down to species level
+#Compare years with differing environmental factors (precip, drought/drought timing?, heat)
+#Average growth in spring months between years? -> temps / precip trends?
+#Larger trees vulnerable to drought?
+#O'rangeville used max growth from previous year as starting DBH
 #Extra code ##
 
 dbh1 = c(100, 200, 300, 100, 200, 300)
@@ -234,3 +281,34 @@ try <- which(abs(Stem1$addition-Stem1$tot*.5)==min(abs(Stem1$addition-Stem1$tot*
 Stem1$perc[try] <- 50
 try <- which(abs(Stem1$addition-Stem1$tot*.75)==min(abs(Stem1$addition-Stem1$tot*.75)))
 Stem1$perc[try] <- 75
+
+#This one works as far as I can tell ##
+#This for loop will change the DBH column in DF: Stem to DBH measures based on caliper measurements ##
+# It acheives this by using Stem[i,22] (Stem$DBH) as DBH1, Stem[i,13] as Meausure 1, and Stem[i+1,13] as Measure 2
+for(i in c(1:nrow(Stem))){
+  Stem[i+1,22]<- findDendroDBH(Stem[i,22], Stem[i,13],Stem[i+1,13])
+}
+
+# If you look at tree 192244 (and others), you'll notice the DBH was remeasured at some point.
+#I want to add something to check if the DBH was remeasured, and if it was, use the new DBH measurement as DBH1 in Ian's function ##
+# there is also a problem when the band is replaced. If you look at tree 192244 you'll notice the band was replaced before the 5/18/2017 measurement, leading to M1 in the previous calculation to = 134.34 while M2 = 11.24. Id like to add another check in the for loop to account for this ##
+for(i in c(1:nrow(Stem))){
+  Stem[i+1,22]<- findDendroDBH(Stem[i,22], #Maybe this should check if the DBH was remeasured since the initial measure, and if it was, it should use the measured DBH instead of calculated? 
+                               ifelse(Stem[i+1,23] == 0, Stem[i,13], Stem[i+1,13]),                #If the band was replaced, shift M1 and M2 down one. Not a perfect solution but it'll be close enough for now. What do you think?
+                               ifelse(Stem[i+1,23] == 0, Stem[i+1,13], Stem[i+2,13]))              # Same deal as above
+}
+
+
+# Graph the DBH ##
+Stem <- Stem[,complete.cases(1)]
+Stem$DOY <- as.Date(with(Stem, paste(year, month, day, sep="-")), "%Y-%m-%d")
+Stem$DOY <- yday(Stem$DOY)
+Stem <- mutate(Stem, dif = DOY-lag(DOY))
+for(i in (2011:2020)){
+  Stem1 <- subset(Stem, year == i)
+  Stem1 <- paste0("Stem_", i)
+}
+ggplot(Stem1, aes(x=DOY, y=dbh)) + geom_line(color = "#0c4c8a")+ labs(title = unique(Stem$tag))
+
+test_intra$DOY <- as.Date(with(test_intra, paste(YEAR, month, day, sep="-")), "%Y-%m-%d")
+test_intra$DOY <- yday(test_intra$DOY)
