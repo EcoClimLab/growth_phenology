@@ -5,6 +5,7 @@
 ######################################################
 
 # 
+library(data.table)
 library(plyr)
 library(dplyr)
 library(tidyverse)
@@ -153,7 +154,46 @@ for(stems in names(all_stems_intra)) {
 }
 
 
+# SARIMA model practice ##
+library(forecast)
+library(fpp2)
+library(tseries)
+Stem <- all_stems_intra[[3]]
+Stem$index <- c(1:nrow(Stem))
+Y <- (Stem[1:70, 32])
+d.y <- diff(Y)
 
+plot(Y)
+plot(d.y)
+
+adf.test(Y, alternative = "stationary", k = 0)
+adf.test(d.y, alternative = "stationary")
+
+acf(Y)
+pacf(Y)
+
+acf(d.y)
+pacf(d.y)
+
+mydata <- arima(Y, order = c(1,1,1))
+
+mydata.prediction <- predict(mydata, n.ahead = 70)
+plot(Y, xlim= c(0,140), ylim = c(420,480))
+lines(mydata.prediction$pred, col = "blue")
+
+prediction <- data.frame(c(71:140), mydata.prediction$pred)
+colnames(prediction) <- c("index", "dbh2")
+
+new <- data.frame(c(1:140), Stem[c(1:140), 32])
+colnames(new) <- c("index", "dbh2")
+newnew <- merge(new, prediction, by = "index", all = TRUE)
+
+ggplot(newnew) + geom_point(aes(x=index, y= dbh2.x)) + geom_line(aes(x=index, y = dbh2.y))
+
+fit1 <- Arima(Y, order = c(1,1,1), seasonal = c(1,1,12))
+checkresiduals(fit1)
+plot(forecast(fit1))
+auto.arima(d.y)
 #Loop to pull out survey where 25%, 50%, and 75% of total growth were achieved ##
 #Run these four items before the loop
 
@@ -217,45 +257,107 @@ plot(Means25$DOY~Means25$year, xlab = "Year", ylab = "Mean Day of Year", main = 
 
 abline(lm(Means25$DOY~Means25$year))
 plot(lm(Means25$DOY~Means25$year), 5) #2012 is an outlier year, remove it for this but come back to it later?
+summary(lm(Means25$DOY~Means25$year))
 
 Means25 <- Means25[-2,]
 plot(Means25$DOY~Means25$year, xlab = "Year", ylab = "Mean Day of Year", main = "Mean DOY where 25% growth was achieved")
-
 abline(lm(Means25$DOY~Means25$year))
+summary(lm(Means25$DOY~Means25$year))
 
 #50% growth
 End50 <- subset(End, perc == .50)
 Means50 <- aggregate(DOY~year, data = End50, FUN = "mean")
 plot(Means50$DOY~Means50$year, xlab = "Year", ylab = "Mean Day of Year", main = "Mean DOY where 50% growth was achieved")
-
 abline(lm(Means50$DOY~Means50$year))
+summary(lm(Means50$DOY~Means50$year))
+
 plot(lm(Means50$DOY~Means50$year), 5) #2019 is an outlier somehow? 
+
 Means50 <- Means50[-9,]
 plot(Means50$DOY~Means50$year, xlab = "Year", ylab = "Mean Day of Year", main = "Mean DOY where 50% growth was achieved")
-
 abline(lm(Means50$DOY~Means50$year))
+summary(lm(Means50$DOY~Means50$year))
 
 #75% growth
 End75 <- subset(End, perc == .75)
 Means75 <- aggregate(DOY~year, data = End75, FUN = "mean")
 plot(Means75$DOY~Means75$year, xlab = "Year", ylab = "Mean Day of Year", main = "Mean DOY where 75% growth was achieved")
-
 abline(lm(Means75$DOY~Means75$year))
+summary(lm(Means75$DOY~Means75$year))
+
 plot(lm(Means75$DOY~Means75$year),5) #again, 2019 is an outlier? I don't understand why.
 Mean75 <- Means75[-9,]
 plot(Means75$DOY~Means75$year, xlab = "Year", ylab = "Mean Day of Year", main = "Mean DOY where 75% growth was achieved")
-
 abline(lm(Means75$DOY~Means75$year))
+summary(lm(Means75$DOY~Means75$year))
+
+#Growth rates ###
+maxrates_df <- data.frame()
+for(p in 1:length(all_stems_intra)){
+rate <- all_stems_intra[[p]]
+rate$month<- ifelse(rate$month == "January", 1, 
+                    ifelse(rate$month == "February", 2,
+                           ifelse(rate$month == "March", 3,
+                                  ifelse(rate$month == "April", 4,
+                                         ifelse(rate$month == "May", 5,
+                                                ifelse(rate$month =="June", 6,
+                                                       ifelse(rate$month == "July", 7,
+                                                              ifelse(rate$month =="August", 8,
+                                                                     ifelse(rate$month =="September", 9,
+                                                                            ifelse(rate$month =="October", 10,
+                                                                                   ifelse(rate$month =="November", 11,
+                                                                                          ifelse(rate$month =="December", 12, rate$month))))))))))))
+rate$DOY <- as.Date(with(rate, paste(year, month, day, sep="-")), "%Y-%m-%d")
+rate$DOY <- yday(rate$DOY)
+
+RATEDF <- data.frame(1,1)
+for(i in 1:nrow(rate)){ #Loop to calculate growth rate
+DOYrate <- (rate[i+1,32] - rate[i,32])/ (rate[i+1,33] - rate[i,33])
+DOYDF <- data.frame(rate[1,33], DOYrate)
+colnames(DOYDF) <- colnames(RATEDF)  
+RATEDF <- rbind(RATEDF, DOYDF)
+}
+
+RATEDF <- RATEDF[-1,]
+colnames(RATEDF) <- c("DOY", "rate")
+attempt <- cbind(rate, RATEDF$rate) #create new DF with rate as a new column
+setnames(attempt, old = "RATEDF$rate",
+         new = "rate")
+attempt <- subset(attempt, rate >= 0 & rate <= 0.5) #remove negative growth and any readings higher than 0.5
+
+max <- aggregate(attempt$rate, by = list(attempt$year), FUN = max) #Pull out row in each year where growth rate was the highest
+maxdf <- attempt[attempt$rate %in% max$x,]
+
+maxrates_df <- rbind(maxrates_df, maxdf)
+}
+sp_max_rates <- aggregate(maxrates_df$DOY~maxrates_df$sp, FUN = mean) #Find average DOY where each species reached max growth
+colnames(sp_max_rates) <- c("species", "DOY")
+ggplot(sp_max_rates, aes(x=species, y = DOY)) +geom_point(size = 5) #Plot average DOY where each species reached max growth
+
+maxrates_df <- subset(maxrates_df, year != 2010 & year!= 2011 & year!= 2012 & year != 2020)
+#Max growth rates in each year by species ###
+sp_year_max <- aggregate(maxrates_df$rate~maxrates_df$sp+maxrates_df$year, FUN = mean)
+colnames(sp_year_max) <- c("sp", "year","rate")
+ggplot(sp_year_max, aes(x= as.factor(year), y= rate, color = sp, group = sp)) + geom_point()+geom_line()
+
+#Average DOY where max growth is achieved each year by species ###
+DOY_sp_max <- aggregate(maxrates_df$DOY~maxrates_df$sp+maxrates_df$year, FUN = mean)
+colnames(DOY_sp_max) <- c("sp", "year","DOY")
+ggplot(DOY_sp_max, aes(x= as.factor(year), y= DOY, color = sp, group = sp)) + geom_point()+geom_line()
+
+attempt2 <- subset(attempt2, rate != max(attempt2$rate)) 
+ggplot(attempt, aes(x=DOY, y = rate)) + geom_point()+ geom_smooth() + labs(x= "Day of Year", y = "Growth rate", title = attempt$sp)
 
 #To do:
-#Growth rates
+#Dig into TIAM trends
 #Incorporate leaf phenology data. NEON tower and ground observation.
 #Compare ring diffuse / ring porous
 #Reduce everything down to species level
 #Compare years with differing environmental factors (precip, drought/drought timing?, heat)
 #Average growth in spring months between years? -> temps / precip trends?
 #Larger trees vulnerable to drought?
-#O'rangeville used max growth from previous year as starting DBH
+#O'rangeville used max dbh from previous year as starting DBH
+
 #Extra code ##
 
 dbh1 = c(100, 200, 300, 100, 200, 300)
@@ -312,3 +414,16 @@ ggplot(Stem1, aes(x=DOY, y=dbh)) + geom_line(color = "#0c4c8a")+ labs(title = un
 
 test_intra$DOY <- as.Date(with(test_intra, paste(YEAR, month, day, sep="-")), "%Y-%m-%d")
 test_intra$DOY <- yday(test_intra$DOY)
+
+# derivative graph 
+spl <- smooth.spline(x, y=ycs)
+pred <- predict(spl)
+
+plot (x, ycs, log="xy")
+lines(pred, col=2)
+
+ycs.prime <- diff(ycs)/diff(x)
+pred.prime <- predict(spl, deriv=1)
+
+plot(ycs.prime)
+lines(pred.prime$y, col=2)
