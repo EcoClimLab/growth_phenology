@@ -1,3 +1,16 @@
+# Notes for collaboration #
+# 1.) Much of the code behind a '#' is code made obsolete after I found a more efficient way of doing things
+# 2.) To begin, you'll need to set your working directory to your local github dendroband repo.
+# 3.) I am not entirely convinced that this is returning the correct values for the variables i'm asking it for
+# so take everything with a grain of salt
+# 4.) I found it was cleaner to capture the variables I am interested in by doing the trees one at a time.
+# Of you want to get the parameters of each measurement we can create a second script to do them all at once.
+
+#To-do: 
+# 1.) Deal with the outliers w/o smoothing spline 
+
+
+
 #1. format dendroband data ####
 library(data.table)
 library(plyr)
@@ -92,6 +105,7 @@ findDendroDBH= function(dbh1,m1,m2,func=objectiveFuncDendro){
 library(MASS)
 
 
+#Sean's functions -- I think they are supposed to be in the rdendrom package but I couldn't the package to work correctly.
 ###################################################
 ### code chunk number 2: lg5.functions
 ###################################################
@@ -475,7 +489,7 @@ all_stems <- data.frame(NULL)
 
 
 
-for(e in 1:length(all_stems_intra)){
+for(e in 1:length(all_stems_intra)){ # Loop to merge all dendroband surveys into one dataframe
   Stem <- all_stems_intra[[e]]
   Stem$month <- ifelse(Stem$month == "January", 1, 
                        ifelse(Stem$month == "February", 2,
@@ -493,12 +507,17 @@ for(e in 1:length(all_stems_intra)){
   Stem$DOY <- yday(Stem$DOY)
   all_stems <- rbind(all_stems, Stem)}
 all_stems <- all_stems[complete.cases(all_stems$measure),]
+
+#Objects needed for the following loop
 data <- data.frame(NULL)
 throwaways <- data.frame(NULL)
 check_list <- NA
 DOY2 <- NULL
 masterDF <- data.frame(1,2,3,4,5,6,7,8)
 colnames(masterDF) <- c("tot", "perc", "tag", "DOY", "sp", "year", "dbh", "max_rate_DOY")
+
+#The following loop will cycle through years, species, and tags to create a final "master dataframe"
+#It includes two of Sean's functions wrapped with some of my code
 for(q in 2012:2019){
   Stem2 <- subset(all_stems, year == q)
   for(w in unique(Stem2$sp)){ #removes trees with less than 10 measurements in each year
@@ -509,37 +528,36 @@ for(q in 2012:2019){
     #original_list <- unique(Stem3$tag)
     for(m in unique(Stem3$tag)){ #remove trees with very small or negative total growth
       growthcheck <- subset(Stem3, tag == m)
-     
-      check_list <- append(check_list,(ifelse( growthcheck[nrow(growthcheck), 32] - growthcheck[1,32] <= 1.25 , unique(growthcheck$tag), NA)))
+      check_list <- append(check_list,(ifelse( growthcheck[nrow(growthcheck), 32] - growthcheck[1,32] <= 1.25 , unique(growthcheck$tag), NA))) #1.25 is arbitrarily chosen. I'm considering decreasing it
       check_list <- check_list[complete.cases(check_list)]
     }
     Stem3 <- Stem3[!(Stem3$tag %in% check_list),]
     skip_to_next <- FALSE #If all trees fail to meet the minimum growth criteria, an error is produced which stops the loop
-    tryCatch(
+    tryCatch( #Go to next species if all tags of previous species failed the growth check
     Stem3$tag_stem <- paste0(Stem3$tag, sep = "_", Stem3$stemtag) #add a unique tag for each stem of trees with multiple stems
     ,error = function(b) { skip_to_next <<- TRUE})
-    if(skip_to_next) { next } 
+    if(skip_to_next) { next } #If you know how to make this display a warning when it encounters an error i'd like to add that eventually
 for(e in unique(Stem3$tag_stem)){
   
   data <- data.frame(NULL)
-  ####stemsDF <- subset(all_stems, year == 2019 & sp == "qual")
-  spline_test <- subset(Stem3, tag_stem == e) #check for outliers/mistakes in the data
-  fit1 <- smooth.spline(x = spline_test$DOY, y = spline_test$measure ,df = 4)
-  plot(spline_test$measure ~ spline_test$DOY)
-  lines(fit1)
-  spline_test$splinepred <- fit1[["y"]]
-  spline_test$dummy <- ifelse(abs(spline_test$splinepred - spline_test$measure) >= 7, 1, 0)
-  throwaways <- rbind(throwaways, spline_test[(spline_test$dummy == 1),])
-  stemstag <- spline_test[(spline_test$dummy == 0),]
-  stemstag <- stemstag[,c(-34,-35)]
-  rm(spline_test)
   
-  #stemstag <- subset(Stem3, tag == e)
-  stemstag <- mutate(stemstag, dif = measure-lag(measure))
+  #spline_test <- subset(Stem3, tag_stem == e) #check for outliers/mistakes in the data
+  #fit1 <- smooth.spline(x = spline_test$DOY, y = spline_test$measure ,df = 4)
+  #plot(spline_test$measure ~ spline_test$DOY)
+  #lines(fit1)
+  #spline_test$splinepred <- fit1[["y"]]
+  #spline_test$dummy <- ifelse(abs(spline_test$splinepred - spline_test$measure) >= 7, 1, 0)
+  #throwaways <- rbind(throwaways, spline_test[(spline_test$dummy == 1),])
+  #stemstag <- spline_test[(spline_test$dummy == 0),]
+  #stemstag <- stemstag[,c(-34,-35)]
+  #rm(spline_test)
   
-  data <- rbind(data, stemstag$dbh2)
+  stemstag <- subset(Stem3, tag_stem == e)
+  #stemstag <- mutate(stemstag, dif = measure-lag(measure))
+  
+  data <- rbind(data, stemstag$dbh2) 
 
-  colnames(data) <- paste0("X", stemstag$DOY) 
+  colnames(data) <- paste0("X", stemstag$DOY) #This is the format that Sean's functions use
   
 #tags <- unique(stemsDF$tag)
 #day <- subset(stemstag, tag == 132539)
@@ -568,8 +586,8 @@ for(e in unique(Stem3$tag_stem)){
 
 ##  STARTING PARAMETERS AND MIN AND MAX VALUES FOR THE L-BFGS-B CALLS
 
+  #This is the beginning of the first of Sean's functions - I can try to help with questions about this but parts of it are over my head
 dbh.data <- data
-#dbh.data <- data
 tree.no <- dim(dbh.data)[1]
 doy.full <- get.doy(dbh.data)
 lg5.hess <- vector("list", tree.no)
@@ -579,7 +597,7 @@ resids.mat <- matrix(NA, tree.no, length(doy.full))
 #pdf("FIGURES/lg5_fit_all.pdf")
 #par(mfrow = c(2,2))
 pb <- txtProgressBar(style = 3)
-for(r in 1:tree.no) {
+for(r in 1:tree.no) { #Sean's first function
   setTxtProgressBar(pb, r / tree.no, title = NULL, label = NULL)
   par(mfrow = c(1,1))
   #	pdf(file = sprintf("FIGURES/lg5_fit_%i.pdf", i))
@@ -693,22 +711,8 @@ winner.tab
 # The list/unlist is done so that we can see the values attributed to the
 # parameters and then make them numeric so that the optim function can use them
 # as a numeric vector.
-#complete2 <- complete2[c(-19,-20,-25,-37,-39),] #19, 20, 25, 37, 39
-#complete_badtrees <- complete2[c(19,20,35,37,39),]
-#complete_tree1 <- melt(complete_badtrees[1,])
-#complete_tree2 <- melt(complete_badtrees[2,])
-#complete_tree3 <- melt(complete_badtrees[3,])
-#complete_tree4 <- melt(complete_badtrees[4,])
-#complete_tree5 <- melt(complete_badtrees[5,])
-
-#plot(complete_tree1)
-#plot(complete_tree2)
-#plot(complete_tree3)
-#plot(complete_tree4)
-#plot(complete_tree5)
 
 dbh.data <- data
-#dbh.data <- data
 tree.no <- dim(dbh.data)[1]
 doy.full <- get.doy(dbh.data)
 Param.df <- as.data.frame(array(dim = c(tree.no, 7)))
@@ -723,7 +727,7 @@ end.d <- matrix(NA, tree.no, 4)
 #pdf("FIGURES/HI_LO_fit_all.pdf")
 #par(mfrow = c(2,2))
 
-for(y in 1:tree.no) {
+for(y in 1:tree.no) { #Sean's second function -- same deal
   print(y)
   
   #	par(mfrow = c(1,1))
@@ -768,6 +772,7 @@ for(y in 1:tree.no) {
 #if(skip_to_next) { next } 
   a <- c(start.d[y, 1], end.d[y, 1])
   
+  #If you want to see the plooted model, remove the '#' in the following two lines:
   #plot(doy, dbh, xlab = "Day of the year", ylab = "DBH (cm)", pch = 19, col = "gray15", main = sprintf("Annual Growth for tree %i", i), cex = 1)
   #lines(days, lg5.pred.a(a, params = params.tmp, doy = days, asymptote = "both"), col = "darkred", lty = 1, lwd = 1)
   Param.df[y, 6:7] <- a
