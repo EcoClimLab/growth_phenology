@@ -1,7 +1,11 @@
 library(readr)
-Wood_pheno_table <- read_csv("C:/Users/world/Desktop/Github/growth_phenology/Data/Wood_pheno_table_V1.csv")
+Wood_pheno_table <- read_csv("C:/Users/world/Desktop/Github/growth_phenology/Data/Wood_pheno_table_V2.csv")
+versionone <- read_csv("C:/Users/world/Desktop/Github/growth_phenology/Data/Wood_pheno_table_V1.csv")
 
-mean(Wood_pheno_table$max_rate_DOY) #June 6th
+unique(Wood_pheno_table$sp)
+mean(Wood_pheno_table$max_rate_DOY) #V1: June 7th, V2: June 7th
+#mean(versionone$max_rate_DOY) #V1: June 7th, V2: June 7th
+
 boxplot(Wood_pheno_table$max_rate_DOY~Wood_pheno_table$wood_type)
 aggregate(Wood_pheno_table$max_rate_DOY, by = list(Wood_pheno_table$wood_type), FUN = mean )
 #25%
