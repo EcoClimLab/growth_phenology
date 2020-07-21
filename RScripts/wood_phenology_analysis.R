@@ -1,6 +1,6 @@
 library(readr)
-Wood_pheno_table <- read_csv("C:/Users/world/Desktop/Github/growth_phenology/Data/Wood_pheno_table_V2.csv")
-versionone <- read_csv("C:/Users/world/Desktop/Github/growth_phenology/Data/Wood_pheno_table_V1.csv")
+Wood_pheno_table <- read_csv("Data/Wood_pheno_table_V2.csv")
+versionone <- read_csv("Data/Wood_pheno_table_V1.csv")
 
 unique(Wood_pheno_table$sp)
 mean(Wood_pheno_table$max_rate_DOY) #V1: June 7th, V2: June 7th
