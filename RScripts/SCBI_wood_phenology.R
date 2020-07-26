@@ -691,14 +691,14 @@ for(r in 1:tree.no) { #Sean's first function
     doy1 <- doy
     dbh1 <- dbh
   }
-  plot(doy, dbh, xlab = "Day of the year", ylab = "DBH (cm)", pch = 19, col = "gray15", main = sprintf("Annual Growth for tree %i", i), cex = 1)
+  #plot(doy, dbh, xlab = "Day of the year", ylab = "DBH (cm)", pch = 19, col = "gray15", main = sprintf("Annual Growth for tree %i", i), cex = 1)
 
   days <- seq(365)
-  for(t in 2:dim(optim.output)[1]) {
-    lines(days, lg5.pred(params = optim.output[t ,], doy = days), col = cols[t - 1], lty = win.vec[t - 1], lwd = 1)
-  }
+  #for(t in 2:dim(optim.output)[1]) {
+  #  lines(days, lg5.pred(params = optim.output[t ,], doy = days), col = cols[t - 1], lty = win.vec[t - 1], lwd = 1)
+  #}
 
-  legend("bottomright", legend = calls[-1], col = cols, lwd = 2, lty = win.vec)
+  #legend("bottomright", legend = calls[-1], col = cols, lwd = 2, lty = win.vec)
 
 
   #	dev.off()
@@ -706,7 +706,7 @@ for(r in 1:tree.no) { #Sean's first function
   resids.mat[r, complete] <- get.lg5.resids(params = lg5.output.LB.wt$par, doy, dbh)
 }
 close(pb)
-dev.off()
+#dev.off()
 
 
 names(optim.output.df) <- c("Tree.no", "Optim.call", "L", "K", "doy_ip", "r", "theta", "ML", "Best.ML")
@@ -786,8 +786,8 @@ for(y in 1:tree.no) { #Sean's second function -- same deal
   a <- c(start.d[y, 1], end.d[y, 1])
 
   #If you want to see the plooted model, remove the '#' in the following two lines:
-  #plot(doy, dbh, xlab = "Day of the year", ylab = "DBH (cm)", pch = 19, col = "gray15", main = sprintf("Annual Growth for tree %i", i), cex = 1)
-  #lines(days, lg5.pred.a(a, params = params.tmp, doy = days, asymptote = "both"), col = "darkred", lty = 1, lwd = 1)
+  plot(doy, dbh, xlab = "Day of the year", ylab = "DBH (cm)", pch = 19, col = "gray15", main = sprintf("Annual Growth for tree %i", i), cex = 1)
+  lines(days, lg5.pred.a(a, params = params.tmp, doy = days, asymptote = "both"), col = "darkred", lty = 1, lwd = 1)
   Param.df[y, 6:7] <- a
 
   Param.df[1, 1:5] <- params.tmp
@@ -827,12 +827,12 @@ max <- max.growth.day(Param.df[1,]) #
 #Growth over the year
 #lg5.pred <- function(params, doy)
 curveDF <- data.frame(NULL)
-endcurveDF <- data.frame(c(60:274)) ###################### Change start and end date here
+endcurveDF <- data.frame(c(1:365)) ###################### Change start and end date here
 pb <- txtProgressBar(style = 3)
 #for( u in 1:nrow(Param.df)){
 #  setTxtProgressBar(pb, u / nrow(Param.df), title = NULL, label = NULL)
  growth_curve <- Param.df[1,]
-   for(i in 60:274){ ##################################### Change period of data here
+   for(i in 1:365){ ##################################### Change period of data here
      prediction <- lg5.pred(growth_curve, i)
      curveDF <- rbind(curveDF, prediction)
 
