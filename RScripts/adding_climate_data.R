@@ -1,7 +1,7 @@
 library(zoo)
 library(data.table)
-
-Wood_pheno_table <- read_csv("C:/Users/world/Desktop/Github/growth_phenology/Data/Wood_pheno_table_V2.csv")
+library(readr)
+Wood_pheno_table <- read_csv("Data/Wood_pheno_table_V2.csv")
 
 #Temperature
 NEON_summary_temp <- read_csv("climate data/NEON_summary_temp.csv")
@@ -116,7 +116,7 @@ Wood_pheno_table$aprilmax <- ifelse(Wood_pheno_table$year == 2015, aprilmaxes[1,
 write.csv(Wood_pheno_table, file = "wood_pheno_with_temp.csv", row.names = FALSE)
 
 #Precipitation
-NEON_summary_precip <- read_csv("C:/Users/world/Desktop/Github/growth_phenology/climate data/NEON_summary_precip.csv")
+NEON_summary_precip <- read_csv("climate data/NEON_summary_precip.csv") #Work with NCDC data instead
 NEON_summary_precip$date <- as.Date(NEON_summary_precip$date)
 NEON_summary_precip$DOY <- yday(NEON_summary_precip$date)
 
