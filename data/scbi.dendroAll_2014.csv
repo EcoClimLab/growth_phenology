@@ -2299,36 +2299,36 @@ tag,stemtag,survey.ID,year,month,day,biannual,intraannual,sp,quadrat,lx,ly,measu
 160910,1,2014.12,2014,9,2,1,1,litu,1607,8.6,1.1,175.4,,,alive,"Amy Lewis, Brandon","Amy Lewis, Brandon",23183,23183,NA,973,0,215,2,NA,1.31,NA,NA,NA,NA,0,NA
 160910,1,2014.13,2014,9,15,1,1,litu,1607,8.6,1.1,174.75,,,alive,"Justin C., Amy Lewis","Justin C., Amy Lewis",23183,23183,NA,973,0,215,2,NA,1.31,NA,NA,NA,NA,0,NA
 160910,1,2014.14,2014,10,27,1,1,litu,1607,8.6,1.1,174.17,,,alive,Erika Gonzalez,Maryam Sedaghatpour,23183,23183,NA,973,0,215,2,NA,1.31,NA,NA,NA,NA,0,NA
-160985,1,2014.01,2014,3,24,1,1,litu,1612,1.2,17.2,73.58,,,alive,Erika Gonzalez,Valentine Herrmann,23254,23254,845,845.9000244,0,216,2,NA,1.26,4,4,NA,NA,0,NA
-160985,1,2014.02,2014,4,14,1,1,litu,1612,1.2,17.2,72.59,,,alive,"Emily, John, Erika","Emily, John, Erika",23254,23254,NA,845.9000244,0,216,2,NA,1.26,NA,NA,NA,NA,0,NA
-160985,1,2014.03,2014,5,1,1,1,litu,1612,1.2,17.2,72.66,,,alive,"Gonzalez, Bennett","Gonzalez, Bennett",23254,23254,NA,845.9000244,0,216,2,NA,1.26,NA,NA,NA,NA,0,NA
-160985,1,2014.04,2014,5,13,1,1,litu,1612,1.2,17.2,71.24,,,alive,"Gonzalez, Lavelle, Bowman-Lipton","Gonzalez, Lavelle, Bowman-Lipton",23254,23254,NA,845.9000244,0,216,2,NA,1.26,NA,NA,NA,NA,0,NA
-160985,1,2014.05,2014,5,27,1,1,litu,1612,1.2,17.2,71.62,,,alive,"Gonzalez, Lavelle, Ross","Gonzalez, Lavelle, Ross",23254,23254,NA,845.9000244,0,216,2,NA,1.26,NA,NA,NA,NA,0,NA
-160985,1,2014.06,2014,6,10,1,1,litu,1612,1.2,17.2,74.29,,,alive,"Erika Gonzalez, Amy Lewis","Erika Gonzalez, Amy Lewis",23254,23254,NA,845.9000244,0,216,2,NA,1.26,NA,NA,NA,NA,0,NA
-160985,1,2014.07,2014,6,23,1,1,litu,1612,1.2,17.2,76.41,,,alive,"Torre Lavelle, Amy Lewis","Torre Lavelle, Amy Lewis",23254,23254,NA,845.9000244,0,216,2,NA,1.26,NA,NA,NA,NA,0,NA
-160985,1,2014.08,2014,7,7,1,1,litu,1612,1.2,17.2,76.78,,,alive,"Torre Lavelle, Amy Lewis","Torre Lavelle, Amy Lewis",23254,23254,NA,845.9000244,0,216,2,NA,1.26,NA,NA,NA,NA,0,NA
-160985,1,2014.09,2014,7,21,1,1,litu,1612,1.2,17.2,78.88,,,alive,"Torre Lavelle, Amy Lewis","Torre Lavelle, Amy Lewis",23254,23254,NA,845.9000244,0,216,2,NA,1.26,NA,NA,NA,NA,0,NA
-160985,1,2014.1,2014,8,4,1,1,litu,1612,1.2,17.2,79.58,,,alive,Amy Lewis,Amy Lewis,23254,23254,NA,845.9000244,0,216,2,NA,1.26,NA,NA,NA,NA,0,NA
-160985,1,2014.11,2014,8,18,1,1,litu,1612,1.2,17.2,80.77,,,alive,"Amy Lewis, Anne Marie","Amy Lewis, Anne Marie",23254,23254,NA,845.9000244,0,216,2,NA,1.26,NA,NA,NA,NA,0,NA
-160985,1,2014.12,2014,9,2,1,1,litu,1612,1.2,17.2,80.97,,,alive,"Amy Lewis, Brandon","Amy Lewis, Brandon",23254,23254,NA,845.9000244,0,216,2,NA,1.26,NA,NA,NA,NA,0,NA
-160985,1,2014.13,2014,9,15,1,1,litu,1612,1.2,17.2,80.99,,,alive,"Justin C., Amy Lewis","Justin C., Amy Lewis",23254,23254,NA,845.9000244,0,216,2,NA,1.26,NA,NA,NA,NA,0,NA
-160985,1,2014.14,2014,10,27,1,1,litu,1612,1.2,17.2,81.05,,,alive,Erika Gonzalez,Maryam Sedaghatpour,23254,23254,NA,845.9000244,0,216,2,NA,1.26,NA,NA,NA,NA,0,NA
+160985,1,2014.01,2014,3,24,1,1,litu,1612,1.2,17.2,73.58,,,alive,Erika Gonzalez,Valentine Herrmann,23254,23254,845,845.9000244,0,216,2,NA,1.26,4,4,NA,NA,1,71.24
+160985,1,2014.02,2014,4,14,1,1,litu,1612,1.2,17.2,72.59,,,alive,"Emily, John, Erika","Emily, John, Erika",23254,23254,NA,845.9000244,0,216,2,NA,1.26,NA,NA,NA,NA,1,71.24
+160985,1,2014.03,2014,5,1,1,1,litu,1612,1.2,17.2,72.66,,,alive,"Gonzalez, Bennett","Gonzalez, Bennett",23254,23254,NA,845.9000244,0,216,2,NA,1.26,NA,NA,NA,NA,1,72.66
+160985,1,2014.04,2014,5,13,1,1,litu,1612,1.2,17.2,71.24,,,alive,"Gonzalez, Lavelle, Bowman-Lipton","Gonzalez, Lavelle, Bowman-Lipton",23254,23254,NA,845.9000244,0,216,2,NA,1.26,NA,NA,NA,NA,1,71.24
+160985,1,2014.05,2014,5,27,1,1,litu,1612,1.2,17.2,71.62,,,alive,"Gonzalez, Lavelle, Ross","Gonzalez, Lavelle, Ross",23254,23254,NA,845.9000244,0,216,2,NA,1.26,NA,NA,NA,NA,1,71.62
+160985,1,2014.06,2014,6,10,1,1,litu,1612,1.2,17.2,74.29,,,alive,"Erika Gonzalez, Amy Lewis","Erika Gonzalez, Amy Lewis",23254,23254,NA,845.9000244,0,216,2,NA,1.26,NA,NA,NA,NA,1,74.29
+160985,1,2014.07,2014,6,23,1,1,litu,1612,1.2,17.2,76.41,,,alive,"Torre Lavelle, Amy Lewis","Torre Lavelle, Amy Lewis",23254,23254,NA,845.9000244,0,216,2,NA,1.26,NA,NA,NA,NA,1,76.41
+160985,1,2014.08,2014,7,7,1,1,litu,1612,1.2,17.2,76.78,,,alive,"Torre Lavelle, Amy Lewis","Torre Lavelle, Amy Lewis",23254,23254,NA,845.9000244,0,216,2,NA,1.26,NA,NA,NA,NA,1,76.78
+160985,1,2014.09,2014,7,21,1,1,litu,1612,1.2,17.2,78.88,,,alive,"Torre Lavelle, Amy Lewis","Torre Lavelle, Amy Lewis",23254,23254,NA,845.9000244,0,216,2,NA,1.26,NA,NA,NA,NA,1,78.88
+160985,1,2014.1,2014,8,4,1,1,litu,1612,1.2,17.2,79.58,,,alive,Amy Lewis,Amy Lewis,23254,23254,NA,845.9000244,0,216,2,NA,1.26,NA,NA,NA,NA,1,79.58
+160985,1,2014.11,2014,8,18,1,1,litu,1612,1.2,17.2,80.77,,,alive,"Amy Lewis, Anne Marie","Amy Lewis, Anne Marie",23254,23254,NA,845.9000244,0,216,2,NA,1.26,NA,NA,NA,NA,1,80.77
+160985,1,2014.12,2014,9,2,1,1,litu,1612,1.2,17.2,80.97,,,alive,"Amy Lewis, Brandon","Amy Lewis, Brandon",23254,23254,NA,845.9000244,0,216,2,NA,1.26,NA,NA,NA,NA,1,80.97
+160985,1,2014.13,2014,9,15,1,1,litu,1612,1.2,17.2,80.99,,,alive,"Justin C., Amy Lewis","Justin C., Amy Lewis",23254,23254,NA,845.9000244,0,216,2,NA,1.26,NA,NA,NA,NA,1,80.99
+160985,1,2014.14,2014,10,27,1,1,litu,1612,1.2,17.2,81.05,,,alive,Erika Gonzalez,Maryam Sedaghatpour,23254,23254,NA,845.9000244,0,216,2,NA,1.26,NA,NA,NA,NA,1,81.05
 162293,1,2014.01,2014,3,27,1,0,qual,1623,3,9.4,49.08,,,alive,Erika Gonzalez,Valentine Herrmann,23639,23639,868.5,865.7000122,0,217,2,NA,1.34,4,4,NA,NA,0,NA
 162293,1,2014.14,2014,10,27,1,0,qual,1623,3,9.4,58.93,,,alive,Amy Lewis,Maryam Sedaghatpour,23639,23639,NA,865.7000122,0,217,2,NA,1.34,NA,NA,NA,NA,0,NA
-162439,1,2014.01,2014,3,27,1,1,quru,1627,16.3,0.3,96.43,,,alive,Erika Gonzalez,Valentine Herrmann,23778,23778,827.8,832.5,0,218,2,NA,1.37,4,5,NA,NA,0,NA
-162439,1,2014.02,2014,4,14,1,1,quru,1627,16.3,0.3,97.83,,,alive,"Emily, John, Erika","Emily, John, Erika",23778,23778,NA,832.5,0,218,2,NA,1.37,NA,NA,NA,NA,0,NA
-162439,1,2014.03,2014,5,1,1,1,quru,1627,16.3,0.3,98.7,,,alive,"Gonzalez, Bennett","Gonzalez, Bennett",23778,23778,NA,832.5,0,218,2,NA,1.37,NA,NA,NA,NA,0,NA
-162439,1,2014.04,2014,5,13,1,1,quru,1627,16.3,0.3,99.41,,,alive,"Gonzalez, Lavelle, Bowman-Lipton","Gonzalez, Lavelle, Bowman-Lipton",23778,23778,NA,832.5,0,218,2,NA,1.37,NA,NA,NA,NA,0,NA
-162439,1,2014.05,2014,5,27,1,1,quru,1627,16.3,0.3,100.58,,,alive,"Gonzalez, Lavelle, Ross","Gonzalez, Lavelle, Ross",23778,23778,NA,832.5,0,218,2,NA,1.37,NA,NA,NA,NA,0,NA
-162439,1,2014.06,2014,6,10,1,1,quru,1627,16.3,0.3,101.54,,,alive,"Erika Gonzalez, Amy Lewis","Erika Gonzalez, Amy Lewis",23778,23778,NA,832.5,0,218,2,NA,1.37,NA,NA,NA,NA,0,NA
-162439,1,2014.07,2014,6,23,1,1,quru,1627,16.3,0.3,105.65,,,alive,"Torre Lavelle, Amy Lewis","Torre Lavelle, Amy Lewis",23778,23778,NA,832.5,0,218,2,NA,1.37,NA,NA,NA,NA,0,NA
-162439,1,2014.08,2014,7,7,1,1,quru,1627,16.3,0.3,108.1,,,alive,"Torre Lavelle, Amy Lewis","Torre Lavelle, Amy Lewis",23778,23778,NA,832.5,0,218,2,NA,1.37,NA,NA,NA,NA,0,NA
-162439,1,2014.09,2014,7,21,1,1,quru,1627,16.3,0.3,116.42,,,alive,"Torre Lavelle, Amy Lewis","Torre Lavelle, Amy Lewis",23778,23778,NA,832.5,0,218,2,NA,1.37,NA,NA,NA,NA,0,NA
-162439,1,2014.1,2014,8,4,1,1,quru,1627,16.3,0.3,116.08,,,alive,Amy Lewis,Amy Lewis,23778,23778,NA,832.5,0,218,2,NA,1.37,NA,NA,NA,NA,0,NA
-162439,1,2014.11,2014,8,18,1,1,quru,1627,16.3,0.3,108.23,,,alive,"Amy Lewis, Anne Marie","Amy Lewis, Anne Marie",23778,23778,NA,832.5,0,218,2,NA,1.37,NA,NA,NA,NA,0,NA
-162439,1,2014.12,2014,9,2,1,1,quru,1627,16.3,0.3,107.79,,,alive,"Amy Lewis, Brandon","Amy Lewis, Brandon",23778,23778,NA,832.5,0,218,2,NA,1.37,NA,NA,NA,NA,0,NA
-162439,1,2014.13,2014,9,15,1,1,quru,1627,16.3,0.3,108.26,,,alive,"Justin C., Amy Lewis","Justin C., Amy Lewis",23778,23778,NA,832.5,0,218,2,NA,1.37,NA,NA,NA,NA,0,NA
-162439,1,2014.14,2014,10,27,1,1,quru,1627,16.3,0.3,107.81,,,alive,Amy Lewis,Maryam Sedaghatpour,23778,23778,NA,832.5,0,218,2,NA,1.37,NA,NA,NA,NA,0,NA
+162439,1,2014.01,2014,3,27,1,1,quru,1627,16.3,0.3,96.43,,,alive,Erika Gonzalez,Valentine Herrmann,23778,23778,827.8,832.5,0,218,2,NA,1.37,4,5,NA,NA,1,96.43
+162439,1,2014.02,2014,4,14,1,1,quru,1627,16.3,0.3,97.83,,,alive,"Emily, John, Erika","Emily, John, Erika",23778,23778,NA,832.5,0,218,2,NA,1.37,NA,NA,NA,NA,1,97.83
+162439,1,2014.03,2014,5,1,1,1,quru,1627,16.3,0.3,98.7,,,alive,"Gonzalez, Bennett","Gonzalez, Bennett",23778,23778,NA,832.5,0,218,2,NA,1.37,NA,NA,NA,NA,1,98.7
+162439,1,2014.04,2014,5,13,1,1,quru,1627,16.3,0.3,99.41,,,alive,"Gonzalez, Lavelle, Bowman-Lipton","Gonzalez, Lavelle, Bowman-Lipton",23778,23778,NA,832.5,0,218,2,NA,1.37,NA,NA,NA,NA,1,99.41
+162439,1,2014.05,2014,5,27,1,1,quru,1627,16.3,0.3,100.58,,,alive,"Gonzalez, Lavelle, Ross","Gonzalez, Lavelle, Ross",23778,23778,NA,832.5,0,218,2,NA,1.37,NA,NA,NA,NA,1,100.58
+162439,1,2014.06,2014,6,10,1,1,quru,1627,16.3,0.3,101.54,,,alive,"Erika Gonzalez, Amy Lewis","Erika Gonzalez, Amy Lewis",23778,23778,NA,832.5,0,218,2,NA,1.37,NA,NA,NA,NA,1,101.54
+162439,1,2014.07,2014,6,23,1,1,quru,1627,16.3,0.3,105.65,,,alive,"Torre Lavelle, Amy Lewis","Torre Lavelle, Amy Lewis",23778,23778,NA,832.5,0,218,2,NA,1.37,NA,NA,NA,NA,1,105.65
+162439,1,2014.08,2014,7,7,1,1,quru,1627,16.3,0.3,108.1,,,alive,"Torre Lavelle, Amy Lewis","Torre Lavelle, Amy Lewis",23778,23778,NA,832.5,0,218,2,NA,1.37,NA,NA,NA,NA,1,108.1
+162439,1,2014.09,2014,7,21,1,1,quru,1627,16.3,0.3,116.42,,,alive,"Torre Lavelle, Amy Lewis","Torre Lavelle, Amy Lewis",23778,23778,NA,832.5,0,218,2,NA,1.37,NA,NA,NA,NA,1,NA
+162439,1,2014.1,2014,8,4,1,1,quru,1627,16.3,0.3,116.08,,,alive,Amy Lewis,Amy Lewis,23778,23778,NA,832.5,0,218,2,NA,1.37,NA,NA,NA,NA,1,NA
+162439,1,2014.11,2014,8,18,1,1,quru,1627,16.3,0.3,108.23,,,alive,"Amy Lewis, Anne Marie","Amy Lewis, Anne Marie",23778,23778,NA,832.5,0,218,2,NA,1.37,NA,NA,NA,NA,1,108.23
+162439,1,2014.12,2014,9,2,1,1,quru,1627,16.3,0.3,107.79,,,alive,"Amy Lewis, Brandon","Amy Lewis, Brandon",23778,23778,NA,832.5,0,218,2,NA,1.37,NA,NA,NA,NA,1,107.79
+162439,1,2014.13,2014,9,15,1,1,quru,1627,16.3,0.3,108.26,,,alive,"Justin C., Amy Lewis","Justin C., Amy Lewis",23778,23778,NA,832.5,0,218,2,NA,1.37,NA,NA,NA,NA,1,108.26
+162439,1,2014.14,2014,10,27,1,1,quru,1627,16.3,0.3,107.81,,,alive,Amy Lewis,Maryam Sedaghatpour,23778,23778,NA,832.5,0,218,2,NA,1.37,NA,NA,NA,NA,1,107.81
 162503,1,2014.01,2014,3,27,1,0,quve,1624,1.3,12.3,79.25,,,alive,Erika Gonzalez,Valentine Herrmann,23838,23838,898.5,898.4000244,0,219,2,NA,1.24,4,4,NA,NA,0,NA
 162503,1,2014.14,2014,10,27,1,0,quve,1624,1.3,12.3,92.31,,,alive,Amy Lewis,Maryam Sedaghatpour,23838,23838,NA,898.4000244,0,219,2,NA,1.24,NA,NA,NA,NA,0,NA
 162543,1,2014.01,2014,3,27,1,1,qual,1627,7.5,16.6,34.08,,,alive,Erika Gonzalez,Valentine Herrmann,23878,23878,892.5,890,0,220,2,NA,1.42,4,4,NA,NA,0,NA
@@ -2395,19 +2395,19 @@ tag,stemtag,survey.ID,year,month,day,biannual,intraannual,sp,quadrat,lx,ly,measu
 172202,1,2014.12,2014,9,2,1,1,quru,1717,17.1,1.8,50.5,,,alive,"Amy Lewis, Brandon","Amy Lewis, Brandon",25504,25504,NA,555.0999756,0,386,2,NA,1.3,NA,NA,NA,NA,0,NA
 172202,1,2014.13,2014,9,15,1,1,quru,1717,17.1,1.8,50.14,,,alive,"Justin C., Amy Lewis","Justin C., Amy Lewis",25504,25504,NA,555.0999756,0,386,2,NA,1.3,NA,NA,NA,NA,0,NA
 172202,1,2014.14,2014,10,27,1,1,quru,1717,17.1,1.8,NA,,band found on ground,alive,Amy Lewis,Maryam Sedaghatpour,25504,25504,NA,555.0999756,0,386,2,NA,1.3,NA,NA,NA,NA,0,NA
-172203,1,2014.01,2014,3,27,1,1,qual,1717,15.5,0.3,103.31,,,alive,Erika Gonzalez,Valentine Herrmann,25505,25505,366.1,368.5,0,387,2,NA,1.3,4,3,NA,NA,1,103.31
-172203,1,2014.02,2014,4,14,1,1,qual,1717,15.5,0.3,104.09,,,alive,"Emily, John, Erika","Emily, John, Erika",25505,25505,NA,368.5,0,387,2,NA,1.3,NA,NA,NA,NA,1,104.09
-172203,1,2014.03,2014,5,1,1,1,qual,1717,15.5,0.3,104.7,,,alive,"Gonzalez, Bennett","Gonzalez, Bennett",25505,25505,NA,368.5,0,387,2,NA,1.3,NA,NA,NA,NA,1,104.7
-172203,1,2014.04,2014,5,13,1,1,qual,1717,15.5,0.3,104.43,,,alive,"Gonzalez, Lavelle, Bowman-Lipton","Gonzalez, Lavelle, Bowman-Lipton",25505,25505,NA,368.5,0,387,2,NA,1.3,NA,NA,NA,NA,1,104.43
-172203,1,2014.05,2014,5,27,1,1,qual,1717,15.5,0.3,104.98,,,alive,"Gonzalez, Lavelle, Ross","Gonzalez, Lavelle, Ross",25505,25505,NA,368.5,0,387,2,NA,1.3,NA,NA,NA,NA,1,104.98
-172203,1,2014.06,2014,6,10,1,1,qual,1717,15.5,0.3,105.52,,,alive,"Erika Gonzalez, Amy Lewis","Erika Gonzalez, Amy Lewis",25505,25505,NA,368.5,0,387,2,NA,1.3,NA,NA,NA,NA,1,105.52
-172203,1,2014.07,2014,6,23,1,1,qual,1717,15.5,0.3,105.8,,,alive,"Torre Lavelle, Amy Lewis","Torre Lavelle, Amy Lewis",25505,25505,NA,368.5,0,387,2,NA,1.3,NA,NA,NA,NA,1,105.8
-172203,1,2014.08,2014,7,7,1,1,qual,1717,15.5,0.3,106.07,,,alive,"Torre Lavelle, Amy Lewis","Torre Lavelle, Amy Lewis",25505,25505,NA,368.5,0,387,2,NA,1.3,NA,NA,NA,NA,1,106.07
-172203,1,2014.09,2014,7,21,1,1,qual,1717,15.5,0.3,106.22,,,alive,"Torre Lavelle, Amy Lewis","Torre Lavelle, Amy Lewis",25505,25505,NA,368.5,0,387,2,NA,1.3,NA,NA,NA,NA,1,106.22
-172203,1,2014.1,2014,8,4,1,1,qual,1717,15.5,0.3,106.15,,,alive,Amy Lewis,Amy Lewis,25505,25505,NA,368.5,0,387,2,NA,1.3,NA,NA,NA,NA,1,106.15
-172203,1,2014.11,2014,8,18,1,1,qual,1717,15.5,0.3,106.62,,,alive,"Amy Lewis, Anne Marie","Amy Lewis, Anne Marie",25505,25505,NA,368.5,0,387,2,NA,1.3,NA,NA,NA,NA,1,106.62
-172203,1,2014.12,2014,9,2,1,1,qual,1717,15.5,0.3,106.83,,,alive,"Amy Lewis, Brandon","Amy Lewis, Brandon",25505,25505,NA,368.5,0,387,2,NA,1.3,NA,NA,NA,NA,1,106.83
-172203,1,2014.13,2014,9,15,1,1,qual,1717,15.5,0.3,106.63,,,alive,"Justin C., Amy Lewis","Justin C., Amy Lewis",25505,25505,NA,368.5,0,387,2,NA,1.3,NA,NA,NA,NA,1,106.63
+172203,1,2014.01,2014,3,27,1,1,qual,1717,15.5,0.3,103.31,,,alive,Erika Gonzalez,Valentine Herrmann,25505,25505,366.1,368.5,0,387,2,NA,1.3,4,3,NA,NA,1,NA
+172203,1,2014.02,2014,4,14,1,1,qual,1717,15.5,0.3,104.09,,,alive,"Emily, John, Erika","Emily, John, Erika",25505,25505,NA,368.5,0,387,2,NA,1.3,NA,NA,NA,NA,1,NA
+172203,1,2014.03,2014,5,1,1,1,qual,1717,15.5,0.3,104.7,,,alive,"Gonzalez, Bennett","Gonzalez, Bennett",25505,25505,NA,368.5,0,387,2,NA,1.3,NA,NA,NA,NA,1,NA
+172203,1,2014.04,2014,5,13,1,1,qual,1717,15.5,0.3,104.43,,,alive,"Gonzalez, Lavelle, Bowman-Lipton","Gonzalez, Lavelle, Bowman-Lipton",25505,25505,NA,368.5,0,387,2,NA,1.3,NA,NA,NA,NA,1,NA
+172203,1,2014.05,2014,5,27,1,1,qual,1717,15.5,0.3,104.98,,,alive,"Gonzalez, Lavelle, Ross","Gonzalez, Lavelle, Ross",25505,25505,NA,368.5,0,387,2,NA,1.3,NA,NA,NA,NA,1,NA
+172203,1,2014.06,2014,6,10,1,1,qual,1717,15.5,0.3,105.52,,,alive,"Erika Gonzalez, Amy Lewis","Erika Gonzalez, Amy Lewis",25505,25505,NA,368.5,0,387,2,NA,1.3,NA,NA,NA,NA,1,NA
+172203,1,2014.07,2014,6,23,1,1,qual,1717,15.5,0.3,105.8,,,alive,"Torre Lavelle, Amy Lewis","Torre Lavelle, Amy Lewis",25505,25505,NA,368.5,0,387,2,NA,1.3,NA,NA,NA,NA,1,NA
+172203,1,2014.08,2014,7,7,1,1,qual,1717,15.5,0.3,106.07,,,alive,"Torre Lavelle, Amy Lewis","Torre Lavelle, Amy Lewis",25505,25505,NA,368.5,0,387,2,NA,1.3,NA,NA,NA,NA,1,NA
+172203,1,2014.09,2014,7,21,1,1,qual,1717,15.5,0.3,106.22,,,alive,"Torre Lavelle, Amy Lewis","Torre Lavelle, Amy Lewis",25505,25505,NA,368.5,0,387,2,NA,1.3,NA,NA,NA,NA,1,NA
+172203,1,2014.1,2014,8,4,1,1,qual,1717,15.5,0.3,106.15,,,alive,Amy Lewis,Amy Lewis,25505,25505,NA,368.5,0,387,2,NA,1.3,NA,NA,NA,NA,1,NA
+172203,1,2014.11,2014,8,18,1,1,qual,1717,15.5,0.3,106.62,,,alive,"Amy Lewis, Anne Marie","Amy Lewis, Anne Marie",25505,25505,NA,368.5,0,387,2,NA,1.3,NA,NA,NA,NA,1,NA
+172203,1,2014.12,2014,9,2,1,1,qual,1717,15.5,0.3,106.83,,,alive,"Amy Lewis, Brandon","Amy Lewis, Brandon",25505,25505,NA,368.5,0,387,2,NA,1.3,NA,NA,NA,NA,1,NA
+172203,1,2014.13,2014,9,15,1,1,qual,1717,15.5,0.3,106.63,,,alive,"Justin C., Amy Lewis","Justin C., Amy Lewis",25505,25505,NA,368.5,0,387,2,NA,1.3,NA,NA,NA,NA,1,NA
 172203,1,2014.14,2014,10,27,1,1,qual,1717,15.5,0.3,117,,band was adjusted,alive,Amy Lewis,Maryam Sedaghatpour,25505,25505,NA,852,1,678,2,NA,1.3,NA,NA,NA,NA,1,NA
 172205,1,2014.01,2014,3,27,1,0,qual,1717,16.1,3.5,89.6,,,alive,Erika Gonzalez,Valentine Herrmann,25507,25507,493.5,493,0,388,2,NA,1.3,4,4,NA,NA,0,NA
 172205,1,2014.14,2014,10,27,1,0,qual,1717,16.1,3.5,96.4,,band was adjusted,alive,Amy Lewis,Maryam Sedaghatpour,25507,25507,NA,493,0,388,2,NA,1.3,NA,NA,NA,NA,0,NA

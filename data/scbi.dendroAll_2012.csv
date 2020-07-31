@@ -481,24 +481,24 @@ tag,stemtag,survey.ID,year,month,day,biannual,intraannual,sp,quadrat,lx,ly,measu
 72232,1,2012.18,2012,11,29,1,0,qual,722,14.5,12.6,44.74,,,alive,Erika Gonzalez,EG/CH,8875,8875,NA,711.4,0,77,2,NA,1.45,NA,NA,NA,NA,0,NA
 72248,1,2012.01,2012,3,15,1,0,caco,723,15,0.3,27.54,,,alive,Caroline Johnson,CJ/LC/BB,8890,8890,NA,301.6,0,78,2,NA,1.39,4,4,NA,NA,0,NA
 72248,1,2012.18,2012,11,29,1,0,caco,723,15,0.3,33.68,,,alive,Erika Gonzalez,EG/CH,8890,8890,NA,301.6,0,78,2,NA,1.39,NA,NA,NA,NA,0,NA
-72308,1,2012.01,2012,3,15,1,1,qual,725,15.2,13.3,16.78,,,alive,Caroline Johnson,CJ/LC/BB,8948,8948,NA,652.9,0,79,2,NA,1.4,3,4,NA,NA,0,NA
-72308,1,2012.02,2012,4,11,1,1,qual,725,15.2,13.3,17.43,,,alive,Bettina,Bettina,8948,8948,NA,652.9,0,79,2,NA,1.4,NA,NA,NA,NA,0,NA
-72308,1,2012.03,2012,4,25,1,1,qual,725,15.2,13.3,19.02,,,alive,Bettina/Caroline/Ben M.,Bettina/Caroline/Ben M.,8948,8948,NA,652.9,0,79,2,NA,1.4,NA,NA,NA,NA,0,NA
-72308,1,2012.04,2012,5,8,1,1,qual,725,15.2,13.3,18.8,,,alive,Caroline/Bettina,Caroline/Bettina,8948,8948,NA,652.9,0,79,2,NA,1.4,NA,NA,NA,NA,0,NA
-72308,1,2012.05,2012,5,22,1,1,qual,725,15.2,13.3,15.9,,,alive,"Erika, Caity, LC, CK","Erika, Caity, LC, CK",8948,8948,NA,652.9,0,79,2,NA,1.4,NA,NA,NA,NA,0,NA
-72308,1,2012.06,2012,6,5,1,1,qual,725,15.2,13.3,20.63,,,alive,"Lorien, Leah","Lorien, Leah",8948,8948,NA,652.9,0,79,2,NA,1.4,NA,NA,NA,NA,0,NA
-72308,1,2012.07,2012,6,19,1,1,qual,725,15.2,13.3,20.79,,,alive,"Erika Gonazlez, Homan, Lemman","Erika Gonazlez, Homan, Lemman",8948,8948,NA,652.9,0,79,2,NA,1.4,NA,NA,NA,NA,0,NA
-72308,1,2012.08,2012,7,2,1,1,qual,725,15.2,13.3,21.11,,,alive,"Lulu, Homan, Bill's nephew","Lulu, Homan",8948,8948,NA,652.9,0,79,2,NA,1.4,NA,NA,NA,NA,0,NA
-72308,1,2012.09,2012,7,16,1,1,qual,725,15.2,13.3,21.27,,,alive,"Gonzalez, Zhang, Lemman","Gonzalez, Zhang, Lemman",8948,8948,NA,652.9,0,79,2,NA,1.4,NA,NA,NA,NA,0,NA
-72308,1,2012.1,2012,7,30,1,1,qual,725,15.2,13.3,21.48,,,alive,"Zhang, Southon, Homan","Zhang, Southon, Homan",8948,8948,NA,652.9,0,79,2,NA,1.4,NA,NA,NA,NA,0,NA
-72308,1,2012.11,2012,8,14,1,1,qual,725,15.2,13.3,21.67,,,alive,"Southon, Zhang","Southon, Zhang",8948,8948,NA,652.9,0,79,2,NA,1.4,NA,NA,NA,NA,0,NA
-72308,1,2012.12,2012,8,29,1,1,qual,725,15.2,13.3,22.06,,,alive,"LC, Zhang","LC, Zhang",8948,8948,NA,652.9,0,79,2,NA,1.4,NA,NA,NA,NA,0,NA
-72308,1,2012.13,2012,9,10,1,1,qual,725,15.2,13.3,22.18,,,alive,"Zhang, JW, Homan","Zhang, JW, Homan",8948,8948,NA,652.9,0,79,2,NA,1.4,NA,NA,NA,NA,0,NA
-72308,1,2012.14,2012,9,25,1,1,qual,725,15.2,13.3,22.48,,,alive,"Robin, Gonzalez",CH,8948,8948,NA,652.9,0,79,2,NA,1.4,NA,NA,NA,NA,0,NA
-72308,1,2012.15,2012,10,9,1,1,qual,725,15.2,13.3,22.52,,,alive,"Robin, Gonzalez, Woltz",CH,8948,8948,NA,652.9,0,79,2,NA,1.4,NA,NA,NA,NA,0,NA
-72308,1,2012.16,2012,10,23,1,1,qual,725,15.2,13.3,21.84,,,alive,"Caity, Gonzalez, Teixeira",CH,8948,8948,NA,652.9,0,79,2,NA,1.4,NA,NA,NA,NA,0,NA
-72308,1,2012.17,2012,11,26,1,1,qual,725,15.2,13.3,21.6,,,alive,"Gonzalez, Woltz",CH,8948,8948,NA,652.9,0,79,2,NA,1.4,NA,NA,NA,NA,0,NA
-72308,1,2012.18,2012,11,29,1,1,qual,725,15.2,13.3,21.38,,,alive,Erika Gonzalez,EG/CH,8948,8948,NA,652.9,0,79,2,NA,1.4,NA,NA,NA,NA,0,NA
+72308,1,2012.01,2012,3,15,1,1,qual,725,15.2,13.3,16.78,,,alive,Caroline Johnson,CJ/LC/BB,8948,8948,NA,652.9,0,79,2,NA,1.4,3,4,NA,NA,1,NA
+72308,1,2012.02,2012,4,11,1,1,qual,725,15.2,13.3,17.43,,,alive,Bettina,Bettina,8948,8948,NA,652.9,0,79,2,NA,1.4,NA,NA,NA,NA,1,NA
+72308,1,2012.03,2012,4,25,1,1,qual,725,15.2,13.3,19.02,,,alive,Bettina/Caroline/Ben M.,Bettina/Caroline/Ben M.,8948,8948,NA,652.9,0,79,2,NA,1.4,NA,NA,NA,NA,1,NA
+72308,1,2012.04,2012,5,8,1,1,qual,725,15.2,13.3,18.8,,,alive,Caroline/Bettina,Caroline/Bettina,8948,8948,NA,652.9,0,79,2,NA,1.4,NA,NA,NA,NA,1,NA
+72308,1,2012.05,2012,5,22,1,1,qual,725,15.2,13.3,15.9,,,alive,"Erika, Caity, LC, CK","Erika, Caity, LC, CK",8948,8948,NA,652.9,0,79,2,NA,1.4,NA,NA,NA,NA,1,NA
+72308,1,2012.06,2012,6,5,1,1,qual,725,15.2,13.3,20.63,,,alive,"Lorien, Leah","Lorien, Leah",8948,8948,NA,652.9,0,79,2,NA,1.4,NA,NA,NA,NA,1,NA
+72308,1,2012.07,2012,6,19,1,1,qual,725,15.2,13.3,20.79,,,alive,"Erika Gonazlez, Homan, Lemman","Erika Gonazlez, Homan, Lemman",8948,8948,NA,652.9,0,79,2,NA,1.4,NA,NA,NA,NA,1,NA
+72308,1,2012.08,2012,7,2,1,1,qual,725,15.2,13.3,21.11,,,alive,"Lulu, Homan, Bill's nephew","Lulu, Homan",8948,8948,NA,652.9,0,79,2,NA,1.4,NA,NA,NA,NA,1,NA
+72308,1,2012.09,2012,7,16,1,1,qual,725,15.2,13.3,21.27,,,alive,"Gonzalez, Zhang, Lemman","Gonzalez, Zhang, Lemman",8948,8948,NA,652.9,0,79,2,NA,1.4,NA,NA,NA,NA,1,NA
+72308,1,2012.1,2012,7,30,1,1,qual,725,15.2,13.3,21.48,,,alive,"Zhang, Southon, Homan","Zhang, Southon, Homan",8948,8948,NA,652.9,0,79,2,NA,1.4,NA,NA,NA,NA,1,NA
+72308,1,2012.11,2012,8,14,1,1,qual,725,15.2,13.3,21.67,,,alive,"Southon, Zhang","Southon, Zhang",8948,8948,NA,652.9,0,79,2,NA,1.4,NA,NA,NA,NA,1,NA
+72308,1,2012.12,2012,8,29,1,1,qual,725,15.2,13.3,22.06,,,alive,"LC, Zhang","LC, Zhang",8948,8948,NA,652.9,0,79,2,NA,1.4,NA,NA,NA,NA,1,NA
+72308,1,2012.13,2012,9,10,1,1,qual,725,15.2,13.3,22.18,,,alive,"Zhang, JW, Homan","Zhang, JW, Homan",8948,8948,NA,652.9,0,79,2,NA,1.4,NA,NA,NA,NA,1,NA
+72308,1,2012.14,2012,9,25,1,1,qual,725,15.2,13.3,22.48,,,alive,"Robin, Gonzalez",CH,8948,8948,NA,652.9,0,79,2,NA,1.4,NA,NA,NA,NA,1,NA
+72308,1,2012.15,2012,10,9,1,1,qual,725,15.2,13.3,22.52,,,alive,"Robin, Gonzalez, Woltz",CH,8948,8948,NA,652.9,0,79,2,NA,1.4,NA,NA,NA,NA,1,NA
+72308,1,2012.16,2012,10,23,1,1,qual,725,15.2,13.3,21.84,,,alive,"Caity, Gonzalez, Teixeira",CH,8948,8948,NA,652.9,0,79,2,NA,1.4,NA,NA,NA,NA,1,NA
+72308,1,2012.17,2012,11,26,1,1,qual,725,15.2,13.3,21.6,,,alive,"Gonzalez, Woltz",CH,8948,8948,NA,652.9,0,79,2,NA,1.4,NA,NA,NA,NA,1,NA
+72308,1,2012.18,2012,11,29,1,1,qual,725,15.2,13.3,21.38,,,alive,Erika Gonzalez,EG/CH,8948,8948,NA,652.9,0,79,2,NA,1.4,NA,NA,NA,NA,1,NA
 72322,1,2012.01,2012,3,15,1,0,litu,726,18.1,0.3,8.33,,,alive,Caroline Johnson,CJ/LC/BB,8962,8962,NA,246,0,80,2,NA,1.3,3,3,NA,NA,0,NA
 72322,1,2012.18,2012,11,29,1,0,litu,726,18.1,0.3,10.62,,,alive,Erika Gonzalez,EG/CH,8962,8962,NA,246,0,80,2,NA,1.3,NA,NA,NA,NA,0,NA
 72324,1,2012.01,2012,3,15,1,1,litu,726,14.4,6.6,54.42,,,alive,Caroline Johnson,CJ/LC/BB,8964,8964,NA,644.8,0,81,2,NA,1.31,4,4,NA,NA,1,54.42
@@ -755,24 +755,24 @@ tag,stemtag,survey.ID,year,month,day,biannual,intraannual,sp,quadrat,lx,ly,measu
 90530,1,2012.18,2012,11,29,1,0,litu,910,10.2,17.8,29.51,,,alive,Erika Gonzalez,EG/CH,10776,10776,NA,622,0,251,2,NA,1.3,NA,NA,NA,NA,0,NA
 90533,1,2012.01,2012,3,15,1,0,cagl,911,18.2,2.1,101.37,M; main,,alive,Caroline Johnson,CJ/LC/BB,10779,10779,NA,482.7,0,252,2,NA,1.3,3,4,NA,NA,0,NA
 90533,1,2012.18,2012,11,29,1,0,cagl,911,18.2,2.1,109.67,,,alive,Erika Gonzalez,EG/CH,10779,10779,NA,482.7,0,252,2,NA,1.3,NA,NA,NA,NA,0,NA
-90612,1,2012.01,2012,3,15,1,1,quru,910,10.7,14,24.2,,,alive,Caroline Johnson,CJ/LC/BB,10857,10857,NA,523.7,0,253,2,NA,1.3,3,3,NA,NA,0,NA
-90612,1,2012.02,2012,4,11,1,1,quru,910,10.7,14,36.43,,,alive,Bettina,Bettina,10857,10857,NA,523.7,0,253,2,NA,1.3,NA,NA,NA,NA,0,NA
-90612,1,2012.03,2012,4,25,1,1,quru,910,10.7,14,32.57,,,alive,Bettina/Caroline/Ben M.,Bettina/Caroline/Ben M.,10857,10857,NA,523.7,0,253,2,NA,1.3,NA,NA,NA,NA,0,NA
-90612,1,2012.04,2012,5,8,1,1,quru,910,10.7,14,30.1,,,alive,Caroline/Bettina,Caroline/Bettina,10857,10857,NA,523.7,0,253,2,NA,1.3,NA,NA,NA,NA,0,NA
-90612,1,2012.05,2012,5,22,1,1,quru,910,10.7,14,31.4,,,alive,"Erika, Caity, LC, CK","Erika, Caity, LC, CK",10857,10857,NA,523.7,0,253,2,NA,1.3,NA,NA,NA,NA,0,NA
-90612,1,2012.06,2012,6,5,1,1,quru,910,10.7,14,32.24,,,alive,"Lorien, Leah","Lorien, Leah",10857,10857,NA,523.7,0,253,2,NA,1.3,NA,NA,NA,NA,0,NA
-90612,1,2012.07,2012,6,19,1,1,quru,910,10.7,14,32.72,,,alive,"Erika Gonazlez, Homan, Lemman","Erika Gonazlez, Homan, Lemman",10857,10857,NA,523.7,0,253,2,NA,1.3,NA,NA,NA,NA,0,NA
-90612,1,2012.08,2012,7,2,1,1,quru,910,10.7,14,33.49,,,alive,"Lulu, Homan, Bill's nephew","Lulu, Homan",10857,10857,NA,523.7,0,253,2,NA,1.3,NA,NA,NA,NA,0,NA
-90612,1,2012.09,2012,7,16,1,1,quru,910,10.7,14,33.8,,,alive,"Gonzalez, Zhang, Lemman","Gonzalez, Zhang, Lemman",10857,10857,NA,523.7,0,253,2,NA,1.3,NA,NA,NA,NA,0,NA
-90612,1,2012.1,2012,7,30,1,1,quru,910,10.7,14,34.11,,,alive,"Zhang, Southon, Homan","Zhang, Southon, Homan",10857,10857,NA,523.7,0,253,2,NA,1.3,NA,NA,NA,NA,0,NA
-90612,1,2012.11,2012,8,14,1,1,quru,910,10.7,14,34.25,,,alive,"Southon, Zhang","Southon, Zhang",10857,10857,NA,523.7,0,253,2,NA,1.3,NA,NA,NA,NA,0,NA
-90612,1,2012.12,2012,8,29,1,1,quru,910,10.7,14,34.37,,,alive,"LC, Zhang","LC, Zhang",10857,10857,NA,523.7,0,253,2,NA,1.3,NA,NA,NA,NA,0,NA
-90612,1,2012.13,2012,9,10,1,1,quru,910,10.7,14,34.5,,,alive,"Zhang, JW, Homan","Zhang, JW, Homan",10857,10857,NA,523.7,0,253,2,NA,1.3,NA,NA,NA,NA,0,NA
-90612,1,2012.14,2012,9,25,1,1,quru,910,10.7,14,34.42,,,alive,"Robin, Gonzalez",CH,10857,10857,NA,523.7,0,253,2,NA,1.3,NA,NA,NA,NA,0,NA
-90612,1,2012.15,2012,10,9,1,1,quru,910,10.7,14,34.62,,,alive,"Robin, Gonzalez, Woltz",CH,10857,10857,NA,523.7,0,253,2,NA,1.3,NA,NA,NA,NA,0,NA
-90612,1,2012.16,2012,10,23,1,1,quru,910,10.7,14,34.63,,,alive,"Caity, Gonzalez, Teixeira",CH,10857,10857,NA,523.7,0,253,2,NA,1.3,NA,NA,NA,NA,0,NA
-90612,1,2012.17,2012,11,26,1,1,quru,910,10.7,14,34.96,,,alive,"Gonzalez, Woltz",CH,10857,10857,NA,523.7,0,253,2,NA,1.3,NA,NA,NA,NA,0,NA
-90612,1,2012.18,2012,11,29,1,1,quru,910,10.7,14,34.79,,,alive,Erika Gonzalez,EG/CH,10857,10857,NA,523.7,0,253,2,NA,1.3,NA,NA,NA,NA,0,NA
+90612,1,2012.01,2012,3,15,1,1,quru,910,10.7,14,24.2,,,alive,Caroline Johnson,CJ/LC/BB,10857,10857,NA,523.7,0,253,2,NA,1.3,3,3,NA,NA,1,24.2
+90612,1,2012.02,2012,4,11,1,1,quru,910,10.7,14,36.43,,,alive,Bettina,Bettina,10857,10857,NA,523.7,0,253,2,NA,1.3,NA,NA,NA,NA,1,NA
+90612,1,2012.03,2012,4,25,1,1,quru,910,10.7,14,32.57,,,alive,Bettina/Caroline/Ben M.,Bettina/Caroline/Ben M.,10857,10857,NA,523.7,0,253,2,NA,1.3,NA,NA,NA,NA,1,NA
+90612,1,2012.04,2012,5,8,1,1,quru,910,10.7,14,30.1,,,alive,Caroline/Bettina,Caroline/Bettina,10857,10857,NA,523.7,0,253,2,NA,1.3,NA,NA,NA,NA,1,30.1
+90612,1,2012.05,2012,5,22,1,1,quru,910,10.7,14,31.4,,,alive,"Erika, Caity, LC, CK","Erika, Caity, LC, CK",10857,10857,NA,523.7,0,253,2,NA,1.3,NA,NA,NA,NA,1,31.4
+90612,1,2012.06,2012,6,5,1,1,quru,910,10.7,14,32.24,,,alive,"Lorien, Leah","Lorien, Leah",10857,10857,NA,523.7,0,253,2,NA,1.3,NA,NA,NA,NA,1,32.24
+90612,1,2012.07,2012,6,19,1,1,quru,910,10.7,14,32.72,,,alive,"Erika Gonazlez, Homan, Lemman","Erika Gonazlez, Homan, Lemman",10857,10857,NA,523.7,0,253,2,NA,1.3,NA,NA,NA,NA,1,32.72
+90612,1,2012.08,2012,7,2,1,1,quru,910,10.7,14,33.49,,,alive,"Lulu, Homan, Bill's nephew","Lulu, Homan",10857,10857,NA,523.7,0,253,2,NA,1.3,NA,NA,NA,NA,1,33.49
+90612,1,2012.09,2012,7,16,1,1,quru,910,10.7,14,33.8,,,alive,"Gonzalez, Zhang, Lemman","Gonzalez, Zhang, Lemman",10857,10857,NA,523.7,0,253,2,NA,1.3,NA,NA,NA,NA,1,33.8
+90612,1,2012.1,2012,7,30,1,1,quru,910,10.7,14,34.11,,,alive,"Zhang, Southon, Homan","Zhang, Southon, Homan",10857,10857,NA,523.7,0,253,2,NA,1.3,NA,NA,NA,NA,1,34.11
+90612,1,2012.11,2012,8,14,1,1,quru,910,10.7,14,34.25,,,alive,"Southon, Zhang","Southon, Zhang",10857,10857,NA,523.7,0,253,2,NA,1.3,NA,NA,NA,NA,1,34.25
+90612,1,2012.12,2012,8,29,1,1,quru,910,10.7,14,34.37,,,alive,"LC, Zhang","LC, Zhang",10857,10857,NA,523.7,0,253,2,NA,1.3,NA,NA,NA,NA,1,34.37
+90612,1,2012.13,2012,9,10,1,1,quru,910,10.7,14,34.5,,,alive,"Zhang, JW, Homan","Zhang, JW, Homan",10857,10857,NA,523.7,0,253,2,NA,1.3,NA,NA,NA,NA,1,34.5
+90612,1,2012.14,2012,9,25,1,1,quru,910,10.7,14,34.42,,,alive,"Robin, Gonzalez",CH,10857,10857,NA,523.7,0,253,2,NA,1.3,NA,NA,NA,NA,1,34.42
+90612,1,2012.15,2012,10,9,1,1,quru,910,10.7,14,34.62,,,alive,"Robin, Gonzalez, Woltz",CH,10857,10857,NA,523.7,0,253,2,NA,1.3,NA,NA,NA,NA,1,34.62
+90612,1,2012.16,2012,10,23,1,1,quru,910,10.7,14,34.63,,,alive,"Caity, Gonzalez, Teixeira",CH,10857,10857,NA,523.7,0,253,2,NA,1.3,NA,NA,NA,NA,1,34.63
+90612,1,2012.17,2012,11,26,1,1,quru,910,10.7,14,34.96,,,alive,"Gonzalez, Woltz",CH,10857,10857,NA,523.7,0,253,2,NA,1.3,NA,NA,NA,NA,1,34.96
+90612,1,2012.18,2012,11,29,1,1,quru,910,10.7,14,34.79,,,alive,Erika Gonzalez,EG/CH,10857,10857,NA,523.7,0,253,2,NA,1.3,NA,NA,NA,NA,1,34.79
 90660,1,2012.01,2012,3,15,1,1,quru,913,4.9,7.9,60.29,,,alive,Caroline Johnson,CJ/LC/BB,10904,10904,NA,911.9,0,123,2,NA,1.22,3,4,NA,NA,0,NA
 90660,1,2012.02,2012,4,11,1,1,quru,913,4.9,7.9,63.85,,,alive,Bettina,Bettina,10904,10904,NA,911.9,0,123,2,NA,1.22,NA,NA,NA,NA,0,NA
 90660,1,2012.03,2012,4,25,1,1,quru,913,4.9,7.9,65.59,,,alive,Bettina/Caroline/Ben M.,Bettina/Caroline/Ben M.,10904,10904,NA,911.9,0,123,2,NA,1.22,NA,NA,NA,NA,0,NA
@@ -1401,24 +1401,24 @@ tag,stemtag,survey.ID,year,month,day,biannual,intraannual,sp,quadrat,lx,ly,measu
 120781,1,2012.18,2012,11,29,1,1,litu,1205,3,2.2,29.08,,,alive,Erika Gonzalez,EG/CH,15914,15914,NA,589.7,0,343,2,NA,1.3,NA,NA,NA,NA,0,NA
 120790,1,2012.01,2012,3,15,1,0,litu,1205,7.3,6.2,50.51,,,alive,Caroline Johnson,CJ/LC/BB,15923,15923,NA,437.9,0,344,2,NA,1.3,4,4,NA,NA,0,NA
 120790,1,2012.18,2012,11,29,1,0,litu,1205,7.3,6.2,59.41,,,alive,Erika Gonzalez,EG/CH,15923,15923,NA,437.9,0,344,2,NA,1.3,NA,NA,NA,NA,0,NA
-121195,1,2012.01,2012,3,15,1,1,quru,1211,12.4,0.4,66.8,,,alive,Caroline Johnson,CJ/LC/BB,16293,16293,NA,876,0,139,2,NA,1.22,4,4,NA,NA,0,NA
-121195,1,2012.02,2012,4,11,1,1,quru,1211,12.4,0.4,82.1,,,alive,Bettina,Bettina,16293,16293,NA,876,0,139,2,NA,1.22,NA,NA,NA,NA,0,NA
-121195,1,2012.03,2012,4,25,1,1,quru,1211,12.4,0.4,82.71,,,alive,Bettina/Caroline/Ben M.,Bettina/Caroline/Ben M.,16293,16293,NA,876,0,139,2,NA,1.22,NA,NA,NA,NA,0,NA
-121195,1,2012.04,2012,5,8,1,1,quru,1211,12.4,0.4,82.59,,,alive,Caroline/Bettina,Caroline/Bettina,16293,16293,NA,876,0,139,2,NA,1.22,NA,NA,NA,NA,0,NA
-121195,1,2012.05,2012,5,22,1,1,quru,1211,12.4,0.4,78.36,,,alive,"Erika, Caity, LC, CK","Erika, Caity, LC, CK",16293,16293,NA,876,0,139,2,NA,1.22,NA,NA,NA,NA,0,NA
-121195,1,2012.06,2012,6,5,1,1,quru,1211,12.4,0.4,79.96,,,alive,"Lorien, Leah","Lorien, Leah",16293,16293,NA,876,0,139,2,NA,1.22,NA,NA,NA,NA,0,NA
-121195,1,2012.07,2012,6,19,1,1,quru,1211,12.4,0.4,82.65,,,alive,"Erika Gonazlez, Homan, Lemman","Erika Gonazlez, Homan, Lemman",16293,16293,NA,876,0,139,2,NA,1.22,NA,NA,NA,NA,0,NA
-121195,1,2012.08,2012,7,2,1,1,quru,1211,12.4,0.4,84.35,,,alive,"Lulu, Homan, Bill's nephew","Lulu, Homan",16293,16293,NA,876,0,139,2,NA,1.22,NA,NA,NA,NA,0,NA
-121195,1,2012.09,2012,7,16,1,1,quru,1211,12.4,0.4,85.31,,,alive,"Gonzalez, Zhang, Lemman","Gonzalez, Zhang, Lemman",16293,16293,NA,876,0,139,2,NA,1.22,NA,NA,NA,NA,0,NA
-121195,1,2012.1,2012,7,30,1,1,quru,1211,12.4,0.4,86.67,,,alive,"Zhang, Southon, Homan","Zhang, Southon, Homan",16293,16293,NA,876,0,139,2,NA,1.22,NA,NA,NA,NA,0,NA
-121195,1,2012.11,2012,8,14,1,1,quru,1211,12.4,0.4,87.95,,,alive,"Southon, Zhang","Southon, Zhang",16293,16293,NA,876,0,139,2,NA,1.22,NA,NA,NA,NA,0,NA
-121195,1,2012.12,2012,8,29,1,1,quru,1211,12.4,0.4,88.7,,,alive,"LC, Zhang","LC, Zhang",16293,16293,NA,876,0,139,2,NA,1.22,NA,NA,NA,NA,0,NA
-121195,1,2012.13,2012,9,10,1,1,quru,1211,12.4,0.4,89.55,,,alive,"Zhang, JW, Homan","Zhang, JW, Homan",16293,16293,NA,876,0,139,2,NA,1.22,NA,NA,NA,NA,0,NA
-121195,1,2012.14,2012,9,25,1,1,quru,1211,12.4,0.4,89.82,,,alive,"Robin, Gonzalez",CH,16293,16293,NA,876,0,139,2,NA,1.22,NA,NA,NA,NA,0,NA
-121195,1,2012.15,2012,10,9,1,1,quru,1211,12.4,0.4,90.08,,,alive,"Robin, Gonzalez, Woltz",CH,16293,16293,NA,876,0,139,2,NA,1.22,NA,NA,NA,NA,0,NA
-121195,1,2012.16,2012,10,23,1,1,quru,1211,12.4,0.4,90.11,,,alive,"Caity, Gonzalez, Teixeira",CH,16293,16293,NA,876,0,139,2,NA,1.22,NA,NA,NA,NA,0,NA
-121195,1,2012.17,2012,11,26,1,1,quru,1211,12.4,0.4,90.78,,,alive,"Gonzalez, Woltz",CH,16293,16293,NA,876,0,139,2,NA,1.22,NA,NA,NA,NA,0,NA
-121195,1,2012.18,2012,11,29,1,1,quru,1211,12.4,0.4,90.95,,,alive,Erika Gonzalez,EG/CH,16293,16293,NA,876,0,139,2,NA,1.22,NA,NA,NA,NA,0,NA
+121195,1,2012.01,2012,3,15,1,1,quru,1211,12.4,0.4,66.8,,,alive,Caroline Johnson,CJ/LC/BB,16293,16293,NA,876,0,139,2,NA,1.22,4,4,NA,NA,1,66.8
+121195,1,2012.02,2012,4,11,1,1,quru,1211,12.4,0.4,82.1,,,alive,Bettina,Bettina,16293,16293,NA,876,0,139,2,NA,1.22,NA,NA,NA,NA,1,NA
+121195,1,2012.03,2012,4,25,1,1,quru,1211,12.4,0.4,82.71,,,alive,Bettina/Caroline/Ben M.,Bettina/Caroline/Ben M.,16293,16293,NA,876,0,139,2,NA,1.22,NA,NA,NA,NA,1,NA
+121195,1,2012.04,2012,5,8,1,1,quru,1211,12.4,0.4,82.59,,,alive,Caroline/Bettina,Caroline/Bettina,16293,16293,NA,876,0,139,2,NA,1.22,NA,NA,NA,NA,1,NA
+121195,1,2012.05,2012,5,22,1,1,quru,1211,12.4,0.4,78.36,,,alive,"Erika, Caity, LC, CK","Erika, Caity, LC, CK",16293,16293,NA,876,0,139,2,NA,1.22,NA,NA,NA,NA,1,78.36
+121195,1,2012.06,2012,6,5,1,1,quru,1211,12.4,0.4,79.96,,,alive,"Lorien, Leah","Lorien, Leah",16293,16293,NA,876,0,139,2,NA,1.22,NA,NA,NA,NA,1,79.96
+121195,1,2012.07,2012,6,19,1,1,quru,1211,12.4,0.4,82.65,,,alive,"Erika Gonazlez, Homan, Lemman","Erika Gonazlez, Homan, Lemman",16293,16293,NA,876,0,139,2,NA,1.22,NA,NA,NA,NA,1,82.65
+121195,1,2012.08,2012,7,2,1,1,quru,1211,12.4,0.4,84.35,,,alive,"Lulu, Homan, Bill's nephew","Lulu, Homan",16293,16293,NA,876,0,139,2,NA,1.22,NA,NA,NA,NA,1,84.35
+121195,1,2012.09,2012,7,16,1,1,quru,1211,12.4,0.4,85.31,,,alive,"Gonzalez, Zhang, Lemman","Gonzalez, Zhang, Lemman",16293,16293,NA,876,0,139,2,NA,1.22,NA,NA,NA,NA,1,85.31
+121195,1,2012.1,2012,7,30,1,1,quru,1211,12.4,0.4,86.67,,,alive,"Zhang, Southon, Homan","Zhang, Southon, Homan",16293,16293,NA,876,0,139,2,NA,1.22,NA,NA,NA,NA,1,86.67
+121195,1,2012.11,2012,8,14,1,1,quru,1211,12.4,0.4,87.95,,,alive,"Southon, Zhang","Southon, Zhang",16293,16293,NA,876,0,139,2,NA,1.22,NA,NA,NA,NA,1,87.95
+121195,1,2012.12,2012,8,29,1,1,quru,1211,12.4,0.4,88.7,,,alive,"LC, Zhang","LC, Zhang",16293,16293,NA,876,0,139,2,NA,1.22,NA,NA,NA,NA,1,88.7
+121195,1,2012.13,2012,9,10,1,1,quru,1211,12.4,0.4,89.55,,,alive,"Zhang, JW, Homan","Zhang, JW, Homan",16293,16293,NA,876,0,139,2,NA,1.22,NA,NA,NA,NA,1,89.55
+121195,1,2012.14,2012,9,25,1,1,quru,1211,12.4,0.4,89.82,,,alive,"Robin, Gonzalez",CH,16293,16293,NA,876,0,139,2,NA,1.22,NA,NA,NA,NA,1,89.82
+121195,1,2012.15,2012,10,9,1,1,quru,1211,12.4,0.4,90.08,,,alive,"Robin, Gonzalez, Woltz",CH,16293,16293,NA,876,0,139,2,NA,1.22,NA,NA,NA,NA,1,90.08
+121195,1,2012.16,2012,10,23,1,1,quru,1211,12.4,0.4,90.11,,,alive,"Caity, Gonzalez, Teixeira",CH,16293,16293,NA,876,0,139,2,NA,1.22,NA,NA,NA,NA,1,90.11
+121195,1,2012.17,2012,11,26,1,1,quru,1211,12.4,0.4,90.78,,,alive,"Gonzalez, Woltz",CH,16293,16293,NA,876,0,139,2,NA,1.22,NA,NA,NA,NA,1,90.78
+121195,1,2012.18,2012,11,29,1,1,quru,1211,12.4,0.4,90.95,,,alive,Erika Gonzalez,EG/CH,16293,16293,NA,876,0,139,2,NA,1.22,NA,NA,NA,NA,1,90.95
 121212,1,2012.01,2012,3,15,1,0,litu,1207,12.7,12.5,71.95,,,alive,Caroline Johnson,CJ/LC/BB,16309,16309,NA,816.2,0,140,2,NA,1.31,4,4,NA,NA,0,NA
 121212,1,2012.18,2012,11,29,1,0,litu,1207,12.7,12.5,91.79,,,alive,Erika Gonzalez,EG/CH,16309,16309,NA,816.2,0,140,2,NA,1.31,NA,NA,NA,NA,0,NA
 121221,1,2012.01,2012,3,15,1,1,litu,1207,1.7,19.3,81.86,,,alive,Caroline Johnson,CJ/LC/BB,16317,16317,NA,114.3,0,345,2,NA,1.3,4,3,NA,NA,0,NA
