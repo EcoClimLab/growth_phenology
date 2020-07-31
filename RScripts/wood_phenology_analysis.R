@@ -1,18 +1,28 @@
 library(readr)
-Wood_pheno_table <- read_csv("Data/Wood_pheno_table_V2.csv")
+Wood_pheno_table <- read_csv("Data/Wood_pheno_table_V4.csv")
+versiontwo <- read_csv("Data/Wood_pheno_table_V2.csv")
 versionone <- read_csv("Data/Wood_pheno_table_V1.csv")
 
 unique(Wood_pheno_table$sp)
-mean(Wood_pheno_table$max_rate_DOY) #V1: June 7th, V2: June 7th
+mean(Wood_pheno_table$max_rate_DOY) #V1: June 7th, V2: June 7th V3: June 7th
 #mean(versionone$max_rate_DOY) #V1: June 7th, V2: June 7th
 
 boxplot(Wood_pheno_table$max_rate_DOY~Wood_pheno_table$wood_type)
-aggregate(Wood_pheno_table$max_rate_DOY, by = list(Wood_pheno_table$wood_type), FUN = mean )
+aggregate(Wood_pheno_table$max_rate_DOY, by = list(Wood_pheno_table$sp), FUN = mean )
+
+ring<- subset(twentyfive, wood_type == "ring porous")
+means <- aggregate(diffuse$DOY, by = list(diffuse$year), FUN = mean)
+plot(means$x~means$Group.1)
+diffuse <- subset(twentyfive, wood_type == "diffuse-porous")
+
+means <- means[5:9, ]
+plot(janmeans$x~means$x)
 #25%
 twentyfive <- subset(Wood_pheno_table, perc == .25)# & sp == "litu")
 boxplot(as.numeric(twentyfive$max_rate_DOY)~twentyfive$sp)
 boxplot(as.numeric(twentyfive$DOY)~twentyfive$sp)
-boxplot(as.numeric(twentyfive$DOY)~twentyfive$wood_type)
+boxplot(as.numeric(twentyfive$DOY)~twentyfive$wood_type, xlab = "Wood type", ylab = "Day of Year", main = "Average DOY where 25% growth was achieved")
+aggregate(twentyfive$DOY, by = list(twentyfive$wood_type), FUN = mean)
 mean(as.numeric(twentyfive$DOY))
 sd(as.numeric(twentyfive$DOY))
 hist(as.numeric(twentyfive$DOY), breaks = 11, xlab = "DOY", main = "DOY where 25% growth achieved")
@@ -118,3 +128,48 @@ boxplot(as.numeric(juni75$DOY)~juni75$year, xlab = "Year", ylab = "DOY", main = 
 tiam75 <- subset(seventyfive, sp == "tiam")
 plot(as.numeric(tiam75$DOY)~as.numeric(tiam75$dbh))
 boxplot(as.numeric(tiam75$DOY)~tiam75$year , xlab = "Year", ylab = "DOY", main = "tiam 75% growth")
+
+plot(meanrate$x~meanrate$Group.1, xlab = "Year", ylab = "Mean maximum rate", main = "Mean maximum growth rates")
+##Mixed-effect model
+Wood_pheno_table <-  merge(marchmeans, Wood_pheno_table, by = "year")
+Wood_pheno_table$marchmean <- as.numeric(Wood_pheno_table$marchmean)
+Wood_pheno_table$year <- as.character(Wood_pheno_table$year)
+twentyfive <- subset(Wood_pheno_table, perc == .25)# & sp == "litu")
+
+library(lme4)
+library(lmerTest)
+mixedmodel <- lmer(DOY~wood_type*marchmean + (1|sp/tag) , data = twentyfive)
+summary(mixedmodel)
+
+mixedmodelrate <- lmer(max_rate_DOY~wood_type + marchmean + wood_type*marchmean + (1|sp:tag) , data = twentyfive)
+summary(mixedmodelrate)
+
+library(glmer2stan)
+library(rstan)
+library(StanHeaders)
+stantable <- twentyfive
+stantable$year <- as.integer(as.factor(stantable$year))
+stantable$wood_type <- as.integer(as.factor(stantable$wood_type))
+stantable$tag <- as.integer(as.factor(stantable$tag))
+stantable$sp <- as.integer(as.factor(stantable$sp))
+nwarm = 100
+niter = 400
+chains = 4
+stantable25 <- subset(stantable, perc == .25)
+stanlm <- lmer2stan(DOY~wood_type*marchmean + (1|sp) , data = stantable25, calcWAIC = T, warmup = nwarm, iter = niter, chains = chains)
+
+print(stanlm)
+stanmer(stanlm)
+plot(stanlm)
+traceplot(stanlm)
+stanlm@stanmodel
+
+boxplot(Wood_pheno_table$tot~Wood_pheno_table$dbh)
+abline(lm(Wood_pheno_table$tot~Wood_pheno_table$dbh))
+summary(lm(Wood_pheno_table$tot~Wood_pheno_table$dbh))
+aggregate(Wood_pheno_table$tot, by = list(Wood_pheno_table$year), FUN = sum)
+
+totals <- aggregate(twentyfive$tot, by = list(twentyfive$year, twentyfive$wood_type), FUN = sum)
+colnames(totals) <- c("Year", "Wood_type", "Total_growth")
+plot <- ggplot(totals, aes(x = Year, y = Total_growth, color = Wood_type))+geom_point()+geom_line(size = 2)+ labs(title = "Total growth over time at SCBI")
+plot

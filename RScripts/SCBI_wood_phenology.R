@@ -509,8 +509,8 @@ data <- data.frame(NULL)
 #throwaways <- data.frame(NULL)
 check_list <- NA
 DOY2 <- NULL
-masterDF <- data.frame(1,2,3,4,5,6,7,8)
-colnames(masterDF) <- c("tot", "perc", "tag", "DOY", "sp", "year", "dbh", "max_rate_DOY")
+masterDF <- data.frame(1,2,3,4,5,6,7,8,9)
+colnames(masterDF) <- c("tot", "perc", "tag", "DOY", "sp", "year", "dbh", "max_rate_DOY", "max_rate")
 
 #########################
 ##Manual check of data ##
@@ -786,7 +786,7 @@ for(y in 1:tree.no) { #Sean's second function -- same deal
   a <- c(start.d[y, 1], end.d[y, 1])
 
   #If you want to see the plooted model, remove the '#' in the following two lines:
-  plot(doy, dbh, xlab = "Day of the year", ylab = "DBH (cm)", pch = 19, col = "gray15", main = sprintf("Annual Growth for tree %i", i), cex = 1)
+  plot(doy, dbh, xlab = "Day of the year", ylab = "DBH (cm)", pch = 19, col = "gray15", main = ?sprintf("Annual Growth for tree %y", y), cex = 1)
   lines(days, lg5.pred.a(a, params = params.tmp, doy = days, asymptote = "both"), col = "darkred", lty = 1, lwd = 1)
   Param.df[y, 6:7] <- a
 
@@ -818,7 +818,7 @@ fifty.day <- round(pred.doy(params, mean(c(params$a, params$b))))
 #  maxDOY <- append(maxDOY, max)
 #}
 max <- max.growth.day(Param.df[1,]) #
-
+maxrate <- max.growth.rate(Param.df[1,])#
 #maxDF <- data.frame(1:length(maxDOY), maxDOY)
 #hist(maxDF$maxDOY, breaks = 11)
 #mean(maxDF$maxDOY)
@@ -891,6 +891,7 @@ phenology_DF$year <- q
 phenology_DF$dbh <- median(stemstag$dbh2)
 #max_rate_DOY <- subset(endcurveDF, endcurveDF$dif == max(endcurveDF$dif))
 phenology_DF$max_rate_DOY <- max
+phenology_DF$max_rate <- maxrate
 skip_to_next <- FALSE
 tryCatch(
 masterDF <- rbind(masterDF, phenology_DF)
@@ -906,7 +907,7 @@ rm(data)
 warnings()
 masterDF <- masterDF[-1,]
 masterDF$wood_type <- ifelse(masterDF$sp == "quru" | masterDF$sp == "qual" , "ring porous", ifelse(masterDF$sp == "litu"|masterDF$sp == "fagr", "diffuse-porous", "other"))
-write.csv(masterDF, file = "Wood_pheno_table_V2.csv", row.names = FALSE)
+write.csv(masterDF, file = "Wood_pheno_table_V4.csv", row.names = FALSE)
 
 for(p in 1:ncol(endcurveDF)){ #Loop to cycle through trees in predicted dbh DF
   #for (i in c(2011:2019)){ #Loop to cycle through years within a stem
