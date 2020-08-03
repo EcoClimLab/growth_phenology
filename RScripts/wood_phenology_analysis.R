@@ -131,6 +131,34 @@ boxplot(as.numeric(tiam75$DOY)~tiam75$year , xlab = "Year", ylab = "DOY", main =
 
 plot(meanrate$x~meanrate$Group.1, xlab = "Year", ylab = "Mean maximum rate", main = "Mean maximum growth rates")
 ##Mixed-effect model
+
+Wood_pheno_table <- read_csv("Data/Wood_pheno_table_V4.csv")
+twentyfive <- subset(Wood_pheno_table, perc == .25)# & sp == "litu")
+
+#Temperature
+#NEON_summary_temp <- read_csv("climate data/NEON_summary_temp.csv")
+weatherdata <- read_csv("climate data/NCDC_NOAA_precip_temp.csv")
+weatherdata$months <- months(as.Date(weatherdata$DATE))
+
+#Temperatures
+springweather <- subset(weatherdata, months == "January" | months == "February" | months == "March" | months == "April" | months == "May")
+springweather <- springweather[complete.cases(springweather$TMAX),]
+january <- subset(springweather, months == "January")
+janmeans <- aggregate(january$TMAX, by = list(january$year), FUN = mean)
+colnames(janmeans) <- c("year", "janmean")
+
+february <- subset(springweather, months == "February")
+febmeans <- aggregate(february$TMAX, by = list(february$year), FUN = mean)
+colnames(febmeans) <- c("year", "febmean")
+
+march <- subset(springweather, months == "March")
+marchmeans <- aggregate(march$TMAX, by = list(march$year), FUN = mean)
+colnames(marchmeans) <- c("year", "marchmean")
+
+april <- subset(springweather, months == "April")
+aprilmeans <- aggregate(april$TMAX, by = list(april$year), FUN = mean)
+colnames(aprilmeans) <- c("year", "aprilmean")
+
 Wood_pheno_table <-  merge(marchmeans, Wood_pheno_table, by = "year")
 Wood_pheno_table$marchmean <- as.numeric(Wood_pheno_table$marchmean)
 Wood_pheno_table$year <- as.character(Wood_pheno_table$year)
