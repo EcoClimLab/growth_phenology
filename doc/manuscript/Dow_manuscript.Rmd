@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 \raggedright
 
-**Title:** 
+**Title:** Effect of spring temperatures on tree growth phenology in a temperate deciduous forest
 
 **Authors (not yet complete, just alphabetical for now--final order TBD):** 
 
@@ -57,15 +57,49 @@ n. Center for Tropical Forest Science-Forest Global Earth Observatory; Smithsoni
 
 ### Introduction
 
-*Here, I'll insert a reference to Sean's paper [@mcmahon_general_2015]. This is pulled from references.bib.*
+
+
+**With climate warming, we can expect earlier springs in temperate forests.** 
+These are likely to affect tree growth, woody productivity, and ecosystem C cycling.
+However, we know little about the growth phenology of temperate deciduous species (see D’Orangeville et al., in revision for more info/ citations)—let alone how these are affected by an early spring.
+
+Here, we ...
+- use 10 years of biweekly dendro band measurements for # species to characterize seasonal growth phenology 
+
+- combine these records with 110 years of tree-ring data for 12 species to examine how spring temperatures impact annual tree growth
+
+- examine the effects of an extremely early spring (2020) seasonal growth phenology and annual growth 
 
 ### Materials and Methods
+
+#### Study site and data
+SCBI ForestGEO plot
+
+10 years biweekly dendrometer measurements
+
+leaf phenology data?
+
+- leaf phenology data from NEON and/or satellite-based (leaf phenology network: https://www.usanpn.org/news/spring) ?
+
+- NDVI or PRI? https://onlinelibrary.wiley.com/doi/10.1111/gcb.15112 (from Ian)
+
+- From Ian:  I noticed how the growth patterns observed by remote sensing pretty much mirror what Sean was finding with his dendro R package (btw is that functional on CRAN yet?) for both SERC and SCBI dendroband data.
+
+perhaps bring in cores?
+
+#### Analysis
+
+*Here, I'll insert a reference to Sean's paper [@mcmahon_general_2015]. This is pulled from references.bib.*
+
 
 
 ### Results
 
 
 ### Discussion
+
+*Content to incorporate:
+N. American strategies have conservative strategies when it comes to phenology, as historically they’ve been subject to more spring frosts. Thus, climate change is having less impact [@zohner_late-spring_2020]*
 
 ### Acknowledgements
 ForestGEO
