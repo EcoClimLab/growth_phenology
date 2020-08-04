@@ -1,0 +1,79 @@
+---
+title: ''
+output: word_document
+bibliography: references.bib
+csl: global-change-biology.csl #(this will change depending on journal we choose. GCB would be a great choice)
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+\raggedright
+
+**Title:** 
+
+**Authors (not yet complete, just alphabetical for now--final order TBD):** 
+
+Cameron Dow^1^
+Erika B. Gonzalez-Akre^1^,
+Ryan Helcoski^1^,
+Valentine Herrmann^1^,
+Ian McGregor^1^,
+Sean McMahon,
+Albert Kim^1^,
+Kristina J. Anderson-Teixeira^1,n^*
+
+
+
+**Author Affiliations:**
+
+1. Conservation Ecology Center; Smithsonian Conservation Biology Institute; Front Royal, VA 22630, USA
+
+n. Center for Tropical Forest Science-Forest Global Earth Observatory; Smithsonian Tropical Research Institute; Panama, Republic of Panama
+
+
+*corresponding author: teixeirak@si.edu; +1 540 635 6546
+
+
+
+```{r eval=FALSE, echo=FALSE}
+## This is a chunk that won't be evaluated or displayed. I use these for notes.
+## Target journal: ??? Global Change Biology????
+## Instructions for authors: 
+#[insert guidance on word count, n figures/ tables allowed, and then some rough planning of what goes in this manuscript]
+
+```
+
+\newpage
+
+### Abstract
+
+
+
+**Keywords**:  
+
+\newpage
+
+### Introduction
+
+*Here, I'll insert a reference to Sean's paper [@mcmahon_general_2015]. This is pulled from references.bib.*
+
+### Materials and Methods
+
+
+### Results
+
+
+### Discussion
+
+### Acknowledgements
+ForestGEO
+
+### Authors' contributions
+
+### References
+
+
+
+
