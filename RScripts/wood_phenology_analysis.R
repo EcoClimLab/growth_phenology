@@ -1,4 +1,6 @@
-library(readr)
+# Load packages and data ----
+# Loading tidyverse loads ggplot2, dplyr, readr, and many more
+library(tidyverse)
 Wood_pheno_table <- read_csv("Data/Wood_pheno_table_V4.csv")
 versiontwo <- read_csv("Data/Wood_pheno_table_V2.csv")
 versionone <- read_csv("Data/Wood_pheno_table_V1.csv")
@@ -7,6 +9,9 @@ unique(Wood_pheno_table$sp)
 mean(Wood_pheno_table$max_rate_DOY) #V1: June 7th, V2: June 7th V3: June 7th
 #mean(versionone$max_rate_DOY) #V1: June 7th, V2: June 7th
 
+
+
+# Exploratory Data Analysis ----------------------------------------------------
 boxplot(Wood_pheno_table$max_rate_DOY~Wood_pheno_table$wood_type)
 aggregate(Wood_pheno_table$max_rate_DOY, by = list(Wood_pheno_table$sp), FUN = mean )
 
@@ -130,7 +135,10 @@ plot(as.numeric(tiam75$DOY)~as.numeric(tiam75$dbh))
 boxplot(as.numeric(tiam75$DOY)~tiam75$year , xlab = "Year", ylab = "DOY", main = "tiam 75% growth")
 
 plot(meanrate$x~meanrate$Group.1, xlab = "Year", ylab = "Mean maximum rate", main = "Mean maximum growth rates")
-##Mixed-effect model
+
+
+
+# Setting up data for mixed-effect model ---------------------------------------
 
 Wood_pheno_table <- read_csv("Data/Wood_pheno_table_V4.csv")
 twentyfive <- subset(Wood_pheno_table, perc == .25)# & sp == "litu")
@@ -164,6 +172,9 @@ Wood_pheno_table$marchmean <- as.numeric(Wood_pheno_table$marchmean)
 Wood_pheno_table$year <- as.character(Wood_pheno_table$year)
 twentyfive <- subset(Wood_pheno_table, perc == .25)# & sp == "litu")
 
+
+
+# Nested random effects model ------------------------------------------
 library(lme4)
 library(lmerTest)
 mixedmodel <- lmer(DOY~wood_type*marchmean + (1|sp/tag) , data = twentyfive)
@@ -172,6 +183,9 @@ summary(mixedmodel)
 mixedmodelrate <- lmer(max_rate_DOY~wood_type + marchmean + wood_type*marchmean + (1|sp:tag) , data = twentyfive)
 summary(mixedmodelrate)
 
+
+
+# Non-nested random effects model using glmer2stan interface to stan ----
 library(glmer2stan)
 library(rstan)
 library(StanHeaders)
@@ -184,6 +198,9 @@ nwarm = 100
 niter = 400
 chains = 4
 stantable25 <- subset(stantable, perc == .25)
+
+# This is only for random effects model (1|sp), as this does not work for nested
+# random effects model (1|sp/tag)
 stanlm <- lmer2stan(DOY~wood_type*marchmean + (1|sp) , data = stantable25, calcWAIC = T, warmup = nwarm, iter = niter, chains = chains)
 
 print(stanlm)
