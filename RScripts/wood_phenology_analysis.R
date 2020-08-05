@@ -218,3 +218,59 @@ totals <- aggregate(twentyfive$tot, by = list(twentyfive$year, twentyfive$wood_t
 colnames(totals) <- c("Year", "Wood_type", "Total_growth")
 plot <- ggplot(totals, aes(x = Year, y = Total_growth, color = Wood_type))+geom_point()+geom_line(size = 2)+ labs(title = "Total growth over time at SCBI")
 plot
+
+
+
+# Non-nested random effects model using rstanarm interface to stan ----
+library(rstanarm)
+# Used for "tidying" mixed effects model outputs:
+library(broom.mixed)
+
+# Convert to tibble for easier viewing
+twentyfive <- twentyfive %>%
+  as_tibble()
+stantable25 <- stantable25 %>%
+  as_tibble()
+
+# Use common formula
+DOY_formula <- "DOY ~ wood_type*marchmean + (1|sp)" %>% as.formula()
+
+mixedmodel <- lmer(
+  formula = DOY_formula,
+  data = twentyfive
+)
+mixedmodel_stanlmer <- stan_lmer(
+  formula = DOY_formula,
+  data = stantable25,
+  seed = 349
+)
+
+# Compare summary of model outputs
+mixedmodel %>% tidy()
+mixedmodel_stanlmer %>% tidy()
+
+# Get fitted values:
+fitted_DOY <- mixedmodel %>%
+  augment() %>%
+  # Get fitted values for lmer
+  rename(
+    DOY_observed = DOY,
+    DOY_hat_lmer = .fitted
+  ) %>%
+  # Get posterior means for stan
+  mutate(DOY_hat_stan = mixedmodel_stanlmer %>% posterior_predict() %>% apply(2, mean)) %>%
+  # Convert to tidy:
+  select(starts_with("DOY"), wood_type, marchmean, sp) %>%
+  pivot_longer(cols = c("DOY_observed", "DOY_hat_lmer", "DOY_hat_stan"), names_to = "DOY_type", values_to =)
+
+# There is shrinkage!
+ggplot(fitted_DOY, aes(x = wood_type, y = value)) +
+  geom_boxplot() +
+  facet_wrap(~DOY_type)
+
+# There is shrinkage!
+ggplot(fitted_DOY, aes(x = sp, y = value)) +
+  geom_boxplot() +
+  facet_wrap(~DOY_type)
+
+
