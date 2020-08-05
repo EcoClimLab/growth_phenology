@@ -33,8 +33,8 @@ model{
     for ( j in 1:N_sp ) vary_sp[j] ~ normal( 0 , sigma_sp );
     // Fixed effects
     for ( i in 1:N ) {
-        vary[i] <- vary_sp[sp[i]];
-        glm[i] <- vary[i] + Intercept
+        vary[i] = vary_sp[sp[i]];
+        glm[i] = vary[i] + Intercept
                 + beta_wood_type * wood_type[i]
                 + beta_marchmean * marchmean[i]
                 + beta_wood_type_X_marchmean * wood_type_X_marchmean[i];
@@ -46,13 +46,13 @@ generated quantities{
     real dev;
     real vary[N];
     real glm[N];
-    dev <- 0;
+    dev = 0;
     for ( i in 1:N ) {
-        vary[i] <- vary_sp[sp[i]];
-        glm[i] <- vary[i] + Intercept
+        vary[i] = vary_sp[sp[i]];
+        glm[i] = vary[i] + Intercept
                 + beta_wood_type * wood_type[i]
                 + beta_marchmean * marchmean[i]
                 + beta_wood_type_X_marchmean * wood_type_X_marchmean[i];
-        dev <- dev + (-2) * normal_log( DOY[i] , glm[i] , sigma );
+        dev = dev + (-2) * normal_lpdf( DOY[i] | glm[i] , sigma );
     }
 }
