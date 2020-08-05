@@ -228,13 +228,16 @@ library(broom.mixed)
 
 # Convert to tibble for easier viewing
 twentyfive <- twentyfive %>%
-  as_tibble()
+  as_tibble() %>%
+  mutate(id = 1:n())
 stantable25 <- stantable25 %>%
-  as_tibble()
+  as_tibble() %>%
+  mutate(id = 1:n())
 
-# Use common formula
-DOY_formula <- "DOY ~ wood_type*marchmean + (1|sp)" %>% as.formula()
+# Use common formula: hierarchy based on tag. No sp yet
+DOY_formula <- "DOY ~ wood_type*marchmean + (1|tag)" %>% as.formula()
 
+# Fit both lmer and stan models using same formula
 mixedmodel <- lmer(
   formula = DOY_formula,
   data = twentyfive
@@ -242,35 +245,65 @@ mixedmodel <- lmer(
 mixedmodel_stanlmer <- stan_lmer(
   formula = DOY_formula,
   data = stantable25,
-  seed = 349
+  seed = 349,
+  # Half of iter are used as burn-in, rest are included in posterior sample
+  iter = 2000,
+  # number of multicore chains to run
+  chains = 2
 )
 
-# Compare summary of model outputs
+# Compare summary of model outputs. Similar
 mixedmodel %>% tidy()
 mixedmodel_stanlmer %>% tidy()
+
+# Get Bayesian posterior fitted values
+DOY_hat_stan_samples <- mixedmodel_stanlmer %>%
+  posterior_predict() %>%
+  as.matrix()
 
 # Get fitted values:
 fitted_DOY <- mixedmodel %>%
   augment() %>%
-  # Get fitted values for lmer
-  rename(
-    DOY_observed = DOY,
-    DOY_hat_lmer = .fitted
-  ) %>%
+  mutate(id = 1:n()) %>%
+  select(id, DOY, DOY_hat_lmer = .fitted) %>%
+  left_join(twentyfive, by = c("id", "DOY")) %>%
   # Get posterior means for stan
-  mutate(DOY_hat_stan = mixedmodel_stanlmer %>% posterior_predict() %>% apply(2, mean)) %>%
+  mutate(DOY_hat_stan = DOY_hat_stan_samples %>% apply(2, mean)) %>%
   # Convert to tidy:
-  select(starts_with("DOY"), wood_type, marchmean, sp) %>%
-  pivot_longer(cols = c("DOY_observed", "DOY_hat_lmer", "DOY_hat_stan"), names_to = "DOY_type", values_to =)
+  select(starts_with("DOY"), wood_type, marchmean, sp, year) %>%
+  pivot_longer(cols = c("DOY", "DOY_hat_lmer", "DOY_hat_stan"), names_to = "DOY_type", values_to = "DOY")
 
-# There is shrinkage!
-ggplot(fitted_DOY, aes(x = wood_type, y = value)) +
+# Plot 1: There is shrinkage!
+ggplot(fitted_DOY, aes(x = wood_type, y = DOY)) +
   geom_boxplot() +
-  facet_wrap(~DOY_type)
+  facet_wrap(~DOY_type) +
+  labs(x = "Wood type", y = "DOY", title = "DOY 25% growth is achieved: Observed DOY and fitted DOY from two models (all years together)")
 
-# There is shrinkage!
-ggplot(fitted_DOY, aes(x = sp, y = value)) +
-  geom_boxplot() +
-  facet_wrap(~DOY_type)
+# Deep deep in to Bayesian results
+DOY_hat_stan_samples_conf_int <- DOY_hat_stan_samples %>%
+  t() %>%
+  as_tibble() %>%
+  mutate(id = 1:n()) %>%
+  left_join(twentyfive, by = c("id")) %>%
+  select(tag, starts_with("V")) %>%
+  pivot_longer(cols = starts_with("V"), names_to = "sim", values_to = "DOY") %>%
+  group_by(tag) %>%
+  summarize(
+    post_mean = mean(DOY),
+    lower_ci = quantile(DOY, probs = 0.025),
+    upper_ci = quantile(DOY, probs = 0.975),
+    width = upper_ci - lower_ci
+  ) %>%
+  left_join(twentyfive, by = "tag")  %>%
+  arrange(wood_type, post_mean) %>%
+  mutate(id = 1:n())
+
+# Plot 2: Posterior mean and 95% credible intervals of DOY of all trees
+ggplot(DOY_hat_stan_samples_conf_int) +
+  geom_segment(aes(y = id, yend = id, x = lower_ci, xend = upper_ci, col = wood_type), alpha = 0.2) +
+  geom_point(aes(y=id, x = post_mean, col = wood_type)) +
+  labs(x = "DOY", y = "", title = "95% Credible interval of DOY (all years)")
+
+
 
 
