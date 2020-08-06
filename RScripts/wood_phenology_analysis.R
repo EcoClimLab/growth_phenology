@@ -221,12 +221,14 @@ plot
 
 
 
-# Non-nested random effects model using rstanarm interface to stan ----
+# Random effects model using rstanarm interface to stan ----
 library(rstanarm)
-# Used for "tidying" mixed effects model outputs:
+# Tools for exploring mixed effects model outputs:
 library(broom.mixed)
+library(sjPlot)
+library(tidybayes)
 
-# Convert to tibble for easier viewing
+# Convert input data frames to tibbles and add variable id'ing each row
 twentyfive <- twentyfive %>%
   as_tibble() %>%
   mutate(id = 1:n())
@@ -234,28 +236,112 @@ stantable25 <- stantable25 %>%
   as_tibble() %>%
   mutate(id = 1:n())
 
-# Use common formula: hierarchy based on tag. No sp yet
+# Used to re-identify sp and tag information from stan results, b/c they were
+# converted to integers
+twentyfive_orig <- twentyfive %>%
+  mutate(
+    # Save original encodings
+    tag_orig = tag,
+    sp_orig = sp,
+    # Create stan encodings
+    tag = as.integer(as.factor(tag_orig)),
+    sp = as.integer(as.factor(sp_orig))
+  ) %>%
+  select(tag, tag_orig, sp, sp_orig) %>%
+  distinct()
+
+
+# Model formula option 1: Just tag
 DOY_formula <- "DOY ~ wood_type*marchmean + (1|tag)" %>% as.formula()
 
-# Fit both lmer and stan models using same formula
+# Model formula option 2: tag nested within sp
+# Reference: https://m-clark.github.io/mixed-models-with-R/extensions.html#hierarchical-structure
+DOY_formula <- "DOY ~ wood_type*marchmean + (1|sp) + (1|sp:tag)" %>% as.formula()
+
+
+# Fit both lmer and stan_lmer models using same formula
 mixedmodel <- lmer(
   formula = DOY_formula,
   data = twentyfive
 )
+
 mixedmodel_stanlmer <- stan_lmer(
   formula = DOY_formula,
-  data = stantable25,
+  # When using stan_lmer, no need to convert categorical variables to integers
+  # like with glmer2stan, so we can use original twentyfive instead of stantable25
+  data = twentyfive,
   seed = 349,
   # Half of iter are used as burn-in, rest are included in posterior sample
-  iter = 2000,
+  iter = 4000,
   # number of multicore chains to run
   chains = 2
 )
 
-# Compare summary of model outputs. Similar
-mixedmodel %>% tidy()
-mixedmodel_stanlmer %>% tidy()
 
+# Analysis of lmer output
+mixedmodel %>% tidy(conf.int = TRUE)
+sjPlot::plot_model(mixedmodel)
+sjPlot::tab_model(mixedmodel)
+
+
+# Analysis of stan_lmer output
+# Reference: http://mjskay.github.io/tidybayes/articles/tidy-rstanarm.html
+
+# Non-random effects. In particular interaction effects
+mixedmodel_stanlmer %>%
+  tidy()
+
+
+# Identify all parameters in model:
+mixedmodel_stanlmer %>%
+  get_variables()
+
+# Get all iter * chain * {# of random effects parameters} posterior draws
+posterior_draws <- mixedmodel_stanlmer %>%
+  # No point in including term since there are only intercepts:
+  # spread_draws(b[term,group]) %>%
+  # So omit it:
+  spread_draws(b[,group])
+
+
+# 1. Posterior distributions of all species random effects parameters: all
+# roughly centered at 0. In other words, almost no difference in species
+# level intercepts
+posterior_draws %>%
+  # Pick out only species random effects:
+  filter(!str_detect(group, "sp:tag:")) %>%
+  separate(group, c("group1", "sp"), ":", remove = FALSE) %>%
+  # Plot:
+  ggplot(aes(x = b, col = sp)) +
+  geom_density() +
+  geom_vline(xintercept = 0, linetype = "dashed") +
+  labs(
+    x = "DOY",
+    title = "Posterior distributions of all 7 species random effects parameters",
+    col = "species"
+  ) +
+  coord_cartesian(xlim = c(-10, 10))
+
+
+# 2. Posterior distributions of all tag nested within species random effects
+# parameters.
+posterior_draws %>%
+  # Pick out tag nested within species random effects:
+  filter(str_detect(group, "sp:tag:")) %>%
+  separate(group, c("group1", "group2", "sp", "tag"), ":", remove = FALSE) %>%
+  # Plot:
+  ggplot(aes(x = b, group = group)) +
+  geom_density() +
+  facet_wrap(~sp) +
+  geom_vline(xintercept = 0, linetype = "dashed") +
+  labs(
+    x = "DOY",
+    title = "Posterior distributions of all 109 tags nested within 7 species random effects parameters"
+  )
+
+
+
+# Extra stuff 1: Show distribution of observed and fitted DOY ------------------
 # Get Bayesian posterior fitted values
 DOY_hat_stan_samples <- mixedmodel_stanlmer %>%
   posterior_predict() %>%
@@ -279,6 +365,9 @@ ggplot(fitted_DOY, aes(x = wood_type, y = DOY)) +
   facet_wrap(~DOY_type) +
   labs(x = "Wood type", y = "DOY", title = "DOY 25% growth is achieved: Observed DOY and fitted DOY from two models (all years together)")
 
+
+
+# Extra stuff 2: Posterior mean and 95% credible intervals of DOY of all trees ------------------
 # Deep deep in to Bayesian results
 DOY_hat_stan_samples_conf_int <- DOY_hat_stan_samples %>%
   t() %>%
@@ -302,8 +391,4 @@ DOY_hat_stan_samples_conf_int <- DOY_hat_stan_samples %>%
 ggplot(DOY_hat_stan_samples_conf_int) +
   geom_segment(aes(y = id, yend = id, x = lower_ci, xend = upper_ci, col = wood_type), alpha = 0.2) +
   geom_point(aes(y=id, x = post_mean, col = wood_type)) +
-  labs(x = "DOY", y = "", title = "95% Credible interval of DOY (all years)")
-
-
-
-
+  labs(x = "DOY", y = "", title = "95% credible interval of DOY (all years)")
