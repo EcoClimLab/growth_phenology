@@ -232,24 +232,6 @@ library(tidybayes)
 twentyfive <- twentyfive %>%
   as_tibble() %>%
   mutate(id = 1:n())
-stantable25 <- stantable25 %>%
-  as_tibble() %>%
-  mutate(id = 1:n())
-
-# Used to re-identify sp and tag information from stan results, b/c they were
-# converted to integers
-twentyfive_orig <- twentyfive %>%
-  mutate(
-    # Save original encodings
-    tag_orig = tag,
-    sp_orig = sp,
-    # Create stan encodings
-    tag = as.integer(as.factor(tag_orig)),
-    sp = as.integer(as.factor(sp_orig))
-  ) %>%
-  select(tag, tag_orig, sp, sp_orig) %>%
-  distinct()
-
 
 # Model formula option 1: Just tag
 DOY_formula <- "DOY ~ wood_type*marchmean + (1|tag)" %>% as.formula()
