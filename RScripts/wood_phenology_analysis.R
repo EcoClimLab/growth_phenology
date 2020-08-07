@@ -326,6 +326,15 @@ posterior_draws %>%
 
 
 
+# Bert TODO:
+# - Write report of which tags are behaving the wonkiest in the above plot of
+# "Posterior distributions of all 109 tags nested within 7 species random
+# effects parameters"
+# - Derive posterior distributions of effect of marchmean for each of the three
+# wood_types separately, not the weird baseline vs offset interpretation of
+# standard regression table output
+
+
 # Extra stuff 1: Show distribution of observed and fitted DOY ------------------
 # Get Bayesian posterior fitted values
 DOY_hat_stan_samples <- mixedmodel_stanlmer %>%
