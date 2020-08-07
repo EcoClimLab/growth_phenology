@@ -172,6 +172,9 @@ Wood_pheno_table$marchmean <- as.numeric(Wood_pheno_table$marchmean)
 Wood_pheno_table$year <- as.character(Wood_pheno_table$year)
 twentyfive <- subset(Wood_pheno_table, perc == .25)# & sp == "litu")
 
+# TODO: Cam adds variables of window_length to twentyfive date frame here:
+
+
 
 
 # Nested random effects model ------------------------------------------
