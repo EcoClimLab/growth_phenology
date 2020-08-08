@@ -75,8 +75,13 @@ Here, we ...
 #### Study site and data
 SCBI ForestGEO plot
 
-10 years biweekly dendrometer measurements
+-SCBI met-tower
 
+Climate data was obtained from a meteorological tower in a clearing adjacent to, and within elevation range of the SCBI ForestGEO plot. This tower is part of the ForestGEO meteorological monitoring program. Temperature readings are taken every 5 minutes using a CR1000 datalogger.  
+
+9 years biweekly dendrometer measurements
+  
+  Dendrometer band measurements were taken every two weeks for 9 years (After cleaning: 2011- 105 trees; 2012 - 102 trees; 2013 - 102 trees; 2014 - 149 trees; 2015 - 149 trees; 2016 - 149 trees; 2017 - 148 trees; 2018 - 146 trees; 2019 - 145 trees ). Data manually cleaned by visual inspection. Three classes of mistakes: 1. Error in measurement - weekly measurement was drastically different from previous week and following week. Mistakes were removed from the raw data before modeling. (## cases) 2. Band slip or stuck - measurements freeze and remain unchanged until sudden jump followed by normal growth pattern. Band slips were sometimes followed by measurements indicating the band became stuck; in these cases, the tree was thrown out for the corresponding year. In cases where the slip was followed by normal growth, the initial slip-point was removed, and the following points were shifted down to the pre-slip level. (## cases) 3. Other - cases where data was clearly wrong but with unknown causes. This seemed to happen mostly in 2011, when the program was just beginning. In cases where several measurements were an issue, they were simply removed. If there were no clear solutions to 'fix' the data, the entire year was removed from the analysis.  
 leaf phenology data?
 
 - leaf phenology data from NEON and/or satellite-based (leaf phenology network: https://www.usanpn.org/news/spring) ?
@@ -87,9 +92,21 @@ leaf phenology data?
 
 perhaps bring in cores?
 
+- Sean's model
+
+- Climwin
+
+The period where the phenology milestone(s) were most affected by Spring time temperature was determined using the R package Climwin. This package tests the correlation between climate variables (daily averaged temperature) and biological variables (DOY) within a specified time-frame, reporting the window with the highest correlation as the 'best-model'. We instructed Climwin to search for the best window within ### to 0 days before the phenology milestone. This was done to find corresponding best-windows for both of our wood-types; ring-porous and diffuse-porous.
+
 #### Analysis
 
 *Here, I'll insert a reference to Sean's paper [@mcmahon_general_2015]. This is pulled from references.bib.*
+
+- Mixed effect model
+
+A mixed effect model was used to test the response of wood phenology variables (25% DOY, max-rate, max-rate DOY, total growth) to fixed effects of wood-type and Spring temperature, and random effects of species and tag. We ran two separate models for each of our major wood-types *and one combined model to use for comparison during the bayesian analysis.* (talking to Albert about possibly doing this)
+
+- Bayesian heirarchal model
 
 
 
