@@ -2,8 +2,8 @@
 # Loading tidyverse loads ggplot2, dplyr, readr, and many more
 library(tidyverse)
 Wood_pheno_table <- read_csv("Data/Wood_pheno_table_V4.csv")
-versiontwo <- read_csv("Data/Wood_pheno_table_V2.csv")
-versionone <- read_csv("Data/Wood_pheno_table_V1.csv")
+#versiontwo <- read_csv("Data/Wood_pheno_table_V2.csv")
+#versionone <- read_csv("Data/Wood_pheno_table_V1.csv")
 
 unique(Wood_pheno_table$sp)
 mean(Wood_pheno_table$max_rate_DOY) #V1: June 7th, V2: June 7th V3: June 7th
@@ -348,6 +348,10 @@ DOY_formulaRP <- "DOY ~ rptemp + (1|sp) + (1|sp:tag)" %>% as.formula()
 
 total_formulaRP <- "tot ~ rptemp + (1|sp) + (1|sp:tag)" %>% as.formula()
 
+maxrateDOY_formulaRP <- "max_rate_DOY ~ rptemp + (1|sp) + (1|sp:tag)" %>% as.formula()
+
+maxrate_formulaRP <- "max_rate ~ rptemp + (1|sp) + (1|sp:tag)" %>% as.formula()
+
 mixedmodel_stanlmerRP_doy <- stan_lmer(
   formula = DOY_formulaRP,
   data = twentyfiveRP,
@@ -367,7 +371,29 @@ mixedmodel_stanlmerRP_total <- stan_lmer(
   chains = 2
 )
 
-mixedmodel_stanlmerDP_total %>%
+mixedmodel_stanlmerRP_total %>%
+  tidy(conf.int = TRUE)
+
+mixedmodel_stanlmerRP_maxrateDOY <- stan_lmer(
+  formula = maxrateDOY_formulaRP,
+  data = twentyfiveRP,
+  seed = 349,
+  iter = 4000,
+  chains = 2
+)
+
+mixedmodel_stanlmerRP_maxrateDOY %>%
+  tidy(conf.int = TRUE)
+
+mixedmodel_stanlmerRP_maxrate <- stan_lmer(
+  formula = maxrate_formulaRP,
+  data = twentyfiveRP,
+  seed = 349,
+  iter = 4000,
+  chains = 2
+)
+
+mixedmodel_stanlmerRP_maxrate %>%
   tidy(conf.int = TRUE)
 
 #
@@ -396,6 +422,10 @@ DOY_formulaDP <- "DOY ~ dptemp + (1|sp) + (1|sp:tag)" %>% as.formula()
 
 total_formulaDP <- "tot ~ dptemp + (1|sp) + (1|sp:tag)" %>% as.formula()
 
+maxrateDOY_formulaDP <- "max_rate_DOY ~ dptemp + (1|sp) + (1|sp:tag)" %>% as.formula()
+
+maxrate_formulaDP <- "max_rate ~ dptemp + (1|sp) + (1|sp:tag)" %>% as.formula()
+
 mixedmodel_stanlmerDP_doy <- stan_lmer(
   formula = DOY_formulaDP,
   data = twentyfiveDP,
@@ -405,7 +435,7 @@ mixedmodel_stanlmerDP_doy <- stan_lmer(
 )
 
 mixedmodel_stanlmerDP_doy %>%
-  tidy()
+  tidy(conf.int = TRUE)
 
 mixedmodel_stanlmerDP_total <- stan_lmer(
   formula = total_formulaDP,
@@ -416,7 +446,30 @@ mixedmodel_stanlmerDP_total <- stan_lmer(
 )
 
 mixedmodel_stanlmerDP_total %>%
-  tidy()
+  tidy(conf.int = TRUE)
+
+mixedmodel_stanlmerDP_maxrateDOY <- stan_lmer(
+  formula = maxrateDOY_formulaDP,
+  data = twentyfiveDP,
+  seed = 349,
+  iter = 4000,
+  chains = 2
+)
+
+mixedmodel_stanlmerDP_maxrateDOY %>%
+  tidy(conf.int = TRUE)
+
+mixedmodel_stanlmerDP_maxrate <- stan_lmer(
+  formula = maxrate_formulaDP,
+  data = twentyfiveDP,
+  seed = 349,
+  iter = 4000,
+  chains = 2
+)
+
+mixedmodel_stanlmerDP_maxrate %>%
+  tidy(conf.int = TRUE)
+#
 
 posterior_draws <- mixedmodel_stanlmerDP_total %>%
   spread_draws(b[,group])
@@ -462,7 +515,7 @@ mixedmodel %>%
 
 
 
-# Bert example code 2: Analysis of stan_lmer output ---
+# Bert example code 2: Analysis of stan_lmer output ----
 # Reference: http://mjskay.github.io/tidybayes/articles/tidy-rstanarm.html
 
 # Look at non-random parameter estimates with (Bayesian) credible intervals
