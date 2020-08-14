@@ -257,38 +257,38 @@ summary(lmer(tot~dptemp + (1|sp/tag) , data = twentyfiveDP))
 
 
 # Non-nested random effects model using glmer2stan interface to stan ----
-library(glmer2stan)
-library(rstan)
-library(StanHeaders)
-stantable <- twentyfive
-stantable$year <- as.integer(as.factor(stantable$year))
-stantable$wood_type <- as.integer(as.factor(stantable$wood_type))
-stantable$tag <- as.integer(as.factor(stantable$tag))
-stantable$sp <- as.integer(as.factor(stantable$sp))
-nwarm = 100
-niter = 400
-chains = 4
-stantable25 <- subset(stantable, perc == .25)
-
-# This is only for random effects model (1|sp), as this does not work for nested
-# random effects model (1|sp/tag)
-stanlm <- lmer2stan(DOY~wood_type*marchmean + (1|sp) , data = stantable25, calcWAIC = T, warmup = nwarm, iter = niter, chains = chains)
-
-print(stanlm)
-stanmer(stanlm)
-plot(stanlm)
-traceplot(stanlm)
-stanlm@stanmodel
-
-boxplot(Wood_pheno_table$tot~Wood_pheno_table$dbh)
-abline(lm(Wood_pheno_table$tot~Wood_pheno_table$dbh))
-summary(lm(Wood_pheno_table$tot~Wood_pheno_table$dbh))
-aggregate(Wood_pheno_table$tot, by = list(Wood_pheno_table$year), FUN = sum)
-
-totals <- aggregate(twentyfive$tot, by = list(twentyfive$year, twentyfive$wood_type), FUN = sum)
-colnames(totals) <- c("Year", "Wood_type", "Total_growth")
-plot <- ggplot(totals, aes(x = Year, y = Total_growth, color = Wood_type))+geom_point()+geom_line(size = 2)+ labs(title = "Total growth over time at SCBI")
-plot
+# library(glmer2stan)
+# library(rstan)
+# library(StanHeaders)
+# stantable <- twentyfive
+# stantable$year <- as.integer(as.factor(stantable$year))
+# stantable$wood_type <- as.integer(as.factor(stantable$wood_type))
+# stantable$tag <- as.integer(as.factor(stantable$tag))
+# stantable$sp <- as.integer(as.factor(stantable$sp))
+# nwarm = 100
+# niter = 400
+# chains = 4
+# stantable25 <- subset(stantable, perc == .25)
+#
+# # This is only for random effects model (1|sp), as this does not work for nested
+# # random effects model (1|sp/tag)
+# stanlm <- lmer2stan(DOY~wood_type*marchmean + (1|sp) , data = stantable25, calcWAIC = T, warmup = nwarm, iter = niter, chains = chains)
+#
+# print(stanlm)
+# stanmer(stanlm)
+# plot(stanlm)
+# traceplot(stanlm)
+# stanlm@stanmodel
+#
+# boxplot(Wood_pheno_table$tot~Wood_pheno_table$dbh)
+# abline(lm(Wood_pheno_table$tot~Wood_pheno_table$dbh))
+# summary(lm(Wood_pheno_table$tot~Wood_pheno_table$dbh))
+# aggregate(Wood_pheno_table$tot, by = list(Wood_pheno_table$year), FUN = sum)
+#
+# totals <- aggregate(twentyfive$tot, by = list(twentyfive$year, twentyfive$wood_type), FUN = sum)
+# colnames(totals) <- c("Year", "Wood_type", "Total_growth")
+# plot <- ggplot(totals, aes(x = Year, y = Total_growth, color = Wood_type))+geom_point()+geom_line(size = 2)+ labs(title = "Total growth over time at SCBI")
+# plot
 
 
 
@@ -421,7 +421,6 @@ mixedmodel_stanlmerDP_total %>%
 posterior_draws <- mixedmodel_stanlmerDP_total %>%
   spread_draws(b[,group])
 
-
 # 1. Posterior distributions of all species random effects parameters: all
 # roughly centered at 0. In other words, almost no difference in species
 # level intercepts
@@ -438,46 +437,70 @@ posterior_draws %>%
   ) +
   coord_cartesian(xlim = c(-10, 10))
 
-# ----
 
-# Analysis of lmer output
-mixedmodel %>% tidy(conf.int = TRUE)
-mixedmodel %>% sjPlot::plot_model()
-mixedmodel %>% sjPlot::plot_model(terms = c("wood_typeother", "wood_typering porous"))
-mixedmodel %>% sjPlot::plot_model(terms = c("wood_typediffuse-porous:marchmean", "wood_typeother:marchmean", "wood_typering porous:marchmean")) +
+
+
+
+
+# Bert example code 1: Analysis of lmer output ----
+# Look at parameter estimates with confidence intervals, two ways.
+# Notice how if we use a model formula of form wood_type + wood_type:marchmean,
+# and not wood_type*marchmean, we can slopes for marchmean for each of the 3
+# wood types directly, no baseline vs offset needed.
+mixedmodel %>%
+  tidy(conf.int = TRUE)
+mixedmodel %>%
+  sjPlot::tab_model()
+
+# Plot parameter estimates with confidence intervals
+mixedmodel %>%
+  sjPlot::plot_model()
+# Focus only on slope for marchmean parameters and add fancy line at 0
+mixedmodel %>%
+  sjPlot::plot_model(terms = c("wood_typediffuse-porous:marchmean", "wood_typeother:marchmean", "wood_typering porous:marchmean")) +
   geom_hline(yintercept = 0, linetype = "dashed", size = 1)
-mixedmodel %>% sjPlot::tab_model()
 
 
-# Analysis of stan_lmer output
+
+# Bert example code 2: Analysis of stan_lmer output ---
 # Reference: http://mjskay.github.io/tidybayes/articles/tidy-rstanarm.html
 
-# Non-random effects. In particular interaction effects
+# Look at non-random parameter estimates with (Bayesian) credible intervals
+# Notice how if we use a model formula of form wood_type + wood_type:marchmean,
+# and not wood_type*marchmean, we can slopes for marchmean for each of the 3
+# wood types directly, no baseline vs offset needed.
 mixedmodel_stanlmer %>%
   tidy(conf.int = TRUE)
 
-
-# Identify all parameters in model:
+# Identify all parameters in model. Not really used anywhere directly.
 mixedmodel_stanlmer %>%
   get_variables()
 
-# Get all iter * chain * {# of random effects parameters} posterior draws
+# Get a data frame of all posterior draws. There are iter * chain * {# of random
+# effects parameters} of them. This data frame is essential since it is used for
+# the rest of the code
 posterior_draws_random_effects <- mixedmodel_stanlmer %>%
   # No point in including term since there are only intercepts:
   # spread_draws(b[term,group]) %>%
   # So omit it:
   spread_draws(b[,group])
 
-
-# 1. Posterior distributions of all species random effects parameters: all
-# roughly centered at 0. In other words, almost no difference in species
-# level intercepts
+# Pick out only posterior draws related to sp random effects
 posterior_draws_sp <- posterior_draws_random_effects %>%
   # Pick out only species random effects:
   filter(!str_detect(group, "sp:tag:")) %>%
   separate(group, c("group1", "sp"), ":", remove = FALSE)
 
-# Plot:
+# Pick out only posterior draws related to tag nested within sp random effects
+posterior_draws_tag_within_sp <- posterior_draws_random_effects %>%
+  # Pick out tag nested within species random effects:
+  filter(str_detect(group, "sp:tag:")) %>%
+  separate(group, c("group1", "group2", "sp", "tag"), ":", remove = FALSE)
+
+
+# Bert example plot 1: Posterior distributions of sp random effects ----
+# All roughly centered at 0. In other words, almost no difference in
+# species level intercepts
 ggplot(posterior_draws_sp, aes(x = b, col = sp)) +
   geom_density() +
   geom_vline(xintercept = 0, linetype = "dashed") +
@@ -489,30 +512,28 @@ ggplot(posterior_draws_sp, aes(x = b, col = sp)) +
   coord_cartesian(xlim = c(-10, 10))
 
 
-# 2. Posterior distributions of all tag nested within species random effects
-# parameters.
-posterior_draws_tag_within_sp <- posterior_draws_random_effects %>%
-  # Pick out tag nested within species random effects:
-  filter(str_detect(group, "sp:tag:")) %>%
-  separate(group, c("group1", "group2", "sp", "tag"), ":", remove = FALSE)
-
-# 2.a) Identify which tags in above plot have 80% credible intervals that do not
-# contain 0 i.e. deviate the most
+# Bert example plot 2: Posterior distributions of tag nested within sp random effects ----
+# First identify which tags in above plot have 95% credible intervals that do not
+# contain 0 i.e. that deviate the most from 0
+conf_level <- 0.95
 outlier_tags <- posterior_draws_tag_within_sp %>%
   group_by(sp, tag) %>%
   summarize(
     mean = mean(b),
-    lower_ci = quantile(b, probs = 0.1),
-    upper_ci = quantile(b, probs = 0.9)
+    lower_ci = quantile(b, probs = (1-conf_level)/2),
+    upper_ci = quantile(b, probs = 1-(1-conf_level)/2)
   ) %>%
   mutate(doesnt_contain_zero = upper_ci < 0 | lower_ci > 0 ) %>%
   filter(doesnt_contain_zero) %>%
   pull(tag)
+outlier_tags
 
+# Second, identify these outlier_tags in data frame with outlier variable. That
+# way we can map this variable to an aesthetic in ggplot
 posterior_draws_tag_within_sp <- posterior_draws_tag_within_sp %>%
   mutate(outlier = tag %in% outlier_tags)
 
-# 2.b) Plot:
+# Third, plot:
 ggplot(posterior_draws_tag_within_sp, aes(x = b, group = group, col = outlier)) +
   geom_density() +
   scale_color_manual(values = c("black", "orange")) +
@@ -524,27 +545,8 @@ ggplot(posterior_draws_tag_within_sp, aes(x = b, group = group, col = outlier)) 
   )
 
 
-# 3. Derive posterior distributions of effect of marchmean for each of the three
-# wood_types separately, not the weird baseline vs offset interpretation of
-# standard regression table output
 
-mixedmodel_stanlmer %>%
-  # No point in including term since there are only intercepts:
-  # spread_draws(b[term,group]) %>%
-  # So omit it:
-  spread_draws()
-
-
-# Bert TODO:
-# - Write report of which tags are behaving the wonkiest in the above plot of
-# "Posterior distributions of all 109 tags nested within 7 species random
-# effects parameters"
-# - Derive posterior distributions of effect of marchmean for each of the three
-# wood_types separately, not the weird baseline vs offset interpretation of
-# standard regression table output
-
-
-# Extra stuff 1: Show distribution of observed and fitted DOY ------------------
+# Bert example plot 3: Show distribution of observed and fitted DOY ----
 # Get Bayesian posterior fitted values
 DOY_hat_stan_samples <- mixedmodel_stanlmer %>%
   posterior_predict() %>%
@@ -563,7 +565,7 @@ fitted_DOY <- mixedmodel %>%
   pivot_longer(cols = c("DOY", "DOY_hat_lmer", "DOY_hat_stan"), names_to = "DOY_type", values_to = "DOY") %>%
   mutate(outlier = tag %in% outlier_tags)
 
-# Plot 1: There is shrinkage!
+# Plot. There is shrinkage! Also, I tagged the outlier_tags in orange
 ggplot(fitted_DOY, aes(x = sp, y = DOY)) +
   geom_boxplot() +
   geom_point(aes(col = outlier), size = 2) +
@@ -573,7 +575,7 @@ ggplot(fitted_DOY, aes(x = sp, y = DOY)) +
 
 
 
-# Extra stuff 2: Posterior mean and 95% credible intervals of DOY of all trees ------------------
+# Bert example plot 4: Posterior mean and 95% credible intervals of DOY of all trees ----
 # Deep deep in to Bayesian results
 DOY_hat_stan_samples_conf_int <- DOY_hat_stan_samples %>%
   t() %>%
@@ -593,7 +595,7 @@ DOY_hat_stan_samples_conf_int <- DOY_hat_stan_samples %>%
   arrange(wood_type, post_mean) %>%
   mutate(id = 1:n())
 
-# Plot 2: Posterior mean and 95% credible intervals of DOY of all trees
+# Plot. Posterior mean and 95% credible intervals of DOY of all trees
 ggplot(DOY_hat_stan_samples_conf_int) +
   geom_segment(aes(y = id, yend = id, x = lower_ci, xend = upper_ci, col = wood_type), alpha = 0.2) +
   geom_point(aes(y=id, x = post_mean, col = wood_type)) +
