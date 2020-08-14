@@ -462,7 +462,7 @@ mixedmodel %>%
 
 
 
-# Bert example code 2: Analysis of stan_lmer output ---
+# Bert example code 2: Analysis of stan_lmer output ----
 # Reference: http://mjskay.github.io/tidybayes/articles/tidy-rstanarm.html
 
 # Look at non-random parameter estimates with (Bayesian) credible intervals
