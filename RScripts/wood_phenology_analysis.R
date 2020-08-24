@@ -15,13 +15,38 @@ mean(Wood_pheno_table$max_rate_DOY) #V1: June 7th, V2: June 7th V3: June 7th
 boxplot(Wood_pheno_table$max_rate_DOY~Wood_pheno_table$wood_type)
 aggregate(Wood_pheno_table$max_rate_DOY, by = list(Wood_pheno_table$sp), FUN = mean )
 
-ring<- subset(twentyfive, wood_type == "ring porous")
-means <- aggregate(diffuse$DOY, by = list(diffuse$year), FUN = mean)
-plot(means$x~means$Group.1)
-diffuse <- subset(twentyfive, wood_type == "diffuse-porous")
+#ring
+ring <- subset(Wood_pheno_table, wood_type == "ring porous")
+mean(ring$max_rate)
+ring25 <- subset(ring, perc == .25)
+mean(ring25$max_rate_DOY)
+mean(ring25$DOY)
 
-means <- means[5:9, ]
-plot(janmeans$x~means$x)
+ring50 <- subset(ring, perc == .50)
+mean(ring50$DOY)
+
+ring75 <- subset(ring, perc == .75)
+mean(ring75$DOY)
+
+#diffuse
+diffuse <- subset(Wood_pheno_table, wood_type == "diffuse-porous")
+mean(diffuse$max_rate_DOY)
+mean(diffuse$max_rate)
+diffuse25 <- subset(diffuse, perc == .25)
+mean(diffuse25$DOY)
+
+diffuse50 <- subset(diffuse, perc == .50)
+mean(diffuse50$DOY)
+
+diffuse75 <- subset(diffuse, perc == .75)
+mean(diffuse75$DOY)
+#ring<- subset(twentyfive, wood_type == "ring porous")
+#means <- aggregate(diffuse$DOY, by = list(diffuse$year), FUN = mean)
+#plot(means$x~means$Group.1)
+#diffuse <- subset(twentyfive, wood_type == "diffuse-porous")
+
+#means <- means[5:9, ]
+#plot(janmeans$x~means$x)
 #25%
 twentyfive <- subset(Wood_pheno_table, perc == .25)# & sp == "litu")
 boxplot(as.numeric(twentyfive$max_rate_DOY)~twentyfive$sp)
@@ -142,16 +167,19 @@ plot(meanrate$x~meanrate$Group.1, xlab = "Year", ylab = "Mean maximum rate", mai
 #Adding CLIMWIN window weather data
 Wood_pheno_table <- read_csv("Data/Wood_pheno_table_V4.csv")
 twentyfive <- subset(Wood_pheno_table, perc == .25)# & sp == "litu")
-
+fifty <- subset(Wood_pheno_table, perc == .50)
+seventyfive <- subset(Wood_pheno_table, perc == .75)
 #Temperature
 #NEON_summary_temp <- read_csv("climate data/NEON_summary_temp.csv")
 weatherdata <- read_csv("climate data/NCDC_NOAA_precip_temp.csv")
 weatherdata$months <- months(as.Date(weatherdata$DATE))
 weatherdata <- weatherdata[complete.cases(weatherdata$flag),]
+weatherdata <- weatherdata[complete.cases(weatherdata$flagdp),]
 weatherdata <- weatherdata[complete.cases(weatherdata$TMAX),]
 
 #I manually assigned a flag on the rows that correspond to each climwin window
 tempmaxmeans <- aggregate(weatherdata$TMAX, by = list(weatherdata$year, weatherdata$flag), FUN = mean)
+tempmaxmeansdp <- aggregate(weatherdata$TMAX, by = list(weatherdata$year, weatherdata$flagdp), FUN = mean)
 
 #Temperatures (obsolete) ----
 springweather <- subset(weatherdata, months == "January" | months == "February" | months == "March" | months == "April" | months == "May")
@@ -172,7 +200,7 @@ april <- subset(springweather, months == "April")
 aprilmeans <- aggregate(april$TMAX, by = list(april$year), FUN = mean)
 colnames(aprilmeans) <- c("year", "aprilmean")
 
-#merge dataframes: Create the rin-porous and diffuse-porous subsets, then append the window data to them ----
+#merge dataframes: Create the ring-porous and diffuse-porous subsets, then append the window data to them ----
 
 #Ring porous
 rpmeans <- subset(tempmaxmeans, Group.2 == "RP") #subset the climate means
@@ -183,18 +211,34 @@ colnames(rpmeans) <- c("year", "rptemp")
 twentyfiveRP <- subset(twentyfive, wood_type == "ring porous")
 twentyfiveRP <- merge(rpmeans, twentyfiveRP, by = "year")
 
+fiftyRP <- subset(fifty, wood_type == "ring porous")
+fiftyRP <- merge(fiftyRP, rpmeans, by = "year")
+
+seventyfiveRP <- subset( seventyfive, wood_type == "ring porous")
+seventyfiveRP <- merge(seventyfiveRP, rpmeans, by = "year")
+
 #Diffuse porous - repeat of RP process
-dpmeans <- subset(tempmaxmeans, Group.2 == "DP")
+dpmeans <- subset(tempmaxmeansdp, Group.2 == "DP")
 dpmeans <- dpmeans[c(1:9), c(1,3)]
 colnames(dpmeans) <- c("year", "dptemp")
 
 twentyfiveDP <- subset(twentyfive, wood_type == "diffuse-porous")
 twentyfiveDP <- merge(dpmeans, twentyfiveDP, by = "year")
 
+fiftyDP <- subset(fifty, wood_type == "diffuse-porous")
+fiftyDP <- merge(fiftyDP, dpmeans, by = "year")
+
+seventyfiveDP <- subset(seventyfive, wood_type == "diffuse-porous")
+seventyfiveDP <- merge(seventyfiveDP, dpmeans, by = "year")
+
 #Check out relationship with plot
 dpdoys <- aggregate(twentyfiveDP$DOY, by = list(twentyfiveDP$year), FUN = mean)
 plot(dpdoys$x~dpmeans$dptemp)
 summary(lm(dpdoys$x~dpmeans$dptemp))
+
+rpdoys <- aggregate(twentyfiveRP$DOY, by = list(twentyfiveRP$year), FUN = mean)
+plot(rpdoys$x~rpmeans$rptemp)
+summary(lm(rpdoys$x~rpmeans$rptemp))
 # Old stuff (remove if you want) ----
 colnames(ringporousmeans) <- c("year", "meantemp")
 Wood_pheno_table <-  merge(ringporousmeans, Wood_pheno_table, by = "year")
@@ -222,7 +266,7 @@ summary(lm(agg$x~ringporousmeans$meantemp))
 library(lme4)
 library(lmerTest)
 #difference according to wood_type
-mixedmodelwood_type <- lmer(DOY~wood_type + (1|sp/tag), data = Wood_pheno_table)
+mixedmodelwood_type <- lmer(doy~marchmean + (1|sp/tag), data = Wood_pheno_table)
 summary(mixedmodelwood_type)
 
 #DOY using NCDC CLIMWIN data
@@ -243,7 +287,7 @@ summary(lmer(tot~rptemp + (1|sp/tag) , data = twentyfiveRP))
 #Repeats of RP process using DP data
 mixedmodelmarchmeandp <- lmer(DOY~dptemp + (1|sp/tag) , data = twentyfiveDP)
 summary(mixedmodelmarchmeandp)
-
+?isSingular
 summary(lmer(max_rate~dptemp + (1|sp/tag) , data = twentyfiveDP))
 
 summary(lmer(max_rate_DOY~dptemp + (1|sp/tag) , data = twentyfiveDP))
@@ -308,7 +352,23 @@ twentyfiveRP <- twentyfiveRP %>%
   as_tibble() %>%
   mutate(id = 1:n())
 
+fiftyRP <- fiftyRP %>%
+  as_tibble() %>%
+  mutate(id = 1:n())
+
+seventyfiveRP <- seventyfiveRP %>%
+  as_tibble() %>%
+  mutate(id = 1:n())
+
 twentyfiveDP <- twentyfiveDP %>%
+  as_tibble() %>%
+  mutate(id = 1:n())
+
+fiftyDP<- fiftyDP %>%
+  as_tibble() %>%
+  mutate(id = 1:n())
+
+seventyfiveDP <- seventyfiveDP %>%
   as_tibble() %>%
   mutate(id = 1:n())
 
@@ -352,7 +412,7 @@ maxrateDOY_formulaRP <- "max_rate_DOY ~ rptemp + (1|sp) + (1|sp:tag)" %>% as.for
 
 maxrate_formulaRP <- "max_rate ~ rptemp + (1|sp) + (1|sp:tag)" %>% as.formula()
 
-mixedmodel_stanlmerRP_doy <- stan_lmer(
+mixedmodel_stanlmerRP_doy25 <- stan_lmer( #25
   formula = DOY_formulaRP,
   data = twentyfiveRP,
   seed = 349,
@@ -360,7 +420,29 @@ mixedmodel_stanlmerRP_doy <- stan_lmer(
   chains = 2
 )
 
-mixedmodel_stanlmerRP_doy %>%
+mixedmodel_stanlmerRP_doy25 %>%
+  tidy(conf.int = TRUE)
+
+mixedmodel_stanlmerRP_doy50 <- stan_lmer( #50
+  formula = DOY_formulaRP,
+  data = fiftyRP,
+  seed = 349,
+  iter = 4000,
+  chains = 2
+)
+
+mixedmodel_stanlmerRP_doy50 %>%
+  tidy(conf.int = TRUE)
+
+mixedmodel_stanlmerRP_doy75 <- stan_lmer( #75
+  formula = DOY_formulaRP,
+  data = seventyfiveRP,
+  seed = 349,
+  iter = 4000,
+  chains = 2
+)
+
+mixedmodel_stanlmerRP_doy75 %>%
   tidy(conf.int = TRUE)
 
 mixedmodel_stanlmerRP_total <- stan_lmer(
@@ -417,6 +499,26 @@ posterior_draws %>%
   ) +
   coord_cartesian(xlim = c(-10, 10))
 
+
+mixedmodel_stanlmerRP_doy %>%
+  tidy(conf.int = TRUE)
+mixedmodel_stanlmerRP_doy  %>%
+  sjPlot::tab_model()
+
+mixedmodel_stanlmerRP_total %>%
+  tidy(conf.int = TRUE)
+mixedmodel_stanlmerRP_total  %>%
+  sjPlot::tab_model()
+
+mixedmodel_stanlmerRP_maxrateDOY %>%
+  tidy(conf.int = TRUE)
+mixedmodel_stanlmerRP_maxrateDOY  %>%
+  sjPlot::tab_model()
+
+mixedmodel_stanlmerRP_maxrate %>%
+  tidy(conf.int = TRUE)
+mixedmodel_stanlmerRP_maxrate  %>%
+  sjPlot::tab_model()
 # Diffuse-porous stan-lmer's ----
 DOY_formulaDP <- "DOY ~ dptemp + (1|sp) + (1|sp:tag)" %>% as.formula()
 
@@ -426,7 +528,7 @@ maxrateDOY_formulaDP <- "max_rate_DOY ~ dptemp + (1|sp) + (1|sp:tag)" %>% as.for
 
 maxrate_formulaDP <- "max_rate ~ dptemp + (1|sp) + (1|sp:tag)" %>% as.formula()
 
-mixedmodel_stanlmerDP_doy <- stan_lmer(
+mixedmodel_stanlmerDP_doy25 <- stan_lmer(#25
   formula = DOY_formulaDP,
   data = twentyfiveDP,
   seed = 349,
@@ -434,7 +536,29 @@ mixedmodel_stanlmerDP_doy <- stan_lmer(
   chains = 2
 )
 
-mixedmodel_stanlmerDP_doy %>%
+mixedmodel_stanlmerDP_doy25 %>%
+  tidy(conf.int = TRUE)
+
+mixedmodel_stanlmerDP_doy50 <- stan_lmer( #50
+  formula = DOY_formulaDP,
+  data = fiftyDP,
+  seed = 349,
+  iter = 4000,
+  chains = 2
+)
+
+mixedmodel_stanlmerDP_doy50 %>%
+  tidy(conf.int = TRUE)
+
+mixedmodel_stanlmerDP_doy75 <- stan_lmer(#75
+  formula = DOY_formulaDP,
+  data = seventyfiveDP,
+  seed = 349,
+  iter = 4000,
+  chains = 2
+)
+
+mixedmodel_stanlmerDP_doy75 %>%
   tidy(conf.int = TRUE)
 
 mixedmodel_stanlmerDP_total <- stan_lmer(
@@ -469,7 +593,29 @@ mixedmodel_stanlmerDP_maxrate <- stan_lmer(
 
 mixedmodel_stanlmerDP_maxrate %>%
   tidy(conf.int = TRUE)
+
+mixedmodel_stanlmerDP_doy %>%
+  tidy(conf.int = TRUE)
+mixedmodel_stanlmerDP_doy  %>%
+  sjPlot::tab_model()
+
+mixedmodel_stanlmerDP_total %>%
+  tidy(conf.int = TRUE)
+mixedmodel_stanlmerDP_total  %>%
+  sjPlot::tab_model()
+
+mixedmodel_stanlmerDP_maxrateDOY %>%
+  tidy(conf.int = TRUE)
+mixedmodel_stanlmerDP_maxrateDOY  %>%
+  sjPlot::tab_model()
+
+mixedmodel_stanlmerDP_maxrate %>%
+  tidy(conf.int = TRUE)
+mixedmodel_stanlmerDP_maxrate  %>%
+  sjPlot::tab_model()
+
 #
+
 
 posterior_draws <- mixedmodel_stanlmerDP_total %>%
   spread_draws(b[,group])
@@ -502,7 +648,7 @@ posterior_draws %>%
 # wood types directly, no baseline vs offset needed.
 mixedmodel %>%
   tidy(conf.int = TRUE)
-mixedmodel %>%
+mixedmodel  %>%
   sjPlot::tab_model()
 
 # Plot parameter estimates with confidence intervals
@@ -513,6 +659,12 @@ mixedmodel %>%
   sjPlot::plot_model(terms = c("wood_typediffuse-porous:marchmean", "wood_typeother:marchmean", "wood_typering porous:marchmean")) +
   geom_hline(yintercept = 0, linetype = "dashed", size = 1)
 
+
+
+# Focus only on slope for marchmean parameters and add fancy line at 0
+mixedmodel %>%
+  sjPlot::plot_model(terms = c("wood_typediffuse-porous:marchmean", "wood_typeother:marchmean", "wood_typering porous:marchmean")) +
+  geom_hline(yintercept = 0, linetype = "dashed", size = 1)
 
 
 # Bert example code 2: Analysis of stan_lmer output ----
@@ -532,7 +684,7 @@ mixedmodel_stanlmer %>%
 # Get a data frame of all posterior draws. There are iter * chain * {# of random
 # effects parameters} of them. This data frame is essential since it is used for
 # the rest of the code
-posterior_draws_random_effects <- mixedmodel_stanlmer %>%
+posterior_draws_random_effects <- mixedmodel_stanlmerDP_doy %>%
   # No point in including term since there are only intercepts:
   # spread_draws(b[term,group]) %>%
   # So omit it:
