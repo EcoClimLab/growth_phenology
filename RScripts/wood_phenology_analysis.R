@@ -232,9 +232,17 @@ seventyfiveDP <- subset(seventyfive, wood_type == "diffuse-porous")
 seventyfiveDP <- merge(seventyfiveDP, dpmeans, by = "year")
 
 #Check out relationship with plot
-dpdoys <- aggregate(twentyfiveDP$DOY, by = list(twentyfiveDP$year), FUN = mean)
-plot(dpdoys$x~dpmeans$dptemp)
-summary(lm(dpdoys$x~dpmeans$dptemp))
+dpdoys25 <- aggregate(twentyfiveDP$DOY, by = list(twentyfiveDP$year), FUN = mean)
+plot(dpdoys25$x~dpmeans$dptemp, xlab = "Average max temp", ylab = "DOY 25% growth acheived", main = "Diffuse-porous preseason relationship")
+summary(lm(dpdoys25$x~dpmeans$dptemp))
+
+dpdoys50 <- aggregate(fiftyDP$DOY, by = list(fiftyDP$year), FUN = mean)
+plot(dpdoys50$x~dpmeans$dptemp, xlab = "Average max temp", ylab = "DOY 50% growth acheived", main = "Diffuse-porous preseason relationship")
+summary(lm(dpdoys50$x~dpmeans$dptemp))
+
+dpdoys75 <- aggregate(seventyfiveDP$DOY, by = list(seventyfiveDP$year), FUN = mean)
+plot(dpdoys75$x~dpmeans$dptemp, xlab = "Average max temp", ylab = "DOY 75% growth acheived", main = "Diffuse-porous preseason relationship")
+summary(lm(dpdoys75$x~dpmeans$dptemp))
 
 rpdoys <- aggregate(twentyfiveRP$DOY, by = list(twentyfiveRP$year), FUN = mean)
 plot(rpdoys$x~rpmeans$rptemp)
@@ -412,6 +420,17 @@ maxrateDOY_formulaRP <- "max_rate_DOY ~ rptemp + (1|sp) + (1|sp:tag)" %>% as.for
 
 maxrate_formulaRP <- "max_rate ~ rptemp + (1|sp) + (1|sp:tag)" %>% as.formula()
 
+#Multivariate model
+jointmodelRP <- stan_mvmer(
+  formula = list(
+    DOY ~ rptemp + (1 | sp) + (1|tag),
+    DOY ~ rptemp + (1 | sp) + (1|tag),
+    DOY ~ rptemp + (1 | sp) + (1|tag)),
+  data = list(twentyfiveRP, fiftyRP, seventyfiveRP),
+  chains = 2, seed = 349, iter = 4000)
+
+summary(jointmodelRP, probs = c(0.025, 0.975)) #probs controls the reported credible interval
+
 mixedmodel_stanlmerRP_doy25 <- stan_lmer( #25
   formula = DOY_formulaRP,
   data = twentyfiveRP,
@@ -527,6 +546,16 @@ total_formulaDP <- "tot ~ dptemp + (1|sp) + (1|sp:tag)" %>% as.formula()
 maxrateDOY_formulaDP <- "max_rate_DOY ~ dptemp + (1|sp) + (1|sp:tag)" %>% as.formula()
 
 maxrate_formulaDP <- "max_rate ~ dptemp + (1|sp) + (1|sp:tag)" %>% as.formula()
+
+jointmodelDP <- stan_mvmer(
+  formula = list(
+    DOY ~ dptemp + (1 | sp) + (1|tag),
+    DOY ~ dptemp + (1 | sp) + (1|tag),
+    DOY ~ dptemp + (1 | sp) + (1|tag)),
+  data = list(twentyfiveDP, fiftyDP, seventyfiveDP),
+  chains = 2, seed = 349, iter = 4000)
+
+summary(jointmodelDP, probs = c(0.025, 0.975))
 
 mixedmodel_stanlmerDP_doy25 <- stan_lmer(#25
   formula = DOY_formulaDP,
