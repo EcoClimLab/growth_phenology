@@ -173,13 +173,13 @@ seventyfive <- subset(Wood_pheno_table, perc == .75)
 #NEON_summary_temp <- read_csv("climate data/NEON_summary_temp.csv")
 weatherdata <- read_csv("climate data/NCDC_NOAA_precip_temp.csv")
 weatherdata$months <- months(as.Date(weatherdata$DATE))
-weatherdata <- weatherdata[complete.cases(weatherdata$flag),]
-weatherdata <- weatherdata[complete.cases(weatherdata$flagdp),]
 weatherdata <- weatherdata[complete.cases(weatherdata$TMAX),]
+weatherdatarp <- weatherdata[complete.cases(weatherdata$flag),]
+weatherdatadp <- weatherdata[complete.cases(weatherdata$flagdp),]
 
 #I manually assigned a flag on the rows that correspond to each climwin window
-tempmaxmeans <- aggregate(weatherdata$TMAX, by = list(weatherdata$year, weatherdata$flag), FUN = mean)
-tempmaxmeansdp <- aggregate(weatherdata$TMAX, by = list(weatherdata$year, weatherdata$flagdp), FUN = mean)
+tempmaxmeansrp <- aggregate(weatherdatarp$TMAX, by = list(weatherdatarp$year, weatherdatarp$flag), FUN = mean)
+tempmaxmeansdp <- aggregate(weatherdatadp$TMAX, by = list(weatherdatadp$year, weatherdatadp$flagdp), FUN = mean)
 
 #Temperatures (obsolete) ----
 springweather <- subset(weatherdata, months == "January" | months == "February" | months == "March" | months == "April" | months == "May")
@@ -203,7 +203,7 @@ colnames(aprilmeans) <- c("year", "aprilmean")
 #merge dataframes: Create the ring-porous and diffuse-porous subsets, then append the window data to them ----
 
 #Ring porous
-rpmeans <- subset(tempmaxmeans, Group.2 == "RP") #subset the climate means
+rpmeans <- subset(tempmaxmeansrp, Group.2 == "RP") #subset the climate means
 rpmeans <- rpmeans[c(1:9), c(1,3)] #remove 'flag' row
 colnames(rpmeans) <- c("year", "rptemp")
 
