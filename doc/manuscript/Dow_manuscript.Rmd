@@ -76,12 +76,17 @@ We hypothesized that (1) ring-porous and diffuse-porous trees would both reach 2
 
 ### Materials and Methods
 
-Study site and data
-SCBI ForestGEO plot
+*Study sites and data*
 
-ForestGEO is a global network of scientists and 71 forest plots dedicated to the long-term study of the world's forests. The ForestGEO plot at SCBI is a 26-ha forest located in Front Royal, Virginia. Every stem ≥1 cm is tagged, mapped, identified to species, and measured in diameter at breast height (DBH) every 5 years following standardized ForestGEO procedure (Condit, 1995). Within the plot, >500 trees have dendrometer bands which are measured at the start and end of each growing season, while a subset of ~150 are additionally measured every two weeks during the growing season. 
+Study sites included **2/3** temperate forests in the Eastern United states, **both/all** part of the Forest Global Earth Observatory [ForestGEO; Anderson-Teixeira et al. 2015] (**Table 1?**). **Both/all** sites are dominated by broadleaf deciduous trees. *(insert site descriptions, including lat/long, elevation, plot size, climate info, dominant species. If we include SERC and if space permits, we may put this in a table, otherwise just text)*
 
-Dendrometer band measurements were taken every two weeks for 9 years (After cleaning: 2011- 105 trees; 2012 - 102 trees; 2013 - 102 trees; 2014 - 149 trees; 2015 - 149 trees; 2016 - 149 trees; 2017 - 148 trees; 2018 - 146 trees; 2019 - 145 trees ). The data were manually cleaned by visual inspection. Three classes of mistakes: 1. Error in measurement - weekly measurement was drastically different from previous week and following week. Mistakes were removed from the raw data before modeling. (## cases) 2. Band slip or stuck - measurements freeze and remain unchanged until sudden jump followed by normal growth pattern. Band slips were sometimes followed by measurements indicating the band became stuck; in these cases, the tree was thrown out for the corresponding year. In cases where the slip was followed by normal growth, the initial slip-point was removed, and the following points were shifted down to the pre-slip level. (## cases) 3. Other - cases where data was clearly wrong but with unknown causes. This seemed to happen mostly in 2011, when the program was just beginning. In cases where several measurements were an issue, they were simply removed. If there were no clear solutions to ‘fix’ the data, the entire year was removed from the analysis.
+Within the plot, metal dendrometer bands were installed on *>#* trees and measured approximately every 1-2 weeks within the growing season for *9* years (*list ranges, for each site if different*). *(don't bother to mention biannual bands, unless you end up using the data--which you could, for annual growth, if you'd like to increase the sample size. You can put exact numbers of bands per year in an SI file.*)  The number of bands measured at each site fluctuated somewhat as trees were added or dropped (e.g., because of tree mortality) from the census *(Table S1)*. Across years, the number of bands sampled averaged *~150* at SCBI, # at Harvard Forest*, and # at SERC*.   *(summary of how bands were distributed across species, focusing on ring/ diffuse porous distinction. details in an SI table)*
+
+(After cleaning: 2011- 105 trees; 2012 - 102 trees; 2013 - 102 trees; 2014 - 149 trees; 2015 - 149 trees; 2016 - 149 trees; 2017 - 148 trees; 2018 - 146 trees; 2019 - 145 trees *--put this in Table S1*). 
+
+Measurements were timed to begin before beginning of spring growth and to continue through the cessation of growth in the fall. *(Give specifics, which may vary by site. Note that we adjusted timing at SCBI when we observed early leaf-out of understory shrubs/herbs)*
+
+The data were manually cleaned by visual inspection. Three classes of mistakes: 1. Error in measurement - weekly measurement was drastically different from previous week and following week. Mistakes were removed from the raw data before modeling. (## cases) 2. Band slip or stuck - measurements freeze and remain unchanged until sudden jump followed by normal growth pattern. Band slips were sometimes followed by measurements indicating the band became stuck; in these cases, the tree was thrown out for the corresponding year. In cases where the slip was followed by normal growth, the initial slip-point was removed, and the following points were shifted down to the pre-slip level. (## cases) 3. Other - cases where data was clearly wrong but with unknown causes. This seemed to happen mostly in 2011, when the program was just beginning. In cases where several measurements were an issue, they were simply removed. If there were no clear solutions to ‘fix’ the data, the entire year was removed from the analysis.
 
 Climate data used was obtained from the National Center for Environmental Information (NCEI) weather station located in Front Royal, Virginia. Average daily maximum temperature for 2011-2019 are from the Daily Summary dataset available on their website (https://www.ncdc.noaa.gov/cdo-web/datasets/GHCND/stations/GHCND:USC00443229/detail). 
 
@@ -101,7 +106,7 @@ perhaps bring in cores?
 
 The period where the phenology milestone(s) were most affected by Spring time temperature was determined using the R package Climwin. This package tests the correlation between climate variables (daily averaged temperature) and biological variables (DOY) within a specified time-frame, reporting the window with the highest correlation as the ‘best-model’. We instructed Climwin to search for the best window within ### to 0 days before the phenology milestone. This was done to find corresponding best-windows for both of our wood-types; ring-porous and diffuse-porous.
 
-### Analysis
+*Analysis*
 
 Here, I’ll insert a reference to Sean’s paper (McMahon & Parker, 2015). This is pulled from references.bib.
 
