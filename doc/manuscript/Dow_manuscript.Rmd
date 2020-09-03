@@ -108,7 +108,7 @@ The period where the phenology milestone(s) were most affected by Spring time te
 
 *Analysis*
 
-Here, I’ll insert a reference to Sean’s paper (McMahon & Parker, 2015). This is pulled from references.bib.
+Here, I’ll insert a reference to Sean’s paper [@mcmahon_general_2015]. This is pulled from references.bib.
 
 -Mixed effect model
 
