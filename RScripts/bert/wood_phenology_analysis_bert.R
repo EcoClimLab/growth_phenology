@@ -242,6 +242,6 @@ plot_climwinmeans
 # Compare models ---------------
 # This uses the patchwork pkg:
 plot_marchmeans / plot_climwinmeans
-
+ggsave(filename = "2020-09-04_marchmeans-vs-climwinmeans.png")
 
 
