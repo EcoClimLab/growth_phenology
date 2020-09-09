@@ -172,7 +172,20 @@ ForestGEO
 
 ### Authors' contributions
 
+
+### Figures
+
+```{r logistic-growth-model, out.width="100%", echo=FALSE, fig.align="center", fig.cap="Lorem ipsum"}
+# Created in RScripts/additional_figures.R
+knitr::include_graphics("tables_figures/fig1.png")
+```
+
+
 ### References
+
+
+
+
 
 
 
