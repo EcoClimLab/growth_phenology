@@ -175,7 +175,8 @@ ggplot() +
   geom_point(data = temp_data, aes(x = marchmean, y = DOY, col = perc)) +
   geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
-  facet_wrap(~perc)
+  facet_wrap(~perc) +
+  labs(x = "March mean temperature (recentered at mean)", y = "DOY", col = "Percentile", main = "Posterior credible intervals")
 ggsave(filename = "results/2020-09-16_preliminary_credible_intervals.png")
 
 
