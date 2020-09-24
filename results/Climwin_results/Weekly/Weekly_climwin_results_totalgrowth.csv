@@ -1,7 +1,7 @@
-"wood_type","refday","winopen","winclose"
-"ring porous",21,9,9
-"ring porous",21,9,9
-"diffuse-porous",24,18,0
-"diffuse-porous",24,16,1
-"other",24,16,12
-"other",24,16,12
+wood_type,refday,winopen,winclose,ref month,win open month,win close month
+ring porous,21,9,9,5.25,3,3
+ring porous,21,9,9,5.25,3,3
+diffuse-porous,24,18,0,6,1.5,6
+diffuse-porous,24,16,1,6,2,5.75
+other,24,16,12,6,2,3
+other,24,16,12,6,2,3

@@ -300,3 +300,143 @@ dffinal <- dffinal[-1,]
 names(dffinal) <- c("wood_type", "refday", "winopen", "winclose")
 write.csv(dffinal, file = "weekly_climwin_results_totalgrowth.csv", row.names = FALSE)
 #
+
+####Max rate DOY daily ----
+rangedates <- data.frame("feb1", round(30)) #/7 for week
+rangedates2 <- data.frame("mar1", round(59)) #/7 for week
+names(rangedates) <- names(rangedates2)
+rangedates <- rbind(rangedates, rangedates2)
+colnames(rangedates) <- c("day", "doy")
+
+dffinal <- data.frame(1,1,1,1)
+for(w in unique(Wood_pheno_table$wood_type)){
+  #for(j in unique(Wood_pheno_table$perc)){
+  twentyfive <- subset(Wood_pheno_table, wood_type == w)# & perc == j )
+
+  biodata <- data.frame(NULL)
+  for(i in c(2011:2019)){ #Assigns dates in the proper format for Climwin analysis, using DOY (already in dataframe)
+    df <- subset(twentyfive, year == i) #using twentyfive dataset
+    df$date <- as.Date(df$max_rate_DOY, origin = paste0(i, "-01-01"))
+    df$date <- strftime(df$date, format = "%d/%m/%Y")
+    biodata <- rbind(biodata, df)
+  }
+
+  refdateround <- round(mean(biodata$max_rate_DOY)) #/7 for week
+
+  for (k in rangedates$doy) {
+
+    refdate <- data.frame(round(mean(biodata$max_rate_DOY)))
+    refdate$round.mean.biodata.max_rate_DOY.. <- as.Date(refdate$round.mean.biodata.max_rate_DOY.., origin = paste0("2011-01-01"))
+    refdate <- separate(refdate, "round.mean.biodata.max_rate_DOY..", c("Year", "Month", "Day"), sep = "-")
+
+    MassWin <- slidingwin(xvar = list(Temp = climate$TMAX),
+                          cdate = climate$DATE,
+                          bdate = biodata$date,
+                          baseline = lm(max_rate_DOY ~ 1, data = biodata),
+                          cinterval = "day",
+                          range = c((refdateround-k), 0),
+                          type = "absolute", refday = c(refdate$Day, refdate$Month),
+                          stat = "mean",
+                          func = "lin",
+                          cmissing = "method2")
+
+    MassRand <- randwin(repeats = 1,
+                        xvar = list(Temp = climate$TMAX),
+                        cdate = climate$DATE,
+                        bdate = biodata$date,
+                        baseline = lm(max_rate_DOY ~ 1, data = biodata),
+                        cinterval = "day",
+                        range = c((refdateround-k), 0),
+                        type = "absolute", refday = c(refdate$Day,refdate$Month),
+                        stat = "mean",
+                        func = "lin",
+                        cmissing = "method2")
+    pvalue(dataset = MassWin[[1]]$Dataset, datasetrand = MassRand[[1]], metric = "AIC")
+
+    MassOutput <- MassWin[[1]][["Dataset"]]
+    MassRand <- MassRand[[1]]
+
+    df <- data.frame(w, round(mean(biodata$max_rate_DOY)),MassWin[[1]][["Dataset"]][[1,2]], MassWin[[1]][["Dataset"]][[1,3]])#add j #add/7
+    names(dffinal) <- names(df)
+    dffinal <- rbind(dffinal, df)
+    png(filename = paste("SCBI", "mettower","max_rate_DOY",k,w,  ".png", sep = "_"), width = 10, height = 8, units = "in", res = 300) #add w
+    plotalloutput <- plotall(dataset = MassOutput,
+                             datasetrand = MassRand,
+                             bestmodel = MassWin[[1]]$BestModel,
+                             bestmodeldata = MassWin[[1]]$BestModelData)
+
+    dev.off()
+  }}#}
+dffinal <- dffinal[-1,]
+names(dffinal) <- c("wood_type", "refday", "winopen", "winclose")
+write.csv(dffinal, file = "daily_climwin_results_max_rate_DOY.csv", row.names = FALSE)
+
+####Max rate DOY WEEKLY ----
+rangedates <- data.frame("feb1", round(30/7)) #/7 for week
+rangedates2 <- data.frame("mar1", round(59/7)) #/7 for week
+names(rangedates) <- names(rangedates2)
+rangedates <- rbind(rangedates, rangedates2)
+colnames(rangedates) <- c("day", "doy")
+
+dffinal <- data.frame(1,1,1,1)
+for(w in unique(Wood_pheno_table$wood_type)){
+  #for(j in unique(Wood_pheno_table$perc)){
+  twentyfive <- subset(Wood_pheno_table, wood_type == w)# & perc == j )
+
+  biodata <- data.frame(NULL)
+  for(i in c(2011:2019)){ #Assigns dates in the proper format for Climwin analysis, using DOY (already in dataframe)
+    df <- subset(twentyfive, year == i) #using twentyfive dataset
+    df$date <- as.Date(df$max_rate_DOY, origin = paste0(i, "-01-01"))
+    df$date <- strftime(df$date, format = "%d/%m/%Y")
+    biodata <- rbind(biodata, df)
+  }
+
+  refdateround <- round(mean(biodata$max_rate_DOY)/7) #/7 for week
+
+  for (k in rangedates$doy) {
+
+    refdate <- data.frame(round(mean(biodata$max_rate_DOY)))
+    refdate$round.mean.biodata.max_rate_DOY.. <- as.Date(refdate$round.mean.biodata.max_rate_DOY.., origin = paste0("2011-01-01"))
+    refdate <- separate(refdate, "round.mean.biodata.max_rate_DOY..", c("Year", "Month", "Day"), sep = "-")
+
+    MassWin <- slidingwin(xvar = list(Temp = climate$TMAX),
+                          cdate = climate$DATE,
+                          bdate = biodata$date,
+                          baseline = lm(max_rate_DOY ~ 1, data = biodata),
+                          cinterval = "week",
+                          range = c((refdateround-k), 0),
+                          type = "absolute", refday = c(refdate$Day, refdate$Month),
+                          stat = "mean",
+                          func = "lin",
+                          cmissing = "method2")
+
+    MassRand <- randwin(repeats = 1,
+                        xvar = list(Temp = climate$TMAX),
+                        cdate = climate$DATE,
+                        bdate = biodata$date,
+                        baseline = lm(max_rate_DOY ~ 1, data = biodata),
+                        cinterval = "week",
+                        range = c((refdateround-k), 0),
+                        type = "absolute", refday = c(refdate$Day,refdate$Month),
+                        stat = "mean",
+                        func = "lin",
+                        cmissing = "method2")
+    pvalue(dataset = MassWin[[1]]$Dataset, datasetrand = MassRand[[1]], metric = "AIC")
+
+    MassOutput <- MassWin[[1]][["Dataset"]]
+    MassRand <- MassRand[[1]]
+
+    df <- data.frame(w, round(mean(biodata$max_rate_DOY)/7),MassWin[[1]][["Dataset"]][[1,2]], MassWin[[1]][["Dataset"]][[1,3]])#add j #add/7
+    names(dffinal) <- names(df)
+    dffinal <- rbind(dffinal, df)
+    png(filename = paste("SCBI", "mettower","max_rate_DOY",k,w,  ".png", sep = "_"), width = 10, height = 8, units = "in", res = 300) #add w
+    plotalloutput <- plotall(dataset = MassOutput,
+                             datasetrand = MassRand,
+                             bestmodel = MassWin[[1]]$BestModel,
+                             bestmodeldata = MassWin[[1]]$BestModelData)
+
+    dev.off()
+  }}#}
+dffinal <- dffinal[-1,]
+names(dffinal) <- c("wood_type", "refday", "winopen", "winclose")
+write.csv(dffinal, file = "weekly_climwin_results_max_rate_DOY.csv", row.names = FALSE)
