@@ -1,6 +1,8 @@
 # Load packages and data ----
 # Loading tidyverse loads ggplot2, dplyr, readr, and many more
 library(tidyverse)
+library(readr)
+library(lubridate)
 Wood_pheno_table <- read_csv("Data/Wood_pheno_table_V4.csv")
 #versiontwo <- read_csv("Data/Wood_pheno_table_V2.csv")
 #versionone <- read_csv("Data/Wood_pheno_table_V1.csv")
@@ -171,15 +173,67 @@ fifty <- subset(Wood_pheno_table, perc == .50)
 seventyfive <- subset(Wood_pheno_table, perc == .75)
 #Temperature
 #NEON_summary_temp <- read_csv("climate data/NEON_summary_temp.csv")
-weatherdata <- read_csv("climate data/NCDC_NOAA_precip_temp.csv")
-weatherdata$months <- months(as.Date(weatherdata$DATE))
+#weatherdata <- read_csv("climate data/NCDC_NOAA_precip_temp.csv")
+#weatherdata$months <- months(as.Date(weatherdata$DATE))
+#weatherdata <- weatherdata[complete.cases(weatherdata$TMAX),]
+#weatherdatarp <- weatherdata[complete.cases(weatherdata$flag),]
+#weatherdatadp <- weatherdata[complete.cases(weatherdata$flagdp),]
+
+#SCBI MET TOWER TRY
+weatherdata <- read_csv("climate data/SCBI_mettower_data_sensor2.csv", col_names = FALSE) #only goes to October 2019, fix?
+colnames(weatherdata) <- c("year", "month", "day", "precip", "TMAX", "TMIN")
+weatherdata[weatherdata$TMAX == -99.9,] <- NA
+
 weatherdata <- weatherdata[complete.cases(weatherdata$TMAX),]
-weatherdatarp <- weatherdata[complete.cases(weatherdata$flag),]
-weatherdatadp <- weatherdata[complete.cases(weatherdata$flagdp),]
+
+weatherdata$DATE <- paste(weatherdata$day, weatherdata$month, weatherdata$year, sep = "/")
+weatherdata$DATE <- strptime(as.character(weatherdata$DATE), format = "%d/%m/%Y")
+weatherdata$DATE <- format(weatherdata$DATE, "%Y-%m-%d")
+
+weekly_climwin_resultsnew <- read_csv("results/Climwin_results/Weekly/weekly_climwin_resultsnew.csv")
+weekly_climwin_resultsnew$opendoy <- yday(weekly_climwin_resultsnew$median_windowopendate)
+weekly_climwin_resultsnew$closedoy <- yday(weekly_climwin_resultsnew$median_windowclosedate)
+weatherdata$doy <-yday(weatherdata$DATE)
+
+rp25 <- subset(weekly_climwin_resultsnew, wood_type =="ring porous" & percs == .25)
+rp25seq <- seq(rp25$opendoy, rp25$closedoy, 1)
+weatherdatarp25 <- weatherdata[weatherdata$doy %in% rp25seq,]
+
+rp50 <- subset(weekly_climwin_resultsnew, wood_type =="ring porous" & percs == .50)
+rp50seq <- seq(rp50$opendoy, rp50$closedoy, 1)
+weatherdatarp50 <- weatherdata[weatherdata$doy %in% rp50seq,]
+
+rp75 <- subset(weekly_climwin_resultsnew, wood_type =="ring porous" & percs == .75)
+rp75seq <- seq(rp75$opendoy, rp75$closedoy, 1)
+weatherdatarp75 <- weatherdata[weatherdata$doy %in% rp75seq,]
+
+dp25 <- subset(weekly_climwin_resultsnew, wood_type =="diffuse-porous" & percs == .25)
+dp25seq <- seq(dp25$opendoy, dp25$closedoy, 1)
+weatherdatadp25 <- weatherdata[weatherdata$doy %in% dp25seq,]
+
+dp50 <- subset(weekly_climwin_resultsnew, wood_type =="diffuse-porous" & percs == .50)
+dp50seq <- seq(dp50$opendoy, dp50$closedoy, 1)
+weatherdatadp50 <- weatherdata[weatherdata$doy %in% dp50seq,]
+
+dp75 <- subset(weekly_climwin_resultsnew, wood_type =="diffuse-porous" & percs == .75)
+dp75seq <- seq(dp75$opendoy, dp75$closedoy, 1)
+weatherdatadp75 <- weatherdata[weatherdata$doy %in% dp75seq,]
+
+############################################################################################
+#25%
+rpmeans25 <- aggregate(weatherdatarp25$TMAX, by = list(weatherdatarp25$year), FUN = mean)
+dpmeans25 <- aggregate(weatherdatadp25$TMAX, by = list(weatherdatadp25$year), FUN = mean)
+#50%
+rpmeans50 <- aggregate(weatherdatarp50$TMAX, by = list(weatherdatarp50$year), FUN = mean)
+dpmeans50 <- aggregate(weatherdatadp50$TMAX, by = list(weatherdatadp50$year), FUN = mean)
+#75%
+rpmeans75 <- aggregate(weatherdatarp75$TMAX, by = list(weatherdatarp75$year), FUN = mean)
+dpmeans75 <- aggregate(weatherdatadp75$TMAX, by = list(weatherdatadp75$year), FUN = mean)
 
 #I manually assigned a flag on the rows that correspond to each climwin window
-tempmaxmeansrp <- aggregate(weatherdatarp$TMAX, by = list(weatherdatarp$year, weatherdatarp$flag), FUN = mean)
-tempmaxmeansdp <- aggregate(weatherdatadp$TMAX, by = list(weatherdatadp$year, weatherdatadp$flagdp), FUN = mean)
+#check aggregate means of same period if NCDC data
+#tempmaxmeansrp <- aggregate(weatherdatarp$TMAX, by = list(weatherdatarp$year), FUN = mean)
+#tempmaxmeansdp <- aggregate(weatherdatadp$TMAX, by = list(weatherdatadp$year, weatherdatadp$flagdp), FUN = mean)
 
 #Temperatures (obsolete) ----
 springweather <- subset(weatherdata, months == "January" | months == "February" | months == "March" | months == "April" | months == "May")
@@ -203,33 +257,38 @@ colnames(aprilmeans) <- c("year", "aprilmean")
 #merge dataframes: Create the ring-porous and diffuse-porous subsets, then append the window data to them ----
 
 #Ring porous
-rpmeans <- subset(tempmaxmeansrp, Group.2 == "RP") #subset the climate means
-rpmeans <- rpmeans[c(1:9), c(1,3)] #remove 'flag' row
-colnames(rpmeans) <- c("year", "rptemp")
+#rpmeans <- subset(tempmaxmeansrp, Group.2 == "RP") #subset the climate means
+#rpmeans <- rpmeans[c(1:9), c(1,3)] #remove 'flag' row
+colnames(rpmeans25) <- c("year", "rptemp")
 
 #subset twentyfive DF to only include RP
+colnames(rpmeans25) <- c("year", "rptemp")
 twentyfiveRP <- subset(twentyfive, wood_type == "ring porous")
-twentyfiveRP <- merge(rpmeans, twentyfiveRP, by = "year")
+twentyfiveRP <- merge(rpmeans25, twentyfiveRP, by = "year")
 
+colnames(rpmeans50) <- c("year", "rptemp")
 fiftyRP <- subset(fifty, wood_type == "ring porous")
-fiftyRP <- merge(fiftyRP, rpmeans, by = "year")
+fiftyRP <- merge(fiftyRP, rpmeans50, by = "year")
 
+colnames(rpmeans75) <- c("year", "rptemp")
 seventyfiveRP <- subset( seventyfive, wood_type == "ring porous")
-seventyfiveRP <- merge(seventyfiveRP, rpmeans, by = "year")
+seventyfiveRP <- merge(seventyfiveRP, rpmeans75, by = "year")
 
 #Diffuse porous - repeat of RP process
-dpmeans <- subset(tempmaxmeansdp, Group.2 == "DP")
-dpmeans <- dpmeans[c(1:9), c(1,3)]
-colnames(dpmeans) <- c("year", "dptemp")
-
+#dpmeans <- subset(tempmaxmeansdp, Group.2 == "DP")
+#dpmeans <- dpmeans[c(1:9), c(1,3)]
+colnames(dpmeans25) <- c("year", "dptemp")
 twentyfiveDP <- subset(twentyfive, wood_type == "diffuse-porous")
-twentyfiveDP <- merge(dpmeans, twentyfiveDP, by = "year")
+twentyfiveDP <- merge(dpmeans25, twentyfiveDP, by = "year")
 
+
+colnames(dpmeans50) <- c("year", "dptemp")
 fiftyDP <- subset(fifty, wood_type == "diffuse-porous")
-fiftyDP <- merge(fiftyDP, dpmeans, by = "year")
+fiftyDP <- merge(fiftyDP, dpmeans50, by = "year")
 
+colnames(dpmeans75) <- c("year", "dptemp")
 seventyfiveDP <- subset(seventyfive, wood_type == "diffuse-porous")
-seventyfiveDP <- merge(seventyfiveDP, dpmeans, by = "year")
+seventyfiveDP <- merge(seventyfiveDP, dpmeans75, by = "year")
 
 #Check out relationship with plot
 dpdoys25 <- aggregate(twentyfiveDP$DOY, by = list(twentyfiveDP$year), FUN = mean)
@@ -244,9 +303,18 @@ dpdoys75 <- aggregate(seventyfiveDP$DOY, by = list(seventyfiveDP$year), FUN = me
 plot(dpdoys75$x~dpmeans$dptemp, xlab = "Average max temp", ylab = "DOY 75% growth acheived", main = "Diffuse-porous preseason relationship")
 summary(lm(dpdoys75$x~dpmeans$dptemp))
 
-rpdoys <- aggregate(twentyfiveRP$DOY, by = list(twentyfiveRP$year), FUN = mean)
+rpdoys25 <- aggregate(twentyfiveRP$DOY, by = list(twentyfiveRP$year), FUN = mean)
 plot(rpdoys$x~rpmeans$rptemp)
 summary(lm(rpdoys$x~rpmeans$rptemp))
+
+rpdoys50 <- aggregate(fiftyRP$DOY, by = list(twentyfiveRP$year), FUN = mean)
+plot(rpdoys50$x~rpmeans50$rptemp)
+summary(lm(rpdoys$x~rpmeans$rptemp))
+
+rpdoys75 <- aggregate(seventyfiveRP$DOY, by = list(twentyfiveRP$year), FUN = mean)
+plot(rpdoys75$x~rpmeans75$rptemp)
+summary(lm(rpdoys$x~rpmeans75$rptemp))
+
 # Old stuff (remove if you want) ----
 colnames(ringporousmeans) <- c("year", "meantemp")
 Wood_pheno_table <-  merge(ringporousmeans, Wood_pheno_table, by = "year")
