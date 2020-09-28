@@ -173,7 +173,13 @@ fifty <- subset(Wood_pheno_table, perc == .50)
 seventyfive <- subset(Wood_pheno_table, perc == .75)
 #Temperature
 #NEON_summary_temp <- read_csv("climate data/NEON_summary_temp.csv")
-#weatherdata <- read_csv("climate data/NCDC_NOAA_precip_temp.csv")
+weatherdatancdc <- read_csv("climate data/NCDC_NOAA_precip_temp.csv")
+weatherdatancdc$DATE <- strptime(as.character(weatherdatancdc$DATE), format = "%d/%m/%Y")
+weatherdatancdc$DATE <- format(weatherdatancdc$DATE, "%Y-%m-%d")
+
+weatherdatancdc$doy <-yday(weatherdatancdc$DATE)
+weatherdatancdc$TMAX <- (weatherdatancdc$TMAX-32)*(5/9)
+weatherdatancdc <- weatherdatancdc[complete.cases(weatherdatancdc$TMAX),]
 #weatherdata$months <- months(as.Date(weatherdata$DATE))
 #weatherdata <- weatherdata[complete.cases(weatherdata$TMAX),]
 #weatherdatarp <- weatherdata[complete.cases(weatherdata$flag),]
@@ -198,27 +204,52 @@ weatherdata$doy <-yday(weatherdata$DATE)
 rp25 <- subset(weekly_climwin_resultsnew, wood_type =="ring porous" & percs == .25)
 rp25seq <- seq(rp25$opendoy, rp25$closedoy, 1)
 weatherdatarp25 <- weatherdata[weatherdata$doy %in% rp25seq,]
-
+#NCDC comparison
+weatherdatarp25_NCDC <- weatherdatancdc[weatherdatancdc$doy %in% rp25seq,]
+aggregate(weatherdatarp25$TMAX, by = list(weatherdatarp25$year), FUN = mean)
+aggregate(weatherdatarp25_NCDC$TMAX, by = list(weatherdatarp25_NCDC$year), FUN = mean)
+###
 rp50 <- subset(weekly_climwin_resultsnew, wood_type =="ring porous" & percs == .50)
 rp50seq <- seq(rp50$opendoy, rp50$closedoy, 1)
 weatherdatarp50 <- weatherdata[weatherdata$doy %in% rp50seq,]
-
+#NCDC comparison
+weatherdatarp50_NCDC <- weatherdatancdc[weatherdatancdc$doy %in% rp50seq,]
+aggregate(weatherdatarp50$TMAX, by = list(weatherdatarp50$year), FUN = mean)
+aggregate(weatherdatarp50_NCDC$TMAX, by = list(weatherdatarp50_NCDC$year), FUN = mean)
+###
 rp75 <- subset(weekly_climwin_resultsnew, wood_type =="ring porous" & percs == .75)
 rp75seq <- seq(rp75$opendoy, rp75$closedoy, 1)
 weatherdatarp75 <- weatherdata[weatherdata$doy %in% rp75seq,]
+#NCDC comparison
+weatherdatarp75_NCDC <- weatherdatancdc[weatherdatancdc$doy %in% rp75seq,]
+aggregate(weatherdatarp75$TMAX, by = list(weatherdatarp75$year), FUN = mean)
+aggregate(weatherdatarp75_NCDC$TMAX, by = list(weatherdatarp75_NCDC$year), FUN = mean)
+###
 
 dp25 <- subset(weekly_climwin_resultsnew, wood_type =="diffuse-porous" & percs == .25)
 dp25seq <- seq(dp25$opendoy, dp25$closedoy, 1)
 weatherdatadp25 <- weatherdata[weatherdata$doy %in% dp25seq,]
-
+#NCDC comparison
+weatherdatadp25_NCDC <- weatherdatancdc[weatherdatancdc$doy %in% dp25seq,]
+aggregate(weatherdatadp25$TMAX, by = list(weatherdatadp25$year), FUN = mean)
+aggregate(weatherdatadp25_NCDC$TMAX, by = list(weatherdatadp25_NCDC$year), FUN = mean)
+###
 dp50 <- subset(weekly_climwin_resultsnew, wood_type =="diffuse-porous" & percs == .50)
 dp50seq <- seq(dp50$opendoy, dp50$closedoy, 1)
 weatherdatadp50 <- weatherdata[weatherdata$doy %in% dp50seq,]
-
+#NCDC comparison
+weatherdatadp50_NCDC <- weatherdatancdc[weatherdatancdc$doy %in% dp50seq,]
+aggregate(weatherdatadp50$TMAX, by = list(weatherdatadp50$year), FUN = mean)
+aggregate(weatherdatadp50_NCDC$TMAX, by = list(weatherdatadp50_NCDC$year), FUN = mean)
+###
 dp75 <- subset(weekly_climwin_resultsnew, wood_type =="diffuse-porous" & percs == .75)
 dp75seq <- seq(dp75$opendoy, dp75$closedoy, 1)
 weatherdatadp75 <- weatherdata[weatherdata$doy %in% dp75seq,]
-
+#NCDC comparison
+weatherdatadp75_NCDC <- weatherdatancdc[weatherdatancdc$doy %in% dp75seq,]
+aggregate(weatherdatadp75$TMAX, by = list(weatherdatadp75$year), FUN = mean)
+aggregate(weatherdatadp75_NCDC$TMAX, by = list(weatherdatadp75_NCDC$year), FUN = mean)
+###
 ############################################################################################
 #25%
 rpmeans25 <- aggregate(weatherdatarp25$TMAX, by = list(weatherdatarp25$year), FUN = mean)
