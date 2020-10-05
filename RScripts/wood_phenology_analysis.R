@@ -177,7 +177,10 @@ weatherdata_cleaned <- read_csv("climate data/met_tower_data_sensor2_ncdc_supple
 colnames(weatherdata_cleaned) <- c("DATE", "year", "month", "day","doy", "TMAX")
 weatherdata_cleaned[weatherdata_cleaned$TMAX == -99.9,] <- NA
 
-weekly_climwin_resultsnew <- read_csv("results/Climwin_results/Weekly/weekly_climwin_resultsnew.csv")
+
+weekly_climwin_resultsnew <- read_csv("results/Climwin_results/Weekly/weekly_climwin_results.csv")
+weekly_climwin_resultsnew$median_windowopendate <- strptime(weekly_climwin_resultsnew$median_windowopendate, format = "%m/%d/%y")
+weekly_climwin_resultsnew$median_windowclosedate <- strptime(weekly_climwin_resultsnew$median_windowclosedate, format = "%m/%d/%y")
 weekly_climwin_resultsnew$opendoy <- yday(weekly_climwin_resultsnew$median_windowopendate)
 weekly_climwin_resultsnew$closedoy <- yday(weekly_climwin_resultsnew$median_windowclosedate)
 
@@ -285,31 +288,31 @@ colnames(rpmeans25) <- c("year", "rptemp")
 #subset twentyfive DF to only include RP
 colnames(rpmeans25) <- c("year", "rptemp")
 twentyfiveRP <- subset(twentyfive, wood_type == "ring porous")
-twentyfiveRP <- merge(rpmeans50, twentyfiveRP, by = "year")##Change rpmeans## here
+twentyfiveRP <- merge(rpmeans25, twentyfiveRP, by = "year")##Change rpmeans## here
 
 colnames(rpmeans50) <- c("year", "rptemp")
 fiftyRP <- subset(fifty, wood_type == "ring porous")
-fiftyRP <- merge(fiftyRP, rpmeans50, by = "year")##Change rpmeans## here
+fiftyRP <- merge(fiftyRP, rpmeans25, by = "year")##Change rpmeans## here
 
 colnames(rpmeans75) <- c("year", "rptemp")
 seventyfiveRP <- subset( seventyfive, wood_type == "ring porous")
-seventyfiveRP <- merge(seventyfiveRP, rpmeans50, by = "year")##Change rpmeans## here
+seventyfiveRP <- merge(seventyfiveRP, rpmeans25, by = "year")##Change rpmeans## here
 
 #Diffuse porous - repeat of RP process
 #dpmeans <- subset(tempmaxmeansdp, Group.2 == "DP")
 #dpmeans <- dpmeans[c(1:9), c(1,3)]
 colnames(dpmeans25) <- c("year", "dptemp")
 twentyfiveDP <- subset(twentyfive, wood_type == "diffuse-porous")
-twentyfiveDP <- merge(dpmeans75, twentyfiveDP, by = "year")
+twentyfiveDP <- merge(dpmeans25, twentyfiveDP, by = "year")
 
 
 colnames(dpmeans50) <- c("year", "dptemp")
 fiftyDP <- subset(fifty, wood_type == "diffuse-porous")
-fiftyDP <- merge(fiftyDP, dpmeans75, by = "year")
+fiftyDP <- merge(fiftyDP, dpmeans25, by = "year")
 
 colnames(dpmeans75) <- c("year", "dptemp")
 seventyfiveDP <- subset(seventyfive, wood_type == "diffuse-porous")
-seventyfiveDP <- merge(seventyfiveDP, dpmeans75, by = "year")
+seventyfiveDP <- merge(seventyfiveDP, dpmeans25, by = "year")
 
 #Check out relationship with plot
 dpdoys25 <- aggregate(twentyfiveDP$DOY, by = list(twentyfiveDP$year), FUN = mean)
