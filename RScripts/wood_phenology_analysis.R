@@ -166,91 +166,45 @@ plot(meanrate$x~meanrate$Group.1, xlab = "Year", ylab = "Mean maximum rate", mai
 
 
 # Setting up data for mixed-effect model ---------------------------------------
-#Adding CLIMWIN window weather data
+#Adding CLIMWIN window weather data----
 Wood_pheno_table <- read_csv("Data/Wood_pheno_table_V4.csv")
 twentyfive <- subset(Wood_pheno_table, perc == .25)# & sp == "litu")
 fifty <- subset(Wood_pheno_table, perc == .50)
 seventyfive <- subset(Wood_pheno_table, perc == .75)
 #Temperature
 #NEON_summary_temp <- read_csv("climate data/NEON_summary_temp.csv")
-weatherdatancdc <- read_csv("climate data/NCDC_NOAA_precip_temp.csv")
-weatherdatancdc$DATE <- strptime(as.character(weatherdatancdc$DATE), format = "%d/%m/%Y")
-weatherdatancdc$DATE <- format(weatherdatancdc$DATE, "%Y-%m-%d")
-
-weatherdatancdc$doy <-yday(weatherdatancdc$DATE)
-weatherdatancdc$TMAX <- (weatherdatancdc$TMAX-32)*(5/9)
-weatherdatancdc <- weatherdatancdc[complete.cases(weatherdatancdc$TMAX),]
-#weatherdata$months <- months(as.Date(weatherdata$DATE))
-#weatherdata <- weatherdata[complete.cases(weatherdata$TMAX),]
-#weatherdatarp <- weatherdata[complete.cases(weatherdata$flag),]
-#weatherdatadp <- weatherdata[complete.cases(weatherdata$flagdp),]
-
-#SCBI MET TOWER TRY
-weatherdata <- read_csv("climate data/SCBI_mettower_data_sensor2.csv", col_names = FALSE) #only goes to October 2019, fix?
-colnames(weatherdata) <- c("year", "month", "day", "precip", "TMAX", "TMIN")
-weatherdata[weatherdata$TMAX == -99.9,] <- NA
-
-weatherdata <- weatherdata[complete.cases(weatherdata$TMAX),]
-
-weatherdata$DATE <- paste(weatherdata$day, weatherdata$month, weatherdata$year, sep = "/")
-weatherdata$DATE <- strptime(as.character(weatherdata$DATE), format = "%d/%m/%Y")
-weatherdata$DATE <- format(weatherdata$DATE, "%Y-%m-%d")
+weatherdata_cleaned <- read_csv("climate data/met_tower_data_sensor2_ncdc_supplemented.csv", col_names = TRUE) #only goes to October 2019, fix?
+colnames(weatherdata_cleaned) <- c("DATE", "year", "month", "day","doy", "TMAX")
+weatherdata_cleaned[weatherdata_cleaned$TMAX == -99.9,] <- NA
 
 weekly_climwin_resultsnew <- read_csv("results/Climwin_results/Weekly/weekly_climwin_resultsnew.csv")
 weekly_climwin_resultsnew$opendoy <- yday(weekly_climwin_resultsnew$median_windowopendate)
 weekly_climwin_resultsnew$closedoy <- yday(weekly_climwin_resultsnew$median_windowclosedate)
-weatherdata$doy <-yday(weatherdata$DATE)
 
 rp25 <- subset(weekly_climwin_resultsnew, wood_type =="ring porous" & percs == .25)
 rp25seq <- seq(rp25$opendoy, rp25$closedoy, 1)
-weatherdatarp25 <- weatherdata[weatherdata$doy %in% rp25seq,]
-#NCDC comparison
-weatherdatarp25_NCDC <- weatherdatancdc[weatherdatancdc$doy %in% rp25seq,]
-aggregate(weatherdatarp25$TMAX, by = list(weatherdatarp25$year), FUN = mean)
-aggregate(weatherdatarp25_NCDC$TMAX, by = list(weatherdatarp25_NCDC$year), FUN = mean)
-###
+weatherdatarp25 <- weatherdata_cleaned[weatherdata_cleaned$doy %in% rp25seq,]
+
 rp50 <- subset(weekly_climwin_resultsnew, wood_type =="ring porous" & percs == .50)
 rp50seq <- seq(rp50$opendoy, rp50$closedoy, 1)
-weatherdatarp50 <- weatherdata[weatherdata$doy %in% rp50seq,]
-#NCDC comparison
-weatherdatarp50_NCDC <- weatherdatancdc[weatherdatancdc$doy %in% rp50seq,]
-aggregate(weatherdatarp50$TMAX, by = list(weatherdatarp50$year), FUN = mean)
-aggregate(weatherdatarp50_NCDC$TMAX, by = list(weatherdatarp50_NCDC$year), FUN = mean)
-###
+weatherdatarp50 <- weatherdata_cleaned[weatherdata_cleaned$doy %in% rp50seq,]
+
 rp75 <- subset(weekly_climwin_resultsnew, wood_type =="ring porous" & percs == .75)
 rp75seq <- seq(rp75$opendoy, rp75$closedoy, 1)
-weatherdatarp75 <- weatherdata[weatherdata$doy %in% rp75seq,]
-#NCDC comparison
-weatherdatarp75_NCDC <- weatherdatancdc[weatherdatancdc$doy %in% rp75seq,]
-aggregate(weatherdatarp75$TMAX, by = list(weatherdatarp75$year), FUN = mean)
-aggregate(weatherdatarp75_NCDC$TMAX, by = list(weatherdatarp75_NCDC$year), FUN = mean)
-###
+weatherdatarp75 <- weatherdata_cleaned[weatherdata_cleaned$doy %in% rp75seq,]
 
 dp25 <- subset(weekly_climwin_resultsnew, wood_type =="diffuse-porous" & percs == .25)
 dp25seq <- seq(dp25$opendoy, dp25$closedoy, 1)
-weatherdatadp25 <- weatherdata[weatherdata$doy %in% dp25seq,]
-#NCDC comparison
-weatherdatadp25_NCDC <- weatherdatancdc[weatherdatancdc$doy %in% dp25seq,]
-aggregate(weatherdatadp25$TMAX, by = list(weatherdatadp25$year), FUN = mean)
-aggregate(weatherdatadp25_NCDC$TMAX, by = list(weatherdatadp25_NCDC$year), FUN = mean)
-###
+weatherdatadp25 <- weatherdata_cleaned[weatherdata_cleaned$doy %in% dp25seq,]
+
 dp50 <- subset(weekly_climwin_resultsnew, wood_type =="diffuse-porous" & percs == .50)
 dp50seq <- seq(dp50$opendoy, dp50$closedoy, 1)
-weatherdatadp50 <- weatherdata[weatherdata$doy %in% dp50seq,]
-#NCDC comparison
-weatherdatadp50_NCDC <- weatherdatancdc[weatherdatancdc$doy %in% dp50seq,]
-aggregate(weatherdatadp50$TMAX, by = list(weatherdatadp50$year), FUN = mean)
-aggregate(weatherdatadp50_NCDC$TMAX, by = list(weatherdatadp50_NCDC$year), FUN = mean)
-###
+weatherdatadp50 <- weatherdata_cleaned[weatherdata_cleaned$doy %in% dp50seq,]
+
 dp75 <- subset(weekly_climwin_resultsnew, wood_type =="diffuse-porous" & percs == .75)
 dp75seq <- seq(dp75$opendoy, dp75$closedoy, 1)
-weatherdatadp75 <- weatherdata[weatherdata$doy %in% dp75seq,]
-#NCDC comparison
-weatherdatadp75_NCDC <- weatherdatancdc[weatherdatancdc$doy %in% dp75seq,]
-aggregate(weatherdatadp75$TMAX, by = list(weatherdatadp75$year), FUN = mean)
-aggregate(weatherdatadp75_NCDC$TMAX, by = list(weatherdatadp75_NCDC$year), FUN = mean)
-###
-############################################################################################
+weatherdatadp75 <- weatherdata_cleaned[weatherdata_cleaned$doy %in% dp75seq,]
+
 #25%
 rpmeans25 <- aggregate(weatherdatarp25$TMAX, by = list(weatherdatarp25$year), FUN = mean)
 dpmeans25 <- aggregate(weatherdatadp25$TMAX, by = list(weatherdatadp25$year), FUN = mean)
@@ -260,6 +214,42 @@ dpmeans50 <- aggregate(weatherdatadp50$TMAX, by = list(weatherdatadp50$year), FU
 #75%
 rpmeans75 <- aggregate(weatherdatarp75$TMAX, by = list(weatherdatarp75$year), FUN = mean)
 dpmeans75 <- aggregate(weatherdatadp75$TMAX, by = list(weatherdatadp75$year), FUN = mean)
+#NCDC comparisons for quality checking ----
+#load in data
+weatherdatancdc <- read_csv("climate data/NCDC_NOAA_precip_temp.csv")
+weatherdatancdc$DATE <- strptime(as.character(weatherdatancdc$DATE), format = "%d/%m/%Y")
+weatherdatancdc$DATE <- format(weatherdatancdc$DATE, "%Y-%m-%d")
+
+weatherdatancdc$doy <-yday(weatherdatancdc$DATE)
+weatherdatancdc$TMAX <- (weatherdatancdc$TMAX-32)*(5/9)
+weatherdatancdc <- weatherdatancdc[complete.cases(weatherdatancdc$TMAX),]
+
+weatherdatarp25_NCDC <- weatherdatancdc[weatherdatancdc$doy %in% rp25seq,]
+rp25_climate_QC <- merge((aggregate(weatherdatarp25$TMAX, by = list(weatherdatarp25$year), FUN = mean)),(aggregate(weatherdatarp25_NCDC$TMAX, by = list(weatherdatarp25_NCDC$year), FUN = mean)), by = "Group.1")
+names(rp25_climate_QC) <- c("year","met_tower", "NCDC")
+
+weatherdatarp50_NCDC <- weatherdatancdc[weatherdatancdc$doy %in% rp50seq,]
+rp50_climate_QC <- merge(aggregate(weatherdatarp50$TMAX, by = list(weatherdatarp50$year), FUN = mean),aggregate(weatherdatarp50_NCDC$TMAX, by = list(weatherdatarp50_NCDC$year), FUN = mean), by = "Group.1")
+names(rp50_climate_QC) <- c("year","met_tower","NCDC")
+
+weatherdatarp75_NCDC <- weatherdatancdc[weatherdatancdc$doy %in% rp75seq,]
+rp75_climate_QC <- merge(aggregate(weatherdatarp75$TMAX, by = list(weatherdatarp75$year), FUN = mean),aggregate(weatherdatarp75_NCDC$TMAX, by = list(weatherdatarp75_NCDC$year), FUN = mean), by = "Group.1")
+names(rp75_climate_QC) <- c("year", "met_tower", "NCDC")
+
+weatherdatadp25_NCDC <- weatherdatancdc[weatherdatancdc$doy %in% dp25seq,]
+dp25_climate_QC <- merge(aggregate(weatherdatadp25$TMAX, by = list(weatherdatadp25$year), FUN = mean),aggregate(weatherdatadp25_NCDC$TMAX, by = list(weatherdatadp25_NCDC$year), FUN = mean), by = "Group.1")
+names(dp25_climate_QC) <- c("year","met_tower","NCDC")
+
+weatherdatadp50_NCDC <- weatherdatancdc[weatherdatancdc$doy %in% dp50seq,]
+dp50_climate_QC <- merge(aggregate(weatherdatadp50$TMAX, by = list(weatherdatadp50$year), FUN = mean),aggregate(weatherdatadp50_NCDC$TMAX, by = list(weatherdatadp50_NCDC$year), FUN = mean), by = "Group.1")
+names(dp50_climate_QC) <- c("year", "met_tower","NCDC")
+
+weatherdatadp75_NCDC <- weatherdatancdc[weatherdatancdc$doy %in% dp75seq,]
+dp75_climate_QC <- merge(aggregate(weatherdatadp75$TMAX, by = list(weatherdatadp75$year), FUN = mean),aggregate(weatherdatadp75_NCDC$TMAX, by = list(weatherdatadp75_NCDC$year), FUN = mean), by = "Group.1")
+names(dp75_climate_QC) <- c("year","met_tower","NCDC")
+
+############################################################################################
+
 
 #I manually assigned a flag on the rows that correspond to each climwin window
 #check aggregate means of same period if NCDC data
@@ -295,27 +285,27 @@ colnames(rpmeans25) <- c("year", "rptemp")
 #subset twentyfive DF to only include RP
 colnames(rpmeans25) <- c("year", "rptemp")
 twentyfiveRP <- subset(twentyfive, wood_type == "ring porous")
-twentyfiveRP <- merge(rpmeans25, twentyfiveRP, by = "year")
+twentyfiveRP <- merge(rpmeans50, twentyfiveRP, by = "year")##Change rpmeans## here
 
 colnames(rpmeans50) <- c("year", "rptemp")
 fiftyRP <- subset(fifty, wood_type == "ring porous")
-fiftyRP <- merge(fiftyRP, rpmeans50, by = "year")
+fiftyRP <- merge(fiftyRP, rpmeans50, by = "year")##Change rpmeans## here
 
 colnames(rpmeans75) <- c("year", "rptemp")
 seventyfiveRP <- subset( seventyfive, wood_type == "ring porous")
-seventyfiveRP <- merge(seventyfiveRP, rpmeans75, by = "year")
+seventyfiveRP <- merge(seventyfiveRP, rpmeans50, by = "year")##Change rpmeans## here
 
 #Diffuse porous - repeat of RP process
 #dpmeans <- subset(tempmaxmeansdp, Group.2 == "DP")
 #dpmeans <- dpmeans[c(1:9), c(1,3)]
 colnames(dpmeans25) <- c("year", "dptemp")
 twentyfiveDP <- subset(twentyfive, wood_type == "diffuse-porous")
-twentyfiveDP <- merge(dpmeans25, twentyfiveDP, by = "year")
+twentyfiveDP <- merge(dpmeans75, twentyfiveDP, by = "year")
 
 
 colnames(dpmeans50) <- c("year", "dptemp")
 fiftyDP <- subset(fifty, wood_type == "diffuse-porous")
-fiftyDP <- merge(fiftyDP, dpmeans50, by = "year")
+fiftyDP <- merge(fiftyDP, dpmeans75, by = "year")
 
 colnames(dpmeans75) <- c("year", "dptemp")
 seventyfiveDP <- subset(seventyfive, wood_type == "diffuse-porous")
@@ -323,28 +313,28 @@ seventyfiveDP <- merge(seventyfiveDP, dpmeans75, by = "year")
 
 #Check out relationship with plot
 dpdoys25 <- aggregate(twentyfiveDP$DOY, by = list(twentyfiveDP$year), FUN = mean)
-plot(dpdoys25$x~dpmeans$dptemp, xlab = "Average max temp", ylab = "DOY 25% growth acheived", main = "Diffuse-porous preseason relationship")
-summary(lm(dpdoys25$x~dpmeans$dptemp))
+plot(dpdoys25$x~dpmeans25$dptemp, xlab = "Average max temp", ylab = "DOY 25% growth acheived", main = "Diffuse-porous preseason relationship")
+summary(lm(dpdoys25$x~dpmeans25$dptemp))
 
 dpdoys50 <- aggregate(fiftyDP$DOY, by = list(fiftyDP$year), FUN = mean)
-plot(dpdoys50$x~dpmeans$dptemp, xlab = "Average max temp", ylab = "DOY 50% growth acheived", main = "Diffuse-porous preseason relationship")
-summary(lm(dpdoys50$x~dpmeans$dptemp))
+plot(dpdoys50$x~dpmeans50$dptemp, xlab = "Average max temp", ylab = "DOY 50% growth acheived", main = "Diffuse-porous preseason relationship")
+summary(lm(dpdoys50$x~dpmeans50$dptemp))
 
 dpdoys75 <- aggregate(seventyfiveDP$DOY, by = list(seventyfiveDP$year), FUN = mean)
-plot(dpdoys75$x~dpmeans$dptemp, xlab = "Average max temp", ylab = "DOY 75% growth acheived", main = "Diffuse-porous preseason relationship")
-summary(lm(dpdoys75$x~dpmeans$dptemp))
+plot(dpdoys75$x~dpmeans75$dptemp, xlab = "Average max temp", ylab = "DOY 75% growth acheived", main = "Diffuse-porous preseason relationship")
+summary(lm(dpdoys75$x~dpmeans75$dptemp))
 
 rpdoys25 <- aggregate(twentyfiveRP$DOY, by = list(twentyfiveRP$year), FUN = mean)
-plot(rpdoys$x~rpmeans$rptemp)
-summary(lm(rpdoys$x~rpmeans$rptemp))
+plot(rpdoys25$x~rpmeans25$rptemp)
+summary(lm(rpdoys25$x~rpmeans25$rptemp))
 
 rpdoys50 <- aggregate(fiftyRP$DOY, by = list(twentyfiveRP$year), FUN = mean)
 plot(rpdoys50$x~rpmeans50$rptemp)
-summary(lm(rpdoys$x~rpmeans$rptemp))
+summary(lm(rpdoys50$x~rpmeans50$rptemp))
 
 rpdoys75 <- aggregate(seventyfiveRP$DOY, by = list(twentyfiveRP$year), FUN = mean)
 plot(rpdoys75$x~rpmeans75$rptemp)
-summary(lm(rpdoys$x~rpmeans75$rptemp))
+summary(lm(rpdoys75$x~rpmeans75$rptemp))
 
 # Old stuff (remove if you want) ----
 colnames(ringporousmeans) <- c("year", "meantemp")
@@ -400,6 +390,15 @@ summary(lmer(max_rate~dptemp + (1|sp/tag) , data = twentyfiveDP))
 summary(lmer(max_rate_DOY~dptemp + (1|sp/tag) , data = twentyfiveDP))
 
 summary(lmer(tot~dptemp + (1|sp/tag) , data = twentyfiveDP))
+
+#Met tower models
+summary(lmer(DOY ~ dptemp + (1|sp/tag), data = twentyfiveDP))
+summary(lmer(DOY ~ dptemp + (1|sp/tag), data = fiftyDP))
+summary(lmer(DOY ~ dptemp + (1|sp/tag), data = seventyfiveDP))
+
+summary(lmer(DOY ~ rptemp + (1|sp/tag), data = twentyfiveRP))
+summary(lmer(DOY ~ rptemp + (1|sp/tag), data = fiftyRP))
+summary(lmer(DOY ~ rptemp + (1|sp/tag), data = seventyfiveRP))
 
 ####
 #mixedmodelrate <- lmer(max_rate_DOY~wood_type + marchmean + wood_type*marchmean + (1|sp:tag) , data = twentyfive)
@@ -528,7 +527,9 @@ jointmodelRP <- stan_mvmer(
   data = list(twentyfiveRP, fiftyRP, seventyfiveRP),
   chains = 2, seed = 349, iter = 4000)
 
-summary(jointmodelRP, probs = c(0.025, 0.975)) #probs controls the reported credible interval
+jointmodelRP_25_temps <- summary(jointmodelRP, probs = c(0.025, 0.975)) #probs controls the reported credible interval
+jointmodelRP_50_temps <- summary(jointmodelRP, probs = c(0.025, 0.975)) #probs controls the reported credible interval
+jointmodelRP_75_temps <- summary(jointmodelRP, probs = c(0.025, 0.975)) #probs controls the reported credible interval
 
 mixedmodel_stanlmerRP_doy25 <- stan_lmer( #25
   formula = DOY_formulaRP,
@@ -655,6 +656,10 @@ jointmodelDP <- stan_mvmer(
   chains = 2, seed = 349, iter = 4000)
 
 summary(jointmodelDP, probs = c(0.025, 0.975))
+
+jointmodelDP_25_temps <- summary(jointmodelDP, probs = c(0.025, 0.975)) #probs controls the reported credible interval
+jointmodelDP_50_temps <- summary(jointmodelDP, probs = c(0.025, 0.975)) #probs controls the reported credible interval
+jointmodelDP_75_temps <- summary(jointmodelDP, probs = c(0.025, 0.975)) #probs controls the reported credible interval
 
 mixedmodel_stanlmerDP_doy25 <- stan_lmer(#25
   formula = DOY_formulaDP,
