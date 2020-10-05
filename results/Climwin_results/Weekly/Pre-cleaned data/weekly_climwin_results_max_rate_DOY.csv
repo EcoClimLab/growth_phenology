@@ -1,0 +1,4 @@
+"wood_type","refdoy","refmonth","refday","winopendoy","winclosedoy","bestmodel_beta","median_windowopendate","median_windowclosedate"
+"ring porous",21,"05","28",10,7,-4.49673637050212,"2011-03-19","2011-04-05"
+"diffuse-porous",25,"06","23",5,2,-3.21174303870246,"2011-02-19","2011-06-11"
+"other",24,"06","15",11,9,-19.2576209561234,"2011-04-02","2011-05-21"

@@ -6,8 +6,12 @@ library(tidyverse)
 
 ####Read in climate and biological data for climwin analysis ----
 #SCBI met tower
-climate <- read_csv("climate data/SCBI_mettower_data_sensor2.csv", col_names = FALSE) #only goes to October 2019, fix?
-colnames(climate) <- c("year", "month", "day", "precip", "TMAX", "TMIN")
+#climate <- read_csv("climate data/SCBI_mettower_data_sensor2.csv", col_names = FALSE) #only goes to October 2019, fix?
+climate <- read_csv("climate data/met_tower_data_sensor2_ncdc_supplemented.csv", col_names = TRUE) #only goes to October 2019, fix?
+
+#colnames(climate) <- c("year","month", "day", "prcip", "TMAX", "TMIN")
+
+colnames(climate) <- c("date","year", "month", "day", "doy", "TMAX")
 climate[climate$TMAX == -99.9,] <- NA
 
 climate <- climate[complete.cases(climate$TMAX),]
@@ -29,7 +33,7 @@ Wood_pheno_table <- read_csv("Data/Wood_pheno_table_V4.csv") #Master datafrmae c
 dffinal <- data.frame(1,1,1,1,1,1,1,1,1,1)
 for(w in unique(Wood_pheno_table$wood_type)){
   for(j in unique(Wood_pheno_table$perc)){
-    twentyfive <- subset(Wood_pheno_table, wood_type == w & perc == j )
+    twentyfive <- subset(Wood_pheno_table,  wood_type == w & perc == j ) #
 
     biodata <- data.frame(NULL)
     for(i in c(2011:2019)){ #Assigns dates in the proper format for Climwin analysis, using DOY (already in dataframe)
@@ -53,7 +57,7 @@ for(w in unique(Wood_pheno_table$wood_type)){
                             baseline = lm(DOY ~ 1, data = biodata),
                             cinterval = "day",
                             range = c((refdateround-30), 0),
-                            type = "absolute", refday = c(refdate$Day, refdate$Month),
+                            type = "absolute", refday = c(as.numeric(refdate$Day), as.numeric(refdate$Month)),
                             stat = "mean",
                             func = "lin",
                             cmissing = "method2")
@@ -65,7 +69,7 @@ for(w in unique(Wood_pheno_table$wood_type)){
                           baseline = lm(DOY ~ 1, data = biodata),
                           cinterval = "day",
                           range = c((refdateround-30), 0),
-                          type = "absolute", refday = c(refdate$Day,refdate$Month),
+                          type = "absolute", refday = c(as.numeric(refdate$Day),as.numeric(refdate$Month)),
                           stat = "mean",
                           func = "lin",
                           cmissing = "method2")
@@ -75,11 +79,12 @@ for(w in unique(Wood_pheno_table$wood_type)){
       MassRand <- MassRand[[1]]
       #windowopen <- as.Date(refdateround- MassWin[[1]][["Dataset"]][[1,2]] , origin = paste0("2011-01-01"))
       #windowclose <- as.Date(refdateround - MassWin[[1]][["Dataset"]][[1,3]] , origin = paste0("2011-01-01"))
+
       winmedians <- medwin(MassOutput, cw = 0.95)
       medianwindowopen <- as.Date(refdateround- winmedians[["Median Window Open"]] , origin = paste0("2011-01-01"))
       medianwindowclose <- as.Date(refdateround - winmedians[["Median Window Close"]] , origin = paste0("2011-01-01"))
 
-      df <- data.frame(w,j, round(mean(biodata$DOY)), refdate$Month, refdate$Day,MassWin[[1]][["Dataset"]][[1,2]], MassWin[[1]][["Dataset"]][[1,3]],MassOutput[1,4],as.character(medianwindowopen),as.character(medianwindowclose))#add j #add/7
+      df <- data.frame(w, j, round(mean(biodata$DOY)), refdate$Month, refdate$Day,MassWin[[1]][["Dataset"]][[1,2]], MassWin[[1]][["Dataset"]][[1,3]],MassOutput[1,4],as.character(medianwindowopen),as.character(medianwindowclose))#add w,#add/7
       names(dffinal) <- names(df)
       dffinal <- rbind(dffinal, df)
       png(filename = paste("SCBI", "mettower",w,  ".png", sep = "_"), width = 10, height = 8, units = "in", res = 300) #add w
@@ -104,7 +109,7 @@ colnames(rangedates) <- c("day", "doy")
 dffinal <- data.frame(1,1,1,1,1,1,1,1,1,1)
 for(w in unique(Wood_pheno_table$wood_type)){
   for(j in unique(Wood_pheno_table$perc)){
-    twentyfive <- subset(Wood_pheno_table, wood_type == w & perc == j )
+    twentyfive <- subset(Wood_pheno_table, wood_type == w & perc == j )#
 
     biodata <- data.frame(NULL)
     for(i in c(2011:2019)){ #Assigns dates in the proper format for Climwin analysis, using DOY (already in dataframe)
@@ -154,7 +159,7 @@ for(w in unique(Wood_pheno_table$wood_type)){
       medianwindowopen <- as.Date(refdateround*7- winmedians[["Median Window Open"]]*7 , origin = paste0("2011-01-01"))
       medianwindowclose <- as.Date(refdateround*7 - winmedians[["Median Window Close"]]*7 , origin = paste0("2011-01-01"))
 
-      df <- data.frame(w,j, round(mean(biodata$DOY)/7),refdate$Month, refdate$Day,MassWin[[1]][["Dataset"]][[1,2]], MassWin[[1]][["Dataset"]][[1,3]],MassOutput[1,4],as.character(medianwindowopen), as.character(medianwindowclose))#add j #add/7
+      df <- data.frame(w,j, round(mean(biodata$DOY)/7),refdate$Month, refdate$Day,MassWin[[1]][["Dataset"]][[1,2]], MassWin[[1]][["Dataset"]][[1,3]],MassOutput[1,4],as.character(medianwindowopen), as.character(medianwindowclose))#add w, #add/7
       names(dffinal) <- names(df)
       dffinal <- rbind(dffinal, df)
       png(filename = paste("SCBI", "mettower",w,j,  ".png", sep = "_"), width = 10, height = 8, units = "in", res = 300) #add w
@@ -167,7 +172,7 @@ for(w in unique(Wood_pheno_table$wood_type)){
     }}#}
 dffinal <- dffinal[-1,]
 names(dffinal) <- c("wood_type", "percs", "refwoy","refmonth", "refday", "winopenwoy", "winclosewoy","bestmodel_beta","median_windowopendate", "median_windowclosedate")
-write.csv(dffinal, file = "weekly_climwin_results.csv", row.names = FALSE)
+write.csv(dffinal, file = "weekly_climwin_results_all.csv", row.names = FALSE)
 
 
 ####Total growth DAILY ----
@@ -254,8 +259,8 @@ colnames(rangedates) <- c("day", "doy")
 
 dffinal <- data.frame(1,1,1,1,1,1,1,1,1)
 for(w in unique(Wood_pheno_table$wood_type)){
-  # for(j in unique(Wood_pheno_table$perc)){
-  twentyfive <- subset(Wood_pheno_table, wood_type == w)# & perc == j )
+   #for(j in unique(Wood_pheno_table$perc)){
+  twentyfive <- subset(Wood_pheno_table, wood_type == w) #& perc == j )
 
   biodata <- data.frame(NULL)
   for(i in c(2011:2019)){ #Assigns dates in the proper format for Climwin analysis, using DOY (already in dataframe)
@@ -305,10 +310,10 @@ for(w in unique(Wood_pheno_table$wood_type)){
     medianwindowopen <- as.Date(refdateround*7- winmedians[["Median Window Open"]]*7 , origin = paste0("2011-01-01"))
     medianwindowclose <- as.Date(refdateround*7 - winmedians[["Median Window Close"]]*7 , origin = paste0("2011-01-01"))
 
-    df <- data.frame(w, round(mean(biodata$DOY)/7),refdate$Month, refdate$Day,MassWin[[1]][["Dataset"]][[1,2]], MassWin[[1]][["Dataset"]][[1,3]],MassOutput[1,4],as.character(medianwindowopen), as.character(medianwindowclose))#add j #add/7
+    df <- data.frame( w,round(mean(biodata$DOY)/7),refdate$Month, refdate$Day,MassWin[[1]][["Dataset"]][[1,2]], MassWin[[1]][["Dataset"]][[1,3]],MassOutput[1,4],as.character(medianwindowopen), as.character(medianwindowclose))#add w, #add/7
     names(dffinal) <- names(df)
     dffinal <- rbind(dffinal, df)
-    png(filename = paste("SCBI", "mettower","total_growth",w,  ".png", sep = "_"), width = 10, height = 8, units = "in", res = 300) #add w
+    png(filename = paste("SCBI", "mettower",w,"total_growth",  ".png", sep = "_"), width = 10, height = 8, units = "in", res = 300) #add w
     plotalloutput <- plotall(dataset = MassOutput,
                              datasetrand = MassRand,
                              bestmodel = MassWin[[1]]$BestModel,
@@ -318,7 +323,7 @@ for(w in unique(Wood_pheno_table$wood_type)){
   }#}
 dffinal <- dffinal[-1,]
 names(dffinal) <- c("wood_type", "refdoy", "refmonth", "refday","winopendoy", "winclosedoy", "bestmodel_beta","median_windowopendate", "median_windowclosedate")
-write.csv(dffinal, file = "weekly_climwin_results_totalgrowth.csv", row.names = FALSE)
+write.csv(dffinal, file = "weekly_climwin_results_totalgrowth_all.csv", row.names = FALSE)
 #
 
 ####Max rate DOY daily ----
@@ -450,6 +455,7 @@ for(w in unique(Wood_pheno_table$wood_type)){
 
     MassOutput <- MassWin[[1]][["Dataset"]]
     MassRand <- MassRand[[1]]
+
     #windowopen <- as.Date(refdateround- MassWin[[1]][["Dataset"]][[1,2]] , origin = paste0("2011-01-01"))
     #windowclose <- as.Date(refdateround - MassWin[[1]][["Dataset"]][[1,3]] , origin = paste0("2011-01-01"))
     winmedians <- medwin(MassOutput, cw = 0.95)
@@ -470,3 +476,4 @@ for(w in unique(Wood_pheno_table$wood_type)){
 dffinal <- dffinal[-1,]
 names(dffinal) <- c("wood_type", "refdoy", "refmonth", "refday","winopendoy", "winclosedoy","bestmodel_beta","median_windowopendate", "median_windowclosedate")
 write.csv(dffinal, file = "weekly_climwin_results_max_rate_DOY.csv", row.names = FALSE)
+plotweights(MassOutput)
