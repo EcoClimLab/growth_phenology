@@ -15,12 +15,15 @@ library(modelr)
 # Run wood_phenology_analysis_bert.R lines 1-96 first
 #
 set.seed(76)
-
-random_tags <- Wood_pheno_table %>% pull(tag) %>% unique() %>% sample(200)
+random_tags <- Wood_pheno_table %>%
+  pull(tag) %>%
+  unique() %>%
+  sample(10)
 
 temp_data <- Wood_pheno_table %>%
   mutate(marchmean = marchmean - mean(marchmean)) %>%
-  # filter(tag %in% random_tags) %>%
+  # Random sample to speed up computation:
+  filter(tag %in% random_tags) %>%
   select(tag, year, perc, DOY, marchmean) %>%
   arrange(tag, year, perc)
 
@@ -131,7 +134,7 @@ bayesian_regression_table
 
 
 # Extract draws corresponding to random effects --------------------------------
-# Executive summary:
+# Executive summary: Looks good, I think
 random_effects <- posterior_draws %>%
   filter(.variable == "b") %>%
   ungroup() %>%
@@ -149,8 +152,12 @@ random_effects <- posterior_draws %>%
 random_effects
 
 
-# Extract predicted values for each data point
-# ISSUE: Predicted values look off
+
+
+
+# Extract predicted values using tidybayes::add_predicted_draws() --------------
+# ISSUE: Predicted values look off so I filed issue https://github.com/mjskay/tidybayes/issues/271
+# See RScripts/bert/tidybayes_github_issue.R
 predictions <- temp_data %>%
   add_predicted_draws(joint_model_marchmeans)
 
@@ -158,12 +165,11 @@ predictions %>%
   group_by(perc) %>%
   summarize(mean_observed = mean(DOY), mean_predicted = mean(.prediction))
 
-
-# Manually compute predicted values instead of using add_predicted_draws() -----
+# Manually compute predicted values instead of using add_predicted_draws()
 predictions <- predictions %>%
-  mutate(.predictions_new = 0)
+  mutate(predictions_manual = 0)
 
-for(i in i:nrow(temp_data)){
+for(i in 1:nrow(temp_data)){
   temp_data_i <- temp_data %>%
     slice(i)
   tag_i <- temp_data_i$tag
@@ -184,32 +190,77 @@ for(i in i:nrow(temp_data)){
     predictions$year == year_i &
     predictions$perc == perc_i
 
-  predictions[index_i, "predictions_new"] <- random_effects_i$.value +
+  predictions[index_i, "predictions_manual"] <- random_effects_i$.value +
     fixed_effects_i$`(Intercept)` +
     fixed_effects_i$marchmean * marchmean_i
+
+  round(i/nrow(temp_data),3) %>% print()
 }
 
-
-# File reprex on this: mean_DOY_hat is not working right for stanmvreg objects
+# mean_DOY_hat is not working right for stanmvreg objects
 predictions %>%
   ungroup() %>%
-  slice_head(n = 600*2000) %>%
   group_by(perc) %>%
-  summarize(mean_observed = mean(DOY), mean_predicted = mean(.prediction), mean_predicted_new = mean(predictions_new))
+  summarize(mean_observed = mean(DOY), mean_predicted = mean(.prediction), mean_predicted_manual = mean(predictions_manual))
 
 
 
+# Use rstanarm::posterior_predict() instead of using add_predicted_draws()
+y_hat_25 <- joint_model_marchmeans %>%
+  posterior_predict(m = 1)
+
+# Rows are posterior draws = # of chains x (iter x 0.5 for burn-in)
+dim(y_hat_25)
+y_hat_25[1:5, 1:5]
+
+# Watch out how you convert to vector. For a given data point in the input data,
+# we want all simulations
+y_hat_25 %>% c() %>% .[1:5]
+
+y_hat <- c(
+  joint_model_marchmeans %>% posterior_predict(m = 1) %>% c(),
+  joint_model_marchmeans %>% posterior_predict(m = 2) %>% c(),
+  joint_model_marchmeans %>% posterior_predict(m = 3) %>% c()
+)
+
+predictions <- predictions %>%
+  ungroup() %>%
+  # Critical: sort by y outcome variable first
+  arrange(perc, tag, year) %>%
+  mutate(predictions_rstanarm = y_hat)
+
+predictions %>%
+  group_by(perc) %>%
+  summarize(
+    mean_observed = mean(DOY),
+    mean_predicted = mean(.prediction),
+    mean_predicted_manual = mean(predictions_manual),
+    mean_predicted_rstanarm = mean(predictions_rstanarm)
+  )
 
 # Hallelujah! -------
 ggplot() +
-  stat_lineribbon(data = predictions, aes(x = marchmean, y = .predictions_new, group = perc, col = perc), .width = c(.99, .95),  color = "#08519C") +
+  stat_lineribbon(data = predictions, aes(x = marchmean, y = predictions_rstanarm, group = perc, col = perc), .width = c(.99, .95),  color = "#08519C") +
+  # stat_lineribbon(data = predictions, aes(x = marchmean, y = predictions_manual, group = perc, col = perc), .width = c(.99, .95),  color = "#08519C") +
   geom_point(data = temp_data, aes(x = marchmean, y = DOY, col = perc)) +
   geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
   facet_wrap(~perc) +
   labs(x = "March mean temperature (recentered at mean)", y = "DOY", col = "Percentile", main = "Posterior credible intervals")
-ggsave(filename = "results/2020-09-16_preliminary_credible_intervals.png", width = 14.7*.8, height = 10.9*.8)
+# ggsave(filename = "results/2020-09-16_preliminary_credible_intervals.png", width = 14.7*.8, height = 10.9*.8)
 
+
+m_mpg = stan_glm(mpg ~ hp * cyl, data = mtcars)
+library(RColorBrewer)
+mtcars %>%
+  group_by(cyl) %>%
+  data_grid(hp = seq_range(hp, n = 501)) %>%
+  add_predicted_draws(m_mpg) %>%
+  ggplot(aes(x = hp, y = mpg)) +
+  stat_lineribbon(aes(y = .prediction), .width = c(.99, .95, .8, .5), color = brewer.pal(5, "Blues")[[5]]) +
+  geom_point(data = mtcars) +
+  scale_fill_brewer() +
+  facet_grid(. ~ cyl, space = "free_x", scales = "free_x")
 
 
 
