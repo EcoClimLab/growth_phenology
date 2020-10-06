@@ -1,4 +1,4 @@
-# 2020/9/16, 2020/10/5 -------
+# 2020/9/16, 2020/10/5, 2020/10/6 -------
 # Testing plotting credible intervals from http://mjskay.github.io/tidybayes/
 library(rstanarm)
 library(tidybayes)
@@ -250,17 +250,8 @@ ggplot() +
 # ggsave(filename = "results/2020-09-16_preliminary_credible_intervals.png", width = 14.7*.8, height = 10.9*.8)
 
 
-m_mpg = stan_glm(mpg ~ hp * cyl, data = mtcars)
-library(RColorBrewer)
-mtcars %>%
-  group_by(cyl) %>%
-  data_grid(hp = seq_range(hp, n = 501)) %>%
-  add_predicted_draws(m_mpg) %>%
-  ggplot(aes(x = hp, y = mpg)) +
-  stat_lineribbon(aes(y = .prediction), .width = c(.99, .95, .8, .5), color = brewer.pal(5, "Blues")[[5]]) +
-  geom_point(data = mtcars) +
-  scale_fill_brewer() +
-  facet_grid(. ~ cyl, space = "free_x", scales = "free_x")
+
+
 
 
 
