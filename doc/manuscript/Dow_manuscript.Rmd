@@ -178,11 +178,36 @@ ForestGEO
 ### Figures
 
 **Figure 1** 
+
+Based on D'Orangeville Figure 1
+
 ```{r fig1, out.width="100%", echo=FALSE, fig.align="center", fig.cap= "Logistic growth model"}
 # Created in RScripts/additional_figures.R
 knitr::include_graphics("tables_figures/fig1.png")
 ```
 
+**Figure 2** 
+
+Based on D'Orangeville Figure 3.a), but with relative growth
+
+```{r fig2, out.width="100%", echo=FALSE, fig.align="center", fig.cap= "Percent total (modeled) growth"}
+# Created in RScripts/additional_figures.R
+knitr::include_graphics("tables_figures/fig2.png")
+```
+
+**Figure 3** 
+
+Similar to D'Orangeville Figure 4.a), but with cummalative relative growth
+
+```{r fig3, out.width="100%", echo=FALSE, fig.align="center", fig.cap= "Cummulative percent total (modeled) growth"}
+# Created in RScripts/additional_figures.R
+knitr::include_graphics("tables_figures/fig3.png")
+```
+
+
+**Figure 4**
+
+**Figure 5**
 
 **Figure 6**
 

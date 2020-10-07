@@ -4,8 +4,9 @@ library(lubridate)
 library(tidybayes)
 library(patchwork)
 library(knitr)
-library(rstanarm)
+library(scales)
 options(mc.cores = parallel::detectCores())
+library(rstanarm)
 
 
 
@@ -15,7 +16,6 @@ Wood_pheno_table <- read_csv("Data/Wood_pheno_table_V4.csv") %>%
   filter(wood_type != "other") %>%
   # Rename ring porous to not have a space
   mutate(wood_type = ifelse(wood_type == "ring porous", "ring-porous", wood_type))
-
 
 
 
@@ -98,6 +98,9 @@ Wood_pheno_table <- Wood_pheno_table %>%
 View(Wood_pheno_table)
 
 
+
+
+# Fit multivariate model using climwinmeans ------------------------------------
 # TODO Erase later: Run analysis
 # - Only for subset of tags to speed up computation
 # - Recenter all climwin values at 65 since mean of climwinmeans is 66.310
@@ -114,12 +117,10 @@ Wood_pheno_table <- Wood_pheno_table %>%
   filter(tag %in% sample_tags) %>%
   mutate(climwinmean = climwinmean - 65)
 
-
-
-
-# Fit multivariate model using climwinmeans ------------------------------------
+# Delete all non-needed columns
 Wood_pheno_table <- Wood_pheno_table %>%
   select(perc, tag, year, wood_type, sp, climwinmean, starts_with("DOY"))
+
 
 # Convert to wide format for use in rstanarm::stan_mvmer()
 Wood_pheno_table_wide <- Wood_pheno_table %>%
@@ -217,11 +218,6 @@ bayesian_regression_table %>%
 
 
 
-# Analyze random effects ---------------------------------
-# Skipped
-
-
-
 
 # Fig6: Plot of regression of DOY over climwinmeans with credible intervals ----
 # Extract predicted DOY_25, DOY_50, DOY_75
@@ -265,19 +261,4 @@ ggsave(filename = "doc/manuscript/tables_figures/fig6.png", width = 14.7*.7, hei
 
 # Sanity check this plot with regression table intercepts and slopes
 posterior_means_fixed_effects
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
