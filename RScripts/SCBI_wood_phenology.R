@@ -532,6 +532,8 @@ for (e in 1:length(all_stems_intra)) { # Loop to merge all dendroband surveys in
 }
 all_stems <- all_stems[complete.cases(all_stems$dbh2), ]
 all_stems <- all_stems[, c(1:31, 34, 35)]
+
+# Added by bert: write all_stems observed data to csv
 write.csv(all_stems, file = "Data/all_stems.csv", row.names = FALSE)
 
 
