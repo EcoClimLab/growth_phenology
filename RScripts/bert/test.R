@@ -1,19 +1,103 @@
 # 2020/9/16, 2020/10/5, 2020/10/6 -------
 # Testing plotting credible intervals from http://mjskay.github.io/tidybayes/
+library(tidyverse)
+library(lubridate)
 library(rstanarm)
 library(tidybayes)
-library(plotly)
 library(broom)
 library(modelr)
+library(patchwork)
+
+
+# Visualize relationship between DOY and marchmeans ----------------------------
+# Get growth data
+Wood_pheno_table <- read_csv("Data/Wood_pheno_table_V4.csv") %>%
+  # Keep only RP and DP for now
+  filter(wood_type != "other") %>%
+  # Rename ring porous to not have a space
+  mutate(wood_type = ifelse(wood_type == "ring porous", "ring-porous", wood_type))
+
+# Create temperature variable
+# 0. Get all weather data
+weatherdata <-
+  read_csv("climate data/NCDC_NOAA_precip_temp.csv") %>%
+  mutate(
+    DATE = dmy(DATE),
+    months = month(DATE, label = TRUE, abbr = FALSE)
+  ) %>%
+  # Remove entries with no tmax data
+  filter(!is.na(TMAX)) %>%
+  # Rename RP flag set by Cam
+  rename(flagrp = flag)
+
+
+# 1. Get mean march daily maximum temperatures
+marchmeans <- weatherdata %>%
+  filter(months == "March") %>%
+  group_by(year) %>%
+  summarize(marchmean = mean(TMAX))
+
+
+# 2.a) EDA of climwin windows
+# RP climwin window is around 3/15 to 4/23
+weatherdata %>%
+  filter(flagrp == "RP") %>%
+  mutate(DOY = yday(DATE)) %>%
+  arrange(DOY) %>%
+  slice(c(1, n()))
+
+# DP climwin window is around 3/27 to 6/2
+weatherdata %>%
+  filter(flagdp == "DP") %>%
+  mutate(DOY = yday(DATE)) %>%
+  arrange(DOY) %>%
+  slice(c(1, n()))
+
+climwin_windows <-
+  tibble(
+    wood_type = c("diffuse-porous", "ring-porous"),
+    window = c("climwin window: 3/27 - 6/2", "climwin window: 3/15 - 4/23")
+  )
+
+
+# 2.b) Get mean climwin daily maximum temperatures
+# RP separately
+climwinmeans_rp <- weatherdata %>%
+  filter(flagrp == "RP") %>%
+  group_by(year) %>%
+  summarize(climwinmean = mean(TMAX)) %>%
+  mutate(wood_type = "ring-porous")
+
+# DP separately
+climwinmeans_dp <- weatherdata %>%
+  filter(flagdp == "DP") %>%
+  group_by(year) %>%
+  summarize(climwinmean = mean(TMAX)) %>%
+  mutate(wood_type = "diffuse-porous")
+
+# Combine
+climwinmeans <- bind_rows(climwinmeans_rp, climwinmeans_dp)
+
+
+# 3. Add to growth data
+Wood_pheno_table <- Wood_pheno_table %>%
+  left_join(marchmeans, by = "year") %>%
+  left_join(climwinmeans, by = c("year", "wood_type")) %>%
+  # Remove other variables
+  select(-c(tot, dbh, max_rate_DOY, max_rate)) %>%
+  mutate(
+    perc = case_when(
+      perc == 0.25 ~ "DOY_25",
+      perc == 0.5 ~ "DOY_50",
+      perc == 0.75 ~ "DOY_75"
+    )
+  )
 
 
 
 
 
 # Visualize relationship between DOY and marchmeans ----------------------------
-#
-# Run wood_phenology_analysis_bert.R lines 1-96 first
-#
 set.seed(76)
 random_tags <- Wood_pheno_table %>%
   pull(tag) %>%
