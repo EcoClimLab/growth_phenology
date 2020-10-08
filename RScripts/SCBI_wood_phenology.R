@@ -532,6 +532,11 @@ for (e in 1:length(all_stems_intra)) { # Loop to merge all dendroband surveys in
 }
 all_stems <- all_stems[complete.cases(all_stems$dbh2), ]
 all_stems <- all_stems[, c(1:31, 34, 35)]
+
+# Added by bert: write all_stems observed data to csv
+write.csv(all_stems, file = "Data/all_stems.csv", row.names = FALSE)
+
+
 # Objects needed for the following loop
 data <- data.frame(NULL)
 # throwaways <- data.frame(NULL)
@@ -563,6 +568,16 @@ colnames(masterDF) <- c("tot", "perc", "tag", "DOY", "sp", "year", "dbh", "max_r
 # 4. Loop to create a final "master dataframe" -------
 # The following loop will cycle through years, species, and tags to create a final "master dataframe"
 # It includes two of Sean's functions wrapped with some of my code
+
+# Added by bert: track LG5 parameters for each tag/year in this list
+tag_years <- all_stems %>%
+  transmute(tag_year = str_c(tag, year, sep = "-")) %>%
+  pull(tag_year) %>%
+  unique()
+
+LG5_parameters <- vector(mode = "list", length = length(tag_years))
+names(LG5_parameters) <- tag_years
+
 for (q in 2011:2019) {
   skip_to_next <- FALSE
   Stem2 <- subset(all_stems, year == q)
@@ -833,6 +848,15 @@ for (q in 2011:2019) {
       names(Param.df) <- c("L", "K", "doy_ip", "r", "theta", "a", "b")
       # write.csv(Param.df, file = "SCBI_hi_lo_lg5.csv", quote = FALSE, row.names = FALSE)
 
+      # Added by bert: save tag/year + parameter values
+      param_values_to_save <- c(stemstag$tag[1], stemstag$year[1],  Param.df) %>% unlist()
+      names(param_values_to_save) <- c("tag", "year", names(Param.df))
+      tagyear_id <- stemstag %>%
+        slice(1) %>%
+        transmute(tag_year = str_c(tag, year, sep = "-")) %>%
+        pull(tag_year)
+      LG5_parameters[[tagyear_id]] <- param_values_to_save
+
 
       # Max growth rate DOY
       maxDOY <- NULL
@@ -944,7 +968,10 @@ masterDF <- masterDF[-1, ]
 masterDF$wood_type <- ifelse(masterDF$sp == "quru" | masterDF$sp == "qual", "ring porous", ifelse(masterDF$sp == "litu" | masterDF$sp == "fagr", "diffuse-porous", "other"))
 write.csv(masterDF, file = "Data/Wood_pheno_table_V4.csv", row.names = FALSE)
 
-
+# Added by bert: save parameter values
+LG5_parameters %>%
+  bind_rows() %>%
+  write_csv(file = "Data/LG5_parameter_values.csv")
 
 
 

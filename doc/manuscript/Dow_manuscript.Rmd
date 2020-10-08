@@ -1,6 +1,8 @@
 ---
 title: ''
-output: word_document
+output: 
+  word_document: 
+    fig_caption: yes
 bibliography: references.bib
 csl: global-change-biology.csl #(this will change depending on journal we choose. GCB would be a great choice)
 ---
@@ -177,7 +179,68 @@ ForestGEO
 
 ### Authors' contributions
 
+
+### Figures
+
+**Figure 1** 
+
+Based on D'Orangeville Figure 1
+
+```{r fig1, out.width="100%", echo=FALSE, fig.align="center", fig.cap= "Logistic growth model"}
+# Created in RScripts/additional_figures.R
+knitr::include_graphics("tables_figures/fig1.png")
+```
+
+**Figure 2** 
+
+Based on D'Orangeville Figure 3.a), but with relative growth
+
+```{r fig2, out.width="100%", echo=FALSE, fig.align="center", fig.cap= "Percent total (modeled) growth"}
+# Created in RScripts/additional_figures.R
+knitr::include_graphics("tables_figures/fig2.png")
+```
+
+**Figure 3** 
+
+Similar to D'Orangeville Figure 4.a), but with cummalative relative growth
+
+```{r fig3, out.width="100%", echo=FALSE, fig.align="center", fig.cap= "Cummulative percent total (modeled) growth"}
+# Created in RScripts/additional_figures.R
+knitr::include_graphics("tables_figures/fig3.png")
+```
+
+
+**Figure 4**
+
+**Figure 5**
+
+**Figure 6**
+
+Notes for now:
+
+1. Model was fit to a random sample of 20 out of 106 tags to speed up computation.
+1. Climwin mean temperatures are recentered at 65F to help sanity check intercepts and slopes. 65F was chosen because it is a "typical" climwinmean value
+1. The multivariate model for $(DOY_{25}, DOY_{50}, DOY_{75})$ has:
+    1. Fixed effects: The interaction between wood type (diffuse vs ring porous) and climwin mean
+    1. Random effects: tag number (no species just yet)
+
+```{r, echo = FALSE}
+fig6_caption <- "Relationship between DOY and climwin mean tempeatures. For each 
+observed climwin mean temperature value, the posterior mean of the fitted day of year
+is represented by the solid blue line and credible intervals are represented by bands."
+```
+
+```{r fig6, out.width="100%", echo=FALSE, fig.align="center", fig.cap=fig6_caption}
+# Created in RScripts/bert/wood_phenology_analysis_bert.R
+knitr::include_graphics("tables_figures/fig6.png")
+```
+
+
 ### References
+
+
+
+
 
 
 

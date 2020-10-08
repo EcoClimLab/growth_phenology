@@ -1,10 +1,12 @@
 # Load packages and data ---------------------------------------
 library(tidyverse)
 library(lubridate)
-library(rstanarm)
 library(tidybayes)
 library(patchwork)
-
+library(knitr)
+library(scales)
+options(mc.cores = parallel::detectCores())
+library(rstanarm)
 
 
 
@@ -14,7 +16,6 @@ Wood_pheno_table <- read_csv("Data/Wood_pheno_table_V4.csv") %>%
   filter(wood_type != "other") %>%
   # Rename ring porous to not have a space
   mutate(wood_type = ifelse(wood_type == "ring porous", "ring-porous", wood_type))
-
 
 
 
@@ -92,156 +93,172 @@ Wood_pheno_table <- Wood_pheno_table %>%
       perc == 0.5 ~ "DOY_50",
       perc == 0.75 ~ "DOY_75"
     )
-  )
+  ) %>%
+  arrange(tag, year)
 View(Wood_pheno_table)
 
 
 
 
-# First model: Fit multivariate model using marchmeans -----------------------
-joint_model_marchmeans <- stan_mvmer(
-  formula = list(
-    DOY_25 ~ wood_type + wood_type:marchmean + (1|sp) + (1|tag),
-    DOY_50 ~ wood_type + wood_type:marchmean + (1|sp) + (1|tag),
-    DOY_75 ~ wood_type + wood_type:marchmean + (1|sp) + (1|tag)
-  ),
-  # Note we transform the data from tall/tidy format to wide format first:
-  data = Wood_pheno_table %>% pivot_wider(names_from = perc, values_from = DOY),
-  seed = 349,
-  # Once we feel good about our results, increase these values. The code will
-  # take longer to run however
-  chains = 2,
-  iter = 1000
-)
+# Fit multivariate model using climwinmeans ------------------------------------
+# TODO Erase later: Run analysis
+# - Only for subset of tags to speed up computation
+# - Recenter all climwin values at 65 since mean of climwinmeans is 66.310
+climwin_mean <- mean(climwinmeans$climwinmean)
+climwin_mean
 
-# Used to identify fixed effects of interest:
-joint_model_marchmeans %>%
-  get_variables() %>%
-  dput()
+set.seed(76)
+sample_tags <- Wood_pheno_table %>%
+  pull(tag) %>%
+  unique() %>%
+  sample(20)
 
-# Extract draws from posterior distributions
-# See http://mjskay.github.io/tidybayes/articles/tidy-rstanarm.html
-posterior_draws_marchmeans <- joint_model_marchmeans %>%
-  gather_draws(
-    # This is a hack:
-    `y1|(Intercept)`, `y2|(Intercept)`, `y3|(Intercept)`, `y1|wood_typering-porous`,
-    `y1|wood_typediffuse-porous:marchmean`, `y1|wood_typering-porous:marchmean`,
-    `y2|wood_typering-porous`, `y2|wood_typediffuse-porous:marchmean`,
-    `y2|wood_typering-porous:marchmean`, `y3|wood_typering-porous`,
-    `y3|wood_typediffuse-porous:marchmean`, `y3|wood_typering-porous:marchmean`
-    )
+Wood_pheno_table <- Wood_pheno_table %>%
+  filter(tag %in% sample_tags) %>%
+  mutate(climwinmean = climwinmean - 65)
 
-# Posterior means of all parameters. Note we need to correct the baseline (DP)
-# vs offset (RP) interpretation of intercepts. Slopes for marchmean are fine
-posterior_means_marchmeans <- posterior_draws_marchmeans %>%
-  group_by(.variable) %>%
-  summarize(value = mean(.value))
-View(posterior_means_marchmeans)
-
-# This is a manually done hack and hence is really brittle. Need to change this
-# later to be more robust
-line_info_marchmeans <- posterior_means_marchmeans %>%
-  mutate(
-    wood_type = c("diffuse-porous", "diffuse-porous", "ring-porous", "ring-porous") %>% rep(times = 3),
-    perc = c("DOY_25", "DOY_50", "DOY_75") %>% rep(each = 4),
-    parameter = c("intercept", "slope", "intercept", "slope") %>% rep(times = 3)
-    ) %>%
-  select(-.variable) %>%
-  pivot_wider(names_from = parameter, values_from = value) %>%
-  mutate(
-    intercept = ifelse(wood_type == "ring-porous" & perc == "DOY_25", 168 + 20.5, intercept),
-    intercept = ifelse(wood_type == "ring-porous" & perc == "DOY_50", 177 + 15.3, intercept),
-    intercept = ifelse(wood_type == "ring-porous" & perc == "DOY_75", 187 + 3.76, intercept)
-  )
-View(line_info_marchmeans)
-
-# Plot
-plot_marchmeans <- ggplot() +
-  facet_wrap(~wood_type) +
-  geom_point(data = Wood_pheno_table, aes(x = marchmean, y = DOY, col = perc)) +
-  labs(x = "Mean march daily maximum temperature", y = "DOY") +
-  geom_abline(data = line_info_marchmeans, aes(intercept = intercept, slope = slope, col = perc), size = 1)
-plot_marchmeans
+# Delete all non-needed columns
+Wood_pheno_table <- Wood_pheno_table %>%
+  select(perc, tag, year, wood_type, sp, climwinmean, starts_with("DOY"))
 
 
+# Convert to wide format for use in rstanarm::stan_mvmer()
+Wood_pheno_table_wide <- Wood_pheno_table %>%
+  pivot_wider(names_from = perc, values_from = DOY)
 
-
-# Second model: Fit multivariate model using climwinmeans -----------------------
+# Fit multivariate model
 joint_model_climwinmeans <- stan_mvmer(
   formula = list(
-    DOY_25 ~ wood_type + wood_type:climwinmean + (1|sp) + (1|tag),
-    DOY_50 ~ wood_type + wood_type:climwinmean + (1|sp) + (1|tag),
-    DOY_75 ~ wood_type + wood_type:climwinmean + (1|sp) + (1|tag)
+    DOY_25 ~ wood_type + wood_type:climwinmean + (1|tag),
+    DOY_50 ~ wood_type + wood_type:climwinmean + (1|tag),
+    DOY_75 ~ wood_type + wood_type:climwinmean + (1|tag)
   ),
   # Note we transform the data from tall/tidy format to wide format first:
-  data = Wood_pheno_table %>% pivot_wider(names_from = perc, values_from = DOY),
-  seed = 349,
+  data = Wood_pheno_table_wide,
+  seed = 76,
   # Once we feel good about our results, increase these values. The code will
   # take longer to run however
   chains = 2,
-  iter = 1000
+  iter = 2000
 )
 
-# Used to identify fixed effects of interest:
+# Get regression table as output by rstanarm package, then clean. We will compare
+# this table to posterior means of all fixed effects we compute later:
+bayesian_regression_table <- joint_model_climwinmeans %>%
+  summary() %>%
+  as_tibble(rownames = "coefficient") %>%
+  # Keep only relevant columns:
+  select(coefficient, mean, sd, `2.5%`, `97.5%`) %>%
+  # Keep only relevant rows:
+  filter(!str_detect(coefficient, "Sigma")) %>%
+  filter(str_detect(coefficient, "(Intercept)") | str_detect(coefficient, "wood_type"))
+bayesian_regression_table
+
+
+
+
+# Extract all posterior draws used for all Bayesian inference ------------------
+# Identify all paramters: Anything with a
+# - b[] is a random effect
+# - Sigma is a variance parameter
 joint_model_climwinmeans %>%
-  get_variables() %>%
-  dput()
+  get_variables()
 
-# Extract draws from posterior distributions
-# See http://mjskay.github.io/tidybayes/articles/tidy-rstanarm.html
-posterior_draws_climwinmeans <- joint_model_climwinmeans %>%
+# Extract posterior draws
+posterior_draws <- joint_model_climwinmeans %>%
+  # This is a hack done manually. There must be a regex way to do this:
   gather_draws(
-    # This is a hack:
-    `y1|(Intercept)`, `y2|(Intercept)`, `y3|(Intercept)`, `y1|wood_typering-porous`,
-    `y1|wood_typediffuse-porous:climwinmean`, `y1|wood_typering-porous:climwinmean`,
-    `y2|wood_typering-porous`, `y2|wood_typediffuse-porous:climwinmean`,
-    `y2|wood_typering-porous:climwinmean`, `y3|wood_typering-porous`,
-    `y3|wood_typediffuse-porous:climwinmean`, `y3|wood_typering-porous:climwinmean`
-  )
-
-# Posterior means of all parameters. Note we need to correct the baseline (DP)
-# vs offset (RP) interpretation of intercepts. Slopes for climwinmean are fine
-posterior_means_climwinmeans <- posterior_draws_climwinmeans %>%
-  group_by(.variable) %>%
-  summarize(value = mean(.value))
-View(posterior_means_climwinmeans)
-
-
-# This is a manually done hack and hence is really brittle. Need to change this
-# later to be more robust
-line_info_climwinmeans <- posterior_means_climwinmeans %>%
-  mutate(
-    wood_type = c("diffuse-porous", "diffuse-porous", "ring-porous", "ring-porous") %>% rep(times = 3),
-    perc = c("DOY_25", "DOY_50", "DOY_75") %>% rep(each = 4),
-    parameter = c("intercept", "slope", "intercept", "slope") %>% rep(times = 3)
+    # Fixed effects:
+    `y1|(Intercept)`, `y2|(Intercept)`, `y3|(Intercept)`,
+    `y1|wood_typering-porous`, `y2|wood_typering-porous`, `y3|wood_typering-porous`,
+    `y1|wood_typediffuse-porous:climwinmean`, `y2|wood_typediffuse-porous:climwinmean`, `y3|wood_typediffuse-porous:climwinmean`,
+    `y1|wood_typering-porous:climwinmean`, `y2|wood_typering-porous:climwinmean`, `y3|wood_typering-porous:climwinmean`,
+    # Random effects
+    b[term,group]
   ) %>%
-  select(-.variable) %>%
-  pivot_wider(names_from = parameter, values_from = value) %>%
+  select(-.chain, -.iteration) %>%
+  arrange(.draw)
+
+
+
+
+
+# Analyze fixed effects ---------------------------------
+# Extract draws of fixed effects:
+fixed_effects <- posterior_draws %>%
+  filter(.variable != "b") %>%
+  ungroup() %>%
+  select(-c(term, group)) %>%
+  # Split DOY
+  separate(.variable, c("perc", "coefficient"), sep = "\\|") %>%
   mutate(
-    intercept = ifelse(wood_type == "ring-porous" & perc == "DOY_25", 260 - 5.16, intercept),
-    intercept = ifelse(wood_type == "ring-porous" & perc == "DOY_50", 298 - 46.5, intercept),
-    intercept = ifelse(wood_type == "ring-porous" & perc == "DOY_75", 318 - 78, intercept)
+    perc = case_when(
+      perc == "y1" ~ "DOY_25",
+      perc == "y2" ~ "DOY_50",
+      perc == "y3" ~ "DOY_75"
+    )
+  ) %>%
+  pivot_wider(names_from = coefficient, values_from = .value)
+
+# Compute posterior means
+posterior_means_fixed_effects <- fixed_effects %>%
+  group_by(perc) %>%
+  summarize(
+    `(Intercept)` = mean(`(Intercept)`),
+    `wood_typering-porous` = mean(`wood_typering-porous`),
+    `wood_typediffuse-porous:climwinmean` = mean(`wood_typediffuse-porous:climwinmean`),
+    `wood_typering-porous:climwinmean` = mean(`wood_typering-porous:climwinmean`)
+    )
+
+# Compare to regression table. Identical! Yay!
+posterior_means_fixed_effects
+bayesian_regression_table %>%
+  select(coefficient, mean)
+
+
+
+
+
+# Fig6: Plot of regression of DOY over climwinmeans with credible intervals ----
+# Extract predicted DOY_25, DOY_50, DOY_75
+y_hat <- c(
+  joint_model_climwinmeans %>% posterior_predict(m = 1) %>% c(),
+  joint_model_climwinmeans %>% posterior_predict(m = 2) %>% c(),
+  joint_model_climwinmeans %>% posterior_predict(m = 3) %>% c()
+)
+
+predictions <- Wood_pheno_table %>%
+  add_predicted_draws(joint_model_climwinmeans) %>%
+  ungroup() %>%
+  # Critical: sort by y outcome category (DOY_25, DOY_50, DOY_75) first
+  arrange(perc, tag, year) %>%
+  mutate(predictions_rstanarm = y_hat)
+
+predictions %>%
+  group_by(perc) %>%
+  summarize(
+    # Observed data values:
+    mean_observed = mean(DOY),
+    # Incorrect predictions generated by tidybayes::add_predicted_draws()
+    # See https://github.com/mjskay/tidybayes/issues/271
+    mean_predicted = mean(.prediction),
+    # Correct predictions as generated by rstanarm
+    mean_predicted_rstanarm = mean(predictions_rstanarm)
   )
-View(line_info_climwinmeans)
 
-# Plot
-plot_climwinmeans <- ggplot() +
-  facet_wrap(~wood_type) +
+
+fig6 <- ggplot() +
+  geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
+  stat_lineribbon(data = predictions, aes(x = climwinmean, y = predictions_rstanarm, group = perc, col = perc), .width = c(.99, .95),  color = "#08519C") +
   geom_point(data = Wood_pheno_table, aes(x = climwinmean, y = DOY, col = perc)) +
-  labs(x = "Mean climwin daily maximum temperature", y = "DOY") +
-  geom_abline(data = line_info_climwinmeans, aes(intercept = intercept, slope = slope, col = perc), size = 1) +
-  # Add labels for climwin windows:
-  geom_text(data = climwin_windows, aes(label = window), x = 57, y = 10, hjust = 0)
-plot_climwinmeans
+  # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
+  scale_fill_brewer() +
+  facet_grid(perc~wood_type) +
+  labs(x = "Climwin mean temperature (relative to 65°F)", y = "DOY", col = "Percentile", main = "Relationship of DOY versus climwin mean temperature") +
+  geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
+fig6
+ggsave(filename = "doc/manuscript/tables_figures/fig6.png", width = 14.7*.7, height = 10.9*.7, plot = fig6)
 
-
-
-
-
-
-# Compare models ---------------
-# This uses the patchwork pkg:
-plot_marchmeans / plot_climwinmeans
-ggsave(filename = "results/2020-09-04_marchmeans-vs-climwinmeans.png")
-
+# Sanity check this plot with regression table intercepts and slopes
+posterior_means_fixed_effects
 
