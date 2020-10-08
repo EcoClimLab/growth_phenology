@@ -292,11 +292,11 @@ twentyfiveRP <- merge(rpmeans25, twentyfiveRP, by = "year")##Change rpmeans## he
 
 colnames(rpmeans50) <- c("year", "rptemp")
 fiftyRP <- subset(fifty, wood_type == "ring porous")
-fiftyRP <- merge(fiftyRP, rpmeans25, by = "year")##Change rpmeans## here
+fiftyRP <- merge(fiftyRP, rpmeans50, by = "year")##Change rpmeans## here
 
 colnames(rpmeans75) <- c("year", "rptemp")
 seventyfiveRP <- subset( seventyfive, wood_type == "ring porous")
-seventyfiveRP <- merge(seventyfiveRP, rpmeans25, by = "year")##Change rpmeans## here
+seventyfiveRP <- merge(seventyfiveRP, rpmeans75, by = "year")##Change rpmeans## here
 
 #Diffuse porous - repeat of RP process
 #dpmeans <- subset(tempmaxmeansdp, Group.2 == "DP")
