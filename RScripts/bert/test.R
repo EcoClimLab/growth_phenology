@@ -41,6 +41,7 @@ ggsave(filename = "results/2020-10-09_temp_vs_precip_by_season.png", plot = by_s
 
 
 
+
 # 2020/9/16, 2020/10/5, 2020/10/6 -------
 # Testing plotting credible intervals from http://mjskay.github.io/tidybayes/
 library(tidyverse)
