@@ -1,3 +1,46 @@
+# 2020/10/9 -------
+# Relationship between monthly average TMAX and total precipitation
+temp_and_precip_data <- read_csv("climate data/NCDC_NOAA_precip_temp.csv") %>%
+  mutate(
+    DATE = dmy(DATE),
+    month = floor_date(DATE, unit = "month"),
+    months = month(DATE, label = TRUE, abbr = FALSE),
+    season = case_when(
+      months %in% c("March", "April", "May") ~ "spring",
+      months %in% c("June", "July", "August") ~ "summer",
+      months %in% c("September", "October", "November") ~ "fall",
+      months %in% c("December", "January", "February") ~ "winter"
+    ),
+    season = factor(season, levels = c("spring", "summer", "fall", "winter"))
+  ) %>%
+  filter(!is.na(PRCP) & !is.na(TMAX)) %>%
+  group_by(month, months, season) %>%
+  summarize(total_precip = sum(PRCP), mean_tmax = mean(TMAX))
+
+# Base plot
+base_plot <- ggplot(temp_and_precip_data, aes(x = mean_tmax, y = total_precip)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(x = "Mean daily TMAX per month", y = "Total precipitation per month")
+
+# Split by month
+by_month <- base_plot +
+  facet_wrap(~months, nrow = 4) +
+  labs(title = "Relationship of temp and precipitation by month")
+by_month
+ggsave(filename = "results/2020-10-09_temp_vs_precip_by_month.png", plot = by_month)
+
+# Split by season
+by_season <- base_plot +
+  facet_wrap(~season, nrow = 2) +
+  labs(title = "Relationship of temp and precipitation by season",
+       subtitle = "Spring = Mar + Apr + May, Summer = Jun + Jul + Aug, ...")
+by_season
+ggsave(filename = "results/2020-10-09_temp_vs_precip_by_season.png", plot = by_season)
+
+
+
+
 # 2020/9/16, 2020/10/5, 2020/10/6 -------
 # Testing plotting credible intervals from http://mjskay.github.io/tidybayes/
 library(tidyverse)
