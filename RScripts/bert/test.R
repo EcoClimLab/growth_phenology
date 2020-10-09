@@ -28,7 +28,7 @@ by_month <- base_plot +
   facet_wrap(~months, nrow = 4) +
   labs(title = "Relationship of temp and precipitation by month")
 by_month
-ggsave(filename = "results/2020-10-09_temp_vs_precip_by_month.png", plot = by_month)
+ggsave(filename = "results/2020-10-09_temp_vs_precip_by_month.png", plot = by_month, width = 10, height = 12)
 
 # Split by season
 by_season <- base_plot +
@@ -36,7 +36,7 @@ by_season <- base_plot +
   labs(title = "Relationship of temp and precipitation by season",
        subtitle = "Spring = Mar + Apr + May, Summer = Jun + Jul + Aug, ...")
 by_season
-ggsave(filename = "results/2020-10-09_temp_vs_precip_by_season.png", plot = by_season)
+ggsave(filename = "results/2020-10-09_temp_vs_precip_by_season.png", plot = by_season, width = 10, height = 12)
 
 
 
