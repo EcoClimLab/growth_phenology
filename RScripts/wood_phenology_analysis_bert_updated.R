@@ -17,7 +17,11 @@ Wood_pheno_table <- read_csv("Data/Wood_pheno_table_V4.csv") %>%
   # Rename ring porous to not have a space
   mutate(wood_type = ifelse(wood_type == "ring porous", "ring-porous", wood_type))
 
-
+twofive <- subset(Wood_pheno_table, perc == .25)
+sevenfive <- subset(Wood_pheno_table, perc == .75)
+twosevenfive <- cbind(twofive, sevenfive$DOY)
+twosevenfive$seasonlength <- twosevenfive$`sevenfive$DOY`-twosevenfive$DOY
+twosevenfive <- twosevenfive[,c(3,6,12)]
 
 # Create temperature variables ----------------------------------
 # 0. Get all weather data
@@ -70,7 +74,7 @@ marchmeans <- weatherdata %>%
 climwin_windows <-
   tibble(
     wood_type = c("diffuse-porous", "ring-porous"),
-    window = c("climwin window: 3/8 - 5/14", "climwin window: 3/5 - 4/5")
+    window = c("climwin window: 3/27 - 6/2", "climwin window: 3/5 - 4/5")
   )
 
 
@@ -93,7 +97,7 @@ climwinmeans_rp <- weatherdata %>%
 #  summarize(climwinmean = mean(TMAX)) %>%
 #  mutate(wood_type = "diffuse-porous")
 climwinmeans_dp <- weatherdata %>%
-  filter(doy %in% c(climwindows[4,11]:climwindows[4,12])) %>%
+  filter(doy %in% c(climwindows[4,11]:climwindows[4,12])) %>% #86:156
   group_by(year) %>%
   summarize(climwinmean = mean(cleantmax)) %>%
   mutate(wood_type = "diffuse-porous")
@@ -106,6 +110,7 @@ climwinmeans <- bind_rows(climwinmeans_rp, climwinmeans_dp)
 Wood_pheno_table <- Wood_pheno_table %>%
   left_join(marchmeans, by = "year") %>%
   left_join(climwinmeans, by = c("year", "wood_type")) %>%
+  left_join(twosevenfive, by = c("tag", "year"))%>%
   # Remove other variables
   select(-c(tot, dbh, max_rate_DOY, max_rate)) %>%
   mutate(
@@ -118,6 +123,7 @@ Wood_pheno_table <- Wood_pheno_table %>%
   arrange(tag, year)
 View(Wood_pheno_table)
 
+#Wood_pheno_table <- left_join(Wood_pheno_table, twosevenfive, by = c("tag", "year"))
 
 
 
@@ -135,7 +141,7 @@ sample_tags <- Wood_pheno_table %>%
   sample(20)
 
 Wood_pheno_table <- Wood_pheno_table %>%
-  filter(tag %in% sample_tags) %>%
+  #filter(tag %in% sample_tags) %>%
   mutate(climwinmean = climwinmean - 16)
 
 # Delete all non-needed columns
@@ -278,8 +284,82 @@ fig6 <- ggplot() +
   labs(x = "Climwin mean temperature (relative to 16°C)", y = "DOY", col = "Percentile", main = "Relationship of DOY versus climwin mean temperature") +
   geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
 fig6
-ggsave(filename = "doc/manuscript/tables_figures/fig6.png", width = 14.7*.7, height = 10.9*.7, plot = fig6)
+ggsave(filename = "doc/manuscript/tables_figures/fig6_Cam.png", width = 14.7*.7, height = 10.9*.7, plot = fig6)
 
 # Sanity check this plot with regression table intercepts and slopes
 posterior_means_fixed_effects
+
+Run full analysis with ncdc data - then full NCDC w/ met tower windows
+
+#Met tower
+coefficient                               mean    sd `2.5%`   `97.5%`
+<chr>                                    <dbl> <dbl>  <dbl>     <dbl>
+  1 y1|(Intercept)                         155.    2.25  150.   159.
+2 y1|wood_typering-porous                -49.6   2.75  -55.0  -44.3
+3 y1|wood_typediffuse-porous:climwinmean  -1.08  0.730  -2.49   0.339
+4 y1|wood_typering-porous:climwinmean     -2.96  0.304  -3.54  -2.36
+5 y2|(Intercept)                         173.    2.20  169.   178.
+6 y2|wood_typering-porous                -32.2   2.82  -37.8  -26.9
+7 y2|wood_typediffuse-porous:climwinmean  -0.913 0.668  -2.18   0.406
+8 y2|wood_typering-porous:climwinmean     -1.90  0.262  -2.43  -1.40
+9 y3|(Intercept)                         192.    2.53  187.   197.
+10 y3|wood_typering-porous                -13.2   3.21  -19.5   -6.93
+11 y3|wood_typediffuse-porous:climwinmean  -0.777 0.759  -2.27   0.705
+12 y3|wood_typering-porous:climwinmean     -0.573 0.300  -1.17   0.00474
+
+
+##### Mixed models using LME4 ----
+twofive_rp <- subset(Wood_pheno_table, perc =="DOY_25" & wood_type =="ring-porous")
+twofive_dp <- subset(Wood_pheno_table, perc =="DOY_25" & wood_type =="diffuse-porous")
+fifty_rp <- subset(Wood_pheno_table, perc =="DOY_50" & wood_type =="ring-porous")
+fifty_dp <- subset(Wood_pheno_table, perc =="DOY_50" & wood_type =="diffuse-porous")
+sevenfive_rp <- subset(Wood_pheno_table, perc =="DOY_75" & wood_type =="ring-porous")
+sevenfive_dp <- subset(Wood_pheno_table, perc =="DOY_75" & wood_type =="diffuse-porous")
+
+summary(lmer(DOY ~ climwinmean + (1|sp/tag), data = twofive_dp))
+summary(lmer(DOY ~ climwinmean + (1|sp/tag), data = fifty_dp))
+summary(lmer(DOY ~ climwinmean + (1|sp/tag), data = sevenfive_dp))
+
+summary(lmer(DOY ~ climwinmean + (1|sp/tag), data = twofive_rp))
+summary(lmer(DOY ~ climwinmean + (1|sp/tag), data = fifty_rp))
+summary(lmer(DOY ~ climwinmean + (1|sp/tag), data = sevenfive_rp))
+
+#####Total ----
+summary(lmer(tot~climwinmean + (1|sp/tag), data = twofive_rp))
+plot(twofive_rp$tot~twofive_rp$climwinmean)
+abline(lm(twofive_rp$tot~twofive_rp$climwinmean))
+
+summary(lmer(tot~climwinmean + (1|sp/tag), data = twofive_dp))
+plot(twofive_dp$tot~twofive_dp$climwinmean)
+abline(lm(twofive_dp$tot~twofive_dp$climwinmean))
+
+##### Max rate / max_rate_DOY ----
+summary(lmer(max_rate~climwinmean + (1|sp/tag), data = twofive_rp))
+plot(twofive_rp$max_rate~twofive_rp$climwinmean)
+abline(lm(twofive_rp$max_rate~twofive_rp$climwinmean))
+
+summary(lmer(max_rate~climwinmean + (1|sp/tag), data = twofive_dp))
+plot(twofive_dp$max_rate~twofive_dp$climwinmean)
+abline(lm(twofive_dp$max_rate~twofive_dp$climwinmean))
+
+summary(lmer(max_rate_DOY~climwinmean + (1|sp/tag), data = twofive_rp))
+plot(twofive_rp$max_rate_DOY~twofive_rp$climwinmean)
+abline(lm(twofive_rp$max_rate_DOY~twofive_rp$climwinmean))
+
+summary(lmer(max_rate_DOY~climwinmean + (1|sp/tag), data = twofive_dp))
+plot(twofive_dp$max_rate_DOY~twofive_dp$climwinmean)
+abline(lm(twofive_dp$max_rate_DOY~twofive_dp$climwinmean))
+
+####75-25 model
+df_rp <- subset(Wood_pheno_table, perc == "DOY_25" & wood_type == "ring-porous")
+df_dp <- subset(Wood_pheno_table, perc == "DOY_25" & wood_type == "diffuse-porous")
+
+summary(lmer(seasonlength ~ climwinmean + (1|sp/tag), data = df_rp))
+plot(df_rp$seasonlength~df_rp$climwinmean)
+abline(lm(df_rp$seasonlength~df_rp$climwinmean))
+
+summary(lmer(seasonlength ~ climwinmean + (1|sp/tag), data = df_dp))
+plot(df_dp$seasonlength~df_dp$climwinmean)
+abline(lm(df_dp$seasonlength~df_dp$climwinmean))
+
 
