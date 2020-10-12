@@ -18,10 +18,21 @@ Wood_pheno_table <- read_csv("Data/Wood_pheno_table_V4.csv") %>%
   mutate(wood_type = ifelse(wood_type == "ring porous", "ring-porous", wood_type))
 
 twofive <- subset(Wood_pheno_table, perc == .25)
+fifty <- subset(Wood_pheno_table, perc == .5)
 sevenfive <- subset(Wood_pheno_table, perc == .75)
+#25-50
+twofifty <- cbind(twofive,fifty$DOY)
+twofifty$twentyfive_to_fifty <- twofifty$`fifty$DOY`-twofifty$DOY
+twofifty <- twofifty[,c(3,6,12)]
+#50-75
+fiftyseventy <- cbind(fifty, sevenfive$DOY)
+fiftyseventy$fifty_to_seventy <- fiftyseventy$`sevenfive$DOY`-fiftyseventy$DOY
+fiftyseventy <- fiftyseventy[,c(3,6,12)]
+#25-75
 twosevenfive <- cbind(twofive, sevenfive$DOY)
 twosevenfive$seasonlength <- twosevenfive$`sevenfive$DOY`-twosevenfive$DOY
 twosevenfive <- twosevenfive[,c(3,6,12)]
+
 
 # Create temperature variables ----------------------------------
 # 0. Get all weather data
@@ -111,6 +122,8 @@ Wood_pheno_table <- Wood_pheno_table %>%
   left_join(marchmeans, by = "year") %>%
   left_join(climwinmeans, by = c("year", "wood_type")) %>%
   left_join(twosevenfive, by = c("tag", "year"))%>%
+  left_join(fiftyseventy, by = c("tag", "year")) %>%
+  left_join(twofifty, by = c("tag", "year")) %>%
   # Remove other variables
   select(-c(tot, dbh, max_rate_DOY, max_rate)) %>%
   mutate(
@@ -351,8 +364,15 @@ plot(twofive_dp$max_rate_DOY~twofive_dp$climwinmean)
 abline(lm(twofive_dp$max_rate_DOY~twofive_dp$climwinmean))
 
 ####75-25 model
+library(lme4)
+library(lmerTest)
+df <- subset(Wood_pheno_table, perc == "DOY_25")
 df_rp <- subset(Wood_pheno_table, perc == "DOY_25" & wood_type == "ring-porous")
 df_dp <- subset(Wood_pheno_table, perc == "DOY_25" & wood_type == "diffuse-porous")
+
+#25-75
+ggplot(df, aes(x = wood_type, y = seasonlength)) + geom_boxplot()
+summary(aov(seasonlength ~ wood_type, data = df))
 
 summary(lmer(seasonlength ~ climwinmean + (1|sp/tag), data = df_rp))
 plot(df_rp$seasonlength~df_rp$climwinmean)
@@ -362,4 +382,30 @@ summary(lmer(seasonlength ~ climwinmean + (1|sp/tag), data = df_dp))
 plot(df_dp$seasonlength~df_dp$climwinmean)
 abline(lm(df_dp$seasonlength~df_dp$climwinmean))
 
+
+#25-50
+ggplot(df, aes(x = wood_type, y = twentyfive_to_fifty)) + geom_boxplot()
+summary(aov(twentyfive_to_fifty ~ wood_type, data = df))
+
+summary(lmer(twentyfive_to_fifty ~ climwinmean + (1|sp/tag), data = df_rp))
+plot(df_rp$twentyfive_to_fifty~df_rp$climwinmean)
+abline(lm(df_rp$twentyfive_to_fifty~df_rp$climwinmean))
+
+summary(lmer(twentyfive_to_fifty ~ climwinmean + (1|sp/tag), data = df_dp))
+plot(df_dp$twentyfive_to_fifty~df_dp$climwinmean)
+abline(lm(df_dp$twentyfive_to_fifty~df_dp$climwinmean))
+
+#50-75
+ggplot(df, aes(x = wood_type, y = fifty_to_seventy)) + geom_boxplot()
+summary(aov(fifty_to_seventy ~ wood_type, data = df))
+
+summary(lmer(fifty_to_seventy ~ climwinmean + (1|sp/tag), data = df_rp))
+plot(df_rp$fifty_to_seventy~df_rp$climwinmean)
+abline(lm(df_rp$fifty_to_seventy~df_rp$climwinmean))
+
+summary(lmer(fifty_to_seventy ~ climwinmean + (1|sp/tag), data = df_dp))
+plot(df_dp$fifty_to_seventy~df_dp$climwinmean)
+abline(lm(df_dp$fifty_to_seventy~df_dp$climwinmean))
+
+###
 
