@@ -535,15 +535,8 @@ all_stems <- all_stems[, c(1:31, 34, 35)]
 
 # Added by bert: write all_stems observed data to csv
 write.csv(all_stems, file = "Data/all_stems.csv", row.names = FALSE)
+all_stems <- read.csv("Data/all_stems.csv")
 
-
-# Objects needed for the following loop
-data <- data.frame(NULL)
-# throwaways <- data.frame(NULL)
-check_list <- NA
-DOY2 <- NULL
-masterDF <- data.frame(1, 2, 3, 4, 5, 6, 7, 8, 9)
-colnames(masterDF) <- c("tot", "perc", "tag", "DOY", "sp", "year", "dbh", "max_rate_DOY", "max_rate")
 
 
 ## Manual check of data ##
@@ -569,6 +562,14 @@ colnames(masterDF) <- c("tot", "perc", "tag", "DOY", "sp", "year", "dbh", "max_r
 # The following loop will cycle through years, species, and tags to create a final "master dataframe"
 # It includes two of Sean's functions wrapped with some of my code
 
+# Objects needed for the following loop
+data <- data.frame(NULL)
+# throwaways <- data.frame(NULL)
+check_list <- NA
+DOY2 <- NULL
+masterDF <- data.frame(1, 2, 3, 4, 5, 6, 7, 8, 9)
+colnames(masterDF) <- c("tot", "perc", "tag", "DOY", "sp", "year", "dbh", "max_rate_DOY", "max_rate")
+
 # Added by bert: track LG5 parameters for each tag/year in this list
 tag_years <- all_stems %>%
   transmute(tag_year = str_c(tag, year, sep = "-")) %>%
@@ -577,19 +578,27 @@ tag_years <- all_stems %>%
 
 LG5_parameters <- vector(mode = "list", length = length(tag_years))
 names(LG5_parameters) <- tag_years
+growth <- NULL
+all_stems$tag_stem <- paste0(all_stems$tag, "_", all_stems$stemtag)
 
 for (q in 2011:2019) {
   skip_to_next <- FALSE
   Stem2 <- subset(all_stems, year == q)
   for (w in unique(Stem2$sp)) { # removes trees with less than 10 measurements in each year
     Stem3 <- subset(Stem2, sp == w)
-    count_df <- count(Stem3, tag)
-    count_df <- subset(count_df, n >= 10)
-    Stem3 <- Stem3[Stem3$tag %in% count_df$tag, ]
+    count_df <- count(Stem3$tag_stem)
+    count_df <- subset(count_df, freq >= 10)
+    Stem3 <- Stem3[Stem3$tag_stem %in% count_df$x, ]
     # original_list <- unique(Stem3$tag)
-    for (m in unique(Stem3$tag)) { # remove trees with very small or negative total growth
-      growthcheck <- subset(Stem3, tag == m)
-      check_list <- append(check_list, (ifelse(growthcheck[nrow(growthcheck), 32] - growthcheck[1, 32] <= 1.25, unique(growthcheck$tag), NA))) # 1.25 is arbitrarily chosen. I'm considering decreasing it
+    for (m in unique(Stem3$tag_stem)) { # remove trees with very small or negative total growth
+      growthcheck <- subset(Stem3, tag_stem == m)
+      check_list <- append(check_list, (ifelse(growthcheck[nrow(growthcheck), 32] - growthcheck[1, 32] <= 0, unique(growthcheck$tag), ifelse(growthcheck[nrow(growthcheck), 32] - growthcheck[1, 32] >= 12, unique(growthcheck$tag), NA)))) # 1.25 is arbitrarily chosen. I'm considering decreasing it
+      growth <- append(growth, growthcheck[nrow(growthcheck), 32] - growthcheck[1, 32])
+      if (growthcheck[nrow(growthcheck), 32] - growthcheck[1, 32] <= 0){
+        plot(growthcheck$dbh2 ~ growthcheck$DOY, main = growthcheck$year)
+        print(growthcheck$tag_stem)
+        print(growthcheck$year)
+      }
       check_list <- check_list[complete.cases(check_list)]
     }
     Stem3 <- Stem3[!(Stem3$tag %in% check_list), ]
@@ -659,9 +668,9 @@ for (q in 2011:2019) {
       resids.mat <- matrix(NA, tree.no, length(doy.full))
       # pdf("FIGURES/lg5_fit_all.pdf")
       # par(mfrow = c(2,2))
-      pb <- txtProgressBar(style = 3)
+      #pb <- txtProgressBar(style = 3)
       for (r in 1:tree.no) { # Sean's first function
-        setTxtProgressBar(pb, r / tree.no, title = NULL, label = NULL)
+        #setTxtProgressBar(pb, r / tree.no, title = NULL, label = NULL)
         par(mfrow = c(1, 1))
         # 	pdf(file = sprintf("FIGURES/lg5_fit_%i.pdf", i))
         dbh <- as.numeric(dbh.data[r, ])
@@ -755,7 +764,7 @@ for (q in 2011:2019) {
         winning.optim.call[r] <- c("L-BFGS-B", "L-BFGS-B wt", "N-M", "N-M wt", "SANN", "SANN wt")[winner]
         resids.mat[r, complete] <- get.lg5.resids(params = lg5.output.LB.wt$par, doy, dbh)
       }
-      close(pb)
+      #close(pb)
       # dev.off()
 
 
@@ -822,17 +831,23 @@ for (q in 2011:2019) {
 
         params.tmp <- hi.lo.output$par
         ## Now call the boundary functions
-        #  tryCatch(
+          tryCatch(
         start.d[y, ] <- start.diam(params = params.tmp, seq.l = seq.l, doy = doy, dbh, deviation.val = deviation.val, figure = FALSE, resid.sd) # Both start and end estimates are returning 200 numbers instead of 1
-        #  error = function(e) { skip_to_next <<- TRUE})
-        #  if(skip_to_next) { next }
-        #  tryCatch(
+          ,error = function(e) {
+            message(paste("start D", unique(stemstag$tag_stem), unique(stemstag$year)))
+            })
+          #if(skip_to_next) {
+          #  }
+          tryCatch(
         end.d[y, ] <- end.diam(params = params.tmp, seq.l = seq.l, doy = doy, dbh, deviation.val = deviation.val, figure = FALSE, resid.sd) # fix this ... dev.val too small
-        #  error = function(e) { skip_to_next <<- TRUE})
-        # if(skip_to_next) { next }
+          ,error = function(e) {
+            message(paste("End D", unique(stemstag$tag_stem), unique(stemstag$year)))
+
+        })
+         #if(skip_to_next) { next }
         a <- c(start.d[y, 1], end.d[y, 1])
 
-        # If you want to see the plooted model, remove the '#' in the following two lines:
+        # If you want to see the ploted model, remove the '#' in the following two lines:
         plot(doy, dbh, xlab = "Day of the year", ylab = "DBH (cm)", pch = 19, col = "gray15", main = ?sprintf("Annual Growth for tree %y", y), cex = 1)
         lines(days, lg5.pred.a(a, params = params.tmp, doy = days, asymptote = "both"), col = "darkred", lty = 1, lwd = 1)
         Param.df[y, 6:7] <- a
@@ -871,8 +886,18 @@ for (q in 2011:2019) {
       #  max <- max.growth.day(Param.df[i,])
       #  maxDOY <- append(maxDOY, max)
       # }
+
       max <- max.growth.day(Param.df[1, ]) #
+      tryCatch(
       maxrate <- max.growth.rate(Param.df[1, ]) #
+      , error = function(e) {
+        message(paste(unique(stemstag$tag_stem), unique(stemstag$year), "maxrate NA"))
+        }
+      )
+#if (skip_to_next) {
+#  next
+#}
+      #  if(skip_to_next) { next }
       # maxDF <- data.frame(1:length(maxDOY), maxDOY)
       # hist(maxDF$maxDOY, breaks = 11)
       # mean(maxDF$maxDOY)
@@ -882,7 +907,7 @@ for (q in 2011:2019) {
       # lg5.pred <- function(params, doy)
       curveDF <- data.frame(NULL)
       endcurveDF <- data.frame(c(1:365)) ###################### Change start and end date here
-      pb <- txtProgressBar(style = 3)
+      #pb <- txtProgressBar(style = 3)
       # for( u in 1:nrow(Param.df)){
       #  setTxtProgressBar(pb, u / nrow(Param.df), title = NULL, label = NULL)
       growth_curve <- Param.df[1, ]
@@ -945,9 +970,10 @@ for (q in 2011:2019) {
       phenology_DF$max_rate_DOY <- max
       phenology_DF$max_rate <- maxrate
       skip_to_next <- FALSE
-      tryCatch(
+      tryCatch( #If all 3 percs were not present, DF was wiped and error will be produced here
         masterDF <- rbind(masterDF, phenology_DF),
         error = function(e) {
+          message(paste("throw out", unique(stemstag$tag_stem), unique(stemstag$year)))
           skip_to_next <<- TRUE
         }
       )
@@ -966,14 +992,14 @@ for (q in 2011:2019) {
 warnings()
 masterDF <- masterDF[-1, ]
 masterDF$wood_type <- ifelse(masterDF$sp == "quru" | masterDF$sp == "qual", "ring porous", ifelse(masterDF$sp == "litu" | masterDF$sp == "fagr", "diffuse-porous", "other"))
-write.csv(masterDF, file = "Data/Wood_pheno_table_V4.csv", row.names = FALSE)
-
+write.csv(masterDF, file = "Data/Wood_pheno_table_V6.csv", row.names = FALSE)
+masterDF$DOY <- as.numeric(masterDF$DOY)
 # Added by bert: save parameter values
 LG5_parameters %>%
   bind_rows() %>%
-  write_csv(file = "Data/LG5_parameter_values.csv")
+  write_csv(file = "Data/LG5_parameter_values_V6.csv")
 
-
+#write.csv(bind_rows(LG5_parameters), file = "Data/LG5_parameter_values_V6.csv")
 
 
 
@@ -1301,3 +1327,49 @@ text(110, min(precip.data$cum.NET.3.1), "d)", pos = 3)
 #            19.30898, 19.34113, 19.37105, 19.38919, 19.39365, 19.41243, 19.41911,
 #            19.43471, 19.43726, 19.44076, 19.44553, 19.44458, 19.44521, 19.44903,
 #            19.44872, 19.45254, 19.45731, 19.45890, 19.45890)
+
+check_list <- NULL
+growth <- 0
+all_stems$tag_stem <- paste0(all_stems$tag, "_", all_stems$stemtag)
+for (q in 2011:2019) {
+  skip_to_next <- FALSE
+  Stem2 <- subset(all_stems, year == q)
+  for (w in unique(Stem2$sp)) { # removes trees with less than 10 measurements in each year
+    Stem3 <- subset(Stem2, sp == w)
+    count_df <- count(Stem3, tag_stem)
+    count_df <- subset(count_df, n >= 10)
+    Stem3 <- Stem3[Stem3$tag_stem %in% count_df$tag_stem, ]
+    # original_list <- unique(Stem3$tag)
+    for (m in unique(Stem3$tag_stem)) { # remove trees with very small or negative total growth
+      growthcheck <- subset(Stem3, tag_stem == m)
+      check_list <- append(check_list, (ifelse(growthcheck[nrow(growthcheck), 32] - growthcheck[1, 32] <= 0, unique(growthcheck$tag), ifelse(growthcheck[nrow(growthcheck), 32] - growthcheck[1, 32] >= 12, unique(growthcheck$tag), NA)))) # 1.25 is arbitrarily chosen. I'm considering decreasing it
+      growth <- append(growth, growthcheck[nrow(growthcheck), 32] - growthcheck[1, 32])
+      if (growthcheck[nrow(growthcheck), 32] - growthcheck[1, 32] <= 0){
+        plot(growthcheck$dbh2 ~ growthcheck$DOY, main = growthcheck$year)
+        print(growthcheck$tag_stem)
+        print(growthcheck$year)
+      }}}
+      check_list <- check_list[complete.cases(check_list)]
+    }
+    Stem3 <- Stem3[!(Stem3$tag %in% check_list), ]
+    skip_to_next <- FALSE # If all trees fail to meet the minimum growth criteria, an error is produced which stops the loop
+    tryCatch( # Go to next species if all tags of previous species failed the growth check
+      Stem3$tag_stem <- paste0(Stem3$tag, sep = "_", Stem3$stemtag) # add a unique tag for each stem of trees with multiple stems
+      ,
+      error = function(b) {
+        skip_to_next <<- TRUE
+      }
+    )
+    if (skip_to_next) {
+      next
+    } # If you know how to make this display a warning when it encounters an error i'd like to add that eventually
+mean(growth$dbh2)
+median(growth$dbh2)
+gdf <- as.data.frame(growth)
+melt(gdf)
+library(reshape2)
+gdf <- melt(gdf)
+mean(gdf$value)
+median(gdf$value)
+sd(gdf$value)
+max(gdf$value)
