@@ -56,12 +56,19 @@ n. Center for Tropical Forest Science-Forest Global Earth Observatory; Smithsoni
 
 #Figure numbers
 schematic=1 #Based on D'Orangeville Figure 1
-growth_pheno_by_xylem = 2
+growth_pheno_by_xylem = 2  #if we include more sites, we'll make this multi-panel
 rel_growth = "2a" #Based on D'Orangeville Figure 3.a), but with relative growth
 cum_growth = "2b" #Similar to D'Orangeville Figure 4.a), but with cumulative relative growth
-# 3 climwin
-
+climwin = 3
 pheno_Tsensitivity = 4
+
+
+#SI:
+#tables
+
+#figures
+climwin_rp_DOY25_SCBI = "S1"
+climwin_dp_DOY25_SCBI = "S2"
 
 #captions
 
@@ -71,10 +78,14 @@ rel_growth_caption <- "Figure 2a. (SHOULD BE MERGED INTO SINGLE IMAGE WITH 2B. S
 
 cum_growth_caption  <- "Figure 2. Growth trajectories for ring- and diffuse-porous trees, as both relative (a) and cumulative (b) fractions of total annual growth. Each line represents one year's growth for a given tree, fit with McMahon model."
 
+climwin_caption <- "Figure 3. Landscapes of relationships between the day of year on which 25% of annual growth is achieved (DOY_25) and temperature in prior weeks for ring- and diffuse-porous trees. Shown is climwin output indicating the change in AIC relative to a null model (first panel) and linear coefficients (second panel). Window Open and Window Close indicate number of weeks prior to DOY_25 (ring-porous: DATE; diffuse-porous: DATE). Black boxes indicate the optimal window (i.e., that with lowest dAIC)."
+
 pheno_Tsensitivity_caption <- "Figure 4. Relationship between DOY and climwin mean tempeatures. For each 
 observed climwin mean temperature value, the posterior mean of the fitted day of year
 is represented by the solid blue line and credible intervals are represented by bands."
 
+climwin_rp_DOY25_SCBI_short_caption <- "Figure S1. Full climwin output for DOY 25 for ring porous species at SCBI."
+climwin_dp_DOY25_SCBI_short_caption <- "Figure S1. Full climwin output for DOY 25 for diffuse porous species at SCBI."
 ```
 
 \newpage
@@ -150,13 +161,8 @@ leaf phenology data?
 
 perhaps bring in cores?
 
-•	Sean’s model
 
-•	Climwin
-
-The period where the phenology milestone(s) were most affected by changes in early Spring temperature was determined using the R package Climwin. This package tests the correlation between climate variables (TMAX) and biological variables (DOY, max rate DOY, total growth) within a specified time-frame, reporting correlation and delta AIC's of each 'window'. as the best-model. We instructed Climwin to search for the best window beginning at February 1st and ending at the mean DOY for each phenology variable (chart in SI?). This was done to find corresponding (median of 95% CI window open and close) start and end dates for the analysis of ring-porous and diffuse-porous trees, as well as all trees pooled together.
-
-*Analysis*
+*Fitting growth curves*
 
 We fit the model of @mcmahon_general_2015 to define *phenological dates and growth rates* (Fig. `r schematic`). 
 
@@ -166,6 +172,9 @@ We fit the model of @mcmahon_general_2015 to define *phenological dates and grow
 knitr::include_graphics("tables_figures/schematic.png")
 ```
 
+*Determining optimal climate windows*
+
+The period where the phenology milestone(s) were most affected by changes in early Spring temperature was determined using the R package Climwin. This package tests the correlation between climate variables (TMAX) and biological variables (DOY, max rate DOY, total growth) within a specified time-frame, reporting correlation and delta AIC's of each 'window'. as the best-model. We instructed Climwin to search for the best window beginning at February 1st and ending at the mean DOY for each phenology variable (chart in SI?). This was done to find corresponding (median of 95% CI window open and close) start and end dates for the analysis of ring-porous and diffuse-porous trees, as well as all trees pooled together.
 
 Notes for now:
 
@@ -184,20 +193,15 @@ This mixed-effect model was run within a heirarchal bayesian framework.
 
 ### Results
 
-•	variable averages 
-
-Pooled across all species and all years the average DOY where max growth rate was achieved is DOY: 158, the DOY where 25% was achieved is DOY: 129, 50% - DOY: 157, 75% - DOY:184. 
-
 *Phenological patterns*
 
-Across all trees, Pooled across all species and all years the average DOY where max growth rate was achieved is DOY: 158, the DOY where 25% was achieved is DOY: 129, 50% - DOY: 157, 75% - DOY:184. 
+*(Numbers in bold will change. If we bring in HF and/or SERC, we should create a table, rather than trying to list everything in the text.)*
+
+Across all trees and years, 25% of annual growth was achieved on **May 9** ($DOY_{25}$=**129**), 50% on **June 6** ($DOY_{50}$=**157**), and 75% on **July 3** ($DOY_{75}$=**184**), for an average peak growing season length of **56** days. Maximum growth rate occurred *just one day after $DOY_{50}$* on **June 7** ($DOY_{max}$=**158**). 
 
 Growth pheonology differed between ring- and diffuse- porous species, with ring-porous species having an earlier start to growth, with growth spread out over a longer growing season (Fig. `r growth_pheno_by_xylem`).
-Specifically, 
-
-Ring-porous (1395 obs) max growth rate – DOY: 147, max growth rate = .048 (find units in Sean’s function), 25% - DOY: 113, 50% DOY: 147, 75% - DOY: 181…68 days
-
-Diffuse-porous (993 obs) max growth rate – DOY: 172, max growth rate = .068 (find units in Sean’s function), 25% - DOY: 153, 50% - DOY: 171, 75% - DOY: 190… 37 days
+For ring-porous trees, on average, 25% of annual growth was achieved on **April 23** ($DOY_{25}$=**113**), 50% on **May 27** ($DOY_{50}$=**147**), and 75% on **June 30** ($DOY_{75}$=**181**), for an average peak growing season length of **68** days. Maximum growth rate occurred *on $DOY_{50}$* and averaged .048 **mm day^-1^ (?)**. 
+For diffuse-porous trees, on average, 25% of annual growth was achieved on **June 2** ($DOY_{25}$=**153**), 50% on **June 20** ($DOY_{50}$=**171**), and 75% on **July 9** ($DOY_{75}$=**190**), for an average peak growing season length of **37** days. Maximum growth rate occurred *just one day after $DOY_{50}$* on **June 21** ($DOY_{max}$=**172**) and averaged .068 **mm day^-1^ (?)**. 
 
 \newpage
 
@@ -213,7 +217,14 @@ knitr::include_graphics("tables_figures/cum_growth.png")
 
 *Climate windows*
 
-•	Climwin results
+•	Climwin results (Figs. `r climwin`, `r climwin_rp_DOY25_SCBI`, `r climwin_dp_DOY25_SCBI`)
+
+```{r climwin, out.width="100%", echo=FALSE, fig.align="center", fig.cap= cum_growth_caption}
+# Created in RScripts/additional_figures.R
+knitr::include_graphics("tables_figures/climwin.png")
+```
+
+
 
 *Climate sensitivity of phenology*
 
@@ -247,9 +258,13 @@ Content to incorporate: N. American strategies have conservative strategies when
 ### Acknowledgements
 ForestGEO
 
-### Authors' contributions
+### Author Contributions
 
+### Supporting Information
 
+`r climwin_rp_DOY25_SCBI_short_caption`
+
+`r climwin_dp_DOY25_SCBI_short_caption`
 
 ### References
 
