@@ -3,7 +3,6 @@ title: ''
 output:
   word_document:
     fig_caption: yes
-  pdf_document: default
 bibliography: references.bib
 csl: global-change-biology.csl
 ---
@@ -50,6 +49,34 @@ n. Center for Tropical Forest Science-Forest Global Earth Observatory; Smithsoni
 
 ```
 
+```{r eval = TRUE, echo=FALSE, warning=FALSE, results='hide'}
+#Figures & Tables: listing figures and their number here is helpful for planning, and also allows automatic numbering within text -->easy changing of order. 
+
+#Table numbers
+
+#Figure numbers
+schematic=1 #Based on D'Orangeville Figure 1
+growth_pheno_by_xylem = 2
+rel_growth = "2a" #Based on D'Orangeville Figure 3.a), but with relative growth
+cum_growth = "2b" #Similar to D'Orangeville Figure 4.a), but with cumulative relative growth
+# 3 climwin
+
+pheno_Tsensitivity = 4
+
+#captions
+
+schematic_caption <- "Figure 1. Schematic illustrating the parameters considered here. Shown are measurements for an example tree (## cm SPECIES), fit with the model of McMahon & Parker (2015), from which phenology and growth rate parameters are obtained. ... (HERE, WE NEED TO ANNOTATE WITH LABELS FOR EACH PARAMETER CONSIDERED IN THE MANUSCRIPT. I'D ALSO DROP THE BACKGROUND SHADING--MAKES IT BUSY.)"
+
+rel_growth_caption <- "Figure 2a. (SHOULD BE MERGED INTO SINGLE IMAGE WITH 2B. SEE BELOW FOR CAPTION)"
+
+cum_growth_caption  <- "Figure 2. Growth trajectories for ring- and diffuse-porous trees, as both relative (a) and cumulative (b) fractions of total annual growth. Each line represents one year's growth for a given tree, fit with McMahon model."
+
+pheno_Tsensitivity_caption <- "Figure 4. Relationship between DOY and climwin mean tempeatures. For each 
+observed climwin mean temperature value, the posterior mean of the fitted day of year
+is represented by the solid blue line and credible intervals are represented by bands."
+
+```
+
 \newpage
 
 ### Abstract
@@ -71,7 +98,7 @@ In recent decades, an increase in average Spring temperature has been impacting 
 
 Shifts in leaf phenology timing could be accompanied by a change in stem-growth phenology, which would likely affect woody productivity, carbon and nutrient cycling, and water use patterns in temperate forests (Keeling et al, 1996;). However, the fine-scale responses of temperate deciduous tree growth to a warming Spring are not commonly recorded due to the increased effort required (). Many observations of climate induced phenological shifts are based on GIS (), eddy-covarience measurements (), or other broad scale measurements of phenological timing, and do little to discern differences between individual species, where leaf and stem-growth phenology can be decoupled (D'Orangeville et al, in review). Further to this point, a recent publication by D'Orangeville et al () found that leaf and wood phenology traits are dissimilar among trees of different wood types (ring-porous and diffuse-porous). For example, they observed that bud burst was occuring around the same time as 25% total annual growth, and 75% leaf development coincided with 50% total annual growth in ring-porous trees, while leaf phenology and stem growth phenology were decoupled in diffuse-porous trees. 
   
-The significance of wood type in regards to wood and leaf phenology likely implies evolutionary differences and adaptations to local climates where these trees can be found. Ring-porous trees have large xylem cells which are prone to embolism during the winter. These cells are repaired before leaf development, explaining why the 25% yearly growth milestone is reached around the same time as bud burst. Diffuse-porous xylem cells are smaller, and less prone to embolism during the Winter, meaning they do not need to be repaired in order to restore hydraulic functionality before beginning the leaf development process. Results from the paper by D’Orangeville et al. (in review) have shown that ring-porous trees reach 25 and 50% of their total yearly growth during Spring, while diffuse-porous trees reach these milestones in the Summer, but both reached 75% total annual growth around the same time. --Consequently, the Summer focused diffuse-porous trees are exposed to higher temperatures and drought risk than ring-porous trees.-- If leaf development is sped up when Spring temperatures are warmer, we should seek to understand whether this relationship holds, and how it potentially varies among trees of different wood-types. 
+The significance of wood type in regards to wood and leaf phenology likely stems from evolutionary differences and adaptations to local climates where these trees can be found. Ring-porous trees have large xylem cells which are prone to embolism during the winter. These cells are repaired before leaf development, explaining why the 25% yearly growth milestone is reached around the same time as bud burst. Diffuse-porous xylem cells are smaller, and less prone to embolism during the Winter, meaning they do not need to be repaired in order to restore hydraulic functionality before beginning the leaf development process. Results from the paper by D’Orangeville et al. (in review) have shown that ring-porous trees reach 25 and 50% of their total yearly growth during Spring, while diffuse-porous trees reach these milestones in the Summer, but both reached 75% total annual growth around the same time. --Consequently, the Summer focused diffuse-porous trees are exposed to higher temperatures and drought risk than ring-porous trees.-- If leaf development is sped up when Spring temperatures are warmer, we should seek to understand whether this relationship holds, and how it potentially varies among trees of different wood-types. 
 
 Earlier leaf up timings could signal that these trees are shifting their peak growth windows back in response to increasing Spring temperatures, but to date, very little research, has been done on the phenology of stem-growth. In fact, we know little about the stem-growth phenology of temperate deciduous species — let alone how these are affected by changes in Spring temperature patterns. Timing of intraannual stem-growth is extremely important as it could have profound impacts on ecosystem interactions, as well as dictate periods of highest drought sensitivity in temperate forests (Foster, 2014; ). If a drought were to occur when trees were at their peak growth rates, the resulting decrease in that year's NPP would reduce the total amount of carbon sequestered, contributing to a climate feedback loop (source?). 
 
@@ -131,7 +158,22 @@ The period where the phenology milestone(s) were most affected by changes in ear
 
 *Analysis*
 
-Here, I’ll insert a reference to Sean’s paper [@mcmahon_general_2015]. This is pulled from references.bib.
+We fit the model of @mcmahon_general_2015 to define *phenological dates and growth rates* (Fig. `r schematic`). 
+
+
+```{r schematic, out.width="100%", echo=FALSE, fig.align="center", fig.cap= schematic_caption}
+# Created in RScripts/additional_figures.R
+knitr::include_graphics("tables_figures/schematic.png")
+```
+
+
+Notes for now:
+
+1. Model was fit to a random sample of 20 out of 106 tags to speed up computation. *(This isn't the case anymore, I fit it to all tag years)*
+1. Climwin mean temperatures are recentered at 65F to help sanity check intercepts and slopes. 65F was chosen because it is a "typical" climwinmean value *(Changed to 16 C based on updated climwin windows)*
+1. The multivariate model for $(DOY_{25}, DOY_{50}, DOY_{75})$ has:
+    1. Fixed effects: The interaction between wood type (diffuse vs ring porous) and climwin mean
+    1. Random effects: tag number (no species just yet)
 
 -Mixed effect model
 
@@ -146,13 +188,41 @@ This mixed-effect model was run within a heirarchal bayesian framework.
 
 Pooled across all species and all years the average DOY where max growth rate was achieved is DOY: 158, the DOY where 25% was achieved is DOY: 129, 50% - DOY: 157, 75% - DOY:184. 
 
+*Phenological patterns*
+
+Across all trees, Pooled across all species and all years the average DOY where max growth rate was achieved is DOY: 158, the DOY where 25% was achieved is DOY: 129, 50% - DOY: 157, 75% - DOY:184. 
+
+Growth pheonology differed between ring- and diffuse- porous species, with ring-porous species having an earlier start to growth, with growth spread out over a longer growing season (Fig. `r growth_pheno_by_xylem`).
+Specifically, 
+
 Ring-porous (1395 obs) max growth rate – DOY: 147, max growth rate = .048 (find units in Sean’s function), 25% - DOY: 113, 50% DOY: 147, 75% - DOY: 181…68 days
 
 Diffuse-porous (993 obs) max growth rate – DOY: 172, max growth rate = .068 (find units in Sean’s function), 25% - DOY: 153, 50% - DOY: 171, 75% - DOY: 190… 37 days
 
+\newpage
+
+```{r rel_growth, out.width="100%", echo=FALSE, fig.align="center", fig.cap= rel_growth_caption}
+# Created in RScripts/additional_figures.R
+knitr::include_graphics("tables_figures/rel_growth.png")
+```
+
+```{r cum_growth, out.width="100%", echo=FALSE, fig.align="center", fig.cap= cum_growth_caption}
+# Created in RScripts/additional_figures.R
+knitr::include_graphics("tables_figures/cum_growth.png")
+```
+
+*Climate windows*
+
 •	Climwin results
 
-•	Accounting for random effects of species and tag, pre-season temperatures had a greater effect on ring-porous species than diffuse-porous.
+*Climate sensitivity of phenology*
+
+Warmer spring temperatures resulted in an earlier start of growth for ring-porous species and an earlier growing season for diffuse-porous species (Fig. `r pheno_Tsensitivity`).
+
+```{r pheno_Tsensitivity, out.width="100%", echo=FALSE, fig.align="center", fig.cap=pheno_Tsensitivity_caption}
+# Created in RScripts/bert/wood_phenology_analysis_bert.R
+knitr::include_graphics("tables_figures/pheno_Tsensitivity.png")
+```
 
 
 ### Discussion
@@ -180,69 +250,6 @@ ForestGEO
 ### Authors' contributions
 
 
-### Figures
-
-
-**Figure 1** 
-
-Based on D'Orangeville Figure 1
-
-```{r fig1, out.width="100%", echo=FALSE, fig.align="center", fig.cap= "Logistic growth model"}
-# Created in RScripts/additional_figures.R
-knitr::include_graphics("tables_figures/fig1.png")
-```
-
-**Figure 2** 
-
-Based on D'Orangeville Figure 3.a), but with relative growth
-
-```{r fig2, out.width="100%", echo=FALSE, fig.align="center", fig.cap= "Percent total (modeled) growth"}
-# Created in RScripts/additional_figures.R
-knitr::include_graphics("tables_figures/fig2.png")
-```
-
-**Figure 3** 
-
-Similar to D'Orangeville Figure 4.a), but with cummalative relative growth
-
-```{r fig3, out.width="100%", echo=FALSE, fig.align="center", fig.cap= "Cummulative percent total (modeled) growth"}
-# Created in RScripts/additional_figures.R
-knitr::include_graphics("tables_figures/fig3.png")
-```
-
-
-**Figure 4**
-
-**Figure 5**
-
-**Figure 6**
-
-Notes for now:
-
-1. Model was fit to a random sample of 20 out of 106 tags to speed up computation.
-1. Climwin mean temperatures are recentered at 65F to help sanity check intercepts and slopes. 65F was chosen because it is a "typical" climwinmean value
-1. The multivariate model for $(DOY_{25}, DOY_{50}, DOY_{75})$ has:
-    1. Fixed effects: The interaction between wood type (diffuse vs ring porous) and climwin mean
-    1. Random effects: tag number (no species just yet)
-
-```{r, echo = FALSE}
-fig6_caption <- "Relationship between DOY and climwin mean tempeatures. For each 
-observed climwin mean temperature value, the posterior mean of the fitted day of year
-is represented by the solid blue line and credible intervals are represented by bands."
-```
-
-```{r fig6, out.width="100%", echo=FALSE, fig.align="center", fig.cap=fig6_caption}
-# Created in RScripts/bert/wood_phenology_analysis_bert.R
-knitr::include_graphics("tables_figures/fig6.png")
-```
-
 
 ### References
-
-
-
-
-
-
-
 
