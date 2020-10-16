@@ -215,15 +215,20 @@ knitr::include_graphics("tables_figures/rel_growth.png")
 knitr::include_graphics("tables_figures/cum_growth.png")
 ```
 
-*Climate windows*
+*Optimal climate windows*
 
-•	Climwin results (Figs. `r climwin`, `r climwin_rp_DOY25_SCBI`, `r climwin_dp_DOY25_SCBI`)
+For the majority of weekly time windows from Feb. 1 to $DOY_{25}$, there was negative relationship between temperature and $DOY_{25}$, meaning that warmer temperatures shifted growth earlier in the season (Figs. `r climwin`, `r climwin_rp_DOY25_SCBI`, `r climwin_dp_DOY25_SCBI`). 
+This held true for both ring- and diffuse-porous trees, *albeit* with stronger relationships for ring-porous trees. 
+*(Describe the landscape:)*
+In general, there were significant negative relationships between temperature and $DOY_{25}$ for any time period beginning $\ge$ **5** weeks prior to $DOY_{25}$, ending  $\le$ **6** weeks prior, and covering at least a **3**-week period. 
+Relationships tended to be weaker and more stochastic in sign for short time periods, particularly those just prior to $DOY_{25}$.
+
+Optimal windows occurred from **##-##** for ring-porous species and from **##-##** for diffuse-porous species.
 
 ```{r climwin, out.width="100%", echo=FALSE, fig.align="center", fig.cap= cum_growth_caption}
 # Created in RScripts/additional_figures.R
 knitr::include_graphics("tables_figures/climwin.png")
 ```
-
 
 
 *Climate sensitivity of phenology*
