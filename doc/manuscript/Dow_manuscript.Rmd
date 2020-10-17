@@ -61,7 +61,7 @@ rel_growth = "2a" #Based on D'Orangeville Figure 3.a), but with relative growth
 cum_growth = "2b" #Similar to D'Orangeville Figure 4.a), but with cumulative relative growth
 climwin = 3
 pheno_Tsensitivity = 4
-
+model_summary = 5
 
 #SI:
 #tables
@@ -83,6 +83,8 @@ climwin_caption <- "Figure 3. Landscapes of relationships between the day of yea
 pheno_Tsensitivity_caption <- "Figure 4. Relationship between DOY and climwin mean tempeatures. For each 
 observed climwin mean temperature value, the posterior mean of the fitted day of year
 is represented by the solid blue line and credible intervals are represented by bands."
+
+model_summary_caption <- "Figure 5. (PLACEHOLDER FOR FIGURE WE DISCUSSED AT LAB MEETING)"
 
 climwin_rp_DOY25_SCBI_short_caption <- "Figure S1. Full climwin output for DOY 25 for ring porous species at SCBI."
 climwin_dp_DOY25_SCBI_short_caption <- "Figure S1. Full climwin output for DOY 25 for diffuse porous species at SCBI."
