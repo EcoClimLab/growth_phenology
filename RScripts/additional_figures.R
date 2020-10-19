@@ -197,10 +197,11 @@ rel_growth <- ggplot(percent_growth, aes(x = doy, y = dbh_growth_percent, group 
   theme_bw() +
   geom_line(alpha = 0.2, aes(col = wood_type)) +
   scale_colour_viridis_d("Wood Type", end = 2/3)
+rel_growth
 
 fig_width <- 7
 ggsave(filename = "doc/manuscript/tables_figures/rel_growth.png",
-       plot = percent_growth_by_DOY_new_viridis,
+       plot = rel_growth,
        width = fig_width, height = fig_width / 2)
 
 
