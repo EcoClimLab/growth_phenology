@@ -147,7 +147,7 @@ ggsave("doc/manuscript/tables_figures/schematic.png", plot = schematic, width = 
 
 
 # Fig2 & Fig3: Percent modeled growth and cummulative percent modeled growth ---
-Wood_pheno_table <- read_csv("Data/Wood_pheno_table_V4.csv") %>%
+Wood_pheno_table <- read_csv("Data/Wood_pheno_table_V7.csv") %>%
   # Keep only RP and DP for now
   filter(wood_type != "other") %>%
   # Rename ring porous to not have a space
@@ -225,3 +225,30 @@ ggsave(filename = "doc/manuscript/tables_figures/fig3.png", plot = fig3, width =
 #   labs(x = "DOY", y = "Cummulative percent of total growth", title = "Cummulative percent of total (modeled) growth in diameter", subtitle = "Each curve represents one tag-year")
 # fig3b
 
+#Figure D'Orangeville figure 4
+warmest <- subset(Wood_pheno_table, year == 2012)
+coldestRP <- subset(Wood_pheno_table, year == 2013 & wood_type == "ring-porous")
+coldestDP <- subset(Wood_pheno_table, year == 2018 & wood_type == "diffuse-porous")
+coldest <- rbind(coldestDP, coldestRP)
+aggregates <- aggregate(Wood_pheno_table$DOY, by = list(Wood_pheno_table$wood_type, Wood_pheno_table$perc), FUN = mean)
+aggregates_warm <- aggregate(warmest$DOY, by = list(warmest$wood_type, warmest$perc), FUN = mean)
+names(aggregates_warm) <- c("Group.1", "Group.2", "warmest")
+aggregates_cold <- aggregate(coldest$DOY, by = list(coldest$wood_type, coldest$perc), FUN = mean)
+names(aggregates_cold) <- c("Group.1", "Group.2", "coldest")
+
+aggregates <- left_join(aggregates, aggregates_cold, by = c("Group.1", "Group.2"))
+aggregates <- left_join(aggregates, aggregates_warm, by = c("Group.1", "Group.2"))
+names(aggregates) <- c("Group.1", "Group.2","x","cold", "warm")
+#names(aggregates) <- c("Wood type", "Growth vari", "DOY")
+doytiming <- ggplot(aggregates, aes(x=x, y = Group.2, group = Group.1, color = Group.1))+
+  geom_point(size = 4)+
+  geom_line()+
+  geom_line(aes(x = cold), linetype = "dashed", size =1, show.legend = TRUE)+
+  geom_line(aes(x = warm), linetype = "dotted", size = 1, show.legend = TRUE)+
+  labs(x = "Day of Year", y = "Growth variable", title = "Intraannual Growth Timing", color = "Wood Type")+
+  scale_colour_viridis_d(end = 2/3)
+
+fig_width <- 7
+ggsave(filename = "doc/manuscript/tables_figures/DOYtiming.png",
+       plot = doytiming,
+       width = fig_width, height = fig_width / 2)
