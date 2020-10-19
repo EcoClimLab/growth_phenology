@@ -7,14 +7,14 @@ library(knitr)
 library(scales)
 options(mc.cores = parallel::detectCores())
 library(rstanarm)
-
+library(broom.mixed)
 
 # Get growth data ----------------------------------
-Wood_pheno_table <- read_csv("Data/Wood_pheno_table_V6.csv") %>%
+Wood_pheno_table <- read_csv("Data/Wood_pheno_table_V7.csv") %>%
   # Keep only RP and DP for now
   filter(wood_type != "other") %>%
-  filter(tot >= 1) %>%
-  filter(tot <= 12.06)%>%
+  #filter(tot >= 1) %>%
+  #filter(tot <= 12.06)%>%
   # Rename ring porous to not have a space
   mutate(wood_type = ifelse(wood_type == "ring porous", "ring-porous", wood_type))
 
@@ -24,15 +24,15 @@ sevenfive <- subset(Wood_pheno_table, perc == .75)
 #25-50
 twofifty <- cbind(twofive,fifty$DOY)
 twofifty$twentyfive_to_fifty <- twofifty$`fifty$DOY`-twofifty$DOY
-twofifty <- twofifty[,c(3,6,12)]
+twofifty <- twofifty[,c(3,6,14)]
 #50-75
 fiftyseventy <- cbind(fifty, sevenfive$DOY)
 fiftyseventy$fifty_to_seventy <- fiftyseventy$`sevenfive$DOY`-fiftyseventy$DOY
-fiftyseventy <- fiftyseventy[,c(3,6,12)]
+fiftyseventy <- fiftyseventy[,c(3,6,14)]
 #25-75
 twosevenfive <- cbind(twofive, sevenfive$DOY)
 twosevenfive$seasonlength <- twosevenfive$`sevenfive$DOY`-twosevenfive$DOY
-twosevenfive <- twosevenfive[,c(3,6,12)]
+twosevenfive <- twosevenfive[,c(3,6,14)]
 
 
 # Create temperature variables ----------------------------------
@@ -295,7 +295,7 @@ fig6 <- ggplot() +
   labs(x = "Climwin mean temperature (relative to 16°C)", y = "DOY", col = "Percentile", main = "Relationship of DOY versus climwin mean temperature") +
   geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
 fig6
-ggsave(filename = "doc/manuscript/tables_figures/fig6_cam.png", width = 14.7*.7, height = 10.9*.7, plot = fig6)
+ggsave(filename = "doc/manuscript/tables_figures/fig6.png", width = 14.7*.7, height = 10.9*.7, plot = fig6)
 
 # Sanity check this plot with regression table intercepts and slopes
 posterior_means_fixed_effects
@@ -335,30 +335,113 @@ coefficient                               mean    sd `2.5%`  `97.5%`
 11 y3|wood_typediffuse-porous:climwinmean  -1.97  0.789  -3.49  -0.443
 12 y3|wood_typering-porous:climwinmean     -0.635 0.339  -1.31   0.0291
 
-#V6 w/ outliers removed
-coefficient                               mean    sd `2.5%`  `97.5%`
-<chr>                                    <dbl> <dbl>  <dbl>    <dbl>
-  1 y1|(Intercept)                         156.    2.21  151.   160.
-2 y1|wood_typering-porous                -52.2   2.80  -57.9  -46.8
-3 y1|wood_typediffuse-porous:climwinmean  -1.51  0.705  -2.94  -0.149
-4 y1|wood_typering-porous:climwinmean     -2.96  0.287  -3.54  -2.40
-5 y2|(Intercept)                         174.    2.23  170.   179.
-6 y2|wood_typering-porous                -36.0   2.88  -41.4  -30.3
-7 y2|wood_typediffuse-porous:climwinmean  -1.50  0.646  -2.78  -0.272
-8 y2|wood_typering-porous:climwinmean     -1.83  0.271  -2.35  -1.29
-9 y3|(Intercept)                         193.    2.49  189.   198.
-10 y3|wood_typering-porous                -18.0   3.17  -24.1  -12.0
-11 y3|wood_typediffuse-porous:climwinmean  -1.51  0.703  -2.88  -0.138
-12 y3|wood_typering-porous:climwinmean     -0.492 0.293  -1.04   0.0980
+#V7 (outliers removed from V6)
+coefficient                               mean    sd  `2.5%`  `97.5%`
+<chr>                                    <dbl> <dbl>   <dbl>    <dbl>
+  1 y1|(Intercept)                         155.    2.16  151.    159.
+2 y1|wood_typering-porous                -49.9   2.79  -55.6   -44.7
+3 y1|wood_typediffuse-porous:climwinmean  -1.30  0.695  -2.68    0.0567
+4 y1|wood_typering-porous:climwinmean     -2.79  0.311  -3.38   -2.20
+5 y2|(Intercept)                         174.    2.12  170.    179.
+6 y2|wood_typering-porous                -34.1   2.78  -39.5   -28.5
+7 y2|wood_typediffuse-porous:climwinmean  -1.46  0.576  -2.58   -0.308
+8 y2|wood_typering-porous:climwinmean     -1.58  0.248  -2.05   -1.07
+9 y3|(Intercept)                         194.    2.36  190.    199.
+10 y3|wood_typering-porous                -16.8   3.07  -22.8   -10.8
+11 y3|wood_typediffuse-porous:climwinmean  -1.67  0.656  -2.95   -0.362
+12 y3|wood_typering-porous:climwinmean     -0.158 0.291  -0.706   0.433
 
+#Bayesian models for other variables ----
+woodtable <- subset(Wood_pheno_table, perc == "DOY_25")
+total_formulaRP <- "tot ~ wood_type + wood_type:climwinmean + (1|tag)" %>% as.formula()
 
+maxrateDOY_formulaRP <- "max_rate_DOY ~wood_type + wood_type:climwinmean + (1|tag)" %>% as.formula()
+
+maxrate_formulaRP <- "max_rate ~ wood_type + wood_type:climwinmean + (1|tag)" %>% as.formula()
+
+seasonlength_formulaRP <- "seasonlength ~ wood_type + wood_type:climwinmean + (1|tag)" %>% as.formula()
+
+earlyperiod_formulaRP <- "twentyfive_to_fifty ~ wood_type + wood_type:climwinmean + (1|tag)" %>% as.formula()
+
+mixedmodel_stanlmerRP_total <- stan_lmer(
+  formula = total_formulaRP,
+  data = woodtable,
+  seed = 349,
+  iter = 4000,
+  chains = 2
+)
+
+mixedmodel_stanlmerRP_total %>%
+  tidy(conf.int = TRUE)
+
+mixedmodel_stanlmerRP_maxrateDOY <- stan_lmer(
+  formula = maxrateDOY_formulaRP,
+  data = woodtable,
+  seed = 349,
+  iter = 4000,
+  chains = 2
+)
+
+mixedmodel_stanlmerRP_maxrateDOY %>%
+  tidy(conf.int = TRUE)
+
+mixedmodel_stanlmerRP_maxrate <- stan_lmer(
+  formula = maxrate_formulaRP,
+  data = woodtable,
+  seed = 349,
+  iter = 4000,
+  chains = 2
+)
+
+mixedmodel_stanlmerRP_maxrate %>%
+  tidy(conf.int = TRUE)
+
+mixedmodel_stanlmerRP_seasonlength <- stan_lmer(
+  formula = seasonlength_formulaRP,
+  data = woodtable,
+  seed = 349,
+  iter = 4000,
+  chains = 2
+)
+
+mixedmodel_stanlmerRP_seasonlength %>%
+  tidy(conf.int = TRUE)
+
+mixedmodel_stanlmerRP_earlyperiod <- stan_lmer(
+  formula = earlyperiod_formulaRP,
+  data = woodtable,
+  seed = 349,
+  iter = 4000,
+  chains = 2
+)
+
+mixedmodel_stanlmerRP_earlyperiod %>%
+  tidy(conf.int = TRUE)
 
 
 #Figure D'Orangeville figure 4
+warmest <- subset(Wood_pheno_table, year == 2012)
+coldestRP <- subset(Wood_pheno_table, year == 2013 & wood_type == "ring-porous")
+coldestDP <- subset(Wood_pheno_table, year == 2018 & wood_type == "diffuse-porous")
+coldest <- rbind(coldestDP, coldestRP)
 aggregates <- aggregate(Wood_pheno_table$DOY, by = list(Wood_pheno_table$wood_type, Wood_pheno_table$perc), FUN = mean)
-#names(aggregates) <- c("Wood type", "Growth vari", "DOY")
-ggplot(aggregates, aes(x=x, y = Group.2, group = Group.1, color = Group.1))+geom_point(size = 4)+geom_line()+labs(x = "Day of Year", y = "Growth variable", title = "Intraannual Growth Timing", color = "Wood Type")
+aggregates_warm <- aggregate(warmest$DOY, by = list(warmest$wood_type, warmest$perc), FUN = mean)
+names(aggregates_warm) <- c("Group.1", "Group.2", "warmest")
+aggregates_cold <- aggregate(coldest$DOY, by = list(coldest$wood_type, coldest$perc), FUN = mean)
+names(aggregates_cold) <- c("Group.1", "Group.2", "coldest")
 
+aggregates <- left_join(aggregates, aggregates_cold, by = c("Group.1", "Group.2"))
+aggregates <- left_join(aggregates, aggregates_warm, by = c("Group.1", "Group.2"))
+#names(aggregates) <- c("Wood type", "Growth vari", "DOY")
+ggplot(aggregates, aes(x=x, y = Group.2, group = Group.1, color = Group.1))+
+  geom_point(size = 4)+
+  geom_line()+
+  geom_line(aes(x = coldest, color = Group.1), linetype = "dashed", size =1)+
+  geom_line(aes(x = warmest, color= Group.1), linetype = "dotted", size = 1)+
+  labs(x = "Day of Year", y = "Growth variable", title = "Intraannual Growth Timing", color = "Wood Type")+
+  scale_colour_viridis_d()
+timingplot <- timingplot + geom_point(data = aggregates_warm, aes(x = x, y = Group.2, group = Group.1, color = Group.1))+geom_line(linetype = "dotted")
+timingplot + geom_point(data = aggregates_cold, aes(x = x, y = Group.2, group =Group.1, color = Group.1))
 ##### Mixed models using LME4 ----
 library(lme4)
 library(lmerTest)
@@ -385,7 +468,7 @@ summary(lmer(DOY ~ climwinmean + (1|sp/tag), data = sevenfive_rp))
 
 ggplot(df)+
   geom_boxplot(aes(x=as.character(year), y=tot, fill = wood_type))+
-  stat_summary(aes(x=as.character(year), y=tot, color = wood_type), fun = "mean", geom = "point", shape = 8, size = 4, fill = "black")+
+  stat_summary(aes(x=as.character(year), y=tot, group = wood_type), fun = "mean", geom = "point", shape = 8, size = 2, fill = "black")+
   geom_point(aes(x=as.character(year), y=climwinmean, color = wood_type, group = wood_type))+
   geom_line(aes(x=as.character(year), y = climwinmean, color = wood_type, group=wood_type))+
   labs(x = "Year", title = "Total Growth / year / wood type")+
@@ -393,6 +476,14 @@ ggplot(df)+
                       ylim.prim <- c(0, 25),
                       ylim.sec <- c(0, 25),
                       sec.axis = sec_axis(~ ., name = "Climwin window mean temperature (C)"))
+lm(twofive_rp$tot~twofive_rp$climwinmean)
+lm(twofive_dp$tot~twofive_dp$climwinmean)
+
+r <- ggplot(data = twofive_rp, aes(x = climwinmean, y = tot, group = year, fill = wood_type))+geom_boxplot()+
+  geom_abline(intercept = 3.59638, slope = 0.09448)+labs(title = "Total Growth (dbh)", x = "Climwin Mean", y = "Total Yearly Growth (DBH)")
+
+r+ ggplot(twofive_dp,aes(x = climwinmean, y = tot, group = year, fill = wood_type))+geom_boxplot()+
+  geom_abline(intercept = 3.42599 , slope = 0.03013)+labs(title = "Total Growth (dbh)", x = "Climwin Mean", y = "Total Yearly Growth (DBH)")
 
 
 boxplot(df$tot~df$wood_type, xlab = "Wood type", ylab = "")
@@ -409,6 +500,8 @@ plot(twofive_dp$tot~twofive_dp$climwinmean)
 abline(lm(twofive_dp$tot~twofive_dp$climwinmean))
 
 ##### Max rate / max_rate_DOY ----
+library(lme4)
+library(lmerTest)
 summary(lmer(max_rate~climwinmean + (1|sp/tag), data = twofive_rp))
 plot(twofive_rp$max_rate~twofive_rp$climwinmean)
 abline(lm(twofive_rp$max_rate~twofive_rp$climwinmean))
@@ -416,6 +509,25 @@ abline(lm(twofive_rp$max_rate~twofive_rp$climwinmean))
 summary(lmer(max_rate~climwinmean + (1|sp/tag), data = twofive_dp))
 plot(twofive_dp$max_rate~twofive_dp$climwinmean)
 abline(lm(twofive_dp$max_rate~twofive_dp$climwinmean))
+
+ggplot(df)+
+  geom_boxplot(aes(x = as.character(year), y = max_rate, fill = wood_type))+
+  stat_summary(aes(x=as.character(year), y=max_rate, group = wood_type), fun = "mean", geom = "point", shape = 8, size = 4, fill = "black")+
+  geom_point(aes(x=as.character(year), y=climwinmean/70, color = wood_type, group = wood_type))+
+  geom_line(aes(x=as.character(year), y = climwinmean/70, color = wood_type, group=wood_type))+
+  labs(x = "Year", title = "Max growth rates")+
+  scale_y_continuous( name = expression("Maximum Growth Rate"),
+                      ylim.prim <- c(0, 100),
+                      ylim.sec <- c(0, 25),
+                      sec.axis = sec_axis(~ .*70, name = "Climwin window mean temperature (C)"))
+
+lm(twofive_rp$max_rate~twofive_rp$climwinmean)
+lm(twofive_dp$max_rate~twofive_dp$climwinmean)
+r <- ggplot(data = twofive_rp, aes(x = climwinmean, y = max_rate, group = year, fill = wood_type))+geom_boxplot()+
+  geom_abline(intercept = 0.0527132, slope = -0.0007811)+labs(title = "Max growth rate")
+r+ ggplot(twofive_dp,aes(x = climwinmean, y = max_rate, group = year, fill = wood_type))+geom_boxplot()+
+  geom_abline(intercept = 0.0659247 , slope = -0.0001822)+labs(title = "Max growth rates")
+
 
 summary(lmer(max_rate_DOY~climwinmean + (1|sp/tag), data = twofive_rp))
 plot(twofive_rp$max_rate_DOY~twofive_rp$climwinmean)
@@ -426,10 +538,23 @@ plot(twofive_dp$max_rate_DOY~twofive_dp$climwinmean, xlab = "Temp", ylab= "DOY m
 abline(lm(twofive_dp$max_rate_DOY~twofive_dp$climwinmean))
 
 
+ggplot(df)+
+  geom_boxplot(aes(x=as.character(year), y=max_rate_DOY, fill = wood_type))+
+  stat_summary(aes(x=as.character(year), y=max_rate_DOY, group = wood_type), fun = "mean", geom = "point", shape = 8, size = 2, fill = "black")+
+  geom_point(aes(x=as.character(year), y=climwinmean*13, color = wood_type, group = wood_type))+
+  geom_line(aes(x=as.character(year), y = climwinmean*13, color = wood_type, group=wood_type))+
+  labs(x = "Year", title = "Max rate DOY")+
+  scale_y_continuous( name = expression("Day of Year"),
+                      ylim.prim <- c(0, 200),
+                      ylim.sec <- c(0, 25),
+                      sec.axis = sec_axis(~ ./13, name = "Climwin window mean temperature (C)"))
+
+lm(twofive_rp$max_rate_DOY~twofive_rp$climwinmean)
+lm(twofive_dp$max_rate_DOY~twofive_dp$climwinmean)
 r <- ggplot(data = twofive_rp, aes(x = climwinmean, y = max_rate_DOY, group = year, fill = wood_type))+geom_boxplot()+
-  geom_abline(intercept = 175.006, slope = -2.138)
+  geom_abline(intercept = 172.570, slope = -1.968)+labs(title = 'Max Rate DOY')
 r+ ggplot(twofive_dp,aes(x = climwinmean, y = max_rate_DOY, group = year, fill = wood_type))+geom_boxplot()+
-  geom_abline(intercept = 206.936 , slope = -1.994)
+  geom_abline(intercept = 203.3 , slope = -1.7)+labs(title = "Max Rate DOY")
 
 
 
@@ -440,7 +565,7 @@ library(lmerTest)
 #25-75
 ggplot(df)+
   geom_boxplot(aes(x = as.character(year), y = seasonlength, fill = wood_type))+
-  stat_summary(aes(x=as.character(year), y=seasonlength, color = wood_type), fun = "mean", geom = "point", shape = 8, size = 4, fill = "black")+
+  stat_summary(aes(x=as.character(year), y=seasonlength, group = wood_type), fun = "mean", geom = "point", shape = 8, size = 4, fill = "black")+
   geom_point(aes(x=as.character(year), y=climwinmean*10, color = wood_type, group = wood_type))+
   geom_line(aes(x=as.character(year), y = climwinmean*10, color = wood_type, group=wood_type))+
   labs(x = "Year", title = "Season length (75% growth DOY - 25% growth DOY)")+
@@ -448,6 +573,15 @@ ggplot(df)+
                       ylim.prim <- c(0, 200),
                       ylim.sec <- c(0, 25),
                       sec.axis = sec_axis(~ . /10, name = "Climwin window mean temperature (C)"))
+
+lm(twofive_rp$seasonlength~twofive_rp$climwinmean)
+lm(twofive_dp$seasonlength~twofive_dp$climwinmean)
+
+r <- ggplot(data = twofive_rp, aes(x = climwinmean, y = seasonlength, group = year, fill = wood_type))+geom_boxplot()+
+  geom_abline(intercept = 33.022, slope = 2.484)+labs(title = "Season length RP (75%-25%)", x = "Climwin Mean", y = "Days")
+
+r+ ggplot(twofive_dp,aes(x = climwinmean, y = seasonlength, group = year, fill = wood_type))+geom_boxplot()+
+  geom_abline(intercept = 39.202308 , slope = -0.06882)+labs(title = "Season length DP (75%-25%)", x = "Climwin Mean", y = "Days")
 
 summary(aov(seasonlength ~ wood_type, data = df))
 
@@ -472,6 +606,12 @@ ggplot(df)+
                       ylim.sec <- c(0, 25),
                       sec.axis = sec_axis(~ . /5, name = "Climwin window mean temperature (C)"))
 
+lm(twofive_rp$twentyfive_to_fifty~twofive_rp$climwinmean)
+lm(twofive_dp$twentyfive_to_fifty~twofive_dp$climwinmean)
+r <- ggplot(data = twofive_rp, aes(x = climwinmean, y = twentyfive_to_fifty, group = year, fill = wood_type))+geom_boxplot()+
+  geom_abline(intercept = 17.289, slope = 1.138)+labs(title = "50%-25%")
+r+ ggplot(twofive_dp,aes(x = climwinmean, y = twentyfive_to_fifty, group = year, fill = wood_type))+geom_boxplot()+
+  geom_abline(intercept = 19.3780 , slope = -0.0245)+labs(title = "50%-25%")
 
 ggplot(df, aes(x = wood_type, y = twentyfive_to_fifty)) + geom_boxplot()
 summary(aov(twentyfive_to_fifty ~ wood_type, data = df))
