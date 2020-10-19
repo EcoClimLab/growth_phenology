@@ -138,7 +138,7 @@ schematic <- ggplot() +
   theme_bw()
 schematic
 
-fig_width <- 8
+fig_width <- 11
 ggsave("doc/manuscript/tables_figures/schematic.png", plot = schematic, width = fig_width, height = fig_width / 1.52)
 
 
