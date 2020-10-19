@@ -13,9 +13,9 @@ library(tidybayes)
 # 5. theta: theta = 1 indicates pre/post inflection post symmetry
 K <- 13.2
 L <- 13.8
-doy.ip <- 200
-r <- 0.075
-theta <- 2
+doy.ip <- 175
+r <- 0.05
+theta <- 1
 params <- c(K, L, doy.ip, r, theta)
 
 # Function for logistic growth model written by Sean. Supposed to be in RDendrom
@@ -37,6 +37,24 @@ true_values <- tibble(
   diameter = lg5.pred(params, doy)
 )
 
+# Max Growth rate
+intercept <- lg5.pred(params, doy.ip) - r *doy.ip
+
+r_true <- (-1)*((K-L)*r/theta )/(1 + 1/theta)^2
+intercept_true <- lg5.pred(params, doy.ip) - r_true *doy.ip
+
+offset <- 40
+max_growth_rate <- tibble(
+  doy = c(doy.ip - offset, doy.ip + offset),
+) %>%
+  mutate(
+    diameter = doy * r_true + intercept_true
+  )
+
+
+
+
+
 # Compute observed values (noise/error added) to plot with points
 set.seed(76)
 observed_values <- tibble(
@@ -53,7 +71,8 @@ doy_diameter_quartile <- bind_rows(
   true_values %>% filter(diameter >= quantile(diameter, probs = 1)) %>% slice(1)
 ) %>%
   mutate(
-    growth = c(0.25, 0.5, 0.75, 1)
+    growth = c(0.25, 0.5, 0.75, 1),
+    label = c("25%", "50%", "75%", "100% of growth")
   )
 
 # Function to create polygons to ggplot
@@ -61,13 +80,14 @@ create_growth_polygon <- function(percent){
   index <- case_when(
     percent == 0.25 ~ 1,
     percent == 0.5 ~ 2,
-    percent == 0.75 ~ 3)
+    percent == 0.75 ~ 3
+  )
 
   growth_doy_domain <- seq(from = doy_diameter_quartile$doy[index], to = doy_diameter_quartile$doy[4])
   n_days_domain <- length(growth_doy_domain)
 
   growth_polygon <- tibble(
-    doy = c(growth_doy_domain[index], growth_doy_domain, growth_doy_domain[n_days_domain], growth_doy_domain[index]),
+    doy = c(growth_doy_domain[1], growth_doy_domain, growth_doy_domain[n_days_domain], growth_doy_domain[1]),
     diameter = c(K, lg5.pred(params, growth_doy_domain), K, K)
   )
 
@@ -76,30 +96,50 @@ create_growth_polygon <- function(percent){
 
 
 # Output figure
-fig1<- ggplot() +
-  # Mark 25%, 50%, 75%, 100% DOY
-  geom_vline(data = doy_diameter_quartile, mapping = aes(xintercept = doy), linetype = "dashed", col = "grey") +
-  geom_polygon(data = create_growth_polygon(percent = 0.25), mapping = aes(x = doy, y = diameter), fill = grey(level = 0.8)) +
-  geom_polygon(data = create_growth_polygon(percent = 0.50), mapping = aes(x = doy, y = diameter), fill = grey(level = 0.6)) +
-  geom_polygon(data = create_growth_polygon(percent = 0.75), mapping = aes(x = doy, y = diameter), fill = grey(level = 0.4)) +
-  # Plot L & K asymptotes
-  geom_hline(yintercept = params[1:2], linetype = "dashed") +
-  # Plot true growth curve
+schematic <- ggplot() +
+  # 25%, 50%, 75%, 100% polygons & labels
+  geom_polygon(data = create_growth_polygon(percent = 0.25), mapping = aes(x = doy, y = diameter), fill = grey(level = 0.75)) +
+  geom_polygon(data = create_growth_polygon(percent = 0.50), mapping = aes(x = doy, y = diameter), fill = grey(level = 0.625)) +
+  geom_polygon(data = create_growth_polygon(percent = 0.75), mapping = aes(x = doy, y = diameter), fill = grey(level = 0.5)) +
+  geom_text(data = doy_diameter_quartile, aes(x = doy - 3, label = label), y = 13.21, angle = 90, hjust = 0, size = 7.5) +
+  # L & K asymptotes
+  geom_hline(yintercept = K, linetype = "dashed", col = "grey") +
+  annotate("text", x = true_values$doy[1], y = K, label = "K", size = 7.5) +
+  geom_hline(yintercept = L, linetype = "dashed", col = "grey") +
+  annotate("text", x = true_values$doy[1], y = L, label = "L", size = 7.5) +
+  # True growth curve
   geom_line(data = true_values, mapping = aes(x = doy, y = diameter)) +
-  # Plot observed values
+  # Observed values
   geom_point(data = observed_values, mapping = aes(x = doy, y = diameter), shape = 21, colour = "black", fill = "white", size = 3, stroke = 1) +
-  # Plot
-  labs(x = "Day of year", y = "Diameter (cm)")
-fig1
-# TODO: Add
-# - Explanations of parameters
-# - 25-75 DOY window
-# - max growth rate
-# - total annual growth
+  # Inflection point & max growth rate
+  annotate("point", x = doy.ip, y = lg5.pred(params, doy.ip), size = 4) +
+  annotate("text", x = doy.ip + 3, y = lg5.pred(params, doy.ip), label = "inflection point:\nmax growth rate\n(dotted slope)", hjust = 0, size = 4) +
+  geom_line(data = max_growth_rate, aes(x = doy, y = diameter), linetype = "dotted") +
+  # geom_abline(intercept = intercept, slope = r) +
+  # Total growth arrows:
+  geom_segment(aes(x = doy_diameter_quartile$doy[4] + 10, y = L, xend = doy_diameter_quartile$doy[4] + 10, yend = K), arrow = arrow(length = unit(0.5, "cm"), ends = "both")) +
+  annotate("text", x = doy_diameter_quartile$doy[4] + 7, y = K + (L - K) / 2, label = "Total annual growth", angle = 90, vjust = 0.5, size = 7.5) +
+  # Growth window arrows:
+  geom_segment(aes(
+    x = doy_diameter_quartile$doy[1],
+    y = K - 0.05,
+    xend = doy_diameter_quartile$doy[3],
+    yend = K - 0.05
+  ),
+  arrow = arrow(length = unit(0.5, "cm"), ends = "both")
+  ) +
+  annotate("text",
+    x = doy_diameter_quartile$doy[1] + (doy_diameter_quartile$doy[3] - doy_diameter_quartile$doy[1]) / 2,
+    y = K - 0.025,
+    label = "75% - 25% growth window", hjust = 0.5, size = 7.5
+  ) +
+  # Etc
+  labs(x = "Day of year", y = "Diameter (cm)") +
+  theme_bw()
+schematic
 
 fig_width <- 8
-ggsave("doc/manuscript/tables_figures/fig1.png", plot = fig1, width = fig_width, height = fig_width / 1.52)
-
+ggsave("doc/manuscript/tables_figures/schematic.png", plot = schematic, width = fig_width, height = fig_width / 1.52)
 
 
 
@@ -148,18 +188,20 @@ percent_growth <- Wood_pheno_table %>%
     dbh_growth_percent_cummulative = cumsum(dbh_growth_percent)
   )
 
-
-
-fig2 <- ggplot(percent_growth, aes(x = doy, y = dbh_growth_percent, group = tag_year)) +
-  geom_line(alpha = 0.1) +
-  facet_wrap(~wood_type, ncol = 1) +
+rel_growth <- ggplot(percent_growth, aes(x = doy, y = dbh_growth_percent, group = tag_year)) +
   coord_cartesian(ylim = c(0, 0.05)) +
   scale_y_continuous(labels = percent) +
-  labs(x = "DOY", y = "Percent of total growth", title = "Percent of total (modeled) growth in diameter", subtitle = "Each curve represents one tag-year")
-fig2
+  labs(x = "DOY", y = "Percent of total growth",
+       title = "Percent of total (modeled) growth in diameter",
+       subtitle = "Each curve represents one tag-year") +
+  theme_bw() +
+  geom_line(alpha = 0.2, aes(col = wood_type)) +
+  scale_colour_viridis_d("Wood Type", end = 2/3)
 
-fig_width <- 6
-ggsave(filename = "doc/manuscript/tables_figures/fig2.png", plot = fig2, width = fig_width, height = fig_width / 1.52)
+fig_width <- 7
+ggsave(filename = "doc/manuscript/tables_figures/rel_growth.png",
+       plot = percent_growth_by_DOY_new_viridis,
+       width = fig_width, height = fig_width / 2)
 
 
 
