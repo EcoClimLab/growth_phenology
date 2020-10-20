@@ -11,12 +11,12 @@ library(tidybayes)
 # 3. doy.ip: inflection point
 # 4. r: slope of curve at inflection point
 # 5. theta: theta = 1 indicates pre/post inflection post symmetry
-K <- 13.2
-L <- 13.8
+L <- 13.2
+K <- 13.8
 doy.ip <- 175
 r <- 0.05
 theta <- 1
-params <- c(K, L, doy.ip, r, theta)
+params <- c(L, K, doy.ip, r, theta)
 
 # Function for logistic growth model written by Sean. Supposed to be in RDendrom
 # package https://github.com/seanmcm/RDendrom, but function does not seem to be included
@@ -40,7 +40,7 @@ true_values <- tibble(
 # Max Growth rate
 intercept <- lg5.pred(params, doy.ip) - r *doy.ip
 
-r_true <- (-1)*((K-L)*r/theta )/(1 + 1/theta)^2
+r_true <- ((K-L)*r/theta )/(1 + 1/theta)^2
 intercept_true <- lg5.pred(params, doy.ip) - r_true *doy.ip
 
 offset <- 40
@@ -88,7 +88,7 @@ create_growth_polygon <- function(percent){
 
   growth_polygon <- tibble(
     doy = c(growth_doy_domain[1], growth_doy_domain, growth_doy_domain[n_days_domain], growth_doy_domain[1]),
-    diameter = c(K, lg5.pred(params, growth_doy_domain), K, K)
+    diameter = c(L, lg5.pred(params, growth_doy_domain), L, L)
   )
 
   return(growth_polygon)
@@ -103,10 +103,10 @@ schematic <- ggplot() +
   geom_polygon(data = create_growth_polygon(percent = 0.75), mapping = aes(x = doy, y = diameter), fill = grey(level = 0.5)) +
   geom_text(data = doy_diameter_quartile, aes(x = doy - 3, label = label), y = 13.21, angle = 90, hjust = 0, size = 7.5) +
   # L & K asymptotes
-  geom_hline(yintercept = K, linetype = "dashed", col = "grey") +
-  annotate("text", x = true_values$doy[1], y = K, label = "K", size = 7.5) +
   geom_hline(yintercept = L, linetype = "dashed", col = "grey") +
   annotate("text", x = true_values$doy[1], y = L, label = "L", size = 7.5) +
+  geom_hline(yintercept = K, linetype = "dashed", col = "grey") +
+  annotate("text", x = true_values$doy[1], y = K, label = "K", size = 7.5) +
   # True growth curve
   geom_line(data = true_values, mapping = aes(x = doy, y = diameter)) +
   # Observed values
@@ -117,20 +117,20 @@ schematic <- ggplot() +
   geom_line(data = max_growth_rate, aes(x = doy, y = diameter), linetype = "dotted") +
   # geom_abline(intercept = intercept, slope = r) +
   # Total growth arrows:
-  geom_segment(aes(x = doy_diameter_quartile$doy[4] + 10, y = L, xend = doy_diameter_quartile$doy[4] + 10, yend = K), arrow = arrow(length = unit(0.5, "cm"), ends = "both")) +
-  annotate("text", x = doy_diameter_quartile$doy[4] + 7, y = K + (L - K) / 2, label = "Total annual growth", angle = 90, vjust = 0.5, size = 7.5) +
+  geom_segment(aes(x = doy_diameter_quartile$doy[4] + 10, y = K, xend = doy_diameter_quartile$doy[4] + 10, yend = L), arrow = arrow(length = unit(0.5, "cm"), ends = "both")) +
+  annotate("text", x = doy_diameter_quartile$doy[4] + 7, y = L + (K - L) / 2, label = "Total annual growth", angle = 90, vjust = 0.5, size = 7.5) +
   # Growth window arrows:
   geom_segment(aes(
     x = doy_diameter_quartile$doy[1],
-    y = K - 0.05,
+    y = L - 0.05,
     xend = doy_diameter_quartile$doy[3],
-    yend = K - 0.05
+    yend = L - 0.05
   ),
   arrow = arrow(length = unit(0.5, "cm"), ends = "both")
   ) +
   annotate("text",
     x = doy_diameter_quartile$doy[1] + (doy_diameter_quartile$doy[3] - doy_diameter_quartile$doy[1]) / 2,
-    y = K - 0.025,
+    y = L - 0.025,
     label = "75% - 25% growth window", hjust = 0.5, size = 7.5
   ) +
   # Etc
