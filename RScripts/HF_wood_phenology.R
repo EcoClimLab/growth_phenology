@@ -749,5 +749,17 @@ LG5_parameters %>%
 
 write.csv(bind_rows(LG5_parameters), file = "Data/LG5_parameter_values_HarvardForest_V1.csv")
 
+#Clean data
+Wood_pheno_table <- read_csv("Data/Wood_pheno_table_HarvardForest_V1.csv") #Master datafrmae containing 20%, 50%, and 75% growth milestones
+LG5_params <- read_csv("data/LG5_parameter_values_HarvardForest_V1.csv")
+outliers <- subset(LG5_params, doy_ip >= 243 | doy_ip <= 90)
+outliers$tag2 <- paste0(outliers$plot, outliers$tag, outliers$year)
+LG5_params <- LG5_params[!(LG5_params$X1 %in% outliers$X1),]
+#write.csv(LG5_params, file = "data/LG5_parameter_values_HarvardForest_V2.csv", row.names = FALSE)
+Wood_pheno_table <- Wood_pheno_table[!(Wood_pheno_table$tag %in% outliers$tag2),]
+Wood_pheno_table <- subset(Wood_pheno_table, tot >= .01)
+Wood_pheno_tabletags <- subset(Wood_pheno_table, DOY <= 30 | DOY >= 300)
+Wood_pheno_table <- Wood_pheno_table[!(Wood_pheno_table$tag %in% Wood_pheno_tabletags$tag),]
+write.csv(Wood_pheno_table, file = "data/Wood_pheno_table_HarvardFOrest_V2.csv", row.names = FALSE)
 
 
