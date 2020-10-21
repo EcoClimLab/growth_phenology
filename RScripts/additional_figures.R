@@ -231,22 +231,29 @@ coldestRP <- subset(Wood_pheno_table, year == 2013 & wood_type == "ring-porous")
 coldestDP <- subset(Wood_pheno_table, year == 2018 & wood_type == "diffuse-porous")
 coldest <- rbind(coldestDP, coldestRP)
 aggregates <- aggregate(Wood_pheno_table$DOY, by = list(Wood_pheno_table$wood_type, Wood_pheno_table$perc), FUN = mean)
+aggregates$temp_type <- "Average"
 aggregates_warm <- aggregate(warmest$DOY, by = list(warmest$wood_type, warmest$perc), FUN = mean)
-names(aggregates_warm) <- c("Group.1", "Group.2", "warmest")
+names(aggregates_warm) <- c("Group.1", "Group.2", "x")
+aggregates_warm$temp_type <- "Warmest Year"
 aggregates_cold <- aggregate(coldest$DOY, by = list(coldest$wood_type, coldest$perc), FUN = mean)
-names(aggregates_cold) <- c("Group.1", "Group.2", "coldest")
+names(aggregates_cold) <- c("Group.1", "Group.2", "x")
+aggregates_cold$temp_type <- "Coldest Year"
 
-aggregates <- left_join(aggregates, aggregates_cold, by = c("Group.1", "Group.2"))
-aggregates <- left_join(aggregates, aggregates_warm, by = c("Group.1", "Group.2"))
-names(aggregates) <- c("Group.1", "Group.2","x","cold", "warm")
+aggregates <- rbind(aggregates, aggregates_cold, aggregates_warm)
+aggregates$Group.2 <- ifelse(aggregates$Group.2 == .25, 25, ifelse(aggregates$Group.2 == .50, 50, ifelse(aggregates$Group.2 == .75, 75, 0)))
+#aggregates <- left_join(aggregates, aggregates_cold, by = c("Group.1", "Group.2"))
+#aggregates <- left_join(aggregates, aggregates_warm, by = c("Group.1", "Group.2"))
+#names(aggregates) <- c("Group.1", "Group.2","x","cold", "warm")
 #names(aggregates) <- c("Wood type", "Growth vari", "DOY")
-doytiming <- ggplot(aggregates, aes(x=x, y = Group.2, group = Group.1, color = Group.1))+
-  geom_point(size = 4)+
-  geom_line()+
-  geom_line(aes(x = cold), linetype = "dashed", size =1, show.legend = TRUE)+
-  geom_line(aes(x = warm), linetype = "dotted", size = 1, show.legend = TRUE)+
-  labs(x = "Day of Year", y = "Growth variable", title = "Intraannual Growth Timing", color = "Wood Type")+
+doytiming <- ggplot(aggregates, aes(x=x, y = as.character(Group.2), group = interaction(Group.1, temp_type), color = Group.1, linetype = temp_type))+
+  geom_point(size = 3)+
+  geom_line(size = 1)+
+  labs(x = "Day of Year", y = "Percent of Total Annual Growth", title = "SCBI Intraannual Growth Timing", color = "Wood Type")+
   scale_colour_viridis_d(end = 2/3)
+
+  #geom_line(aes(x = cold), linetype = "dashed", size =1, show.legend = TRUE)+
+  #geom_line(aes(x = warm), linetype = "dotted", size = 1, show.legend = TRUE)+
+
 
 fig_width <- 7
 ggsave(filename = "doc/manuscript/tables_figures/DOYtiming.png",
