@@ -32,7 +32,7 @@ $$
 dbh = \frac{K-L}{1 + 1/\theta*\exp(-r(doy - doy_{ip})/\theta)^{\theta}}
 $$
 However the `lg5.pred()` function from the [`RDendrom`
-package](https://github.com/seanmcm/RDendrom/blob/master/R/DENDRO_BASE_FUNCTIONS.R#L544) computes DBH as follows:
+package](https://github.com/seanmcm/RDendrom/blob/master/R/DENDRO_BASE_FUNCTIONS.R) computes DBH as follows:
 
 ```{r, echo = TRUE}
 lg5.pred <- function(params, doy) {
