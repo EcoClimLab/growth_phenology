@@ -10,13 +10,14 @@ library(rstanarm)
 library(broom.mixed)
 
 # Get growth data ----------------------------------
-Wood_pheno_table <- read_csv("Data/Wood_pheno_table_V7.csv") %>%
+Wood_pheno_table <- read_csv("Data/Wood_pheno_table_HarvardForest_V2.csv") %>%
   # Keep only RP and DP for now
   filter(wood_type != "other") %>%
   #filter(tot >= 1) %>%
   #filter(tot <= 12.06)%>%
   # Rename ring porous to not have a space
   mutate(wood_type = ifelse(wood_type == "ring porous", "ring-porous", wood_type))
+Wood_pheno_table$tag <- substr(Wood_pheno_table$tag,1, nchar(as.character(Wood_pheno_table$tag))-4)
 
 twofive <- subset(Wood_pheno_table, perc == .25)
 fifty <- subset(Wood_pheno_table, perc == .5)
@@ -24,40 +25,39 @@ sevenfive <- subset(Wood_pheno_table, perc == .75)
 #25-50
 twofifty <- cbind(twofive,fifty$DOY)
 twofifty$twentyfive_to_fifty <- twofifty$`fifty$DOY`-twofifty$DOY
-twofifty <- twofifty[,c(3,6,14)]
+twofifty <- twofifty[,c(3,6,12)]
 #50-75
 fiftyseventy <- cbind(fifty, sevenfive$DOY)
 fiftyseventy$fifty_to_seventy <- fiftyseventy$`sevenfive$DOY`-fiftyseventy$DOY
-fiftyseventy <- fiftyseventy[,c(3,6,14)]
+fiftyseventy <- fiftyseventy[,c(3,6,12)]
 #25-75
 twosevenfive <- cbind(twofive, sevenfive$DOY)
 twosevenfive$seasonlength <- twosevenfive$`sevenfive$DOY`-twosevenfive$DOY
-twosevenfive <- twosevenfive[,c(3,6,14)]
+twosevenfive <- twosevenfive[,c(3,6,12)]
 
 
 # Create temperature variables ----------------------------------
 # 0. Get all weather data
 weatherdata <-
-  read_csv("climate data/met_tower_data_sensor2_ncdc_supplemented.csv") %>%
-  filter(!is.na(cleantmax)) %>%
-  mutate(year = year.x)
+  read_csv("climate data/HF_weatherdata.csv") %>%
+  filter(!is.na(airtmax))
 
-  #mutate(
-  #  DATE = dmy(DATE),
-  #  months = month(DATE, label = TRUE, abbr = FALSE)
-  #) %>%
-  # Remove entries with no tmax data
-   #%>%
-  # Rename RP flag set by Cam
-  #rename(flagrp = flag)
+#mutate(
+#  DATE = dmy(DATE),
+#  months = month(DATE, label = TRUE, abbr = FALSE)
+#) %>%
+# Remove entries with no tmax data
+#%>%
+# Rename RP flag set by Cam
+#rename(flagrp = flag)
 climwindows <-
-  read.csv("results/Climwin_results/Weekly/weekly_climwin_results.csv") %>%
+  read.csv("results/Climwin_results/Weekly/SCBI/weekly_climwin_results.csv") %>%
   filter(wood_type != "other") %>%
   mutate(
-  median_windowopendate = strptime(median_windowopendate, format = "%m/%d/%y"),
-  median_windowclosedate = strptime(median_windowclosedate, format = "%m/%d/%y"),
-  opendoy = yday(median_windowopendate),
-  closedoy = yday(median_windowclosedate)
+    median_windowopendate = strptime(median_windowopendate, format = "%m/%d/%y"),
+    median_windowclosedate = strptime(median_windowclosedate, format = "%m/%d/%y"),
+    opendoy = yday(median_windowopendate),
+    closedoy = yday(median_windowclosedate)
   )
 
 
@@ -65,7 +65,7 @@ climwindows <-
 marchmeans <- weatherdata %>%
   filter(month == 3) %>%
   group_by(year) %>%
-  summarize(marchmean = mean(cleantmax))
+  summarize(marchmean = mean(airtmax))
 
 # 2.a) EDA of climwin windows
 # RP climwin window is around 3/15 to 4/23
@@ -97,9 +97,9 @@ climwin_windows <-
 #  summarize(climwinmean = mean(TMAX)) %>%
 #  mutate(wood_type = "ring-porous")
 climwinmeans_rp <- weatherdata %>%
-  filter(doy %in% c(climwindows[1,11]:climwindows[1,12])) %>%
+  filter(DOY %in% c(climwindows[1,11]:climwindows[1,12])) %>%
   group_by(year) %>%
-  summarize(climwinmean = mean(cleantmax)) %>%
+  summarize(climwinmean = mean(airtmax)) %>%
   mutate(wood_type = "ring-porous")
 # DP separately
 #climwinmeans_dp <- weatherdata %>%
@@ -108,9 +108,9 @@ climwinmeans_rp <- weatherdata %>%
 #  summarize(climwinmean = mean(TMAX)) %>%
 #  mutate(wood_type = "diffuse-porous")
 climwinmeans_dp <- weatherdata %>%
-  filter(doy %in% c(climwindows[4,11]:climwindows[4,12])) %>% #68:135
+  filter(DOY %in% c(climwindows[4,11]:climwindows[4,12])) %>% #68:135
   group_by(year) %>%
-  summarize(climwinmean = mean(cleantmax)) %>%
+  summarize(climwinmean = mean(airtmax)) %>%
   mutate(wood_type = "diffuse-porous")
 
 # Combine
@@ -153,7 +153,7 @@ sample_tags <- Wood_pheno_table %>%
 
 Wood_pheno_table <- Wood_pheno_table %>%
   #filter(tag %in% sample_tags) %>%
-  mutate(climwinmean = climwinmean - 16)
+  mutate(climwinmean = climwinmean - 10)
 
 # Delete all non-needed columns
 Wood_pheno_table <- Wood_pheno_table %>%
@@ -246,7 +246,7 @@ posterior_means_fixed_effects <- fixed_effects %>%
     `wood_typering-porous` = mean(`wood_typering-porous`),
     `wood_typediffuse-porous:climwinmean` = mean(`wood_typediffuse-porous:climwinmean`),
     `wood_typering-porous:climwinmean` = mean(`wood_typering-porous:climwinmean`)
-    )
+  )
 
 # Compare to regression table. Identical! Yay!
 posterior_means_fixed_effects
@@ -295,7 +295,7 @@ fig6 <- ggplot() +
   labs(x = "Climwin mean temperature (relative to 16°C)", y = "DOY", col = "Percentile", main = "Relationship of DOY versus climwin mean temperature") +
   geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
 fig6
-ggsave(filename = "doc/manuscript/tables_figures/fig6.png", width = 14.7*.7, height = 10.9*.7, plot = fig6)
+ggsave(filename = "doc/manuscript/tables_figures/fig6_HarvardForestV1.png", width = 14.7*.7, height = 10.9*.7, plot = fig6)
 
 # Sanity check this plot with regression table intercepts and slopes
 posterior_means_fixed_effects
