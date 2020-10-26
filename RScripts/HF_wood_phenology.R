@@ -18,6 +18,9 @@ all_stems$date <- as.Date(all_stems$date, "%m/%d/%Y")
 all_stems$year <- as.numeric(format(all_stems$date, format = "%Y"))
 all_stems$month <- as.numeric(format(all_stems$date, format = "%m"))
 all_stems$day <- as.numeric(format(all_stems$date, format = "%d"))
+
+
+
 # 2. Load necessary functions ----------------------------------------------------
 # Sean's functions -- I think they are supposed to be in the rdendrom package but I couldn't the package to work correctly.
 ### code chunk number 2: lg5.functions
@@ -303,6 +306,12 @@ fit.outer.hull <- function(dbh, doy.full, params, quant = 0.8) {
   out.fit <- outer.hull(params, doy, dbh)
 }
 
+get.lg5.ML <- function(params, doy, dbh, resid.sd) {
+  pred.dbh <- lg5.pred(params, doy)
+  pred.ML <-  -sum(dnorm(dbh, pred.dbh, resid.sd, log = T))
+  return(pred.ML)
+}
+
 #### -----
 # Objects needed for the following loop
 data <- data.frame(NULL)
@@ -324,6 +333,20 @@ growth <- NULL
 all_stems$tag_stem <- paste0(all_stems$plot, all_stems$tag, all_stems$year)
 all_stems <- all_stems[!(all_stems$tag_stem %in% "A191998"),]
 all_stems <- all_stems[complete.cases(all_stems$dbh2),]
+#tag_years <- unique(all_stems$tag_stem)
+#checkone <- count(all_stems, tag_stem)
+#checkone <- subset(checkone, n >= 10)
+#all_stems_clean <- all_stems[all_stems$tag_stem %in% checkone$tag_stem, ]
+#tag_years_2 <- unique(all_stems_clean$tag_stem)
+#all_stems_clean$plot_tag <- paste0(all_stems_clean$plot, all_stems_clean$tag)
+#yearsofdata <- count(all_stems_clean, plot_tag)
+#yearsofdata <- subset(yearsofdata, n >= 50)
+#all_stems_clean <- all_stems_clean[all_stems_clean$plot_tag %in% yearsofdata$plot_tag,]
+#tag_years_3 <- unique(all_stems_clean$tag_stem)
+#tagsubset <- unique(all_stems_clean$plot_tag)
+#tagsubset <- tagsubset[c(1:20, 100:120, 200:220, 300:320, 400:420, 500:520, 600:620, 700:708)]
+#all_stems <- all_stems_clean
+#all_stems <- all_stems[all_stems$plot_tag %in% tagsubset,]
 for (q in 1998:2003) {
   skip_to_next <- FALSE
   Stem2 <- subset(all_stems, year == q)
@@ -357,6 +380,7 @@ for (q in 1998:2003) {
     #  next
     #} # If you know how to make this display a warning when it encounters an error i'd like to add that eventually
     for (e in unique(Stem3$tag_stem)) {
+      ML_value <- NULL
       skip_to_next <- FALSE
       data <- data.frame(NULL)
 
@@ -606,10 +630,26 @@ for (q in 1998:2003) {
 
       names(Param.df) <- c("L", "K", "doy_ip", "r", "theta", "a", "b")
       # write.csv(Param.df, file = "SCBI_hi_lo_lg5.csv", quote = FALSE, row.names = FALSE)
+      ML_value <- NA
+
+      #for(i in 1:nrow(LG5_parameter_values)){
+        K <- as.numeric(Param.df[1,2])
+        L <- as.numeric(Param.df[1,1])
+        doy.ip <- as.numeric(Param.df[1,3])
+        r <- as.numeric(Param.df[1,4])
+        theta <- as.numeric(Param.df[1,5])
+        params_function <- c(K, L, doy.ip, r, theta)
+        dbh <- dbh
+        doy <- doy
+        ML_value <- get.lg5.ML(params_function, doy,dbh, .5)
+        #LG5_parameter_values[i,13] <- ML_value
+        #rm(ML_value)
+
+      #LG5_parameter_values <- subset(LG5_parameter_values, ML_value <= 90)
 
       # Added by bert: save tag/year + parameter values
-      param_values_to_save <- c(stemstag$plot[1], stemstag$tag[1], stemstag$year[1],  Param.df) %>% unlist()
-      names(param_values_to_save) <- c("plot", "tag", "year", names(Param.df))
+      param_values_to_save <- c(stemstag$plot[1], stemstag$tag[1], stemstag$year[1], Param.df, ML_value) %>% unlist()
+      names(param_values_to_save) <- c("plot", "tag", "year", names(Param.df), "ML_value")
       tagyear_id <- stemstag %>%
         slice(1) %>%
         transmute(tag_year = str_c(plot, tag, year, sep = "-")) %>%
@@ -740,15 +780,15 @@ warnings()
 masterDF <- masterDF[-1, ]
 unique(masterDF$sp)
 masterDF$wood_type <- ifelse(masterDF$sp == "betual"| masterDF$sp == "acerru" | masterDF$sp == "fagugr" | masterDF$sp == "betule" | masterDF$sp == "betupa" | masterDF$sp == "acerpe" | masterDF$sp == "betupo" | masterDF$sp == "prunse", "diffuse-porous", ifelse(masterDF$sp == "querru" | masterDF$sp == "querve" | masterDF$sp == "fraxam", "ring-porous", "other"))
-write.csv(masterDF, file = "Data/Wood_pheno_table_HarvardForest_V1.csv", row.names = FALSE)
+write.csv(masterDF, file = "Data/Wood_pheno_table_HarvardForest_subset.csv", row.names = FALSE)
 masterDF$DOY <- as.numeric(masterDF$DOY)
 # Added by bert: save parameter values
 LG5_parameters %>%
   bind_rows() %>%
-  write_csv(file = "Data/LG5_parameter_values_HarvardForest_V1.csv")
+  write_csv(file = "Data/LG5_parameter_values_HarvardForest_subset.csv")
 
-write.csv(bind_rows(LG5_parameters), file = "Data/LG5_parameter_values_HarvardForest_V1.csv")
-
+write.csv(bind_rows(LG5_parameters), file = "Data/LG5_parameter_values_HarvardForest_subset.csv")
+lg5 <- bind_rows(LG5_parameters)
 #Clean data
 Wood_pheno_table <- read_csv("Data/Wood_pheno_table_HarvardForest_V1.csv") #Master datafrmae containing 20%, 50%, and 75% growth milestones
 LG5_params <- read_csv("data/LG5_parameter_values_HarvardForest_V1.csv")

@@ -44,7 +44,7 @@ climate$DATE <- strptime(as.character(climate$DATE), format = "%d/%m/%Y")
 climate$DATE <- format(climate$DATE, "%d/%m/%Y")
 
 #The data containing the biological responses for testing
-Wood_pheno_table <- read_csv("Data/Wood_pheno_table_HarvardForest_V2.csv") #Master datafrmae containing 20%, 50%, and 75% growth milestones
+Wood_pheno_table <- read_csv("Data/Wood_pheno_table_HFtemp.csv") #Master datafrmae containing 20%, 50%, and 75% growth milestones
 ####Percentage DOY climwin all wood types, all percs DAILY ----
 #rangedates <- data.frame("feb1", round(30)) #/7 for week
 #rangedates2 <- data.frame("mar1", round(59)) #/7 for week

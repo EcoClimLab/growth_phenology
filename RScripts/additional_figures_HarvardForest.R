@@ -18,6 +18,12 @@ r <- 0.05
 theta <- 1
 params <- c(K, L, doy.ip, r, theta)
 
+get.lg5.ML <- function(params, doy, dbh, resid.sd) {
+  pred.dbh <- lg5.pred(params, doy)
+  pred.ML <-  -sum(dnorm(dbh, pred.dbh, resid.sd, log = T))
+  return(pred.ML)
+}
+
 # Function for logistic growth model written by Sean. Supposed to be in RDendrom
 # package https://github.com/seanmcm/RDendrom, but function does not seem to be included
 lg5.pred <- function(params, doy) {
@@ -162,11 +168,10 @@ LG5_parameter_values <- read_csv("Data/LG5_parameter_values_HarvardForest_V2.csv
 LG5_parameter_values$site_tag <- paste0(LG5_parameter_values$plot, LG5_parameter_values$tag)
 # Generalized 5-parameter logistic function (modified version of Sean's function)
 lg5 <- function(L, K, doy_ip, r, theta, doy) {
-  # For specified 5 parameters and x = doy, compute y = dbh
+ For specified 5 parameters and x = doy, compute y = dbh
   dbh <- L + ((K - L) / (1 + 1/theta * exp(-(r * (doy - doy_ip) / theta)) ^ theta))
   return(dbh)
 }
-
 
 percent_growth <- Wood_pheno_table %>%
   #separate(tag, into = c("tag", "stem"), sep = "_") %>%
@@ -192,6 +197,17 @@ percent_growth <- Wood_pheno_table %>%
     dbh_growth_percent_cummulative = cumsum(dbh_growth_percent)
   )
 
+percent_growth <- subset(percent_growth, dbh_total_growth >= .1)
+percent_growth_vari <- percent_growth[percent_growth$dbh_growth_percent_cummulative >=1.1,]
+#pg_new <- unique(percent_growth$tag_year)
+percent_growth <- percent_growth[!(percent_growth$tag_year %in% percent_growth_vari$tag_year),]
+#mean(LG5_parameter_values$theta)
+#sd(LG5_parameter_values$theta)
+#mean(LG5_parameter_values$theta)+(2*sd(LG5_parameter_values$theta))
+
+#LG5_parameter_values_subset <- subset(LG5_parameter_values, theta <= mean(LG5_parameter_values$theta)+sd(LG5_parameter_values$theta) & theta >= mean(LG5_parameter_values$theta)-sd(LG5_parameter_values$theta))
+Wood_pheno_table <- Wood_pheno_table[Wood_pheno_table$tag %in% percent_growth$tag_year,]
+write.csv(Wood_pheno_table, file = "wood_pheno_table_HFtemp.csv", row.names = FALSE)
 rel_growth <- ggplot(percent_growth, aes(x = doy, y = dbh_growth_percent, group = tag_year)) +
   coord_cartesian(ylim = c(0, 0.05)) +
   scale_y_continuous(labels = percent) +
@@ -204,7 +220,7 @@ rel_growth <- ggplot(percent_growth, aes(x = doy, y = dbh_growth_percent, group 
 rel_growth
 
 fig_width <- 7
-ggsave(filename = "doc/manuscript/tables_figures/rel_growth_HF_V1.png",
+ggsave(filename = "doc/manuscript/tables_figures/rel_growth_HF.png",
        plot = rel_growth,
        width = fig_width, height = fig_width / 2)
 
@@ -230,30 +246,38 @@ ggsave(filename = "doc/manuscript/tables_figures/fig3_HF_V1.png", plot = fig3, w
 # fig3b
 
 #Figure D'Orangeville figure 4
-warmest <- subset(Wood_pheno_table, year == 2012)
-coldestRP <- subset(Wood_pheno_table, year == 2013 & wood_type == "ring-porous")
-coldestDP <- subset(Wood_pheno_table, year == 2018 & wood_type == "diffuse-porous")
+warmestRP <- subset(Wood_pheno_table, year == 1999 & wood_type == "ring-porous")
+warmestDP <- subset(Wood_pheno_table, year == 1999 & wood_type == "diffuse-porous")
+warmest <- rbind(warmestRP, warmestDP)
+coldestRP <- subset(Wood_pheno_table, year == 2003 & wood_type == "ring-porous")
+coldestDP <- subset(Wood_pheno_table, year == 2003 & wood_type == "diffuse-porous")
 coldest <- rbind(coldestDP, coldestRP)
 aggregates <- aggregate(Wood_pheno_table$DOY, by = list(Wood_pheno_table$wood_type, Wood_pheno_table$perc), FUN = mean)
+aggregates$temp_type <- "Average"
 aggregates_warm <- aggregate(warmest$DOY, by = list(warmest$wood_type, warmest$perc), FUN = mean)
-names(aggregates_warm) <- c("Group.1", "Group.2", "warmest")
+names(aggregates_warm) <- c("Group.1", "Group.2", "x")
+aggregates_warm$temp_type <- "Warmest Year"
 aggregates_cold <- aggregate(coldest$DOY, by = list(coldest$wood_type, coldest$perc), FUN = mean)
-names(aggregates_cold) <- c("Group.1", "Group.2", "coldest")
+names(aggregates_cold) <- c("Group.1", "Group.2", "x")
+aggregates_cold$temp_type <- "Coldest Year"
 
-aggregates <- left_join(aggregates, aggregates_cold, by = c("Group.1", "Group.2"))
-aggregates <- left_join(aggregates, aggregates_warm, by = c("Group.1", "Group.2"))
-names(aggregates) <- c("Group.1", "Group.2","x","cold", "warm")
+aggregates <- rbind(aggregates, aggregates_cold, aggregates_warm)
+aggregates <- aggregates %>% mutate(temp_type = factor(temp_type, levels = c("Warmest Year", "Average", "Coldest Year")))
+
+#aggregates$Group.2 <- ifelse(aggregates$Group.2 == .25, 25, ifelse(aggregates$Group.2 == .50, 50, ifelse(aggregates$Group.2 == .75, 75, 0)))
+
+#aggregates <- left_join(aggregates, aggregates_cold, by = c("Group.1", "Group.2"))
+#aggregates <- left_join(aggregates, aggregates_warm, by = c("Group.1", "Group.2"))
+#names(aggregates) <- c("Group.1", "Group.2","x","cold", "warm")
 #names(aggregates) <- c("Wood type", "Growth vari", "DOY")
-doytiming <- ggplot(aggregates, aes(x=x, y = Group.2, group = Group.1, color = Group.1, linetype = temptype))+
-  geom_point(size = 4)+
-  geom_line()+
-  labs(x = "Day of Year", y = "Growth variable", title = "Intraannual Growth Timing", color = "Wood Type")+
+doytiming <- ggplot(aggregates, aes(x=x, y = as.character(Group.2), group = interaction(Group.1, temp_type), color = Group.1, linetype = temp_type))+
+  geom_point(size = 3)+
+  geom_line(size = 1)+
+  labs(x = "Day of Year", y = "Percent of Total Annual Growth", title = "Harvard Forest Intraannual Growth Timing", color = "Wood Type")+
   scale_colour_viridis_d(end = 2/3)
 
-geom_line(aes(x = cold), linetype = "dashed", size =1, show.legend = TRUE)+
-  geom_line(aes(x = warm), linetype = "dotted", size = 1, show.legend = TRUE)+
 
-  fig_width <- 7
-ggsave(filename = "doc/manuscript/tables_figures/DOYtiming.png",
+fig_width <- 7
+ggsave(filename = "doc/manuscript/tables_figures/DOYtiming_HF_PRELIM.png",
        plot = doytiming,
        width = fig_width, height = fig_width / 2)

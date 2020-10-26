@@ -10,7 +10,7 @@ library(rstanarm)
 library(broom.mixed)
 
 # Get growth data ----------------------------------
-Wood_pheno_table <- read_csv("Data/Wood_pheno_table_HarvardForest_V2.csv") %>%
+Wood_pheno_table <- read_csv("Data/Wood_pheno_table_HFtemp.csv") %>%
   # Keep only RP and DP for now
   filter(wood_type != "other") %>%
   #filter(tot >= 1) %>%
@@ -51,14 +51,14 @@ weatherdata <-
 # Rename RP flag set by Cam
 #rename(flagrp = flag)
 climwindows <-
-  read.csv("results/Climwin_results/Weekly/SCBI/weekly_climwin_results.csv") %>%
+  read.csv("results/Climwin_results/Weekly/Harvard Forest/weekly_climwin_results_all_HF.csv") %>%
   filter(wood_type != "other") %>%
   mutate(
-    median_windowopendate = strptime(median_windowopendate, format = "%m/%d/%y"),
-    median_windowclosedate = strptime(median_windowclosedate, format = "%m/%d/%y"),
-    opendoy = yday(median_windowopendate),
-    closedoy = yday(median_windowclosedate)
-  )
+  median_windowopendate = as.Date(median_windowopendate, format = "%Y-%m-%d"),
+  median_windowclosedate = as.Date(median_windowclosedate, format = "%Y-%m-%d"),
+  opendoy = yday(median_windowopendate),
+  closedoy = yday(median_windowclosedate)
+)
 
 
 # 1. Get mean march daily maximum temperatures
@@ -97,7 +97,7 @@ climwin_windows <-
 #  summarize(climwinmean = mean(TMAX)) %>%
 #  mutate(wood_type = "ring-porous")
 climwinmeans_rp <- weatherdata %>%
-  filter(DOY %in% c(climwindows[1,11]:climwindows[1,12])) %>%
+  filter(DOY %in% c(climwindows[4,11]:climwindows[4,12])) %>%
   group_by(year) %>%
   summarize(climwinmean = mean(airtmax)) %>%
   mutate(wood_type = "ring-porous")
@@ -108,7 +108,7 @@ climwinmeans_rp <- weatherdata %>%
 #  summarize(climwinmean = mean(TMAX)) %>%
 #  mutate(wood_type = "diffuse-porous")
 climwinmeans_dp <- weatherdata %>%
-  filter(DOY %in% c(climwindows[4,11]:climwindows[4,12])) %>% #68:135
+  filter(DOY %in% c(climwindows[1,11]:climwindows[1,12])) %>% #68:135
   group_by(year) %>%
   summarize(climwinmean = mean(airtmax)) %>%
   mutate(wood_type = "diffuse-porous")
@@ -153,7 +153,7 @@ sample_tags <- Wood_pheno_table %>%
 
 Wood_pheno_table <- Wood_pheno_table %>%
   #filter(tag %in% sample_tags) %>%
-  mutate(climwinmean = climwinmean - 10)
+  mutate(climwinmean = climwinmean - 18)
 
 # Delete all non-needed columns
 Wood_pheno_table <- Wood_pheno_table %>%
@@ -295,7 +295,7 @@ fig6 <- ggplot() +
   labs(x = "Climwin mean temperature (relative to 16°C)", y = "DOY", col = "Percentile", main = "Relationship of DOY versus climwin mean temperature") +
   geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
 fig6
-ggsave(filename = "doc/manuscript/tables_figures/fig6_HarvardForestV1.png", width = 14.7*.7, height = 10.9*.7, plot = fig6)
+ggsave(filename = "doc/manuscript/tables_figures/fig6_HF_PRELIM_RESULTS_NOT_CORRECT.png", width = 14.7*.7, height = 10.9*.7, plot = fig6)
 
 # Sanity check this plot with regression table intercepts and slopes
 posterior_means_fixed_effects
@@ -449,8 +449,8 @@ summary(lmer(DOY ~ climwinmean + (1|sp/tag), data = sevenfive_rp))
 #####Total ----
 
 ggplot(df)+
-  geom_boxplot(aes(x=as.character(year), y=tot, fill = wood_type))+
-  stat_summary(aes(x=as.character(year), y=tot, group = wood_type), fun = "mean", geom = "point", shape = 8, size = 2, fill = "black")+
+  geom_boxplot(aes(x=as.character(year), y=tot*10, fill = wood_type))+
+  stat_summary(aes(x=as.character(year), y=tot*10, group = wood_type), fun = "mean", geom = "point", shape = 8, size = 2, fill = "black")+
   geom_point(aes(x=as.character(year), y=climwinmean, color = wood_type, group = wood_type))+
   geom_line(aes(x=as.character(year), y = climwinmean, color = wood_type, group=wood_type))+
   labs(x = "Year", title = "Total Growth / year / wood type")+
@@ -462,10 +462,10 @@ lm(twofive_rp$tot~twofive_rp$climwinmean)
 lm(twofive_dp$tot~twofive_dp$climwinmean)
 
 r <- ggplot(data = twofive_rp, aes(x = climwinmean, y = tot, group = year, fill = wood_type))+geom_boxplot()+
-  geom_abline(intercept = 3.59638, slope = 0.09448)+labs(title = "Total Growth (dbh)", x = "Climwin Mean", y = "Total Yearly Growth (DBH)")
+  geom_abline(intercept = 0.84123, slope = -0.03667)+labs(title = "Total Growth (dbh)", x = "Climwin Mean", y = "Total Yearly Growth (DBH)")
 
 r+ ggplot(twofive_dp,aes(x = climwinmean, y = tot, group = year, fill = wood_type))+geom_boxplot()+
-  geom_abline(intercept = 3.42599 , slope = 0.03013)+labs(title = "Total Growth (dbh)", x = "Climwin Mean", y = "Total Yearly Growth (DBH)")
+  geom_abline(intercept = 0.212818 , slope = -0.001014)+labs(title = "Total Growth (dbh)", x = "Climwin Mean", y = "Total Yearly Growth (DBH)")
 
 
 boxplot(df$tot~df$wood_type, xlab = "Wood type", ylab = "")

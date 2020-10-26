@@ -3,16 +3,18 @@
 library(tidyverse)
 library(readr)
 library(lubridate)
-Wood_pheno_table <- read_csv("Data/Wood_pheno_table_V4.csv")
+Wood_pheno_table <- read_csv("Data/Wood_pheno_table_V5.csv")
 #versiontwo <- read_csv("Data/Wood_pheno_table_V2.csv")
 #versionone <- read_csv("Data/Wood_pheno_table_V1.csv")
 
 unique(Wood_pheno_table$sp)
 mean(Wood_pheno_table$max_rate_DOY) #V1: June 7th, V2: June 7th V3: June 7th
 #mean(versionone$max_rate_DOY) #V1: June 7th, V2: June 7th
+library(dplyr)
+Wood_pheno_table_V4 %>% count(year)
 
-
-
+twofive <- subset(Wood_pheno_table_V4, perc == .25)
+count(twofive, year)
 # Exploratory Data Analysis ----------------------------------------------------
 boxplot(Wood_pheno_table$max_rate_DOY~Wood_pheno_table$wood_type)
 aggregate(Wood_pheno_table$max_rate_DOY, by = list(Wood_pheno_table$sp), FUN = mean )
@@ -387,7 +389,7 @@ summary(lmer(tot~rptemp + (1|sp/tag) , data = twentyfiveRP))
 #Repeats of RP process using DP data
 mixedmodelmarchmeandp <- lmer(DOY~dptemp + (1|sp/tag) , data = twentyfiveDP)
 summary(mixedmodelmarchmeandp)
-?isSingular
+
 summary(lmer(max_rate~dptemp + (1|sp/tag) , data = twentyfiveDP))
 
 summary(lmer(max_rate_DOY~dptemp + (1|sp/tag) , data = twentyfiveDP))
@@ -395,15 +397,57 @@ summary(lmer(max_rate_DOY~dptemp + (1|sp/tag) , data = twentyfiveDP))
 summary(lmer(tot~dptemp + (1|sp/tag) , data = twentyfiveDP))
 
 #Met tower models
-summary(lmer(DOY ~ dptemp + (1|sp/tag), data = twentyfiveDP))
-summary(lmer(DOY ~ dptemp + (1|sp/tag), data = fiftyDP))
-summary(lmer(DOY ~ dptemp + (1|sp/tag), data = seventyfiveDP))
+twofive_rp <- subset(Wood_pheno_table, perc =="DOY_25" & wood_type =="ring-porous")
+twofive_dp <- subset(Wood_pheno_table, perc =="DOY_25" & wood_type =="diffuse-porous")
+fifty_rp <- subset(Wood_pheno_table, perc =="DOY_50" & wood_type =="ring-porous")
+fifty_dp <- subset(Wood_pheno_table, perc =="DOY_50" & wood_type =="diffuse-porous")
+sevenfive_rp <- subset(Wood_pheno_table, perc =="DOY_75" & wood_type =="ring-porous")
+sevenfive_dp <- subset(Wood_pheno_table, perc =="DOY_75" & wood_type =="diffuse-porous")
 
-summary(lmer(DOY ~ rptemp + (1|sp/tag), data = twentyfiveRP))
-summary(lmer(DOY ~ rptemp + (1|sp/tag), data = fiftyRP))
-summary(lmer(DOY ~ rptemp + (1|sp/tag), data = seventyfiveRP))
+summary(lmer(DOY ~ climwinmean + (1|sp/tag), data = twofive_dp))
+summary(lmer(DOY ~ climwinmean + (1|sp/tag), data = fifty_dp))
+summary(lmer(DOY ~ climwinmean + (1|sp/tag), data = sevenfive_dp))
 
-####
+summary(lmer(DOY ~ climwinmean + (1|sp/tag), data = twofive_rp))
+summary(lmer(DOY ~ climwinmean + (1|sp/tag), data = fifty_rp))
+summary(lmer(DOY ~ climwinmean + (1|sp/tag), data = sevenfive_rp))
+
+summary(lmer(tot~climwinmean + (1|sp/tag), data = twofive_rp))
+plot(twofive_rp$tot~twofive_rp$climwinmean)
+abline(lm(twofive_rp$tot~twofive_rp$climwinmean))
+
+summary(lmer(tot~climwinmean + (1|sp/tag), data = twofive_dp))
+plot(twofive_dp$tot~twofive_dp$climwinmean)
+abline(lm(twofive_dp$tot~twofive_dp$climwinmean))
+
+summary(lmer(max_rate~climwinmean + (1|sp/tag), data = twofive_rp))
+plot(twofive_rp$max_rate~twofive_rp$climwinmean)
+abline(lm(twofive_rp$max_rate~twofive_rp$climwinmean))
+
+summary(lmer(max_rate~climwinmean + (1|sp/tag), data = twofive_dp))
+plot(twofive_dp$max_rate~twofive_dp$climwinmean)
+abline(lm(twofive_dp$max_rate~twofive_dp$climwinmean))
+
+summary(lmer(max_rate_DOY~climwinmean + (1|sp/tag), data = twofive_rp))
+plot(twofive_rp$max_rate_DOY~twofive_rp$climwinmean)
+abline(lm(twofive_rp$max_rate_DOY~twofive_rp$climwinmean))
+
+summary(lmer(max_rate_DOY~climwinmean + (1|sp/tag), data = twofive_dp))
+plot(twofive_dp$max_rate_DOY~twofive_dp$climwinmean)
+abline(lm(twofive_dp$max_rate_DOY~twofive_dp$climwinmean))
+
+####75-25 model
+df_rp <- subset(Wood_pheno_table, perc == "DOY_25" & wood_type == "ring-porous")
+df_dp <- subset(Wood_pheno_table, perc == "DOY_25" & wood_type == "diffuse-porous")
+
+summary(lmer(seasonlength ~ climwinmean + (1|sp/tag), data = df_rp))
+plot(df_rp$seasonlength~df_rp$climwinmean)
+abline(lm(df_rp$seasonlength~df_rp$climwinmean))
+
+summary(lmer(seasonlength ~ climwinmean + (1|sp/tag), data = df_dp))
+plot(df_dp$seasonlength~df_dp$climwinmean)
+abline(lm(df_dp$seasonlength~df_dp$climwinmean))
+
 #mixedmodelrate <- lmer(max_rate_DOY~wood_type + marchmean + wood_type*marchmean + (1|sp:tag) , data = twentyfive)
 #summary(mixedmodelrate)
 
@@ -448,7 +492,6 @@ summary(lmer(DOY ~ rptemp + (1|sp/tag), data = seventyfiveRP))
 # Random effects model using rstanarm interface to stan ----
 library(rstanarm)
 # Tools for exploring mixed effects model outputs:
-library(broom.mixed)
 library(sjPlot)
 library(tidybayes)
 
