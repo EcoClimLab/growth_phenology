@@ -3,7 +3,7 @@ library(scales)
 library(tidybayes)
 
 # Figure numbers from: https://github.com/SCBI-ForestGEO/growth_phenology/issues/13
-
+unique(Wood_pheno_table_HarvardForest_V2$sp)
 # Figure 1: Logistic growth curve and parameter illustration -------------------
 # Set parameters from McMahon & Parker (2014)
 # 1. L: lower asymptotes
@@ -17,7 +17,7 @@ doy.ip <- 175
 r <- 0.05
 theta <- 1
 params <- c(K, L, doy.ip, r, theta)
-
+lg5
 get.lg5.ML <- function(params, doy, dbh, resid.sd) {
   pred.dbh <- lg5.pred(params, doy)
   pred.ML <-  -sum(dnorm(dbh, pred.dbh, resid.sd, log = T))
