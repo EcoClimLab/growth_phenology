@@ -86,6 +86,12 @@ is represented by the solid blue line and credible intervals are represented by 
 DOYtiming_caption <- "Figure 5. Day of year where growth milestones were achied at (a) the Smithonian Conservation Biology Institute and (b) Harvard Forest."
 
 # SUPPLEMENTARY INFO
+#SI table numbers
+sample_size_by_year= "S1"
+
+#SI table captions
+sample_size_by_year_caption <- "Table S1. Sample size by year"
+
 #SI figure numbers
 climwin_rp_DOY25_SCBI = "S1"
 climwin_dp_DOY25_SCBI = "S2"
@@ -163,22 +169,10 @@ The second study site was Harvard Forest in the central Massachusetts town of Pe
 The third study site was the forest dynamics plot located at the Smithsonian Ecological Research Center in Edgewater, Maryland near a sub estuary of the Chesapeake Bay (38°88′ N, 76°55′ W, elevation?). The forest here established roughly 120 years ago, while the plot was established in 2007. The 16 HA plot is dominated by tulip poplar (Liriodendron tulipifera), oak (Quercus spp.), beech (Fagus spp.), hickory (Carya spp.), and maple (Acer spp.). (Climate summary) 
 
 
-Within the plot, metal dendrometer bands were installed on *>#* trees and measured with a digital caliper approximately every 1-2 weeks within the growing season for *9* years (*list ranges, for each site if different*). *(don't bother to mention biannual bands, unless you end up using the data--which you could, for annual growth, if you'd like to increase the sample size. You can put exact numbers of bands per year in an SI file.*)  The number of bands measured at each site fluctuated somewhat as trees were added or dropped (e.g., because of tree mortality) from the census *(Table S1)*. Across years, the number of bands sampled averaged *~150* at SCBI, # at Harvard Forest*, and # at SERC*. Four main species were sampled including two diffuse-porous (Lirodendron tulipfera and Fagus grandafolia) and two ring-porous (Quercus rubra and Quercus alba) species.    *(summary of how bands were distributed across species, focusing on ring/ diffuse porous distinction. details in an SI table)*
+Within the plot, metal dendrometer bands were installed on *>#* trees and measured with a digital caliper approximately every 1-2 weeks within the growing season for *9* years (*list ranges, for each site if different*). *(don't bother to mention biannual bands, unless you end up using the data--which you could, for annual growth, if you'd like to increase the sample size. You can put exact numbers of bands per year in an SI file.*)  The number of bands measured at each site fluctuated somewhat as trees were added or dropped (e.g., because of tree mortality) from the census (Table `r sample_size_by_year`). Across years, the number of bands sampled averaged *~150* at SCBI, # at Harvard Forest*, and # at SERC*. Four main species were sampled including two diffuse-porous (Lirodendron tulipfera and Fagus grandafolia) and two ring-porous (Quercus rubra and Quercus alba) species.    *(summary of how bands were distributed across species, focusing on ring/ diffuse porous distinction. details in an SI table)*
 
 (5 years @ Harvard Forest, 10 @ SCBI) 
 
-(Bands After cleaning: 2011- 105 trees; 2012 - 102 trees; 2013 - 102 trees; 2014 - 149 trees; 2015 - 149 trees; 2016 - 149 trees; 2017 - 148 trees; 2018 - 146 trees; 2019 - 145 trees *--put this in Table S1*). 
-
-(Bands used after minimum growth checks: 
-1  2011    84
-2  2012    84
-3  2013   100
-4  2014   100
-5  2015    96
-6  2016    94
-7  2017    89
-8  2018    88
-9  2019    75) this seems like alot are being thrown out - manually check if WAI
 
 Measurements were timed to begin before beginning of spring growth and to continue through the cessation of growth in the fall. *(Give specifics, which may vary by site. Note that we adjusted timing at SCBI when we observed early leaf-out of understory shrubs/herbs)* The median start date was 4/14, which was adjusted when early leaf-out of understory shrubs and herbs was observed, and the median end date was 10/17, coinciding with late senesence in the plot. The earliest start date for intraannual measurements was in 2020 on March 30, and the latest end date was on 2012 on November 26. 
 
@@ -301,6 +295,8 @@ ForestGEO
 ### Author Contributions
 
 ### Supporting Information
+
+`r sample_size_by_year_caption`
 
 `r climwin_rp_DOY25_SCBI_short_caption`
 
