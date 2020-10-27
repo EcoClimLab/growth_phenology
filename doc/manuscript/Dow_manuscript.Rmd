@@ -64,10 +64,9 @@ growth_curves_all = 2
     cum_growth_HF = "2d" 
 climwin = 3
 pheno_Tsensitivity = 4
-model_summary = 5
-DOYtiming = 6
-DOYtiming_SCBI = "6a"
-DOYtiming_Harvard = "6b"
+DOYtiming = 5
+DOYtiming_SCBI = "5a"
+DOYtiming_Harvard = "5b"
 
 #captions
 #tables
@@ -84,9 +83,7 @@ pheno_Tsensitivity_caption <- "Figure 4. Relationship between DOY and climwin me
 observed climwin mean temperature value, the posterior mean of the fitted day of year
 is represented by the solid blue line and credible intervals are represented by bands."
 
-model_summary_caption <- "Figure 5. (PLACEHOLDER FOR FIGURE WE DISCUSSED AT LAB MEETING)"
-
-DOYtiming_caption <- "Figure 6. Day of year where growth milestones were achied at (a) the Smithonian Conservation Biology Institute and (b) Harvard Forest."
+DOYtiming_caption <- "Figure 5. Day of year where growth milestones were achied at (a) the Smithonian Conservation Biology Institute and (b) Harvard Forest."
 
 # SUPPLEMENTARY INFO
 #SI figure numbers
