@@ -64,22 +64,20 @@ climwin = 3
 pheno_Tsensitivity = 4
 model_summary = 5
 DOYtiming = 6
-#SI:
-#tables
-
-#figures
-climwin_rp_DOY25_SCBI = "S1"
-climwin_dp_DOY25_SCBI = "S2"
+DOYtiming_SCBI = "6a"
+DOYtiming_Harvard = "6b"
 
 #captions
+#tables
+hypothesis_table_caption <-"Table 1. Hypothesis table. (NEEDS FORMATTING...obviously!)"
 
+#figures
 schematic_caption <- "Figure 1. Schematic illustrating the parameters considered here. Shown are measurements for an example tree (## cm SPECIES), fit with the model of McMahon & Parker (2015), from which phenology and growth rate parameters are obtained. ... (HERE, WE NEED TO ANNOTATE WITH LABELS FOR EACH PARAMETER CONSIDERED IN THE MANUSCRIPT. I'D ALSO DROP THE BACKGROUND SHADING--MAKES IT BUSY.)"
 
 rel_growth_caption <- "Figure 2a. (SHOULD BE MERGED INTO SINGLE IMAGE WITH 2B. SEE BELOW FOR CAPTION)"
-
 cum_growth_caption  <- "Figure 2. Growth trajectories for ring- and diffuse-porous trees, as both relative (a) and cumulative (b) fractions of total annual growth. Each line represents one year's growth for a given tree, fit with McMahon model."
 
-climwin_caption <- "Figure 3. Landscapes of relationships between the day of year on which 25% of annual growth is achieved (DOY_25) and temperature in prior weeks for ring- and diffuse-porous trees. Shown is climwin output indicating the change in AIC relative to a null model (first panel) and linear coefficients (second panel). Window Open and Window Close indicate number of weeks prior to DOY_25 (ring-porous: DATE; diffuse-porous: DATE). Black boxes indicate the optimal window (i.e., that with lowest dAIC)."
+climwin_caption <- "Figure 3. Landscapes of relationships between the day of year on which 25% of annual growth is achieved (DOY_25) and temperature in prior weeks for ring- and diffuse-porous trees at SCBI and Harvard Forest. Shown are matrices of linear coefficients of first-order linear regressions between temperature and DOY_25, where Window Open and Window Close indicate number of weeks prior to DOY_25 (ring-porous: DATE at SCBI, DATE at HF; diffuse-porous: DATE at SCBI, DATE at HF). Black boxes indicate the optimal window (i.e., that with lowest dAIC).    (REPLOT ON THE SAME SCALE, WITH BLUE FOR POSITIVE AND RED FOR NEGATIVE)"
 
 pheno_Tsensitivity_caption <- "Figure 4. Relationship between DOY and climwin mean tempeatures. For each 
 observed climwin mean temperature value, the posterior mean of the fitted day of year
@@ -87,9 +85,20 @@ is represented by the solid blue line and credible intervals are represented by 
 
 model_summary_caption <- "Figure 5. (PLACEHOLDER FOR FIGURE WE DISCUSSED AT LAB MEETING)"
 
+DOYtiming_caption <- "Figure 6. Day of year where growth milestones were achied at (a) the Smithonian Conservation Biology Institute and (b) Harvard Forest."
+
+# SUPPLEMENTARY INFO
+#SI figure numbers
+climwin_rp_DOY25_SCBI = "S1"
+climwin_dp_DOY25_SCBI = "S2"
+climwin_rp_DOY25_SCBI = "S3"
+climwin_dp_DOY25_SCBI = "S4"
+#SI figure captions
 climwin_rp_DOY25_SCBI_short_caption <- "Figure S1. Full climwin output for DOY 25 for ring porous species at SCBI."
-climwin_dp_DOY25_SCBI_short_caption <- "Figure S1. Full climwin output for DOY 25 for diffuse porous species at SCBI."
-DOYtiming_caption <- "Figure 6. Day of year where growth milestones were achied at the Smithonian Conservation Biology Institute."
+climwin_dp_DOY25_SCBI_short_caption <- "Figure S2. Full climwin output for DOY 25 for diffuse porous species at SCBI."
+climwin_rp_DOY25_HARV_short_caption <- "Figure S3. Full climwin output for DOY 25 for ring porous species at Harvard Forest."
+climwin_dp_DOY25_HARV_short_caption <- "Figure S4. Full climwin output for DOY 25 for diffuse porous species at Harvard Forest."
+
 ```
 
 \newpage
@@ -128,9 +137,7 @@ The significance of wood type in regards to wood and leaf phenology likely stems
 
 
 #### (5. Here, we...)
-Using many measurements taken within a year, we can model the growth of individual trees and extract data on growth milestones and traits for interspecific, intraspecific, and temporal comparison (McMahon & Parker, 2014). This allows the determination of variable responses of key tree species within a forest, meaning a better understanding of future growth under projected climate conditions. Here, we use biweekly dendrometer band measurements (5 years @ Harvard Forest, 10 @ SCBI) for dominant tree species at each site (15 @ Harvard Forest, 4 @ SCBI)  to characterize intraannual stem-growth phenology within two forest dynamics plots in the Eastern USA, calculating for each tree in each year where data was available: the day of year (DOY) where 25, 50, and 75% annual growth was achieved; the maximum growth rate; the DOY where maximum growth rate was achieved; the total growth; and season length (75%-25% DOY) (Fig. `r schematic`). Correlation between these variables and Spring temperatures over the 15 year study period (1998-2003; 2011-2019) were assessed using a linear mixed model in a heriarchal bayesian framework.
-
-We test the hypotheses that (1) stem-growth milestones are reached earlier in years with warmer early springs, but (2) maximum growth rates are independent of spring temperatures, and as a result (3) total annual growth increases in response to warmer spring temperatures (Table `r hypothesis_table`).
+Here, we characterize how early spring temperatures affect stem growth phenology and rates of temperate deciduous trees within **two/three** forest dynamics plots in the Eastern USA. Using data from dendrometer bands measured throughout the growing season, we fit a growth model  to the time series of individual trees to determine the day of year (DOY) where 25, 50, and 75% annual growth was achieved; maximum growth rates and the DOY on which they occurred; total annual growth; and peak growing season length (75%-25% DOY) [Fig. `r schematic`; @mcmahon_general_2015]. We test the hypotheses that (1) warmer early springs result in earlier stem growth and a period of growth, but (2) maximum growth rates are independent of spring temperatures, and as a result (3) total annual growth increases in response to warmer spring temperatures (Table `r hypothesis_table`).
 
 ```{r schematic, out.width="100%", echo=FALSE, fig.align="center", fig.cap= schematic_caption}
 # Created in RScripts/additional_figures.R
@@ -141,13 +148,13 @@ knitr::include_graphics("tables_figures/schematic.png")
 ```{r hypothesis_table, eval=TRUE, echo=FALSE, warning=FALSE}
 library(knitr)  
 hypothesis_table <- read.csv(file = "tables_figures/hypothesis_table.csv")
-knitr::kable(hypothesis_table, caption = "Table 1. Hypothesis table. (NEEDS FORMATTING...obviously!)")
+knitr::kable(hypothesis_table, caption = hypothesis_table_caption)
 ```
 
 
 ### Materials and Methods
 
-*Study sites and data*
+#### Study sites and data
 
 Study sites included **2/3** temperate forests in the Eastern United states, **both/all** part of the Forest Global Earth Observatory [ForestGEO; Anderson-Teixeira et al. 2015] (**Table 1?**). **Both/all** sites are dominated by broadleaf deciduous trees. *(insert site descriptions, including lat/long, elevation, plot size, climate info, dominant species. If we include SERC and if space permits, we may put this in a table, otherwise just text)*
 
@@ -159,6 +166,8 @@ The third study site was the forest dynamics plot located at the Smithsonian Eco
 
 
 Within the plot, metal dendrometer bands were installed on *>#* trees and measured with a digital caliper approximately every 1-2 weeks within the growing season for *9* years (*list ranges, for each site if different*). *(don't bother to mention biannual bands, unless you end up using the data--which you could, for annual growth, if you'd like to increase the sample size. You can put exact numbers of bands per year in an SI file.*)  The number of bands measured at each site fluctuated somewhat as trees were added or dropped (e.g., because of tree mortality) from the census *(Table S1)*. Across years, the number of bands sampled averaged *~150* at SCBI, # at Harvard Forest*, and # at SERC*. Four main species were sampled including two diffuse-porous (Lirodendron tulipfera and Fagus grandafolia) and two ring-porous (Quercus rubra and Quercus alba) species.    *(summary of how bands were distributed across species, focusing on ring/ diffuse porous distinction. details in an SI table)*
+
+(5 years @ Harvard Forest, 10 @ SCBI) 
 
 (Bands After cleaning: 2011- 105 trees; 2012 - 102 trees; 2013 - 102 trees; 2014 - 149 trees; 2015 - 149 trees; 2016 - 149 trees; 2017 - 148 trees; 2018 - 146 trees; 2019 - 145 trees *--put this in Table S1*). 
 
@@ -172,6 +181,7 @@ Within the plot, metal dendrometer bands were installed on *>#* trees and measur
 7  2017    89
 8  2018    88
 9  2019    75) this seems like alot are being thrown out - manually check if WAI
+
 Measurements were timed to begin before beginning of spring growth and to continue through the cessation of growth in the fall. *(Give specifics, which may vary by site. Note that we adjusted timing at SCBI when we observed early leaf-out of understory shrubs/herbs)* The median start date was 4/14, which was adjusted when early leaf-out of understory shrubs and herbs was observed, and the median end date was 10/17, coinciding with late senesence in the plot. The earliest start date for intraannual measurements was in 2020 on March 30, and the latest end date was on 2012 on November 26. 
 
 The dendroband data were manually cleaned by visual inspection. Three classes of mistakes: 1. Error in measurement - weekly measurement was drastically different from previous week and following week. Mistakes were removed from the raw data before modeling. (## cases) 2. Band slip or stuck - measurements freeze and remain unchanged until sudden jump followed by normal growth pattern. Band slips were sometimes followed by measurements indicating the band became stuck; in these cases, the tree was thrown out for the corresponding year. In cases where the slip was followed by normal growth, the initial slip-point was removed, and the following points were shifted down to the pre-slip level. (## cases) 3. Other - cases where data was clearly wrong but with unknown causes. This seemed to happen mostly in 2011, when the program was just beginning. In cases where several measurements were an issue, they were simply removed. If there were no clear solutions to ‘fix’ the data, the entire year was removed from the analysis.
@@ -189,14 +199,18 @@ leaf phenology data?
 perhaps bring in cores?
 
 
-*Fitting growth curves*
+#### Fitting growth curves
 
 We fit the model of @mcmahon_general_2015 to define *phenological dates and growth rates* (Fig. `r schematic`). 
 
 
-*Determining optimal climate windows*
+#### Determining optimal climate windows
 
 The period where the phenology milestone(s) were most affected by changes in early Spring temperature was determined using the R package Climwin. This package tests the correlation between climate variables (TMAX) and biological variables (DOY, max rate DOY, total growth) within a specified time-frame, reporting correlation and delta AIC's of each 'window'. as the best-model. We instructed Climwin to search for the best window beginning at February 1st and ending at the mean DOY for each phenology variable (chart in SI?). This was done to find corresponding (median of 95% CI window open and close) start and end dates for the analysis of ring-porous and diffuse-porous trees, as well as all trees pooled together.
+
+#### Hypothesis testing
+
+Correlation between these variables and Spring temperatures over the 15 year study period (1998-2003; 2011-2019) were assessed using a linear mixed model in a heriarchal bayesian framework.
 
 Notes for now:
 
@@ -245,7 +259,7 @@ Relationships tended to be weaker and more stochastic in sign for short time per
 
 Optimal windows occurred from **##-##** for ring-porous species and from **##-##** for diffuse-porous species.
 
-```{r climwin, out.width="100%", echo=FALSE, fig.align="center", fig.cap= cum_growth_caption}
+```{r climwin, out.width="100%", echo=FALSE, fig.align="center", fig.cap= climwin_caption}
 # Created in RScripts/additional_figures.R
 knitr::include_graphics("tables_figures/climwin.png")
 ```
@@ -268,6 +282,10 @@ We have shown that intraannual growth patterns in North American temperate trees
 ```{r DOYtiming, out.width="100%", echo=FALSE, fig.align="center", fig.cap= DOYtiming_caption}
 # Created in RScripts/additional_figures.R
 knitr::include_graphics("tables_figures/DOYtiming.png")
+```
+
+```{r DOYtiming2, out.width="100%", echo=FALSE, fig.align="center", fig.cap= DOYtiming_caption}
+knitr::include_graphics("tables_figures/DOYtiming_HF_PRELIM.png")
 ```
 
 The mechanisms controlling activation of cambium reactivation is still debated, as some speculate Auxin, the chemical believed to kick-start the reactivation process, originates in the leaves (Frankenstein et al, 2005). However, the fact that ring-porous species complete 25% growth before the presence of leaf buds indicates there may be another source of Auxin production. *READ MORE ABOUT THIS!* The relationship between earlier cambial reactivation and early Spring temperature signals that the mechanism is influenced by temperature? 
@@ -301,6 +319,10 @@ ForestGEO
 `r climwin_rp_DOY25_SCBI_short_caption`
 
 `r climwin_dp_DOY25_SCBI_short_caption`
+
+`r climwin_rp_DOY25_HARV_short_caption` 
+
+`r climwin_dp_DOY25_HARV_short_caption`
 
 ### References
 

@@ -1,8 +1,10 @@
 Hypotheses & Specific Predictions,SCBI.RP,SCBI.DP,Harvard.RP,Harvard.DP
-1. Warmer early springs result in earlier stem growth.,,,,
+1. Warmer early springs result in earlier stem growth and longer growing seasons,,,,
 - DOY25 is negatively correlated with early spring T.,yes,yes,yes,yes
 - DOY50 is negatively correlated with early spring T.,yes,yes,yes,yes
 - DOY75 is negatively correlated with early spring T.,-,yes,yes,yes
+- DOY of max growth rate is negatively correlated with early spring T,,,,
+- Peak growing season length (DOY75-DOY25) is positively correlated with early spring temperatures.,,,,
 2. Maximum growth rates are independent of early spring temperatures.,,,,
 - Max growth rate is independent of early spring temperatures.,,,,
 3. Annual stem growth responds positively to warmer spring temperatures.,,,,
