@@ -188,15 +188,6 @@ The dendroband data were manually cleaned by visual inspection. Three classes of
 
 Daily maximum temperatures (TMAX) were obtained from a meteorological tower adjacent to the SCBI ForestGEO plot (data can be found on the ForestGEO climate portal, DOI on github). The R package climpact was used to plot TMAX for visual inspection (# points removed?). Climpact also identifies readings that were greater than 3 standard deviations away from yearly means. These points were labeled as outliers and removed from the dataset. Gaps in the SCBI meteorological tower data were subsequently filled using TMAX readings obtained from a National Center for Environmental Information (NCEI) weather station located in Front Royal, Virginia (https://www.ncdc.noaa.gov/cdo-web/datasets/GHCND/stations/GHCND:USC00443229/detail). 
 
-leaf phenology data?
-
-•	leaf phenology data from NEON and/or satellite-based (leaf phenology network: https://www.usanpn.org/news/spring) ?
-
-•	NDVI or PRI? https://onlinelibrary.wiley.com/doi/10.1111/gcb.15112 (from Ian)
-
-•	From Ian: I noticed how the growth patterns observed by remote sensing pretty much mirror what Sean was finding with his dendro R package (btw is that functional on CRAN yet?) for both SERC and SCBI dendroband data.
-
-perhaps bring in cores?
 
 
 #### Fitting growth curves
