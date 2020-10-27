@@ -57,9 +57,11 @@ hypothesis_table=1
 
 #Figure numbers
 schematic=1 #illustrates parameters
-growth_pheno_by_xylem = 2  #if we include more sites, we'll make this multi-panel
-rel_growth = "2a" #Based on D'Orangeville Figure 3.a), but with relative growth
-cum_growth = "2b" #Similar to D'Orangeville Figure 4.a), but with cumulative relative growth
+growth_curves_all = 2  
+    rel_growth_SCBI = "2a" 
+    rel_growth_HF = "2b" 
+    cum_growth_SCBI = "2c" 
+    cum_growth_HF = "2d" 
 climwin = 3
 pheno_Tsensitivity = 4
 model_summary = 5
@@ -74,8 +76,7 @@ hypothesis_table_caption <-"Table 1. Hypothesis table. (NEEDS FORMATTING...obvio
 #figures
 schematic_caption <- "Figure 1. Schematic illustrating the parameters considered here. Shown are measurements for an example tree (## cm SPECIES), fit with the model of McMahon & Parker (2015), from which phenology and growth rate parameters are obtained. ... (HERE, WE NEED TO ANNOTATE WITH LABELS FOR EACH PARAMETER CONSIDERED IN THE MANUSCRIPT. I'D ALSO DROP THE BACKGROUND SHADING--MAKES IT BUSY.)"
 
-rel_growth_caption <- "Figure 2a. (SHOULD BE MERGED INTO SINGLE IMAGE WITH 2B. SEE BELOW FOR CAPTION)"
-cum_growth_caption  <- "Figure 2. Growth trajectories for ring- and diffuse-porous trees, as both relative (a) and cumulative (b) fractions of total annual growth. Each line represents one year's growth for a given tree, fit with McMahon model."
+growth_curves_all_caption  <- "Figure 2. Growth trajectories for ring- and diffuse-porous trees, as both relative and cumulative fractions of total annual growth. Each line represents one year's growth for a given tree, fit with McMahon model."
 
 climwin_caption <- "Figure 3. Landscapes of relationships between the day of year on which 25% of annual growth is achieved (DOY_25) and temperature in prior weeks for ring- and diffuse-porous trees at SCBI and Harvard Forest. Shown are matrices of linear coefficients of first-order linear regressions between temperature and DOY_25, where Window Open and Window Close indicate number of weeks prior to DOY_25 (ring-porous: DATE at SCBI, DATE at HF; diffuse-porous: DATE at SCBI, DATE at HF). Black boxes indicate the optimal window (i.e., that with lowest dAIC).    (REPLOT ON THE SAME SCALE, WITH BLUE FOR POSITIVE AND RED FOR NEGATIVE)"
 
@@ -224,20 +225,15 @@ This mixed-effect model was run within a heirarchal bayesian framework.
 
 Across all trees and years, 25% of annual growth was achieved on **May 9** ($DOY_{25}$=**129**), 50% on **June 6** ($DOY_{50}$=**157**), and 75% on **July 3** ($DOY_{75}$=**184**), for an average peak growing season length of **56** days. Maximum growth rate occurred *just one day after $DOY_{50}$* on **June 7** ($DOY_{max}$=**158**). 
 
-Growth pheonology differed between ring- and diffuse- porous species, with ring-porous species having an earlier start to growth, with growth spread out over a longer growing season (Fig. `r growth_pheno_by_xylem`).
+Growth pheonology differed between ring- and diffuse- porous species, with ring-porous species having an earlier start to growth, with growth spread out over a longer growing season (Fig. `r growth_curves_all`).
 For ring-porous trees, on average, 25% of annual growth was achieved on **April 23** ($DOY_{25}$=**113**), 50% on **May 27** ($DOY_{50}$=**147**), and 75% on **June 30** ($DOY_{75}$=**181**), for an average peak growing season length of **68** days. Maximum growth rate occurred *on $DOY_{50}$* and averaged .048 **mm day^-1^ (?)**. 
 For diffuse-porous trees, on average, 25% of annual growth was achieved on **June 2** ($DOY_{25}$=**153**), 50% on **June 20** ($DOY_{50}$=**171**), and 75% on **July 9** ($DOY_{75}$=**190**), for an average peak growing season length of **37** days. Maximum growth rate occurred *just one day after $DOY_{50}$* on **June 21** ($DOY_{max}$=**172**) and averaged .068 **mm day^-1^ (?)**. 
 
 \newpage
 
-```{r rel_growth, out.width="100%", echo=FALSE, fig.align="center", fig.cap= rel_growth_caption}
+```{r growth_curves_all, out.width="100%", echo=FALSE, fig.align="center", fig.cap= growth_curves_all_caption}
 # Created in RScripts/additional_figures.R
-knitr::include_graphics("tables_figures/rel_growth.png")
-```
-
-```{r cum_growth, out.width="100%", echo=FALSE, fig.align="center", fig.cap= cum_growth_caption}
-# Created in RScripts/additional_figures.R
-knitr::include_graphics("tables_figures/cum_growth.png")
+knitr::include_graphics("tables_figures/growth_curves_all.png")
 ```
 
 *Optimal climate windows*
@@ -287,12 +283,14 @@ Diffuse-porous growth timing seems relatively unaffected by early Spring tempera
 
 --the range of some of these species may migrate North to cooler summer conditions becoming potentially extant in the Southern / mid Atlantic of the USA.--    (Is mortality of ring-porous species higher in recent decades? Hard to pinpoint, but would likely be caused by warmer early-spring followed by late frost events exhausting NSC reserves?)
 
-This analysis is one of a first generation of intraannual dendroband tree growth studies, and as such, is only the tip of the ice berg. Here, we focused our analysis purely on early Spring warming. This falls short of the reality of our changing climate, where each season is being affected in some way, leading to a combination of stressors on plant growth. For example, diffuse porous trees seemed to show little, if any, relationship with the climate window defined here, but if we shift that window forward 20 days, the effect increases dramatically, signalling a greater importance of May/June TMAX on trees of that wood type (figure or table?). This revelation agrees with the results from other climate sensitivity studies like Helcoski et al (2019), which found differences in interspecific growth responses to several climate variables throughout the year. Additionally, Other studies have found that Autumn leaf senescence is being delayed in response to warmer temperatures in the previous year's Winter or Autumn (), positive correlation between growth and higher winter temperatures (Heide, 1993; Delpierre et al, 2009), stunted total productivity induced by drought and high TMAX in the current year's Summer (), and an increase in diffuse-porous tree growth during the gorwing season following an abnormally cold winter (Benito & Pederson, 2015; Elliot et al, 2015). How these relationships may impact intraannual growth patterns is uncertain, but identifying such relationships will help us further understand how climate change is impacting forests. 
+This analysis is one of a first generation of intraannual dendroband tree growth studies, and as such, is only the tip of the ice berg. Here, we focused our analysis purely on early Spring warming. This falls short of the reality of our changing climate, where each season is being affected in some way, leading to a combination of stressors on plant growth. For example, diffuse porous trees seemed to show little, if any, relationship with the climate window defined here, but if we shift that window forward 20 days, the effect increases dramatically, signalling a greater importance of May/June TMAX on trees of that wood type (figure or table?). This revelation agrees with the results from other climate sensitivity studies like Helcoski et al (2019), which found differences in interspecific growth responses to several climate variables throughout the year. Additionally, Other studies have found that Autumn leaf senescence is being delayed in response to warmer temperatures in the previous year's Winter or Autumn (), positive correlation between growth and higher winter temperatures (Heide, 1993; Delpierre et al, 2009), stunted total productivity induced by drought and high TMAX in the current year's Summer (), and an increase in diffuse-porous tree growth during the growing season following an abnormally cold winter (Benito & Pederson, 2015; Elliot et al, 2015). How these relationships may impact intraannual growth patterns is uncertain, but identifying such relationships will help us further understand how climate change is impacting forests. 
 
 We present a stepping stone for future studies to build upon. 
 
 
 ### (Content to incorporate) 
+
+Geng et al. 2020 GCB- Climate warming increases spring phenological differences among temperate trees.
 
 N. American strategies have conservative strategies when it comes to phenology, as historically they’ve been subject to more spring frosts. Thus, climate change is having less impact (Zohner et al., 2020); Leaf velocity discussion? - - RP trees BB = 25% and 75% leaf development = 50% growth (D'Orangeville). Are DP trees leafing up earlier? If yes, how much earlier? Similar to 25,50,75% DOY retreat? 
 
