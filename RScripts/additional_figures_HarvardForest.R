@@ -281,3 +281,77 @@ fig_width <- 7
 ggsave(filename = "doc/manuscript/tables_figures/DOYtiming_HF_PRELIM.png",
        plot = doytiming,
        width = fig_width, height = fig_width / 2)
+
+####Tags per Year table ----
+all_stems$tag_year <- paste(all_stems$tag, all_stems$year, sep = "_")
+unique <- unique(all_stems$tag_year)
+unique <- data.frame(unique)
+unique$year <- substr(unique$unique,nchar(as.character(unique$unique))-3, nchar(as.character(unique$unique))) #use this to split cores up into two columns, ID and letter, then use unique id's to pick one of each core?
+tags_per_year <- count(unique$year)
+names(tags_per_year) <- c("Year", "SCBI")
+
+all_stems$tag_year <- paste(all_stems$plot, all_stems$tag, all_stems$year, sep = "_")
+unique <- unique(all_stems$tag_year)
+unique <- data.frame(unique)
+unique$year <- substr(unique$unique,nchar(as.character(unique$unique))-3, nchar(as.character(unique$unique))) #use this to split cores up into two columns, ID and letter, then use unique id's to pick one of each core?
+tags_per_year_HF <- count(unique$year)
+names(tags_per_year_HF) <- c("Year", "Harvard Forest")
+
+tags <- merge(tags_per_year,tags_per_year_HF, by = "Year", all = TRUE)
+tags$Year <- as.character(tags$Year)
+tags$Year <- as.numeric(tags$Year)
+tags <- tags[order(tags$Year),-4]
+
+write.csv(tags, file = "Tags_per_year.csv", row.names = FALSE)
+
+#Species distibution of bands
+stems_unclean <- read.csv("data/Wood_pheno_table_HarvardForest_V2.csv")
+stems_clean <- read_csv("data/wood_pheno_table_HFtemp.csv")
+stems_clean <- subset(stems_clean, perc == .25)
+stems_unclean <- subset(stems_unclean, perc == .25 & wood_type != "other")
+
+clean <- count(stems_clean$sp)
+unclean <-count(stems_unclean$sp)
+
+clean$x
+Species <- c("Striped Maple", "Red Maple", "Yellow Birch", "Black Birch", "White Birch", "Grey Birch",
+             "American Beech", "White Ash", "Black Cherry", "Red Oak", "Black Oak")
+clean$Species <- Species
+names(clean) <- c("SP code", "After Cleaning", "Species")
+clean <- clean[,c(2,3)]
+unclean$Species <- Species
+names(unclean) <- c("SP code", "Before Cleaning", "Species")
+unclean <- unclean[,c(2,3)]
+
+merged <- merge(clean, unclean, by = "Species")
+merged <- merged[,c(1,3,2)]
+
+merged$Wood_Structure <-c("Diffuse-porous","Diffuse-porous","Diffuse-porous","Ring-Porous","Diffuse-porous","Diffuse-porous","Ring-Porous","Diffuse-porous" ,"Ring-Porous","Diffuse-porous","Diffuse-porous")
+merged <- merged[order(merged$Wood_Structure),]
+
+write.csv(merged, file = "HF_bands_bySP.csv", row.names = FALSE)
+
+###SCBI
+stems_unclean <- read.csv("data/Wood_pheno_table_V6.csv")
+stems_clean <- read.csv("data/Wood_pheno_table_V7.csv")
+stems_clean <- subset(stems_clean, perc == .25)
+stems_unclean <- subset(stems_unclean, perc == .25 & wood_type != "other")
+
+clean <- count(stems_clean$sp)
+unclean <-count(stems_unclean$sp)
+
+Species <- c("American Beech", "Tulip Poplar", "White Oak", "Red Oak")
+clean$Species <- Species
+names(clean) <- c("SP code", "After Cleaning", "Species")
+clean <- clean[,c(2,3)]
+unclean$Species <- Species
+names(unclean) <- c("SP code", "Before Cleaning", "Species")
+unclean <- unclean[,c(2,3)]
+
+merged <- merge(clean, unclean, by = "Species")
+merged <- merged[,c(1,3,2)]
+
+merged$Wood_Structure <-c("Diffuse-porous","Ring-Porous","Diffuse-porous","Ring-Porous")
+merged <- merged[order(merged$Wood_Structure),]
+
+write.csv(merged, file = "SCBI_bands_bySP.csv", row.names = FALSE)
