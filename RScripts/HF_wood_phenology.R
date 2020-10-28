@@ -780,14 +780,14 @@ warnings()
 masterDF <- masterDF[-1, ]
 unique(masterDF$sp)
 masterDF$wood_type <- ifelse(masterDF$sp == "betual"| masterDF$sp == "acerru" | masterDF$sp == "fagugr" | masterDF$sp == "betule" | masterDF$sp == "betupa" | masterDF$sp == "acerpe" | masterDF$sp == "betupo" | masterDF$sp == "prunse", "diffuse-porous", ifelse(masterDF$sp == "querru" | masterDF$sp == "querve" | masterDF$sp == "fraxam", "ring-porous", "other"))
-write.csv(masterDF, file = "Data/Wood_pheno_table_HarvardForest_subset.csv", row.names = FALSE)
+write.csv(masterDF, file = "Data/Wood_pheno_table_HarvardForest_V3.csv", row.names = FALSE)
 masterDF$DOY <- as.numeric(masterDF$DOY)
 # Added by bert: save parameter values
 LG5_parameters %>%
   bind_rows() %>%
   write_csv(file = "Data/LG5_parameter_values_HarvardForest_subset.csv")
 
-write.csv(bind_rows(LG5_parameters), file = "Data/LG5_parameter_values_HarvardForest_subset.csv")
+write.csv(bind_rows(LG5_parameters), file = "Data/LG5_parameter_values_HarvardForest_V3.csv")
 lg5 <- bind_rows(LG5_parameters)
 #Clean data
 Wood_pheno_table <- read_csv("Data/Wood_pheno_table_HarvardForest_V1.csv") #Master datafrmae containing 20%, 50%, and 75% growth milestones

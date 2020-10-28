@@ -399,6 +399,11 @@ fit.outer.hull <- function(dbh, doy.full, params, quant = 0.8) {
   out.fit <- outer.hull(params, doy, dbh)
 }
 
+get.lg5.ML <- function(params, doy, dbh, resid.sd) {
+  pred.dbh <- lg5.pred(params, doy)
+  pred.ML <-  -sum(dnorm(dbh, pred.dbh, resid.sd, log = T))
+  return(pred.ML)
+}
 
 
 # 3. Loop to create timeseries of dbh measurements manually -----
@@ -862,10 +867,18 @@ for (q in 2011:2019) {
 
       names(Param.df) <- c("L", "K", "doy_ip", "r", "theta", "a", "b")
       # write.csv(Param.df, file = "SCBI_hi_lo_lg5.csv", quote = FALSE, row.names = FALSE)
-
+      K <- as.numeric(Param.df[1,2])
+      L <- as.numeric(Param.df[1,1])
+      doy.ip <- as.numeric(Param.df[1,3])
+      r <- as.numeric(Param.df[1,4])
+      theta <- as.numeric(Param.df[1,5])
+      params_function <- c(K, L, doy.ip, r, theta)
+      dbh <- dbh
+      doy <- doy
+      ML_value <- get.lg5.ML(params_function, doy,dbh, .5)
       # Added by bert: save tag/year + parameter values
-      param_values_to_save <- c(stemstag$tag[1], stemstag$year[1],  Param.df) %>% unlist()
-      names(param_values_to_save) <- c("tag", "year", names(Param.df))
+      param_values_to_save <- c(stemstag$tag[1], stemstag$year[1],  Param.df, ML_value) %>% unlist()
+      names(param_values_to_save) <- c("tag", "year", names(Param.df), "ML_value")
       tagyear_id <- stemstag %>%
         slice(1) %>%
         transmute(tag_year = str_c(tag, year, sep = "-")) %>%
@@ -992,15 +1005,15 @@ for (q in 2011:2019) {
 warnings()
 masterDF <- masterDF[-1, ]
 masterDF$wood_type <- ifelse(masterDF$sp == "quru" | masterDF$sp == "qual", "ring porous", ifelse(masterDF$sp == "litu" | masterDF$sp == "fagr", "diffuse-porous", "other"))
-write.csv(masterDF, file = "Data/Wood_pheno_table_V6.csv", row.names = FALSE)
+write.csv(masterDF, file = "Data/Wood_pheno_table_V8.csv", row.names = FALSE)
 masterDF$DOY <- as.numeric(masterDF$DOY)
 # Added by bert: save parameter values
 LG5_parameters %>%
   bind_rows() %>%
   write_csv(file = "Data/LG5_parameter_values_V6.csv")
 
-#write.csv(bind_rows(LG5_parameters), file = "Data/LG5_parameter_values_V6.csv")
-
+LG5_try <- bind_rows(LG5_parameters)
+write.csv(bind_rows(LG5_parameters), file = "Data/LG5_parameter_values_V8.csv")
 
 
 

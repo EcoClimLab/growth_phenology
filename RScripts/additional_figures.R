@@ -146,8 +146,14 @@ ggsave("doc/manuscript/tables_figures/schematic.png", plot = schematic, width = 
 
 
 
-# Fig2 & Fig3: Percent modeled growth and cummulative percent modeled growth ---
-Wood_pheno_table <- read_csv("Data/Wood_pheno_table_V7.csv") %>%
+# Growth_Cruves_all: Percent modeled growth and cummulative percent modeled growth ---
+Wood_pheno_table_scbi <- read_csv("Data/Wood_pheno_table_V7.csv") %>%
+  # Keep only RP and DP for now
+  filter(wood_type != "other") %>%
+  # Rename ring porous to not have a space
+  mutate(wood_type = ifelse(wood_type == "ring porous", "ring-porous", wood_type))
+
+Wood_pheno_table_hf <- read_csv("Data/Wood_pheno_table_HFtemp.csv") %>%
   # Keep only RP and DP for now
   filter(wood_type != "other") %>%
   # Rename ring porous to not have a space
@@ -155,7 +161,7 @@ Wood_pheno_table <- read_csv("Data/Wood_pheno_table_V7.csv") %>%
 
 
 # As generated in Rscripts/SCBI_wood_phenology.R
-LG5_parameter_values <- read_csv("Data/LG5_parameter_values.csv")
+LG5_parameter_values_scbi <- read_csv("Data/LG5_parameter_values.csv")
 
 # Generalized 5-parameter logistic function (modified version of Sean's function)
 lg5 <- function(L, K, doy_ip, r, theta, doy) {
