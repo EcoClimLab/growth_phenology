@@ -142,18 +142,18 @@ fig_width <- 11
 ggsave("doc/manuscript/tables_figures/schematic.png", plot = schematic, width = fig_width, height = fig_width / 1.25)
 
 
-
+#----
 
 
 
 # Growth_Cruves_all: Percent modeled growth and cummulative percent modeled growth ---
-Wood_pheno_table_scbi <- read_csv("Data/Wood_pheno_table_V7.csv") %>%
+Wood_pheno_table_scbi <- read_csv("Data/Wood_pheno_table_V8CLEAN.csv") %>%
   # Keep only RP and DP for now
   filter(wood_type != "other") %>%
   # Rename ring porous to not have a space
   mutate(wood_type = ifelse(wood_type == "ring porous", "ring-porous", wood_type))
 
-Wood_pheno_table_hf <- read_csv("Data/Wood_pheno_table_HFtemp.csv") %>%
+Wood_pheno_table_hf <- read_csv("Data/Wood_pheno_table_HarvardForest_V3CLEAN.csv") %>%
   # Keep only RP and DP for now
   filter(wood_type != "other") %>%
   # Rename ring porous to not have a space
@@ -161,7 +161,8 @@ Wood_pheno_table_hf <- read_csv("Data/Wood_pheno_table_HFtemp.csv") %>%
 
 
 # As generated in Rscripts/SCBI_wood_phenology.R
-LG5_parameter_values_scbi <- read_csv("Data/LG5_parameter_values.csv")
+LG5_parameter_values_scbi <- read_csv("Data/LG5_parameter_values_V8CLEAN.csv")
+LG5_parameter_values_hf <- read_csv("Data/LG5_parameter_values_HarvardForest_V3CLEAN.csv")
 
 # Generalized 5-parameter logistic function (modified version of Sean's function)
 lg5 <- function(L, K, doy_ip, r, theta, doy) {
@@ -169,19 +170,22 @@ lg5 <- function(L, K, doy_ip, r, theta, doy) {
   dbh <- L + ((K - L) / (1 + 1/theta * exp(-(r * (doy - doy_ip) / theta)) ^ theta))
   return(dbh)
 }
-
-percent_growth <- Wood_pheno_table %>%
-  separate(tag, into = c("tag", "stem"), sep = "_") %>%
+Wood_pheno_table_scbi <- Wood_pheno_table_scbi[,-12]
+LG5_parameter_values_scbi <- LG5_parameter_values_scbi[,-12]
+percent_growth_scbi <-Wood_pheno_table_scbi %>%
   mutate(
     tag = as.numeric(tag),
-    tag_year = str_c(tag, year)
+    tag_year = str_c(tag,year)
   ) %>%
   select(tag, year, tag_year, wood_type) %>%
   distinct() %>%
-  left_join(LG5_parameter_values, by = c("tag", "year")) %>%
+  left_join(LG5_parameter_values_scbi, by = c("tag", "year")) %>%
   group_by(tag, year) %>%
   mutate(doy = list(seq(from = 1, to = 365, by = 1))) %>%
   unnest_longer(doy) %>%
+  #mutate(
+  #  tag_year = tag_year.x
+  #) %>%
   group_by(tag_year) %>%
   mutate(
     dbh = lg5(L, K, doy_ip, r, theta, doy),
@@ -194,42 +198,81 @@ percent_growth <- Wood_pheno_table %>%
     dbh_growth_percent_cummulative = cumsum(dbh_growth_percent)
   )
 
-rel_growth <- ggplot(percent_growth, aes(x = doy, y = dbh_growth_percent, group = tag_year)) +
+percent_growth_hf <- Wood_pheno_table_hf %>%
+  #separate(tag, into = c("tag", "stem"), sep = "_") %>%
+  mutate(
+    site_tag = site_tag,
+    tag_year = str_c(site_tag, year)
+  ) %>%
+  select(site_tag, year, tag_year, wood_type) %>%
+  distinct() %>%
+  left_join(LG5_parameter_values_hf, by = c("site_tag", "year")) %>%
+  group_by(site_tag, year) %>%
+  mutate(doy = list(seq(from = 1, to = 365, by = 1))) %>%
+  unnest_longer(doy) %>%
+  mutate(
+    tag_year = tag_year.x
+  ) %>%
+  group_by(tag_year) %>%
+  mutate(
+    dbh = lg5(L, K, doy_ip, r, theta, doy),
+    dbh_growth = dbh - lag(dbh),
+    dbh_total_growth = lg5(L, K, doy_ip, r, theta, 365)- lg5(L, K, doy_ip, r, theta, 1),
+    dbh_growth_percent = dbh_growth/dbh_total_growth
+  ) %>%
+  filter(!is.na(dbh_growth)) %>%
+  mutate(
+    dbh_growth_percent_cummulative = cumsum(dbh_growth_percent)
+  )
+
+library(gridExtra)
+
+png(filename = "doc/manuscript/tables_figures/growth_curves_all.png", width=10, height=5,
+    pointsize=12, bg="transparent", units="in", res=600,
+    restoreConsole=FALSE)
+
+grid.arrange(
+
+ggplot(percent_growth_scbi, aes(x = doy, y = dbh_growth_percent, group = tag_year)) +
   coord_cartesian(ylim = c(0, 0.05)) +
   scale_y_continuous(labels = percent) +
-  labs(x = "DOY", y = "Percent of total growth",
-       title = "Percent of total (modeled) growth in diameter",
-       subtitle = "Each curve represents one tag-year") +
+  labs( x="",y = "Percent of total growth",
+       title = "SCBI",
+       subtitle = "Percent of total (modeled) growth in diameter") +
   theme_bw() +
   geom_line(alpha = 0.2, aes(col = wood_type)) +
-  scale_colour_viridis_d("Wood Type", end = 2/3)
-rel_growth
+  scale_colour_viridis_d("Wood Type", end = 2/3),
 
-fig_width <- 7
-ggsave(filename = "doc/manuscript/tables_figures/rel_growth.png",
-       plot = rel_growth,
-       width = fig_width, height = fig_width / 2)
+ggplot(percent_growth_hf, aes(x = doy, y = dbh_growth_percent, group = tag_year)) +
+  coord_cartesian(ylim = c(0, 0.05)) +
+  scale_y_continuous(labels = percent) +
+  labs(x="", y = "Percent of total growth",
+       title = "Harvard Forest",
+       subtitle = "Percent of total (modeled) growth in diameter") +
+  theme_bw() +
+  theme(legend.position = "none")+
+  geom_line(alpha = 0.2, aes(col = wood_type)) +
+  scale_colour_viridis_d("Wood Type", end = 2/3),
 
-
-
-fig3 <- ggplot(percent_growth, aes(x = doy, y = dbh_growth_percent_cummulative, group = tag_year, col = wood_type)) +
+ggplot(percent_growth_scbi, aes(x = doy, y = dbh_growth_percent_cummulative, group = tag_year, col = wood_type)) +
   geom_line(alpha = 0.2) +
   scale_y_continuous(labels = percent) +
-  labs(x = "DOY", y = "Cummulative percent of total growth", title = "Cummulative percent of total (modeled) growth in diameter")
-fig3
-
-fig_width <- 6
-ggsave(filename = "doc/manuscript/tables_figures/fig3.png", plot = fig3, width = fig_width, height = fig_width / 1.52)
+  labs(x = "DOY", y = "Cummulative percent of total growth",
+       subtitle = "Cummulative percent of total (modeled) growth")+
+  scale_colour_viridis_d("Wood Type", end = 2/3),
 
 
+ggplot(percent_growth_hf, aes(x = doy, y = dbh_growth_percent_cummulative, group = tag_year, col = wood_type)) +
+  geom_line(alpha = 0.2) +
+  scale_y_continuous(labels = percent) +
+  theme(legend.position = "none")+
+  labs(x = "DOY", y = "Cummulative percent of total growth",
+       subtitle = "Cummulative percent of total (modeled) growth")+
+  scale_colour_viridis_d("Wood Type", end = 2/3),
 
-# fig3b <- ggplot(percent_growth, aes(x = doy, y = dbh_growth_percent_cummulative, group = wood_type)) +
-#   stat_lineribbon(.width = c(.95, 0.9),  color = "#08519C") +
-#   facet_wrap(~wood_type, ncol = 1) +
-#   scale_y_continuous(labels = percent) +
-#   scale_fill_brewer() +
-#   labs(x = "DOY", y = "Cummulative percent of total growth", title = "Cummulative percent of total (modeled) growth in diameter", subtitle = "Each curve represents one tag-year")
-# fig3b
+as.table = TRUE, nrow=2, ncol=2) ###as.table specifies order if multiple rows
+
+dev.off()
 
 #Figure D'Orangeville figure 4
 warmest <- subset(Wood_pheno_table, year == 2012)
