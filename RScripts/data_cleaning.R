@@ -3,13 +3,13 @@ library(scales)
 library(tidybayes)
 
 #SCBI ----
-Wood_pheno_table_scbi <- read_csv("Data/Wood_pheno_table_V8RAW.csv") %>%
+Wood_pheno_table_scbi <- read_csv("Data/Wood_pheno_table_V10RAW.csv") %>%
   # Keep only RP and DP for now
   filter(wood_type != "other") %>%
   # Rename ring porous to not have a space
   mutate(wood_type = ifelse(wood_type == "ring porous", "ring-porous", wood_type))
 
-LG5_parameter_values_scbi <- read_csv("Data/LG5_parameter_values_V8RAW.csv")
+LG5_parameter_values_scbi <- read_csv("Data/LG5_parameter_values_V10RAW.csv")
 
 # Generalized 5-parameter logistic function (modified version of Sean's function)
 lg5 <- function(L, K, doy_ip, r, theta, doy) {
@@ -34,9 +34,9 @@ percent_growth <- Wood_pheno_table_scbi %>%
   unnest_longer(doy) %>%
   group_by(tag_year) %>%
   mutate(
-    dbh = lg5(L, K, doy_ip, r, theta, doy),
+    dbh = lg5(a, b, doy_ip, r, theta, doy),
     dbh_growth = dbh - lag(dbh),
-    dbh_total_growth =  lg5(L, K, doy_ip, r, theta, 365)- lg5(L, K, doy_ip, r, theta, 1),
+    dbh_total_growth =  b-a,
     dbh_growth_percent = dbh_growth/dbh_total_growth
   ) %>%
   filter(!is.na(dbh_growth)) %>%
@@ -44,17 +44,22 @@ percent_growth <- Wood_pheno_table_scbi %>%
     dbh_growth_percent_cummulative = cumsum(dbh_growth_percent)
   )
 
+percent_growth_one <- subset(percent_growth, dbh_growth_percent_cummulative == 1)
+percent_growth <- percent_growth[!(percent_growth$tag_year %in% unique(percent_growth_one$tag_year)),]
 maxgrowthrate <- aggregate(percent_growth$dbh_growth_percent, by = list(percent_growth$tag_year), FUN = max)
 names(maxgrowthrate) <- c("tag_year", "rate")
 
+maxgrowthcumul <- aggregate(percent_growth$dbh_growth_percent_cummulative, by = list(percent_growth$tag_year), FUN = max)
+maxgrowthcumul_good <- subset(maxgrowthcumul, x >= 0.95)
+percent_growth <- percent_growth[percent_growth$tag_year %in% maxgrowthcumul_good$Group.1,]
 ratedoy <- percent_growth[percent_growth$dbh_growth_percent %in% maxgrowthrate$rate,]
 ratedoysubset <- subset(ratedoy, doy >= 110 & doy <= 250)
 percent_growth <- percent_growth[percent_growth$tag_year %in% ratedoysubset$tag_year,]
 
-#outliers <- subset(percent_growth, dbh_growth_percent_cummulative >= 1.01)
-#greaterthan100 <- unique(outliers$tag_year)
+outliers <- subset(percent_growth, dbh_growth_percent_cummulative >= 1.01)
+greaterthan100 <- unique(outliers$tag_year)
 
-#percent_growth <- percent_growth[!(percent_growth$tag_year %in% greaterthan100),  ]
+percent_growth <- percent_growth[!(percent_growth$tag_year %in% greaterthan100),  ]
 Wood_pheno_table_scbi <-  Wood_pheno_table_scbi %>%
   separate(tag, into = c("tag", "stem"), sep = "_") %>%
   mutate(
@@ -65,9 +70,11 @@ Wood_pheno_table_scbi <- Wood_pheno_table_scbi[Wood_pheno_table_scbi$tag_year %i
 LG5_parameter_values_scbi$tag_year <- paste0(LG5_parameter_values_scbi$tag, LG5_parameter_values_scbi$year)
 LG5_parameter_values_scbi <- LG5_parameter_values_scbi[LG5_parameter_values_scbi$tag_year %in% unique(percent_growth$tag_year),]
 
-write.csv(Wood_pheno_table_scbi, file = "data/Wood_pheno_table_V8CLEAN.csv", row.names = FALSE)
-write.csv(LG5_parameter_values_scbi, file = "data/LG5_parameter_values_V8CLEAN.csv", row.names = FALSE)
+write.csv(Wood_pheno_table_scbi, file = "data/Wood_pheno_table_V9CLEAN.csv", row.names = FALSE)
+write.csv(LG5_parameter_values_scbi, file = "data/LG5_parameter_values_V9CLEAN.csv", row.names = FALSE)
 
+
+LG5_parameter_values_scbi$tot_lg5 <- lg5(LG5_parameter_values_scbi$L, LG5_parameter_values_scbi$K, LG5_parameter_values_scbi$doy_ip, LG5_parameter_values_scbi$r, LG5_parameter_values_scbi$theta, 365)-lg5(LG5_parameter_values_scbi$L, LG5_parameter_values_scbi$K, LG5_parameter_values_scbi$doy_ip, LG5_parameter_values_scbi$r, LG5_parameter_values_scbi$theta, 1)
 
 
 rel_growth_scbi <- ggplot(percent_growth, aes(x = doy, y = dbh_growth_percent, group = tag_year)) +
@@ -98,7 +105,7 @@ fig3_scbi
 #ggsave(filename = "doc/manuscript/tables_figures/fig3.png", plot = fig3, width = fig_width, height = fig_width / 1.52)
 
 #Harvard Forest ----
-Wood_pheno_table_hf <- read_csv("Data/Wood_pheno_table_HarvardForest_V3RAW.csv") %>%
+Wood_pheno_table_hf <- read_csv("Data/Wood_pheno_table_HarvardForest_V4.csv") %>%
   # Keep only RP and DP for now
   filter(wood_type != "other") %>%
   # Rename ring porous to not have a space
@@ -108,7 +115,7 @@ Wood_pheno_table_hf$site_tag <- substr(Wood_pheno_table_hf$tag,1, nchar(as.chara
 Wood_pheno_table_hf$site <- substr(Wood_pheno_table_hf$tag,1, 2) #use this to split cores up into two columns, ID and letter, then use unique id's to pick one of each core?
 Wood_pheno_table_hf$realtag <- substr(Wood_pheno_table_hf$site_tag,3, nchar(as.character(Wood_pheno_table_hf$site_tag))) #use this to split cores up into two columns, ID and letter, then use unique id's to pick one of each core?
 
-LG5_parameter_values_hf <- read_csv("Data/LG5_parameter_values_HarvardForest_V3RAW.csv")
+LG5_parameter_values_hf <- read_csv("Data/LG5_parameter_values_HarvardForest_V3.csv")
 LG5_parameter_values_hf$site_tag <- paste0(LG5_parameter_values_hf$plot, LG5_parameter_values_hf$tag)
 
 # Generalized 5-parameter logistic function (modified version of Sean's function)
@@ -117,13 +124,12 @@ lg5 <- function(L, K, doy_ip, r, theta, doy) {
   dbh <- L + ((K - L) / (1 + 1/theta * exp(-(r * (doy - doy_ip) / theta)) ^ theta))
   return(dbh)
 }
-
 #LG5_parameter_values <- subset(LG5_parameter_values_scbi, ML_value >= 100)
 
 percent_growth <- Wood_pheno_table_hf %>%
   #separate(tag, into = c("tag", "stem"), sep = "_") %>%
   mutate(
-    site_tag = site_tag,
+    site_tag = tag,
     tag_year = str_c(site_tag, year)
   ) %>%
   select(site_tag, year, tag_year, wood_type) %>%
@@ -136,33 +142,48 @@ percent_growth <- Wood_pheno_table_hf %>%
   mutate(
     dbh = lg5(L, K, doy_ip, r, theta, doy),
     dbh_growth = dbh - lag(dbh),
-    dbh_total_growth = lg5(L, K, doy_ip, r, theta, 365)- lg5(L, K, doy_ip, r, theta, 1),
+    dbh_total_growth = K-L,
     dbh_growth_percent = dbh_growth/dbh_total_growth
   ) %>%
   filter(!is.na(dbh_growth)) %>%
   mutate(
     dbh_growth_percent_cummulative = cumsum(dbh_growth_percent)
   )
+percent_growth <- subset(percent_growth, dbh_total_growth >= 0.05)
+percent_growth_vari <- percent_growth[percent_growth$dbh_growth_percent_cummulative >=1.1,]
+#percent_growth$Round <- round(percent_growth$dbh_growth_percent_cummulative, digits = -2)
+percent_growth_low <-subset(percent_growth, dbh_growth_percent_cummulative >= 0.99)
+unique(percent_growth_low$tag_year)
+#pg_new <- unique(percent_growth$tag_year)
+percent_growth <- percent_growth[!(percent_growth$tag_year %in% unique(percent_growth_vari$tag_year)),]
+percent_growth <- percent_growth[percent_growth$tag_year %in% unique(percent_growth_low$tag_year),]
+#mean(LG5_parameter_values$theta)
+#sd(LG5_parameter_values$theta)
+#mean(LG5_parameter_values$theta)+(2*sd(LG5_parameter_values$theta))
 
-
-highgrowthdays <- subset(percent_growth, dbh_growth_percent >= .06)
+highgrowthdays <- subset(percent_growth, dbh_growth_percent >= .05)
 highgrowthtagyears <- unique(highgrowthdays$tag_year)
 percent_growth <- percent_growth[!(percent_growth$tag_year %in% highgrowthtagyears),]
 
 maxgrowthrate <- aggregate(percent_growth$dbh_growth_percent, by = list(percent_growth$tag_year), FUN = max)
 names(maxgrowthrate) <- c("tag_year", "rate")
 ratedoy <- percent_growth[percent_growth$dbh_growth_percent %in% maxgrowthrate$rate,]
-ratedoysubset <- subset(ratedoy, doy >= 110 & doy <= 250)
+aggregate(ratedoy$doy, by = list(ratedoy$wood_type), FUN = mean)
+163-(14*3)
+176+(14*3)
+ratedoysubset <- subset(ratedoy, doy >= 125 & doy <= 220)
 percent_growth <- percent_growth[percent_growth$tag_year %in% ratedoysubset$tag_year,]
 
-percent_growth <- subset(percent_growth, dbh_total_growth >= 0.03)
+unique(percent_growth$tag_year)
 
-Wood_pheno_table_hf <- Wood_pheno_table_hf[Wood_pheno_table_hf$tag %in% unique(percent_growth$tag_year),]
+#percent_growth <- subset(percent_growth, dbh_total_growth >= 0.03)
+Wood_pheno_table_hf$tag_year <- paste0(Wood_pheno_table_hf$tag, Wood_pheno_table_hf$year)
+Wood_pheno_table_hf <- Wood_pheno_table_hf[Wood_pheno_table_hf$tag_year %in% unique(percent_growth$tag_year),]
 LG5_parameter_values_hf$tag_year <- paste0(LG5_parameter_values_hf$site_tag, LG5_parameter_values_hf$year)
 LG5_parameter_values_hf <- LG5_parameter_values_hf[LG5_parameter_values_hf$tag_year %in% unique(percent_growth$tag_year),]
 
-write.csv(Wood_pheno_table_hf, file = "data/Wood_pheno_table_HarvardForest_V3CLEAN.csv", row.names = FALSE)
-write.csv(LG5_parameter_values_hf, file = "data/LG5_parameter_values_HarvardForest_V3CLEAN.csv", row.names = FALSE)
+write.csv(Wood_pheno_table_hf, file = "data/Wood_pheno_table_HarvardForest_V4CLEAN.csv", row.names = FALSE)
+write.csv(LG5_parameter_values_hf, file = "data/LG5_parameter_values_HarvardForest_V4CLEAN.csv", row.names = FALSE)
 
 rel_growth_hf <- ggplot(percent_growth, aes(x = doy, y = dbh_growth_percent, group = tag_year)) +
   coord_cartesian(ylim = c(0, 0.05)) +

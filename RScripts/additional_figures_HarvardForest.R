@@ -168,7 +168,7 @@ LG5_parameter_values <- read_csv("Data/LG5_parameter_values_HarvardForest_V2.csv
 LG5_parameter_values$site_tag <- paste0(LG5_parameter_values$plot, LG5_parameter_values$tag)
 # Generalized 5-parameter logistic function (modified version of Sean's function)
 lg5 <- function(L, K, doy_ip, r, theta, doy) {
- For specified 5 parameters and x = doy, compute y = dbh
+# For specified 5 parameters and x = doy, compute y = dbh
   dbh <- L + ((K - L) / (1 + 1/theta * exp(-(r * (doy - doy_ip) / theta)) ^ theta))
   return(dbh)
 }

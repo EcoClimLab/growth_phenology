@@ -130,6 +130,7 @@ lg5.pred <- function(params, doy) {
   dbh <- L + ((K - L) / (1 + 1 / theta * exp(-(r * (doy - doy.ip) / theta))^theta))
   return(dbh)
 }
+lg5.pred(params, 200)
 
 lg5.ML <- function(params, doy, dbh, resid.sd) {
   pred.dbh <- lg5.pred(params, doy)
@@ -425,7 +426,7 @@ get.lg5.ML <- function(params, doy, dbh, resid.sd) {
 ## 2v. If new.band=1, we have a measure, and there's no new dbh (indicating a new dbh wasn't recorded when the band was changed), dbh2 is the sum of the differences of the previous dbh2's added to the most recent dbh2.
 ## 2vi. UNCOMMON If new.band=1 , measure is NA, and the dbh in the original column is unchanged , dbh2 is the sum of the differences of the previous dbh2's added to the most recent dbh2.
 ## 2vii. UNCOMMON If new.band=1, measure is NA, and dbh is different, dbh2 is the new dbh plus the mean of the differences of the previous dbh2's.
-
+mean(tags_per_year_HF$`Harvard Forest`)
 ## intraannual data
 for (stems in names(all_stems_intra)) {
   tree.n <- all_stems_intra[[stems]]
@@ -566,7 +567,8 @@ all_stems <- read.csv("Data/all_stems.csv")
 # 4. Loop to create a final "master dataframe" -------
 # The following loop will cycle through years, species, and tags to create a final "master dataframe"
 # It includes two of Sean's functions wrapped with some of my code
-
+all_stems <- read_csv("data/all_stems.csv")
+all_stems$dbh2 <- all_stems$dbh2/10
 # Objects needed for the following loop
 data <- data.frame(NULL)
 # throwaways <- data.frame(NULL)
@@ -591,13 +593,13 @@ for (q in 2011:2019) {
   Stem2 <- subset(all_stems, year == q)
   for (w in unique(Stem2$sp)) { # removes trees with less than 10 measurements in each year
     Stem3 <- subset(Stem2, sp == w)
-    count_df <- count(Stem3$tag_stem)
-    count_df <- subset(count_df, freq >= 10)
-    Stem3 <- Stem3[Stem3$tag_stem %in% count_df$x, ]
+    count_df <- count(Stem3, tag_stem)
+    count_df <- subset(count_df, n >= 10)
+    Stem3 <- Stem3[Stem3$tag_stem %in% count_df$tag_stem, ]
     # original_list <- unique(Stem3$tag)
     for (m in unique(Stem3$tag_stem)) { # remove trees with very small or negative total growth
       growthcheck <- subset(Stem3, tag_stem == m)
-      check_list <- append(check_list, (ifelse(growthcheck[nrow(growthcheck), 32] - growthcheck[1, 32] <= 0, unique(growthcheck$tag), ifelse(growthcheck[nrow(growthcheck), 32] - growthcheck[1, 32] >= 12, unique(growthcheck$tag), NA)))) # 1.25 is arbitrarily chosen. I'm considering decreasing it
+      check_list <- append(check_list, (ifelse(growthcheck[nrow(growthcheck), 32] - growthcheck[1, 32] <= 0, unique(growthcheck$tag), ifelse(growthcheck[nrow(growthcheck), 32] - growthcheck[1, 32] >= 12.5, unique(growthcheck$tag), NA)))) # 1.25 is arbitrarily chosen. I'm considering decreasing it
       growth <- append(growth, growthcheck[nrow(growthcheck), 32] - growthcheck[1, 32])
       if (growthcheck[nrow(growthcheck), 32] - growthcheck[1, 32] <= 0){
         plot(growthcheck$dbh2 ~ growthcheck$DOY, main = growthcheck$year)
@@ -775,7 +777,7 @@ for (q in 2011:2019) {
 
       names(optim.output.df) <- c("Tree.no", "Optim.call", "L", "K", "doy_ip", "r", "theta", "ML", "Best.ML")
       # write.csv(optim.output.df, file = "Optim_output.csv", quote = FALSE, row.names = FALSE)
-
+      ML_value <- as.character(optim.output.df[optim.output.df$Optim.call == winning.optim.call, 8])
 
       winner.tab <- table(winning.optim.call)
       winner.tab
@@ -867,15 +869,15 @@ for (q in 2011:2019) {
 
       names(Param.df) <- c("L", "K", "doy_ip", "r", "theta", "a", "b")
       # write.csv(Param.df, file = "SCBI_hi_lo_lg5.csv", quote = FALSE, row.names = FALSE)
-      K <- as.numeric(Param.df[1,2])
-      L <- as.numeric(Param.df[1,1])
-      doy.ip <- as.numeric(Param.df[1,3])
-      r <- as.numeric(Param.df[1,4])
-      theta <- as.numeric(Param.df[1,5])
-      params_function <- c(K, L, doy.ip, r, theta)
-      dbh <- dbh
-      doy <- doy
-      ML_value <- get.lg5.ML(params_function, doy,dbh, .5)
+      #K <- as.numeric(Param.df[1,2])
+      #L <- as.numeric(Param.df[1,1])
+      #doy.ip <- as.numeric(Param.df[1,3])
+      #r <- as.numeric(Param.df[1,4])
+      #theta <- as.numeric(Param.df[1,5])
+      #params_function <- c(K, L, doy.ip, r, theta)
+      #dbh <- dbh
+      #doy <- doy
+      #ML_value <- get.lg5.ML(params_function, doy,dbh, .5)
       # Added by bert: save tag/year + parameter values
       param_values_to_save <- c(stemstag$tag[1], stemstag$year[1],  Param.df, ML_value) %>% unlist()
       names(param_values_to_save) <- c("tag", "year", names(Param.df), "ML_value")
@@ -1005,7 +1007,7 @@ for (q in 2011:2019) {
 warnings()
 masterDF <- masterDF[-1, ]
 masterDF$wood_type <- ifelse(masterDF$sp == "quru" | masterDF$sp == "qual", "ring porous", ifelse(masterDF$sp == "litu" | masterDF$sp == "fagr", "diffuse-porous", "other"))
-write.csv(masterDF, file = "Data/Wood_pheno_table_V8.csv", row.names = FALSE)
+write.csv(masterDF, file = "Data/Wood_pheno_table_V10RAW.csv", row.names = FALSE)
 masterDF$DOY <- as.numeric(masterDF$DOY)
 # Added by bert: save parameter values
 LG5_parameters %>%
@@ -1013,7 +1015,7 @@ LG5_parameters %>%
   write_csv(file = "Data/LG5_parameter_values_V6.csv")
 
 LG5_try <- bind_rows(LG5_parameters)
-write.csv(bind_rows(LG5_parameters), file = "Data/LG5_parameter_values_V8.csv")
+write.csv(bind_rows(LG5_parameters), file = "Data/LG5_parameter_values_V10RAW.csv")
 
 
 

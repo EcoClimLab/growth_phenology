@@ -1,0 +1,48 @@
+---
+title: ''
+author: ''
+output:
+  pdf_document:
+    citation_package: natbib
+    fig_caption: yes
+  html_document:
+    df_print: paged
+bibliography: null
+biblio-style: apalike
+csl: new-phytologist.csl
+header-includes:
+- \usepackage{booktabs}
+- \usepackage{longtable}
+- \usepackage{array}
+- \usepackage{multirow}
+- \usepackage{wrapfig}
+- \usepackage{float}
+- \usepackage{colortbl}
+- \usepackage{pdflscape}
+- \usepackage{tabu}
+- \usepackage{threeparttable}
+- \usepackage{threeparttablex}
+- \usepackage[normalem]{ulem}
+- \usepackage{makecell}
+- \usepackage{xcolor}
+---
+```{r, Table 2, eval=TRUE, echo=FALSE, message=FALSE}
+library(knitr)
+library(kableExtra)
+table1 <- read.csv("tables_figures/HF_bands_bySP.csv",stringsAsFactors = FALSE, check.names = FALSE)
+kbl(table2, format = "latex", booktabs = T)
+```
+
+```{r, Table 2, eval=TRUE, echo=FALSE, message=FALSE}
+library(knitr)
+library(kableExtra)
+table2 <- read.csv("tables_figures/SCBI_bands_bySP.csv",stringsAsFactors = FALSE, check.names = FALSE)
+kbl(table2, format = "latex", booktabs = T)
+```
+
+```{r, Table 2, eval=TRUE, echo=FALSE, message=FALSE}
+library(knitr)
+library(kableExtra)
+table2 <- read.csv("tables_figures/sample_size_by_year.csv",stringsAsFactors = FALSE, check.names = FALSE)
+kbl(table2, format = "latex", booktabs = T)
+```

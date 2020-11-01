@@ -147,13 +147,13 @@ ggsave("doc/manuscript/tables_figures/schematic.png", plot = schematic, width = 
 
 
 # Growth_Cruves_all: Percent modeled growth and cummulative percent modeled growth ---
-Wood_pheno_table_scbi <- read_csv("Data/Wood_pheno_table_V8CLEAN.csv") %>%
+Wood_pheno_table_scbi <- read_csv("Data/Wood_pheno_table_V9CLEAN.csv") %>%
   # Keep only RP and DP for now
   filter(wood_type != "other") %>%
   # Rename ring porous to not have a space
   mutate(wood_type = ifelse(wood_type == "ring porous", "ring-porous", wood_type))
 
-Wood_pheno_table_hf <- read_csv("Data/Wood_pheno_table_HarvardForest_V3CLEAN.csv") %>%
+Wood_pheno_table_hf <- read_csv("Data/Wood_pheno_table_HarvardForest_V4CLEAN.csv") %>%
   # Keep only RP and DP for now
   filter(wood_type != "other") %>%
   # Rename ring porous to not have a space
@@ -161,7 +161,7 @@ Wood_pheno_table_hf <- read_csv("Data/Wood_pheno_table_HarvardForest_V3CLEAN.csv
 
 
 # As generated in Rscripts/SCBI_wood_phenology.R
-LG5_parameter_values_scbi <- read_csv("Data/LG5_parameter_values_V8CLEAN.csv")
+LG5_parameter_values_scbi <- read_csv("Data/LG5_parameter_values_V9CLEAN.csv")
 LG5_parameter_values_hf <- read_csv("Data/LG5_parameter_values_HarvardForest_V3CLEAN.csv")
 
 # Generalized 5-parameter logistic function (modified version of Sean's function)
@@ -217,7 +217,7 @@ percent_growth_hf <- Wood_pheno_table_hf %>%
   mutate(
     dbh = lg5(L, K, doy_ip, r, theta, doy),
     dbh_growth = dbh - lag(dbh),
-    dbh_total_growth = lg5(L, K, doy_ip, r, theta, 365)- lg5(L, K, doy_ip, r, theta, 1),
+    dbh_total_growth = K-L,
     dbh_growth_percent = dbh_growth/dbh_total_growth
   ) %>%
   filter(!is.na(dbh_growth)) %>%
@@ -237,18 +237,17 @@ ggplot(percent_growth_scbi, aes(x = doy, y = dbh_growth_percent, group = tag_yea
   coord_cartesian(ylim = c(0, 0.05)) +
   scale_y_continuous(labels = percent) +
   labs( x="",y = "Percent of total growth",
-       title = "SCBI",
-       subtitle = "Percent of total (modeled) growth in diameter") +
+       title = "SCBI") +
   theme_bw() +
+  theme(legend.position = c(.75,.75))+
   geom_line(alpha = 0.2, aes(col = wood_type)) +
-  scale_colour_viridis_d("Wood Type", end = 2/3),
+  scale_colour_viridis_d("", end = 2/3),
 
 ggplot(percent_growth_hf, aes(x = doy, y = dbh_growth_percent, group = tag_year)) +
   coord_cartesian(ylim = c(0, 0.05)) +
   scale_y_continuous(labels = percent) +
-  labs(x="", y = "Percent of total growth",
-       title = "Harvard Forest",
-       subtitle = "Percent of total (modeled) growth in diameter") +
+  labs(x="", y = "",
+       title = "Harvard Forest") +
   theme_bw() +
   theme(legend.position = "none")+
   geom_line(alpha = 0.2, aes(col = wood_type)) +
@@ -257,17 +256,18 @@ ggplot(percent_growth_hf, aes(x = doy, y = dbh_growth_percent, group = tag_year)
 ggplot(percent_growth_scbi, aes(x = doy, y = dbh_growth_percent_cummulative, group = tag_year, col = wood_type)) +
   geom_line(alpha = 0.2) +
   scale_y_continuous(labels = percent) +
-  labs(x = "DOY", y = "Cummulative percent of total growth",
-       subtitle = "Cummulative percent of total (modeled) growth")+
+  theme_bw()+
+  theme(legend.position = "none")+
+  labs(x = "DOY", y = "Cummulative percent of total growth")+
   scale_colour_viridis_d("Wood Type", end = 2/3),
 
 
 ggplot(percent_growth_hf, aes(x = doy, y = dbh_growth_percent_cummulative, group = tag_year, col = wood_type)) +
   geom_line(alpha = 0.2) +
   scale_y_continuous(labels = percent) +
+  theme_bw()+
   theme(legend.position = "none")+
-  labs(x = "DOY", y = "Cummulative percent of total growth",
-       subtitle = "Cummulative percent of total (modeled) growth")+
+  labs(x = "DOY", y = "")+
   scale_colour_viridis_d("Wood Type", end = 2/3),
 
 as.table = TRUE, nrow=2, ncol=2) ###as.table specifies order if multiple rows
@@ -275,36 +275,135 @@ as.table = TRUE, nrow=2, ncol=2) ###as.table specifies order if multiple rows
 dev.off()
 
 #Figure D'Orangeville figure 4
-warmest <- subset(Wood_pheno_table, year == 2012)
-coldestRP <- subset(Wood_pheno_table, year == 2013 & wood_type == "ring-porous")
-coldestDP <- subset(Wood_pheno_table, year == 2018 & wood_type == "diffuse-porous")
-coldest <- rbind(coldestDP, coldestRP)
-aggregates <- aggregate(Wood_pheno_table$DOY, by = list(Wood_pheno_table$wood_type, Wood_pheno_table$perc), FUN = mean)
-aggregates$temp_type <- "Average"
-aggregates_warm <- aggregate(warmest$DOY, by = list(warmest$wood_type, warmest$perc), FUN = mean)
-names(aggregates_warm) <- c("Group.1", "Group.2", "x")
-aggregates_warm$temp_type <- "Warmest Year"
-aggregates_cold <- aggregate(coldest$DOY, by = list(coldest$wood_type, coldest$perc), FUN = mean)
-names(aggregates_cold) <- c("Group.1", "Group.2", "x")
-aggregates_cold$temp_type <- "Coldest Year"
+warmest_scbi <- subset(Wood_pheno_table_scbi, year == 2012)
+coldestRP_scbi <- subset(Wood_pheno_table_scbi, year == 2013 & wood_type == "ring-porous")
+coldestDP_scbi <- subset(Wood_pheno_table_scbi, year == 2018 & wood_type == "diffuse-porous")
+coldest_scbi <- rbind(coldestDP_scbi, coldestRP_scbi)
+aggregates_scbi <- aggregate(Wood_pheno_table_scbi$DOY, by = list(Wood_pheno_table_scbi$wood_type, Wood_pheno_table_scbi$perc), FUN = mean)
+aggregates_scbi$temp_type <- "Average"
+aggregates_warm_scbi <- aggregate(warmest_scbi$DOY, by = list(warmest_scbi$wood_type, warmest_scbi$perc), FUN = mean)
+names(aggregates_warm_scbi) <- c("Group.1", "Group.2", "x")
+aggregates_warm_scbi$temp_type <- "Warmest Year"
+aggregates_cold_scbi <- aggregate(coldest_scbi$DOY, by = list(coldest_scbi$wood_type, coldest_scbi$perc), FUN = mean)
+names(aggregates_cold_scbi) <- c("Group.1", "Group.2", "x")
+aggregates_cold_scbi$temp_type <- "Coldest Year"
 
-aggregates <- rbind(aggregates, aggregates_cold, aggregates_warm)
-aggregates$Group.2 <- ifelse(aggregates$Group.2 == .25, 25, ifelse(aggregates$Group.2 == .50, 50, ifelse(aggregates$Group.2 == .75, 75, 0)))
+aggregates_scbi <- rbind(aggregates_scbi, aggregates_cold_scbi, aggregates_warm_scbi)
+aggregates_scbi$Group.2 <- ifelse(aggregates_scbi$Group.2 == .25, 25, ifelse(aggregates_scbi$Group.2 == .50, 50, ifelse(aggregates_scbi$Group.2 == .75, 75, 0)))
+aggregates_scbi <- aggregates_scbi %>% mutate(temp_type = factor(temp_type, levels = c("Warmest Year", "Average", "Coldest Year")))
+
 #aggregates <- left_join(aggregates, aggregates_cold, by = c("Group.1", "Group.2"))
 #aggregates <- left_join(aggregates, aggregates_warm, by = c("Group.1", "Group.2"))
 #names(aggregates) <- c("Group.1", "Group.2","x","cold", "warm")
 #names(aggregates) <- c("Wood type", "Growth vari", "DOY")
-doytiming <- ggplot(aggregates, aes(x=x, y = as.character(Group.2), group = interaction(Group.1, temp_type), color = Group.1, linetype = temp_type))+
+doytiming_scbi <- ggplot(aggregates_scbi, aes(x=x, y = as.character(Group.2), group = interaction(Group.1, temp_type), color = temp_type, linetype = Group.1))+
   geom_point(size = 3)+
   geom_line(size = 1)+
-  labs(x = "Day of Year", y = "Percent of Total Annual Growth", title = "SCBI Intraannual Growth Timing", color = "Wood Type")+
-  scale_colour_viridis_d(end = 2/3)
+  labs(x = "Day of Year", y = "Percent of Total Annual Growth", title = "SCBI Intraannual Growth Timing", color = "Temp", linetype = "Wood Type")+
+  scale_colour_manual(values = c("red", "purple", "blue"))
 
   #geom_line(aes(x = cold), linetype = "dashed", size =1, show.legend = TRUE)+
   #geom_line(aes(x = warm), linetype = "dotted", size = 1, show.legend = TRUE)+
 
 
-fig_width <- 7
-ggsave(filename = "doc/manuscript/tables_figures/DOYtiming.png",
-       plot = doytiming,
-       width = fig_width, height = fig_width / 2)
+#fig_width <- 7
+#ggsave(filename = "doc/manuscript/tables_figures/DOYtiming.png",
+#       plot = doytiming,
+#       width = fig_width, height = fig_width / 2)
+
+warmestRP_hf <- subset(Wood_pheno_table_hf, year == 2000 & wood_type == "ring-porous")
+warmestDP_hf <- subset(Wood_pheno_table_hf, year == 2001 & wood_type == "diffuse-porous")
+warmest_hf <- rbind(warmestRP_hf, warmestDP_hf)
+coldestRP_hf <- subset(Wood_pheno_table_hf, year == 2001 & wood_type == "ring-porous")
+coldestDP_hf <- subset(Wood_pheno_table_hf, year == 2000 & wood_type == "diffuse-porous")
+coldest_hf <- rbind(coldestDP_hf, coldestRP_hf)
+aggregates_hf <- aggregate(Wood_pheno_table_hf$DOY, by = list(Wood_pheno_table_hf$wood_type, Wood_pheno_table_hf$perc), FUN = mean)
+aggregates_hf$temp_type <- "Average"
+aggregates_warm_hf <- aggregate(warmest_hf$DOY, by = list(warmest_hf$wood_type, warmest_hf$perc), FUN = mean)
+names(aggregates_warm_hf) <- c("Group.1", "Group.2", "x")
+aggregates_warm_hf$temp_type <- "Warmest Year"
+aggregates_cold_hf <- aggregate(coldest_hf$DOY, by = list(coldest_hf$wood_type, coldest_hf$perc), FUN = mean)
+names(aggregates_cold_hf) <- c("Group.1", "Group.2", "x")
+aggregates_cold_hf$temp_type <- "Coldest Year"
+
+aggregates_hf <- rbind(aggregates_hf, aggregates_cold_hf, aggregates_warm_hf)
+aggregates_hf <- aggregates_hf %>% mutate(temp_type = factor(temp_type, levels = c("Warmest Year", "Average", "Coldest Year")))
+
+#aggregates$Group.2 <- ifelse(aggregates$Group.2 == .25, 25, ifelse(aggregates$Group.2 == .50, 50, ifelse(aggregates$Group.2 == .75, 75, 0)))
+
+#aggregates <- left_join(aggregates, aggregates_cold, by = c("Group.1", "Group.2"))
+#aggregates <- left_join(aggregates, aggregates_warm, by = c("Group.1", "Group.2"))
+#names(aggregates) <- c("Group.1", "Group.2","x","cold", "warm")
+#names(aggregates) <- c("Wood type", "Growth vari", "DOY")
+doytiming_hf <- ggplot(aggregates_hf, aes(x=x, y = as.character(Group.2), group = interaction(Group.1, temp_type), color = temp_type, linetype = Group.1))+
+  geom_point(size = 3)+
+  geom_line(size = 1)+
+  labs(x = "Day of Year", y = "Percent of Total Annual Growth", title = "Harvard Forest Intraannual Growth Timing", color = "Wood Type")+
+  scale_colour_manual(values = c("red", "purple", "blue"))
+
+png(filename = "doc/manuscript/tables_figures/DOYtiming.png", width=10, height=10,
+    pointsize=12, bg="transparent", units="in", res=600,
+    restoreConsole=FALSE)
+
+grid.arrange(
+  ggplot(aggregates_scbi, aes(x=x, y = as.character(Group.2), group = interaction(Group.1, temp_type), color = temp_type, linetype = Group.1))+
+    geom_point(size = 3)+
+    geom_line(size = 1)+
+    theme(legend.position = "top")+
+    labs(x = "", y = "Percent of Total Annual Growth", title = "(a) SCBI", color = "Temp", linetype = "Wood Type")+
+    scale_colour_manual(values = c("red", "purple", "blue")),
+
+  ggplot(aggregates_hf, aes(x=x, y = as.character(Group.2), group = interaction(Group.1, temp_type), color = temp_type, linetype = Group.1))+
+    geom_point(size = 3)+
+    geom_line(size = 1)+
+    theme(legend.position = "none")+
+    labs(x = "Day of Year", y = "Percent of Total Annual Growth", title = "(b) Harvard Forest", color = "Wood Type")+
+    scale_colour_manual(values = c("red", "purple", "blue")),
+
+  as.table = TRUE, nrow=2, ncol=1) ###as.table specifies order if multiple rows
+
+dev.off()
+#### TEST ----
+lg5.pred.mod <- function(params, doy) {
+  L <- params[5] # min(dbh, na.rm = T)
+  K <- params[6]
+  doy.ip <- params[7]
+  r <- params[8]
+  theta <- params[9]
+  dbh <- vector(length = length(doy))
+  dbh <- L + ((K - L) / (1 + 1 / theta * exp(-(r * (doy - doy.ip) / theta))^theta))
+  return(dbh)
+}
+params <- unlist(as.list(LG5_parameter_values_hf[1,]))
+plot(lg5.pred.mod(params, doy = c(1:365)))
+abline(h = params[4]) #L - lower
+params[4]
+abline(h=params[5]) #K - upper
+params[5]
+abline(h=params[9]) #a - Lower
+params[9]
+abline(h=params[10]) #b - upper
+params[10]
+
+lg5 <- function(L, K, doy_ip, r, theta, doy) {
+  # For specified 5 parameters and x = doy, compute y = dbh
+  dbh <- L + ((K - L) / (1 + 1/theta * exp(-(r * (doy - doy_ip) / theta)) ^ theta))
+  return(dbh)
+}
+for(i in 4){
+  param <- LG5_parameter_values_hf[i,]
+  L <- param$a
+  K <- param$b
+  doy_ip <- param$doy_ip
+  r <- param$r
+  theta <- param$theta
+  plot(lg5(L,K,doy_ip, r, theta, doy= c(1:365)))
+  abline(h = param$L, col = "orange")
+  param$L
+  abline(h = param$K, col = "green")
+  param$K
+  abline(h = param$a, col = "blue")
+  paste(param$a)
+  abline(h = param$b, col = "red")
+  param$b
+  }

@@ -10,7 +10,7 @@ library(rstanarm)
 library(broom.mixed)
 
 # Get growth data ----------------------------------
-Wood_pheno_table <- read_csv("Data/Wood_pheno_table_HFtemp.csv") %>%
+Wood_pheno_table <- read_csv("Data/Wood_pheno_table_HarvardForest_V4CLEAN.csv") %>%
   # Keep only RP and DP for now
   filter(wood_type != "other") %>%
   #filter(tot >= 1) %>%
@@ -135,7 +135,7 @@ Wood_pheno_table <- Wood_pheno_table %>%
   ) %>%
   arrange(tag, year)
 View(Wood_pheno_table)
-
+memory.limit(10000)
 
 
 # Fit multivariate model using climwinmeans ------------------------------------
@@ -153,11 +153,11 @@ sample_tags <- Wood_pheno_table %>%
 
 Wood_pheno_table <- Wood_pheno_table %>%
   #filter(tag %in% sample_tags) %>%
-  mutate(climwinmean = climwinmean - 18)
+  mutate(climwinmean = climwinmean - 13)
 
 # Delete all non-needed columns
 Wood_pheno_table <- Wood_pheno_table %>%
-  select(perc, tag, year, wood_type, sp, climwinmean, starts_with("DOY"))
+  select(perc, tag, year, wood_type, sp, climwinmean, starts_with("DOY"), site.x)
 
 
 # Convert to wide format for use in rstanarm::stan_mvmer()
@@ -167,9 +167,9 @@ Wood_pheno_table_wide <- Wood_pheno_table %>%
 # Fit multivariate model
 joint_model_climwinmeans <- stan_mvmer(
   formula = list(
-    DOY_25 ~ wood_type + wood_type:climwinmean + (1|tag),
-    DOY_50 ~ wood_type + wood_type:climwinmean + (1|tag),
-    DOY_75 ~ wood_type + wood_type:climwinmean + (1|tag)
+    DOY_25 ~ wood_type + wood_type:climwinmean + (1|site.x) + (1|tag),
+    DOY_50 ~ wood_type + wood_type:climwinmean + (1|site.x) + (1|tag),
+    DOY_75 ~ wood_type + wood_type:climwinmean + (1|site.x) + (1|tag)
   ),
   # Note we transform the data from tall/tidy format to wide format first:
   data = Wood_pheno_table_wide,

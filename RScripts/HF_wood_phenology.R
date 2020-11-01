@@ -20,7 +20,6 @@ all_stems$month <- as.numeric(format(all_stems$date, format = "%m"))
 all_stems$day <- as.numeric(format(all_stems$date, format = "%d"))
 
 
-
 # 2. Load necessary functions ----------------------------------------------------
 # Sean's functions -- I think they are supposed to be in the rdendrom package but I couldn't the package to work correctly.
 ### code chunk number 2: lg5.functions
@@ -330,7 +329,8 @@ plot_tag_years <- all_stems %>%
 LG5_parameters <- vector(mode = "list", length = length(plot_tag_years))
 names(LG5_parameters) <- plot_tag_years
 growth <- NULL
-all_stems$tag_stem <- paste0(all_stems$plot, all_stems$tag, all_stems$year)
+all_stems$tag_stem <- paste0(all_stems$plot, all_stems$tag)#, all_stems$year)
+unique(all_stems$tag_stem)
 all_stems <- all_stems[!(all_stems$tag_stem %in% "A191998"),]
 all_stems <- all_stems[complete.cases(all_stems$dbh2),]
 #tag_years <- unique(all_stems$tag_stem)
@@ -538,6 +538,7 @@ for (q in 1998:2003) {
       if(skip_to_next) { next }
       names(optim.output.df) <- c("Tree.no", "Optim.call", "L", "K", "doy_ip", "r", "theta", "ML", "Best.ML")
       # write.csv(optim.output.df, file = "Optim_output.csv", quote = FALSE, row.names = FALSE)
+      ML_value <- as.character(optim.output.df[optim.output.df$Optim.call == winning.optim.call, 8])
 
 
       winner.tab <- table(winning.optim.call)
@@ -630,18 +631,18 @@ for (q in 1998:2003) {
 
       names(Param.df) <- c("L", "K", "doy_ip", "r", "theta", "a", "b")
       # write.csv(Param.df, file = "SCBI_hi_lo_lg5.csv", quote = FALSE, row.names = FALSE)
-      ML_value <- NA
+      #ML_value <- NA
 
       #for(i in 1:nrow(LG5_parameter_values)){
-        K <- as.numeric(Param.df[1,2])
-        L <- as.numeric(Param.df[1,1])
-        doy.ip <- as.numeric(Param.df[1,3])
-        r <- as.numeric(Param.df[1,4])
-        theta <- as.numeric(Param.df[1,5])
-        params_function <- c(K, L, doy.ip, r, theta)
-        dbh <- dbh
-        doy <- doy
-        ML_value <- get.lg5.ML(params_function, doy,dbh, .5)
+        #K <- as.numeric(Param.df[1,2])
+        #L <- as.numeric(Param.df[1,1])
+        #doy.ip <- as.numeric(Param.df[1,3])
+        #r <- as.numeric(Param.df[1,4])
+        #theta <- as.numeric(Param.df[1,5])
+        #params_function <- c(K, L, doy.ip, r, theta)
+        #dbh <- dbh
+        #doy <- doy
+        #ML_value <- get.lg5.ML(params_function, doy,dbh, .5)
         #LG5_parameter_values[i,13] <- ML_value
         #rm(ML_value)
 
@@ -780,7 +781,7 @@ warnings()
 masterDF <- masterDF[-1, ]
 unique(masterDF$sp)
 masterDF$wood_type <- ifelse(masterDF$sp == "betual"| masterDF$sp == "acerru" | masterDF$sp == "fagugr" | masterDF$sp == "betule" | masterDF$sp == "betupa" | masterDF$sp == "acerpe" | masterDF$sp == "betupo" | masterDF$sp == "prunse", "diffuse-porous", ifelse(masterDF$sp == "querru" | masterDF$sp == "querve" | masterDF$sp == "fraxam", "ring-porous", "other"))
-write.csv(masterDF, file = "Data/Wood_pheno_table_HarvardForest_V3.csv", row.names = FALSE)
+write.csv(masterDF, file = "Data/Wood_pheno_table_HarvardForest_V4.csv", row.names = FALSE)
 masterDF$DOY <- as.numeric(masterDF$DOY)
 # Added by bert: save parameter values
 LG5_parameters %>%
