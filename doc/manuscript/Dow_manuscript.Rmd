@@ -207,8 +207,14 @@ Notes for now:
 
 A mixed effect model was used to test the response of wood phenology variables (25% DOY, 50% DOY, 75% DOY, max-rate, max-rate DOY, total growth) to fixed effects of wood-type and spring temperature, along with random effects of species and tag. We ran two separate models of each wood phenology variable for each of our major wood-types, and one combined model to use for comparison. Models were run using the LME4 package in R (Bates, D., Mächler, M., Bolker, B. & Walker, S. (2015). Fitting linear mixed‐effects models using lme4. J. Stat. Softw., 67, 1–48.)
 
-•	Bayesian heirarchal model
-This mixed-effect model was run within a heirarchal bayesian framework. 
+•	Bayesian heirarchical model
+This mixed-effect model was run within a hierarchical Bayesian framework and fit using the `rstanarm` R interface to the Stan programming language @rstanarm_2020. In all cases unless otherwise specified, all prior distributions are set to be the weakly informative defaults. 
+<!--
+TODO added by Bert: Whereever we specify model details, include details about prior from here:
+https://cran.r-project.org/web/packages/rstanarm/vignettes/priors.html#default-weakly-informative-prior-distributions
+-->
+
+
 
 ### Results
 
