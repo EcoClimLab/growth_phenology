@@ -79,7 +79,7 @@ growth_curves_all_caption  <- "Figure 2. Growth trajectories for ring- and diffu
 
 climwin_caption <- "Figure 3. Landscapes of relationships between the day of year on which 25% of annual growth is achieved (DOY_25) and temperature in prior weeks for ring- and diffuse-porous trees at SCBI and Harvard Forest. Shown are matrices of linear coefficients of first-order linear regressions between temperature and DOY_25, where Window Open and Window Close indicate number of weeks prior to DOY_25 (ring-porous: DATE at SCBI, DATE at HF; diffuse-porous: DATE at SCBI, DATE at HF). Black boxes indicate the optimal window."
 
-pheno_Tsensitivity_caption <- "Figure 4. Relationship between DOY and climwin mean tempeatures. For each 
+pheno_Tsensitivity_caption <- "Figure 4. Relationship between DOY and climwin mean temperatures. For each 
 observed climwin mean temperature value, the posterior mean of the fitted day of year
 is represented by the solid blue line and credible intervals are represented by bands."
 
@@ -257,7 +257,12 @@ Warmer spring temperatures resulted in an earlier start of growth for ring-porou
 
 ```{r pheno_Tsensitivity, out.width="100%", echo=FALSE, fig.align="center", fig.cap=pheno_Tsensitivity_caption}
 # Created in RScripts/bert/wood_phenology_analysis_bert.R
-knitr::include_graphics("tables_figures/pheno_Tsensitivity.png")
+knitr::include_graphics("tables_figures/pheno_Tsensitivity_scbi.png")
+```
+
+```{r , out.width="100%", echo=FALSE, fig.align="center", fig.cap="Harvard. FIGURES WILL NEED TO BE COMBINED"}
+# Created in RScripts/bert/wood_phenology_analysis_bert.R
+knitr::include_graphics("tables_figures/pheno_Tsensitivity_HF.png")
 ```
 
 
@@ -270,9 +275,6 @@ We have shown that intraannual growth patterns in North American temperate trees
 knitr::include_graphics("tables_figures/DOYtiming.png")
 ```
 
-```{r DOYtiming2, out.width="100%", echo=FALSE, fig.align="center", fig.cap= DOYtiming_caption}
-knitr::include_graphics("tables_figures/DOYtiming_HF_PRELIM.png")
-```
 
 The mechanisms controlling activation of cambium reactivation is still debated, as some speculate Auxin, the chemical believed to kick-start the reactivation process, originates in the leaves (Frankenstein et al, 2005). However, the fact that ring-porous species complete 25% growth before the presence of leaf buds indicates there may be another source of Auxin production. *READ MORE ABOUT THIS!* The relationship between earlier cambial reactivation and early spring temperature signals that the mechanism is influenced by temperature? 
 
