@@ -68,11 +68,8 @@ DOYtiming = 5
 DOYtiming_SCBI = "5a"
 DOYtiming_Harvard = "5b"
 
-#captions
-#tables
-hypothesis_table_caption <-"Table 1. Hypothesis table. (NEEDS FORMATTING...obviously!)"
+#figure captions
 
-#figures
 schematic_caption <- "Figure 1. Schematic illustrating the parameters considered here. Shown are measurements for an example tree (## cm SPECIES), fit with the model of McMahon & Parker (2015), from which phenology and growth rate parameters are obtained."
 
 growth_curves_all_caption  <- "Figure 2. Growth trajectories for ring- and diffuse-porous trees, as both relative and cumulative fractions of total annual growth. Each line represents one year's growth for a given tree, fit with McMahon model."
@@ -85,7 +82,7 @@ is represented by the solid blue line and credible intervals are represented by 
 
 DOYtiming_caption <- "Figure 5. Day of year where growth milestones were achied at (a) the Smithonian Conservation Biology Institute and (b) Harvard Forest."
 
-# SUPPLEMENTARY INFO
+# SUPPLEMENTARY INFO (this chunk must be repeated in Dow_SI.Rmd)
 #SI table numbers
 sample_size_by_year= "S1"
 
@@ -156,9 +153,7 @@ knitr::include_graphics("tables_figures/schematic.png")
 
 
 ```{r hypothesis_table, eval=TRUE, echo=FALSE, warning=FALSE}
-library(knitr)  
-hypothesis_table <- read.csv(file = "tables_figures/hypothesis_table.csv")
-knitr::kable(hypothesis_table, caption = hypothesis_table_caption)
+knitr::include_graphics("tables_figures/hypothesis_table.png")
 ```
 
 
