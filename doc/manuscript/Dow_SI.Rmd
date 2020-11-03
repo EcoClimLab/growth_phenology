@@ -26,6 +26,7 @@ header-includes:
 - \usepackage{makecell}
 - \usepackage{xcolor}
 ---
+
 ```{r, Table HF_bands_bySP, eval=TRUE, echo=FALSE, message=FALSE}
 library(knitr)
 library(kableExtra)
