@@ -26,6 +26,28 @@ header-includes:
 - \usepackage{makecell}
 - \usepackage{xcolor}
 ---
+```{r eval = TRUE, echo=FALSE, warning=FALSE, results='hide'}
+path_to_results <- paste0(dirname(dirname(getwd())), "/results/") #I was trying to read directly from results folder, but couldn't get it working.
+
+# SUPPLEMENTARY INFO (copied from Dow_manuscript.Rmd)
+#SI table numbers
+sample_size_by_year= "S1"
+
+#SI table captions
+sample_size_by_year_caption <- "Table S1. Sample size by year"
+
+#SI figure numbers
+climwin_rp_DOY25_SCBI = "S1"
+climwin_dp_DOY25_SCBI = "S2"
+climwin_rp_DOY25_HARV = "S3"
+climwin_dp_DOY25_HARV = "S4"
+#SI figure captions
+climwin_rp_DOY25_SCBI_short_caption <- "Figure S1. Full climwin output for DOY 25 for ring porous species at SCBI."
+climwin_dp_DOY25_SCBI_short_caption <- "Figure S2. Full climwin output for DOY 25 for diffuse porous species at SCBI."
+climwin_rp_DOY25_HARV_short_caption <- "Figure S3. Full climwin output for DOY 25 for ring porous species at Harvard Forest."
+climwin_dp_DOY25_HARV_short_caption <- "Figure S4. Full climwin output for DOY 25 for diffuse porous species at Harvard Forest."
+
+```
 
 ```{r, Table HF_bands_bySP, eval=TRUE, echo=FALSE, message=FALSE}
 library(knitr)
@@ -48,4 +70,28 @@ library(knitr)
 library(kableExtra)
 table <- read.csv("tables_figures/sample_size_by_year.csv",stringsAsFactors = FALSE, check.names = FALSE)
 kbl(table, format = "latex", booktabs = T)
+```
+
+\newpage
+
+```{r climwin_rp_DOY25_SCBI, out.width="100%", echo=FALSE, fig.align="center", fig.cap= climwin_rp_DOY25_SCBI_short_caption}
+knitr::include_graphics("tables_figures/SCBI_mettower_ring-porous_DOY25.png")
+```
+
+\newpage
+
+```{r climwin_dp_DOY25_SCBI, out.width="100%", echo=FALSE, fig.align="center", fig.cap= climwin_dp_DOY25_SCBI_short_caption}
+knitr::include_graphics("tables_figures/SCBI_mettower_diffuse-porous_DOY25.png")
+```
+
+\newpage
+
+```{r climwin_rp_DOY25_HARV, out.width="100%", echo=FALSE, fig.align="center", fig.cap= climwin_rp_DOY25_HARV_short_caption}
+knitr::include_graphics("tables_figures/HF_ring-porous_DOY25.png")
+```
+
+\newpage
+
+```{r climwin_dp_DOY25_HARV, out.width="100%", echo=FALSE, fig.align="center", fig.cap= climwin_dp_DOY25_HARV_short_caption}
+knitr::include_graphics("tables_figures/HF_diffuse-porous_DOY25.png")
 ```
