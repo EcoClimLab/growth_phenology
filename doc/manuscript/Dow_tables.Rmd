@@ -26,23 +26,25 @@ header-includes:
 - \usepackage{makecell}
 - \usepackage{xcolor}
 ---
-```{r, Table 2, eval=TRUE, echo=FALSE, message=FALSE}
+```{r, Table HF_bands_bySP, eval=TRUE, echo=FALSE, message=FALSE}
 library(knitr)
 library(kableExtra)
-table1 <- read.csv("tables_figures/HF_bands_bySP.csv",stringsAsFactors = FALSE, check.names = FALSE)
-kbl(table2, format = "latex", booktabs = T)
+table <- read.csv("tables_figures/HF_bands_bySP.csv",stringsAsFactors = FALSE, check.names = FALSE)
+kbl(table, format = "latex", booktabs = T)
 ```
 
-```{r, Table 2, eval=TRUE, echo=FALSE, message=FALSE}
+\newpage
+```{r, Table SCBI_bands_bySP, eval=TRUE, echo=FALSE, message=FALSE}
 library(knitr)
 library(kableExtra)
-table2 <- read.csv("tables_figures/SCBI_bands_bySP.csv",stringsAsFactors = FALSE, check.names = FALSE)
-kbl(table2, format = "latex", booktabs = T)
+table <- read.csv("tables_figures/SCBI_bands_bySP.csv",stringsAsFactors = FALSE, check.names = FALSE)
+kbl(table, format = "latex", booktabs = T)
 ```
 
-```{r, Table 2, eval=TRUE, echo=FALSE, message=FALSE}
+\newpage
+```{r, Table sample_size_by_year, eval=TRUE, echo=FALSE, message=FALSE}
 library(knitr)
 library(kableExtra)
-table2 <- read.csv("tables_figures/sample_size_by_year.csv",stringsAsFactors = FALSE, check.names = FALSE)
-kbl(table2, format = "latex", booktabs = T)
+table <- read.csv("tables_figures/sample_size_by_year.csv",stringsAsFactors = FALSE, check.names = FALSE)
+kbl(table, format = "latex", booktabs = T)
 ```
