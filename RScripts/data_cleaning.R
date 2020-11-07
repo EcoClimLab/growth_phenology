@@ -9,6 +9,8 @@ Wood_pheno_table_scbi <- read_csv("Data/Wood_pheno_table_V10RAW.csv") %>%
   filter(wood_type != "other") %>%
   # Rename ring porous to not have a space
   mutate(wood_type = ifelse(wood_type == "ring porous", "ring-porous", wood_type))
+Wood_pheno_table_scbi$tag_year_perc <- paste0(Wood_pheno_table_scbi$tag, Wood_pheno_table_scbi$year, Wood_pheno_table_scbi$perc)
+unitag <- unique(Wood_pheno_table_scbi)
 
 LG5_parameter_values_scbi <- read_csv("Data/LG5_parameter_values_V10RAW.csv")
 
@@ -18,7 +20,6 @@ lg5 <- function(L, K, doy_ip, r, theta, doy) {
   dbh <- L + ((K - L) / (1 + 1/theta * exp(-(r * (doy - doy_ip) / theta)) ^ theta))
   return(dbh)
 }
-
 percent_growth <- Wood_pheno_table_scbi %>%
   separate(tag, into = c("tag", "stem"), sep = "_") %>%
   mutate(
@@ -33,9 +34,9 @@ percent_growth <- Wood_pheno_table_scbi %>%
   unnest_longer(doy) %>%
   group_by(tag_year) %>%
   mutate(
-    dbh = lg5(a, b, doy_ip, r, theta, doy),
+    dbh = lg5(L, K, doy_ip, r, theta, doy),
     dbh_growth = dbh - lag(dbh),
-    dbh_total_growth =  b-a,
+    dbh_total_growth =  K-L,
     dbh_growth_percent = dbh_growth/dbh_total_growth
   ) %>%
   filter(!is.na(dbh_growth)) %>%
@@ -53,6 +54,10 @@ high_growthday <- subset(maxgrowthrate, rate >= 0.02) #Remove trees where one da
 #ENTRIES REMOVED IN THIS STEP
 percent_growth_high <- percent_growth_RP[percent_growth_RP$tag_year %in% high_growthday$tag_year,]
 SCBI_highgrowth_RP <- unique(percent_growth_high$tag_year)
+wood_pheno_removed <- Wood_pheno_table_scbi[Wood_pheno_table_scbi$tag_year %in% SCBI_highgrowth_RP,]
+wood_pheno_removed <- subset(wood_pheno_removed, perc == .25)
+count(wood_pheno_removed,sp)
+hist(wood_pheno_removed$dbh)
 #subset main DF
 percent_growth_RP <- percent_growth_RP[!(percent_growth_RP$tag_year %in% unique(high_growthday$tag_year)),]
 
@@ -63,6 +68,11 @@ ratedoysubset <- subset(ratedoy, doy >= 110 & doy <= 190) #Remove models where p
 #ENTRIES REMOVED IN THIS STEP
 percent_growth_badpeak <- percent_growth_RP[!(percent_growth_RP$tag_year %in% ratedoysubset$tag_year),]
 SCBI_badpeak_RP <- unique(percent_growth_badpeak$tag_year)
+wood_pheno_removed <- Wood_pheno_table_scbi[Wood_pheno_table_scbi$tag_year %in% SCBI_badpeak_RP,]
+wood_pheno_removed <- subset(wood_pheno_removed, perc == .25)
+count(wood_pheno_removed,sp)
+hist(wood_pheno_removed$dbh)
+
 #subset main DF
 percent_growth_RP <- percent_growth_RP[percent_growth_RP$tag_year %in% ratedoysubset$tag_year,]
 
@@ -76,6 +86,11 @@ high_growthday <- subset(maxgrowthrate, rate >= 0.04) #Remove trees where one da
 #ENTRIES REMOVED IN THIS STEP
 percent_growth_high <- percent_growth_DP[percent_growth_DP$tag_year %in% high_growthday$tag_year,]
 SCBI_highgrowth_DP <- unique(percent_growth_high$tag_year)
+wood_pheno_removed <- Wood_pheno_table_scbi[Wood_pheno_table_scbi$tag_year %in% SCBI_highgrowth_DP,]
+wood_pheno_removed <- subset(wood_pheno_removed, perc == .25)
+count(wood_pheno_removed,sp)
+hist(wood_pheno_removed$dbh)
+
 #Subset main DF
 percent_growth_DP <- percent_growth_DP[!(percent_growth_DP$tag_year %in% unique(high_growthday$tag_year)),]
 
@@ -85,6 +100,11 @@ ratedoysubset <- subset(ratedoy, doy >= 125 & doy <= 220) #Remove models where p
 #ENTRIES REMOVED IN THIS STEP
 percent_growth_badpeak <- percent_growth_DP[!(percent_growth_DP$tag_year %in% ratedoysubset$tag_year),]
 SCBI_badpeak_DP <- unique(percent_growth_badpeak$tag_year)
+wood_pheno_removed <- Wood_pheno_table_scbi[Wood_pheno_table_scbi$tag_year %in% SCBI_badpeak_DP,]
+wood_pheno_removed <- subset(wood_pheno_removed, perc == .25)
+count(wood_pheno_removed,sp)
+hist(wood_pheno_removed$dbh)
+
 #subset main DF
 percent_growth_DP <- percent_growth_DP[percent_growth_DP$tag_year %in% ratedoysubset$tag_year,]
 
@@ -98,6 +118,11 @@ unique(percent_growth_one$tag_year)#Check how many tags meet this req
 #ENTRIES REMOVED IN THIS STEP
 percent_growth_low <- percent_growth[!(percent_growth$tag_year %in% unique(percent_growth_one$tag_year)),]
 SCBI_below99 <- unique(percent_growth_low$tag_year)
+wood_pheno_removed <- Wood_pheno_table_scbi[Wood_pheno_table_scbi$tag_year %in% SCBI_below99,]
+wood_pheno_removed <- subset(wood_pheno_removed, perc == .25)
+count(wood_pheno_removed,sp)
+ggplot(wood_pheno_removed, aes(x=dbh, group = sp, fill = sp))+geom_histogram(position = "dodge")
+#LG5_parameter_values_removed <- LG5_parameter_values_scbi[LG5_parameter_values_scbi$tag_year %in% SCBI_below99,]
 #Subset main DF
 percent_growth <- percent_growth[(percent_growth$tag_year %in% unique(percent_growth_one$tag_year)),] #Remove tags with <99% growth
 
@@ -120,15 +145,22 @@ Wood_pheno_table_scbi <-  Wood_pheno_table_scbi %>%
     tag = as.numeric(tag),
     tag_year = str_c(tag, year)
   )
+#unitag <- unique(Wood_pheno_table_scbi)
+
 Wood_pheno_table_scbi <- Wood_pheno_table_scbi[Wood_pheno_table_scbi$tag_year %in% unique(percent_growth$tag_year),]
+tot_growth <- distinct(percent_growth[,c(3,17)], .keep_all = TRUE)
+Wood_pheno_table_scbi <- left_join(Wood_pheno_table_scbi, tot_growth, by = "tag_year")
+#unitag <- unique(Wood_pheno_table_scbi)
+
 LG5_parameter_values_scbi$tag_year <- paste0(LG5_parameter_values_scbi$tag, LG5_parameter_values_scbi$year)
 LG5_parameter_values_scbi <- LG5_parameter_values_scbi[LG5_parameter_values_scbi$tag_year %in% unique(percent_growth$tag_year),]
 
-write.csv(Wood_pheno_table_scbi, file = "data/Wood_pheno_table_V10CLEAN.csv", row.names = FALSE)
+#V11 = 99%, V12 = 95%
+write.csv(Wood_pheno_table_scbi, file = "data/Wood_pheno_table_V12CLEAN.csv", row.names = FALSE)
 write.csv(LG5_parameter_values_scbi, file = "data/LG5_parameter_values_V10CLEAN.csv", row.names = FALSE)
 
 #SCBI Plots ----
-rel_growth_scbi <-ggplot(percent_growth, aes(x = doy, y = dbh_growth_percent, group = tag_year)) +
+rel_growth_scbi <-ggplot(percent_growth_low, aes(x = doy, y = dbh_growth_percent, group = tag_year)) +
   coord_cartesian(ylim = c(0, 0.05)) +
   scale_y_continuous(labels = percent) +
   labs(x = "DOY", y = "Percent of total growth",
@@ -210,6 +242,11 @@ high_growthday <- subset(maxgrowthrate, rate >= 0.02) #Remove trees where one da
 #ENTRIES REMOVED IN THIS STEP
 percent_growth_high <- percent_growth_RP[percent_growth_RP$tag_year %in% high_growthday$tag_year,]
 HF_highgrowth_RP <- unique(percent_growth_high$tag_year)
+wood_pheno_removed <- Wood_pheno_table_hf[Wood_pheno_table_hf$tag_year %in% HF_highgrowth_RP,]
+wood_pheno_removed <- subset(wood_pheno_removed, perc == .25)
+count(wood_pheno_removed,sp)
+hist(wood_pheno_removed$dbh)
+
 #Subset main DF
 percent_growth_RP <- percent_growth_RP[!(percent_growth_RP$tag_year %in% unique(high_growthday$tag_year)),]
 
@@ -219,6 +256,11 @@ ratedoysubset <- subset(ratedoy, doy >= 110 & doy <= 190) #Remove models where p
 #ENTRIES REMOVED IN THIS STEP
 percent_growth_badpeak <- percent_growth_RP[!(percent_growth_RP$tag_year %in% ratedoysubset$tag_year),]
 HF_badpeak_RP <- unique(percent_growth_badpeak$tag_year)
+wood_pheno_removed <- Wood_pheno_table_hf[Wood_pheno_table_hf$tag_year %in% HF_badpeak_RP,]
+wood_pheno_removed <- subset(wood_pheno_removed, perc == .25)
+count(wood_pheno_removed,sp)
+hist(wood_pheno_removed$dbh)
+
 #subset main DF
 percent_growth_RP <- percent_growth_RP[percent_growth_RP$tag_year %in% ratedoysubset$tag_year,]
 
@@ -232,6 +274,11 @@ high_growthday <- subset(maxgrowthrate, rate >= 0.04) #Remove trees where one da
 #ENTRIES REMOVED IN THIS STEP
 percent_growth_high <- percent_growth_DP[percent_growth_DP$tag_year %in% high_growthday$tag_year,]
 HF_highgrowth_DP <- unique(percent_growth_high$tag_year)
+wood_pheno_removed <- Wood_pheno_table_hf[Wood_pheno_table_hf$tag_year %in% HF_highgrowth_DP,]
+wood_pheno_removed <- subset(wood_pheno_removed, perc == .25)
+count(wood_pheno_removed,sp)
+hist(wood_pheno_removed$dbh)
+
 #Subset main DF
 percent_growth_DP <- percent_growth_DP[!(percent_growth_DP$tag_year %in% unique(high_growthday$tag_year)),]
 
@@ -241,6 +288,11 @@ ratedoysubset <- subset(ratedoy, doy >= 125 & doy <= 220) #Remove models where p
 #ENTRIES REMOVED IN THIS STEP
 percent_growth_badpeak <- percent_growth_DP[!(percent_growth_DP$tag_year %in% ratedoysubset$tag_year),]
 HF_badpeak_DP <- unique(percent_growth_badpeak$tag_year)
+wood_pheno_removed <- Wood_pheno_table_hf[Wood_pheno_table_hf$tag_year %in% HF_badpeak_DP,]
+wood_pheno_removed <- subset(wood_pheno_removed, perc == .25)
+count(wood_pheno_removed,sp)
+hist(wood_pheno_removed$dbh)
+
 #subset main DF
 percent_growth_DP <- percent_growth_DP[percent_growth_DP$tag_year %in% ratedoysubset$tag_year,]
 
@@ -249,11 +301,16 @@ percent_growth <- rbind(percent_growth_DP, percent_growth_RP)
 
 #Clean both at once now----
 #Remove models that failed to model at least 99% of total growth using LG5.pre
-percent_growth_one <- subset(percent_growth, dbh_growth_percent_cummulative >= .99) #Find tags that reach ~100% growth
+percent_growth_one <- subset(percent_growth, dbh_growth_percent_cummulative >= .95) #Find tags that reach ~100% growth
 unique(percent_growth_one$tag_year)#Check how many we have
 #ENTRIES REMOVED IN THIS STEP
 percent_growth_low <- percent_growth[!(percent_growth$tag_year %in% unique(percent_growth_one$tag_year)),]
 HF_below99 <- unique(percent_growth_low$tag_year)
+wood_pheno_removed <- Wood_pheno_table_hf[Wood_pheno_table_hf$tag_year %in% HF_below99,]
+wood_pheno_removed <- subset(wood_pheno_removed, perc == .25)
+count(wood_pheno_removed,sp)
+hist(wood_pheno_removed$dbh)
+
 #Subset main DF
 percent_growth <- percent_growth[(percent_growth$tag_year %in% unique(percent_growth_one$tag_year)),] #Remove tags with <99% growth
 
@@ -261,6 +318,11 @@ percent_growth <- percent_growth[(percent_growth$tag_year %in% unique(percent_gr
 #ENTRIES REMOVED THIS STEP
 percent_growth_gone <- subset(percent_growth, dbh_total_growth <= 0.02) #remove small growth trees
 HF_smallgrowth <- unique(percent_growth_gone$tag_year)
+wood_pheno_removed <- Wood_pheno_table_hf[Wood_pheno_table_hf$tag_year %in% HF_smallgrowth,]
+wood_pheno_removed <- subset(wood_pheno_removed, perc == .25)
+count(wood_pheno_removed,sp)
+hist(wood_pheno_removed$dbh)
+
 #Subset the main DF
 percent_growth <- subset(percent_growth, dbh_total_growth >= 0.02) #remove small growth trees
 
@@ -274,10 +336,13 @@ count(Wood_pheno_table_hf, sp)
 #Remove bad models from wood_pheno_table and LG5_param DF's ----
 Wood_pheno_table_hf$tag_year <- paste0(Wood_pheno_table_hf$tag, Wood_pheno_table_hf$year)
 Wood_pheno_table_hf <- Wood_pheno_table_hf[Wood_pheno_table_hf$tag_year %in% unique(percent_growth$tag_year),]
+tot_growth <- distinct(percent_growth[,c(3,19)], .keep_all = TRUE)
+Wood_pheno_table_hf <- left_join(Wood_pheno_table_hf, tot_growth, by = "tag_year")
+
 LG5_parameter_values_hf$tag_year <- paste0(LG5_parameter_values_hf$site_tag, LG5_parameter_values_hf$year)
 LG5_parameter_values_hf <- LG5_parameter_values_hf[LG5_parameter_values_hf$tag_year %in% unique(percent_growth$tag_year),]
 
-write.csv(Wood_pheno_table_hf, file = "data/Wood_pheno_table_HarvardForest_V5CLEAN.csv", row.names = FALSE)
+write.csv(Wood_pheno_table_hf, file = "data/Wood_pheno_table_HarvardForest_V6CLEAN.csv", row.names = FALSE)
 write.csv(LG5_parameter_values_hf, file = "data/LG5_parameter_values_HarvardForest_V5CLEAN.csv", row.names = FALSE)
 
 #Harvard forest plots ----

@@ -10,7 +10,7 @@ library(rstanarm)
 library(broom.mixed)
 
 # Get growth data ----------------------------------
-Wood_pheno_table <- read_csv("Data/Wood_pheno_table_V7.csv") %>%
+Wood_pheno_table <- read_csv("Data/Wood_pheno_table_V11CLEAN.csv") %>%
   # Keep only RP and DP for now
   filter(wood_type != "other") %>%
   #filter(tot >= 1) %>%
@@ -24,15 +24,15 @@ sevenfive <- subset(Wood_pheno_table, perc == .75)
 #25-50
 twofifty <- cbind(twofive,fifty$DOY)
 twofifty$twentyfive_to_fifty <- twofifty$`fifty$DOY`-twofifty$DOY
-twofifty <- twofifty[,c(3,6,14)]
+twofifty <- twofifty[,c(3,7,15)]
 #50-75
 fiftyseventy <- cbind(fifty, sevenfive$DOY)
 fiftyseventy$fifty_to_seventy <- fiftyseventy$`sevenfive$DOY`-fiftyseventy$DOY
-fiftyseventy <- fiftyseventy[,c(3,6,14)]
+fiftyseventy <- fiftyseventy[,c(3,7,15)]
 #25-75
 twosevenfive <- cbind(twofive, sevenfive$DOY)
 twosevenfive$seasonlength <- twosevenfive$`sevenfive$DOY`-twosevenfive$DOY
-twosevenfive <- twosevenfive[,c(3,6,14)]
+twosevenfive <- twosevenfive[,c(3,7,15)]
 
 
 # Create temperature variables ----------------------------------
@@ -51,11 +51,11 @@ weatherdata <-
   # Rename RP flag set by Cam
   #rename(flagrp = flag)
 climwindows <-
-  read.csv("results/Climwin_results/Weekly/weekly_climwin_results.csv") %>%
+  read.csv("results/Climwin_results/Weekly/SCBI/weekly_climwin_results_V11.csv") %>%
   filter(wood_type != "other") %>%
   mutate(
-  median_windowopendate = strptime(median_windowopendate, format = "%m/%d/%y"),
-  median_windowclosedate = strptime(median_windowclosedate, format = "%m/%d/%y"),
+  median_windowopendate = as.Date(median_windowopendate),
+  median_windowclosedate = as.Date(median_windowclosedate),
   opendoy = yday(median_windowopendate),
   closedoy = yday(median_windowclosedate)
   )
@@ -85,7 +85,7 @@ marchmeans <- weatherdata %>%
 climwin_windows <-
   tibble(
     wood_type = c("diffuse-porous", "ring-porous"),
-    window = c("climwin window: 3/8 - 5/14", "climwin window: 3/5 - 4/5")
+    window = c("climwin window: 3/19 - 5/21", "climwin window: 3/15 - 4/2")
   )
 
 
@@ -156,10 +156,16 @@ Wood_pheno_table <- Wood_pheno_table %>%
   mutate(climwinmean = climwinmean - 16)
 
 # Delete all non-needed columns
+Wood_pheno_table$tag_year_perc <- paste0(Wood_pheno_table$tag, Wood_pheno_table$year, Wood_pheno_table$perc)
+unitag <- unique(Wood_pheno_table$tag_year_perc)
+Wood_pheno_table<- distinct(Wood_pheno_table,tag_year_perc, .keep_all = TRUE)
+
+
 Wood_pheno_table <- Wood_pheno_table %>%
   select(perc, tag, year, wood_type, sp, climwinmean, starts_with("DOY"))
 
-
+Wood_pheno_table <- Wood_pheno_table %>%
+  select(tag, year, wood_type, seasonlength)
 # Convert to wide format for use in rstanarm::stan_mvmer()
 Wood_pheno_table_wide <- Wood_pheno_table %>%
   pivot_wider(names_from = perc, values_from = DOY)
@@ -265,6 +271,7 @@ y_hat <- c(
   joint_model_climwinmeans %>% posterior_predict(m = 3) %>% c()
 )
 
+
 predictions <- Wood_pheno_table %>%
   add_predicted_draws(joint_model_climwinmeans) %>%
   ungroup() %>%
@@ -286,22 +293,71 @@ predictions %>%
 
 
 fig6 <- ggplot() +
-  geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
+  #geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
   stat_lineribbon(data = predictions, aes(x = climwinmean, y = predictions_rstanarm, group = perc, col = perc), .width = c(.99, .95),  color = "#08519C") +
   geom_point(data = Wood_pheno_table, aes(x = climwinmean, y = DOY, col = perc)) +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
   facet_grid(perc~wood_type) +
+  coord_cartesian(xlim =c(17, 23), ylim = c(90, 240))+
   labs(x = "Climwin mean temperature (relative to 16°C)", y = "DOY", col = "Percentile", main = "Relationship of DOY versus climwin mean temperature") +
   geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
 fig6
 ggsave(filename = "doc/manuscript/tables_figures/fig6.png", width = 14.7*.7, height = 10.9*.7, plot = fig6)
 
+####### CAM ATTEMPT
+predictions_RP <- subset(predictions, wood_type == "ring-porous")
+predictions_DP <- subset(predictions, wood_type == "diffuse-porous")
+Wood_pheno_table_RP <- subset(Wood_pheno_table, wood_type == "ring-porous")
+Wood_pheno_table_DP <- subset(Wood_pheno_table, wood_type == "diffuse-porous")
+
+fig6_RP <- ggplot() +
+  #geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
+  stat_lineribbon(data = predictions_RP, aes(x = climwinmean, y = predictions_rstanarm, group = perc, col = perc), .width = c(.99, .95)) +
+  geom_point(data = Wood_pheno_table_RP, aes(x = climwinmean, y = DOY, col = perc)) +
+  # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
+  scale_fill_brewer() +
+  #facet_grid(perc) +
+  coord_cartesian(xlim =c(17, 23), ylim = c(80, 240))+
+  theme(legend.position = "none")+
+  labs(x = "Climwin mean temperature (relative to 16°C)", y = "DOY", col = "Percentile", title  = "Ring-porous")
+  #geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
+fig6_RP
+
+fig6_DP <- ggplot() +
+  #geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
+  stat_lineribbon(data = predictions_DP, aes(x = climwinmean, y = predictions_rstanarm, group = perc, col = perc), .width = c(.99, .95)) +
+  geom_point(data = Wood_pheno_table_DP, aes(x = climwinmean, y = DOY, col = perc)) +
+  # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
+  scale_fill_brewer() +
+  #facet_grid(perc) +
+  coord_cartesian(xlim =c(17, 23), ylim = c(80, 240))+
+  labs(x = "Climwin mean temperature (relative to 16°C)", y = "DOY", col = "Percentile", title = "Diffuse-porous")
+  #geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
+fig6_DP
+
+fig6_RP+fig6_DP
+
 # Sanity check this plot with regression table intercepts and slopes
 posterior_means_fixed_effects
 
 Run full analysis with ncdc data - then full NCDC w/ met tower windows
-
+#V11
+# A tibble: 12 x 5
+coefficient                               mean     sd  `2.5%`  `97.5%`
+<chr>                                    <dbl>  <dbl>   <dbl>    <dbl>
+  1 y1|(Intercept)                         218.     8.22  202.    234.
+2 y1|wood_typering-porous                -79.3    8.62  -96.4   -62.5
+3 y1|wood_typediffuse-porous:climwinmean  -3.33   0.429  -4.18   -2.50
+4 y1|wood_typering-porous:climwinmean     -1.10   0.209  -1.49   -0.680
+5 y2|(Intercept)                         232.     7.66  218.    247.
+6 y2|wood_typering-porous                -71.2    8.00  -86.4   -56.1
+7 y2|wood_typediffuse-porous:climwinmean  -3.15   0.393  -3.88   -2.41
+8 y2|wood_typering-porous:climwinmean     -0.797  0.188  -1.15   -0.407
+9 y3|(Intercept)                         246.     9.42  227.    264.
+10 y3|wood_typering-porous                -62.2   10.1   -82.1   -42.1
+11 y3|wood_typediffuse-porous:climwinmean  -2.92   0.488  -3.87   -1.94
+12 y3|wood_typering-porous:climwinmean     -0.492  0.239  -0.941  -0.0255
 #Met tower
 #V4 wood table
 coefficient                               mean    sd `2.5%`   `97.5%`
@@ -396,16 +452,6 @@ mixedmodel_stanlmerRP_maxrate <- stan_lmer(
 mixedmodel_stanlmerRP_maxrate %>%
   tidy(conf.int = TRUE)
 
-mixedmodel_stanlmerRP_seasonlength <- stan_lmer(
-  formula = seasonlength_formulaRP,
-  data = woodtable,
-  seed = 349,
-  iter = 4000,
-  chains = 2
-)
-
-mixedmodel_stanlmerRP_seasonlength %>%
-  tidy(conf.int = TRUE)
 
 mixedmodel_stanlmerRP_earlyperiod <- stan_lmer(
   formula = earlyperiod_formulaRP,

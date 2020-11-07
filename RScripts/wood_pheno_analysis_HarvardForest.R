@@ -10,14 +10,14 @@ library(rstanarm)
 library(broom.mixed)
 
 # Get growth data ----------------------------------
-Wood_pheno_table <- read_csv("Data/Wood_pheno_table_HarvardForest_V4CLEAN.csv") %>%
+Wood_pheno_table <- read_csv("Data/Wood_pheno_table_HarvardForest_V6CLEAN.csv") %>%
   # Keep only RP and DP for now
   filter(wood_type != "other") %>%
   #filter(tot >= 1) %>%
   #filter(tot <= 12.06)%>%
   # Rename ring porous to not have a space
   mutate(wood_type = ifelse(wood_type == "ring porous", "ring-porous", wood_type))
-Wood_pheno_table$tag <- substr(Wood_pheno_table$tag,1, nchar(as.character(Wood_pheno_table$tag))-4)
+#Wood_pheno_table$tag <- substr(Wood_pheno_table$tag,1, nchar(as.character(Wood_pheno_table$tag))-4)
 
 twofive <- subset(Wood_pheno_table, perc == .25)
 fifty <- subset(Wood_pheno_table, perc == .5)
@@ -25,15 +25,15 @@ sevenfive <- subset(Wood_pheno_table, perc == .75)
 #25-50
 twofifty <- cbind(twofive,fifty$DOY)
 twofifty$twentyfive_to_fifty <- twofifty$`fifty$DOY`-twofifty$DOY
-twofifty <- twofifty[,c(3,6,12)]
+twofifty <- twofifty[,c(3,6,16)]
 #50-75
 fiftyseventy <- cbind(fifty, sevenfive$DOY)
 fiftyseventy$fifty_to_seventy <- fiftyseventy$`sevenfive$DOY`-fiftyseventy$DOY
-fiftyseventy <- fiftyseventy[,c(3,6,12)]
+fiftyseventy <- fiftyseventy[,c(3,6,16)]
 #25-75
 twosevenfive <- cbind(twofive, sevenfive$DOY)
 twosevenfive$seasonlength <- twosevenfive$`sevenfive$DOY`-twosevenfive$DOY
-twosevenfive <- twosevenfive[,c(3,6,12)]
+twosevenfive <- twosevenfive[,c(3,6,16)]
 
 
 # Create temperature variables ----------------------------------
@@ -85,7 +85,7 @@ marchmeans <- weatherdata %>%
 climwin_windows <-
   tibble(
     wood_type = c("diffuse-porous", "ring-porous"),
-    window = c("climwin window: 3/8 - 5/14", "climwin window: 3/5 - 4/5")
+    window = c("climwin window: 3/19 - 5/7", "climwin window: 3/19 - 4/16")
   )
 
 
