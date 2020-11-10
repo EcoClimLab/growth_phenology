@@ -116,7 +116,7 @@ climwin_dp_DOY25_HARV_short_caption <- "Figure S4. Full climwin output for DOY 2
 ### Introduction
 
 #### (1. forests are critical for climate change regulation, so we need to understand better how they're responding to climate change)
-As global atmospheric greenhouse gas levels are rising, and little meaningful policy is being implemented in response, our planet is expected to surpass the 2.5 degree C warming mark that the Paris accord pledged to avoid. The absence of human intervention increases our reliance on natural systems to soften the blow of climate change. Plant life, especially forests, make up a large portion of these natural systems, offering many valuable ecosystem services. For one, they house an astonishing 80% of terrestrial species and are capable of removing the greenhouse gas CO2 from the atmosphere and storing it in the trees or soil. Forests sequester about one-third of all anthropogenic CO~2~ and store ~45% of all terrestrial carbon (Bonan, 2008). However, their future under the current era of rapid change is uncertain (Friedlingstein et al, 2006). 
+As global atmospheric greenhouse gas levels are rising, and little meaningful policy is being implemented in response, our planet is expected to surpass the 2.5 degree C warming mark that the Paris accord pledged to avoid. The absence of human intervention increases our reliance on natural systems to soften the blow of climate change. Plant life, especially forests, make up a large portion of these natural systems, offering many valuable ecosystem services. For one, they house an astonishing 80% of terrestrial species and are capable of removing the greenhouse gas CO2 from the atmosphere and storing it in the trees or soil. Forests sequester about one-third of all anthropogenic CO~2~ and store ~45% of all terrestrial carbon [@bonan_forests_2008]. However, their future under the current era of rapid change is uncertain [@friedlingstein_climatecarbon_2006]. 
 
 Reducing this uncertainty requires better understanding of the drivers of tree growth (Bugmann et al, 2019). Tree growth is sensitive to climatic factors like precipitation, temperature, and cloudiness in early growing season (Helcoski et al, 2019; Ciais, 2003; Goulden, 1996), as well as other physical factors including nitrogen content of soil, increasing atmospheric CO~2~, deposition of atmospheric pollutants in acid rain (Mathias & Thomas, 2018), and invasion by pests or pathogens. Understanding how growth is influenced by these factors is essential for developing accurate models to inform forest managers and policy makers about the role of future forests in climate change mitigation efforts.
 
@@ -124,6 +124,8 @@ Reducing this uncertainty requires better understanding of the drivers of tree g
 In recent decades, an increase in average spring temperature has been impacting many natural systems including forests (Parmesan & Yohe, 2003; Zhihong, 2006). 
 Shifts in leaf phenology timing could be accompanied by changes in stem-growth phenology, which would likely affect woody productivity, carbon and nutrient cycling, and water use patterns in temperate forests (Keeling et al, 1996;). 
 The effects of this spring warming are most apparent when examining leaf phenology shifts, *which have been extensively studied (Way, 2011; Klosterman & Hufkins & Richardson, 2018), leading to many critical observations*. As temperatures are increasing, some regions have seen earlier leaf out in deciduous trees, sometimes matched or exceeded by later leaf senescence, meaning a potential shift in growing season timing or length (Ibáñez et al, 2010; Jeong et al., 2011). The timing of this spring warming also has a significant effect on leaf phenology response (Crabbe et al, 2016). 
+
+Leaf phenology--as characterized by satellite observations of NDVI or EVI-- is linked to the ecosystem CO~2~ uptake period. In turn, longer carbon uptake periods have been linked to greater net annual C sequestration (i.e., net ecosystem exchange, NEE) by ecosystems [@churkina_spatial_2005; @keenan_net_2014], although more of the interannual variation in forest NEE is explained by variation in maximum C uptake rates than by the length of the carbon uptake period [@fu_maximum_2019].
 
 Many observations of climate induced phenological shifts are based on GIS (), eddy-covarience measurements (), or other broad scale measurements of phenological timing, and do little to discern differences between individual species, where leaf and stem-growth phenology can be decoupled (D'Orangeville et al, in review). 
 
@@ -285,6 +287,8 @@ We present a stepping stone for future studies to build upon.
 
 
 ### (Content to incorporate) 
+
+results align with @fu_maximum_2019, which shows that interannual variation in NEE is more strongly linked to peak C uptake rates than to growing season length. Our study demonstrates that this holds true for $ANPP_{woody}$ as well as NEE.
 
 Geng et al. 2020 GCB- Climate warming increases spring phenological differences among temperate trees.
 
