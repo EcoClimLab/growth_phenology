@@ -11,7 +11,7 @@ library(rstanarm)
 library(broom.mixed)
 #SCBI
 # Get growth data ----------------------------------
-Wood_pheno_table <- read_csv("Data/Wood_pheno_table_V11CLEAN.csv") %>%
+Wood_pheno_table <- read_csv("Data/Wood_pheno_table_V13CLEAN.csv") %>%
   # Keep only RP and DP for now
   filter(wood_type != "other") %>%
   #filter(tot >= 1) %>%
@@ -25,15 +25,15 @@ sevenfive <- subset(Wood_pheno_table, perc == .75)
 #25-50
 twofifty <- cbind(twofive,fifty$DOY)
 twofifty$twentyfive_to_fifty <- twofifty$`fifty$DOY`-twofifty$DOY
-twofifty <- twofifty[,c(3,7,15)]
+twofifty <- twofifty[,c(3,7,16)]
 #50-75
 fiftyseventy <- cbind(fifty, sevenfive$DOY)
 fiftyseventy$fifty_to_seventy <- fiftyseventy$`sevenfive$DOY`-fiftyseventy$DOY
-fiftyseventy <- fiftyseventy[,c(3,7,15)]
+fiftyseventy <- fiftyseventy[,c(3,7,16)]
 #25-75
 twosevenfive <- cbind(twofive, sevenfive$DOY)
 twosevenfive$seasonlength <- twosevenfive$`sevenfive$DOY`-twosevenfive$DOY
-twosevenfive <- twosevenfive[,c(3,7,15)]
+twosevenfive <- twosevenfive[,c(3,7,16)]
 
 
 # Create temperature variables ----------------------------------
@@ -52,7 +52,7 @@ weatherdata <-
 # Rename RP flag set by Cam
 #rename(flagrp = flag)
 climwindows <-
-  read.csv("results/Climwin_results/Weekly/SCBI/weekly_climwin_results_V11.csv") %>%
+  read.csv("results/Climwin_results/Weekly/SCBI/weekly_climwin_results_975perc.csv") %>%
   filter(wood_type != "other") %>%
   mutate(
     median_windowopendate = as.Date(median_windowopendate),
@@ -86,7 +86,7 @@ marchmeans <- weatherdata %>%
 climwin_windows <-
   tibble(
     wood_type = c("diffuse-porous", "ring-porous"),
-    window = c("climwin window: 3/19 - 5/21", "climwin window: 3/15 - 4/2")
+    window = c("climwin window: 2/12 - 5/21", "climwin window: 4/9 - 5/28")
   )
 
 
@@ -98,7 +98,7 @@ climwin_windows <-
 #  summarize(climwinmean = mean(TMAX)) %>%
 #  mutate(wood_type = "ring-porous")
 climwinmeans_rp <- weatherdata %>%
-  filter(doy %in% c(climwindows[1,11]:climwindows[1,12])) %>%
+  filter(doy %in% c(climwindows[2,11]:climwindows[2,12])) %>%
   group_by(year) %>%
   summarize(climwinmean = mean(cleantmax)) %>%
   mutate(wood_type = "ring-porous")
@@ -209,7 +209,7 @@ fig6_RP <- ggplot() +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
   #facet_grid(perc) +
-  coord_cartesian(xlim =c(17, 22.5), ylim = c(80, 240))+
+  coord_cartesian(xlim =c(19.5, 23.5), ylim = c(80, 240))+
   theme(legend.position = "none")+
   labs(x = "", y = "DOY", col = "Percentile", title  = "Ring-porous", subtitle = "Relationship of DOY versus climwin mean temperature")
 #geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
@@ -223,7 +223,7 @@ fig6_DP <- ggplot() +
   scale_fill_brewer() +
   theme(legend.position = c(.95,.5))+
   #facet_grid(perc) +
-  coord_cartesian(xlim =c(18.5, 22.5), ylim = c(80, 240))+
+  coord_cartesian(xlim =c(14.3, 19), ylim = c(80, 240))+
   labs(x = "", y = "", col = "Percentile", title = "Diffuse-porous", subtitle = "Relationship of DOY versus climwin mean temperature")
 #geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
 fig6_DP
@@ -262,7 +262,7 @@ fig6_RP_tot <- ggplot() +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
   #facet_grid(perc) +
-  coord_cartesian(xlim =c(17, 22.5), ylim = c(-.4, 1.5))+
+  coord_cartesian(xlim =c(19.5, 23.5), ylim = c(-.4, 1.5))+
   theme(legend.position = "none")+
   labs(x = "", y = "Total (cm)", subtitle  = "Total Growth")
 #geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
@@ -275,7 +275,7 @@ fig6_DP_tot <- ggplot() +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
   #facet_grid(perc) +
-  coord_cartesian(xlim =c(18.5, 22.5), ylim = c(-.4, 1.5))+
+  coord_cartesian(xlim =c(14.3, 19), ylim = c(-.4, 1.5))+
   theme(legend.position = "none")+
   labs(x = "", y = "", subtitle  = "Total Growth")
 #geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
@@ -315,7 +315,7 @@ fig6_RP_sl <- ggplot() +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
   #facet_grid(perc) +
-  coord_cartesian(xlim =c(17, 22.5), ylim = c(3, 106))+
+  coord_cartesian(xlim =c(19.5, 23.5), ylim = c(3, 106))+
   theme(legend.position = "none")+
   labs(x = "", y = "# of Days", subtitle  = "Season Length")
 #geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
@@ -328,7 +328,7 @@ fig6_DP_sl <- ggplot() +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
   #facet_grid(perc) +
-  coord_cartesian(xlim =c(18.5, 22.5), ylim = c(3, 106))+
+  coord_cartesian(xlim =c(14.3, 19), ylim = c(3, 106))+
   theme(legend.position = "none")+
   labs(x = "", y = "", subtitle  = "Season Length")
 #geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
@@ -368,7 +368,7 @@ fig6_RP_mr <- ggplot() +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
   #facet_grid(perc) +
-  coord_cartesian(xlim =c(17, 22.5), ylim = c(-.007, 0.02))+
+  coord_cartesian(xlim =c(19.5, 23.5), ylim = c(-.007, 0.02))+
   theme(legend.position = "none")+
   labs(x = "", y = "Growth Rate (cm/day)", subtitle  = "Maximum Growth Rate")
 #geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
@@ -381,7 +381,7 @@ fig6_DP_mr <- ggplot() +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
   #facet_grid(perc) +
-  coord_cartesian(xlim =c(18.5, 22.5), ylim = c(-.007, 0.02))+
+  coord_cartesian(xlim =c(14.3, 19), ylim = c(-.007, 0.02))+
   theme(legend.position = "none")+
   labs(x = "", y = "", subtitle  = "Maximum Growth Rate")
 #geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
@@ -421,7 +421,7 @@ fig6_RP_mrdoy <- ggplot() +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
   #facet_grid(perc) +
-  coord_cartesian(xlim =c(17, 22.5), ylim = c(99, 235))+
+  coord_cartesian(xlim =c(19.5, 23.5), ylim = c(99, 235))+
   theme(legend.position = "none")+
   labs(x = "Temperature", y = "DOY", subtitle  = "Max Rate DOY")
 #geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
@@ -434,7 +434,7 @@ fig6_DP_mrdoy <- ggplot() +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
   #facet_grid(perc) +
-  coord_cartesian(xlim =c(18.5, 22.5), ylim = c(99, 235))+
+  coord_cartesian(xlim =c(14.3, 19), ylim = c(99, 235))+
   theme(legend.position = "none")+
   labs(x = "Temperature",y= "", subtitle  = "Max Rate DOY")
 #geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
@@ -442,7 +442,7 @@ fig6_DP_mrdoy
 
 #Harvard Forest----
 # Get growth data ----------------------------------
-Wood_pheno_table_hf <- read_csv("Data/Wood_pheno_table_HarvardForest_V6CLEAN.csv") %>%
+Wood_pheno_table_hf <- read_csv("Data/Wood_pheno_table_HarvardForest_V9CLEAN.csv") %>%
   # Keep only RP and DP for now
   filter(wood_type != "other") %>%
   #filter(tot >= 1) %>%
@@ -457,15 +457,15 @@ sevenfive_hf <- subset(Wood_pheno_table_hf, perc == .75)
 #25-50
 twofifty_hf <- cbind(twofive_hf,fifty_hf$DOY)
 twofifty_hf$twentyfive_to_fifty <- twofifty_hf$`fifty_hf$DOY`-twofifty_hf$DOY
-twofifty_hf <- twofifty_hf[,c(3,6,16)]
+twofifty_hf <- twofifty_hf[,c(3,6,17)]
 #50-75
 fiftyseventy_hf <- cbind(fifty_hf, sevenfive_hf$DOY)
 fiftyseventy_hf$fifty_to_seventy <- fiftyseventy_hf$`sevenfive_hf$DOY`-fiftyseventy_hf$DOY
-fiftyseventy_hf <- fiftyseventy_hf[,c(3,6,16)]
+fiftyseventy_hf <- fiftyseventy_hf[,c(3,6,17)]
 #25-75
 twosevenfive_hf <- cbind(twofive_hf, sevenfive_hf$DOY)
 twosevenfive_hf$seasonlength <- twosevenfive_hf$`sevenfive_hf$DOY`-twosevenfive_hf$DOY
-twosevenfive_hf <- twosevenfive_hf[,c(3,6,16)]
+twosevenfive_hf <- twosevenfive_hf[,c(3,6,17)]
 
 
 # Create temperature variables ----------------------------------
@@ -483,7 +483,7 @@ weatherdata_hf <-
 # Rename RP flag set by Cam
 #rename(flagrp = flag)
 climwindows_hf <-
-  read.csv("results/Climwin_results/Weekly/Harvard Forest/weekly_climwin_results_all_HF.csv") %>%
+  read.csv("results/Climwin_results/Weekly/Harvard Forest/weekly_climwin_results_all_HF_975.csv") %>%
   filter(wood_type != "other") %>%
   mutate(
     median_windowopendate = as.Date(median_windowopendate, format = "%Y-%m-%d"),
@@ -600,7 +600,7 @@ y_hat_hf <- c(
   joint_model_climwinmeans_hf %>% posterior_predict(m = 2) %>% c(),
   joint_model_climwinmeans_hf %>% posterior_predict(m = 3) %>% c()
 )
-
+memory.limit(size = 15000)
 predictions_hf <- Wood_pheno_table_hf %>%
   add_predicted_draws(joint_model_climwinmeans_hf) %>%
   ungroup() %>%
@@ -633,7 +633,7 @@ fig6_RP_hf <- ggplot() +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
   #facet_grid(perc) +
-  coord_cartesian(xlim =c(7, 13), ylim = c(44, 261))+
+  coord_cartesian(xlim =c(12.3, 16), ylim = c(44, 261))+
   theme(legend.position = "none")+
   labs(x = "", y = "DOY", col = "Percentile", title  = "Ring-porous", subtitle = "Relationship of DOY versus climwin mean temperature")
 #geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
@@ -647,14 +647,13 @@ fig6_DP_hf <- ggplot() +
   scale_fill_brewer() +
   theme(legend.position = c(.95,.5))+
   #facet_grid(perc) +
-  coord_cartesian(xlim =c(11.5, 15), ylim = c(80, 240))+
+  coord_cartesian(xlim =c(11.7, 15), ylim = c(80, 240))+
   labs(x = "", y = "", col = "Percentile", title = "Diffuse-porous", subtitle = "Relationship of DOY versus climwin mean temperature")
 #geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
 fig6_DP_hf
-
 ###TOTAL GROWTH----
 woodtable_hf <- subset(Wood_pheno_table_hf, perc == "DOY_25")
-total_formulaRP <- "tot ~ wood_type + wood_type:climwinmean + (1|tag)" %>% as.formula()
+total_formulaRP <- "dbh_total_growth ~ wood_type + wood_type:climwinmean + (1|tag)" %>% as.formula()
 
 mixedmodel_stanlmerRP_total_hf <- stan_lmer(
   formula = total_formulaRP,
@@ -684,7 +683,7 @@ fig6_RP_tot_hf <- ggplot() +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
   #facet_grid(perc) +
-  coord_cartesian(xlim =c(7, 13), ylim = c(-.27, 1.28))+
+  coord_cartesian(xlim =c(12.3, 16), ylim = c(-.27, 1.28))+
   theme(legend.position = "none")+
   labs(x = "", y = "Total (cm)", subtitle  = "Total Growth")
 #geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
@@ -697,7 +696,7 @@ fig6_DP_tot_hf <- ggplot() +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
   #facet_grid(perc) +
-  coord_cartesian(xlim =c(11.5, 15), ylim = c(-.27, 1))+
+  coord_cartesian(xlim =c(11.7, 15), ylim = c(-.27, 1))+
   theme(legend.position = "none")+
   labs(x = "", y = "", subtitle  = "Total Growth")
 #geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
@@ -737,7 +736,7 @@ fig6_RP_sl_hf <- ggplot() +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
   #facet_grid(perc) +
-  coord_cartesian(xlim =c(7, 13), ylim = c(3, 106))+
+  coord_cartesian(xlim =c(12.3, 16), ylim = c(3, 106))+
   theme(legend.position = "none")+
   labs(x = "", y = "# of Days", subtitle  = "Season Length")
 #geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
@@ -750,7 +749,7 @@ fig6_DP_sl_hf <- ggplot() +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
   #facet_grid(perc) +
-  coord_cartesian(xlim =c(11.5, 15), ylim = c(3, 106))+
+  coord_cartesian(xlim =c(11.7, 15), ylim = c(3, 106))+
   theme(legend.position = "none")+
   labs(x = "", y = "", subtitle  = "Season Length")
 #geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
@@ -791,7 +790,7 @@ fig6_RP_mr_hf<- ggplot() +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
   #facet_grid(perc) +
-  coord_cartesian(xlim =c(7, 13), ylim = c(-.007, 0.02))+
+  coord_cartesian(xlim =c(12.3, 16), ylim = c(-.007, 0.02))+
   theme(legend.position = "none")+
   labs(x = "", y = "Growth Rate (cm/day)", subtitle  = "Maximum Growth Rate")
 #geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
@@ -804,7 +803,7 @@ fig6_DP_mr_hf <- ggplot() +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
   #facet_grid(perc) +
-  coord_cartesian(xlim =c(11.5, 15), ylim = c(-.007, 0.02))+
+  coord_cartesian(xlim =c(11.7, 15), ylim = c(-.007, 0.02))+
   theme(legend.position = "none")+
   labs(x = "", y = "", subtitle  = "Maximum Growth Rate")
 #geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
@@ -832,7 +831,28 @@ predictions_mrdoy_hf <- woodtable_hf %>%
   ungroup() %>%
   arrange(tag, year) %>%
   mutate(predictions_rstanarm = y_hst_hf)
-
+#memory.limit(10000)
+#rm(fifty)
+#rm(fifty_hf)
+#rm(predictions_DP_hf)
+#rm(climwinmeans)
+#rm(climwinmeans_dp)
+#rm(climwinmeans_dp_hf)
+#rm(climwinmeans_hf)
+#rm(climwinmeans_rp)
+#rm(climwinmeans_rp_hf)
+#rm(marchmeans)
+#rm(marchmeans_hf)
+#rm(predictions)
+#rm(mixedmodel_stanlmerRP_total_hf)
+#rm(mixedmodel_stanlmerRP_maxrate)
+#rm(mixedmodel_stanlmerRP_maxrate_hf)
+#rm(mixedmodel_stanlmerRP_maxrateDOY)
+#rm(mixedmodel_stanlmerRP_seasonlength)
+#rm(mixedmodel_stanlmerRP_seasonlength_hf)
+#rm(mixedmodel_stanlmerRP_total)
+gc()
+#save.image()
 predictions_mrdoy_RP_hf <- subset(predictions_mrdoy_hf, wood_type == "ring-porous")
 predictions_mrdoy_DP_hf <- subset(predictions_mrdoy_hf, wood_type == "diffuse-porous")
 Wood_pheno_table_RP_mrdoy_hf <- subset(woodtable_hf, wood_type == "ring-porous")
@@ -845,7 +865,7 @@ fig6_RP_mrdoy_hf <- ggplot() +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
   #facet_grid(perc) +
-  coord_cartesian(xlim =c(7, 13), ylim = c(99, 235))+
+  coord_cartesian(xlim =c(12.3, 16), ylim = c(99, 235))+
   theme(legend.position = "none")+
   labs(x = "Temperature (C)", y = "")
 #geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
@@ -858,7 +878,7 @@ fig6_DP_mrdoy_hf <- ggplot() +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
   #facet_grid(perc) +
-  coord_cartesian(xlim =c(11.5, 15), ylim = c(99, 235))+
+  coord_cartesian(xlim =c(11.7, 15), ylim = c(99, 235))+
   theme(legend.position = "none")+
   labs(x = "Temperature (C)",y= "")
 #geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
@@ -867,7 +887,6 @@ fig6_DP_mrdoy_hf
 
 #ALL TOGETHER----
 library(gridExtra)
-
 png(filename = "doc/manuscript/tables_figures/pheno_Tsensitivity_combo.png", width=15, height=25,
     pointsize=12, bg="transparent", units="in", res=600,
     restoreConsole=FALSE)
@@ -881,7 +900,7 @@ grid.arrange(
     # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
     scale_fill_brewer() +
     #facet_grid(perc) +
-    coord_cartesian(xlim =c(17, 22.5), ylim = c(80, 240))+
+    coord_cartesian(xlim =c(19.5, 23.5), ylim = c(80, 240))+
     theme(legend.position = "none")+
     labs(x = "", y = "DOY", col = "Percentile", title  = "SCBI", subtitle = "Ring-porous"),
 
@@ -893,7 +912,7 @@ grid.arrange(
     scale_fill_brewer() +
     theme(legend.position = "none")+
     #facet_grid(perc) +
-    coord_cartesian(xlim =c(18.5, 22.5), ylim = c(80, 240))+
+    coord_cartesian(xlim =c(14.3, 19), ylim = c(80, 240))+
     labs(x = "", y = "", col = "Percentile", title = "SCBI", subtitle = "Diffuse-porous"),
 
   ggplot() +
@@ -903,7 +922,7 @@ grid.arrange(
     # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
     scale_fill_brewer() +
     #facet_grid(perc) +
-    coord_cartesian(xlim =c(7, 13), ylim = c(44, 261))+
+    coord_cartesian(xlim =c(12.3, 16), ylim = c(44, 261))+
     theme(legend.position = "none")+
     labs(x = "", y = "", col = "Percentile", title  = "Harvard Forest", subtitle = "Ring-porous"),
 
@@ -915,7 +934,7 @@ grid.arrange(
     scale_fill_brewer() +
     theme(legend.position = c(.95,.5))+
     #facet_grid(perc) +
-    coord_cartesian(xlim =c(11.5, 15.5), ylim = c(80, 240))+
+    coord_cartesian(xlim =c(11.7, 15.5), ylim = c(80, 240))+
     labs(x = "", y = "", col = "Percentile", title = "Harvard Forest", subtitle = "Diffuse-porous"),
 
   ggplot() +
@@ -925,7 +944,7 @@ grid.arrange(
     # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
     scale_fill_brewer() +
     #facet_grid(perc) +
-    coord_cartesian(xlim =c(17, 22.5), ylim = c(-.4, 1.5))+
+    coord_cartesian(xlim =c(19.5, 23.5), ylim = c(-.4, 1.5))+
     theme(legend.position = "none")+
     labs(x = "", y = "Total Growth (cm)"),
 
@@ -936,7 +955,7 @@ grid.arrange(
     # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
     scale_fill_brewer() +
     #facet_grid(perc) +
-    coord_cartesian(xlim =c(18.5, 22.5), ylim = c(-.4, 1.5))+
+    coord_cartesian(xlim =c(14.3, 19), ylim = c(-.4, 1.5))+
     theme(legend.position = "none")+
     labs(x = "", y = ""),
 
@@ -947,7 +966,7 @@ grid.arrange(
     # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
     scale_fill_brewer() +
     #facet_grid(perc) +
-    coord_cartesian(xlim =c(7, 13), ylim = c(-.27, 1.28))+
+    coord_cartesian(xlim =c(12.3, 16), ylim = c(-.27, 1.28))+
     theme(legend.position = "none")+
     labs(x = "", y = ""),
 
@@ -958,7 +977,7 @@ grid.arrange(
     # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
     scale_fill_brewer() +
     #facet_grid(perc) +
-    coord_cartesian(xlim =c(11.5, 15), ylim = c(-.27, 1))+
+    coord_cartesian(xlim =c(11.7, 15), ylim = c(-.27, 1))+
     theme(legend.position = "none")+
     labs(x = "", y = ""),
 
@@ -969,7 +988,7 @@ grid.arrange(
     # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
     scale_fill_brewer() +
     #facet_grid(perc) +
-    coord_cartesian(xlim =c(17, 22.5), ylim = c(3, 106))+
+    coord_cartesian(xlim =c(19.5, 23.5), ylim = c(3, 106))+
     theme(legend.position = "none")+
     labs(x = "", y = "Season Length (# of Days)"),
 
@@ -980,7 +999,7 @@ grid.arrange(
     # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
     scale_fill_brewer() +
     #facet_grid(perc) +
-    coord_cartesian(xlim =c(18.5, 22.5), ylim = c(3, 90))+
+    coord_cartesian(xlim =c(14.3, 19), ylim = c(3, 90))+
     theme(legend.position = "none")+
     labs(x = "", y = ""),
 
@@ -991,7 +1010,7 @@ grid.arrange(
     # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
     scale_fill_brewer() +
     #facet_grid(perc) +
-    coord_cartesian(xlim =c(7, 13), ylim = c(3, 106))+
+    coord_cartesian(xlim =c(12.3, 16), ylim = c(3, 106))+
     theme(legend.position = "none")+
     labs(x = "", y = ""),
 
@@ -1002,7 +1021,7 @@ grid.arrange(
     # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
     scale_fill_brewer() +
     #facet_grid(perc) +
-    coord_cartesian(xlim =c(11.5, 15), ylim = c(3, 106))+
+    coord_cartesian(xlim =c(11.7, 15), ylim = c(3, 106))+
     theme(legend.position = "none")+
     labs(x = "", y = ""),
 
@@ -1013,7 +1032,7 @@ grid.arrange(
     # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
     scale_fill_brewer() +
     #facet_grid(perc) +
-    coord_cartesian(xlim =c(17, 22.5), ylim = c(-.007, 0.02))+
+    coord_cartesian(xlim =c(19.5, 23.5), ylim = c(-.007, 0.02))+
     theme(legend.position = "none")+
     labs(x = "", y = "Maximum Growth Rate (cm/day)"),
 
@@ -1024,7 +1043,7 @@ grid.arrange(
     # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
     scale_fill_brewer() +
     #facet_grid(perc) +
-    coord_cartesian(xlim =c(18.5, 22.5), ylim = c(-.007, 0.02))+
+    coord_cartesian(xlim =c(14.3, 19), ylim = c(-.007, 0.02))+
     theme(legend.position = "none")+
     labs(x = "", y = ""),
 
@@ -1035,7 +1054,7 @@ grid.arrange(
     # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
     scale_fill_brewer() +
     #facet_grid(perc) +
-    coord_cartesian(xlim =c(7, 13), ylim = c(-.007, 0.02))+
+    coord_cartesian(xlim =c(12.3, 16), ylim = c(-.007, 0.02))+
     theme(legend.position = "none")+
     labs(x = "", y = ""),
 
@@ -1046,7 +1065,7 @@ grid.arrange(
     # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
     scale_fill_brewer() +
     #facet_grid(perc) +
-    coord_cartesian(xlim =c(11.5, 15), ylim = c(-.007, 0.02))+
+    coord_cartesian(xlim =c(11.7, 15), ylim = c(-.007, 0.02))+
     theme(legend.position = "none")+
     labs(x = "", y = ""),
 
@@ -1057,7 +1076,7 @@ grid.arrange(
     # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
     scale_fill_brewer() +
     #facet_grid(perc) +
-    coord_cartesian(xlim =c(17, 22.5), ylim = c(99, 235))+
+    coord_cartesian(xlim =c(19.5, 23.5), ylim = c(99, 235))+
     theme(legend.position = "none")+
     labs(x = "Temperature (c)", y = "Max Rate DOY"),
 
@@ -1068,7 +1087,7 @@ grid.arrange(
     # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
     scale_fill_brewer() +
     #facet_grid(perc) +
-    coord_cartesian(xlim =c(18.5, 22.5), ylim = c(99, 235))+
+    coord_cartesian(xlim =c(14.3, 19), ylim = c(99, 235))+
     theme(legend.position = "none")+
     labs(x = "Temperature (c)",y= ""),
 
@@ -1079,7 +1098,7 @@ grid.arrange(
     # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
     scale_fill_brewer() +
     #facet_grid(perc) +
-    coord_cartesian(xlim =c(7, 13), ylim = c(99, 235))+
+    coord_cartesian(xlim =c(12.3, 16), ylim = c(99, 235))+
     theme(legend.position = "none")+
     labs(x = "Temperature (c)", y = "DOY"),
 
@@ -1090,7 +1109,7 @@ grid.arrange(
     # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
     scale_fill_brewer() +
     #facet_grid(perc) +
-    coord_cartesian(xlim =c(11.5, 15), ylim = c(99, 235))+
+    coord_cartesian(xlim =c(11.7, 15), ylim = c(99, 235))+
     theme(legend.position = "none")+
     labs(x = "Temperature (c)",y= ""),
 

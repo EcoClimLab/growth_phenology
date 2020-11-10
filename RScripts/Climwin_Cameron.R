@@ -21,8 +21,8 @@ climate$DATE <- strptime(as.character(climate$DATE), format = "%d/%m/%Y")
 climate$DATE <- format(climate$DATE, "%d/%m/%Y")
 
 #The data containing the biological responses for testing
-Wood_pheno_table <- read_csv("Data/Wood_pheno_table_V10CLEAN.csv") #Master datafrmae containing 20%, 50%, and 75% growth milestones
-
+Wood_pheno_table <- read_csv("Data/Wood_pheno_table_V13CLEAN.csv") #Master datafrmae containing 20%, 50%, and 75% growth milestones
+#Wood_pheno_table <- Wood_pheno_table_scbi
 ####Percentage DOY climwin all wood types, all percs DAILY ----
 #rangedates <- data.frame("feb1", round(30)) #/7 for week
 #rangedates2 <- data.frame("mar1", round(59)) #/7 for week
@@ -172,7 +172,7 @@ for(w in unique(Wood_pheno_table$wood_type)){
     }}#}
 dffinal <- dffinal[-1,]
 names(dffinal) <- c("wood_type", "percs", "refwoy","refmonth", "refday", "winopenwoy", "winclosewoy","bestmodel_beta","median_windowopendate", "median_windowclosedate")
-write.csv(dffinal, file = "results/Climwin_results/Weekly/SCBI/weekly_climwin_results_all.csv", row.names = FALSE)
+write.csv(dffinal, file = "results/Climwin_results/Weekly/SCBI/weekly_climwin_results_975perc.csv", row.names = FALSE)
 
 
 ####Total growth DAILY ----
