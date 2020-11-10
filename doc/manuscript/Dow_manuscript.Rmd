@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 \raggedright
 
 **Title:** ~~Effect of spring temperatures on tree growth phenology in two temperate deciduous forests~~
-Warmer spring temperatures in temperate deciduous forests cause earlier tree growth but have little effect on annual woody productivity
+Warmer spring temperatures in temperate deciduous forests cause earlier tree growth but have little/only modest(?) effect on annual woody productivity
 
 **Authors (not yet complete, just alphabetical for now--final order TBD):** 
 
@@ -77,7 +77,7 @@ growth_curves_all_caption  <- "Figure 2. Growth trajectories for ring- and diffu
 
 climwin_caption <- "Figure 3. Landscapes of relationships between the day of year on which 25% of annual growth is achieved (DOY_25) and temperature in prior weeks for ring- and diffuse-porous trees at SCBI and Harvard Forest. Shown are matrices of linear coefficients of first-order linear regressions between temperature and DOY_25, where Window Open and Window Close indicate number of weeks prior to DOY_25 (ring-porous: DATE at SCBI, DATE at HF; diffuse-porous: DATE at SCBI, DATE at HF). Black boxes indicate the optimal window."
 
-pheno_Tsensitivity_caption <- "Figure 4. Relationship between DOY and climwin mean temperatures. For each 
+pheno_Tsensitivity_caption <- "Figure 4. Relationship between growth parameters and climwin mean temperatures. For each 
 observed climwin mean temperature value, the posterior mean of the fitted day of year
 is represented by the solid blue line and credible intervals are represented by bands."
 
@@ -255,12 +255,7 @@ Warmer spring temperatures resulted in an earlier start of growth for ring-porou
 
 ```{r pheno_Tsensitivity, out.width="100%", echo=FALSE, fig.align="center", fig.cap=pheno_Tsensitivity_caption}
 # Created in RScripts/bert/wood_phenology_analysis_bert.R
-knitr::include_graphics("tables_figures/pheno_Tsensitivity_scbi.png")
-```
-
-```{r , out.width="100%", echo=FALSE, fig.align="center", fig.cap="Harvard. FIGURES WILL NEED TO BE COMBINED"}
-# Created in RScripts/bert/wood_phenology_analysis_bert.R
-knitr::include_graphics("tables_figures/pheno_Tsensitivity_HF.png")
+knitr::include_graphics("tables_figures/pheno_Tsensitivity_combo.png")
 ```
 
 
