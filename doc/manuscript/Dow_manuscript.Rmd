@@ -129,17 +129,15 @@ The effects of this spring warming are most apparent when examining leaf phenolo
 Leaf phenology is linked to the ecosystem CO~2~ uptake period, and in turn longer carbon uptake periods have been linked to greater net annual C sequestration (*i.e.*, net ecosystem exchange, $NEE$; @churkina_spatial_2005; @keenan_net_2014; @zhou_explaining_2016]. 
 However, more of the interannual variation in forest $NEE$ is explained by variation in maximum C uptake rates than by the length of the carbon uptake period [@zhou_explaining_2016; @fu_maximum_2019].
 
-Thus, while it is increasingly clear that warming spring temperatures lengthen the growing season and modestly increase annual carbon sequestration, we know little about the effect on tree growth and woody productivity, which can be decoupled from leaf phenology and represent only a modest proportion of $NEE$. 
-
-~~,Many observations of climate induced phenological shifts are based on GIS (), eddy-covarience measurements (), or other broad scale measurements of phenological timing, and do little to discern differences between individual species, where leaf and stem-growth phenology can be decoupled (D'Orangeville et al, in review). ~~
+Thus, while it is increasingly clear that warming spring temperatures lengthen the growing season and modestly increase annual carbon sequestration, we know little about the effect on tree growth and woody productivity, which can be decoupled from leaf phenology (D'Orangeville et al, in review) and represent only a modest proportion of total C sequestration (Anderson-Teixeira et al. in review). 
 
 #### (3. However, we don't know how warming springs affect stem-growth, which matters because the C allocated to stem growth will be retained in the ecosystem for decades to millenia )
 
 Earlier leaf up timings could signal that these trees are shifting their growth windows in response to increasing spring temperatures, but to date, very little research has been done on this topic. 
-In fact, we know little about the stem-growth phenology of temperate deciduous species — let alone how these are affected by changes in spring temperature patterns. *(but check into this.... I suspect there may be some that we're missing)*
+In fact, we know little about the stem-growth phenology of temperate deciduous species — let alone how these are affected by changes in spring temperature patterns. *(but check into this.... I suspect there may be some that we're missing--perhaps auto dendro bands in Europe. Neil did say that there's little on early spring T)*
 Warming events in late-spring were shown to shift leaf emergence timing back more than early-spring warming (Freidl et al, 2014) and earlier leaf emergence has been shown to cause complex lagged effects on subsequent seasonal growth in European broad leaf deciduous and mixed forests (Crabbe et al, 2016). Identifying the pre-season period of greatest sensitivity of intraannual growth, along with the effect warming within that period has on other stem phenology traits could help unravel the mysteries of tree growth.
 
-Tree-ring records give some hints that warmer springs may increase annual growth (Helcoski et al. 2019), but tree-rings tell us nothing about the timing of that growth.  Timing of intraannual stem-growth is extremely important as well. 
+Tree-ring records give some hints that warmer springs may increase annual growth (Helcoski et al. 2019; probably some more), but tree-rings tell us nothing about the timing of that growth.  Timing of intraannual stem-growth is extremely important as well. 
 
 
 #### (4. We also know little about differences across species or functional groups, which matters because it will affect how different species fare under climate change )
