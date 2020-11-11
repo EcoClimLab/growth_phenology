@@ -167,12 +167,22 @@ hist(LG5_parameter_values_removed$ML_value)
 #Subset main DF
 percent_growth <- percent_growth[(percent_growth$tag_year %in% unique(percent_growth_one$tag_year)),] #Remove tags with <99% growth
 
+#Strange spikes
+percent_growth_na <- percent_growth[(is.na(percent_growth$b)),]
+
+percent_growth <- percent_growth[!(is.na(percent_growth$b)),]
+
 #Check for patterns in removed trees----
 removed_tagyears <- c(SCBI_badpeak_DP,SCBI_badpeak_RP, SCBI_below99,SCBI_highgrowth_DP,SCBI_highgrowth_RP,SCBI_smallgrowth)
 removed_trees <- Wood_pheno_table_scbi[Wood_pheno_table_scbi$tag_year %in% removed_tagyears,]
 removed_trees <-subset(removed_trees, perc == .25)
 hist(removed_trees$dbh)
 count(removed_trees,sp)
+
+weirdtag <- subset(percent_growth, doy == 210)
+weirdtag <- subset(weirdtag, dbh_growth_percent == max(weirdtag$dbh_growth_percent))
+
+percent_growth <- percent_growth[!(percent_growth$tag_year %in% unique(weirdtag$tag_year)),] #Remove tags with <99% growth
 
 #Remove bad models from wood_pheno_table and LG5_param DF's ----
 #Wood_pheno_table_scbi <-  Wood_pheno_table_scbi %>%
@@ -183,6 +193,9 @@ count(removed_trees,sp)
 #  )
 #unitag <- unique(Wood_pheno_table_scbi)
 wood_gone <- Wood_pheno_table_scbi[!(Wood_pheno_table_scbi$tag_year %in% unique(percent_growth$tag_year)),]
+wood_gone<- subset(wood_gone, perc == .25)
+206/(2994/3)#998
+
 Wood_pheno_table_scbi <- Wood_pheno_table_scbi[Wood_pheno_table_scbi$tag_year %in% unique(percent_growth$tag_year),]
 tot_growth <- distinct(percent_growth[,c(3,17)], .keep_all = TRUE)
 Wood_pheno_table_scbi <- left_join(Wood_pheno_table_scbi, tot_growth, by = "tag_year")
@@ -392,9 +405,23 @@ LG5_parameter_values_removed_99_hf <- LG5_parameter_values_hf[LG5_parameter_valu
 #Subset main DF
 percent_growth <- percent_growth[(percent_growth$tag_year %in% unique(percent_growth_one$tag_year)),] #Remove tags with <99% growth
 
+###Messing around ###
+#percent_growth$check <- 1
+#percent_growth_season_length <- subset(percent_growth, dbh_growth_percent >= 0.01)
+#SL <- aggregate(percent_growth_season_length$check, by = list(percent_growth_season_length$tag_year), FUN = sum)
+#SL20 <- subset(SL, x <=5)
+#percent_growth_SL <- percent_growth[percent_growth$tag_year %in% "D15272002",]
+#percent_growth_5 <- subset(percent_growth, dbh_growth_percent >= 0.05)
 
+percent_growth_na <- percent_growth[(is.na(percent_growth$b)),]
 
+percent_growth <- percent_growth[!(is.na(percent_growth$b)),]
 
+#percent_growth_DP_try <- percent_growth_DP %>%
+#  group_by(tag_year) %>%
+#  mutate(spikecheck = dbh_growth/lag(dbh_growth))
+#percent_growth_two_tags <-subset(percent_growth_DP_try, spikecheck >= 7 & spikecheck<= 100)
+#percent_growth_two <- percent_growth[percent_growth$tag_year %in% unique(percent_growth_two_tags$tag_year),]
 #Check for patterns in removed trees
 removed_tagyears <- c(HF_badpeak_DP,HF_badpeak_RP, HF_below99,HF_highgrowth_DP,HF_highgrowth_RP,HF_smallgrowth)
 removed_trees <- Wood_pheno_table_hf[Wood_pheno_table_hf$tag_year %in% removed_tagyears,]
@@ -405,7 +432,9 @@ count(Wood_pheno_table_hf, sp)
 #Remove bad models from wood_pheno_table and LG5_param DF's ----
 Wood_pheno_table_hf$tag_year <- paste0(Wood_pheno_table_hf$tag, Wood_pheno_table_hf$year)
 Wood_gone <- Wood_pheno_table_hf[!(Wood_pheno_table_hf$tag_year %in% unique(percent_growth$tag_year)),]
-
+1224/3
+5994/3
+408/1998
 Wood_pheno_table_hf <- Wood_pheno_table_hf[Wood_pheno_table_hf$tag_year %in% unique(percent_growth$tag_year),]
 tot_growth <- distinct(percent_growth[,c(3,19)], .keep_all = TRUE)
 Wood_pheno_table_hf <- left_join(Wood_pheno_table_hf, tot_growth, by = "tag_year")
@@ -434,7 +463,7 @@ rel_growth_hf
 
 
 
-fig3_hf <- ggplot(percent_growth, aes(x = doy, y = dbh_growth_percent_cummulative, group = tag_year, col = wood_type)) +
+fig3_hf <- ggplot(percent_growth_SL, aes(x = doy, y = dbh_growth_percent_cummulative, group = tag_year, col = wood_type)) +
   geom_line(alpha = 0.2) +
   scale_y_continuous(labels = percent) +
   labs(x = "DOY", y = "Cummulative percent of total growth", title = "Cummulative percent of total (modeled) growth in diameter")

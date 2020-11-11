@@ -200,7 +200,7 @@ for(w in unique(Wood_pheno_table$wood_type)){
   }}#}
 dffinal <- dffinal[-1,]
 names(dffinal) <- c("wood_type", "percs", "refwoy","refmonth", "refday", "winopenwoy", "winclosewoy","bestmodel_beta","median_windowopendate", "median_windowclosedate")
-write.csv(dffinal, file = "weekly_climwin_results_all_HF_975.csv", row.names = FALSE)
+write.csv(dffinal, file = "results/Climwin_results/Weekly/Harvard Forest/weekly_climwin_results_all_HF_975.csv", row.names = FALSE)
 
 
 ####Total growth DAILY ----

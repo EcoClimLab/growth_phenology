@@ -10,7 +10,7 @@ library(rstanarm)
 library(broom.mixed)
 
 # Get growth data ----------------------------------
-Wood_pheno_table <- read_csv("Data/Wood_pheno_table_HarvardForest_V6CLEAN.csv") %>%
+Wood_pheno_table <- read_csv("Data/Wood_pheno_table_HarvardForest_V9CLEAN.csv") %>%
   # Keep only RP and DP for now
   filter(wood_type != "other") %>%
   #filter(tot >= 1) %>%
@@ -25,15 +25,15 @@ sevenfive <- subset(Wood_pheno_table, perc == .75)
 #25-50
 twofifty <- cbind(twofive,fifty$DOY)
 twofifty$twentyfive_to_fifty <- twofifty$`fifty$DOY`-twofifty$DOY
-twofifty <- twofifty[,c(3,6,16)]
+twofifty <- twofifty[,c(3,6,17)]
 #50-75
 fiftyseventy <- cbind(fifty, sevenfive$DOY)
 fiftyseventy$fifty_to_seventy <- fiftyseventy$`sevenfive$DOY`-fiftyseventy$DOY
-fiftyseventy <- fiftyseventy[,c(3,6,16)]
+fiftyseventy <- fiftyseventy[,c(3,6,17)]
 #25-75
 twosevenfive <- cbind(twofive, sevenfive$DOY)
 twosevenfive$seasonlength <- twosevenfive$`sevenfive$DOY`-twosevenfive$DOY
-twosevenfive <- twosevenfive[,c(3,6,16)]
+twosevenfive <- twosevenfive[,c(3,6,17)]
 
 
 # Create temperature variables ----------------------------------
@@ -51,7 +51,7 @@ weatherdata <-
 # Rename RP flag set by Cam
 #rename(flagrp = flag)
 climwindows <-
-  read.csv("results/Climwin_results/Weekly/Harvard Forest/weekly_climwin_results_all_HF.csv") %>%
+  read.csv("results/Climwin_results/Weekly/Harvard Forest/weekly_climwin_results_all_HF_975.csv") %>%
   filter(wood_type != "other") %>%
   mutate(
   median_windowopendate = as.Date(median_windowopendate, format = "%Y-%m-%d"),
