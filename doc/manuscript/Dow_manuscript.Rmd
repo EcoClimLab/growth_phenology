@@ -56,6 +56,7 @@ n. Center for Tropical Forest Science-Forest Global Earth Observatory; Smithsoni
 #Table numbers
 hypothesis_table=1
 species_table=2
+mean_growth_parameters_table=3
 
 #Figure numbers
 schematic=1 #illustrates parameters
@@ -250,6 +251,12 @@ For diffuse-porous trees, on average, 25% of annual growth was achieved on **Jun
 ```{r growth_curves_all, out.width="100%", echo=FALSE, fig.align="center", fig.cap= growth_curves_all_caption}
 # Created in RScripts/additional_figures.R
 knitr::include_graphics("tables_figures/growth_curves_all.png")
+```
+
+```{r mean_growth_parameters_table, eval=TRUE, echo=FALSE, warning=FALSE}
+library(knitr)
+mean_growth_parameters <- read.csv("tables_figures/mean_growth_parameters.csv",stringsAsFactors = FALSE, check.names = FALSE)
+knitr::kable(mean_growth_parameters) 
 ```
 
 *Optimal climate windows*
