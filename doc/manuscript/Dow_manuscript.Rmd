@@ -14,19 +14,19 @@ knitr::opts_chunk$set(echo = TRUE)
 \raggedright
 
 **Title:** ~~Effect of spring temperatures on tree growth phenology in two temperate deciduous forests~~
-Warmer spring temperatures in temperate deciduous forests cause earlier tree growth but have little/only modest(?) effect on annual woody productivity
+Warmer spring temperatures in temperate deciduous forests cause earlier tree growth but have little effect on annual woody productivity
 
 **Authors (not yet complete, just alphabetical for now--final order TBD):** 
 
-Cameron Dow^1^
-Loïc D’Orangeville
+Cameron Dow^1^,
+Loïc D’Orangeville,
 Erika B. Gonzalez-Akre^1^,
 Ryan Helcoski^1^,
 Valentine Herrmann^1^,
 Ian McGregor^1^,
 Sean McMahon,
 Albert Kim^1^,
-David A. Orwig
+David A. Orwig,
 Kristina J. Anderson-Teixeira^1,n^*
 
 
