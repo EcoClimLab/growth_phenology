@@ -14,20 +14,30 @@ knitr::opts_chunk$set(echo = TRUE)
 
 \raggedright
 
-**Title:** ~~Effect of spring temperatures on tree growth phenology in two temperate deciduous forests~~
-Warmer spring temperatures in temperate deciduous forests cause earlier tree growth but have little effect on annual woody productivity
+**Title:** Warmer spring temperatures in temperate deciduous forests cause earlier tree growth but have little effect on annual woody productivity
 
 **Authors (not yet complete, just alphabetical for now--final order TBD):** 
 
-Cameron Dow^1^,
-Loïc D’Orangeville,
-Erika B. Gonzalez-Akre^1^,
-Ryan Helcoski^1^,
-Valentine Herrmann^1^,
-Ian McGregor^1^,
-Sean McMahon,
-Albert Kim^1^,
-David A. Orwig,
+Cameron Dow^1^
+
+Loïc D’Orangeville
+
+Erika B. Gonzalez-Akre^1^
+
+Ryan Helcoski^1^
+
+Valentine Herrmann^1^
+
+Ian McGregor^1^
+
+Sean McMahon
+
+Albert Kim^1^
+
+David A. Orwig
+
+Neil Pederson
+
 Kristina J. Anderson-Teixeira^1,n^*
 
 
@@ -43,15 +53,14 @@ n. Center for Tropical Forest Science-Forest Global Earth Observatory; Smithsoni
 
 
 
-```{r eval=FALSE, echo=FALSE}
-## This is a chunk that won't be evaluated or displayed. I use these for notes.
-## Target journal: ??? Global Change Biology????
-## Instructions for authors: 
-#[insert guidance on word count, n figures/ tables allowed, and then some rough planning of what goes in this manuscript]
-
-```
-
 ```{r eval = TRUE, echo=FALSE, warning=FALSE, results='hide'}
+
+## Target journal: Global Change Biology
+## Instructions for authors: https://onlinelibrary-wiley-com.smithsonian.idm.oclc.org/page/journal/13652486/homepage/forauthors.html
+## Primary Research Articles present the results of a completed research project and are up to 8000 words in length. Word limits apply to the main body of the text (Introduction, Materials and Methods, Results, Discussion, and Acknowledgements).
+
+## I don't think GCB has an official limit. I just saw a recently accepted article with 10 figures and 4 tables, so we're fine!
+
 #Figures & Tables: listing figures and their number here is helpful for planning, and also allows automatic numbering within text -->easy changing of order. 
 
 #Table numbers
@@ -79,7 +88,7 @@ schematic_caption <- "Figure 1. Schematic illustrating the parameters considered
 
 growth_curves_all_caption  <- "Figure 2. Growth trajectories for ring- and diffuse-porous trees, as both relative and cumulative fractions of total annual growth. Each line represents one year's growth for a given tree, fit with McMahon model."
 
-climwin_caption <- "Figure 3. Landscapes of relationships between the day of year on which 25% of annual growth is achieved (DOY_25) and temperature in prior weeks for ring- and diffuse-porous trees at SCBI and Harvard Forest. Shown are matrices of linear coefficients of first-order linear regressions between temperature and DOY_25, where Window Open and Window Close indicate number of weeks prior to DOY_25 (ring-porous: DATE at SCBI, DATE at HF; diffuse-porous: DATE at SCBI, DATE at HF). Black boxes indicate the optimal window."
+climwin_caption <- "Figure 3. THIS IS OUT OF DATE. Landscapes of relationships between the day of year on which 25% of annual growth is achieved (DOY_25) and temperature in prior weeks for ring- and diffuse-porous trees at SCBI and Harvard Forest. Shown are matrices of linear coefficients of first-order linear regressions between temperature and DOY_25, where Window Open and Window Close indicate number of weeks prior to DOY_25 (ring-porous: DATE at SCBI, DATE at HF; diffuse-porous: DATE at SCBI, DATE at HF). Black boxes indicate the optimal window."
 
 pheno_Tsensitivity_caption <- "Figure 4. Relationship between growth parameters and climwin mean temperatures. For each 
 observed climwin mean temperature value, the posterior mean of the fitted day of year
@@ -112,6 +121,13 @@ climwin_dp_DOY25_HARV_short_caption <- "Figure S4. Full climwin output for DOY 2
 \newpage
 
 # Abstract
+```{r eval=FALSE, echo=FALSE}
+## For GCB:
+## Abstract limit for GCB is 300 words. 
+## 6-10 keywords
+
+```
+
 
 I like the [Nature summary paragraph template](https://cbs.umn.edu/sites/cbs.umn.edu/files/public/downloads/Annotated_Nature_abstract.pdf):
 
@@ -156,7 +172,7 @@ Tree-ring records give some hints that warmer springs may increase annual growth
 
 
 ## (We also know little about differences across species or functional groups, which matters because it will affect how different species fare under climate change )
-~~A recent publication by D'Orangeville et al () found that~~ Leaf and wood phenology  traits, along with their apparent relationships, are dissimilar among trees of different wood types (ring-porous and diffuse-porous; **D'Orangeville et al. **). For example, ~~they observed that~~ bud burst occurs around the same time as 25% total annual growth, and 75% leaf development coincided with 50% total annual growth in ring-porous trees, while leaf phenology and stem growth phenology were decoupled in diffuse-porous trees. 
+Leaf and wood phenology  traits, along with their apparent relationships, are dissimilar among trees of different wood types (ring-porous and diffuse-porous; **D'Orangeville et al. **). For example, bud burst occurs around the same time as 25% total annual growth, and 75% leaf development coincided with 50% total annual growth in ring-porous trees, while leaf phenology and stem growth phenology were decoupled in diffuse-porous trees. 
 
   
 The significance of wood type in regards to wood and leaf phenology likely stems from evolutionary differences and adaptations to local climates where these trees can be found. Ring-porous trees have large xylem cells which are prone to embolism during the winter. These cells are repaired before leaf development, explaining why the 25% yearly growth milestone is reached around the same time as bud burst. Diffuse-porous xylem cells are smaller, and less prone to embolism during the Winter, meaning they do not need to be repaired in order to restore hydraulic functionality before beginning the leaf development process. Results from the paper by D’Orangeville et al. (in review) have shown that ring-porous trees reach 25 and 50% of their total yearly growth during spring, while diffuse-porous trees reach these milestones in the summer, but both reached 75% total annual growth around the same time. If leaf development is sped up when spring temperatures are warmer, we should seek to understand whether this relationship holds, and how it potentially varies among trees of different wood-types. 
@@ -178,7 +194,7 @@ knitr::include_graphics("tables_figures/hypothesis_table.png")
 
 # Materials and Methods
 
-## Study sites and data
+## Study sites
 
 Study sites included two temperate forests in the Eastern United States, both part of the Forest Global Earth Observatory [ForestGEO; Anderson-Teixeira et al. 2015]. 
 
@@ -186,7 +202,7 @@ Our first study site was the forest dynamics plot located at the Smithsonian Con
 
 The second study site was Harvard Forest (42.5388° N, 72.1755° W, 340-368 m.a.s.l.), located near the central Massachusetts town of Petersham. *Harvard Forest was established in 1907 as a study site for university students and researchers. (Previous use?)* Dominate species within the approximately 13 HA plot are hemlock (*Tsuga spp.*), oak (*Quercus spp.*) and maple (*Acer spp.*). The climate is temperate continental with a mean annual precipitation of 1120 mm, January temperatures averaging -12 degrees C and July temperatures averaging 19 degrees C (D'Orangeville et al, ).
 
-## Data collection and cleaning
+## Data preparation
 ### Dendrometer bands
 
 Metal dendrometer bands installed on *99-145* and *700-755* trees within the SCBI and Harvard Forest ForestGEO plots, respectively, were measured with a digital caliper approximately every 1-2 weeks within the growing season from 2011-2020 and 1998-2003, respectively. The number of bands measured at each site fluctuated somewhat as trees were added or dropped (e.g., because of tree mortality) from the census (Table `r sample_size_by_year`) *(tags_per_year_preclean in data folder)*. Across years, the number of bands sampled averaged *~135* at SCBI and  *~717* at Harvard Forest. At SCBI, four species were sampled including two diffuse-porous (Lirodendron tulipfera and Fagus grandafolia) and two ring-porous (Quercus rubra and Quercus alba) species. At Harvard Forest, eleven species were sampled including eight diffuse-porous and three ring-porous (Table `r species_table`)*(bands_bySP csv's in data folder)*.     
@@ -206,24 +222,24 @@ Measurements were timed to begin before beginning of spring growth and to contin
 (*The following seems out of date, right? Scripted cleaning is not described.*)
 The dendroband data were manually cleaned by visual inspection. Three classes of mistakes: 1. Error in measurement - weekly measurement was drastically different from previous week and following week. Mistakes were removed from the raw data before modeling. 2. Band slip or stuck - measurements freeze and remain unchanged until sudden jump followed by normal growth pattern. Band slips were sometimes followed by measurements indicating the band became stuck; in these cases, the tree was thrown out for the corresponding year. In cases where the slip was followed by normal growth, the initial slip-point was removed, and the following points were shifted down to the pre-slip level. 3. Other - cases where data was clearly wrong but with unknown causes. In cases where several measurements were an issue, they were simply removed. If there were no clear solutions to ‘fix’ the data, the entire year was removed from the analysis.
 
+We fit the model of @mcmahon_general_2015 to define *phenological dates and growth rates* (Fig. `r schematic`). 
+...DETAILS...
+
+After model fitting, we used  a script to remove outliers....
+
 ### Tree-rings
-(*tree rings, if included-- KAT can write this*)
+(*tree rings-- KAT can write this*)
 
 ### Climate
 Daily maximum temperatures ($T_{MAX}$) for SCBI were obtained from a meteorological tower adjacent to the SCBI ForestGEO plot (data can be found on the ForestGEO climate portal, DOI on github). Daily maximum temperatures at Harvard Forest were obtained from the Harvard Forest weather station (Boose & Gould, 2004; Boose, 2018).  The R package climpact () was used to plot $T_{MAX}$ for visual inspection. Climpact also identifies readings that were greater than 3 standard deviations away from yearly means. These points were labeled as outliers and removed from the dataset. Gaps in the SCBI meteorological tower data were subsequently filled using $T_{MAX}$ readings obtained from a National Center for Environmental Information (NCEI) weather station located in Front Royal, Virginia (https://www.ncdc.noaa.gov/cdo-web/datasets/GHCND/stations/GHCND:USC00443229/detail). (*how were gaps filled for Harvard? Or was the record good?*)
 
+(*climate data for tree rings-- KAT can write this*)
 
-## Data analysis
-### Fitting growth curves
-
-We fit the model of @mcmahon_general_2015 to define *phenological dates and growth rates* (Fig. `r schematic`). 
-
-
-### Determining optimal climate windows
+## (Climwin)
 
 The period where the phenology milestone(s) were most affected by changes in early spring temperature was determined using the R package Climwin. This package tests the correlation between climate variables ($T_{MAX}$) and biological variables (DOY, max rate DOY, total growth) within a specified time-frame, reporting correlation and delta AIC's of each 'window'. as the best-model. We instructed Climwin to search for the best window beginning at February 1st and ending at the mean DOY for each phenology variable (chart in SI?). This was done to find corresponding (median of 95% CI window open and close) start and end dates for the analysis of ring-porous and diffuse-porous trees, as well as all trees pooled together.
 
-### Hypothesis testing
+## Hypothesis testing
 
 Correlation between these variables and spring temperatures over the 15 year study period (1998-2003; 2011-2019) were assessed using a linear mixed model in a heriarchal bayesian framework.
 
@@ -375,7 +391,7 @@ Another study found that the velocity of leaf development is correlated to bud b
 The timing of tree growth has profound impacts on ecosystem interactions, as well as dictates periods of highest drought sensitivity in temperate forests (Foster, 2014; D’Orangeville et al. in review). Species have co-evolved to utilize the phenological stages of trees at specific times in the year. If the timing of intraannual phenology traits were to shift, that could harm the species depending on the trees (). Additionally, if a drought were to occur when trees were at their peak growth rates, the resulting decrease in that year's NPP would reduce the total amount of carbon sequestered, contributing to a climate feedback loop further exacerbating these potential shifts (source?). 
 
 # Acknowledgements
-people: (everyone who helped collect data), Jess Shue (data), Neil Pederson (helpful discussion) 
+people: (everyone who helped collect data), Jess Shue (data)
 Funding: ForestGEO
 
 # Author Contributions
