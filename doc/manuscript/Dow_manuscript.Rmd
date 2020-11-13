@@ -380,6 +380,8 @@ We present a stepping stone for future studies to build upon.
 
 # (Content to incorporate) 
 
+From Neil: @zhang_drought_2021, @zhang_extended_2020
+
 results align with @fu_maximum_2019, which shows that interannual variation in NEE is more strongly linked to peak C uptake rates than to growing season length. Our study demonstrates that this holds true for $ANPP_{woody}$ as well as NEE.
 
 Geng et al. 2020 GCB- Climate warming increases spring phenological differences among temperate trees.
