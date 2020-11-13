@@ -24,8 +24,8 @@ library(MASS)
 
 # 1. Format dendroband data ----------------------------------------------------
 # files <- dir("data", pattern="_201[0-9]*.csv")
-files <- dir("data", pattern = "_201[0-9]*.csv")
-dates <- c(2011:2019)
+files <- dir("data", pattern = "_20[1-2][0-9]*.csv")
+dates <- c(2011:2020)
 
 # 1a. this loop breaks up each year's dendroband trees into separate dataframes by stemID
 # grouping by intraannual
@@ -130,7 +130,6 @@ lg5.pred <- function(params, doy) {
   dbh <- L + ((K - L) / (1 + 1 / theta * exp(-(r * (doy - doy.ip) / theta))^theta))
   return(dbh)
 }
-lg5.pred(params, 200)
 
 lg5.ML <- function(params, doy, dbh, resid.sd) {
   pred.dbh <- lg5.pred(params, doy)
@@ -426,7 +425,6 @@ get.lg5.ML <- function(params, doy, dbh, resid.sd) {
 ## 2v. If new.band=1, we have a measure, and there's no new dbh (indicating a new dbh wasn't recorded when the band was changed), dbh2 is the sum of the differences of the previous dbh2's added to the most recent dbh2.
 ## 2vi. UNCOMMON If new.band=1 , measure is NA, and the dbh in the original column is unchanged , dbh2 is the sum of the differences of the previous dbh2's added to the most recent dbh2.
 ## 2vii. UNCOMMON If new.band=1, measure is NA, and dbh is different, dbh2 is the new dbh plus the mean of the differences of the previous dbh2's.
-mean(tags_per_year_HF$`Harvard Forest`)
 ## intraannual data
 for (stems in names(all_stems_intra)) {
   tree.n <- all_stems_intra[[stems]]
@@ -434,10 +432,10 @@ for (stems in names(all_stems_intra)) {
   tree.n$dbh2[1] <- tree.n$dbh[1]
 
   tree.n$dbh2 <- as.numeric(tree.n$dbh2)
-  tree.n$measure <- ifelse(tree.n$flag == 0, as.numeric(tree.n$measure), as.numeric(tree.n$newmeasure))
+  #tree.n$measure <- ifelse(tree.n$flag == 0, as.numeric(tree.n$measure), as.numeric(tree.n$newmeasure))
   tree.n$dbh <- as.numeric(tree.n$dbh)
-
-  q <- mean(unlist(tapply(tree.n$measure, tree.n$dendroID, diff)), na.rm = TRUE)
+  tree.n$measure <- as.numeric(tree.n$measure)
+  #q <- mean(unlist(tapply(tree.n$measure, tree.n$dendroID, diff)), na.rm = TRUE)
 
   for (i in 2:(nrow(tree.n))) {
     tree.n$dbh2[[i]] <-
@@ -542,7 +540,7 @@ all_stems <- all_stems[, c(1:31, 34, 35)]
 # Added by bert: write all_stems observed data to csv
 write.csv(all_stems, file = "Data/all_stems.csv", row.names = FALSE)
 all_stems <- read.csv("Data/all_stems.csv")
-
+all_stems <- read_csv("~/GitHub/Dendrobands/data/scbi.dendroAll_2020.csv")
 
 
 ## Manual check of data ##
@@ -588,7 +586,7 @@ names(LG5_parameters) <- tag_years
 growth <- NULL
 all_stems$tag_stem <- paste0(all_stems$tag, "_", all_stems$stemtag)
 
-for (q in 2011:2019) {
+for (q in 2020) {
   skip_to_next <- FALSE
   Stem2 <- subset(all_stems, year == q)
   for (w in unique(Stem2$sp)) { # removes trees with less than 10 measurements in each year
@@ -1007,12 +1005,12 @@ for (q in 2011:2019) {
 warnings()
 masterDF <- masterDF[-1, ]
 masterDF$wood_type <- ifelse(masterDF$sp == "quru" | masterDF$sp == "qual", "ring porous", ifelse(masterDF$sp == "litu" | masterDF$sp == "fagr", "diffuse-porous", "other"))
-write.csv(masterDF, file = "Data/Wood_pheno_table_V10RAW.csv", row.names = FALSE)
+write.csv(masterDF, file = "Data/Wood_pheno_table_2020.csv", row.names = FALSE)
 masterDF$DOY <- as.numeric(masterDF$DOY)
 # Added by bert: save parameter values
 LG5_parameters %>%
   bind_rows() %>%
-  write_csv(file = "Data/LG5_parameter_values_V6.csv")
+  write_csv(file = "Data/LG5_parameter_values_2020.csv")
 
 LG5_try <- bind_rows(LG5_parameters)
 write.csv(bind_rows(LG5_parameters), file = "Data/LG5_parameter_values_V10RAW.csv")

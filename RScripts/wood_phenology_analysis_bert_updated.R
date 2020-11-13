@@ -24,15 +24,15 @@ sevenfive <- subset(Wood_pheno_table, perc == .75)
 #25-50
 twofifty <- cbind(twofive,fifty$DOY)
 twofifty$twentyfive_to_fifty <- twofifty$`fifty$DOY`-twofifty$DOY
-twofifty <- twofifty[,c(3,7,16)]
+twofifty <- twofifty[,c(3,7,15)]
 #50-75
 fiftyseventy <- cbind(fifty, sevenfive$DOY)
 fiftyseventy$fifty_to_seventy <- fiftyseventy$`sevenfive$DOY`-fiftyseventy$DOY
-fiftyseventy <- fiftyseventy[,c(3,7,16)]
+fiftyseventy <- fiftyseventy[,c(3,7,15)]
 #25-75
 twosevenfive <- cbind(twofive, sevenfive$DOY)
 twosevenfive$seasonlength <- twosevenfive$`sevenfive$DOY`-twosevenfive$DOY
-twosevenfive <- twosevenfive[,c(3,7,16)]
+twosevenfive <- twosevenfive[,c(3,7,15)]
 
 
 # Create temperature variables ----------------------------------
@@ -60,12 +60,22 @@ climwindows <-
   closedoy = yday(median_windowclosedate)
   )
 
-
+#4-2 - 4-23
 # 1. Get mean march daily maximum temperatures
 marchmeans <- weatherdata %>%
   filter(month == 3) %>%
   group_by(year) %>%
   summarize(marchmean = mean(cleantmax))
+
+aprilmeans <- weatherdata %>%
+  filter(month == 4) %>%
+  group_by(year) %>%
+  summarize(aprilmean = mean(cleantmax))
+
+febmeans <- weatherdata %>%
+  filter(month == 2) %>%
+  group_by(year) %>%
+  summarize(febmean = mean(cleantmax))
 
 # 2.a) EDA of climwin windows
 # RP climwin window is around 3/15 to 4/23
@@ -107,6 +117,7 @@ climwinmeans_rp <- weatherdata %>%
 #  group_by(year) %>%
 #  summarize(climwinmean = mean(TMAX)) %>%
 #  mutate(wood_type = "diffuse-porous")
+#week 3-6
 climwinmeans_dp <- weatherdata %>%
   filter(doy %in% c(climwindows[4,11]:climwindows[4,12])) %>% #68:135
   group_by(year) %>%
@@ -115,7 +126,8 @@ climwinmeans_dp <- weatherdata %>%
 
 # Combine
 climwinmeans <- bind_rows(climwinmeans_rp, climwinmeans_dp)
-
+#RP range: 19-23
+#DP range: 14.3-18.7
 
 # 3. Add to growth data
 Wood_pheno_table <- Wood_pheno_table %>%
@@ -134,7 +146,7 @@ Wood_pheno_table <- Wood_pheno_table %>%
     )
   ) %>%
   arrange(tag, year)
-View(Wood_pheno_table)
+#View(Wood_pheno_table)
 
 
 

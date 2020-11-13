@@ -171,6 +171,18 @@ joint_model_climwinmeans <- stan_mvmer(
   iter = 2000
 )
 
+# Get regression table as output by rstanarm package, then clean. We will compare
+# this table to posterior means of all fixed effects we compute later:
+bayesian_regression_table_hf <- joint_model_climwinmeans_hf %>%
+  summary() %>%
+  as_tibble(rownames = "coefficient") %>%
+  # Keep only relevant columns:
+  select(coefficient, mean, sd, `2.5%`, `97.5%`) %>%
+  # Keep only relevant rows:
+  filter(!str_detect(coefficient, "Sigma")) %>%
+  filter(str_detect(coefficient, "(Intercept)") | str_detect(coefficient, "wood_type"))
+bayesian_regression_table_hf
+
 # Fig6: Plot of regression of DOY over climwinmeans with credible intervals ----
 # Extract predicted DOY_25, DOY_50, DOY_75
 y_hat <- c(
@@ -223,7 +235,7 @@ fig6_DP <- ggplot() +
   scale_fill_brewer() +
   theme(legend.position = c(.95,.5))+
   #facet_grid(perc) +
-  coord_cartesian(xlim =c(14.3, 19), ylim = c(80, 240))+
+  coord_cartesian(xlim =c(14.3, 19.3), ylim = c(80, 240))+
   labs(x = "", y = "", col = "Percentile", title = "Diffuse-porous", subtitle = "Relationship of DOY versus climwin mean temperature")
 #geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
 fig6_DP
@@ -241,6 +253,9 @@ mixedmodel_stanlmerRP_total <- stan_lmer(
   iter = 4000,
   chains = 2
 )
+
+mixedmodel_stanlmerRP_total %>%
+  tidy(conf.int = TRUE)
 
 y_hot <- mixedmodel_stanlmerRP_total %>% posterior_predict() %>% c()
 
@@ -662,6 +677,9 @@ mixedmodel_stanlmerRP_total_hf <- stan_lmer(
   iter = 4000,
   chains = 2
 )
+
+mixedmodel_stanlmerRP_total_hf %>%
+  tidy(conf.int = TRUE)
 
 y_hot_hf <- mixedmodel_stanlmerRP_total_hf %>% posterior_predict() %>% c()
 

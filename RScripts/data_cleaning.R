@@ -76,7 +76,7 @@ percent_growth_RP <- percent_growth_RP[!(percent_growth_RP$tag_year %in% unique(
 #Remove models with peak growth outside of expected season. IE, winter growth peaks
 ratedoy <- percent_growth_RP[percent_growth_RP$dbh_growth_percent %in% maxgrowthrate$rate,]#DOY where max growth occured
 keeptags <- NULL
-for(i in 2011:2019){
+for(i in 2011:2020){
 year <- subset(ratedoy, year == i)
 upper <- (mean(year$doy)+(sd*sd(year$doy)))
 lower <- (mean(year$doy)-(sd*sd(year$doy)))
@@ -118,7 +118,7 @@ percent_growth_DP <- percent_growth_DP[!(percent_growth_DP$tag_year %in% unique(
 #Remove models with peak growth outside of expected season. IE, winter growth peaks
 ratedoy <- percent_growth_DP[percent_growth_DP$dbh_growth_percent %in% maxgrowthrate$rate,]#DOY where max growth occured
 keeptags <- NULL
-for(i in 2011:2019){
+for(i in 2011:2020){
   year <- subset(ratedoy, year == i)
   upper <- (mean(year$doy)+(sd*sd(year$doy)))
   lower <- (mean(year$doy)-(sd*sd(year$doy)))
@@ -179,7 +179,12 @@ removed_trees <-subset(removed_trees, perc == .25)
 hist(removed_trees$dbh)
 count(removed_trees,sp)
 
-weirdtag <- subset(percent_growth, doy == 210)
+weirdtag <- subset(percent_growth, doy == 190)
+weirdtag <- subset(weirdtag, dbh_growth_percent == max(weirdtag$dbh_growth_percent))
+
+percent_growth <- percent_growth[!(percent_growth$tag_year %in% unique(weirdtag$tag_year)),] #Remove tags with <99% growth
+
+weirdtag <- subset(percent_growth, doy == 353:365)
 weirdtag <- subset(weirdtag, dbh_growth_percent == max(weirdtag$dbh_growth_percent))
 
 percent_growth <- percent_growth[!(percent_growth$tag_year %in% unique(weirdtag$tag_year)),] #Remove tags with <99% growth
@@ -194,11 +199,11 @@ percent_growth <- percent_growth[!(percent_growth$tag_year %in% unique(weirdtag$
 #unitag <- unique(Wood_pheno_table_scbi)
 wood_gone <- Wood_pheno_table_scbi[!(Wood_pheno_table_scbi$tag_year %in% unique(percent_growth$tag_year)),]
 wood_gone<- subset(wood_gone, perc == .25)
-206/(2994/3)#998
+247/(3348/3)#1116
 
 Wood_pheno_table_scbi <- Wood_pheno_table_scbi[Wood_pheno_table_scbi$tag_year %in% unique(percent_growth$tag_year),]
-tot_growth <- distinct(percent_growth[,c(3,17)], .keep_all = TRUE)
-Wood_pheno_table_scbi <- left_join(Wood_pheno_table_scbi, tot_growth, by = "tag_year")
+tot_growth <- distinct(percent_growth[,c(3,16)], .keep_all = TRUE)
+Wood_pheno_table_scbi_wha <- left_join(Wood_pheno_table_scbi, tot_growth, by = "tag_year")
 #unitag <- unique(Wood_pheno_table_scbi)
 
 LG5_parameter_values_scbi$tag_year <- paste0(LG5_parameter_values_scbi$tag, LG5_parameter_values_scbi$year)

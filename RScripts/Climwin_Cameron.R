@@ -112,7 +112,7 @@ for(w in unique(Wood_pheno_table$wood_type)){
     twentyfive <- subset(Wood_pheno_table, wood_type == w & perc == j )#
 
     biodata <- data.frame(NULL)
-    for(i in c(2011:2019)){ #Assigns dates in the proper format for Climwin analysis, using DOY (already in dataframe)
+    for(i in c(2012:2019)){ #Assigns dates in the proper format for Climwin analysis, using DOY (already in dataframe)
       df <- subset(twentyfive, year == i) #using twentyfive dataset
       df$date <- as.Date(df$DOY, origin = paste0(i, "-01-01"))
       df$date <- strftime(df$date, format = "%d/%m/%Y")
@@ -132,7 +132,7 @@ for(w in unique(Wood_pheno_table$wood_type)){
                             bdate = biodata$date,
                             baseline = lm(DOY ~ 1, data = biodata),
                             cinterval = "week",
-                            range = c((refdateround-(30/7)), 0),
+                            range = c(refdateround, 0),
                             type = "absolute", refday = c(refdate$Day, refdate$Month),
                             stat = "mean",
                             func = "lin",
@@ -144,7 +144,7 @@ for(w in unique(Wood_pheno_table$wood_type)){
                           bdate = biodata$date,
                           baseline = lm(DOY ~ 1, data = biodata),
                           cinterval = "week",
-                          range = c((refdateround-(30/7)), 0),
+                          range = c(refdateround, 0),
                           type = "absolute", refday = c(refdate$Day,refdate$Month),
                           stat = "mean",
                           func = "lin",

@@ -135,7 +135,7 @@ Wood_pheno_table <- Wood_pheno_table %>%
   ) %>%
   arrange(tag, year)
 View(Wood_pheno_table)
-memory.limit(10000)
+#memory.limit(10000)
 
 
 # Fit multivariate model using climwinmeans ------------------------------------
