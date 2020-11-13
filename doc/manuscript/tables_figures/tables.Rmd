@@ -30,7 +30,7 @@ kable(hypothesis_table, col.names = c("Hypotheses and Specific Predictions", "RP
   add_header_above(c(" ", "SCBI" = 2, "Harvard"=2 )) %>%
   pack_rows("1. Warmer early springs result in earlier stem growth and longer growing seasons", 1, 5, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
   pack_rows("2. Maximum growth rates are independent of early spring temperatures.", 6, 6, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
-  pack_rows("3. Annual stem growth responds positively to warmer spring temperatures.", 7, 7, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
+  pack_rows("3. Annual stem growth responds positively to warmer spring temperatures.", 7, 8, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
   kable_styling(latex_options = c("scale_down", "hold_position"), protect_latex = T) 
 ```
 

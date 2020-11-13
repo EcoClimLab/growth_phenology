@@ -1,7 +1,8 @@
 ---
 title: ''
 output:
-  word_document:
+  bookdown::word_document2: 
+    reference_docx: word-styles-reference.docx #make sure this line is indented! see this guide for formatting: https://rmarkdown.rstudio.com/articles_docx.html
     fig_caption: yes
 bibliography: references.bib
 csl: global-change-biology.csl
@@ -70,6 +71,7 @@ pheno_Tsensitivity = 4
 DOYtiming = 5
 DOYtiming_SCBI = "5a"
 DOYtiming_Harvard = "5b"
+tree_rings = 6
 
 #figure captions
 
@@ -84,6 +86,8 @@ observed climwin mean temperature value, the posterior mean of the fitted day of
 is represented by the solid blue line and credible intervals are represented by bands."
 
 DOYtiming_caption <- "Figure 5. Day of year where growth milestones were achied at (a) the Smithonian Conservation Biology Institute and (b) Harvard Forest."
+
+tree_rings_caption <- "Figure 6. Climate sensitiivity of annual growth from tree-rings. THIS IS JUST A PLACEHOLDER TO SHOW THE RESULTS--WE'LL WANT TO RE-MAKE FIGURE."
 
 # SUPPLEMENTARY INFO (this chunk must be repeated in Dow_SI.Rmd)
 #SI table numbers
@@ -107,7 +111,7 @@ climwin_dp_DOY25_HARV_short_caption <- "Figure S4. Full climwin output for DOY 2
 
 \newpage
 
-### Abstract
+# Abstract
 
 I like the [Nature summary paragraph template](https://cbs.umn.edu/sites/cbs.umn.edu/files/public/downloads/Annotated_Nature_abstract.pdf):
 
@@ -125,14 +129,14 @@ I like the [Nature summary paragraph template](https://cbs.umn.edu/sites/cbs.umn
 \newpage
 
 
-### Introduction
+# Introduction
 
-#### (1. forests are critical for climate change regulation, so we need to understand better how they're responding to climate change)
+## (1. forests are critical for climate change regulation, so we need to understand better how they're responding to climate change)
 As global atmospheric greenhouse gas levels are rising, and little meaningful policy is being implemented in response, our planet is expected to surpass the 2.5 degree C warming mark that the Paris accord pledged to avoid. The absence of human intervention increases our reliance on natural systems to soften the blow of climate change. Plant life, especially forests, make up a large portion of these natural systems, offering many valuable ecosystem services. For one, they house an astonishing 80% of terrestrial species and are capable of removing the greenhouse gas CO2 from the atmosphere and storing it in the trees or soil. Forests sequester about one-third of all anthropogenic CO~2~ and store ~45% of all terrestrial carbon [@bonan_forests_2008]. However, their future under the current era of rapid change is uncertain [@friedlingstein_climatecarbon_2006]. 
 
 Reducing this uncertainty requires better understanding of the drivers of tree growth (Bugmann et al, 2019). Tree growth is sensitive to climatic factors like precipitation, temperature, and cloudiness in early growing season (Helcoski et al, 2019; Ciais, 2003; Goulden, 1996), as well as other physical factors including nitrogen content of soil, increasing atmospheric CO~2~, deposition of atmospheric pollutants in acid rain (Mathias & Thomas, 2018), and invasion by pests or pathogens. Understanding how growth is influenced by these factors is essential for developing accurate models to inform forest managers and policy makers about the role of future forests in climate change mitigation efforts.
 
-#### (2. spring temperatures are rising, and this is affecting leaf phenology and carbon cycling)
+## (2. spring temperatures are rising, and this is affecting leaf phenology and carbon cycling)
 In recent decades, an increase in average spring temperature has been impacting many natural systems including forests (Parmesan & Yohe, 2003; Zhihong, 2006). 
 Shifts in leaf phenology timing could be accompanied by changes in stem-growth phenology, which would likely affect woody productivity, carbon and nutrient cycling, and water use patterns in temperate forests (Keeling et al, 1996;). 
 The effects of this spring warming are most apparent when examining leaf phenology shifts, *which have been extensively studied (Way, 2011; Klosterman & Hufkins & Richardson, 2018), leading to many critical observations*. As temperatures are increasing, some regions have seen earlier leaf out in deciduous trees, sometimes matched or exceeded by later leaf senescence, meaning a potential shift in growing season timing or length (Ibáñez et al, 2010; Jeong et al., 2011). The timing of this spring warming also has a significant effect on leaf phenology response (Crabbe et al, 2016). 
@@ -142,7 +146,7 @@ However, more of the interannual variation in forest $NEE$ is explained by varia
 
 Thus, while it is increasingly clear that warming spring temperatures lengthen the growing season and modestly increase annual carbon sequestration, we know little about the effect on tree growth and woody productivity, which can be decoupled from leaf phenology (D'Orangeville et al, in review) and represent only a modest proportion of total C sequestration (Anderson-Teixeira et al. in review). 
 
-#### (3. However, we don't know how warming springs affect stem-growth, which matters because the C allocated to stem growth will be retained in the ecosystem for decades to millenia )
+## (3. However, we don't know how warming springs affect stem-growth, which matters because the C allocated to stem growth will be retained in the ecosystem for decades to millenia )
 
 Earlier timing of spring leaf-up and initiation of carbon sequestration could signal that these trees are shifting their growth windows in response to increasing spring temperatures, but to date, very little research has been done on this topic. 
 In fact, we know little about the stem-growth phenology of temperate deciduous species — let alone how these are affected by changes in spring temperature patterns. *(but check into this.... I suspect there may be some that we're missing--perhaps auto dendro bands in Europe. Neil did say that there's little on early spring T)*
@@ -151,15 +155,15 @@ Warming events in late-spring were shown to shift leaf emergence timing back mor
 Tree-ring records give some hints that warmer springs may increase annual growth (Helcoski et al. 2019; probably some more), but tree-rings tell us nothing about the timing of that growth.  Timing of intraannual stem-growth is extremely important as well. 
 
 
-#### (4. We also know little about differences across species or functional groups, which matters because it will affect how different species fare under climate change )
+## (4. We also know little about differences across species or functional groups, which matters because it will affect how different species fare under climate change )
 ~~A recent publication by D'Orangeville et al () found that~~ Leaf and wood phenology  traits, along with their apparent relationships, are dissimilar among trees of different wood types (ring-porous and diffuse-porous; **D'Orangeville et al. YY**). For example, ~~they observed that~~ bud burst occurs around the same time as 25% total annual growth, and 75% leaf development coincided with 50% total annual growth in ring-porous trees, while leaf phenology and stem growth phenology were decoupled in diffuse-porous trees. 
 
   
 The significance of wood type in regards to wood and leaf phenology likely stems from evolutionary differences and adaptations to local climates where these trees can be found. Ring-porous trees have large xylem cells which are prone to embolism during the winter. These cells are repaired before leaf development, explaining why the 25% yearly growth milestone is reached around the same time as bud burst. Diffuse-porous xylem cells are smaller, and less prone to embolism during the Winter, meaning they do not need to be repaired in order to restore hydraulic functionality before beginning the leaf development process. Results from the paper by D’Orangeville et al. (in review) have shown that ring-porous trees reach 25 and 50% of their total yearly growth during spring, while diffuse-porous trees reach these milestones in the summer, but both reached 75% total annual growth around the same time. If leaf development is sped up when spring temperatures are warmer, we should seek to understand whether this relationship holds, and how it potentially varies among trees of different wood-types. 
 
 
-#### (5. Here, we...)
-Here, we characterize how early spring temperatures affect stem growth phenology and rates of temperate deciduous trees within **two/three** forest dynamics plots in the Eastern USA. Using data from dendrometer bands measured throughout the growing season, we fit a growth model  to the time series of individual trees to determine the day of year (DOY) where 25, 50, and 75% annual growth was achieved; maximum growth rates and the DOY on which they occurred; total annual growth; and peak growing season length (75%-25% DOY) [Fig. `r schematic`; @mcmahon_general_2015]. We test the hypotheses that (1) warmer early springs result in earlier stem growth and a period of growth, but (2) maximum growth rates are independent of spring temperatures, and as a result (3) total annual growth increases in response to warmer spring temperatures (Table `r hypothesis_table`).
+## (5. Here, we...)
+Here, we characterize how early spring temperatures affect stem growth phenology and rates of temperate deciduous trees within two forest dynamics plots in the Eastern USA. Using data from dendrometer bands measured throughout the growing season, we fit a growth model  to the time series of individual trees to determine the day of year (DOY) where 25, 50, and 75% annual growth was achieved; maximum growth rates and the DOY on which they occurred; total annual growth; and peak growing season length (75%-25% DOY) [Fig. `r schematic`; @mcmahon_general_2015]. We test the hypotheses that (1) warmer early springs result in earlier stem growth and a period of growth, but (2) maximum growth rates are independent of spring temperatures, and as a result (3) total annual growth increases in response to warmer spring temperatures (Table `r hypothesis_table`).
 
 ```{r schematic, out.width="100%", echo=FALSE, fig.align="center", fig.cap= schematic_caption}
 # Created in RScripts/additional_figures.R
@@ -172,9 +176,9 @@ knitr::include_graphics("tables_figures/hypothesis_table.png")
 ```
 
 
-### Materials and Methods
+# Materials and Methods
 
-#### Study sites and data
+## Study sites and data
 
 Study sites included two temperate forests in the Eastern United States, both part of the Forest Global Earth Observatory [ForestGEO; Anderson-Teixeira et al. 2015]. 
 
@@ -184,6 +188,7 @@ The second study site was Harvard Forest (42.5388° N, 72.1755° W, 340-368 m.a.
 
 Metal dendrometer bands installed on *99-145* and *700-755* trees within the SCBI and Harvard Forest ForestGEO plots, respectively, were measured with a digital caliper approximately every 1-2 weeks within the growing season from 2011-2020 and 1998-2003, respectively. The number of bands measured at each site fluctuated somewhat as trees were added or dropped (e.g., because of tree mortality) from the census (Table `r sample_size_by_year`) *(tags_per_year_preclean in data folder)*. Across years, the number of bands sampled averaged *~135* at SCBI and  *~717* at Harvard Forest. At SCBI, four species were sampled including two diffuse-porous (Lirodendron tulipfera and Fagus grandafolia) and two ring-porous (Quercus rubra and Quercus alba) species. At Harvard Forest, eleven species were sampled including eight diffuse-porous and three ring-porous (Table `r species_table`)*(bands_bySP csv's in data folder)*.     
 
+\newpage
 *(Do we want a table of species here?? Columns would be Species, xylem porosity, n trees, n tree-years (after cleaning). Details will be in an SI table)*
 
 ```{r species_table, eval=TRUE, echo=FALSE, warning=FALSE}
@@ -195,6 +200,8 @@ knitr::kable(species_table)
 
 Measurements were timed to begin before beginning of spring growth and to continue through the cessation of growth in the fall. At SCBI, the median start date was 4/14, which was adjusted when early leaf-out of understory shrubs and herbs was observed, and the median end date was 10/17, coinciding with late senescence in the plot. The earliest start date for intraannual measurements at SCBI was March 30, 2020 and the latest end date was November 26, 2012. Harvard Forest measurements took place at a similar time, with the median start date of 4/23 and median end date of 10/30. 1998 was an anomalous year where initial measurements were taken on 1/5, but not taken again until 4/15. The latest end date was November 11, 2002.
 
+(*tree rings, if included-- KAT can write this*)
+
 (*The following seems out of date, right? Scripted cleaning is not described.*)
 The dendroband data were manually cleaned by visual inspection. Three classes of mistakes: 1. Error in measurement - weekly measurement was drastically different from previous week and following week. Mistakes were removed from the raw data before modeling. 2. Band slip or stuck - measurements freeze and remain unchanged until sudden jump followed by normal growth pattern. Band slips were sometimes followed by measurements indicating the band became stuck; in these cases, the tree was thrown out for the corresponding year. In cases where the slip was followed by normal growth, the initial slip-point was removed, and the following points were shifted down to the pre-slip level. 3. Other - cases where data was clearly wrong but with unknown causes. In cases where several measurements were an issue, they were simply removed. If there were no clear solutions to ‘fix’ the data, the entire year was removed from the analysis.
 
@@ -202,16 +209,16 @@ Daily maximum temperatures ($T_{MAX}$) for SCBI were obtained from a meteorologi
 
 
 
-#### Fitting growth curves
+## Fitting growth curves
 
 We fit the model of @mcmahon_general_2015 to define *phenological dates and growth rates* (Fig. `r schematic`). 
 
 
-#### Determining optimal climate windows
+## Determining optimal climate windows
 
 The period where the phenology milestone(s) were most affected by changes in early spring temperature was determined using the R package Climwin. This package tests the correlation between climate variables ($T_{MAX}$) and biological variables (DOY, max rate DOY, total growth) within a specified time-frame, reporting correlation and delta AIC's of each 'window'. as the best-model. We instructed Climwin to search for the best window beginning at February 1st and ending at the mean DOY for each phenology variable (chart in SI?). This was done to find corresponding (median of 95% CI window open and close) start and end dates for the analysis of ring-porous and diffuse-porous trees, as well as all trees pooled together.
 
-#### Hypothesis testing
+## Hypothesis testing
 
 Correlation between these variables and spring temperatures over the 15 year study period (1998-2003; 2011-2019) were assessed using a linear mixed model in a heriarchal bayesian framework.
 
@@ -234,7 +241,7 @@ https://cran.r-project.org/web/packages/rstanarm/vignettes/priors.html#default-w
 
 
 
-### Results
+# Results
 
 *Phenological patterns*
 
@@ -284,8 +291,16 @@ Warmer spring temperatures resulted in an earlier start of growth for ring-porou
 knitr::include_graphics("tables_figures/pheno_Tsensitivity_combo.png")
 ```
 
+*Climate sensitivity of growth*
 
-### Discussion
+
+
+```{r tree_rings, out.width="100%", echo=FALSE, fig.align="center", fig.cap= tree_rings_caption}
+# Created in RScripts/additional_figures.R
+knitr::include_graphics("tables_figures/tree_rings.tif")
+```
+
+# Discussion
 
 We have shown that intraannual growth patterns in North American temperate trees change in response to increasing spring temperatures. The magnitude of these changes depends largely on the evolutionary differences inherent in the two wood types analyzed here. Ring-porous trees must repair winter embolism of their large xylem vessels before leaf expansion, achieving roughly 25% total yearly growth simultaneously with bud burst, and 50% yearly growth around the time of 75% leaf emergence (D'Orangeville et al,). On the other hand, diffuse-porous trees are less prone to cavitation and so do not need to repair winter embolism before bud burst, allowing up to 75% leaf out before reaching their 25% yearly growth totals (D'Orangeville et al). These differences are likely evolutionary hydraulic adaptations to climate (Baas & Wheeler, 2011). The presence of wide-xylem cells in ring-porous trees allows for greater water conductivity in the spring at the cost of increased cavitation risk during spring drought, and high likeliehood of damage during frost events (Cochard & Tyree, 1990; Sperry et al, 1994). The pre-leaf stem growth occurring in these species is fueled by non-structural carbon stores, often used for other cell maintenance activities within the plant (Sperry et al, 1994; Palacio et al, 2014; Sevanto et al, 2014). The dependence on these carbon stores for cambial activation could prove to be detrimental to long-term health of the tree, as exhaustion of reserves leads to carbon starvation (Sevanto et al, 2014). Diffuse-porous trees have narrower xylem cells lowering the risk of cavitation, but leading to a decreased water conductivity in the spring, revealing a growth strategy more focused on a relatively faster, shorter growing season in the Summer (Sperry et al, 1994). This allows the diffuse-porous trees to conserve their carbon stores, making them potentially more resistant to pest/pathogen invasions?, but exposing them to higher temperatures and drought risk during their Summer-centered growth period. 
 
@@ -308,7 +323,7 @@ This analysis is one of a first generation of intraannual dendroband tree growth
 We present a stepping stone for future studies to build upon. 
 
 
-### (Content to incorporate) 
+# (Content to incorporate) 
 
 results align with @fu_maximum_2019, which shows that interannual variation in NEE is more strongly linked to peak C uptake rates than to growing season length. Our study demonstrates that this holds true for $ANPP_{woody}$ as well as NEE.
 
@@ -320,12 +335,13 @@ Another study found that the velocity of leaf development is correlated to bud b
 
 The timing of tree growth has profound impacts on ecosystem interactions, as well as dictates periods of highest drought sensitivity in temperate forests (Foster, 2014; D’Orangeville et al. in review). Species have co-evolved to utilize the phenological stages of trees at specific times in the year. If the timing of intraannual phenology traits were to shift, that could harm the species depending on the trees (). Additionally, if a drought were to occur when trees were at their peak growth rates, the resulting decrease in that year's NPP would reduce the total amount of carbon sequestered, contributing to a climate feedback loop further exacerbating these potential shifts (source?). 
 
-### Acknowledgements
-ForestGEO
+# Acknowledgements
+people: (everyone who helped collect data), Jess Shue (data), Neil Pederson (helpful discussion) 
+Funding: ForestGEO
 
-### Author Contributions
+# Author Contributions
 
-### Supporting Information
+# Supporting Information
 
 `r sample_size_by_year_caption`
 
@@ -337,5 +353,5 @@ ForestGEO
 
 `r climwin_dp_DOY25_HARV_short_caption`
 
-### References
+# References
 
