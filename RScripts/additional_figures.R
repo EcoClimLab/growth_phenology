@@ -171,7 +171,7 @@ lg5 <- function(L, K, doy_ip, r, theta, doy) {
   return(dbh)
 }
 Wood_pheno_table_scbi <- Wood_pheno_table_scbi[,-12]
-LG5_parameter_values_scbi <- LG5_parameter_values_scbi[,-12]
+LG5_parameter_values_scbi <- LG5_parameter_values_scbi[,-11]
 percent_growth_scbi <-Wood_pheno_table_scbi %>%
   mutate(
     tag = as.numeric(tag),
@@ -224,7 +224,7 @@ percent_growth_hf <- Wood_pheno_table_hf %>%
     dbh_growth_percent_cummulative = cumsum(dbh_growth_percent)
   )
 
-library(gridExtra)
+
 
 png(filename = "doc/manuscript/tables_figures/growth_curves_all.png", width=10, height=5,
     pointsize=12, bg="transparent", units="in", res=600,
@@ -273,7 +273,7 @@ as.table = TRUE, nrow=2, ncol=2) ###as.table specifies order if multiple rows
 
 dev.off()
 # ----
-#DOY timing firgure----
+#DOY timing figure----
 Wood_pheno_table_scbi <- read_csv("Data/Wood_pheno_table_V13CLEAN.csv") %>%
   # Keep only RP and DP for now
   filter(wood_type != "other") %>%
@@ -286,13 +286,17 @@ Wood_pheno_table_hf <- read_csv("Data/Wood_pheno_table_HarvardForest_V9CLEAN.csv
   # Rename ring porous to not have a space
   mutate(wood_type = ifelse(wood_type == "ring porous", "ring-porous", wood_type))
 
-warmestRP_scbi <- subset(Wood_pheno_table_scbi, year == 2011 & wood_type == "ring-porous")
+warmestRP_scbi <- subset(Wood_pheno_table_scbi, year == 2012 & wood_type == "ring-porous")
 warmestDP_scbi <- subset(Wood_pheno_table_scbi, year == 2012 & wood_type == "diffuse-porous")
 warmest_scbi <- rbind(warmestDP_scbi, warmestRP_scbi)
-coldestRP_scbi <- subset(Wood_pheno_table_scbi, year == 2016 & wood_type == "ring-porous")
+coldestRP_scbi <- subset(Wood_pheno_table_scbi, year == 2013 & wood_type == "ring-porous")
 coldestDP_scbi <- subset(Wood_pheno_table_scbi, year == 2013 & wood_type == "diffuse-porous")
 coldest_scbi <- rbind(coldestDP_scbi, coldestRP_scbi)
 aggregates_scbi <- aggregate(Wood_pheno_table_scbi$DOY, by = list(Wood_pheno_table_scbi$wood_type, Wood_pheno_table_scbi$perc), FUN = mean)
+#aggregates_scbi_rp <- subset(Wood_pheno_table_scbi, year == 2015 & wood_type == "ring-porous")
+#aggregates_scbi_dp <- subset(Wood_pheno_table_scbi, year == 2015 & wood_type == "diffuse-porous")
+#aggregates_scbi_pre <- rbind(aggregates_scbi_dp, aggregates_scbi_rp)
+#aggregates_scbi <-aggregate(aggregates_scbi_pre$DOY, by = list(aggregates_scbi_pre$wood_type, aggregates_scbi_pre$perc), FUN = mean)
 aggregates_scbi$temp_type <- "Average"
 aggregates_warm_scbi <- aggregate(warmest_scbi$DOY, by = list(warmest_scbi$wood_type, warmest_scbi$perc), FUN = mean)
 names(aggregates_warm_scbi) <- c("Group.1", "Group.2", "x")
@@ -324,11 +328,11 @@ doytiming_scbi <- ggplot(aggregates_scbi, aes(x=x, y = as.character(Group.2), gr
 #       plot = doytiming,
 #       width = fig_width, height = fig_width / 2)
 
-warmestRP_hf <- subset(Wood_pheno_table_hf, year == 2001 & wood_type == "ring-porous")
-warmestDP_hf <- subset(Wood_pheno_table_hf, year == 1998 & wood_type == "diffuse-porous")
+warmestRP_hf <- subset(Wood_pheno_table_hf, year == 2001 & wood_type == "ring-porous")#2001
+warmestDP_hf <- subset(Wood_pheno_table_hf, year == 1998 & wood_type == "diffuse-porous")#1998
 warmest_hf <- rbind(warmestRP_hf, warmestDP_hf)
-coldestRP_hf <- subset(Wood_pheno_table_hf, year == 2003 & wood_type == "ring-porous")
-coldestDP_hf <- subset(Wood_pheno_table_hf, year == 2000 & wood_type == "diffuse-porous")
+coldestRP_hf <- subset(Wood_pheno_table_hf, year == 2000 & wood_type == "ring-porous")#2003
+coldestDP_hf <- subset(Wood_pheno_table_hf, year == 2000 & wood_type == "diffuse-porous")#2000
 coldest_hf <- rbind(coldestDP_hf, coldestRP_hf)
 aggregates_hf <- aggregate(Wood_pheno_table_hf$DOY, by = list(Wood_pheno_table_hf$wood_type, Wood_pheno_table_hf$perc), FUN = mean)
 aggregates_hf$temp_type <- "Average"
@@ -362,6 +366,7 @@ grid.arrange(
   ggplot(aggregates_scbi, aes(x=x, y = as.character(Group.2), group = interaction(Group.1, temp_type), color = temp_type, linetype = Group.1))+
     geom_point(size = 3)+
     geom_line(size = 1)+
+    theme_bw()+
     theme(legend.position = "top")+
     labs(x = "", y = "Percent of Total Annual Growth", title = "(a) SCBI", color = "Temp", linetype = "Wood Type")+
     scale_colour_manual(values = c("red", "purple", "blue")),
@@ -369,6 +374,7 @@ grid.arrange(
   ggplot(aggregates_hf, aes(x=x, y = as.character(Group.2), group = interaction(Group.1, temp_type), color = temp_type, linetype = Group.1))+
     geom_point(size = 3)+
     geom_line(size = 1)+
+    theme_bw()+
     theme(legend.position = "none")+
     labs(x = "Day of Year", y = "Percent of Total Annual Growth", title = "(b) Harvard Forest", color = "Wood Type")+
     scale_colour_manual(values = c("red", "purple", "blue")),
@@ -376,3 +382,5 @@ grid.arrange(
   as.table = TRUE, nrow=2, ncol=1) ###as.table specifies order if multiple rows
 
 dev.off()
+
+
