@@ -19,7 +19,7 @@ climate <- climate[complete.cases(climate$TMAX),]
 climate$DATE <- paste(climate$day, climate$month, climate$year, sep = "/")
 climate$DATE <- strptime(as.character(climate$DATE), format = "%d/%m/%Y")
 climate$DATE <- format(climate$DATE, "%d/%m/%Y")
-
+climate <- distinct(climate,DATE,.keep_all = TRUE)
 #The data containing the biological responses for testing
 Wood_pheno_table <- read_csv("Data/Wood_pheno_table_V13CLEAN.csv") #Master datafrmae containing 20%, 50%, and 75% growth milestones
 #Wood_pheno_table <- Wood_pheno_table_scbi
@@ -36,7 +36,7 @@ for(w in unique(Wood_pheno_table$wood_type)){
     twentyfive <- subset(Wood_pheno_table,  wood_type == w & perc == j ) #
 
     biodata <- data.frame(NULL)
-    for(i in c(2011:2019)){ #Assigns dates in the proper format for Climwin analysis, using DOY (already in dataframe)
+    for(i in c(2011:2020)){ #Assigns dates in the proper format for Climwin analysis, using DOY (already in dataframe)
       df <- subset(twentyfive, year == i) #using twentyfive dataset
       df$date <- as.Date(df$DOY, origin = paste0(i, "-01-01"))
       df$date <- strftime(df$date, format = "%d/%m/%Y")
@@ -112,7 +112,7 @@ for(w in unique(Wood_pheno_table$wood_type)){
     twentyfive <- subset(Wood_pheno_table, wood_type == w & perc == j )#
 
     biodata <- data.frame(NULL)
-    for(i in c(2012:2019)){ #Assigns dates in the proper format for Climwin analysis, using DOY (already in dataframe)
+    for(i in c(2011:2020)){ #Assigns dates in the proper format for Climwin analysis, using DOY (already in dataframe)
       df <- subset(twentyfive, year == i) #using twentyfive dataset
       df$date <- as.Date(df$DOY, origin = paste0(i, "-01-01"))
       df$date <- strftime(df$date, format = "%d/%m/%Y")
