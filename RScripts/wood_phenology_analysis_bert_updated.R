@@ -107,7 +107,7 @@ climwin_windows <-
 #  summarize(climwinmean = mean(TMAX)) %>%
 #  mutate(wood_type = "ring-porous")
 climwinmeans_rp <- weatherdata %>%
-  filter(doy %in% c(climwindows[2,11]:climwindows[2,12])) %>%
+  filter(doy %in% c(climwindows[1,11]:climwindows[1,12])) %>%
   group_by(year) %>%
   summarize(climwinmean = mean(cleantmax)) %>%
   mutate(wood_type = "ring-porous")
