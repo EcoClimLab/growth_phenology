@@ -320,7 +320,7 @@ knitr::include_graphics("tables_figures/climwin.png")
 ## Climate sensitivity of phenology 
 
 For both ring- and diffuse- porous species at both sites, warmer spring temperatures resulted in earlier achievement of growth milestones (Tables `r hypothesis_table`, Figs. `r pheno_Tsensitivity`, `r DOYtiming`).
-Specifically, $DOY_{25}$, $DOY_{50}$, $DOY_{75}$, and $DOY_{g.max}$ all decreased significantly with increasing $T_{max}$ during the critical period (Table `r mean_growth_parameters_table`).
+Specifically, $DOY_{25}$, $DOY_{50}$, $DOY_{75}$, and $DOY_{ip}$ all decreased significantly with increasing $T_{max}$ during the critical period (Table `r mean_growth_parameters_table`).
 
 ```{r pheno_Tsensitivity, out.width="100%", echo=FALSE, fig.align="center", fig.cap=pheno_Tsensitivity_caption}
 # Created in RScripts/bert/wood_phenology_analysis_bert.R
