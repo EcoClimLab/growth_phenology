@@ -32,7 +32,7 @@ Ian McGregor^1^
 
 Sean McMahon
 
-Albert Kim^1^
+Albert Y. Kim^1,2^
 
 David A. Orwig
 
@@ -45,6 +45,8 @@ Kristina J. Anderson-Teixeira^1,n^*
 **Author Affiliations:**
 
 1. Conservation Ecology Center; Smithsonian Conservation Biology Institute; Front Royal, VA 22630, USA
+
+2. Statistical & Data Sciences; Smith College; Northampton, MA 01063, USA
 
 n. Center for Tropical Forest Science-Forest Global Earth Observatory; Smithsonian Tropical Research Institute; Panama, Republic of Panama
 
