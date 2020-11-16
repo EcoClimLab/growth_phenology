@@ -25,15 +25,15 @@ sevenfive <- subset(Wood_pheno_table, perc == .75)
 #25-50
 twofifty <- cbind(twofive,fifty$DOY)
 twofifty$twentyfive_to_fifty <- twofifty$`fifty$DOY`-twofifty$DOY
-twofifty <- twofifty[,c(3,7,16)]
+twofifty <- twofifty[,c(3,7,15)]
 #50-75
 fiftyseventy <- cbind(fifty, sevenfive$DOY)
 fiftyseventy$fifty_to_seventy <- fiftyseventy$`sevenfive$DOY`-fiftyseventy$DOY
-fiftyseventy <- fiftyseventy[,c(3,7,16)]
+fiftyseventy <- fiftyseventy[,c(3,7,15)]
 #25-75
 twosevenfive <- cbind(twofive, sevenfive$DOY)
 twosevenfive$seasonlength <- twosevenfive$`sevenfive$DOY`-twosevenfive$DOY
-twosevenfive <- twosevenfive[,c(3,7,16)]
+twosevenfive <- twosevenfive[,c(3,7,15)]
 
 
 # Create temperature variables ----------------------------------
@@ -173,7 +173,7 @@ joint_model_climwinmeans <- stan_mvmer(
 
 # Get regression table as output by rstanarm package, then clean. We will compare
 # this table to posterior means of all fixed effects we compute later:
-bayesian_regression_table_hf <- joint_model_climwinmeans_hf %>%
+bayesian_regression_table <- joint_model_climwinmeans %>%
   summary() %>%
   as_tibble(rownames = "coefficient") %>%
   # Keep only relevant columns:
@@ -181,7 +181,7 @@ bayesian_regression_table_hf <- joint_model_climwinmeans_hf %>%
   # Keep only relevant rows:
   filter(!str_detect(coefficient, "Sigma")) %>%
   filter(str_detect(coefficient, "(Intercept)") | str_detect(coefficient, "wood_type"))
-bayesian_regression_table_hf
+bayesian_regression_table
 
 # Fig6: Plot of regression of DOY over climwinmeans with credible intervals ----
 # Extract predicted DOY_25, DOY_50, DOY_75
@@ -582,6 +582,7 @@ Wood_pheno_table_hf <- Wood_pheno_table_hf %>%
   ) %>%
   arrange(tag, year)
 
+
 # Fit multivariate model using climwinmeans ------------------------------------
 # Delete all non-needed columns
 Wood_pheno_table_hf_2 <- Wood_pheno_table_hf %>%
@@ -608,6 +609,16 @@ joint_model_climwinmeans_hf <- stan_mvmer(
   iter = 4000
 )
 
+bayesian_regression_table_hf <- joint_model_climwinmeans_hf %>%
+  summary() %>%
+  as_tibble(rownames = "coefficient") %>%
+  # Keep only relevant columns:
+  select(coefficient, mean, sd, `2.5%`, `97.5%`) %>%
+  # Keep only relevant rows:
+  filter(!str_detect(coefficient, "Sigma")) %>%
+  filter(str_detect(coefficient, "(Intercept)") | str_detect(coefficient, "wood_type"))
+bayesian_regression_table_hf
+
 # Fig6: Plot of regression of DOY over climwinmeans with credible intervals ----
 # Extract predicted DOY_25, DOY_50, DOY_75
 y_hat_hf <- c(
@@ -615,7 +626,7 @@ y_hat_hf <- c(
   joint_model_climwinmeans_hf %>% posterior_predict(m = 2) %>% c(),
   joint_model_climwinmeans_hf %>% posterior_predict(m = 3) %>% c()
 )
-memory.limit(size = 15000)
+#memory.limit(size = 15000)
 predictions_hf <- Wood_pheno_table_hf %>%
   add_predicted_draws(joint_model_climwinmeans_hf) %>%
   ungroup() %>%
@@ -902,7 +913,24 @@ fig6_DP_mrdoy_hf <- ggplot() +
 #geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
 fig6_DP_mrdoy_hf
 
+#test
+predictions_RP$sig <- ifelse(predictions_RP$perc == "DOY_25", "Not sig", "Sig")
+predictions_RP_25 <- subset(predictions_RP, perc == "DOY_25")
+predictions_RP_50 <- subset(predictions_RP, perc == "DOY_50")
+predictions_RP_75 <- subset(predictions_RP, perc == "DOY_75")
 
+ggplot() +
+  #geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
+  stat_lineribbon(data = predictions_RP_50, aes(x = climwinmean, y = predictions_rstanarm, group = perc, col = perc), .width = c(.99, .95)) +
+  stat_lineribbon(data = predictions_RP_25, aes(x = climwinmean, y = predictions_rstanarm, group = perc, col = perc), .width = c(.99, .95)) +
+  stat_lineribbon(data = predictions_RP_75, aes(x = climwinmean, y = predictions_rstanarm, group = perc, col = perc), .width = c(.99, .95)) +
+  geom_point(data = Wood_pheno_table_RP, aes(x = climwinmean, y = DOY, col = perc)) +
+  # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
+  scale_fill_brewer() +
+  #facet_grid(perc) +
+  coord_cartesian(xlim =c(17.5, 22.5), ylim = c(80, 240))+
+  theme(legend.position = "none")+
+  labs(x = "", y = "DOY", col = "Percentile", title  = "SCBI", subtitle = "Ring-porous")
 #ALL TOGETHER----
 library(gridExtra)
 png(filename = "doc/manuscript/tables_figures/pheno_Tsensitivity_combo.png", width=15, height=25,
@@ -913,29 +941,30 @@ grid.arrange(
 
   ggplot() +
     #geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
-    stat_lineribbon(data = predictions_RP, aes(x = climwinmean, y = predictions_rstanarm, group = perc, col = perc), .width = c(.99, .95)) +
+    stat_lineribbon(data = predictions_RP, aes(x = climwinmean, y = predictions_rstanarm, group = perc, col = perc, linetype = sig), .width = c(.99, .95)) +
     geom_point(data = Wood_pheno_table_RP, aes(x = climwinmean, y = DOY, col = perc)) +
     # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
-    scale_fill_brewer() +
+    scale_linetype_manual(values=c("solid", "dashed"))+
+     scale_fill_brewer() +
     #facet_grid(perc) +
-    coord_cartesian(xlim =c(19.5, 23.5), ylim = c(80, 240))+
+    coord_cartesian(xlim =c(17.5, 22.5), ylim = c(80, 240))+
     theme(legend.position = "none")+
     labs(x = "", y = "DOY", col = "Percentile", title  = "SCBI", subtitle = "Ring-porous"),
 
   ggplot() +
     #geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
-    stat_lineribbon(data = predictions_DP, aes(x = climwinmean, y = predictions_rstanarm, group = perc, col = perc), .width = c(.99, .95)) +
+    stat_lineribbon(data = predictions_DP, aes(x = climwinmean, y = predictions_rstanarm, group = perc, col = perc), .width = c(.99, .95), linetype = "dashed") +
     geom_point(data = Wood_pheno_table_DP, aes(x = climwinmean, y = DOY, col = perc)) +
     # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
     scale_fill_brewer() +
     theme(legend.position = "none")+
     #facet_grid(perc) +
-    coord_cartesian(xlim =c(14.3, 19), ylim = c(80, 240))+
+    coord_cartesian(xlim =c(14.7, 19.2), ylim = c(80, 240))+
     labs(x = "", y = "", col = "Percentile", title = "SCBI", subtitle = "Diffuse-porous"),
 
   ggplot() +
     #geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
-    stat_lineribbon(data = predictions_RP_hf, aes(x = climwinmean, y = predictions_rstanarm, group = perc, col = perc), .width = c(.99, .95)) +
+    stat_lineribbon(data = predictions_RP_hf, aes(x = climwinmean, y = predictions_rstanarm, group = perc, col = perc), .width = c(.99, .95), linetype = "dashed") +
     geom_point(data = Wood_pheno_table_RP_hf, aes(x = climwinmean, y = DOY, col = perc)) +
     # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
     scale_fill_brewer() +
@@ -946,7 +975,7 @@ grid.arrange(
 
   ggplot() +
     #geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
-    stat_lineribbon(data = predictions_DP_hf, aes(x = climwinmean, y = predictions_rstanarm, group = perc, col = perc), .width = c(.99, .95)) +
+    stat_lineribbon(data = predictions_DP_hf, aes(x = climwinmean, y = predictions_rstanarm, group = perc, col = perc), .width = c(.99, .95), linetype = "dashed") +
     geom_point(data = Wood_pheno_table_DP_hf, aes(x = climwinmean, y = DOY, col = perc)) +
     # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
     scale_fill_brewer() +
@@ -957,59 +986,59 @@ grid.arrange(
 
   ggplot() +
     #geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
-    stat_lineribbon(data = predictions_tot_RP, aes(x = climwinmean, y = predictions_rstanarm), .width = c(.99, .95)) +
-    geom_point(data = Wood_pheno_table_RP_tot, aes(x = climwinmean, y = tot)) +
+    stat_lineribbon(data = predictions_mrdoy_RP, aes(x = climwinmean, y = predictions_rstanarm), .width = c(.99, .95), linetype = "dashed") +
+    geom_point(data = Wood_pheno_table_RP_mrdoy, aes(x = climwinmean, y = max_rate_DOY)) +
     # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
     scale_fill_brewer() +
     #facet_grid(perc) +
-    coord_cartesian(xlim =c(19.5, 23.5), ylim = c(-.4, 1.5))+
+    coord_cartesian(xlim =c(17.5, 22.5), ylim = c(99, 235))+
     theme(legend.position = "none")+
-    labs(x = "", y = "Total Growth (cm)"),
-
+    labs(x = "", y = "Max Rate DOY"),
+  
   ggplot() +
     #geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
-    stat_lineribbon(data = predictions_tot_DP, aes(x = climwinmean, y = predictions_rstanarm), .width = c(.99, .95)) +
-    geom_point(data = Wood_pheno_table_DP_tot, aes(x = climwinmean, y = tot)) +
+    stat_lineribbon(data = predictions_mrdoy_DP, aes(x = climwinmean, y = predictions_rstanarm), .width = c(.99, .95), linetype = "dashed") +
+    geom_point(data = Wood_pheno_table_DP_mrdoy, aes(x = climwinmean, y = max_rate_DOY)) +
     # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
     scale_fill_brewer() +
     #facet_grid(perc) +
-    coord_cartesian(xlim =c(14.3, 19), ylim = c(-.4, 1.5))+
+    coord_cartesian(xlim =c(14.7, 19.2), ylim = c(99, 235))+
     theme(legend.position = "none")+
-    labs(x = "", y = ""),
-
+    labs(x = "",y= ""),
+  
   ggplot() +
     #geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
-    stat_lineribbon(data = predictions_tot_RP_hf, aes(x = climwinmean, y = predictions_rstanarm), .width = c(.99, .95)) +
-    geom_point(data = Wood_pheno_table_RP_tot_hf, aes(x = climwinmean, y = tot)) +
+    stat_lineribbon(data = predictions_mrdoy_RP_hf, aes(x = climwinmean, y = predictions_rstanarm), .width = c(.99, .95), linetype = "dashed") +
+    geom_point(data = Wood_pheno_table_RP_mrdoy_hf, aes(x = climwinmean, y = max_rate_DOY)) +
     # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
     scale_fill_brewer() +
     #facet_grid(perc) +
-    coord_cartesian(xlim =c(12.3, 16), ylim = c(-.27, 1.28))+
+    coord_cartesian(xlim =c(12.3, 16), ylim = c(99, 235))+
     theme(legend.position = "none")+
-    labs(x = "", y = ""),
-
+    labs(x = "", y = "DOY"),
+  
   ggplot() +
     #geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
-    stat_lineribbon(data = predictions_tot_DP_hf, aes(x = climwinmean, y = predictions_rstanarm), .width = c(.99, .95)) +
-    geom_point(data = Wood_pheno_table_DP_tot_hf, aes(x = climwinmean, y = tot)) +
+    stat_lineribbon(data = predictions_mrdoy_DP_hf, aes(x = climwinmean, y = predictions_rstanarm), .width = c(.99, .95), linetype = "dashed") +
+    geom_point(data = Wood_pheno_table_DP_mrdoy_hf, aes(x = climwinmean, y = max_rate_DOY)) +
     # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
     scale_fill_brewer() +
     #facet_grid(perc) +
-    coord_cartesian(xlim =c(11.7, 15), ylim = c(-.27, 1))+
+    coord_cartesian(xlim =c(11.7, 15), ylim = c(99, 235))+
     theme(legend.position = "none")+
-    labs(x = "", y = ""),
-
+    labs(x = "",y= ""),
+  
   ggplot() +
     #geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
-    stat_lineribbon(data = predictions_sl_RP, aes(x = climwinmean, y = predictions_rstanarm), .width = c(.99, .95)) +
+    stat_lineribbon(data = predictions_sl_RP, aes(x = climwinmean, y = predictions_rstanarm), .width = c(.99, .95), linetype = "dashed") +
     geom_point(data = Wood_pheno_table_RP_sl, aes(x = climwinmean, y = seasonlength)) +
     # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
     scale_fill_brewer() +
     #facet_grid(perc) +
-    coord_cartesian(xlim =c(19.5, 23.5), ylim = c(3, 106))+
+    coord_cartesian(xlim =c(17.5, 22.5), ylim = c(3, 106))+
     theme(legend.position = "none")+
     labs(x = "", y = "Season Length (# of Days)"),
-
+  
   ggplot() +
     #geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
     stat_lineribbon(data = predictions_sl_DP, aes(x = climwinmean, y = predictions_rstanarm), .width = c(.99, .95)) +
@@ -1017,13 +1046,13 @@ grid.arrange(
     # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
     scale_fill_brewer() +
     #facet_grid(perc) +
-    coord_cartesian(xlim =c(14.3, 19), ylim = c(3, 90))+
+    coord_cartesian(xlim =c(14.7, 19.2), ylim = c(3, 90))+
     theme(legend.position = "none")+
     labs(x = "", y = ""),
-
+  
   ggplot() +
     #geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
-    stat_lineribbon(data = predictions_sl_RP_hf, aes(x = climwinmean, y = predictions_rstanarm), .width = c(.99, .95)) +
+    stat_lineribbon(data = predictions_sl_RP_hf, aes(x = climwinmean, y = predictions_rstanarm), .width = c(.99, .95), linetype = "dashed") +
     geom_point(data = Wood_pheno_table_RP_sl_hf, aes(x = climwinmean, y = seasonlength)) +
     # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
     scale_fill_brewer() +
@@ -1031,10 +1060,10 @@ grid.arrange(
     coord_cartesian(xlim =c(12.3, 16), ylim = c(3, 106))+
     theme(legend.position = "none")+
     labs(x = "", y = ""),
-
+  
   ggplot() +
     #geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
-    stat_lineribbon(data = predictions_sl_DP_hf, aes(x = climwinmean, y = predictions_rstanarm), .width = c(.99, .95)) +
+    stat_lineribbon(data = predictions_sl_DP_hf, aes(x = climwinmean, y = predictions_rstanarm), .width = c(.99, .95), linetype = "dashed") +
     geom_point(data = Wood_pheno_table_DP_sl_hf, aes(x = climwinmean, y = seasonlength)) +
     # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
     scale_fill_brewer() +
@@ -1042,7 +1071,7 @@ grid.arrange(
     coord_cartesian(xlim =c(11.7, 15), ylim = c(3, 106))+
     theme(legend.position = "none")+
     labs(x = "", y = ""),
-
+  
   ggplot() +
     #geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
     stat_lineribbon(data = predictions_mr_RP, aes(x = climwinmean, y = predictions_rstanarm), .width = c(.99, .95)) +
@@ -1050,7 +1079,7 @@ grid.arrange(
     # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
     scale_fill_brewer() +
     #facet_grid(perc) +
-    coord_cartesian(xlim =c(19.5, 23.5), ylim = c(-.007, 0.02))+
+    coord_cartesian(xlim =c(17.5, 22.5), ylim = c(-.007, 0.02))+
     theme(legend.position = "none")+
     labs(x = "", y = "Maximum Growth Rate (cm/day)"),
 
@@ -1061,13 +1090,13 @@ grid.arrange(
     # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
     scale_fill_brewer() +
     #facet_grid(perc) +
-    coord_cartesian(xlim =c(14.3, 19), ylim = c(-.007, 0.02))+
+    coord_cartesian(xlim =c(14.7, 19.2), ylim = c(-.007, 0.02))+
     theme(legend.position = "none")+
     labs(x = "", y = ""),
 
   ggplot() +
     #geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
-    stat_lineribbon(data = predictions_mr_RP_hf, aes(x = climwinmean, y = predictions_rstanarm), .width = c(.99, .95)) +
+    stat_lineribbon(data = predictions_mr_RP_hf, aes(x = climwinmean, y = predictions_rstanarm), .width = c(.99, .95), linetype = "dashed") +
     geom_point(data = Wood_pheno_table_RP_mr_hf, aes(x = climwinmean, y = max_rate)) +
     # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
     scale_fill_brewer() +
@@ -1078,7 +1107,7 @@ grid.arrange(
 
   ggplot() +
     #geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
-    stat_lineribbon(data = predictions_mr_DP_hf, aes(x = climwinmean, y = predictions_rstanarm), .width = c(.99, .95)) +
+    stat_lineribbon(data = predictions_mr_DP_hf, aes(x = climwinmean, y = predictions_rstanarm), .width = c(.99, .95), linetype = "dashed") +
     geom_point(data = Wood_pheno_table_DP_mr_hf, aes(x = climwinmean, y = max_rate)) +
     # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
     scale_fill_brewer() +
@@ -1087,50 +1116,52 @@ grid.arrange(
     theme(legend.position = "none")+
     labs(x = "", y = ""),
 
+  
   ggplot() +
     #geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
-    stat_lineribbon(data = predictions_mrdoy_RP, aes(x = climwinmean, y = predictions_rstanarm), .width = c(.99, .95)) +
-    geom_point(data = Wood_pheno_table_RP_mrdoy, aes(x = climwinmean, y = max_rate_DOY)) +
+    stat_lineribbon(data = predictions_tot_RP, aes(x = climwinmean, y = predictions_rstanarm), .width = c(.99, .95)) +
+    geom_point(data = Wood_pheno_table_RP_tot, aes(x = climwinmean, y = tot)) +
     # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
     scale_fill_brewer() +
     #facet_grid(perc) +
-    coord_cartesian(xlim =c(19.5, 23.5), ylim = c(99, 235))+
+    coord_cartesian(xlim =c(17.5, 22.5), ylim = c(-.4, 1.5))+
     theme(legend.position = "none")+
-    labs(x = "Temperature (c)", y = "Max Rate DOY"),
-
+    labs(x = "Temperature (c) 3/22-4/9", y = "Total Growth (cm)"),
+  
   ggplot() +
     #geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
-    stat_lineribbon(data = predictions_mrdoy_DP, aes(x = climwinmean, y = predictions_rstanarm), .width = c(.99, .95)) +
-    geom_point(data = Wood_pheno_table_DP_mrdoy, aes(x = climwinmean, y = max_rate_DOY)) +
+    stat_lineribbon(data = predictions_tot_DP, aes(x = climwinmean, y = predictions_rstanarm), .width = c(.99, .95)) +
+    geom_point(data = Wood_pheno_table_DP_tot, aes(x = climwinmean, y = tot)) +
     # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
     scale_fill_brewer() +
     #facet_grid(perc) +
-    coord_cartesian(xlim =c(14.3, 19), ylim = c(99, 235))+
+    coord_cartesian(xlim =c(14.7, 19.2), ylim = c(-.4, 1.5))+
     theme(legend.position = "none")+
-    labs(x = "Temperature (c)",y= ""),
-
+    labs(x = "Temperature (c) 2/19-5/21", y = ""),
+  
   ggplot() +
     #geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
-    stat_lineribbon(data = predictions_mrdoy_RP_hf, aes(x = climwinmean, y = predictions_rstanarm), .width = c(.99, .95)) +
-    geom_point(data = Wood_pheno_table_RP_mrdoy_hf, aes(x = climwinmean, y = max_rate_DOY)) +
+    stat_lineribbon(data = predictions_tot_RP_hf, aes(x = climwinmean, y = predictions_rstanarm), .width = c(.99, .95), linetype = "dashed") +
+    geom_point(data = Wood_pheno_table_RP_tot_hf, aes(x = climwinmean, y = tot)) +
     # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
     scale_fill_brewer() +
     #facet_grid(perc) +
-    coord_cartesian(xlim =c(12.3, 16), ylim = c(99, 235))+
+    coord_cartesian(xlim =c(12.3, 16), ylim = c(-.27, 1.28))+
     theme(legend.position = "none")+
-    labs(x = "Temperature (c)", y = "DOY"),
-
+    labs(x = "Temperature (c) 4/2-5/7", y = ""),
+  
   ggplot() +
     #geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
-    stat_lineribbon(data = predictions_mrdoy_DP_hf, aes(x = climwinmean, y = predictions_rstanarm), .width = c(.99, .95)) +
-    geom_point(data = Wood_pheno_table_DP_mrdoy_hf, aes(x = climwinmean, y = max_rate_DOY)) +
+    stat_lineribbon(data = predictions_tot_DP_hf, aes(x = climwinmean, y = predictions_rstanarm), .width = c(.99, .95), linetype = "shortdash") +
+    geom_point(data = Wood_pheno_table_DP_tot_hf, aes(x = climwinmean, y = tot)) +
     # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
     scale_fill_brewer() +
     #facet_grid(perc) +
-    coord_cartesian(xlim =c(11.7, 15), ylim = c(99, 235))+
+    coord_cartesian(xlim =c(11.7, 15), ylim = c(-.27, 1))+
     theme(legend.position = "none")+
-    labs(x = "Temperature (c)",y= ""),
-
+    labs(x = "Temperature (c) 3/19-5/7", y = ""),
+  
+  
   as.table = TRUE, nrow=5, ncol=4) ###as.table specifies order if multiple rows
 
 dev.off()
