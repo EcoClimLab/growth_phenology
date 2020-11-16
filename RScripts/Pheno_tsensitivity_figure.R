@@ -25,15 +25,15 @@ sevenfive <- subset(Wood_pheno_table, perc == .75)
 #25-50
 twofifty <- cbind(twofive,fifty$DOY)
 twofifty$twentyfive_to_fifty <- twofifty$`fifty$DOY`-twofifty$DOY
-twofifty <- twofifty[,c(3,7,15)]
+twofifty <- twofifty[,c(3,7,16)]
 #50-75
 fiftyseventy <- cbind(fifty, sevenfive$DOY)
 fiftyseventy$fifty_to_seventy <- fiftyseventy$`sevenfive$DOY`-fiftyseventy$DOY
-fiftyseventy <- fiftyseventy[,c(3,7,15)]
+fiftyseventy <- fiftyseventy[,c(3,7,16)]
 #25-75
 twosevenfive <- cbind(twofive, sevenfive$DOY)
 twosevenfive$seasonlength <- twosevenfive$`sevenfive$DOY`-twosevenfive$DOY
-twosevenfive <- twosevenfive[,c(3,7,15)]
+twosevenfive <- twosevenfive[,c(3,7,16)]
 
 
 # Create temperature variables ----------------------------------
@@ -242,9 +242,7 @@ fig6_DP
 
 ###TOTAL GROWTH----
 woodtable <- subset(Wood_pheno_table, perc == "DOY_25")
-total_formulaRP <- "tot ~ wood_type + wood_type:climwinmean + (1|tag)" %>% as.formula()
-
-earlyperiod_formulaRP <- "twentyfive_to_fifty ~ wood_type + wood_type:climwinmean + (1|tag)" %>% as.formula()
+total_formulaRP <- "dbh_total_growth ~ wood_type + wood_type:climwinmean + (1|tag)" %>% as.formula()
 
 mixedmodel_stanlmerRP_total <- stan_lmer(
   formula = total_formulaRP,
@@ -277,7 +275,7 @@ fig6_RP_tot <- ggplot() +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
   #facet_grid(perc) +
-  coord_cartesian(xlim =c(19.5, 23.5), ylim = c(-.4, 1.5))+
+  coord_cartesian(xlim =c(17.5, 22.5), ylim = c(-.4, 1.5))+
   theme(legend.position = "none")+
   labs(x = "", y = "Total (cm)", subtitle  = "Total Growth")
 #geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
@@ -994,7 +992,7 @@ grid.arrange(
     coord_cartesian(xlim =c(17.5, 22.5), ylim = c(99, 235))+
     theme(legend.position = "none")+
     labs(x = "", y = "Max Rate DOY"),
-  
+
   ggplot() +
     #geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
     stat_lineribbon(data = predictions_mrdoy_DP, aes(x = climwinmean, y = predictions_rstanarm), .width = c(.99, .95), linetype = "dashed") +
@@ -1005,7 +1003,7 @@ grid.arrange(
     coord_cartesian(xlim =c(14.7, 19.2), ylim = c(99, 235))+
     theme(legend.position = "none")+
     labs(x = "",y= ""),
-  
+
   ggplot() +
     #geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
     stat_lineribbon(data = predictions_mrdoy_RP_hf, aes(x = climwinmean, y = predictions_rstanarm), .width = c(.99, .95), linetype = "dashed") +
@@ -1016,7 +1014,7 @@ grid.arrange(
     coord_cartesian(xlim =c(12.3, 16), ylim = c(99, 235))+
     theme(legend.position = "none")+
     labs(x = "", y = "DOY"),
-  
+
   ggplot() +
     #geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
     stat_lineribbon(data = predictions_mrdoy_DP_hf, aes(x = climwinmean, y = predictions_rstanarm), .width = c(.99, .95), linetype = "dashed") +
@@ -1027,7 +1025,7 @@ grid.arrange(
     coord_cartesian(xlim =c(11.7, 15), ylim = c(99, 235))+
     theme(legend.position = "none")+
     labs(x = "",y= ""),
-  
+
   ggplot() +
     #geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
     stat_lineribbon(data = predictions_sl_RP, aes(x = climwinmean, y = predictions_rstanarm), .width = c(.99, .95), linetype = "dashed") +
@@ -1038,7 +1036,7 @@ grid.arrange(
     coord_cartesian(xlim =c(17.5, 22.5), ylim = c(3, 106))+
     theme(legend.position = "none")+
     labs(x = "", y = "Season Length (# of Days)"),
-  
+
   ggplot() +
     #geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
     stat_lineribbon(data = predictions_sl_DP, aes(x = climwinmean, y = predictions_rstanarm), .width = c(.99, .95)) +
@@ -1049,7 +1047,7 @@ grid.arrange(
     coord_cartesian(xlim =c(14.7, 19.2), ylim = c(3, 90))+
     theme(legend.position = "none")+
     labs(x = "", y = ""),
-  
+
   ggplot() +
     #geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
     stat_lineribbon(data = predictions_sl_RP_hf, aes(x = climwinmean, y = predictions_rstanarm), .width = c(.99, .95), linetype = "dashed") +
@@ -1060,7 +1058,7 @@ grid.arrange(
     coord_cartesian(xlim =c(12.3, 16), ylim = c(3, 106))+
     theme(legend.position = "none")+
     labs(x = "", y = ""),
-  
+
   ggplot() +
     #geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
     stat_lineribbon(data = predictions_sl_DP_hf, aes(x = climwinmean, y = predictions_rstanarm), .width = c(.99, .95), linetype = "dashed") +
@@ -1071,7 +1069,7 @@ grid.arrange(
     coord_cartesian(xlim =c(11.7, 15), ylim = c(3, 106))+
     theme(legend.position = "none")+
     labs(x = "", y = ""),
-  
+
   ggplot() +
     #geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
     stat_lineribbon(data = predictions_mr_RP, aes(x = climwinmean, y = predictions_rstanarm), .width = c(.99, .95)) +
@@ -1116,7 +1114,7 @@ grid.arrange(
     theme(legend.position = "none")+
     labs(x = "", y = ""),
 
-  
+
   ggplot() +
     #geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
     stat_lineribbon(data = predictions_tot_RP, aes(x = climwinmean, y = predictions_rstanarm), .width = c(.99, .95)) +
@@ -1127,7 +1125,7 @@ grid.arrange(
     coord_cartesian(xlim =c(17.5, 22.5), ylim = c(-.4, 1.5))+
     theme(legend.position = "none")+
     labs(x = "Temperature (c) 3/22-4/9", y = "Total Growth (cm)"),
-  
+
   ggplot() +
     #geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
     stat_lineribbon(data = predictions_tot_DP, aes(x = climwinmean, y = predictions_rstanarm), .width = c(.99, .95)) +
@@ -1138,7 +1136,7 @@ grid.arrange(
     coord_cartesian(xlim =c(14.7, 19.2), ylim = c(-.4, 1.5))+
     theme(legend.position = "none")+
     labs(x = "Temperature (c) 2/19-5/21", y = ""),
-  
+
   ggplot() +
     #geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
     stat_lineribbon(data = predictions_tot_RP_hf, aes(x = climwinmean, y = predictions_rstanarm), .width = c(.99, .95), linetype = "dashed") +
@@ -1149,7 +1147,7 @@ grid.arrange(
     coord_cartesian(xlim =c(12.3, 16), ylim = c(-.27, 1.28))+
     theme(legend.position = "none")+
     labs(x = "Temperature (c) 4/2-5/7", y = ""),
-  
+
   ggplot() +
     #geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
     stat_lineribbon(data = predictions_tot_DP_hf, aes(x = climwinmean, y = predictions_rstanarm), .width = c(.99, .95), linetype = "shortdash") +
@@ -1160,8 +1158,8 @@ grid.arrange(
     coord_cartesian(xlim =c(11.7, 15), ylim = c(-.27, 1))+
     theme(legend.position = "none")+
     labs(x = "Temperature (c) 3/19-5/7", y = ""),
-  
-  
+
+
   as.table = TRUE, nrow=5, ncol=4) ###as.table specifies order if multiple rows
 
 dev.off()
