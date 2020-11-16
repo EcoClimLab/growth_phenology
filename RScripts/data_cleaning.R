@@ -203,7 +203,7 @@ wood_gone<- subset(wood_gone, perc == .25)
 
 Wood_pheno_table_scbi <- Wood_pheno_table_scbi[Wood_pheno_table_scbi$tag_year %in% unique(percent_growth$tag_year),]
 tot_growth <- distinct(percent_growth[,c(3,16)], .keep_all = TRUE)
-Wood_pheno_table_scbi_wha <- left_join(Wood_pheno_table_scbi, tot_growth, by = "tag_year")
+Wood_pheno_table_scbi <- left_join(Wood_pheno_table_scbi, tot_growth, by = "tag_year")
 #unitag <- unique(Wood_pheno_table_scbi)
 
 LG5_parameter_values_scbi$tag_year <- paste0(LG5_parameter_values_scbi$tag, LG5_parameter_values_scbi$year)
