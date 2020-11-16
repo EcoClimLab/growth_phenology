@@ -105,7 +105,7 @@ create_growth_polygon <- function(doy_diameter_quartile, percent){
 
 
 # Output figure
-geom.text.size <- 3.5
+geom.text.size <- 4
 theme.size <- (14/5) * geom.text.size
 
 
@@ -119,10 +119,10 @@ schematic <- ggplot() +
     axis.title = element_text(size = theme.size)
   ) +
   labs(
-    x = "Day of year",
+    x = "Day of year (1 to 365)",
     y = "Diameter at breast height"
   ) +
-  coord_cartesian(xlim = c(1, 300))+
+  coord_cartesian(xlim = c(30, 280))+
   # Mark DOY's on x-axis:
   geom_vline(data = doy_diameter_quartile, aes(xintercept = doy), linetype = "dashed", show.legend = FALSE, col = "grey") +
   scale_x_continuous(
@@ -149,7 +149,7 @@ schematic <- ggplot() +
     "text",
     x = doy.ip,
     y = lg5.pred(params, doy.ip) + 0.025,
-    label = expression(paste(g[max], " = slope of tangent line at ", DOY[ip], "  ")),
+    label = expression(paste(g[max], " = slope of tangent line  ")),
     hjust = 1,
     size = geom.text.size
   ) +
