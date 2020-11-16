@@ -1,0 +1,198 @@
+---
+title: "LG5 Function Errata Updated"
+author: "Albert Y. Kim"
+date: "Last updated on `r Sys.Date()`"
+output:
+  pdf_document:
+    number_sections: yes
+  html_document:
+    df_print: kable
+    highlight: tango
+    number_sections: yes
+    theme: cosmo
+urlcolor: blue
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, echo = FALSE)
+library(tidyverse)
+```
+
+
+# LG5 model formula typo
+
+The formula is written as follows in [McMahon and Parker 2015 Eq 1 (page 245)](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4314258/). Note how in the numerator the $L$'s cancel out, leaving only $K$ being included in the formula:
+
+$$
+dbh = \frac{L + (K-L)}{1 + 1/\theta*\exp(-r(doy - doy_{ip})/\theta)^{\theta}}
+$$
+The formula is written as follows in the D'Orangeville et al. draft manuscript (page 9). Note the numerator is different than McMahon and Parker's formulation:
+
+$$
+dbh = \frac{K-L}{1 + 1/\theta*\exp(-r(doy - doy_{ip})/\theta)^{\theta}}
+$$
+However the `lg5.pred()` function from the [`RDendrom`
+package](https://github.com/seanmcm/RDendrom/blob/master/R/DENDRO_BASE_FUNCTIONS.R) computes DBH as follows:
+
+```{r, echo = TRUE}
+lg5.pred <- function(params, doy) {
+  L <- params[1] # min(dbh, na.rm = T)
+  K <- params[2]
+  doy.ip <- params[3]
+  r <- params[4]
+  theta <- params[5]
+  dbh <- vector(length = length(doy))
+  dbh <- L + ((K - L) / (1 + 1 / theta * exp(-(r * (doy - doy.ip) / theta))^theta))
+  return(dbh)
+}
+```
+
+which corresponds to the following formula:
+
+$$
+dbh = L + \frac{K-L}{1 + 1/\theta*\exp(-r(doy - doy_{ip})/\theta)^{\theta}}
+$$
+
+Also note that the denominator of the LG5 function can be simplified since 
+$$
+\exp(-r(doy - doy_{ip})/\theta)^{\theta} = \exp(-r(doy - doy_{ip}))
+$$
+
+
+
+
+
+# $doy_{ip}$ and $r$ parameter from LG5 model
+
+I have a suspicion both these interpretations of the $r$ and $doy_{ip}$ parameters of LG5 model are incorrect:
+
+1. McMahon and Parker 2015 state just above Eq 1 (page 245): "$doy_{ip}$ marks the day of the year when the inflection of the curve is predicted to occur, and the rate parameter $r$ describes the slope of the curve at the inflection point"
+1. D'Orangeville et al. state (page 9): "$r$ represents the maximum growth rate" and "$doy_{ip}$ is the day of year when maximum growth rate occurs" and "$doy_{ip}$ is the day of year (doy) when maximum growth rate occurs..."
+
+Rather, I believe that the correct formulations of (1) the slope/the maximum growth rate and (2) inflection points are instead:
+
+$$
+\begin{aligned}
+doy_{ip}^* &= -\frac{\log(\theta)}{r} + doy_{ip}\\
+r^* &= \frac{r(K-L)}{4}
+\end{aligned}
+$$
+
+
+## Plot LG5 diameter and growth curves
+
+Let's set arbitrarily chosen parameter values **but making sure to use a value other than $\theta$ = 1**:
+
+1. Use `lg5.pred()` to compute all diameters for all DOY = 1, ..., 365
+1. Compute growth by taking differences of diameters
+
+```{r, echo = TRUE}
+L <- 13
+K <- 14
+doy.ip <- 175
+r <- 0.05
+# Use a value other than theta = 1:
+theta <- 1.5
+```
+
+
+## Original interpretations of $doy_{ip}$
+
+We then plot both the diameter curve as well as the growth curve, with `doy.ip` marked with a vertical dotted line.
+
+```{r, fig.width=10}
+params <- c(L, K, doy.ip, r, theta)
+dbh_growth_values <- tibble(doy = seq(from = 1, to = 365)) %>%
+  mutate(
+    diameter = lg5.pred(params, doy),
+    growth = diameter - lag(diameter)
+  )
+
+par(mfrow=c(1, 2))
+plot(dbh_growth_values$doy, dbh_growth_values$diameter, type = "l", 
+     main = "LG5 diameter", xlab = "doy", ylab = "diameter")
+abline(v = doy.ip, lty = "dotted")
+plot(dbh_growth_values$doy, dbh_growth_values$growth, type = "l", 
+     main = "Growth curve", xlab = "doy", ylab = "growth")
+abline(v = doy.ip, lty = "dotted")
+```
+
+Observe how `doy.ip` is not the day the peak growth occurs.
+
+## Original interpretations of $r$
+
+1. McMahon and Parker 2015 state: "the rate parameter $r$ describes the slope of the curve at the inflection point". We mark the appropriate line with slope `r` in orange in the diameter plot. 
+1. D'Orangeville et al. state: "$r$ represents the maximum growth rate" and "$doy_{ip}$ is the day of year when maximum growth rate occurs". Let's mark this maximum growth rate with a horizontal orange line in the growth plot.
+
+```{r, fig.width=10}
+# Compute diameter at doy.ip, then solve for intercept via y = mx + b 
+y <- lg5.pred(params, doy.ip)
+intercept <- y - r*doy.ip
+
+par(mfrow=c(1, 2))
+plot(dbh_growth_values$doy, dbh_growth_values$diameter, type = "l", 
+     main = "LG5 diameter", xlab = "doy", ylab = "diameter")
+abline(v = doy.ip, lty = "dotted")
+abline(intercept, r, col = "orange")
+plot(dbh_growth_values$doy, dbh_growth_values$growth, type = "l", 
+     main = "Growth curve", xlab = "doy", ylab = "growth")
+abline(v = doy.ip, lty = "dotted")
+abline(h = r, col = "orange")
+```
+
+Observe
+
+1. In the left plot how the orange line does not appear to be tangent to the LG5 curve at `doy.ip` and hence is not the slope at that point.
+1. In the right plot $r$ = `r r` does not correspond to the growth rate at the peak of the curve, rather it appears to be around 0.012. 
+
+
+## Proposed $doy_{ip}^*$ and $r^*$
+
+Let's repeat the above with our proposed $doy_{ip}^*$, which is the point $x$ at which $\frac{d^2}{dx^2}LG5(x) = 0$ (per calculus on inflection points), and our proposed new growth rate $r^*$, which is $\frac{d}{dx}LG5(x)$ evaluated at $x$ = $doy_{ip}^*$. See [this](https://drive.google.com/file/d/1CMT2o1svTfbS7wQ_uJoWjqHbvDopkCZw/view?usp=sharing) and [this](https://drive.google.com/file/d/10MjbohLvOvLxkBpNmC_bnJKnLiE0K-pr/view?usp=sharing) PDF for all analytic derivative derivations.
+
+$$
+\begin{aligned}
+r^* &= \frac{r(K-L)}{4}\\
+doy_{ip}^* &= -\frac{\log(\theta)}{r} + doy_{ip}
+\end{aligned}
+$$
+
+
+```{r, fig.width=10}
+# Comupte new r and doy.ip, then find intercept
+r_new <- r*(K-L)/4
+doy.ip_new <- -log(theta)/r + doy.ip
+y <- lg5.pred(params, doy.ip_new)
+intercept_new <- y - r_new*doy.ip_new
+
+par(mfrow=c(1, 2))
+plot(dbh_growth_values$doy, dbh_growth_values$diameter, type = "l", 
+     main = "LG5 diameter", xlab = "doy", ylab = "diameter")
+abline(v = doy.ip_new, lty = "dotted")
+abline(intercept_new, r_new, col = "orange")
+plot(dbh_growth_values$doy, dbh_growth_values$growth, type = "l", 
+     main = "Growth curve", xlab = "doy", ylab = "growth")
+abline(v = doy.ip_new, lty = "dotted")
+abline(h = r_new, col = "orange")
+```
+
+Observe:
+
+1. In the left plot how the orange line is now tangent to the LG5 curve at `doy.ip` and thus is the correct slope.
+1. In the right plot $r^*$ = `r r_new` now corresponds to the max growth rate correctly occurring at `doy.ip`.
+
+
+# Previous errata
+
+In the previous errata PDF `LG5_errata.pdf` I suggested that the correct max growth rate was 
+
+$$
+r_{new} = \frac{K-L}{\left(1 + \frac{1}{\theta}\right)^2}\frac{r}{\theta}
+$$
+
+However, this result was based on the incorrect assumption that $doy_{ip}$ was the correct inflection point, which we evaluated $\frac{d}{dx}LG5(x)$ to obtain the max growth rate. Furthermore, the empirical simulations/plots I showed were for $\theta = 1$. If we plug this value into the previous $r_{new}$ we get
+
+$$
+r_{new} = \frac{K-L}{\left(1 + \frac{1}{\theta}\right)^2}\frac{r}{\theta} = \frac{K-L}{\left(1 + \frac{1}{1}\right)^2}\frac{r}{1} = \frac{r(K-L)}{4}
+$$
+which is our updated formulation above. 
