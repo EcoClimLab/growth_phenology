@@ -26,10 +26,6 @@ end_doy <- 365
 window_open <- 60
 window_close <- 105
 
-critical_temp_window <- tibble(
-  x = c(window_open, window_close, window_close, window_open, window_open),
-  y = c()
-)
 
 # Function for logistic growth model written by Sean. Supposed to be in RDendrom
 # package https://github.com/seanmcm/RDendrom, but function does not seem to be included
@@ -56,9 +52,19 @@ true_values <- tibble(
 # Incorrect intercept since r is not true slope at inflection point:
 # intercept <- lg5.pred(params, doy.ip) - r *doy.ip
 
-# Correct slope and intercept
+# Version 1 of correct slope and intercept
 r_true <- ((K-L)*r/theta )/(1 + 1/theta)^2
 intercept_true <- lg5.pred(params, doy.ip) - r_true *doy.ip
+
+# Version 2 of correct doy/ip, slope, and intercept
+doy.ip_true <- -log(theta)/r + doy.ip
+r_true_true <- r*(K-L)/4
+intercept_true_true <- lg5.pred(params, doy.ip_true) - r_true_true *doy.ip_true
+
+ggplot(true_values, aes(x = doy, y = diff)) +
+  geom_line() +
+  geom_vline(xintercept = doy.ip_true) +
+  geom_hline(yintercept = r_true_true)
 
 
 # 3. Observed values (noise/error added) (points)
