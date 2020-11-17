@@ -401,7 +401,7 @@ doytiming_scbi <- ggplot(aggregates_scbi, aes(x=x, y = as.character(Group.2), gr
 warmestRP_hf <- subset(Wood_pheno_table_hf, year == 2001 & wood_type == "ring-porous")#2001
 warmestDP_hf <- subset(Wood_pheno_table_hf, year == 1998 & wood_type == "diffuse-porous")#1998
 warmest_hf <- rbind(warmestRP_hf, warmestDP_hf)
-coldestRP_hf <- subset(Wood_pheno_table_hf, year == 2000 & wood_type == "ring-porous")#2003
+coldestRP_hf <- subset(Wood_pheno_table_hf, year == 2000 & wood_type == "ring-porous")#2000
 coldestDP_hf <- subset(Wood_pheno_table_hf, year == 2000 & wood_type == "diffuse-porous")#2000
 coldest_hf <- rbind(coldestDP_hf, coldestRP_hf)
 aggregates_hf <- aggregate(Wood_pheno_table_hf$DOY, by = list(Wood_pheno_table_hf$wood_type, Wood_pheno_table_hf$perc), FUN = mean)
