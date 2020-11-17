@@ -5,33 +5,33 @@ library(lubridate)
 library(tidyverse)
 library(dplyr)
 #Merge two weather DF's into one ----
-#HF_1964to2002 <- read_csv("climate data/HF_1964to2002.csv")
-#HF_2001toPresent <- read_csv("climate data/HF_2001toPresent.csv")
-#
-#HF_1964to2002$DOY <- yday(HF_1964to2002$date)# format = "%y-%m-%d")
-#
-#HF_1964to2002$year <- as.numeric(format(HF_1964to2002$date, format = "%Y"))
-#HF_1998to2002 <- subset(HF_1964to2002, year >=1998)
-#HF_1998to2002 <- HF_1998to2002[,c(1,4,11,12)]
-#HF_1998to2002$month <- as.numeric(format(HF_1998to2002$date, format = "%m"))
-#HF_1998to2002$day <- as.numeric(format(HF_1998to2002$date, format = "%d"))
-#
-#HF_2001toPresent$DOY <- yday(HF_2001toPresent$date)
-#HF_2001toPresent$year <- as.numeric(format(HF_2001toPresent$date, format = "%Y"))
-#HF_2001toPresent <- HF_2001toPresent[,c(1,5,47,48)]
-#HF_2001toPresent <- HF_2001toPresent[c(-1:-505),]
-#HF_2001toPresent <- subset(HF_2001toPresent, year == 2002 | year == 2003)
-#HF_2001toPresent$month <- as.numeric(format(HF_2001toPresent$date, format = "%m"))
-#HF_2001toPresent$day <- as.numeric(format(HF_2001toPresent$date, format = "%d"))
-#
-#HF_weatherdata <- rbind(HF_1998to2002, HF_2001toPresent)
-#
-#write.csv(HF_weatherdata, file = "HF_weatherdata.csv", row.names = FALSE)
+HF_1964to2002 <- read_csv("climate data/HF_1964to2002.csv")
+HF_2001toPresent <- read_csv("climate data/HF_2001toPresent.csv")
+
+HF_1964to2002$DOY <- yday(HF_1964to2002$date)# format = "%y-%m-%d")
+
+HF_1964to2002$year <- as.numeric(format(HF_1964to2002$date, format = "%Y"))
+HF_1998to2002 <- subset(HF_1964to2002, year >=1998)
+HF_1998to2002 <- HF_1998to2002[,c(1,6,10,11)]
+HF_1998to2002$month <- as.numeric(format(HF_1998to2002$date, format = "%m"))
+HF_1998to2002$day <- as.numeric(format(HF_1998to2002$date, format = "%d"))
+
+HF_2001toPresent$DOY <- yday(HF_2001toPresent$date)
+HF_2001toPresent$year <- as.numeric(format(HF_2001toPresent$date, format = "%Y"))
+HF_2001toPresent <- HF_2001toPresent[,c(1,7,47,48)]
+HF_2001toPresent <- HF_2001toPresent[c(-1:-505),]
+HF_2001toPresent <- subset(HF_2001toPresent, year == 2002 | year == 2003)
+HF_2001toPresent$month <- as.numeric(format(HF_2001toPresent$date, format = "%m"))
+HF_2001toPresent$day <- as.numeric(format(HF_2001toPresent$date, format = "%d"))
+
+HF_weatherdata <- rbind(HF_1998to2002, HF_2001toPresent)
+
+write.csv(HF_weatherdata, file = "HF_weatherdata_TMIN.csv", row.names = FALSE)
 ####Read in climate and biological data for climwin analysis ----
 #SCBI met tower
 #climate <- read_csv("climate data/SCBI_mettower_data_sensor2.csv", col_names = FALSE) #only goes to October 2019, fix?
 climate <- read_csv("climate data/HF_weatherdata.csv", col_names = TRUE) #only goes to October 2019, fix?
-
+#climate <- HF_weatherdata
 #colnames(climate) <- c("year","month", "day", "prcip", "TMAX", "TMIN")
 
 colnames(climate) <- c("date","TMAX", "doy", "year", "month", "day")
@@ -150,7 +150,7 @@ for(w in unique(Wood_pheno_table$wood_type)){
     refdate$round.mean.biodata.DOY.. <- as.Date(refdate$round.mean.biodata.DOY.., origin = paste0("1998-01-01"))
     refdate <- separate(refdate, "round.mean.biodata.DOY..", c("Year", "Month", "Day"), sep = "-")
 
-    MassWin <- slidingwin(xvar = list(Temp = climate$TMAX),
+    MassWin <- slidingwin(xvar = list(Temp = climate$TMIN),
                           cdate = climate$DATE,
                           bdate = biodata$date,
                           baseline = lm(DOY ~ 1, data = biodata),
@@ -162,7 +162,7 @@ for(w in unique(Wood_pheno_table$wood_type)){
                           cmissing = "method2")
 
     MassRand <- randwin(repeats = 5,
-                        xvar = list(Temp = climate$TMAX),
+                        xvar = list(Temp = climate$TMIN),
                         cdate = climate$DATE,
                         bdate = biodata$date,
                         baseline = lm(DOY ~ 1, data = biodata),
@@ -181,7 +181,7 @@ for(w in unique(Wood_pheno_table$wood_type)){
     tryCatch(
     winmedians <- medwin(MassOutput, cw = 0.95),
     error = function(hi){
-      winmedians <<- medwin(MassOutput, cw = .9999)
+      winmedians <<- medwin(MassOutput, cw = .99999)
     }
     )
     medianwindowopen <- as.Date(refdateround*7- winmedians[["Median Window Open"]]*7 , origin = paste0("2011-01-01"))
@@ -200,7 +200,7 @@ for(w in unique(Wood_pheno_table$wood_type)){
   }}#}
 dffinal <- dffinal[-1,]
 names(dffinal) <- c("wood_type", "percs", "refwoy","refmonth", "refday", "winopenwoy", "winclosewoy","bestmodel_beta","median_windowopendate", "median_windowclosedate")
-write.csv(dffinal, file = "results/Climwin_results/Weekly/Harvard Forest/weekly_climwin_results_all_HF_975.csv", row.names = FALSE)
+write.csv(dffinal, file = "results/Climwin_results/Weekly/Harvard Forest/weekly_climwin_results_all_HF_TMIN.csv", row.names = FALSE)
 
 
 ####Total growth DAILY ----
