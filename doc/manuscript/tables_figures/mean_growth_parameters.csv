@@ -1,8 +1,8 @@
 ,SCBI.ring,SCBI.diffuse,Harvard.ring,Harvard.diffuse
-most influential early spring T window,DATE-DATE,DATE-DATE,DATE-DATE,DATE-DATE
-DOY.25,113 (April 23),DATE,DATE,DATE
-DOY.50,147 (May 27),DATE,DATE,DATE
-DOY.75,DATE,DATE,DATE,DATE
-DOY.ip,DATE,DATE,DATE,DATE
-g.max,n,n,n,n
+most influential early spring T window,3/22-4/9,2/19-5/21,4/2-5/7,3/19-5/7
+DOY.25,123 (May 4),154 (June 4),132 (May 15),164 (June 14)
+DOY.50,152 (June 2),172 (June 22),159 (June 9),182 (July 2)
+DOY.75,180 (June 30),190 (July 9),186 (July 6),199 (July 19)
+DOY.g.max,152 (June 2),173 (June 23),161 (June 11),183 (July 3)
+g.max,0.046,0.061,0.03,0.025
 delta.DBH ,n,n,n,n

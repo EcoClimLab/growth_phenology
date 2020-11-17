@@ -271,22 +271,23 @@ https://cran.r-project.org/web/packages/rstanarm/vignettes/priors.html#default-w
 *(Numbers in bold will change)*
 
 Across all trees and years at SCBI, 
-25% of annual growth was achieved on **May 9** ($DOY_{25}$=**129**), 
-50% on **June 6** ($DOY_{50}$=**157**), 
-and 75% on **July 3** ($DOY_{75}$=**184**), 
-for an average peak growing season length of **56** days. 
-Maximum growth rate occurred *just one day after $DOY_{50}$* on **June 7** ($DOY_{max}$=**158**). 
+25% of annual growth was achieved on **May 20** ($DOY_{25}$=**139**), 
+50% on **June 12** ($DOY_{50}$=**162**), 
+and 75% on **July 5** ($DOY_{75}$=**185**), 
+for an average peak growing season length of **45** days. 
+Maximum growth rate occurred *just one day after $DOY_{50}$* on **June 13** ($DOY_{max}$=**163**). 
 At Harvard Forest,
-25% of annual growth was achieved on **XX** ($DOY_{25}$=**XX**), 
-50% on **XX** ($DOY_{50}$=**XX**), 
-and 75% on **XX** ($DOY_{75}$=**XX**), 
-for an average peak growing season length of **XX** days. 
-Maximum growth rate occurred on **XX** ($DOY_{max}$=**XX**). 
+25% of annual growth was achieved on **June 1** ($DOY_{25}$=**151**), 
+50% on **June 23** ($DOY_{50}$=**173**), 
+and 75% on **July 14** ($DOY_{75}$=**194**), 
+for an average peak growing season length of **43** days. 
+Maximum growth rate occurred on **June 24** ($DOY_{max}$=**174**). 
 
 At both sites, growth phenology differed between ring- and diffuse- porous species, with ring-porous species having an earlier start to growth, with growth spread out over a longer growing season (Fig. `r growth_curves_all`, Table `r mean_growth_parameters_table`).
 
-~~For ring-porous trees, on average, 25% of annual growth was achieved on **April 23** ($DOY_{25}$=**113**), 50% on **May 27** ($DOY_{50}$=**147**), and 75% on **June 30** ($DOY_{75}$=**181**), for an average peak growing season length of **68** days. Maximum growth rate occurred *on $DOY_{50}$* and averaged .048 **mm day^-1^ (?)**.~~
-~~For diffuse-porous trees, on average, 25% of annual growth was achieved on **June 2** ($DOY_{25}$=**153**), 50% on **June 20** ($DOY_{50}$=**171**), and 75% on **July 9** ($DOY_{75}$=**190**), for an average peak growing season length of **37** days. Maximum growth rate occurred *just one day after $DOY_{50}$* on **June 21** ($DOY_{max}$=**172**) and averaged .068 **mm day^-1^ (?)**.~~ 
+~~For ring-porous trees, on average, 25% of annual growth was achieved on **May 4** ($DOY_{25}$=**123**) at SCBI and **May 15** ($DOY_{25}$=**132**) at Harvard FOrest, 50% on **June 2** ($DOY_{50}$=**152**) at SCBI and **June 9** ($DOY_{50}$=**159**) at Harvard Forest, and 75% on **June 30** ($DOY_{75}$=**180**) at SCBI and **July 6** ($DOY_{75}$=**186**) at Harvard Forest, for an average peak growing season length of **56** days at SCBI and **54** days at Harvard Forest. Maximum growth rate occurred *on $DOY_{50}$* at SCBI and *June 11* ($DOY_{max}$=**161**) at Harvard Forest and averaged .046 and .030 **mm day^-1^ (?)** respectively.~~
+
+~~For diffuse-porous trees, on average, 25% of annual growth was achieved on **June 4** ($DOY_{25}$=**154**) at SCBI and **June 14** ($DOY_{25}$=**164**) at Harvard Forest, 50% on **June 22** ($DOY_{50}$=**172**) at SCBI and **July 2** ($DOY_{50}$=**182**) at Harvard Forest, and 75% on **July 10** ($DOY_{75}$=**190**) and **July 19** ($DOY_{75}$=**199**) at Harvard forest, for an average peak growing season length of **36** days at SCBI and **35** days at Harvard Forest. Maximum growth rate occurred *just one day after $DOY_{50}$* on **June 23** ($DOY_{max}$=**173**) at SCBI and **just one day after $DOY_{50}$** on **July 3** ($DOY_{max}$=**183**) at Harvard Forest and averaged .061 and .025 **mm day^-1^ (?)** respectively.~~ 
 
 \newpage
 
@@ -303,13 +304,13 @@ knitr::kable(mean_growth_parameters)
 
 ## Optimal climate windows
 
-For the majority of weekly time windows from Feb. 1 to $DOY_{25}$, there was negative relationship between temperature and $DOY_{25}$, meaning that warmer temperatures shifted growth earlier in the season (Figs. `r climwin`, `r climwin_rp_DOY25_SCBI`, `r climwin_dp_DOY25_SCBI`). 
-This held true for both ring- and diffuse-porous trees, *albeit* with stronger relationships for ring-porous trees. 
+For the majority of weekly time windows from Jan. 1 to $DOY_{25}$, there was negative relationship between temperature and $DOY_{25}$, meaning that warmer temperatures shifted growth earlier in the season (Figs. `r climwin`, `r climwin_rp_DOY25_SCBI`, `r climwin_dp_DOY25_SCBI`). 
+This held true for both ring- and diffuse-porous trees at both sites, *albeit* with stronger relationships for diffuse-porous trees. 
 *(Describe the landscape:)*
-In general, there were significant negative relationships between temperature and $DOY_{25}$ for any time period beginning $\ge$ **5** weeks prior to $DOY_{25}$, ending  $\le$ **6** weeks prior, and covering at least a **3**-week period. 
+In general, there were significant negative relationships between temperature and $DOY_{25}$ for any time period beginning $\ge$ **5** weeks prior to $DOY_{25}$, ending  $\le$ **8-20** weeks prior depending on wood-type and site, and covering at least a **3**-week period. 
 Relationships tended to be weaker and more stochastic in sign for short time periods, particularly those just prior to $DOY_{25}$.
 
-Optimal windows occurred from **##-##** for ring-porous species and from **##-##** for diffuse-porous species.
+Optimal windows occurred from **3/22-5/7** for ring-porous species and from **2/19-5/21** for diffuse-porous species.
 
 ```{r climwin, out.width="100%", echo=FALSE, fig.align="center", fig.cap= climwin_caption}
 # Created in RScripts/additional_figures.R
@@ -320,7 +321,7 @@ knitr::include_graphics("tables_figures/climwin.png")
 ## Climate sensitivity of phenology 
 
 For both ring- and diffuse- porous species at both sites, warmer spring temperatures resulted in earlier achievement of growth milestones (Tables `r hypothesis_table`, Figs. `r pheno_Tsensitivity`, `r DOYtiming`).
-Specifically, $DOY_{25}$, $DOY_{50}$, $DOY_{75}$, and $DOY_{ip}$ all decreased significantly with increasing $T_{max}$ during the critical period (Table `r mean_growth_parameters_table`).
+Specifically, $DOY_{25}$, $DOY_{50}$, and $DOY_{g.max}$ at SCBI and $DOY_{25}$, $DOY_{50}$, $DOY_{75}$, and $DOY_{g.max}$ at Harvard Forest all decreased significantly with increasing $T_{max}$ during the critical period (Table `r mean_growth_parameters_table`).
 
 ```{r pheno_Tsensitivity, out.width="100%", echo=FALSE, fig.align="center", fig.cap=pheno_Tsensitivity_caption}
 # Created in RScripts/bert/wood_phenology_analysis_bert.R
@@ -332,17 +333,16 @@ knitr::include_graphics("tables_figures/pheno_Tsensitivity_combo.png")
 knitr::include_graphics("tables_figures/DOYtiming_allyears.png")
 ```
 
-Because both $DOY_{25}$ and $DOY_{75}$ both shifted forward, peak growing season length was not consistently increased by warmer early spring temperatures (Tables `r hypothesis_table`, Figs. `r pheno_Tsensitivity`, `r DOYtiming`).
-At both sites, $DOY_{75}-DOY_{25}$ decreased with temperature for ring-porous species 
-and was neutral (SCBI) or positive (Harvard Forest) for diffuse-porous species.
+At SCBI, ring-porous $DOY_{25}$ and $DOY_{50}$ shifted back while ${DOY_75}$ did not shift, resulting in an extended peak growing season length when critical window temperatures were warmer (Tables `r hypothesis_table`, Figs. `r pheno_Tsensitivity`, `r DOYtiming`).
+Diffuse-porous $DOY_{25}$, $DOY_{50}$, and ${DOY_75}$ shifted back uniformly resulting in no significant change in peak growing season length. At Harvard Forest, ring-porous ${DOY_75}$ shifted back faster than ${DOY_25}$, resulting in shorter peak growins season length, while diffuse-porous ${DOY_25}$ shifted back faster than ${DOY_75}$, resulting in an extended peak growing season length in response to warmer critical window temperatures.  
 
 ## Climate sensitivity of growth
 
 Maximum growth rate, $g_{max}$, was not consistently linked to early spring temperatures (Tables `r hypothesis_table`, Fig. `r pheno_Tsensitivity`). 
 Ring-porous species exhibited no change (SCBI) or a slight increase (Harvard Forest) with warmer early spring temperatures.
-In contrast, diffuse-porous species exhibited lower $g_{max}$ in years with higher early spring $T_{max}$.
+In contrast, diffuse-porous species exhibited no change (SCBI) or lower $g_{max}$ in years with higher early spring $T_{max}$.
 
-Total annual growth rate, $\Delta DBH$, also was not consistently linked to early spring temperatures (Tables `r hypothesis_table`, Fig. `r pheno_Tsensitivity`).
+Total annual growth, $\Delta DBH$, also was not consistently linked to early spring temperatures, displaying either no relationship (SCBI) or extremely small changes (Harvard Forest) (Tables `r hypothesis_table`, Fig. `r pheno_Tsensitivity`).
 
 ```{r tree_rings, out.width="100%", echo=FALSE, fig.align="center", fig.cap= tree_rings_caption}
 # Created in RScripts/additional_figures.R
