@@ -6,12 +6,16 @@ library(patchwork)
 library(gridExtra)
 library(knitr)
 library(scales)
-options(mc.cores = parallel::detectCores())
-library(rstanarm)
 library(broom.mixed)
 
+# rstanarm stuff
+options(mc.cores = parallel::detectCores())
+library(rstanarm)
 
-
+# Number of MCMC chains & number of simulations per chain.
+# Need to increase this at the end
+n_iter <- 4000
+n_chains <- 2
 
 
 
@@ -176,11 +180,9 @@ joint_model_climwinmeans <- stan_mvmer(
   ),
   # Note we transform the data from tall/tidy format to wide format first:
   data = Wood_pheno_table_wide,
-  seed = 76,
-  # Once we feel good about our results, increase these values. The code will
-  # take longer to run however
-  chains = 2,
-  iter = 2000
+  seed = 349,
+  iter = n_iter,
+  chains = n_chains
 )
 
 # Get regression table as output by rstanarm package, then clean. We will compare
@@ -260,8 +262,8 @@ mixedmodel_stanlmerRP_total <- stan_lmer(
   formula = total_formulaRP,
   data = woodtable,
   seed = 349,
-  iter = 4000,
-  chains = 2
+  iter = n_iter,
+  chains = n_chains
 )
 
 mixedmodel_stanlmerRP_total %>%
@@ -315,8 +317,8 @@ mixedmodel_stanlmerRP_seasonlength <- stan_lmer(
   formula = seasonlength_formulaRP,
   data = woodtable,
   seed = 349,
-  iter = 4000,
-  chains = 2
+  iter = n_iter,
+  chains = n_chains
 )
 
 mixedmodel_stanlmerRP_seasonlength %>%
@@ -336,7 +338,7 @@ predictions_sl_RP <- subset(predictions_sl, wood_type == "ring-porous")
 predictions_sl_DP <- subset(predictions_sl, wood_type == "diffuse-porous")
 Wood_pheno_table_RP_sl <- subset(woodtable, wood_type == "ring-porous")
 Wood_pheno_table_DP_sl <- subset(woodtable, wood_type == "diffuse-porous")
-# memory.limit(size=50000)
+
 fig6_RP_sl <- ggplot() +
   # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
   stat_lineribbon(data = predictions_sl_RP, aes(x = climwinmean, y = predictions_rstanarm), .width = c(.99, .95)) +
@@ -370,8 +372,8 @@ mixedmodel_stanlmerRP_maxrate <- stan_lmer(
   formula = maxrate_formulaRP,
   data = woodtable,
   seed = 349,
-  iter = 4000,
-  chains = 2
+  iter = n_iter,
+  chains = n_chains
 )
 
 mixedmodel_stanlmerRP_maxrate %>%
@@ -425,8 +427,8 @@ mixedmodel_stanlmerRP_maxrateDOY <- stan_lmer(
   formula = maxrateDOY_formulaRP,
   data = woodtable,
   seed = 349,
-  iter = 4000,
-  chains = 2
+  iter = n_iter,
+  chains = n_chains
 )
 
 mixedmodel_stanlmerRP_maxrateDOY %>%
@@ -630,11 +632,9 @@ joint_model_climwinmeans_hf <- stan_mvmer(
   ),
   # Note we transform the data from tall/tidy format to wide format first:
   data = Wood_pheno_table_wide_hf,
-  seed = 76,
-  # Once we feel good about our results, increase these values. The code will
-  # take longer to run however
-  chains = 2,
-  iter = 4000
+  seed = 349,
+  iter = n_iter,
+  chains = n_chains
 )
 
 bayesian_regression_table_hf <- joint_model_climwinmeans_hf %>%
@@ -713,8 +713,8 @@ mixedmodel_stanlmerRP_total_hf <- stan_lmer(
   formula = total_formulaRP,
   data = woodtable_hf,
   seed = 349,
-  iter = 4000,
-  chains = 2
+  iter = n_iter,
+  chains = n_chains
 )
 
 mixedmodel_stanlmerRP_total_hf %>%
@@ -734,7 +734,7 @@ predictions_tot_RP_hf <- subset(predictions_tot_hf, wood_type == "ring-porous")
 predictions_tot_DP_hf <- subset(predictions_tot_hf, wood_type == "diffuse-porous")
 Wood_pheno_table_RP_tot_hf <- subset(woodtable_hf, wood_type == "ring-porous")
 Wood_pheno_table_DP_tot_hf <- subset(woodtable_hf, wood_type == "diffuse-porous")
-# memory.limit(size = 10000)
+
 fig6_RP_tot_hf <- ggplot() +
   # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
   stat_lineribbon(data = predictions_tot_RP_hf, aes(x = climwinmean, y = predictions_rstanarm), .width = c(.99, .95)) +
@@ -768,8 +768,8 @@ mixedmodel_stanlmerRP_seasonlength_hf <- stan_lmer(
   formula = seasonlength_formulaRP,
   data = woodtable_hf,
   seed = 349,
-  iter = 4000,
-  chains = 2
+  iter = n_iter,
+  chains = n_chains
 )
 
 mixedmodel_stanlmerRP_seasonlength_hf %>%
@@ -824,8 +824,8 @@ mixedmodel_stanlmerRP_maxrate_hf <- stan_lmer(
   formula = maxrate_formulaRP,
   data = woodtable_hf,
   seed = 349,
-  iter = 4000,
-  chains = 2
+  iter = n_iter,
+  chains = n_chains
 )
 
 mixedmodel_stanlmerRP_maxrate_hf %>%
@@ -880,8 +880,8 @@ mixedmodel_stanlmerRP_maxrateDOY_hf <- stan_lmer(
   formula = maxrateDOY_formulaRP,
   data = woodtable_hf,
   seed = 349,
-  iter = 4000,
-  chains = 2
+  iter = n_iter,
+  chains = n_chains
 )
 
 mixedmodel_stanlmerRP_maxrateDOY_hf %>%
