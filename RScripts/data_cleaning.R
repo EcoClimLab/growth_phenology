@@ -85,6 +85,9 @@ year <- subset(year, doy <= upper & doy >= lower) #Remove models where peak grow
 goodtags <- unique(year$tag_year)
 keeptags <- append(keeptags, goodtags)
 }
+percent_growth_RP_gone <- percent_growth_RP[!(percent_growth_RP$tag_year %in% keeptags),]
+SCBI_badpeak_RP <- unique(percent_growth_RP_gone$tag_year)
+
 percent_growth_RP <- percent_growth_RP[percent_growth_RP$tag_year %in% keeptags,]
 #ENTRIES REMOVED IN THIS STEP
 #percent_growth_badpeak <- percent_growth_RP[!(percent_growth_RP$tag_year %in% ratedoysubset$tag_year),]
@@ -105,8 +108,8 @@ maxgrowthrate <- aggregate(percent_growth_DP$dbh_growth_percent, by = list(perce
 names(maxgrowthrate) <- c("tag_year", "rate")#Maximum growth rate of each tree
 high_growthday <- subset(maxgrowthrate, rate >= (mean(maxgrowthrate$rate)+(sd(maxgrowthrate$rate)*sd)) & rate <= 0) #Remove trees where one day had higher than 4% of total growth
 #ENTRIES REMOVED IN THIS STEP
-#percent_growth_high <- percent_growth_DP[percent_growth_DP$tag_year %in% high_growthday$tag_year,]
-#SCBI_highgrowth_DP <- unique(percent_growth_high$tag_year)
+percent_growth_high <- percent_growth_DP[percent_growth_DP$tag_year %in% high_growthday$tag_year,]
+SCBI_highgrowth_DP <- unique(percent_growth_high$tag_year)
 #wood_pheno_removed <- Wood_pheno_table_scbi[Wood_pheno_table_scbi$tag_year %in% SCBI_highgrowth_DP,]
 #wood_pheno_removed <- subset(wood_pheno_removed, perc == .25)
 #count(wood_pheno_removed,sp)
@@ -127,6 +130,9 @@ for(i in 2011:2020){
   goodtags <- unique(year$tag_year)
   keeptags <- append(keeptags, goodtags)
 }
+percent_growth_DP_gone <- percent_growth_DP[!(percent_growth_DP$tag_year %in% keeptags),]
+SCBI_badpeak_DP <- unique(percent_growth_DP_gone$tag_year)
+
 percent_growth_DP <- percent_growth_DP[percent_growth_DP$tag_year %in% keeptags,]
 #ENTRIES REMOVED IN THIS STEP
 #percent_growth_badpeak <- percent_growth_DP[!(percent_growth_DP$tag_year %in% ratedoysubset$tag_year),]
@@ -169,7 +175,7 @@ percent_growth <- percent_growth[(percent_growth$tag_year %in% unique(percent_gr
 
 #Strange spikes
 percent_growth_na <- percent_growth[(is.na(percent_growth$b)),]
-
+SCBI_na <- unique(percent_growth_na$tag_year)
 percent_growth <- percent_growth[!(is.na(percent_growth$b)),]
 
 #Check for patterns in removed trees----
@@ -178,6 +184,38 @@ removed_trees <- Wood_pheno_table_scbi[Wood_pheno_table_scbi$tag_year %in% remov
 removed_trees <-subset(removed_trees, perc == .25)
 hist(removed_trees$dbh)
 count(removed_trees,sp)
+
+Wood_pheno_table_scbi_25 <- subset(Wood_pheno_table_scbi, perc == .25)
+library(gridExtra)
+png(filename = "doc/manuscript/tables_figures/data_cleaning_figure_scbi.png", width=15, height=10,
+    pointsize=12, bg="transparent", units="in", res=600,
+    restoreConsole=FALSE)
+
+grid.arrange(
+
+  ggplot(Wood_pheno_table_scbi_25, aes(x = dbh, fill = sp))+geom_histogram(position = "dodge", binwidth = 20)+
+    labs(x = "DBH", y = "# of tag years", title = "Tag years pre-removal", fill = "")+
+    theme_bw()+
+    theme(legend.position = "none"),
+
+  ggplot(removed_trees, aes(x = dbh, fill = sp))+geom_histogram(position = "dodge", binwidth = 20)+
+    labs(x = "DBH", y = "", title = "Tag years removed", fill = "Species code")+
+    theme_bw()+
+    theme(legend.position = c(.9,.60)),
+
+  ggplot(Wood_pheno_table_scbi_25, aes(x = sp, fill = sp))+geom_bar(position = "dodge")+
+    labs(x = "Species", y = "# of tag years", title = "", fill = "")+
+    theme_bw()+
+    theme(legend.position = "none"),
+
+  ggplot(removed_trees, aes(x = sp, fill = sp))+geom_bar(position = "dodge")+
+    labs(x = "Species", y = "", title = "", fill = "")+
+    theme_bw()+
+    theme(legend.position = "none"),
+
+  as.table = TRUE, nrow=2, ncol=2) ###as.table specifies order if multiple rows
+
+dev.off()
 
 weirdtag <- subset(percent_growth, doy == 190)
 weirdtag <- subset(weirdtag, dbh_growth_percent == max(weirdtag$dbh_growth_percent))
@@ -197,6 +235,7 @@ percent_growth <- percent_growth[!(percent_growth$tag_year %in% unique(weirdtag$
 #    tag_year = str_c(tag, year)
 #  )
 #unitag <- unique(Wood_pheno_table_scbi)
+
 wood_gone <- Wood_pheno_table_scbi[!(Wood_pheno_table_scbi$tag_year %in% unique(percent_growth$tag_year)),]
 wood_gone<- subset(wood_gone, perc == .25)
 247/(3348/3)#1116
@@ -205,6 +244,7 @@ Wood_pheno_table_scbi <- Wood_pheno_table_scbi[Wood_pheno_table_scbi$tag_year %i
 tot_growth <- distinct(percent_growth[,c(3,16)], .keep_all = TRUE)
 Wood_pheno_table_scbi <- left_join(Wood_pheno_table_scbi, tot_growth, by = "tag_year")
 #unitag <- unique(Wood_pheno_table_scbi)
+
 
 LG5_parameter_values_scbi$tag_year <- paste0(LG5_parameter_values_scbi$tag, LG5_parameter_values_scbi$year)
 LG5_parameter_values_scbi <- LG5_parameter_values_scbi[LG5_parameter_values_scbi$tag_year %in% unique(percent_growth$tag_year),]
@@ -323,6 +363,9 @@ for(i in 1998:2003){
   goodtags <- unique(year$tag_year)
   keeptags <- append(keeptags, goodtags)
 }
+percent_growth_RP_gone <- percent_growth_RP[!(percent_growth_RP$tag_year %in% keeptags),]
+HF_badpeak_RP <- unique(percent_growth_RP_gone$tag_year)
+
 percent_growth_RP <- percent_growth_RP[percent_growth_RP$tag_year %in% keeptags,]
 #ENTRIES REMOVED IN THIS STEP
 #percent_growth_badpeak <- percent_growth_RP[!(percent_growth_RP$tag_year %in% ratedoysubset$tag_year),]
@@ -367,6 +410,9 @@ for(i in 1998:2003){
   goodtags <- unique(year$tag_year)
   keeptags <- append(keeptags, goodtags)
 }
+percent_growth_DP_gone <- percent_growth_DP[!(percent_growth_DP$tag_year %in% keeptags),]
+HF_badpeak_DP <- unique(percent_growth_DP_gone$tag_year)
+
 percent_growth_DP <- percent_growth_DP[percent_growth_DP$tag_year %in% keeptags,]
 #ENTRIES REMOVED IN THIS STEP
 #percent_growth_badpeak <- percent_growth_DP[!(percent_growth_DP$tag_year %in% ratedoysubset$tag_year),]
@@ -419,7 +465,7 @@ percent_growth <- percent_growth[(percent_growth$tag_year %in% unique(percent_gr
 #percent_growth_5 <- subset(percent_growth, dbh_growth_percent >= 0.05)
 
 percent_growth_na <- percent_growth[(is.na(percent_growth$b)),]
-
+HF_na <- unique(percent_growth_na$tag_year)
 percent_growth <- percent_growth[!(is.na(percent_growth$b)),]
 
 #percent_growth_DP_try <- percent_growth_DP %>%
@@ -428,12 +474,48 @@ percent_growth <- percent_growth[!(is.na(percent_growth$b)),]
 #percent_growth_two_tags <-subset(percent_growth_DP_try, spikecheck >= 7 & spikecheck<= 100)
 #percent_growth_two <- percent_growth[percent_growth$tag_year %in% unique(percent_growth_two_tags$tag_year),]
 #Check for patterns in removed trees
-removed_tagyears <- c(HF_badpeak_DP,HF_badpeak_RP, HF_below99,HF_highgrowth_DP,HF_highgrowth_RP,HF_smallgrowth)
+removed_tagyears <- c(HF_badpeak_DP,HF_badpeak_RP, HF_below99,HF_highgrowth_DP,HF_highgrowth_RP,HF_smallgrowth, HF_na)
 removed_trees <- Wood_pheno_table_hf[Wood_pheno_table_hf$tag_year %in% removed_tagyears,]
 removed_trees <-subset(removed_trees, perc == .25)
 hist(removed_trees$dbh)
-count(removed_trees,sp)
-count(Wood_pheno_table_hf, sp)
+HF_removed_tags_DF <- count(removed_trees,sp)
+
+Wood_pheno_table_hf_25 <- subset(Wood_pheno_table_hf, perc == .25)
+HF_total_tags_DF <- count(Wood_pheno_table_hf_25, sp)
+
+library(gridExtra)
+png(filename = "doc/manuscript/tables_figures/data_cleaning_figure_hf.png", width=15, height=10,
+    pointsize=12, bg="transparent", units="in", res=600,
+    restoreConsole=FALSE)
+
+grid.arrange(
+
+ggplot(Wood_pheno_table_hf_25, aes(x = dbh, fill = sp))+geom_histogram(position = "dodge", binwidth = 20)+
+  labs(x = "DBH", y = "# of tag years", title = "Tag years pre-removal", fill = "")+
+  theme_bw()+
+  theme(legend.position = "none"),
+
+ggplot(removed_trees, aes(x = dbh, fill = sp))+geom_histogram(position = "dodge", binwidth = 20)+
+  labs(x = "DBH", y = "", title = "Tag years removed", fill = "Species code")+
+  theme_bw()+
+  theme(legend.position = c(.9,.60)),
+
+ggplot(Wood_pheno_table_hf_25, aes(x = sp, fill = sp))+geom_bar(position = "dodge")+
+  labs(x = "Species", y = "# of tag years", title = "", fill = "")+
+  theme_bw()+
+  theme(legend.position = "none"),
+
+ggplot(removed_trees, aes(x = sp, fill = sp))+geom_bar(position = "dodge")+
+  labs(x = "Species", y = "", title = "", fill = "")+
+  theme_bw()+
+  theme(legend.position = "none"),
+
+as.table = TRUE, nrow=2, ncol=2) ###as.table specifies order if multiple rows
+
+dev.off()
+
+
+
 #Remove bad models from wood_pheno_table and LG5_param DF's ----
 Wood_pheno_table_hf$tag_year <- paste0(Wood_pheno_table_hf$tag, Wood_pheno_table_hf$year)
 Wood_gone <- Wood_pheno_table_hf[!(Wood_pheno_table_hf$tag_year %in% unique(percent_growth$tag_year)),]
