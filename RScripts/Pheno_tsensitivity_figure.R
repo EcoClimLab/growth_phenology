@@ -1,16 +1,28 @@
 # Create fig 6
-# Load packages and data ---------------------------------------
 library(tidyverse)
 library(lubridate)
 library(tidybayes)
 library(patchwork)
+library(gridExtra)
 library(knitr)
 library(scales)
 options(mc.cores = parallel::detectCores())
 library(rstanarm)
 library(broom.mixed)
-# SCBI
-# Get growth data ----------------------------------
+
+
+
+
+
+
+
+#-------------------------------------------------------------------------------
+#
+# Run analysis on SCBI
+#
+#-------------------------------------------------------------------------------
+
+# Get growth data --------------------------------------------------------------
 Wood_pheno_table <- read_csv("Data/Wood_pheno_table_V13CLEAN.csv") %>%
   # Keep only RP and DP for now
   filter(wood_type != "other") %>%
@@ -36,7 +48,7 @@ twosevenfive$seasonlength <- twosevenfive$`sevenfive$DOY` - twosevenfive$DOY
 twosevenfive <- twosevenfive[, c(3, 7, 16)]
 
 
-# Create temperature variables ----------------------------------
+# Create temperature variables -------------------------------------------------
 # 0. Get all weather data
 weatherdata <-
   read_csv("climate data/met_tower_data_sensor2_ncdc_supplemented.csv") %>%
@@ -240,7 +252,7 @@ fig6_DP <- ggplot() +
 # geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
 fig6_DP
 
-### TOTAL GROWTH----
+### TOTAL GROWTH ----
 woodtable <- subset(Wood_pheno_table, perc == "DOY_25")
 total_formulaRP <- "dbh_total_growth ~ wood_type + wood_type:climwinmean + (1|tag)" %>% as.formula()
 
@@ -296,7 +308,7 @@ fig6_DP_tot <- ggplot() +
 # geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
 fig6_DP_tot
 
-### Season length----
+### Season length ----
 seasonlength_formulaRP <- "seasonlength ~ wood_type + wood_type:climwinmean + (1|tag)" %>% as.formula()
 
 mixedmodel_stanlmerRP_seasonlength <- stan_lmer(
@@ -351,7 +363,7 @@ fig6_DP_sl <- ggplot() +
 # geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
 fig6_DP_sl
 
-### MAX RATE----
+### MAX RATE ----
 maxrate_formulaRP <- "max_rate ~ wood_type + wood_type:climwinmean + (1|tag)" %>% as.formula()
 
 mixedmodel_stanlmerRP_maxrate <- stan_lmer(
@@ -406,7 +418,7 @@ fig6_DP_mr <- ggplot() +
 # geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
 fig6_DP_mr
 
-# MAX RATE DOY----
+### MAX RATE DOY ----
 maxrateDOY_formulaRP <- "max_rate_DOY ~wood_type + wood_type:climwinmean + (1|tag)" %>% as.formula()
 
 mixedmodel_stanlmerRP_maxrateDOY <- stan_lmer(
@@ -461,8 +473,18 @@ fig6_DP_mrdoy <- ggplot() +
 # geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
 fig6_DP_mrdoy
 
-# Harvard Forest----
-# Get growth data ----------------------------------
+
+
+
+
+
+
+#-------------------------------------------------------------------------------
+#
+# Run analysis on Harvard Forest
+#
+#-------------------------------------------------------------------------------
+# Get growth data --------------------------------------------------------------
 Wood_pheno_table_hf <- read_csv("Data/Wood_pheno_table_HarvardForest_V9CLEAN.csv") %>%
   # Keep only RP and DP for now
   filter(wood_type != "other") %>%
@@ -489,7 +511,7 @@ twosevenfive_hf$seasonlength <- twosevenfive_hf$`sevenfive_hf$DOY` - twosevenfiv
 twosevenfive_hf <- twosevenfive_hf[, c(3, 6, 17)]
 
 
-# Create temperature variables ----------------------------------
+# Create temperature variables -------------------------------------------------
 # 0. Get all weather data
 weatherdata_hf <-
   read_csv("climate data/HF_weatherdata.csv") %>%
@@ -683,7 +705,7 @@ fig6_DP_hf <- ggplot() +
   labs(x = "", y = "", col = "Percentile", title = "Diffuse-porous", subtitle = "Relationship of DOY versus climwin mean temperature")
 # geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
 fig6_DP_hf
-### TOTAL GROWTH----
+### TOTAL GROWTH ----
 woodtable_hf <- subset(Wood_pheno_table_hf, perc == "DOY_25")
 total_formulaRP <- "dbh_total_growth ~ wood_type + wood_type:climwinmean + (1|tag)" %>% as.formula()
 
@@ -739,7 +761,7 @@ fig6_DP_tot_hf <- ggplot() +
 # geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
 fig6_DP_tot_hf
 
-# Season length ----
+### Season length ----
 seasonlength_formulaRP <- "seasonlength ~ wood_type + wood_type:climwinmean + (1|tag)" %>% as.formula()
 
 mixedmodel_stanlmerRP_seasonlength_hf <- stan_lmer(
@@ -795,7 +817,7 @@ fig6_DP_sl_hf <- ggplot() +
 fig6_DP_sl_hf
 
 
-# MAX RATE ----
+### MAX RATE ----
 maxrate_formulaRP <- "max_rate ~ wood_type + wood_type:climwinmean + (1|tag)" %>% as.formula()
 
 mixedmodel_stanlmerRP_maxrate_hf <- stan_lmer(
@@ -851,7 +873,7 @@ fig6_DP_mr_hf <- ggplot() +
 fig6_DP_mr_hf
 
 
-# MAX RATE DOY ----
+### MAX RATE DOY ----
 maxrateDOY_formulaRP <- "max_rate_DOY ~wood_type + wood_type:climwinmean + (1|tag)" %>% as.formula()
 
 mixedmodel_stanlmerRP_maxrateDOY_hf <- stan_lmer(
@@ -945,8 +967,18 @@ ggplot() +
   coord_cartesian(xlim = c(11.8, 19.7), ylim = c(80, 240)) +
   theme(legend.position = "none") +
   labs(x = "", y = "DOY", col = "Percentile", title = "SCBI", subtitle = "Ring-porous")
-# ALL TOGETHER----
-library(gridExtra)
+
+
+
+
+
+
+
+#-------------------------------------------------------------------------------
+#
+# Combine all plots together
+#
+#-------------------------------------------------------------------------------
 png(
   filename = "doc/manuscript/tables_figures/pheno_Tsensitivity_combo.png", width = 15, height = 25,
   pointsize = 12, bg = "transparent", units = "in", res = 600,
@@ -954,7 +986,6 @@ png(
 )
 
 grid.arrange(
-
   ggplot() +
     # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
     stat_lineribbon(data = predictions_RP, aes(x = climwinmean, y = predictions_rstanarm, group = perc, col = perc, linetype = sig), .width = c(.99, .95)) +
@@ -1180,5 +1211,3 @@ grid.arrange(
 ) ### as.table specifies order if multiple rows
 
 dev.off()
-
-#----
