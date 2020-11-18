@@ -1,4 +1,8 @@
-# Create fig 6
+#
+# To get a quick overview of the sections of this code, go RStudio menu bar ->
+# Edit -> Folding -> Collapse all.
+#
+
 library(tidyverse)
 library(lubridate)
 library(tidybayes)
@@ -20,13 +24,9 @@ n_chains <- 2
 
 
 
-#-------------------------------------------------------------------------------
-#
-# Run analysis on SCBI
-#
-#-------------------------------------------------------------------------------
 
-# Get growth data --------------------------------------------------------------
+# Run analysis on SCBI ---------------------------------------------------------
+## Get growth data --------------------------------------------------------------
 Wood_pheno_table <- read_csv("Data/Wood_pheno_table_V13CLEAN.csv") %>%
   # Keep only RP and DP for now
   filter(wood_type != "other") %>%
@@ -52,7 +52,7 @@ twosevenfive$seasonlength <- twosevenfive$`sevenfive$DOY` - twosevenfive$DOY
 twosevenfive <- twosevenfive[, c(3, 7, 16)]
 
 
-# Create temperature variables -------------------------------------------------
+## Create temperature variables -------------------------------------------------
 # 0. Get all weather data
 weatherdata <-
   read_csv("climate data/met_tower_data_sensor2_ncdc_supplemented.csv") %>%
@@ -155,12 +155,11 @@ Wood_pheno_table <- Wood_pheno_table %>%
 
 
 
-# Fit multivariate model using climwinmeans ------------------------------------
+### Model Fit 1 (multivariate): (DOY_25, DOY_50, DOY_75) using climwinmeans ----
 # Delete all non-needed columns
 Wood_pheno_table$tag_year_perc <- paste0(Wood_pheno_table$tag, Wood_pheno_table$year, Wood_pheno_table$perc)
 unitag <- unique(Wood_pheno_table$tag_year_perc)
 Wood_pheno_table <- distinct(Wood_pheno_table, tag_year_perc, .keep_all = TRUE)
-
 
 Wood_pheno_table_doy <- Wood_pheno_table %>%
   select(perc, tag, year, wood_type, sp, climwinmean, starts_with("DOY"))
@@ -197,7 +196,7 @@ bayesian_regression_table <- joint_model_climwinmeans %>%
   filter(str_detect(coefficient, "(Intercept)") | str_detect(coefficient, "wood_type"))
 bayesian_regression_table
 
-# Fig6: Plot of regression of DOY over climwinmeans with credible intervals ----
+# Fig6: Plot of regression of DOY over climwinmeans with credible intervals
 # Extract predicted DOY_25, DOY_50, DOY_75
 y_hat <- c(
   joint_model_climwinmeans %>% posterior_predict(m = 1) %>% c(),
@@ -254,7 +253,8 @@ fig6_DP <- ggplot() +
 # geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
 fig6_DP
 
-### TOTAL GROWTH ----
+
+### Model Fit 2: TOTAL GROWTH ----
 woodtable <- subset(Wood_pheno_table, perc == "DOY_25")
 total_formulaRP <- "dbh_total_growth ~ wood_type + wood_type:climwinmean + (1|tag)" %>% as.formula()
 
@@ -310,7 +310,8 @@ fig6_DP_tot <- ggplot() +
 # geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
 fig6_DP_tot
 
-### Season length ----
+
+### Model Fit 3: Season length ----
 seasonlength_formulaRP <- "seasonlength ~ wood_type + wood_type:climwinmean + (1|tag)" %>% as.formula()
 
 mixedmodel_stanlmerRP_seasonlength <- stan_lmer(
@@ -365,7 +366,8 @@ fig6_DP_sl <- ggplot() +
 # geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
 fig6_DP_sl
 
-### MAX RATE ----
+
+### Model Fit 4: MAX RATE ----
 maxrate_formulaRP <- "max_rate ~ wood_type + wood_type:climwinmean + (1|tag)" %>% as.formula()
 
 mixedmodel_stanlmerRP_maxrate <- stan_lmer(
@@ -420,7 +422,8 @@ fig6_DP_mr <- ggplot() +
 # geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
 fig6_DP_mr
 
-### MAX RATE DOY ----
+
+### Model Fit 5: MAX RATE DOY ----
 maxrateDOY_formulaRP <- "max_rate_DOY ~wood_type + wood_type:climwinmean + (1|tag)" %>% as.formula()
 
 mixedmodel_stanlmerRP_maxrateDOY <- stan_lmer(
@@ -481,12 +484,8 @@ fig6_DP_mrdoy
 
 
 
-#-------------------------------------------------------------------------------
-#
-# Run analysis on Harvard Forest
-#
-#-------------------------------------------------------------------------------
-# Get growth data --------------------------------------------------------------
+# Run analysis on Harvard Forest -----------------------------------------------
+## Get growth data --------------------------------------------------------------
 Wood_pheno_table_hf <- read_csv("Data/Wood_pheno_table_HarvardForest_V9CLEAN.csv") %>%
   # Keep only RP and DP for now
   filter(wood_type != "other") %>%
@@ -513,7 +512,7 @@ twosevenfive_hf$seasonlength <- twosevenfive_hf$`sevenfive_hf$DOY` - twosevenfiv
 twosevenfive_hf <- twosevenfive_hf[, c(3, 6, 17)]
 
 
-# Create temperature variables -------------------------------------------------
+## Create temperature variables -------------------------------------------------
 # 0. Get all weather data
 weatherdata_hf <-
   read_csv("climate data/HF_weatherdata.csv") %>%
@@ -613,11 +612,11 @@ Wood_pheno_table_hf <- Wood_pheno_table_hf %>%
   arrange(tag, year)
 
 
-# Fit multivariate model using climwinmeans ------------------------------------
+### Model Fit 1 (multivariate): (DOY_25, DOY_50, DOY_75) using climwinmeans ----
+
 # Delete all non-needed columns
 Wood_pheno_table_hf_2 <- Wood_pheno_table_hf %>%
   select(perc, tag, year, wood_type, sp, climwinmean, starts_with("DOY"), site)
-
 
 # Convert to wide format for use in rstanarm::stan_mvmer()
 Wood_pheno_table_wide_hf <- Wood_pheno_table_hf_2 %>%
@@ -647,7 +646,7 @@ bayesian_regression_table_hf <- joint_model_climwinmeans_hf %>%
   filter(str_detect(coefficient, "(Intercept)") | str_detect(coefficient, "wood_type"))
 bayesian_regression_table_hf
 
-# Fig6: Plot of regression of DOY over climwinmeans with credible intervals ----
+# Fig6: Plot of regression of DOY over climwinmeans with credible intervals
 # Extract predicted DOY_25, DOY_50, DOY_75
 y_hat_hf <- c(
   joint_model_climwinmeans_hf %>% posterior_predict(m = 1) %>% c(),
@@ -705,7 +704,7 @@ fig6_DP_hf <- ggplot() +
   labs(x = "", y = "", col = "Percentile", title = "Diffuse-porous", subtitle = "Relationship of DOY versus climwin mean temperature")
 # geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
 fig6_DP_hf
-### TOTAL GROWTH ----
+### Model Fit 2: TOTAL GROWTH ----
 woodtable_hf <- subset(Wood_pheno_table_hf, perc == "DOY_25")
 total_formulaRP <- "dbh_total_growth ~ wood_type + wood_type:climwinmean + (1|tag)" %>% as.formula()
 
@@ -761,7 +760,8 @@ fig6_DP_tot_hf <- ggplot() +
 # geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
 fig6_DP_tot_hf
 
-### Season length ----
+
+### Model Fit 3: Season length ----
 seasonlength_formulaRP <- "seasonlength ~ wood_type + wood_type:climwinmean + (1|tag)" %>% as.formula()
 
 mixedmodel_stanlmerRP_seasonlength_hf <- stan_lmer(
@@ -817,7 +817,7 @@ fig6_DP_sl_hf <- ggplot() +
 fig6_DP_sl_hf
 
 
-### MAX RATE ----
+### Model Fit 4: MAX RATE ----
 maxrate_formulaRP <- "max_rate ~ wood_type + wood_type:climwinmean + (1|tag)" %>% as.formula()
 
 mixedmodel_stanlmerRP_maxrate_hf <- stan_lmer(
@@ -873,7 +873,7 @@ fig6_DP_mr_hf <- ggplot() +
 fig6_DP_mr_hf
 
 
-### MAX RATE DOY ----
+### Model Fit 5: MAX RATE DOY ----
 maxrateDOY_formulaRP <- "max_rate_DOY ~wood_type + wood_type:climwinmean + (1|tag)" %>% as.formula()
 
 mixedmodel_stanlmerRP_maxrateDOY_hf <- stan_lmer(
@@ -953,11 +953,7 @@ ggplot() +
 
 
 
-#-------------------------------------------------------------------------------
-#
-# Combine all plots together
-#
-#-------------------------------------------------------------------------------
+# Combine all model fit plots together -----------------------------------------
 png(
   filename = "doc/manuscript/tables_figures/pheno_Tsensitivity_combo.png", width = 15, height = 25,
   pointsize = 12, bg = "transparent", units = "in", res = 600,
