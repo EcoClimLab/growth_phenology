@@ -16,7 +16,6 @@ library(broom.mixed)
 # rstanarm stuff
 options(mc.cores = parallel::detectCores())
 library(rstanarm)
-
 # Number of MCMC chains & number of simulations per chain.
 # Need to increase this at the end
 n_iter <- 4000
@@ -60,14 +59,13 @@ weatherdata <-
   filter(!is.na(cleantmax)) %>%
   mutate(year = year.x)
 
-# mutate(
-#  DATE = dmy(DATE),
-#  months = month(DATE, label = TRUE, abbr = FALSE)
-# ) %>%
-# Remove entries with no tmax data
-# %>%
-# Rename RP flag set by Cam
-# rename(flagrp = flag)
+# 1. Get mean march daily maximum temperatures
+marchmeans <- weatherdata %>%
+  filter(month == 3) %>%
+  group_by(year) %>%
+  summarize(marchmean = mean(cleantmax))
+
+# 2. Get climwin data
 climwindows <-
   read.csv("results/Climwin_results/Weekly/SCBI/weekly_climwin_results_975perc.csv") %>%
   filter(wood_type != "other") %>%
@@ -77,13 +75,6 @@ climwindows <-
     opendoy = yday(median_windowopendate),
     closedoy = yday(median_windowclosedate)
   )
-
-
-# 1. Get mean march daily maximum temperatures
-marchmeans <- weatherdata %>%
-  filter(month == 3) %>%
-  group_by(year) %>%
-  summarize(marchmean = mean(cleantmax))
 
 # 2.a) EDA of climwin windows
 # RP climwin window is around 3/15 to 4/23
@@ -151,24 +142,18 @@ Wood_pheno_table <- Wood_pheno_table %>%
       perc == 0.75 ~ "DOY_75"
     )
   ) %>%
-  arrange(tag, year)
+  arrange(tag, year) %>%
+  mutate(tag_year_perc = paste0(tag, year, perc))
 
-
-
-
-### Model Fit 1 (multivariate): (DOY_25, DOY_50, DOY_75) using climwinmeans ----
-# Delete all non-needed columns
-Wood_pheno_table$tag_year_perc <- paste0(Wood_pheno_table$tag, Wood_pheno_table$year, Wood_pheno_table$perc)
+# Pick out only distinct rows
 unitag <- unique(Wood_pheno_table$tag_year_perc)
 Wood_pheno_table <- distinct(Wood_pheno_table, tag_year_perc, .keep_all = TRUE)
 
-Wood_pheno_table_doy <- Wood_pheno_table %>%
-  select(perc, tag, year, wood_type, sp, climwinmean, starts_with("DOY"))
 
-# Wood_pheno_table_doy <- Wood_pheno_table %>%
-#  select(tag, year, wood_type, seasonlength)
+### Model Fit 1 (multivariate): (DOY_25, DOY_50, DOY_75) using climwinmeans ----
 # Convert to wide format for use in rstanarm::stan_mvmer()
-Wood_pheno_table_wide <- Wood_pheno_table_doy %>%
+Wood_pheno_table_wide <- Wood_pheno_table %>%
+  select(perc, tag, year, wood_type, sp, climwinmean, starts_with("DOY")) %>%
   pivot_wider(names_from = perc, values_from = DOY)
 
 # Fit multivariate model
@@ -519,14 +504,13 @@ weatherdata_hf <-
   read_csv("climate data/HF_weatherdata.csv") %>%
   filter(!is.na(airtmax))
 
-# mutate(
-#  DATE = dmy(DATE),
-#  months = month(DATE, label = TRUE, abbr = FALSE)
-# ) %>%
-# Remove entries with no tmax data
-# %>%
-# Rename RP flag set by Cam
-# rename(flagrp = flag)
+# 1. Get mean march daily maximum temperatures
+marchmeans_hf <- weatherdata_hf %>%
+  filter(month == 3) %>%
+  group_by(year) %>%
+  summarize(marchmean = mean(airtmax))
+
+# 2. Get climwin data
 climwindows_hf <-
   read.csv("results/Climwin_results/Weekly/Harvard Forest/weekly_climwin_results_all_HF_975.csv") %>%
   filter(wood_type != "other") %>%
@@ -536,13 +520,6 @@ climwindows_hf <-
     opendoy = yday(median_windowopendate),
     closedoy = yday(median_windowclosedate)
   )
-
-
-# 1. Get mean march daily maximum temperatures
-marchmeans_hf <- weatherdata_hf %>%
-  filter(month == 3) %>%
-  group_by(year) %>%
-  summarize(marchmean = mean(airtmax))
 
 # 2.a) EDA of climwin windows
 # RP climwin window is around 3/15 to 4/23
@@ -614,13 +591,9 @@ Wood_pheno_table_hf <- Wood_pheno_table_hf %>%
 
 
 ### Model Fit 1 (multivariate): (DOY_25, DOY_50, DOY_75) using climwinmeans ----
-
-# Delete all non-needed columns
-Wood_pheno_table_hf_2 <- Wood_pheno_table_hf %>%
-  select(perc, tag, year, wood_type, sp, climwinmean, starts_with("DOY"), site)
-
 # Convert to wide format for use in rstanarm::stan_mvmer()
-Wood_pheno_table_wide_hf <- Wood_pheno_table_hf_2 %>%
+Wood_pheno_table_wide_hf <- Wood_pheno_table_hf %>%
+  select(perc, tag, year, wood_type, sp, climwinmean, starts_with("DOY"), site) %>%
   pivot_wider(names_from = perc, values_from = DOY)
 
 # Fit multivariate model
