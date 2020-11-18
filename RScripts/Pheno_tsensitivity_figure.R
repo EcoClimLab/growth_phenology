@@ -1,5 +1,6 @@
+# Setup ------------------------------------------------------------------------
 #
-# To get a quick overview of the sections of this code, go RStudio menu bar ->
+# To get a quick overview of the sections of this code, go to RStudio menu bar ->
 # Edit -> Folding -> Collapse all.
 #
 
@@ -25,7 +26,7 @@ n_chains <- 2
 
 
 
-# Run analysis on SCBI ---------------------------------------------------------
+# 1. Run analysis on SCBI ---------------------------------------------------------
 ## Get growth data --------------------------------------------------------------
 Wood_pheno_table <- read_csv("Data/Wood_pheno_table_V13CLEAN.csv") %>%
   # Keep only RP and DP for now
@@ -484,7 +485,7 @@ fig6_DP_mrdoy
 
 
 
-# Run analysis on Harvard Forest -----------------------------------------------
+# 2. Run analysis on Harvard Forest -----------------------------------------------
 ## Get growth data --------------------------------------------------------------
 Wood_pheno_table_hf <- read_csv("Data/Wood_pheno_table_HarvardForest_V9CLEAN.csv") %>%
   # Keep only RP and DP for now
@@ -953,7 +954,7 @@ ggplot() +
 
 
 
-# Combine all model fit plots together -----------------------------------------
+# 3. Combine model fit plots for SCBI and Harvard Forest together -----------------------------------------
 png(
   filename = "doc/manuscript/tables_figures/pheno_Tsensitivity_combo.png", width = 15, height = 25,
   pointsize = 12, bg = "transparent", units = "in", res = 600,
