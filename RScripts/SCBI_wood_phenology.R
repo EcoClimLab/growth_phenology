@@ -1,9 +1,12 @@
 # Setup ------------------------------------------------------------------------
 #
-# This script takes the SCBI dendroband measurements and fits Sean McMahon's LG5
-# dendrometer model for each tree-year. The output is a .csv of RAW fitted
-# parameters and related values (max rate, max rate DOY, etc.), which we will
-# then "clean" for outliers in data_cleaning.R.
+# This script takes as input the SCBI dendroband measurements and fits Sean McMahon's LG5
+# dendrometer model for each tree-year. The outputs are two .csv files of RAW
+#
+# 1. wood phenology DOY25, DOY50, DOY75 data
+# 2. raw fitted parameters and related values (max rate, max rate DOY, etc.)
+#
+# which we will then "clean" for outliers in data_cleaning.R.
 #
 # To get a quick overview of the sections of this code, go to RStudio menu bar ->
 # Edit -> Folding -> Collapse all.
@@ -668,12 +671,18 @@ for (q in 2020) {
   }
 }
 
-# Write master data frame
+
+
+
+# Write master data frames ----
+## Wood phenology data ----
 warnings()
 masterDF <- masterDF[-1, ]
 masterDF$wood_type <- ifelse(masterDF$sp == "quru" | masterDF$sp == "qual", "ring porous", ifelse(masterDF$sp == "litu" | masterDF$sp == "fagr", "diffuse-porous", "other"))
 write.csv(masterDF, file = "Data/Wood_pheno_table_2020.csv", row.names = FALSE)
 masterDF$DOY <- as.numeric(masterDF$DOY)
+
+## Fitted parameter data ----
 # Added by bert: save parameter values
 LG5_parameters %>%
   bind_rows() %>%

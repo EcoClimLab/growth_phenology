@@ -1,9 +1,12 @@
 # Setup ------------------------------------------------------------------------
 #
-# This script takes the Harvard Forest dendroband measurements and fits Sean McMahon's LG5
-# dendrometer model for each tree-year. The output is a .csv of RAW fitted
-# parameters and related values (max rate, max rate DOY, etc.), which we will
-# then "clean" for outliers in data_cleaning.R.
+# This script takes as input the Harvard Forest dendroband measurements and fits Sean McMahon's LG5
+# dendrometer model for each tree-year. The outputs are two .csv files of RAW
+#
+# 1. wood phenology DOY25, DOY50, DOY75 data
+# 2. fitted parameters and related values (max rate, max rate DOY, etc.)
+#
+# which we will then "clean" for outliers in data_cleaning.R.
 #
 # To get a quick overview of the sections of this code, go to RStudio menu bar ->
 # Edit -> Folding -> Collapse all.
@@ -501,13 +504,20 @@ for (q in 1998:2003) {
   }
 }
 
-# Write master data frame
+
+
+
+
+# Write master data frames ----
+## Wood phenology data ----
 warnings()
 masterDF <- masterDF[-1, ]
 unique(masterDF$sp)
 masterDF$wood_type <- ifelse(masterDF$sp == "betual"| masterDF$sp == "acerru" | masterDF$sp == "fagugr" | masterDF$sp == "betule" | masterDF$sp == "betupa" | masterDF$sp == "acerpe" | masterDF$sp == "betupo" | masterDF$sp == "prunse", "diffuse-porous", ifelse(masterDF$sp == "querru" | masterDF$sp == "querve" | masterDF$sp == "fraxam", "ring-porous", "other"))
 write.csv(masterDF, file = "Data/Wood_pheno_table_HarvardForest_V4.csv", row.names = FALSE)
 masterDF$DOY <- as.numeric(masterDF$DOY)
+
+## Fitted parameter data ----
 # Added by bert: save parameter values
 LG5_parameters %>%
   bind_rows() %>%
