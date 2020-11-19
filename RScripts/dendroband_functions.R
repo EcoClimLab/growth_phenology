@@ -1,5 +1,4 @@
 # Sean McMahon's dendrobands functions. From: https://github.com/seanmcm/RDendrom/
-
 # convert measure to DBH (Use function in Dendrobands/Rscripts/analysis/convert_caliper_meas_to_dbh.R (I pasted it below for now))
 # Caliper to DBH function by Ian##
 objectiveFuncDendro <- function(diameter2, diameter1, gap1, gap2) {
