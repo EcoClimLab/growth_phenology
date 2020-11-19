@@ -4,8 +4,9 @@ Cameron Dow's growth phenology project
 
 ## Steps to replicate the analysis
 
+All scripts in `RScripts/`
 
-1. Using McMahon & Parker [LG5 dendroband model](https://github.com/seanmcm/RDendrom) for all tree-years compute: (1) fitted (DOY25, DOY50, DOY75) values and (2) all fitted LG5 parameters and related values (max rate, max rate DOY). Then do a little cleaning to remove egrigious outliers.
+1. Using McMahon & Parker [LG5 dendroband model](https://github.com/seanmcm/RDendrom) (functions in `dendroband_functions.R`), for all tree-years compute: (1) fitted (DOY25, DOY50, DOY75) values and (2) all fitted LG5 parameters and related values (max rate, max rate DOY). Then do a little cleaning to remove egrigious outliers.
     1. SCBI: 
         1. Run `SCBI_wood_phenology.R` to generate `Data/Wood_pheno_table_VXRAW.csv` 
         1. Run `data_cleaning.R` to generate `Data/Wood_pheno_table_VXCLEAN.csv` where `X` is the latest version number, which is 13
