@@ -1,5 +1,10 @@
 # Setup ------------------------------------------------------------------------
 #
+# This script takes the SCBI dendroband measurements and fits Sean McMahon's LG5
+# dendrometer model for each tree-year. The output is a .csv of RAW fitted
+# parameters and related values (max rate, max rate DOY, etc.), which we will
+# then "clean" for outliers in data_cleaning.R.
+#
 # To get a quick overview of the sections of this code, go to RStudio menu bar ->
 # Edit -> Folding -> Collapse all.
 #
