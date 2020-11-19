@@ -2,6 +2,10 @@
 
 Cameron Dow's growth phenology project
 
+![](doc/manuscript/tables_figures/DOYtiming_allyears.png)
+
+
+
 ## Steps to replicate the analysis
 
 All scripts in `RScripts/`
