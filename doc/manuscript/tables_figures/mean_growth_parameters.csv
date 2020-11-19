@@ -4,5 +4,5 @@ DOY.25,123 (May 4),154 (June 4),132 (May 15),164 (June 14)
 DOY.50,152 (June 2),172 (June 22),159 (June 9),182 (July 2)
 DOY.75,180 (June 30),190 (July 9),186 (July 6),199 (July 19)
 DOY.g.max,152 (June 2),173 (June 23),161 (June 11),183 (July 3)
-g.max,0.046,0.061,0.03,0.025
-delta.DBH ,n,n,n,n
+g.max (mm/day),0.046,0.061,0.03,0.025
+delta.DBH (mm/yr),4.7,3.6,3.1,1.4
