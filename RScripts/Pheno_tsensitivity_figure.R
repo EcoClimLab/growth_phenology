@@ -27,7 +27,7 @@ n_chains <- 2
 
 # 1. Run analysis on SCBI ---------------------------------------------------------
 ## Get growth data --------------------------------------------------------------
-Wood_pheno_table <- read_csv("Data/Wood_pheno_table_V13CLEAN.csv") %>%
+Wood_pheno_table <- read_csv("Data/Wood_pheno_table_SCBI_CLEAN.csv") %>%
   # Keep only RP and DP for now
   filter(wood_type != "other") %>%
   # filter(tot >= 1) %>%
@@ -67,7 +67,7 @@ marchmeans <- weatherdata %>%
 
 # 2. Get climwin data
 climwindows <-
-  read.csv("results/Climwin_results/Weekly/SCBI/weekly_climwin_results_975perc.csv") %>%
+  read.csv("results/Climwin_results/Weekly/SCBI/weekly_climwin_results_SCBI.csv") %>%
   filter(wood_type != "other") %>%
   mutate(
     median_windowopendate = as.Date(median_windowopendate),
@@ -462,7 +462,7 @@ fig6_DP_mrdoy
 
 # 2. Run analysis on Harvard Forest -----------------------------------------------
 ## Get growth data --------------------------------------------------------------
-Wood_pheno_table_hf <- read_csv("Data/Wood_pheno_table_HarvardForest_V9CLEAN.csv") %>%
+Wood_pheno_table_hf <- read_csv("Data/Wood_pheno_table_HarvardForest_CLEAN.csv") %>%
   # Keep only RP and DP for now
   filter(wood_type != "other") %>%
   # filter(tot >= 1) %>%
@@ -502,7 +502,7 @@ marchmeans_hf <- weatherdata_hf %>%
 
 # 2. Get climwin data
 climwindows_hf <-
-  read.csv("results/Climwin_results/Weekly/Harvard Forest/weekly_climwin_results_all_HF_975.csv") %>%
+  read.csv("results/Climwin_results/Weekly/Harvard Forest/weekly_climwin_results_all_HF.csv") %>%
   filter(wood_type != "other") %>%
   mutate(
     median_windowopendate = as.Date(median_windowopendate, format = "%Y-%m-%d"),

@@ -679,15 +679,15 @@ for (q in 2020) {
 warnings()
 masterDF <- masterDF[-1, ]
 masterDF$wood_type <- ifelse(masterDF$sp == "quru" | masterDF$sp == "qual", "ring porous", ifelse(masterDF$sp == "litu" | masterDF$sp == "fagr", "diffuse-porous", "other"))
-write.csv(masterDF, file = "Data/Wood_pheno_table_2020.csv", row.names = FALSE)
+write.csv(masterDF, file = "Data/Wood_pheno_table_SCBI_RAW.csv", row.names = FALSE)
 masterDF$DOY <- as.numeric(masterDF$DOY)
 
 ## Fitted parameter data ----
 # Added by bert: save parameter values
 LG5_parameters %>%
   bind_rows() %>%
-  write_csv(file = "Data/LG5_parameter_values_2020.csv")
+  write_csv(file = "Data/LG5_parameter_values_SCBI_RAW.csv")
 
-LG5_try <- bind_rows(LG5_parameters)
-write.csv(bind_rows(LG5_parameters), file = "Data/LG5_parameter_values_V10RAW.csv")
+#LG5_try <- bind_rows(LG5_parameters)
+#write.csv(bind_rows(LG5_parameters), file = "Data/LG5_parameter_values_SCBI_RAW.csv")
 
