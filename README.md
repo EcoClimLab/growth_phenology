@@ -10,7 +10,7 @@ Cameron Dow's growth phenology project
 
 All scripts in `RScripts/`
 
-1. Using McMahon & Parker [LG5 dendroband model](https://github.com/seanmcm/RDendrom) (functions in `dendroband_functions.R`), for all tree-years compute: (1) fitted (DOY25, DOY50, DOY75) values and (2) all fitted LG5 parameters and related values (max rate, max rate DOY). Then do a little cleaning to remove egrigious outliers.
+1. Using McMahon & Parker [LG5 dendroband model](https://github.com/seanmcm/RDendrom) (illustrated below, functions in `dendroband_functions.R`), for all tree-years compute: (1) fitted (DOY25, DOY50, DOY75) values and (2) all fitted LG5 parameters and related values (max rate, max rate DOY). Then do a little cleaning to remove egrigious outliers.
     1. SCBI: 
         1. Run `SCBI_wood_phenology.R` to generate `Data/Wood_pheno_table_VXRAW.csv` 
         1. Run `data_cleaning.R` to generate `Data/Wood_pheno_table_VXCLEAN.csv` where `X` is the latest version number, which is 13
@@ -23,3 +23,5 @@ All scripts in `RScripts/`
 3. Run `Pheno_tsensitivity_figure.R` to (1) fit all Bayesian models using [`rstanarm`](https://mc-stan.org/users/interfaces/rstanarm) R package interface to Stan and (2) generate plots based on posterior distributions
 4. Run `additional_figures.R` to generate additional plots
     1. Manually change years in section header `DOY timing figure` based upon hottest and coldest temp years within climwin windows. See climwinmeans generated in             `Pheno_Tsensitivity.R`
+
+![](doc/manuscript/tables_figures/schematic.png)
