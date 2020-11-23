@@ -67,7 +67,7 @@ marchmeans <- weatherdata %>%
 
 # 2. Get climwin data
 climwindows <-
-  read.csv("results/Climwin_results/Weekly/SCBI/weekly_climwin_results_SCBI.csv") %>%
+  read.csv("results/Climwin_results/Weekly/SCBI/weekly_climwin_results_SCBI_TMAX.csv") %>%
   filter(wood_type != "other") %>%
   mutate(
     median_windowopendate = as.Date(median_windowopendate),
@@ -502,7 +502,7 @@ marchmeans_hf <- weatherdata_hf %>%
 
 # 2. Get climwin data
 climwindows_hf <-
-  read.csv("results/Climwin_results/Weekly/Harvard Forest/weekly_climwin_results_all_HF.csv") %>%
+  read.csv("results/Climwin_results/Weekly/Harvard Forest/weekly_climwin_results_HF_TMAX.csv") %>%
   filter(wood_type != "other") %>%
   mutate(
     median_windowopendate = as.Date(median_windowopendate, format = "%Y-%m-%d"),
