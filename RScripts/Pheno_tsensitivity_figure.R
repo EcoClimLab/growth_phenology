@@ -653,7 +653,7 @@ fig6_DP_hf
 
 ### Model Fit 2: TOTAL GROWTH ----
 woodtable_hf <- subset(Wood_pheno_table_hf, perc == "DOY_25")
-total_formulaRP <- "dbh_total_growth ~ wood_type + wood_type:climwinmean + (1|tag)" %>% as.formula()
+total_formulaRP <- "dbh_total_growth ~ wood_type + wood_type:climwinmean + (1|site) + (1|tag)" %>% as.formula()
 
 mixedmodel_stanlmerRP_total_hf <- stan_lmer(
   formula = total_formulaRP,
@@ -709,7 +709,7 @@ fig6_DP_tot_hf
 
 
 ### Model Fit 3: Season length ----
-seasonlength_formulaRP <- "seasonlength ~ wood_type + wood_type:climwinmean + (1|tag)" %>% as.formula()
+seasonlength_formulaRP <- "seasonlength ~ wood_type + wood_type:climwinmean + (1|site) + (1|tag)" %>% as.formula()
 
 mixedmodel_stanlmerRP_seasonlength_hf <- stan_lmer(
   formula = seasonlength_formulaRP,
@@ -765,7 +765,7 @@ fig6_DP_sl_hf
 
 
 ### Model Fit 4: MAX RATE ----
-maxrate_formulaRP <- "max_rate ~ wood_type + wood_type:climwinmean + (1|tag)" %>% as.formula()
+maxrate_formulaRP <- "max_rate ~ wood_type + wood_type:climwinmean + (1|site) + (1|tag)" %>% as.formula()
 
 mixedmodel_stanlmerRP_maxrate_hf <- stan_lmer(
   formula = maxrate_formulaRP,
@@ -821,7 +821,7 @@ fig6_DP_mr_hf
 
 
 ### Model Fit 5: MAX RATE DOY ----
-maxrateDOY_formulaRP <- "max_rate_DOY ~wood_type + wood_type:climwinmean + (1|tag)" %>% as.formula()
+maxrateDOY_formulaRP <- "max_rate_DOY ~wood_type + wood_type:climwinmean + (1|site) + (1|tag)" %>% as.formula()
 
 mixedmodel_stanlmerRP_maxrateDOY_hf <- stan_lmer(
   formula = maxrateDOY_formulaRP,
