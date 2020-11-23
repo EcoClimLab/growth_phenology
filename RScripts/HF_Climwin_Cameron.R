@@ -16,6 +16,21 @@ library(readr)
 library(lubridate)
 library(tidyverse)
 library(dplyr)
+
+#Edit the plotbetas function in climwin
+#In the function, change scale_fill_gradientn(colours = c("red", "yellow", "blue"), name = "") to scale_fill_gradient2(high = "blue", mid = "yellow", low = "red")
+trace("plotbetas", edit = TRUE)
+
+#ggplot(MassOutput, aes(x = WindowClose, y = WindowOpen, z = ModelBeta)) +
+#  geom_tile(aes(fill = ModelBeta)) +
+#  scale_fill_gradient2(high = "blue", mid = "yellow", low = "red") +
+#  #theme_climwin() +
+#  theme(legend.position = c(0.75,0.3)) +
+#  ggtitle("Beta linear") +
+#  ylab("Window open") +
+#  xlab("Window close")
+
+
 # Merge two weather DF's into one ----
 #HF_1964to2002 <- read_csv("climate data/HF_1964to2002.csv")
 #HF_2001toPresent <- read_csv("climate data/HF_2001toPresent.csv")
@@ -118,21 +133,28 @@ for (w in unique(Wood_pheno_table$wood_type)) {
     df <- data.frame(w, j, round(mean(biodata$DOY) / 7), refdate$Month, refdate$Day, MassWin[[1]][["Dataset"]][[1, 2]], MassWin[[1]][["Dataset"]][[1, 3]], MassOutput[1, 4], as.character(medianwindowopen), as.character(medianwindowclose)) # add w, #add/7
     names(dffinal) <- names(df)
     dffinal <- rbind(dffinal, df)
+
     png(filename = paste("HF", w, j, ".png", sep = "_"), width = 10, height = 8, units = "in", res = 300) # add w
     plotalloutput <- plotall(
       dataset = MassOutput,
       datasetrand = MassRand,
       bestmodel = MassWin[[1]]$BestModel,
-      bestmodeldata = MassWin[[1]]$BestModelData
+      bestmodeldata = MassWin[[1]]$BestModelData,
+      arrow = TRUE
     )
-
     dev.off()
+
+
+    plotbetas(MassOutput, arrow = TRUE)
+    ggsave(filename = paste("HF","Plotbetas", w, j, ".png", sep = "_"), width = 10, height = 8, units = "in") # add w
+
+
   }
 } # }
+
 dffinal <- dffinal[-1, ]
 names(dffinal) <- c("wood_type", "percs", "refwoy", "refmonth", "refday", "winopenwoy", "winclosewoy", "bestmodel_beta", "median_windowopendate", "median_windowclosedate")
 write.csv(dffinal, file = "results/Climwin_results/Weekly/Harvard Forest/weekly_climwin_results_HF_TMAX.csv", row.names = FALSE)
-
 
 
 ## TMIN: Percentage DOY climwin all wood types, all percs WEEKLY ----
@@ -217,8 +239,11 @@ for (w in unique(Wood_pheno_table$wood_type)) {
       bestmodel = MassWin[[1]]$BestModel,
       bestmodeldata = MassWin[[1]]$BestModelData
     )
-
     dev.off()
+    plotbetas(MassOutput, arrow = TRUE)
+    ggsave(filename = paste("HF","Plotbetas", w, j, ".png", sep = "_"), width = 10, height = 8, units = "in") # add w
+
+
   }
 } # }
 dffinal <- dffinal[-1, ]

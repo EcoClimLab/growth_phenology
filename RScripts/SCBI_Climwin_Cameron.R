@@ -11,6 +11,19 @@ library(readr)
 library(lubridate)
 library(tidyverse)
 
+#Edit the plotbetas function in climwin
+#In the function, change scale_fill_gradientn(colours = c("red", "yellow", "blue"), name = "") to scale_fill_gradient2(high = "blue", mid = "yellow", low = "red")
+trace("plotbetas", edit = TRUE)
+
+#ggplot(MassOutput, aes(x = WindowClose, y = WindowOpen, z = ModelBeta)) +
+#  geom_tile(aes(fill = ModelBeta)) +
+#  scale_fill_gradient2(high = "blue", mid = "yellow", low = "red") +
+#  #theme_climwin() +
+#  theme(legend.position = c(0.75,0.3)) +
+#  ggtitle("Beta linear") +
+#  ylab("Window open") +
+#  xlab("Window close")
+
 # Read in climate and biological data for climwin analysis ----
 # SCBI met tower
 climate <- read_csv("climate data/met_tower_data_sensor2_ncdc_supplemented.csv", col_names = TRUE) # only goes to October 2019, fix?
@@ -95,16 +108,23 @@ for (w in unique(Wood_pheno_table$wood_type)) {
     df <- data.frame(w, j, round(mean(biodata$DOY) / 7), refdate$Month, refdate$Day, MassWin[[1]][["Dataset"]][[1, 2]], MassWin[[1]][["Dataset"]][[1, 3]], MassOutput[1, 4], as.character(medianwindowopen), as.character(medianwindowclose)) # add w, #add/7
     names(dffinal) <- names(df)
     dffinal <- rbind(dffinal, df)
-    png(filename = paste("SCBI", "mettower", w, j, ".png", sep = "_"), width = 10, height = 8, units = "in", res = 300) # add w
+    png(filename = paste("SCBI", w, j, ".png", sep = "_"), width = 10, height = 8, units = "in", res = 300) # add w
     plotalloutput <- plotall(
       dataset = MassOutput,
       datasetrand = MassRand,
       bestmodel = MassWin[[1]]$BestModel,
-      bestmodeldata = MassWin[[1]]$BestModelData
+      bestmodeldata = MassWin[[1]]$BestModelData,
+      arrow = TRUE
     )
 
     dev.off()
-  }
+
+    plotbetas(MassOutput, arrow = TRUE)
+    ggsave(filename = paste("SCBI","Plotbetas", w, j, ".png", sep = "_"), width = 10, height = 8, units = "in") # add w
+
+
+
+    }
 } # }
 dffinal <- dffinal[-1, ]
 names(dffinal) <- c("wood_type", "percs", "refwoy", "refmonth", "refday", "winopenwoy", "winclosewoy", "bestmodel_beta", "median_windowopendate", "median_windowclosedate")
@@ -199,15 +219,22 @@ for (w in unique(Wood_pheno_table$wood_type)) {
     df <- data.frame(w, j, round(mean(biodata$DOY) / 7), refdate$Month, refdate$Day, MassWin[[1]][["Dataset"]][[1, 2]], MassWin[[1]][["Dataset"]][[1, 3]], MassOutput[1, 4], as.character(medianwindowopen), as.character(medianwindowclose)) # add w, #add/7
     names(dffinal) <- names(df)
     dffinal <- rbind(dffinal, df)
-    png(filename = paste("SCBI", "mettower", w, j, ".png", sep = "_"), width = 10, height = 8, units = "in", res = 300) # add w
+    png(filename = paste("SCBI", w, j, ".png", sep = "_"), width = 10, height = 8, units = "in", res = 300) # add w
     plotalloutput <- plotall(
       dataset = MassOutput,
       datasetrand = MassRand,
       bestmodel = MassWin[[1]]$BestModel,
-      bestmodeldata = MassWin[[1]]$BestModelData
+      bestmodeldata = MassWin[[1]]$BestModelData,
+      arrow = TRUE
     )
 
     dev.off()
+
+    plotbetas(MassOutput, arrow = TRUE)
+    ggsave(filename = paste("SCBI","Plotbetas", w, j, ".png", sep = "_"), width = 10, height = 8, units = "in") # add w
+
+
+
   }
 } # }
 dffinal <- dffinal[-1, ]
