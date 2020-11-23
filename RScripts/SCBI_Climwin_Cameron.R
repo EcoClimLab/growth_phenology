@@ -115,18 +115,24 @@ write.csv(dffinal, file = "results/Climwin_results/Weekly/SCBI/weekly_climwin_re
 ## TMIN: Percentage DOY climwin all wood types, all percs WEEKLY ----
 
 #Set up TMIN dataframe
-climate <- read_csv("climate data/SCBI_mettower_data_sensor2.csv", col_names = FALSE)
-climate <- climate[,c(1,2,3,6)]
-names(climate) <- c("year", "month", "day", "TMIN")
-climate[climate$TMIN == -99.9,] <- NA
-climate$TMIN <- as.numeric(climate$TMIN)
+#climate <- read_csv("climate data/SCBI_mettower_data_sensor2.csv", col_names = FALSE)
+#climate <- climate[,c(1,2,3,6)]
+#names(climate) <- c("year", "month", "day", "TMIN")
+#climate[climate$TMIN == -99.9,] <- NA
+#climate$TMIN <- as.numeric(climate$TMIN)
 
-climate <- climate[complete.cases(climate$TMIN),]
+#climate <- climate[complete.cases(climate$TMIN),]
 
-climate$DATE <- paste(climate$day, climate$month, climate$year, sep = "/")
-climate$DATE <- strptime(as.character(climate$DATE), format = "%d/%m/%Y")
-climate$DATE <- format(climate$DATE, "%d/%m/%Y")
-climate <- distinct(climate, DATE, .keep_all = TRUE)
+#climate$DATE <- paste(climate$day, climate$month, climate$year, sep = "/")
+#climate$DATE <- strptime(as.character(climate$DATE), format = "%d/%m/%Y")
+#climate$doy <- yday(climate$DATE)
+#climate$DATE <- format(climate$DATE, "%d/%m/%Y")
+#climate <- distinct(climate, DATE, .keep_all = TRUE)
+
+#write.csv(climate, file = "SCBI_tmin.csv", row.names = FALSE)
+
+
+climate <- read_csv("climate data/SCBI_tmin.csv")
 
 dffinal <- data.frame(1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
 for (w in unique(Wood_pheno_table$wood_type)) {
