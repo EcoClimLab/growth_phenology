@@ -237,7 +237,8 @@ for (w in unique(Wood_pheno_table$wood_type)) {
       dataset = MassOutput,
       datasetrand = MassRand,
       bestmodel = MassWin[[1]]$BestModel,
-      bestmodeldata = MassWin[[1]]$BestModelData
+      bestmodeldata = MassWin[[1]]$BestModelData,
+      arrow = TRUE
     )
     dev.off()
     plotbetas(MassOutput, arrow = TRUE)
