@@ -18,7 +18,7 @@ options(mc.cores = parallel::detectCores())
 library(rstanarm)
 # Number of MCMC chains & number of simulations per chain.
 # Need to increase this at the end
-n_iter <- 4000
+n_iter <- 10000
 n_chains <- 2
 
 
