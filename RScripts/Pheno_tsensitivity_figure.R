@@ -27,7 +27,7 @@ n_chains <- 2
 
 # 1. Run analysis on SCBI ---------------------------------------------------------
 ## Get growth data --------------------------------------------------------------
-Wood_pheno_table <- read_csv("Data/Wood_pheno_table_V13CLEAN.csv") %>%
+Wood_pheno_table <- read_csv("Data/Wood_pheno_table_SCBI_CLEAN.csv") %>%
   # Keep only RP and DP for now
   filter(wood_type != "other") %>%
   # filter(tot >= 1) %>%
@@ -54,20 +54,21 @@ twosevenfive <- twosevenfive[, c(3, 7, 16)]
 
 ## Create temperature variables -------------------------------------------------
 # 0. Get all weather data
+#TMAX
 weatherdata <-
   read_csv("climate data/met_tower_data_sensor2_ncdc_supplemented.csv") %>%
   filter(!is.na(cleantmax)) %>%
   mutate(year = year.x)
 
-# 1. Get mean march daily maximum temperatures
-marchmeans <- weatherdata %>%
-  filter(month == 3) %>%
-  group_by(year) %>%
-  summarize(marchmean = mean(cleantmax))
+#TMIN
+#weatherdata <-
+#  read_csv("climate data/SCBI_tmin.csv") %>%
+#  filter(!is.na(TMIN))
 
 # 2. Get climwin data
+#TMAX
 climwindows <-
-  read.csv("results/Climwin_results/Weekly/SCBI/weekly_climwin_results_975perc.csv") %>%
+  read.csv("results/Climwin_results/Weekly/SCBI/weekly_climwin_results_SCBI_TMAX.csv") %>%
   filter(wood_type != "other") %>%
   mutate(
     median_windowopendate = as.Date(median_windowopendate),
@@ -76,51 +77,42 @@ climwindows <-
     closedoy = yday(median_windowclosedate)
   )
 
-# 2.a) EDA of climwin windows
-# RP climwin window is around 3/15 to 4/23
-# weatherdata %>%
-#  filter(flagrp == "RP") %>%
-#  mutate(DOY = yday(DATE)) %>%
-#  arrange(DOY) %>%
-#  slice(c(1, n()))
-
-# DP climwin window is around 3/27 to 6/2
-# weatherdata %>%
-#  filter(flagdp == "DP") %>%
-#  mutate(DOY = yday(DATE)) %>%
-#  arrange(DOY) %>%
-#  slice(c(1, n()))
-
-climwin_windows <-
-  tibble(
-    wood_type = c("diffuse-porous", "ring-porous"),
-    window = c("climwin window: 2/12 - 5/21", "climwin window: 4/9 - 5/28")
-  )
-
-
-# 2.b) Get mean climwin daily maximum temperatures
-# RP separately
-# climwinmeans_rp <- weatherdata %>%
-#  filter(flagrp == "RP") %>%
-#  group_by(year) %>%
-#  summarize(climwinmean = mean(TMAX)) %>%
-#  mutate(wood_type = "ring-porous")
+#TMIN
+#climwindows <-
+#  read.csv("results/Climwin_results/Weekly/SCBI/TMIN/weekly_climwin_results_SCBI_TMIN.csv") %>%
+#  filter(wood_type != "other") %>%
+#  mutate(
+#    median_windowopendate = as.Date(median_windowopendate),
+#    median_windowclosedate = as.Date(median_windowclosedate),
+#    opendoy = yday(median_windowopendate),
+#    closedoy = yday(median_windowclosedate)
+#  )
+#TMAX
 climwinmeans_rp <- weatherdata %>%
   filter(doy %in% c(climwindows[1, 11]:climwindows[1, 12])) %>%
   group_by(year) %>%
   summarize(climwinmean = mean(cleantmax)) %>%
   mutate(wood_type = "ring-porous")
-# DP separately
-# climwinmeans_dp <- weatherdata %>%
-#  filter(flagdp == "DP") %>%
+
+#TMIN
+#climwinmeans_rp <- weatherdata %>%
+#  filter(doy %in% c(climwindows[1, 11]:climwindows[1, 12])) %>%
 #  group_by(year) %>%
-#  summarize(climwinmean = mean(TMAX)) %>%
-#  mutate(wood_type = "diffuse-porous")
+#  summarize(climwinmean = mean(TMIN)) %>%
+#  mutate(wood_type = "ring-porous")
+#TMAX
 climwinmeans_dp <- weatherdata %>%
   filter(doy %in% c(climwindows[4, 11]:climwindows[4, 12])) %>% # 68:135
   group_by(year) %>%
   summarize(climwinmean = mean(cleantmax)) %>%
   mutate(wood_type = "diffuse-porous")
+
+#TMIN
+#climwinmeans_dp <- weatherdata %>%
+#  filter(doy %in% c(climwindows[4, 11]:climwindows[4, 12])) %>% # 68:135
+#  group_by(year) %>%
+#  summarize(climwinmean = mean(TMIN)) %>%
+#  mutate(wood_type = "diffuse-porous")
 
 # Combine
 climwinmeans <- bind_rows(climwinmeans_rp, climwinmeans_dp)
@@ -128,7 +120,7 @@ climwinmeans <- bind_rows(climwinmeans_rp, climwinmeans_dp)
 
 # 3. Add to growth data
 Wood_pheno_table <- Wood_pheno_table %>%
-  left_join(marchmeans, by = "year") %>%
+ # left_join(marchmeans, by = "year") %>%
   left_join(climwinmeans, by = c("year", "wood_type")) %>%
   left_join(twosevenfive, by = c("tag", "year")) %>%
   left_join(fiftyseventy, by = c("tag", "year")) %>%
@@ -462,7 +454,7 @@ fig6_DP_mrdoy
 
 # 2. Run analysis on Harvard Forest -----------------------------------------------
 ## Get growth data --------------------------------------------------------------
-Wood_pheno_table_hf <- read_csv("Data/Wood_pheno_table_HarvardForest_V9CLEAN.csv") %>%
+Wood_pheno_table_hf <- read_csv("Data/Wood_pheno_table_HarvardForest_CLEAN.csv") %>%
   # Keep only RP and DP for now
   filter(wood_type != "other") %>%
   # filter(tot >= 1) %>%
@@ -490,19 +482,26 @@ twosevenfive_hf <- twosevenfive_hf[, c(3, 6, 17)]
 
 ## Create temperature variables -------------------------------------------------
 # 0. Get all weather data
+#TMAX
 weatherdata_hf <-
   read_csv("climate data/HF_weatherdata.csv") %>%
   filter(!is.na(airtmax))
 
+#TMIN
+#weatherdata_hf <-
+#  read_csv("climate data/HF_weatherdata_TMIN.csv") %>%
+#  filter(!is.na(airtmin))
+
 # 1. Get mean march daily maximum temperatures
-marchmeans_hf <- weatherdata_hf %>%
-  filter(month == 3) %>%
-  group_by(year) %>%
-  summarize(marchmean = mean(airtmax))
+#marchmeans_hf <- weatherdata_hf %>%
+#  filter(month == 3) %>%
+#  group_by(year) %>%
+#  summarize(marchmean = mean(airtmax))
 
 # 2. Get climwin data
+#TMAX
 climwindows_hf <-
-  read.csv("results/Climwin_results/Weekly/Harvard Forest/weekly_climwin_results_all_HF_975.csv") %>%
+  read.csv("results/Climwin_results/Weekly/Harvard Forest/weekly_climwin_results_HF_TMAX.csv") %>%
   filter(wood_type != "other") %>%
   mutate(
     median_windowopendate = as.Date(median_windowopendate, format = "%Y-%m-%d"),
@@ -511,51 +510,45 @@ climwindows_hf <-
     closedoy = yday(median_windowclosedate)
   )
 
-# 2.a) EDA of climwin windows
-# RP climwin window is around 3/15 to 4/23
-# weatherdata %>%
-#  filter(flagrp == "RP") %>%
-#  mutate(DOY = yday(DATE)) %>%
-#  arrange(DOY) %>%
-#  slice(c(1, n()))
-
-# DP climwin window is around 3/27 to 6/2
-# weatherdata %>%
-#  filter(flagdp == "DP") %>%
-#  mutate(DOY = yday(DATE)) %>%
-#  arrange(DOY) %>%
-#  slice(c(1, n()))
-
-climwin_windows_hf <-
-  tibble(
-    wood_type = c("diffuse-porous", "ring-porous"),
-    window = c("climwin window: 3/19 - 5/7", "climwin window: 3/19 - 4/16")
-  )
+#TMIN
+#climwindows_hf <-
+#  read.csv("results/Climwin_results/Weekly/Harvard Forest/TMIN/weekly_climwin_results_HF_TMIN.csv") %>%
+#  filter(wood_type != "other") %>%
+#  mutate(
+#    median_windowopendate = as.Date(median_windowopendate, format = "%Y-%m-%d"),
+#    median_windowclosedate = as.Date(median_windowclosedate, format = "%Y-%m-%d"),
+#    opendoy = yday(median_windowopendate),
+#    closedoy = yday(median_windowclosedate)
+#  )
 
 
-# 2.b) Get mean climwin daily maximum temperatures
-# RP separately
-# climwinmeans_rp <- weatherdata %>%
-#  filter(flagrp == "RP") %>%
-#  group_by(year) %>%
-#  summarize(climwinmean = mean(TMAX)) %>%
-#  mutate(wood_type = "ring-porous")
+#TMAX
 climwinmeans_rp_hf <- weatherdata_hf %>%
   filter(DOY %in% c(climwindows_hf[4, 11]:climwindows_hf[4, 12])) %>%
   group_by(year) %>%
   summarize(climwinmean = mean(airtmax)) %>%
   mutate(wood_type = "ring-porous")
-# DP separately
-# climwinmeans_dp <- weatherdata %>%
-#  filter(flagdp == "DP") %>%
+
+#TMIN
+#climwinmeans_rp_hf <- weatherdata_hf %>%
+#  filter(DOY %in% c(climwindows_hf[4, 11]:climwindows_hf[4, 12])) %>%
 #  group_by(year) %>%
-#  summarize(climwinmean = mean(TMAX)) %>%
-#  mutate(wood_type = "diffuse-porous")
+#  summarize(climwinmean = mean(airtmin)) %>%
+#  mutate(wood_type = "ring-porous")
+
+#TMAX
 climwinmeans_dp_hf <- weatherdata_hf %>%
   filter(DOY %in% c(climwindows_hf[1, 11]:climwindows_hf[1, 12])) %>% # 68:135
   group_by(year) %>%
   summarize(climwinmean = mean(airtmax)) %>%
   mutate(wood_type = "diffuse-porous")
+
+#TMIN
+#climwinmeans_dp_hf <- weatherdata_hf %>%
+#  filter(DOY %in% c(climwindows_hf[1, 11]:climwindows_hf[1, 12])) %>% # 68:135
+#  group_by(year) %>%
+#  summarize(climwinmean = mean(airtmin)) %>%
+#  mutate(wood_type = "diffuse-porous")
 
 # Combine
 climwinmeans_hf <- bind_rows(climwinmeans_rp_hf, climwinmeans_dp_hf)
@@ -563,7 +556,7 @@ climwinmeans_hf <- bind_rows(climwinmeans_rp_hf, climwinmeans_dp_hf)
 
 # 3. Add to growth data
 Wood_pheno_table_hf <- Wood_pheno_table_hf %>%
-  left_join(marchmeans_hf, by = "year") %>%
+#  left_join(marchmeans_hf, by = "year") %>%
   left_join(climwinmeans_hf, by = c("year", "wood_type")) %>%
   left_join(twosevenfive_hf, by = c("tag", "year")) %>%
   left_join(fiftyseventy_hf, by = c("tag", "year")) %>%
@@ -660,7 +653,7 @@ fig6_DP_hf
 
 ### Model Fit 2: TOTAL GROWTH ----
 woodtable_hf <- subset(Wood_pheno_table_hf, perc == "DOY_25")
-total_formulaRP <- "dbh_total_growth ~ wood_type + wood_type:climwinmean + (1|tag)" %>% as.formula()
+total_formulaRP <- "dbh_total_growth ~ wood_type + wood_type:climwinmean + (1|site) + (1|tag)" %>% as.formula()
 
 mixedmodel_stanlmerRP_total_hf <- stan_lmer(
   formula = total_formulaRP,
@@ -716,7 +709,7 @@ fig6_DP_tot_hf
 
 
 ### Model Fit 3: Season length ----
-seasonlength_formulaRP <- "seasonlength ~ wood_type + wood_type:climwinmean + (1|tag)" %>% as.formula()
+seasonlength_formulaRP <- "seasonlength ~ wood_type + wood_type:climwinmean + (1|site) + (1|tag)" %>% as.formula()
 
 mixedmodel_stanlmerRP_seasonlength_hf <- stan_lmer(
   formula = seasonlength_formulaRP,
@@ -772,7 +765,7 @@ fig6_DP_sl_hf
 
 
 ### Model Fit 4: MAX RATE ----
-maxrate_formulaRP <- "max_rate ~ wood_type + wood_type:climwinmean + (1|tag)" %>% as.formula()
+maxrate_formulaRP <- "max_rate ~ wood_type + wood_type:climwinmean + (1|site) + (1|tag)" %>% as.formula()
 
 mixedmodel_stanlmerRP_maxrate_hf <- stan_lmer(
   formula = maxrate_formulaRP,
@@ -828,7 +821,7 @@ fig6_DP_mr_hf
 
 
 ### Model Fit 5: MAX RATE DOY ----
-maxrateDOY_formulaRP <- "max_rate_DOY ~wood_type + wood_type:climwinmean + (1|tag)" %>% as.formula()
+maxrateDOY_formulaRP <- "max_rate_DOY ~wood_type + wood_type:climwinmean + (1|site) + (1|tag)" %>% as.formula()
 
 mixedmodel_stanlmerRP_maxrateDOY_hf <- stan_lmer(
   formula = maxrateDOY_formulaRP,

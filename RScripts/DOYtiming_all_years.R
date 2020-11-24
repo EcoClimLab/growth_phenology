@@ -2,7 +2,7 @@ library(ggplot2)
 library(readr)
 library(tidyverse)
 library(lubridate)
-Wood_pheno_table_scbi <- read_csv("Data/Wood_pheno_table_V13CLEAN.csv") %>%
+Wood_pheno_table_scbi <- read_csv("Data/Wood_pheno_table_SCBI_CLEAN.csv") %>%
   # Keep only RP and DP for now
   filter(wood_type != "other") %>%
   # Rename ring porous to not have a space
@@ -22,7 +22,7 @@ weatherdata <-
 # Rename RP flag set by Cam
 #rename(flagrp = flag)
 climwindows <-
-  read.csv("results/Climwin_results/Weekly/SCBI/weekly_climwin_results_975perc.csv") %>%
+  read.csv("results/Climwin_results/Weekly/SCBI/weekly_climwin_results_SCBI_TMAX.csv") %>%
   filter(wood_type != "other") %>%
   mutate(
     median_windowopendate = as.Date(median_windowopendate),
@@ -36,13 +36,7 @@ climwinmeans_rp <- weatherdata %>%
   group_by(year) %>%
   summarize(climwinmean = mean(cleantmax)) %>%
   mutate(wood_type = "ring-porous")
-# DP separately
-#climwinmeans_dp <- weatherdata %>%
-#  filter(flagdp == "DP") %>%
-#  group_by(year) %>%
-#  summarize(climwinmean = mean(TMAX)) %>%
-#  mutate(wood_type = "diffuse-porous")
-#week 3-6
+
 climwinmeans_dp <- weatherdata %>%
   filter(doy %in% c(climwindows[4,11]:climwindows[4,12])) %>% #68:135
   group_by(year) %>%
@@ -51,8 +45,6 @@ climwinmeans_dp <- weatherdata %>%
 
 # Combine
 climwinmeans <- bind_rows(climwinmeans_rp, climwinmeans_dp)
-#RP range: 19-23
-#DP range: 14.3-18.7
 
 # 3. Add to growth data
 Wood_pheno_table_scbi <- Wood_pheno_table_scbi %>%
@@ -110,8 +102,6 @@ aggregates_scbi_dp$stanT <- (aggregates_scbi_dp$window_temp-min(aggregates_scbi_
 aggregates_scbi <- rbind(aggregates_scbi_dp,aggregates_scbi_rp)
 
 
-#(T_year - T_min)/(T_max-Tmin)
-
 g <-  ggplot(aggregates_scbi, aes(x=x, y = as.character(Group.2), group = interaction(Group.1, year), color = stanT, linetype = Group.1))+
   geom_point(size = 3)+
   geom_line(size = 1)+
@@ -129,28 +119,28 @@ g
 #  #scale_colour_manual(values = c("red", "blue", "purple"))
 #  scale_colour_gradient(low = "blue", high = "red")
 
-SCBI_CMI <- read_csv("SCBI_CMI.csv")
-CMI_ag_scbi <- aggregate(SCBI_CMI$CMI, by = list(SCBI_CMI$year), FUN = mean)
-names(CMI_ag_scbi) <- c("year","CMI")
-aggregates_scbi <- left_join(aggregates_scbi, CMI_ag_scbi, by = "year")
+#SCBI_CMI <- read_csv("SCBI_CMI.csv")
+#CMI_ag_scbi <- aggregate(SCBI_CMI$CMI, by = list(SCBI_CMI$year), FUN = mean)
+#names(CMI_ag_scbi) <- c("year","CMI")
+#aggregates_scbi <- left_join(aggregates_scbi, CMI_ag_scbi, by = "year")
 
-CMI_ag_previousyear <- CMI_ag_scbi
-CMI_ag_previousyear[,1] <- c(2012,2013,2014,2015,2016,2017,2018,2019,NA)
-CMI_ag_previousyear <- CMI_ag_previousyear[-9,]
+#CMI_ag_previousyear <- CMI_ag_scbi
+#CMI_ag_previousyear[,1] <- c(2012,2013,2014,2015,2016,2017,2018,2019,NA)
+#CMI_ag_previousyear <- CMI_ag_previousyear[-9,]
 
 #aggregates_scbi$CMI_level <- ifelse(aggregates_scbi$CMI > mean(aggregates_scbi$CMI), "Above Average", "Below Average")
-aggregates_scbi$previous_cmi <- left_join(aggregates_scbi, CMI_ag_previousyear, by = "year")
+#aggregates_scbi$previous_cmi <- left_join(aggregates_scbi, CMI_ag_previousyear, by = "year")
 
-ggplot(aggregates_scbi, aes(x=x, y = as.character(Group.2), group = interaction(Group.1, year), color = CMI, linetype = Group.1))+
-  geom_point(size = 3)+
-  geom_line(size = 1)+
-  labs(x = "Day of Year", y = "Percent of Total Annual Growth", title = "Harvard Forest Intraannual Growth Timing", color = "CMI", linetype = "Wood Type")+
-  scale_colour_gradient(low = "blue", high = "red")
+#ggplot(aggregates_scbi, aes(x=x, y = as.character(Group.2), group = interaction(Group.1, year), color = CMI, linetype = Group.1))+
+#  geom_point(size = 3)+
+#  geom_line(size = 1)+
+#  labs(x = "Day of Year", y = "Percent of Total Annual Growth", title = "Harvard Forest Intraannual Growth Timing", color = "CMI", linetype = "Wood Type")+
+#  scale_colour_gradient(low = "blue", high = "red")
 
 
 #Harvard Forest
 # Get growth data ----------------------------------
-Wood_pheno_table <- read_csv("Data/Wood_pheno_table_HarvardForest_V9CLEAN.csv") %>%
+Wood_pheno_table <- read_csv("Data/Wood_pheno_table_HarvardForest_CLEAN.csv") %>%
   # Keep only RP and DP for now
   filter(wood_type != "other") %>%
   #filter(tot >= 1) %>%
@@ -172,7 +162,7 @@ weatherdata <-
 # Rename RP flag set by Cam
 #rename(flagrp = flag)
 climwindows <-
-  read.csv("results/Climwin_results/Weekly/Harvard Forest/weekly_climwin_results_all_HF_975.csv") %>%
+  read.csv("results/Climwin_results/Weekly/Harvard Forest/weekly_climwin_results_HF_TMAX.csv") %>%
   filter(wood_type != "other") %>%
   mutate(
     median_windowopendate = as.Date(median_windowopendate, format = "%Y-%m-%d"),
@@ -180,17 +170,13 @@ climwindows <-
     opendoy = yday(median_windowopendate),
     closedoy = yday(median_windowclosedate)
   )
+
 climwinmeans_rp_hf <- weatherdata %>%
   filter(DOY %in% c(climwindows[4,11]:climwindows[4,12])) %>%
   group_by(year) %>%
   summarize(climwinmean = mean(airtmax)) %>%
   mutate(wood_type = "ring-porous")
-# DP separately
-#climwinmeans_dp <- weatherdata %>%
-#  filter(flagdp == "DP") %>%
-#  group_by(year) %>%
-#  summarize(climwinmean = mean(TMAX)) %>%
-#  mutate(wood_type = "diffuse-porous")
+
 climwinmeans_dp_hf <- weatherdata %>%
   filter(DOY %in% c(climwindows[1,11]:climwindows[1,12])) %>% #68:135
   group_by(year) %>%
@@ -262,56 +248,56 @@ h <- ggplot(aggregates_hf, aes(x=x, y = as.character(Group.2), group = interacti
   scale_colour_gradient(low = "blue", high = "red")
 # scale_colour_manual(values = c("red", "blue", "purple"))
 
-h+ ggplot(aggregates_hf_dp, aes(x=x, y = as.character(Group.2), group = interaction(Group.1, year), color = window_temp, linetype = Group.1))+
-  geom_point(size = 3)+
-  geom_line(size = 1)+
-  theme(legend.position = "top")+
-  labs(x = "Day of Year", y = "Percent of Total Annual Growth", title = "Harvard Forest Intraannual Growth Timing", color = "Temp", linetype = "")+
-  scale_colour_gradient(low = "blue", high = "red")
-# scale_colour_manual(values = c("red", "blue", "purple"))
+#h+ ggplot(aggregates_hf_dp, aes(x=x, y = as.character(Group.2), group = interaction(Group.1, year), color = window_temp, linetype = Group.1))+
+#  geom_point(size = 3)+
+#  geom_line(size = 1)+
+#  theme(legend.position = "top")+
+#  labs(x = "Day of Year", y = "Percent of Total Annual Growth", title = "Harvard Forest Intraannual Growth Timing", color = "Temp", linetype = "")+
+#  scale_colour_gradient(low = "blue", high = "red")
+## scale_colour_manual(values = c("red", "blue", "purple"))
 
-HF_CMI <- read_csv("HF_CMI.csv")
-CMI_ag_hf <- aggregate(HF_CMI$CMI, by = list(HF_CMI$year), FUN = mean)
-names(CMI_ag_hf) <- c("year","CMI")
-aggregates_hf <- left_join(aggregates_hf, CMI_ag_hf, by = "year")
+#HF_CMI <- read_csv("HF_CMI.csv")
+#CMI_ag_hf <- aggregate(HF_CMI$CMI, by = list(HF_CMI$year), FUN = mean)
+#names(CMI_ag_hf) <- c("year","CMI")
+#aggregates_hf <- left_join(aggregates_hf, CMI_ag_hf, by = "year")
 
 #aggregates_hf$CMI_level <- ifelse(aggregates_hf$CMI > mean(aggregates_hf$CMI), "Above Average", "Below Average")
 
-CMI_ag_previousyear <- CMI_ag_hf
-CMI_ag_previousyear[,1] <- c(1999,2000,2001,2002,2003,NA)
-CMI_ag_previousyear <- CMI_ag_previousyear[-6,]
+#CMI_ag_previousyear <- CMI_ag_hf
+#CMI_ag_previousyear[,1] <- c(1999,2000,2001,2002,2003,NA)
+#CMI_ag_previousyear <- CMI_ag_previousyear[-6,]
 
-aggregates_hf$previous_cmi <- left_join(aggregates_hf, CMI_ag_previousyear, by = "year")
+#aggregates_hf$previous_cmi <- left_join(aggregates_hf, CMI_ag_previousyear, by = "year")
 
-ggplot(aggregates_hf, aes(x=x, y = as.character(Group.2), group = interaction(Group.1, year), color = CMI, linetype = Group.1))+
-  geom_point(size = 3)+
-  geom_line(size = 1)+
-  labs(x = "Day of Year", y = "Percent of Total Annual Growth", title = "Harvard Forest Intraannual Growth Timing", color = "CMI", linetype = "Wood Type")+
-  scale_colour_gradient(low = "blue", high = "red")
+#ggplot(aggregates_hf, aes(x=x, y = as.character(Group.2), group = interaction(Group.1, year), color = CMI, linetype = Group.1))+
+#  geom_point(size = 3)+
+#  geom_line(size = 1)+
+#  labs(x = "Day of Year", y = "Percent of Total Annual Growth", title = "Harvard Forest Intraannual Growth Timing", color = "CMI", linetype = "Wood Type")+
+#  scale_colour_gradient(low = "blue", high = "red")
 
 
 #SPEI
-spei_all_months <- read_csv("~/GitHub/Climate/Climate_Data/SPEI/data_calculated_with_script/spei_all_months.csv")
+#spei_all_months <- read_csv("~/GitHub/Climate/Climate_Data/SPEI/data_calculated_with_script/spei_all_months.csv")
 
-spei_hf <- subset(spei_all_months, sites.sitename == "Harvard_Forest")
-spei_scbi <- subset(spei_all_months, sites.sitename == "Smithsonian_Conservation_Biology_Institute")
-spei_hf$Date <- strptime(spei_hf$Date, format = "%m/%d/%Y")
-spei_hf$Date <- as.Date(spei_hf$Date)
+#spei_hf <- subset(spei_all_months, sites.sitename == "Harvard_Forest")
+#spei_scbi <- subset(spei_all_months, sites.sitename == "Smithsonian_Conservation_Biology_Institute")
+#spei_hf$Date <- strptime(spei_hf$Date, format = "%m/%d/%Y")
+#spei_hf$Date <- as.Date(spei_hf$Date)
 
-spei_hf <- spei_hf %>%
-  mutate(year = year(Date),
-                month = month(Date),
-                day = day(Date))
-spei_hf <- subset(spei_hf, year >= 1998 & year <= 2003)
-spei_hf <- spei_hf[,c(1,2,14,51,52,53)]
-spei_agg_hf <- aggregate(spei_hf$value_month_12, by = list(spei_hf$year), FUN = mean)
-aggregates_hf <-
+#spei_hf <- spei_hf %>%
+#  mutate(year = year(Date),
+#                month = month(Date),
+#                day = day(Date))
+#spei_hf <- subset(spei_hf, year >= 1998 & year <= 2003)
+#spei_hf <- spei_hf[,c(1,2,14,51,52,53)]
+#spei_agg_hf <- aggregate(spei_hf$value_month_12, by = list(spei_hf$year), FUN = mean)
+#aggregates_hf <-
 
-ggplot(aggregates_hf, aes(x=x, y = as.character(Group.2), group = interaction(Group.1, year), color = CMI, linetype = Group.1))+
-  geom_point(size = 3)+
-  geom_line(size = 1)+
-  labs(x = "Day of Year", y = "Percent of Total Annual Growth", title = "Harvard Forest Intraannual Growth Timing", color = "CMI", linetype = "Wood Type")+
-  scale_colour_gradient(low = "blue", high = "red")
+#ggplot(aggregates_hf, aes(x=x, y = as.character(Group.2), group = interaction(Group.1, year), color = CMI, linetype = Group.1))+
+#  geom_point(size = 3)+
+#  geom_line(size = 1)+
+#  labs(x = "Day of Year", y = "Percent of Total Annual Growth", title = "Harvard Forest Intraannual Growth Timing", color = "CMI", linetype = "Wood Type")+
+#  scale_colour_gradient(low = "blue", high = "red")
 
 #ALL YEARS PLOT
 library(gridExtra)
