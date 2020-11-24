@@ -173,7 +173,7 @@ bayesian_regression_table <- joint_model_climwinmeans %>%
   filter(!str_detect(coefficient, "Sigma")) %>%
   filter(str_detect(coefficient, "(Intercept)") | str_detect(coefficient, "wood_type"))
 bayesian_regression_table
-
+write.csv(bayesian_regression_table, file = "Results/Bayesian outputs/DOY_SCBI.csv", row.names = FALSE)
 # Extract predicted DOY_25, DOY_50, DOY_75
 # Note we need to take this long approach since tidybayes::add_predicted_draws()
 # yields incorrected predicted/fitted values for stan_mvmer models as of 2020/11/18
@@ -234,9 +234,9 @@ mixedmodel_stanlmerRP_total <- stan_lmer(
   chains = n_chains
 )
 
-mixedmodel_stanlmerRP_total %>%
+tot_scbi <- mixedmodel_stanlmerRP_total %>%
   tidy(conf.int = TRUE)
-
+write.csv(tot_scbi, file = "Results/Bayesian outputs/TOT_SCBI.csv", row.names = FALSE)
 y_hot <- mixedmodel_stanlmerRP_total %>%
   posterior_predict() %>%
   c()
@@ -290,8 +290,9 @@ mixedmodel_stanlmerRP_seasonlength <- stan_lmer(
   chains = n_chains
 )
 
-mixedmodel_stanlmerRP_seasonlength %>%
+SL_scbi <- mixedmodel_stanlmerRP_seasonlength %>%
   tidy(conf.int = TRUE)
+write.csv(SL_scbi, file = "Results/Bayesian outputs/SL_SCBI.csv", row.names = FALSE)
 
 y_hit <- mixedmodel_stanlmerRP_seasonlength %>%
   posterior_predict() %>%
@@ -346,8 +347,9 @@ mixedmodel_stanlmerRP_maxrate <- stan_lmer(
   chains = n_chains
 )
 
-mixedmodel_stanlmerRP_maxrate %>%
+MR_scbi <- mixedmodel_stanlmerRP_maxrate %>%
   tidy(conf.int = TRUE)
+write.csv(MR_scbi, file = "Results/Bayesian outputs/MR_SCBI.csv", row.names = FALSE)
 
 y_het <- mixedmodel_stanlmerRP_maxrate %>%
   posterior_predict() %>%
@@ -402,8 +404,9 @@ mixedmodel_stanlmerRP_maxrateDOY <- stan_lmer(
   chains = n_chains
 )
 
-mixedmodel_stanlmerRP_maxrateDOY %>%
+MRDOY_scbi <- mixedmodel_stanlmerRP_maxrateDOY %>%
   tidy(conf.int = TRUE)
+write.csv(MRDOY_scbi, file = "Results/Bayesian outputs/MRDOY_SCBI.csv", row.names = FALSE)
 
 y_hst <- mixedmodel_stanlmerRP_maxrateDOY %>%
   posterior_predict() %>%
@@ -602,6 +605,7 @@ bayesian_regression_table_hf <- joint_model_climwinmeans_hf %>%
   filter(!str_detect(coefficient, "Sigma")) %>%
   filter(str_detect(coefficient, "(Intercept)") | str_detect(coefficient, "wood_type"))
 bayesian_regression_table_hf
+write.csv(bayesian_regression_table_hf, file = "Results/Bayesian outputs/DOY_HF.csv", row.names = FALSE)
 
 # Extract predicted DOY_25, DOY_50, DOY_75
 # Note we need to take this long approach since tidybayes::add_predicted_draws()
@@ -663,8 +667,9 @@ mixedmodel_stanlmerRP_total_hf <- stan_lmer(
   chains = n_chains
 )
 
-mixedmodel_stanlmerRP_total_hf %>%
+tot_hf <- mixedmodel_stanlmerRP_total_hf %>%
   tidy(conf.int = TRUE)
+write.csv(tot_hf, file = "Results/Bayesian outputs/TOT_HF.csv", row.names = FALSE)
 
 y_hot_hf <- mixedmodel_stanlmerRP_total_hf %>%
   posterior_predict() %>%
@@ -719,8 +724,9 @@ mixedmodel_stanlmerRP_seasonlength_hf <- stan_lmer(
   chains = n_chains
 )
 
-mixedmodel_stanlmerRP_seasonlength_hf %>%
+SL_hf <- mixedmodel_stanlmerRP_seasonlength_hf %>%
   tidy(conf.int = TRUE)
+write.csv(SL_hf, file = "Results/Bayesian outputs/SL_HF.csv", row.names = FALSE)
 
 y_hit_hf <- mixedmodel_stanlmerRP_seasonlength_hf %>%
   posterior_predict() %>%
@@ -775,8 +781,9 @@ mixedmodel_stanlmerRP_maxrate_hf <- stan_lmer(
   chains = n_chains
 )
 
-mixedmodel_stanlmerRP_maxrate_hf %>%
+MR_hf <- mixedmodel_stanlmerRP_maxrate_hf %>%
   tidy(conf.int = TRUE)
+write.csv(MR_hf, file = "Results/Bayesian outputs/MR_HF.csv", row.names = FALSE)
 
 y_het_hf <- mixedmodel_stanlmerRP_maxrate_hf %>%
   posterior_predict() %>%
@@ -831,8 +838,9 @@ mixedmodel_stanlmerRP_maxrateDOY_hf <- stan_lmer(
   chains = n_chains
 )
 
-mixedmodel_stanlmerRP_maxrateDOY_hf %>%
+MRDOY_hf <- mixedmodel_stanlmerRP_maxrateDOY_hf %>%
   tidy(conf.int = TRUE)
+write.csv(MRDOY_hf, file = "Results/Bayesian outputs/MRDOY_HF.csv", row.names = FALSE)
 
 y_hst_hf <- mixedmodel_stanlmerRP_maxrateDOY_hf %>%
   posterior_predict() %>%
@@ -874,31 +882,6 @@ fig6_DP_mrdoy_hf <- ggplot() +
   labs(x = "Temperature (C)", y = "")
 # geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
 fig6_DP_mrdoy_hf
-
-# test
-predictions_RP$sig <- ifelse(predictions_RP$perc == "DOY_75", "Not sig", "Sig")
-predictions_RP_25 <- subset(predictions_RP, perc == "DOY_25")
-predictions_RP_50 <- subset(predictions_RP, perc == "DOY_50")
-predictions_RP_75 <- subset(predictions_RP, perc == "DOY_75")
-
-ggplot() +
-  # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
-  stat_lineribbon(data = predictions_RP_50, aes(x = climwinmean, y = predictions_rstanarm, group = perc, col = perc), .width = c(.99, .95)) +
-  stat_lineribbon(data = predictions_RP_25, aes(x = climwinmean, y = predictions_rstanarm, group = perc, col = perc), .width = c(.99, .95)) +
-  stat_lineribbon(data = predictions_RP_75, aes(x = climwinmean, y = predictions_rstanarm, group = perc, col = perc), .width = c(.99, .95)) +
-  geom_point(data = Wood_pheno_table_RP, aes(x = climwinmean, y = DOY, col = perc)) +
-  # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
-  scale_fill_brewer() +
-  # facet_grid(perc) +
-  coord_cartesian(xlim = c(11.8, 19.7), ylim = c(80, 240)) +
-  theme(legend.position = "none") +
-  labs(x = "", y = "DOY", col = "Percentile", title = "SCBI", subtitle = "Ring-porous")
-
-
-
-
-
-
 
 # 3. Combine model fit plots for SCBI and Harvard Forest together -----------------------------------------
 png(
