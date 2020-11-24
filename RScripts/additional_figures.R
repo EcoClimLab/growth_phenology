@@ -453,6 +453,38 @@ grid.arrange(
 
 dev.off()
 
+#####Climwin figure ------
+#Edit the plotbetas function in climwin
+#In the function, change scale_fill_gradientn(colours = c("red", "yellow", "blue"), name = "") to scale_fill_gradient2(high = "blue", mid = "yellow", low = "red")
+trace("plotbetas", edit = TRUE)
+
+#ggplot(MassOutput, aes(x = WindowClose, y = WindowOpen, z = ModelBeta)) +
+#  geom_tile(aes(fill = ModelBeta)) +
+#  scale_fill_gradient2(high = "blue", mid = "yellow", low = "red") +
+#  #theme_climwin() +
+#  theme(legend.position = c(0.75,0.3)) +
+#  ggtitle("Beta linear") +
+#  ylab("Window open") +
+#  xlab("Window close")
+
+SCBI_dp <- read_csv("results/Climwin_results/Weekly/SCBI/MassOutput_25_diffuse-porous.csv")
+SCBI_rp <- read_csv("results/Climwin_results/Weekly/SCBI/MassOutput_25_ring-porous.csv")
+HF_dp <- read_csv("results/Climwin_results/Weekly/Harvard Forest/MassOutput_0.25_diffuse-porous.csv")
+HF_rp <- read_csv("results/Climwin_results/Weekly/Harvard Forest/MassOutput_0.25_ring-porous.csv")
+
+png(filename = "doc/manuscript/tables_figures/climwin_figure.png", width=10, height=15,
+    pointsize=12, bg="transparent", units="in", res=600,
+    restoreConsole=FALSE)
+
+grid.arrange(
+  plotbetas(SCBI_dp, arrow = TRUE),
+  plotbetas(SCBI_rp, arrow = TRUE),
+  plotbetas(HF_rp, arrow = TRUE),
+  plotbetas(HF_dp, arrow = TRUE),
+
+  as.table = TRUE, nrow=2, ncol=2) ###as.table specifies order if multiple rows
+
+dev.off()
 
 
 

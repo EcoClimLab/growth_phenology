@@ -118,6 +118,7 @@ for (w in unique(Wood_pheno_table$wood_type)) {
     # pvalue(dataset = MassWin[[1]]$Dataset, datasetrand = MassRand[[1]], metric = "AIC")
 
     MassOutput <- MassWin[[1]][["Dataset"]]
+    write.csv(MassOutput, file = paste0("MassOutput_", j,"_", w, ".csv"), row.names = FALSE)
     MassRand <- MassRand[[1]]
     # windowopen <- as.Date((refdateround*7)- (MassWin[[1]][["Dataset"]][[1,2]]*7) , origin = paste0("2011-01-01"))
     # windowclose <- as.Date((refdateround*7) - (MassWin[[1]][["Dataset"]][[1,3]]*7) , origin = paste0("2011-01-01"))
