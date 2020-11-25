@@ -16,6 +16,7 @@ library(broom.mixed)
 # rstanarm stuff
 options(mc.cores = parallel::detectCores())
 library(rstanarm)
+library(patchwork)
 # Number of MCMC chains & number of simulations per chain.
 # Need to increase this at the end
 n_iter <- 10000
@@ -216,14 +217,26 @@ fig6_DP <- ggplot() +
   scale_fill_brewer() +
   theme(legend.position = c(.95, .5)) +
   # facet_grid(perc) +
-  coord_cartesian(xlim = c(14.3, 19.3), ylim = c(80, 240)) +
+  coord_cartesian(xlim = c(14.5, 19.6), ylim = c(80, 240)) +
   labs(x = "", y = "", col = "Percentile", title = "Diffuse-porous", subtitle = "Relationship of DOY versus climwin mean temperature")
 # geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
 fig6_DP
 
+woodtable <- subset(Wood_pheno_table, perc == "DOY_25")
+
+rm(list=setdiff(ls(), c("fig6_RP", "fig6_DP",
+                        "fig6_RP_tot", "fig6_DP_tot",
+                        "fig6_RP_SL", "fig6_DP_SL",
+                        "fig6_RP_mr", "fig6_DP_mr",
+                        "fig6_RP_mrdoy", "fig6_DP_mrdoy",
+                        "fig6_RP_hf", "fig6_DP_hf",
+                        "fig6_RP_hf_tot", "fig6_DP_hf_tot",
+                        "fig6_RP_hf_SL", "fig6_DP_hf_SL",
+                        "fig6_RP_hf_mr", "fig6_DP_hf_mr",
+                        "fig6_RP_hf_mrdoy", "fig6_DP_hf_mrdoy",
+                        "woodtable", "n_iter", "n_chains")))
 
 ### Model Fit 2: TOTAL GROWTH ----
-woodtable <- subset(Wood_pheno_table, perc == "DOY_25")
 total_formulaRP <- "dbh_total_growth ~ wood_type + wood_type:climwinmean + (1|tag)" %>% as.formula()
 
 mixedmodel_stanlmerRP_total <- stan_lmer(
@@ -259,7 +272,7 @@ fig6_RP_tot <- ggplot() +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
   # facet_grid(perc) +
-  coord_cartesian(xlim = c(17.5, 22.5), ylim = c(-.4, 1.5)) +
+  coord_cartesian(xlim = c(11.8, 19.7), ylim = c(-.4, 1.5)) +
   theme(legend.position = "none") +
   labs(x = "", y = "Total (cm)", subtitle = "Total Growth")
 # geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
@@ -272,12 +285,23 @@ fig6_DP_tot <- ggplot() +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
   # facet_grid(perc) +
-  coord_cartesian(xlim = c(14.3, 19), ylim = c(-.4, 1.5)) +
+  coord_cartesian(xlim = c(14.5, 19.6), ylim = c(-.4, 1.5)) +
   theme(legend.position = "none") +
   labs(x = "", y = "", subtitle = "Total Growth")
 # geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
 fig6_DP_tot
 
+rm(list=setdiff(ls(), c("fig6_RP", "fig6_DP",
+                        "fig6_RP_tot", "fig6_DP_tot",
+                        "fig6_RP_SL", "fig6_DP_SL",
+                        "fig6_RP_mr", "fig6_DP_mr",
+                        "fig6_RP_mrdoy", "fig6_DP_mrdoy",
+                        "fig6_RP_hf", "fig6_DP_hf",
+                        "fig6_RP_hf_tot", "fig6_DP_hf_tot",
+                        "fig6_RP_hf_SL", "fig6_DP_hf_SL",
+                        "fig6_RP_hf_mr", "fig6_DP_hf_mr",
+                        "fig6_RP_hf_mrdoy", "fig6_DP_hf_mrdoy",
+                        "woodtable", "n_iter", "n_chains")))
 
 ### Model Fit 3: Season length ----
 seasonlength_formulaRP <- "seasonlength ~ wood_type + wood_type:climwinmean + (1|tag)" %>% as.formula()
@@ -316,7 +340,7 @@ fig6_RP_sl <- ggplot() +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
   # facet_grid(perc) +
-  coord_cartesian(xlim = c(19.5, 23.5), ylim = c(3, 106)) +
+  coord_cartesian(xlim = c(11.8, 19.7), ylim = c(3, 106)) +
   theme(legend.position = "none") +
   labs(x = "", y = "# of Days", subtitle = "Season Length")
 # geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
@@ -329,11 +353,23 @@ fig6_DP_sl <- ggplot() +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
   # facet_grid(perc) +
-  coord_cartesian(xlim = c(14.3, 19), ylim = c(3, 106)) +
+  coord_cartesian(xlim = c(14.5, 19.6), ylim = c(3, 90)) +
   theme(legend.position = "none") +
   labs(x = "", y = "", subtitle = "Season Length")
 # geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
 fig6_DP_sl
+
+rm(list=setdiff(ls(), c("fig6_RP", "fig6_DP",
+                        "fig6_RP_tot", "fig6_DP_tot",
+                        "fig6_RP_sl", "fig6_DP_sl",
+                        "fig6_RP_mr", "fig6_DP_mr",
+                        "fig6_RP_mrdoy", "fig6_DP_mrdoy",
+                        "fig6_RP_hf", "fig6_DP_hf",
+                        "fig6_RP_hf_tot", "fig6_DP_hf_tot",
+                        "fig6_RP_hf_sl", "fig6_DP_hf_sl",
+                        "fig6_RP_hf_mr", "fig6_DP_hf_mr",
+                        "fig6_RP_hf_mrdoy", "fig6_DP_hf_mrdoy",
+                        "woodtable", "n_iter", "n_chains")))
 
 
 ### Model Fit 4: MAX RATE ----
@@ -373,7 +409,7 @@ fig6_RP_mr <- ggplot() +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
   # facet_grid(perc) +
-  coord_cartesian(xlim = c(19.5, 23.5), ylim = c(-.007, 0.02)) +
+  coord_cartesian(xlim = c(11.8, 19.7), ylim = c(-.007, 0.02)) +
   theme(legend.position = "none") +
   labs(x = "", y = "Growth Rate (cm/day)", subtitle = "Maximum Growth Rate")
 # geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
@@ -386,12 +422,23 @@ fig6_DP_mr <- ggplot() +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
   # facet_grid(perc) +
-  coord_cartesian(xlim = c(14.3, 19), ylim = c(-.007, 0.02)) +
+  coord_cartesian(xlim = c(14.5, 19.6), ylim = c(-.007, 0.02)) +
   theme(legend.position = "none") +
   labs(x = "", y = "", subtitle = "Maximum Growth Rate")
 # geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
 fig6_DP_mr
 
+rm(list=setdiff(ls(), c("fig6_RP", "fig6_DP",
+                        "fig6_RP_tot", "fig6_DP_tot",
+                        "fig6_RP_SL", "fig6_DP_SL",
+                        "fig6_RP_mr", "fig6_DP_mr",
+                        "fig6_RP_mrdoy", "fig6_DP_mrdoy",
+                        "fig6_RP_hf", "fig6_DP_hf",
+                        "fig6_RP_hf_tot", "fig6_DP_hf_tot",
+                        "fig6_RP_hf_SL", "fig6_DP_hf_SL",
+                        "fig6_RP_hf_mr", "fig6_DP_hf_mr",
+                        "fig6_RP_hf_mrdoy", "fig6_DP_hf_mrdoy",
+                        "woodtable", "n_iter", "n_chains")))
 
 ### Model Fit 5: MAX RATE DOY ----
 maxrateDOY_formulaRP <- "max_rate_DOY ~wood_type + wood_type:climwinmean + (1|tag)" %>% as.formula()
@@ -430,7 +477,7 @@ fig6_RP_mrdoy <- ggplot() +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
   # facet_grid(perc) +
-  coord_cartesian(xlim = c(19.5, 23.5), ylim = c(99, 235)) +
+  coord_cartesian(xlim = c(11.8, 19.7), ylim = c(110, 200)) +
   theme(legend.position = "none") +
   labs(x = "Temperature", y = "DOY", subtitle = "Max Rate DOY")
 # geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
@@ -443,13 +490,24 @@ fig6_DP_mrdoy <- ggplot() +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
   # facet_grid(perc) +
-  coord_cartesian(xlim = c(14.3, 19), ylim = c(99, 235)) +
+  coord_cartesian(xlim = c(14.5, 19.6), ylim = c(125, 210)) +
   theme(legend.position = "none") +
   labs(x = "Temperature", y = "", subtitle = "Max Rate DOY")
 # geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
 fig6_DP_mrdoy
 
 
+rm(list=setdiff(ls(), c("fig6_RP", "fig6_DP",
+                        "fig6_RP_tot", "fig6_DP_tot",
+                        "fig6_RP_SL", "fig6_DP_SL",
+                        "fig6_RP_mr", "fig6_DP_mr",
+                        "fig6_RP_mrdoy", "fig6_DP_mrdoy",
+                        "fig6_RP_hf", "fig6_DP_hf",
+                        "fig6_RP_hf_tot", "fig6_DP_hf_tot",
+                        "fig6_RP_hf_SL", "fig6_DP_hf_SL",
+                        "fig6_RP_hf_mr", "fig6_DP_hf_mr",
+                        "fig6_RP_hf_mrdoy", "fig6_DP_hf_mrdoy",
+                        "woodtable", "n_iter", "n_chains")))
 
 
 
@@ -654,9 +712,22 @@ fig6_DP_hf <- ggplot() +
 # geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
 fig6_DP_hf
 
+woodtable_hf <- subset(Wood_pheno_table_hf, perc == "DOY_25")
+
+rm(list=setdiff(ls(), c("fig6_RP", "fig6_DP",
+                        "fig6_RP_tot", "fig6_DP_tot",
+                        "fig6_RP_SL", "fig6_DP_SL",
+                        "fig6_RP_mr", "fig6_DP_mr",
+                        "fig6_RP_mrdoy", "fig6_DP_mrdoy",
+                        "fig6_RP_hf", "fig6_DP_hf",
+                        "fig6_RP_hf_tot", "fig6_DP_hf_tot",
+                        "fig6_RP_hf_SL", "fig6_DP_hf_SL",
+                        "fig6_RP_hf_mr", "fig6_DP_hf_mr",
+                        "fig6_RP_hf_mrdoy", "fig6_DP_hf_mrdoy",
+                        "woodtable", "n_iter", "n_chains","woodtable_hf")))
+
 
 ### Model Fit 2: TOTAL GROWTH ----
-woodtable_hf <- subset(Wood_pheno_table_hf, perc == "DOY_25")
 total_formulaRP <- "dbh_total_growth ~ wood_type + wood_type:climwinmean + (1|site) + (1|tag)" %>% as.formula()
 
 mixedmodel_stanlmerRP_total_hf <- stan_lmer(
@@ -712,6 +783,17 @@ fig6_DP_tot_hf <- ggplot() +
 # geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
 fig6_DP_tot_hf
 
+rm(list=setdiff(ls(), c("fig6_RP", "fig6_DP",
+                        "fig6_RP_tot", "fig6_DP_tot",
+                        "fig6_RP_SL", "fig6_DP_SL",
+                        "fig6_RP_mr", "fig6_DP_mr",
+                        "fig6_RP_mrdoy", "fig6_DP_mrdoy",
+                        "fig6_RP_hf", "fig6_DP_hf",
+                        "fig6_RP_tot_hf", "fig6_DP_tot_hf",
+                        "fig6_RP_sl_hf", "fig6_DP_sl_hf",
+                        "fig6_RP_mr_hf", "fig6_DP_mr_hf",
+                        "fig6_RP_mrdoy_hf", "fig6_DP_mrdoy_hf",
+                        "woodtable", "n_iter", "n_chains","woodtable_hf")))
 
 ### Model Fit 3: Season length ----
 seasonlength_formulaRP <- "seasonlength ~ wood_type + wood_type:climwinmean + (1|site) + (1|tag)" %>% as.formula()
@@ -769,6 +851,17 @@ fig6_DP_sl_hf <- ggplot() +
 # geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
 fig6_DP_sl_hf
 
+rm(list=setdiff(ls(), c("fig6_RP", "fig6_DP",
+                        "fig6_RP_tot", "fig6_DP_tot",
+                        "fig6_RP_SL", "fig6_DP_SL",
+                        "fig6_RP_mr", "fig6_DP_mr",
+                        "fig6_RP_mrdoy", "fig6_DP_mrdoy",
+                        "fig6_RP_hf", "fig6_DP_hf",
+                        "fig6_RP_tot_hf", "fig6_DP_tot_hf",
+                        "fig6_RP_sl_hf", "fig6_DP_sl_hf",
+                        "fig6_RP_mr_hf", "fig6_DP_mr_hf",
+                        "fig6_RP_mrdoy_hf", "fig6_DP_mrdoy_hf",
+                        "woodtable", "n_iter", "n_chains","woodtable_hf")))
 
 ### Model Fit 4: MAX RATE ----
 maxrate_formulaRP <- "max_rate ~ wood_type + wood_type:climwinmean + (1|site) + (1|tag)" %>% as.formula()
@@ -826,6 +919,17 @@ fig6_DP_mr_hf <- ggplot() +
 # geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
 fig6_DP_mr_hf
 
+rm(list=setdiff(ls(), c("fig6_RP", "fig6_DP",
+                        "fig6_RP_tot", "fig6_DP_tot",
+                        "fig6_RP_SL", "fig6_DP_SL",
+                        "fig6_RP_mr", "fig6_DP_mr",
+                        "fig6_RP_mrdoy", "fig6_DP_mrdoy",
+                        "fig6_RP_hf", "fig6_DP_hf",
+                        "fig6_RP_tot_hf", "fig6_DP_tot_hf",
+                        "fig6_RP_sl_hf", "fig6_DP_sl_hf",
+                        "fig6_RP_mr_hf", "fig6_DP_mr_hf",
+                        "fig6_RP_mrdoy_hf", "fig6_DP_mrdoy_hf",
+                        "woodtable", "n_iter", "n_chains","woodtable_hf")))
 
 ### Model Fit 5: MAX RATE DOY ----
 maxrateDOY_formulaRP <- "max_rate_DOY ~wood_type + wood_type:climwinmean + (1|site) + (1|tag)" %>% as.formula()
@@ -883,7 +987,21 @@ fig6_DP_mrdoy_hf <- ggplot() +
 # geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
 fig6_DP_mrdoy_hf
 
+rm(list=setdiff(ls(), c("fig6_RP", "fig6_DP",
+                        "fig6_RP_tot", "fig6_DP_tot",
+                        "fig6_RP_sl", "fig6_DP_sl",
+                        "fig6_RP_mr", "fig6_DP_mr",
+                        "fig6_RP_mrdoy", "fig6_DP_mrdoy",
+                        "fig6_RP_hf", "fig6_DP_hf",
+                        "fig6_RP_tot_hf", "fig6_DP_tot_hf",
+                        "fig6_RP_sl_hf", "fig6_DP_sl_hf",
+                        "fig6_RP_mr_hf", "fig6_DP_mr_hf",
+                        "fig6_RP_mrdoy_hf", "fig6_DP_mrdoy_hf",
+                        "woodtable", "n_iter", "n_chains","woodtable_hf")))
+
 # 3. Combine model fit plots for SCBI and Harvard Forest together -----------------------------------------
+
+fig6_RP+fig6_DP+fig6_RP_hf+fig6_DP_hf+fig6_RP_mrdoy+fig6_DP_mrdoy+fig6_RP_mrdoy_hf+fig6_DP_mrdoy_hf+fig6_RP_sl+fig6_DP_sl+fig6_RP_sl_hf+fig6_DP_sl_hf+fig6_RP_mr+fig6_DP_mr+fig6_RP_mr_hf+fig6_DP_mr_hf+fig6_RP_tot+fig6_DP_tot+fig6_RP_tot_hf+fig6_DP_tot_hf+ plot_layout(nrow = 5)
 png(
   filename = "doc/manuscript/tables_figures/pheno_Tsensitivity_combo.png", width = 15, height = 25,
   pointsize = 12, bg = "transparent", units = "in", res = 600,
