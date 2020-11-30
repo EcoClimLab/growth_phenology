@@ -12,6 +12,7 @@ library(gridExtra)
 library(knitr)
 library(scales)
 library(broom.mixed)
+library(tictoc)
 
 # rstanarm stuff
 options(mc.cores = parallel::detectCores())
@@ -19,10 +20,22 @@ library(rstanarm)
 library(patchwork)
 # Number of MCMC chains & number of simulations per chain.
 # Need to increase this at the end
-n_iter <- 10000
+n_iter <- 1000
 n_chains <- 2
 
+# Objects to keep during memory management clean-up
+objects_to_keep <- c(
+  "objects_to_keep", "n_iter", "n_chains",
+  "fig6_RP", "fig6_DP", "fig6_RP_hf", "fig6_DP_hf",
+  "fig6_RP_mrdoy", "fig6_DP_mrdoy", "fig6_RP_mrdoy_hf", "fig6_DP_mrdoy_hf",
+  "fig6_RP_sl", "fig6_DP_sl", "fig6_RP_sl_hf", "fig6_DP_sl_hf",
+  "fig6_RP_mr", "fig6_DP_mr", "fig6_RP_mr_hf", "fig6_DP_mr_hf",
+  "fig6_RP_tot", "fig6_DP_tot", "fig6_RP_tot_hf", "fig6_DP_tot_hf",
+  "woodtable", "woodtable_hf"
+)
 
+# Start timer
+tic()
 
 
 
@@ -198,7 +211,7 @@ Wood_pheno_table_DP <- subset(Wood_pheno_table, wood_type == "diffuse-porous")
 
 fig6_RP <- ggplot() +
   # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
-  stat_lineribbon(data = predictions_RP, aes(x = climwinmean, y = predictions_rstanarm, group = perc, col = perc, linetype = sig), .width = c(.99, .95)) +
+  stat_lineribbon(data = predictions_RP, aes(x = climwinmean, y = predictions_rstanarm, group = perc, col = perc), .width = c(.99, .95)) +
   geom_point(data = Wood_pheno_table_RP, aes(x = climwinmean, y = DOY, col = perc)) +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_linetype_manual(values = c("dashed", "solid")) +
@@ -223,17 +236,10 @@ fig6_DP
 
 woodtable <- subset(Wood_pheno_table, perc == "DOY_25")
 
-rm(list=setdiff(ls(), c("fig6_RP", "fig6_DP",
-                        "fig6_RP_tot", "fig6_DP_tot",
-                        "fig6_RP_SL", "fig6_DP_SL",
-                        "fig6_RP_mr", "fig6_DP_mr",
-                        "fig6_RP_mrdoy", "fig6_DP_mrdoy",
-                        "fig6_RP_hf", "fig6_DP_hf",
-                        "fig6_RP_hf_tot", "fig6_DP_hf_tot",
-                        "fig6_RP_hf_SL", "fig6_DP_hf_SL",
-                        "fig6_RP_hf_mr", "fig6_DP_hf_mr",
-                        "fig6_RP_hf_mrdoy", "fig6_DP_hf_mrdoy",
-                        "woodtable", "n_iter", "n_chains")))
+# Clean-up
+rm(list = setdiff(ls(), objects_to_keep))
+
+
 
 ### Model Fit 2: TOTAL GROWTH ----
 total_formulaRP <- "dbh_total_growth ~ wood_type + wood_type:climwinmean + (1|tag)" %>% as.formula()
@@ -288,17 +294,10 @@ fig6_DP_tot <-  ggplot() +
   labs(x = "Temperature (c) 2/19-5/21", y = "")
 fig6_DP_tot
 
-rm(list=setdiff(ls(), c("fig6_RP", "fig6_DP",
-                        "fig6_RP_tot", "fig6_DP_tot",
-                        "fig6_RP_SL", "fig6_DP_SL",
-                        "fig6_RP_mr", "fig6_DP_mr",
-                        "fig6_RP_mrdoy", "fig6_DP_mrdoy",
-                        "fig6_RP_hf", "fig6_DP_hf",
-                        "fig6_RP_hf_tot", "fig6_DP_hf_tot",
-                        "fig6_RP_hf_SL", "fig6_DP_hf_SL",
-                        "fig6_RP_hf_mr", "fig6_DP_hf_mr",
-                        "fig6_RP_hf_mrdoy", "fig6_DP_hf_mrdoy",
-                        "woodtable", "n_iter", "n_chains")))
+# Clean-up
+rm(list = setdiff(ls(), objects_to_keep))
+
+
 
 ### Model Fit 3: Season length ----
 seasonlength_formulaRP <- "seasonlength ~ wood_type + wood_type:climwinmean + (1|tag)" %>% as.formula()
@@ -354,17 +353,8 @@ fig6_DP_sl <- ggplot() +
   labs(x = "", y = "")
 fig6_DP_sl
 
-rm(list=setdiff(ls(), c("fig6_RP", "fig6_DP",
-                        "fig6_RP_tot", "fig6_DP_tot",
-                        "fig6_RP_sl", "fig6_DP_sl",
-                        "fig6_RP_mr", "fig6_DP_mr",
-                        "fig6_RP_mrdoy", "fig6_DP_mrdoy",
-                        "fig6_RP_hf", "fig6_DP_hf",
-                        "fig6_RP_hf_tot", "fig6_DP_hf_tot",
-                        "fig6_RP_hf_sl", "fig6_DP_hf_sl",
-                        "fig6_RP_hf_mr", "fig6_DP_hf_mr",
-                        "fig6_RP_hf_mrdoy", "fig6_DP_hf_mrdoy",
-                        "woodtable", "n_iter", "n_chains")))
+# Clean-up
+rm(list = setdiff(ls(), objects_to_keep))
 
 
 ### Model Fit 4: MAX RATE ----
@@ -421,17 +411,9 @@ fig6_DP_mr <- ggplot() +
   labs(x = "", y = "")
 fig6_DP_mr
 
-rm(list=setdiff(ls(), c("fig6_RP", "fig6_DP",
-                        "fig6_RP_tot", "fig6_DP_tot",
-                        "fig6_RP_SL", "fig6_DP_SL",
-                        "fig6_RP_mr", "fig6_DP_mr",
-                        "fig6_RP_mrdoy", "fig6_DP_mrdoy",
-                        "fig6_RP_hf", "fig6_DP_hf",
-                        "fig6_RP_hf_tot", "fig6_DP_hf_tot",
-                        "fig6_RP_hf_SL", "fig6_DP_hf_SL",
-                        "fig6_RP_hf_mr", "fig6_DP_hf_mr",
-                        "fig6_RP_hf_mrdoy", "fig6_DP_hf_mrdoy",
-                        "woodtable", "n_iter", "n_chains")))
+# Clean-up
+rm(list = setdiff(ls(), objects_to_keep))
+
 
 ### Model Fit 5: MAX RATE DOY ----
 maxrateDOY_formulaRP <- "max_rate_DOY ~wood_type + wood_type:climwinmean + (1|tag)" %>% as.formula()
@@ -487,18 +469,8 @@ fig6_DP_mrdoy <-  ggplot() +
   labs(x = "", y = "")
 fig6_DP_mrdoy
 
-
-rm(list=setdiff(ls(), c("fig6_RP", "fig6_DP",
-                        "fig6_RP_tot", "fig6_DP_tot",
-                        "fig6_RP_SL", "fig6_DP_SL",
-                        "fig6_RP_mr", "fig6_DP_mr",
-                        "fig6_RP_mrdoy", "fig6_DP_mrdoy",
-                        "fig6_RP_hf", "fig6_DP_hf",
-                        "fig6_RP_hf_tot", "fig6_DP_hf_tot",
-                        "fig6_RP_hf_SL", "fig6_DP_hf_SL",
-                        "fig6_RP_hf_mr", "fig6_DP_hf_mr",
-                        "fig6_RP_hf_mrdoy", "fig6_DP_hf_mrdoy",
-                        "woodtable", "n_iter", "n_chains")))
+# Clean-up
+rm(list = setdiff(ls(), objects_to_keep))
 
 
 
@@ -704,17 +676,9 @@ fig6_DP_hf
 
 woodtable_hf <- subset(Wood_pheno_table_hf, perc == "DOY_25")
 
-rm(list=setdiff(ls(), c("fig6_RP", "fig6_DP",
-                        "fig6_RP_tot", "fig6_DP_tot",
-                        "fig6_RP_SL", "fig6_DP_SL",
-                        "fig6_RP_mr", "fig6_DP_mr",
-                        "fig6_RP_mrdoy", "fig6_DP_mrdoy",
-                        "fig6_RP_hf", "fig6_DP_hf",
-                        "fig6_RP_hf_tot", "fig6_DP_hf_tot",
-                        "fig6_RP_hf_SL", "fig6_DP_hf_SL",
-                        "fig6_RP_hf_mr", "fig6_DP_hf_mr",
-                        "fig6_RP_hf_mrdoy", "fig6_DP_hf_mrdoy",
-                        "woodtable", "n_iter", "n_chains","woodtable_hf")))
+# Clean-up
+rm(list = setdiff(ls(), objects_to_keep))
+
 
 
 ### Model Fit 2: TOTAL GROWTH ----
@@ -771,17 +735,9 @@ fig6_DP_tot_hf <- ggplot() +
   labs(x = "Temperature (c) 3/19-5/7", y = "")
 fig6_DP_tot_hf
 
-rm(list=setdiff(ls(), c("fig6_RP", "fig6_DP",
-                        "fig6_RP_tot", "fig6_DP_tot",
-                        "fig6_RP_SL", "fig6_DP_SL",
-                        "fig6_RP_mr", "fig6_DP_mr",
-                        "fig6_RP_mrdoy", "fig6_DP_mrdoy",
-                        "fig6_RP_hf", "fig6_DP_hf",
-                        "fig6_RP_tot_hf", "fig6_DP_tot_hf",
-                        "fig6_RP_sl_hf", "fig6_DP_sl_hf",
-                        "fig6_RP_mr_hf", "fig6_DP_mr_hf",
-                        "fig6_RP_mrdoy_hf", "fig6_DP_mrdoy_hf",
-                        "woodtable", "n_iter", "n_chains","woodtable_hf")))
+# Clean-up
+rm(list = setdiff(ls(), objects_to_keep))
+
 
 ### Model Fit 3: Season length ----
 seasonlength_formulaRP <- "seasonlength ~ wood_type + wood_type:climwinmean + (1|site) + (1|tag)" %>% as.formula()
@@ -837,17 +793,9 @@ fig6_DP_sl_hf <- ggplot() +
   labs(x = "", y = "")
 fig6_DP_sl_hf
 
-rm(list=setdiff(ls(), c("fig6_RP", "fig6_DP",
-                        "fig6_RP_tot", "fig6_DP_tot",
-                        "fig6_RP_SL", "fig6_DP_SL",
-                        "fig6_RP_mr", "fig6_DP_mr",
-                        "fig6_RP_mrdoy", "fig6_DP_mrdoy",
-                        "fig6_RP_hf", "fig6_DP_hf",
-                        "fig6_RP_tot_hf", "fig6_DP_tot_hf",
-                        "fig6_RP_sl_hf", "fig6_DP_sl_hf",
-                        "fig6_RP_mr_hf", "fig6_DP_mr_hf",
-                        "fig6_RP_mrdoy_hf", "fig6_DP_mrdoy_hf",
-                        "woodtable", "n_iter", "n_chains","woodtable_hf")))
+# Clean-up
+rm(list = setdiff(ls(), objects_to_keep))
+
 
 ### Model Fit 4: MAX RATE ----
 maxrate_formulaRP <- "max_rate ~ wood_type + wood_type:climwinmean + (1|site) + (1|tag)" %>% as.formula()
@@ -903,17 +851,9 @@ fig6_DP_mr_hf <-   ggplot() +
   labs(x = "", y = "")
 fig6_DP_mr_hf
 
-rm(list=setdiff(ls(), c("fig6_RP", "fig6_DP",
-                        "fig6_RP_tot", "fig6_DP_tot",
-                        "fig6_RP_SL", "fig6_DP_SL",
-                        "fig6_RP_mr", "fig6_DP_mr",
-                        "fig6_RP_mrdoy", "fig6_DP_mrdoy",
-                        "fig6_RP_hf", "fig6_DP_hf",
-                        "fig6_RP_tot_hf", "fig6_DP_tot_hf",
-                        "fig6_RP_sl_hf", "fig6_DP_sl_hf",
-                        "fig6_RP_mr_hf", "fig6_DP_mr_hf",
-                        "fig6_RP_mrdoy_hf", "fig6_DP_mrdoy_hf",
-                        "woodtable", "n_iter", "n_chains","woodtable_hf")))
+# Clean-up
+rm(list = setdiff(ls(), objects_to_keep))
+
 
 ### Model Fit 5: MAX RATE DOY ----
 maxrateDOY_formulaRP <- "max_rate_DOY ~wood_type + wood_type:climwinmean + (1|site) + (1|tag)" %>% as.formula()
@@ -969,32 +909,49 @@ fig6_DP_mrdoy_hf <- ggplot() +
   labs(x = "", y = "")
 fig6_DP_mrdoy_hf
 
-rm(list=setdiff(ls(), c("fig6_RP", "fig6_DP",
-                        "fig6_RP_tot", "fig6_DP_tot",
-                        "fig6_RP_sl", "fig6_DP_sl",
-                        "fig6_RP_mr", "fig6_DP_mr",
-                        "fig6_RP_mrdoy", "fig6_DP_mrdoy",
-                        "fig6_RP_hf", "fig6_DP_hf",
-                        "fig6_RP_tot_hf", "fig6_DP_tot_hf",
-                        "fig6_RP_sl_hf", "fig6_DP_sl_hf",
-                        "fig6_RP_mr_hf", "fig6_DP_mr_hf",
-                        "fig6_RP_mrdoy_hf", "fig6_DP_mrdoy_hf",
-                        "woodtable", "n_iter", "n_chains","woodtable_hf")))
+# Clean-up
+rm(list = setdiff(ls(), objects_to_keep))
 
-# 3. Combine model fit plots for SCBI and Harvard Forest together -----------------------------------------
 
-fig6_RP+fig6_DP+fig6_RP_hf+fig6_DP_hf+fig6_RP_mrdoy+fig6_DP_mrdoy+fig6_RP_mrdoy_hf+fig6_DP_mrdoy_hf+fig6_RP_sl+fig6_DP_sl+fig6_RP_sl_hf+fig6_DP_sl_hf+fig6_RP_mr+fig6_DP_mr+fig6_RP_mr_hf+fig6_DP_mr_hf+fig6_RP_tot+fig6_DP_tot+fig6_RP_tot_hf+fig6_DP_tot_hf+ plot_layout(nrow = 5)
+# 3. Save and combine model fit plots for SCBI and Harvard Forest together -----------------------------------------
+# End timer
+timer <- toc()
+timer$toc - timer$tic
 
+## Save all figure objects ------------
+# save(list = objects_to_keep, file = "doc/manuscript/tables_figures/figures.RData")
+
+## Create single figure using patchwork ----------
+png(
+  filename = "doc/manuscript/tables_figures/pheno_Tsensitivity_combo_patchwork.png", width = 15, height = 25,
+  pointsize = 12, bg = "transparent", units = "in", res = 600
+  #restoreConsole = FALSE
+)
+# DOY:
+fig6_RP + fig6_DP + fig6_RP_hf + fig6_DP_hf +
+  # Max rate DOY:
+  fig6_RP_mrdoy + fig6_DP_mrdoy + fig6_RP_mrdoy_hf + fig6_DP_mrdoy_hf +
+  # Season length:
+  fig6_RP_sl + fig6_DP_sl + fig6_RP_sl_hf + fig6_DP_sl_hf +
+  # Maximum growth rate:
+  fig6_RP_mr + fig6_DP_mr + fig6_RP_mr_hf + fig6_DP_mr_hf +
+  # Total growth:
+  fig6_RP_tot + fig6_DP_tot + fig6_RP_tot_hf + fig6_DP_tot_hf +
+  plot_layout(nrow = 5)
+dev.off()
+
+
+
+## Create single figure using grid.arrange ----------
 png(
   filename = "doc/manuscript/tables_figures/pheno_Tsensitivity_combo.png", width = 15, height = 25,
   pointsize = 12, bg = "transparent", units = "in", res = 600,
   restoreConsole = FALSE
 )
-
 grid.arrange(
   ggplot() +
     # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
-    stat_lineribbon(data = predictions_RP, aes(x = climwinmean, y = predictions_rstanarm, group = perc, col = perc, linetype = sig), .width = c(.99, .95)) +
+    stat_lineribbon(data = predictions_RP, aes(x = climwinmean, y = predictions_rstanarm, group = perc, col = perc), .width = c(.99, .95)) +
     geom_point(data = Wood_pheno_table_RP, aes(x = climwinmean, y = DOY, col = perc)) +
     # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
     scale_linetype_manual(values = c("dashed", "solid")) +
