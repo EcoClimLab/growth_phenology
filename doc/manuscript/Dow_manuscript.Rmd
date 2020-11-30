@@ -287,13 +287,13 @@ At both sites, growth phenology differed between ring- and diffuse- porous speci
 Specifically, ring-porous species began growing earlier, reaching the $DOY_{25}$ benchmark `r 154-123` days earlier at SCBI and `r 164-132` days earlier at Harvard Forest. 
 Growth of ring-porous species was spread out over a longer growing season, with average $L_{PGS}$ of ring-porous species being **21** days longer at SCBI and **19** days longer at Harvard Forest. *(These numbers are calculated as based on `mean DOY75- mean DOY25`, whereas we want `mean [DOY75- DOY25]`. Need to fix this, but I filled in approximate numbers for now.)* 
 
-\newpage
 
 ```{r growth_curves_all, out.width="100%", echo=FALSE, fig.align="center", fig.cap= growth_curves_all_caption}
 # Created in RScripts/additional_figures.R
 knitr::include_graphics("tables_figures/growth_curves_all.png")
 ```
 
+\newpage
 ```{r mean_growth_parameters_table,  eval=TRUE, echo=FALSE, warning=FALSE}
 library(knitr)
 mean_growth_parameters <- read.csv("tables_figures/mean_growth_parameters.csv",stringsAsFactors = FALSE, check.names = FALSE)
@@ -330,8 +330,9 @@ knitr::include_graphics("tables_figures/pheno_Tsensitivity_combo.png")
 knitr::include_graphics("tables_figures/DOYtiming_allyears.png")
 ```
 
-At SCBI, ring-porous $DOY_{25}$ and $DOY_{50}$ shifted back while ${DOY_75}$ did not shift, resulting in an extended peak growing season length when critical window temperatures were warmer (Tables `r hypothesis_table`, Figs. `r pheno_Tsensitivity`, `r DOYtiming`).
-Diffuse-porous $DOY_{25}$, $DOY_{50}$, and ${DOY_75}$ shifted back uniformly resulting in no significant change in peak growing season length. At Harvard Forest, ring-porous ${DOY_75}$ shifted back faster than ${DOY_25}$, resulting in shorter peak growins season length, while diffuse-porous ${DOY_25}$ shifted back faster than ${DOY_75}$, resulting in an extended peak growing season length in response to warmer critical window temperatures.  
+At SCBI, ring-porous $DOY_{25}$ and $DOY_{50}$ shifted earlier while ${DOY_75}$ did not shift, resulting in longer peak growing season length when critical window temperatures were warmer (Tables `r hypothesis_table`, Figs. `r pheno_Tsensitivity`, `r DOYtiming`).
+Diffuse-porous $DOY_{25}$, $DOY_{50}$, and ${DOY_75}$ shifted earlier uniformly resulting in no significant change in peak growing season length. 
+At Harvard Forest, ring-porous ${DOY_75}$ shifted more than ${DOY_25}$, resulting in shorter peak growing season length, while diffuse-porous ${DOY_25}$ shifted more than ${DOY_75}$, resulting in an extended peak growing season length in response to warmer critical window temperatures.  
 
 ## Climate sensitivity of growth
 
@@ -339,7 +340,10 @@ Maximum growth rate, $g_{max}$, was not consistently linked to early spring temp
 Ring-porous species exhibited no change (SCBI) or a slight increase (Harvard Forest) with warmer early spring temperatures.
 In contrast, diffuse-porous species exhibited no change (SCBI) or lower $g_{max}$ in years with higher early spring $T_{max}$.
 
-Total annual growth, $\Delta DBH$, also was not consistently linked to early spring temperatures, displaying either no relationship (SCBI) or extremely small changes (Harvard Forest) (Tables `r hypothesis_table`, Fig. `r pheno_Tsensitivity`).
+Total annual growth measured with dendrometer bands, $\Delta DBH$, also was not consistently linked to early spring temperatures, displaying either no relationship (SCBI) or extremely small changes (Harvard Forest) (Tables `r hypothesis_table`, Fig. `r pheno_Tsensitivity`).
+
+Annual growth recorded in tree-ring records, $RW$, ...
+
 
 ```{r tree_rings, out.width="100%", echo=FALSE, fig.align="center", fig.cap= tree_rings_caption}
 # Created in RScripts/additional_figures.R
