@@ -90,7 +90,8 @@ schematic_caption <- "Figure 1. Schematic illustrating the parameters considered
 
 growth_curves_all_caption  <- "Figure 2. Growth trajectories for ring- and diffuse-porous trees, as both relative and cumulative fractions of total annual growth. Each line represents one year's growth for a given tree, fit with McMahon model."
 
-climwin_caption <- "Figure 3. THIS IS OUT OF DATE. Landscapes of relationships between the day of year on which 25% of annual growth is achieved (DOY_25) and temperature in prior weeks for ring- and diffuse-porous trees at SCBI and Harvard Forest. Shown are matrices of linear coefficients of first-order linear regressions between temperature and DOY_25, where Window Open and Window Close indicate number of weeks prior to DOY_25 (ring-porous: DATE at SCBI, DATE at HF; diffuse-porous: DATE at SCBI, DATE at HF). Black boxes indicate the optimal window."
+climwin_caption <- "Figure 3. Landscapes of relationships between the day of year on which 25% of annual growth is achieved (DOY_25) and temperature in prior weeks for ring- (1ST ROW) and diffuse-porous (2ND ROW) trees at SCBI (FIRST COLUMN) and Harvard Forest (SECOND COLUMN). Shown are matrices of linear coefficients of first-order linear regressions between temperature and DOY_25, where Window Open and Window Close indicate number of weeks prior to DOY_25 (ring-porous: May 4 at SCBI, May 15 at HF; diffuse-porous: June 4 at SCBI, June 14 at HF). Black boxes indicate the optimal window (ring-porous:  March 22- April 9 at SCBI, April 2 - May 07 at HF; diffuse-porous: Feb. 19- May 21 at SCBI, March 19 - May 07 at HF)."
+
 
 pheno_Tsensitivity_caption <- "Figure 4. Relationship between growth parameters and climwin mean temperatures. For each 
 observed climwin mean temperature value, the posterior mean of the fitted day of year
@@ -108,6 +109,7 @@ sample_size_by_year= "S1"
 sample_size_by_year_caption <- "Table S1. Sample size by year"
 
 #SI figure numbers
+all_climwin_SI_figs = " S1-S4"
 climwin_rp_DOY25_SCBI = "S1"
 climwin_dp_DOY25_SCBI = "S2"
 climwin_rp_DOY25_SCBI = "S3"
@@ -292,7 +294,7 @@ Growth of ring-porous species was spread out over a longer growing season, with 
 knitr::include_graphics("tables_figures/growth_curves_all.png")
 ```
 
-```{r mean_growth_parameters_table, eval=TRUE, echo=FALSE, warning=FALSE}
+```{r mean_growth_parameters_table,  eval=TRUE, echo=FALSE, warning=FALSE}
 library(knitr)
 mean_growth_parameters <- read.csv("tables_figures/mean_growth_parameters.csv",stringsAsFactors = FALSE, check.names = FALSE)
 knitr::kable(mean_growth_parameters) 
@@ -300,17 +302,16 @@ knitr::kable(mean_growth_parameters)
 
 ## Optimal climate windows
 
-For the majority of weekly time windows from Jan. 1 to $DOY_{25}$, there was negative relationship between temperature and $DOY_{25}$, meaning that warmer temperatures shifted growth earlier in the season (Figs. `r climwin`, `r climwin_rp_DOY25_SCBI`, `r climwin_dp_DOY25_SCBI`). 
-This held true for both ring- and diffuse-porous trees at both sites, *albeit* with stronger relationships for diffuse-porous trees. 
-*(Describe the landscape:)*
-In general, there were significant negative relationships between temperature and $DOY_{25}$ for any time period beginning $\ge$ **5** weeks prior to $DOY_{25}$, ending  $\le$ **8-20** weeks prior depending on wood-type and site, and covering at least a **3**-week period. 
-Relationships tended to be weaker and more stochastic in sign for short time periods, particularly those just prior to $DOY_{25}$.
-
-Optimal windows occurred from **3/22-5/7** for ring-porous species and from **2/19-5/21** for diffuse-porous species.
+For the majority of weekly time windows from Jan. 1 to $DOY_{25}$, there was neutral negative relationship between temperature and $DOY_{25}$, meaning that warmer temperatures shifted growth earlier in the season (Figs. `r climwin`, `r all_climwin_SI_figs`). 
+This held true for both ring- and diffuse-porous trees at both sites. 
+The strongest relationships, including but not limited to the optimal time windows (Table `r mean_growth_parameters_table`), occurred for time windows closing $\le$ 5 weeks prior to $DOY_{25}$. 
+(In general, there were significant negative relationships between temperature and $DOY_{25}$ for any time period beginning $\ge$ **5** weeks prior to $DOY_{25}$, ending  $\le$ **8-20** weeks prior depending on wood-type and site, and covering at least a **3**-week period (`r all_climwin_SI_figs`).
+Relationships tended to be weaker and more stochastic in sign for short time periods, particularly those just prior to $DOY_{25}$.)
+(**Cameron, I'm not sure if the above text is up-to-date... Also, see [issue 34](https://github.com/EcoClimLab/growth_phenology/issues/34)** )
 
 ```{r climwin, out.width="100%", echo=FALSE, fig.align="center", fig.cap= climwin_caption}
 # Created in RScripts/additional_figures.R
-knitr::include_graphics("tables_figures/climwin.png")
+knitr::include_graphics("tables_figures/climwin_figure.png")
 ```
 
 
