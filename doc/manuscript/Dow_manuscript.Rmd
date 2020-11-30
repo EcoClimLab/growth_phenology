@@ -268,26 +268,22 @@ https://cran.r-project.org/web/packages/rstanarm/vignettes/priors.html#default-w
 
 ## Phenological patterns
 
-*(Numbers in bold will change, updated; 11/18. Should be final results)*
-
 Across all trees and years at SCBI, 
-25% of annual growth was achieved on **May 20** ($DOY_{25}$=**139**), 
-50% on **June 12** ($DOY_{50}$=**162**), 
-and 75% on **July 5** ($DOY_{75}$=**185**), 
-for an average peak growing season length of **45** days. 
-Maximum growth rate occurred *just one day after $DOY_{50}$* on **June 13** ($DOY_{max}$=**163**). 
+25% of annual growth was achieved on May 20 ($DOY_{25}$=139), 
+50% on June 12 ($DOY_{50}$=162), 
+and 75% on July 5 ($DOY_{75}$=185), 
+for an average peak growing season length of 45 days. 
+Maximum growth rate occurred just one day after $DOY_{50}$ on June 13 ($DOY_{max}$=163). 
 At Harvard Forest,
-25% of annual growth was achieved on **June 1** ($DOY_{25}$=**151**), 
-50% on **June 23** ($DOY_{50}$=**173**), 
-and 75% on **July 14** ($DOY_{75}$=**194**), 
-for an average peak growing season length of **43** days. 
-Maximum growth rate occurred on **June 24** ($DOY_{max}$=**174**). 
+25% of annual growth was achieved on June 1 ($DOY_{25}$=151), 
+50% on June 23 ($DOY_{50}$=173), 
+and 75% on July 14 ($DOY_{75}$=194), 
+for an average peak growing season length of 43 days. 
+Maximum growth rate occurred on June 24 ($DOY_{max}$=174). 
 
-At both sites, growth phenology differed between ring- and diffuse- porous species, with ring-porous species having an earlier start to growth, with growth spread out over a longer growing season (Fig. `r growth_curves_all`, Table `r mean_growth_parameters_table`).
-
-For ring-porous trees, on average, 25% of annual growth was achieved on **May 4** ($DOY_{25}$=**123**) at SCBI and **May 15** ($DOY_{25}$=**132**) at Harvard FOrest, 50% on **June 2** ($DOY_{50}$=**152**) at SCBI and **June 9** ($DOY_{50}$=**159**) at Harvard Forest, and 75% on **June 30** ($DOY_{75}$=**180**) at SCBI and **July 6** ($DOY_{75}$=**186**) at Harvard Forest, for an average peak growing season length of **56** days at SCBI and **54** days at Harvard Forest. Maximum growth rate occurred *on $DOY_{50}$* at SCBI and *June 11* ($DOY_{max}$=**161**) at Harvard Forest and averaged .046 and .030 **mm day^-1^ (?)** respectively.
-
-For diffuse-porous trees, on average, 25% of annual growth was achieved on **June 4** ($DOY_{25}$=**154**) at SCBI and **June 14** ($DOY_{25}$=**164**) at Harvard Forest, 50% on **June 22** ($DOY_{50}$=**172**) at SCBI and **July 2** ($DOY_{50}$=**182**) at Harvard Forest, and 75% on **July 10** ($DOY_{75}$=**190**) and **July 19** ($DOY_{75}$=**199**) at Harvard forest, for an average peak growing season length of **36** days at SCBI and **35** days at Harvard Forest. Maximum growth rate occurred *just one day after $DOY_{50}$* on **June 23** ($DOY_{max}$=**173**) at SCBI and **just one day after $DOY_{50}$** on **July 3** ($DOY_{max}$=**183**) at Harvard Forest and averaged .061 and .025 **mm day^-1^ (?)** respectively.
+At both sites, growth phenology differed between ring- and diffuse- porous species (Fig. `r growth_curves_all`, Table `r mean_growth_parameters_table`). 
+Specifically, ring-porous species began growing earlier, reaching the $DOY_{25}$ benchmark `r 154-123` days earlier at SCBI and `r 164-132` days earlier at Harvard Forest. 
+Growth of ring-porous species was spread out over a longer growing season, with average $L_{PGS}$ of ring-porous species being **21** days longer at SCBI and **19** days longer at Harvard Forest. *(These numbers are calculated as based on `mean DOY75- mean DOY25`, whereas we want `mean [DOY75- DOY25]`. Need to fix this, but I filled in approximate numbers for now.)* 
 
 \newpage
 
@@ -381,6 +377,8 @@ We present a stepping stone for future studies to build upon.
 
 
 # (Content to incorporate) 
+
+new Science paper: @zani_increased_2020
 
 From Neil: @zhang_drought_2021, @zhang_extended_2020
 
