@@ -20,7 +20,7 @@ library(rstanarm)
 library(patchwork)
 # Number of MCMC chains & number of simulations per chain.
 # Need to increase this at the end
-n_iter <- 7500
+n_iter <- 10000
 n_chains <- 2
 
 # Objects to keep during memory management clean-up
