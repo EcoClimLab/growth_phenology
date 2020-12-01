@@ -454,8 +454,11 @@ grid.arrange(
 dev.off()
 
 #####Climwin figure ------
+library(climwin)
 #Edit the plotbetas function in climwin
 #In the function, change scale_fill_gradientn(colours = c("red", "yellow", "blue"), name = "") to scale_fill_gradient2(high = "blue", mid = "yellow", low = "red")
+#Change Circle coordinates from best window to median of windows which make up 95% cw <median(dataset[dataset$cw == 1,]$WindowOpen)>
+
 trace("plotbetas", edit = TRUE)
 
 #ggplot(MassOutput, aes(x = WindowClose, y = WindowOpen, z = ModelBeta)) +
@@ -466,11 +469,26 @@ trace("plotbetas", edit = TRUE)
 #  ggtitle("Beta linear") +
 #  ylab("Window open") +
 #  xlab("Window close")
-
+cw = 0.95
 SCBI_dp <- read_csv("results/Climwin_results/Weekly/SCBI/MassOutput_25_diffuse-porous.csv")
+SCBI_dp    <- SCBI_dp[order(-SCBI_dp$ModWeight), ]
+SCBI_dp$cw <- as.numeric(cumsum(SCBI_dp$ModWeight) <= cw)
+SCBI_dp$ID <- "SCBI Diffuse-porous"
+
 SCBI_rp <- read_csv("results/Climwin_results/Weekly/SCBI/MassOutput_25_ring-porous.csv")
+SCBI_rp    <- SCBI_rp[order(-SCBI_rp$ModWeight), ]
+SCBI_rp$cw <- as.numeric(cumsum(SCBI_rp$ModWeight) <= cw)
+SCBI_rp$ID <- "SCBI Ring-porous"
+
 HF_dp <- read_csv("results/Climwin_results/Weekly/Harvard Forest/MassOutput_0.25_diffuse-porous.csv")
+HF_dp    <- HF_dp[order(-HF_dp$ModWeight), ]
+HF_dp$cw <- as.numeric(cumsum(HF_dp$ModWeight) <= cw)
+HF_dp$ID <- "Harvard Forest Diffuse-porous"
+
 HF_rp <- read_csv("results/Climwin_results/Weekly/Harvard Forest/MassOutput_0.25_ring-porous.csv")
+HF_rp    <- HF_rp[order(-HF_rp$ModWeight), ]
+HF_rp$cw <- as.numeric(cumsum(HF_rp$ModWeight) <= cw)
+HF_rp$ID <- "Harvard Forest Ring-porous"
 
 png(filename = "doc/manuscript/tables_figures/climwin_figure.png", width=10, height=15,
     pointsize=12, bg="transparent", units="in", res=600,
@@ -479,16 +497,10 @@ png(filename = "doc/manuscript/tables_figures/climwin_figure.png", width=10, hei
 grid.arrange(
   plotbetas(SCBI_dp, arrow = TRUE),
   plotbetas(SCBI_rp, arrow = TRUE),
-  plotbetas(HF_rp, arrow = TRUE),
   plotbetas(HF_dp, arrow = TRUE),
+  plotbetas(HF_rp, arrow = TRUE),
+
 
   as.table = TRUE, nrow=2, ncol=2) ###as.table specifies order if multiple rows
 
 dev.off()
-
-
-
-
-
-
-
