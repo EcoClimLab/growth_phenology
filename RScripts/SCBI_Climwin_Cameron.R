@@ -10,6 +10,7 @@ library(climwin)
 library(readr)
 library(lubridate)
 library(tidyverse)
+library(patchwork)
 
 #Edit the plotbetas function in climwin
 #In the function, change scale_fill_gradientn(colours = c("red", "yellow", "blue"), name = "") to scale_fill_gradient2(high = "blue", mid = "yellow", low = "red")
