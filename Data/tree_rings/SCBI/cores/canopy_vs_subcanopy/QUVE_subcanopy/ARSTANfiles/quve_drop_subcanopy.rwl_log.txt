@@ -1,0 +1,24 @@
+data file #  1  --  caco_drop_canopy.rwl                                        
+1                  !tucson ring-width format                         
+-9           0     !missing values estimated (no plots)              
+4            0     !spread/level power transform (no plots)          
+2      20    0     !1st-neg expon curve (k>0), no = opt 5            
+-67    0     0     !2nd-spline curve (pct n 50% cutoff)              
+1                  !non-robust detrending methods used               
+0                  !no interactive detrending                        
+2                  !residuals or differences (rt-gt)                 
+1      0     0     !non-robust autoregressive modeling               
+0            0     !minimum aic pooled ar model order fit (no plots) 
+0                  !pooled ar order fit to all series                
+2   0   0    0     !robust (biweight) mean chronology                
+-33                !rbar weighted stabilization method               
+1950 2000          !first and last years of common period            
+SSSTTC             !site-tree-core separation mask                   
+40   20   0        !running rbar window/overlap (no plots)           
+2                  !summary & series statistics printed              
+0                  !no individual core series saved                  
+3                  !no spaghetti and mean chronology plots           
+0            0     !no stand dynamics analyses done                  
+0                  !running mean window width                        
+0                  !percent growth change threshold                  
+0                  !standard error limit threshold                   

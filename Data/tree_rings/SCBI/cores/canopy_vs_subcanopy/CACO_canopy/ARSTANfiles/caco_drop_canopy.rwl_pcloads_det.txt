@@ -1,0 +1,8 @@
+ eigenvalue  1.031   0.969
+ eval sderr  0.204   0.192
+ % variance  0.515   0.485
+ cumulative  0.515   1.000
+ brokn stck  1.500   0.500
+ series_id   #  1       2
+  132018A    0.707   0.707
+  50488A     0.707  -0.707

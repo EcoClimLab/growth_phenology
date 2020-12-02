@@ -1,0 +1,5 @@
+ % variance  0.541
+ cumulative  0.541
+ series_id   #  1
+  132018A    0.735
+  50488A     0.735

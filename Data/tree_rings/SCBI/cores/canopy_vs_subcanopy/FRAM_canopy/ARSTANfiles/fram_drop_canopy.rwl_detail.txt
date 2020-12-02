@@ -1,0 +1,28 @@
+ num = number of series             ident = series identification
+ ify = first year of time series      ily = last year of time series
+ yfp = years from pith for rcs        itn = transform (>3 = power*1000)
+ idt = series detrending options      ips = series ar model order options
+ isb = stabilize variance options     icu = use (1) or do not use (0)
+ ics = save (1) or do not save (0)    cpa = common period analysis series
+                   -- do not delete these lines --
+ num  ident      ify   ily   yfp   itn   idt   ips   isb   icu   ics   cpa
+   1  192697    1937  2009     0     4   -67     0     0     1     1     1
+   2  142178    1893  2009     0     4   -67     0     0     1     1     2
+   3  171358    1958  2009     0     4   -67     0     0     1     1     0
+   4  202536    1926  2009     0     4   -67     0     0     1     1     4
+   5  182396    1895  2009     0     4   -67     0     0     1     1     5
+   6  101292    1896  2007     0     4   -67     0     0     1     1     6
+   7  182678    1931  2009     0     4   -67     0     0     1     1     7
+   8  10539     1882  2009     0     4   -67     0     0     1     1     8
+   9  202775    1885  2009     0     4   -67     0     0     1     1     9
+  10  132525    1925  2009     0     4   -67     0     0     1     1    10
+  11  40131     1892  2009     0     4   -67     0     0     1     1    11
+  12  140881    1914  2009     0     4   -67     0     0     1     1    12
+  13  40935A    1920  2015     0     4   -67     0     0     1     1    13
+  14  111290A   1899  2014     0     4   -67     0     0     1     1    14
+  15  192260A   1944  2016     0     4   -67     0     0     1     1    15
+  16  20432A    1940  2011     0     4   -67     0     0     1     1    16
+  17  30039A    1940  2015     0     4   -67     0     0     1     1    17
+  18  30109     1936  2015     0     4   -67     0     0     1     1    18
+  19  40853A    1922  2016     0     4   -67     0     0     1     1    19
+  20  192154A   1879  2016     0     4   -67     0     0     1     1    20

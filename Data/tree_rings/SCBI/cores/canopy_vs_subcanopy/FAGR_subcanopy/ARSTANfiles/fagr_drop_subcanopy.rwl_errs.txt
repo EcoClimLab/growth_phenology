@@ -1,0 +1,52 @@
+fagr_drop_subcanopy.rwl -- no data title --               1st itrdb line missing     
+fagr_drop_subcanopy.rwl -- no data title --               2nd itrdb line missing     
+fagr_drop_subcanopy.rwl -- no data title --               3rd itrdb line missing     
+fagr_d1920   0  1 766  2 334  2 346  2 345  2 486  2 439  2 293  2 714  3 562  3  err
+fagr_d1930 271  4 528  4 444  4 270  5 388  5 339  5 365  6 414  6 123  6  56  6  err
+fagr_d1940 246  7 233  7 342  8 322  8 305 10 370 10 247 11 328 11 243 13 150 13  err
+fagr_d1950 180 15 171 18 148 20 112 22 120 29 118 30 130 30 151 30 113 33 105 36  err
+fagr_d1960 118 39 101 41  99 44  91 47  87 51  85 51  68 52 102 54 104 55 103 58  err
+fagr_d1970  96 59  98 62  99 62  96 63  93 65  81 67  86 67  78 69  94 69  78 71  err
+fagr_d1980 102 71 104 71 103 71  99 72 111 72  94 72  92 72  84 72  84 72  87 72  err
+fagr_d1990  98 72  70 72  95 72  97 72  97 72  90 72  99 72  77 72  90 72  82 72  err
+fagr_d2000 114 72 109 71  89 70 109 69  92 69 108 69 110 67 114 65 109 60 108 56  err
+fagr_d20109990  09990  09990  09990  09990  09990  09990  09990  09990  09990  0  err
+fagr_drop_subcanopy.rwl -- no data title --               1st itrdb line missing     
+fagr_drop_subcanopy.rwl -- no data title --               2nd itrdb line missing     
+fagr_drop_subcanopy.rwl -- no data title --               3rd itrdb line missing     
+fagr_d1920   0  1 197  2  49  2  51  2  30  2  68  2  48  2   7  2  51  3  13  3  err
+fagr_d1930  56  4  27  4  44  4  53  5  31  5  23  5 102  6  90  6  57  6 136  6  err
+fagr_d1940  54  7 118  7  99  8  56  8  93 10 117 10  61 11 105 11  58 13  52 13  err
+fagr_d1950  68 15  57 18  64 20  52 22  53 29  48 30  60 30  55 30  42 33  36 36  err
+fagr_d1960  33 39  28 41  24 44  30 47  30 51  29 51  23 52  35 54  33 55  30 58  err
+fagr_d1970  31 59  33 62  26 62  30 63  29 65  26 67  27 67  33 69  28 69  28 71  err
+fagr_d1980  34 71  25 71  26 71  28 72  31 72  24 72  23 72  23 72  21 72  22 72  err
+fagr_d1990  23 72  21 72  19 72  24 72  22 72  22 72  25 72  26 72  22 72  23 72  err
+fagr_d2000  28 72  25 71  26 70  25 69  22 69  25 69  26 67  29 65  26 60  31 56  err
+fagr_d20109990  09990  09990  09990  09990  09990  09990  09990  09990  09990  0  err
+fagr_drop_subcanopy.rwl -- no data title --               1st itrdb line missing     
+fagr_drop_subcanopy.rwl -- no data title --               2nd itrdb line missing     
+fagr_drop_subcanopy.rwl -- no data title --               3rd itrdb line missing     
+fagr_d1920   0  1 199  2 123  2  26  2  15  2  78  2  16  2  33  2  12  3   1  3  err
+fagr_d1930  35  4  42  4  38  4  59  5  69  5  32  5 113  6  44  6  87  6 120  6  err
+fagr_d1940  54  7 102  7  85  8  55  8  74 10 106 10  56 11  92 11  42 13  58 13  err
+fagr_d1950  54 15  50 18  52 20  56 22  50 29  47 30  50 30  43 30  39 33  32 36  err
+fagr_d1960  33 39  23 41  22 44  25 47  29 51  24 51  25 52  32 54  29 55  28 58  err
+fagr_d1970  27 59  28 62  21 62  25 63  22 65  22 67  27 67  33 69  27 69  24 71  err
+fagr_d1980  35 71  20 71  21 71  21 72  31 72  21 72  20 72  19 72  19 72  20 72  err
+fagr_d1990  22 72  20 72  20 72  23 72  21 72  22 72  21 72  25 72  22 72  21 72  err
+fagr_d2000  28 72  22 71  27 70  21 69  24 69  23 69  23 67  26 65  28 60  30 56  err
+fagr_d20109990  09990  09990  09990  09990  09990  09990  09990  09990  09990  0  err
+fagr_drop_subcanopy.rwl -- no data title --               1st itrdb line missing     
+fagr_drop_subcanopy.rwl -- no data title --               2nd itrdb line missing     
+fagr_drop_subcanopy.rwl -- no data title --               3rd itrdb line missing     
+fagr_d1920   0  1 191  2 118  2  25  2  14  2  74  2  16  2  32  2  12  3   1  3  err
+fagr_d1930  33  4  40  4  37  4  56  5  67  5  31  5 109  6  42  6  83  6 115  6  err
+fagr_d1940  51  7  98  7  82  8  53  8  71 10 102 10  54 11  88 11  40 13  56 13  err
+fagr_d1950  51 15  48 18  49 20  54 22  48 29  45 30  48 30  41 30  38 33  30 36  err
+fagr_d1960  31 39  22 41  21 44  24 47  28 51  23 51  24 52  31 54  28 55  27 58  err
+fagr_d1970  26 59  27 62  20 62  24 63  21 65  21 67  26 67  32 69  26 69  23 71  err
+fagr_d1980  33 71  19 71  20 71  20 72  29 72  20 72  19 72  18 72  18 72  20 72  err
+fagr_d1990  22 72  19 72  19 72  22 72  20 72  21 72  20 72  24 72  21 72  20 72  err
+fagr_d2000  26 72  21 71  26 70  20 69  23 69  22 69  22 67  25 65  27 60  29 56  err
+fagr_d20109990  09990  09990  09990  09990  09990  09990  09990  09990  09990  0  err

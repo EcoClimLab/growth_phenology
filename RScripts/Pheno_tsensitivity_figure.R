@@ -586,7 +586,6 @@ Wood_pheno_table_hf <- Wood_pheno_table_hf %>%
   ) %>%
   arrange(tag, year)
 
-
 ### Model Fit 1 (multivariate): (DOY_25, DOY_50, DOY_75) using climwinmeans ----
 # Convert to wide format for use in rstanarm::stan_mvmer()
 Wood_pheno_table_wide_hf <- Wood_pheno_table_hf %>%

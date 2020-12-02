@@ -1,0 +1,22 @@
+ num = number of series             ident = series identification
+ ify = first year of time series      ily = last year of time series
+ yfp = years from pith for rcs        itn = transform (>3 = power*1000)
+ idt = series detrending options      ips = series ar model order options
+ isb = stabilize variance options     icu = use (1) or do not use (0)
+ ics = save (1) or do not save (0)    cpa = common period analysis series
+                   -- do not delete these lines --
+ num  ident      ify   ily   yfp   itn   idt   ips   isb   icu   ics   cpa
+   1  132241    1945  2009     0     4   -67     0     0     1     1     1
+   2  132236    1939  2009     0     4   -67     0     0     1     1     2
+   3  112170    1950  2009     0     4   -67     0     0     1     1     3
+   4  192213    1948  2009     0     4   -67     0     0     1     1     4
+   5  142521    1953  2009     0     4   -67     0     0     1     1     0
+   6  142484    1938  2009     0     4   -67     0     0     1     1     6
+   7  122180    1940  2009     0     4   -67     0     0     1     1     7
+   8  122146    1955  2009     0     4   -67     0     0     1     1     0
+   9  122150    1935  2009     0     4   -67     0     0     1     1     9
+  10  122157    1952  2009     0     4   -67     0     0     1     1     0
+  11  122278    1980  2009     0     4   -67     0     0     1     1     0
+  12  142046    1936  2009     0     4   -67     0     0     1     1    11
+  13  162432    1962  2005     0     4   -67     0     0     1     1     0
+  14  132233    1938  2009     0     4   -67     0     0     1     1     2

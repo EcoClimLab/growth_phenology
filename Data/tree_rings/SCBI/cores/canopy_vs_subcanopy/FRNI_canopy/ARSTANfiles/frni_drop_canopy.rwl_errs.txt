@@ -1,0 +1,60 @@
+frni_drop_canopy.rwl -- no data title --                  1st itrdb line missing     
+frni_drop_canopy.rwl -- no data title --                  2nd itrdb line missing     
+frni_drop_canopy.rwl -- no data title --                  3rd itrdb line missing     
+frni_d19059990  09990  09990  09990  09990  0   0  1   0  1   0  1   0  1   0  1  err
+frni_d1910   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1  err
+frni_d1920   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1  err
+frni_d1930   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1  err
+frni_d1940   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1  err
+frni_d1950   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1  err
+frni_d1960   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1  err
+frni_d1970   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1  err
+frni_d1980   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1  err
+frni_d1990   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1  err
+frni_d2000   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1  err
+frni_d2010   0  1   0  1   0  1   0  1   0  1   0  19990  09990  09990  09990  0  err
+frni_drop_canopy.rwl -- no data title --                  1st itrdb line missing     
+frni_drop_canopy.rwl -- no data title --                  2nd itrdb line missing     
+frni_drop_canopy.rwl -- no data title --                  3rd itrdb line missing     
+frni_d19059990  09990  09990  09990  09990  0   0  1   0  1   0  1   0  1   0  1  err
+frni_d1910   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1  err
+frni_d1920   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1  err
+frni_d1930   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1  err
+frni_d1940   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1  err
+frni_d1950   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1  err
+frni_d1960   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1  err
+frni_d1970   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1  err
+frni_d1980   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1  err
+frni_d1990   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1  err
+frni_d2000   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1  err
+frni_d2010   0  1   0  1   0  1   0  1   0  1   0  19990  09990  09990  09990  0  err
+frni_drop_canopy.rwl -- no data title --                  1st itrdb line missing     
+frni_drop_canopy.rwl -- no data title --                  2nd itrdb line missing     
+frni_drop_canopy.rwl -- no data title --                  3rd itrdb line missing     
+frni_d19059990  09990  09990  09990  09990  0   0  1   0  1   0  1   0  1   0  1  err
+frni_d1910   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1  err
+frni_d1920   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1  err
+frni_d1930   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1  err
+frni_d1940   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1  err
+frni_d1950   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1  err
+frni_d1960   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1  err
+frni_d1970   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1  err
+frni_d1980   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1  err
+frni_d1990   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1  err
+frni_d2000   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1  err
+frni_d2010   0  1   0  1   0  1   0  1   0  1   0  19990  09990  09990  09990  0  err
+frni_drop_canopy.rwl -- no data title --                  1st itrdb line missing     
+frni_drop_canopy.rwl -- no data title --                  2nd itrdb line missing     
+frni_drop_canopy.rwl -- no data title --                  3rd itrdb line missing     
+frni_d19059990  09990  09990  09990  09990  0   0  1   0  1   0  1   0  1   0  1  err
+frni_d1910   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1  err
+frni_d1920   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1  err
+frni_d1930   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1  err
+frni_d1940   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1  err
+frni_d1950   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1  err
+frni_d1960   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1  err
+frni_d1970   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1  err
+frni_d1980   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1  err
+frni_d1990   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1  err
+frni_d2000   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1   0  1  err
+frni_d2010   0  1   0  1   0  1   0  1   0  1   0  19990  09990  09990  09990  0  err

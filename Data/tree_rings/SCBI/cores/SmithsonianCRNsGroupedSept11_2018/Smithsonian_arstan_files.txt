@@ -1,0 +1,8 @@
+juni_drop.rwl
+quve_drop.rwl
+fram_drop.rwl
+pist_drop.rwl
+qupr_drop.rwl
+quru_drop.rwl
+frni_drop.rwl
+litu_drop.rwl

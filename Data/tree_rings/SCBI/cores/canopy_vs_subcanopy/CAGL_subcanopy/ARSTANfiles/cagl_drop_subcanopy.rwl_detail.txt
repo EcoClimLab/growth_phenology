@@ -1,0 +1,29 @@
+ num = number of series             ident = series identification
+ ify = first year of time series      ily = last year of time series
+ yfp = years from pith for rcs        itn = transform (>3 = power*1000)
+ idt = series detrending options      ips = series ar model order options
+ isb = stabilize variance options     icu = use (1) or do not use (0)
+ ics = save (1) or do not save (0)    cpa = common period analysis series
+                   -- do not delete these lines --
+ num  ident      ify   ily   yfp   itn   idt   ips   isb   icu   ics   cpa
+   1  90522     1905  2002     0     4   -67     0     0     1     1     1
+   2  91327     1935  2009     0     4   -67     0     0     1     1     2
+   3  90542     1868  1992     0     4   -67     0     0     1     1     0
+   4  60252     1878  2008     0     4   -67     0     0     1     1     4
+   5  80301     1890  1997     0     4   -67     0     0     1     1     0
+   6  50244     1921  2008     0     4   -67     0     0     1     1     6
+   7  91487     1917  2004     0     4   -67     0     0     1     1     7
+   8  70152     1916  2008     0     4   -67     0     0     1     1     8
+   9  30567A    1932  2013     0     4   -67     0     0     1     1     9
+  10  100961    1969  2007     0     4   -67     0     0     1     1     0
+  11  100974    1936  2005     0     4   -67     0     0     1     1    11
+  12  60172     1880  2007     0     4   -67     0     0     1     1    12
+  13  40522     1930  2010     0     4   -67     0     0     1     1    13
+  14  131032    1880  2009     0     4   -67     0     0     1     1    14
+  15  60386     1902  2009     0     4   -67     0     0     1     1    15
+  16  111212    1952  2009     0     4   -67     0     0     1     1     0
+  17  100680    1931  2007     0     4   -67     0     0     1     1    17
+  18  112256A   1955  2015     0     4   -67     0     0     1     1     0
+  19  172210A   1938  2014     0     4   -67     0     0     1     1    19
+  20  91321     1881  1996     0     4   -67     0     0     1     1     0
+  21  121088    1902  2009     0     4   -67     0     0     1     1    21
