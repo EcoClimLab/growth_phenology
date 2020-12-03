@@ -355,7 +355,15 @@ knitr::include_graphics("tables_figures/tree_rings.tif")
 ## (summary of key findings, gap filled)
 We found that warmer spring temperatures in temperate deciduous forests cause earlier tree growth but have little effect on annual woody productivity...
 
+
+
 ## ("limitation in filling gap, how to interpret/fix")
+Although the number of years analyzed here is limited (# years at SCBI, # years at HF), the signal is clear and consistent: for both species groups at both sites, warmer temperatures during virtually any part of the spring led to significantly earlier achievement of growth milestones (*CITE RELEVANT FIGS & TABLES* ).
+This indicates that this is not a subtle effect.
+However, the effect on L_PGS, r_max, and $\Delta DBH$, if any, is subtle, and a much longer record would be needed to detect such effects. 
+Fortunately, we were able to get at annual growth using tree-ring data (Fig. `r tree_rings`).
+These confirm that the effect of spring temperatures on annual growth is modest and generally not significant, while revealing a slightly more complex picture.
+Although spring temperatures prior to May rarely had a significant influence on 
 
 ## ("limitation in generalization, how to interpret/fix")
 
