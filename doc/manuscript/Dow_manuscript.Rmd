@@ -223,7 +223,7 @@ knitr::include_graphics("tables_figures/hypothesis_table.png")
 
 ## Study sites
 
-Study sites included two temperate forests in the Eastern United States, both part of the Forest Global Earth Observatory [ForestGEO; Anderson-Teixeira et al. 2015]. 
+Study sites included two temperate forests in the eastern United States, both part of the Forest Global Earth Observatory [ForestGEO; Anderson-Teixeira et al. 2015]. 
 
 Our first study site was the forest dynamics plot located at the Smithsonian Conservation Biology Institute 5 km South of Front Royal, Virginia within the Blue Ridge Mountains (38.8935° N, 78.1454° W; elevation 273–338 m.a.s.l.). The forest here was established in the mid-19th century after conversion from agricultural fields. Dominate canopy species within the 25.6 ha forest plot include tulip poplar (*Liriodendron tulipifera*), oaks (*Quercus spp.*), hickories (*Carya spp.*). The climate is humid temperate, with a mean annual precipitation of 998 mm, January temperatures averaging 1 degrees C and July temperatures averaging 24 degrees C (Helcoski et al, 2019).  
 
@@ -245,15 +245,34 @@ knitr::include_graphics("tables_figures/species_table.png")
 ```
 
 
-Measurements were timed to begin before beginning of spring growth and to continue through the cessation of growth in the fall. At SCBI, the median start date was 4/14, which was adjusted when early leaf-out of understory shrubs and herbs was observed, and the median end date was 10/17, coinciding with late senescence in the plot. The earliest start date for intraannual measurements at SCBI was March 30, 2020 and the latest end date was November 26, 2012. Harvard Forest measurements took place at a similar time, with the median start date of 4/23 and median end date of 10/30. 1998 was an anomalous year where initial measurements were taken on 1/5, but not taken again until 4/15. The latest end date was November 11, 2002.
+Measurements were timed to begin before the beginning of spring growth and to continue through the cessation of growth in the fall. 
+At SCBI, the median start date was 4/14, which was adjusted when early leaf-out of understory shrubs and herbs was observed, with the earliest start date being March 30, 2020. Measurements were continued through to fall leaf senescence, with the median end date being 10/17 and the latest end date was November 26, 2012. 
+Timing of measurements at Harvard Forest was similar, with the median start date of 4/23 and median end date of 10/30. 1998 was an anomalous year where initial measurements were taken on 1/5, but not taken again until 4/15. The latest end date was November 11, 2002.
 
-The dendroband data were manually cleaned by visual inspection before analysis. Three classes of mistakes: 1. Error in measurement - weekly measurement was drastically different from previous week and following week. Mistakes were removed from the raw data before modeling. 2. Band slip or stuck - measurements freeze and remain unchanged until sudden jump followed by normal growth pattern. Band slips were sometimes followed by measurements indicating the band became stuck; in these cases, the tree was thrown out for the corresponding year. In cases where the slip was followed by normal growth, the initial slip-point was removed, and the following points were shifted down to the pre-slip level. 3. Other - cases where data was clearly wrong but with unknown causes. In cases where several measurements were an issue, they were simply removed. If there were no clear solutions to ‘fix’ the data, the entire year was removed from the analysis.
+The dendrometer band data were manually cleaned by visual inspection before analysis. 
+We screened for three classes of mistakes. 
+First, when a weekly measurement was drastically different from previous week and following weeks, this was assumed to be a measurement error and the record was removed.
+Second, when measurements remained essentially unchanged for several readings, followed by a sudden jump followed by normal growth pattern, this was assumed to be a case where the band was stuck and then released. In these cases, the full annual record for the tree was removed.
+Third, there were cases where data were clearly wrong but with unknown causes. In cases where several measurements were an issue, they were simply removed. If there were no clear solutions to ‘fix’ the data, the entire year was removed from the analysis.
 
-We fit the model of @mcmahon_general_2015 to define *phenological dates and growth rates* (Fig. `r schematic`). This 5 parameter logistic model was fitted to each tag year's dendroband measurements in R: 
-$$L + ((K - L) / (1 + 1/\theta * exp(-(r * (doy - doy_{ip}) / \theta)) ^ {\theta}))$$  **(Cameron, please check formatting. It should be possible to write this more clearly with latex formatting. )**
-Here, $L$ and $K$ are lower and upper asymptotes of the model, theta is a tuning parameter controlling the slope of the curve toward the upper asymptote, $r$ is the slope of the curve at the inflection point, $doy_{ip}$ is the day of year where the inflection point occurs, and $doy$ are the modeled days of year, in this case, 1-365. *We note that the maximum growth rate does not always occur on the doy_ip, and is controlled magically by theta somehow.* Using the optimized parameters for each tree year, we could then determine the DBH on every day within that year, giving us the ability to extract the intra-annual growth variables we were interested in. 
+We fit the model of @mcmahon_general_2015 to define *phenological dates and growth rates* (Fig. `r schematic`). This 5 parameter logistic model was fitted to each tag year's dendrometer band measurements in R: 
+$$ DBH = L + \frac{K - L} { 1 + 1/\theta \cdot exp[-r(DOY - DOY_{ip}) / \theta)] ^ \theta}$$  **(Cameron, please check equation following formatting. )**
+Here, $L$ and $K$ are lower and upper asymptotes of the model, corresponding to $DBH$ at the beginning and end of the year, respectively. 
+$\theta$ is a tuning parameter controlling the slope of the curve toward the upper asymptote, $r$ is the slope of the curve at the inflection point, $doy_{ip}$ is the day of year where the inflection point occurs, and $doy$ are the modeled days of year, in this case, 1-365. 
+*We note that the maximum growth rate does not always occur on the doy_ip, and is controlled magically by theta somehow.* 
+Using the optimized parameters for each tree year, we could then determine the $DBH$ on every day within that year, giving us the ability to extract the intra-annual growth variables we were interested in. 
 
-After model fitting, we used a script to remove poorly fit models. Models were judged to be poorly fit if certain modeled growth characteristics fell outside of the acceptable range we determined. Modeled tag years were removed if: 1. single day growth rates were higher than 2 standard deviations away from the mean for each wood-type (SCBI = 2, HF = 34) 2. DOY where peak growth rate occured was 2 standard deviations away, calculated for each wood-type in each year (aimed to remove models which predicted growth to peak during the winter; SCBI = 62, HF = 106) 3. tag years with small or negligible total growth (deltaDBH < 0.02 mm; SCBI = 0, HF = 66), 4. models which predicted total yearly growth to take longer than 365 days (SCBI = 181, HF = 199) 5. models with unexplained spikes (SCBI = 0, HF = 3). At Harvard Forest the tag years removed through this method was proportional to the original sample size, indicating that no species or size class was disproportionately removed compared to others *(SI figure? data_cleaning_figure_hf in manuscript folder)*. At SCBI a higher proportion of oak trees were removed *(data_cleaning_figure_scbi)*. The majority (White oak = 91, Red oak = 79) were removed in step 5 above, indicating that the LG5 model struggled to accurately model these these species.  
+After model fitting, we used a script to remove poorly fit models. 
+Models were judged to be poorly fit if certain modeled growth characteristics fell outside of the acceptable range we determined. 
+Modeled tag years were removed under five conditions:  
+(1) single day growth rates were higher than 2 standard deviations away from the mean for each wood-type (SCBI = 2, HF = 34); 
+(2) DOY where peak growth rate occurred was 2 standard deviations away, calculated for each wood-type in each year (aimed to remove models which predicted growth to peak during the winter; SCBI = 62, HF = 106); 
+(3) tree-years with small or negligible total growth ($\Delta DBH$ < 0.02 mm; SCBI = 0, HF = 66); 
+(4) model fit predicted total yearly growth to take longer than 365 days (SCBI = 181, HF = 199); 
+and (5) models with unexplained sharp spikes in growth rate (SCBI = 0, HF = 3). 
+At Harvard Forest the tag years removed through this method was proportional to the original sample size, indicating that no species or size class was disproportionately removed compared to others *(SI figure? data_cleaning_figure_hf in manuscript folder)*. 
+At SCBI a higher proportion of oak trees were removed *(data_cleaning_figure_scbi)*. 
+The majority (White oak = 91, Red oak = 79) were removed in step 5 above, indicating that the LG5 model struggled to accurately model these these species.  
 
 ### Tree-rings
 Dominant tree species were cored at both sites following sampling designs that covered a broad range of $DBH$.
