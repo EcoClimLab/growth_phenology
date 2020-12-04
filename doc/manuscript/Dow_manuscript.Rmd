@@ -100,7 +100,7 @@ is represented by the solid blue line and credible intervals are represented by 
 
 DOYtiming_caption <- "Figure 5. Day of year where growth milestones were achied at (a) the Smithonian Conservation Biology Institute and (b) Harvard Forest."
 
-tree_rings_caption <- "Figure 6. Climate sensitiivity of annual growth from tree-rings. THIS IS JUST A PLACEHOLDER TO SHOW THE RESULTS--WE'LL WANT TO RE-MAKE FIGURE."
+tree_rings_caption <- "Figure 6. Climate sensitiivity of annual growth, as derived from tree-rings, for dominant ring- and diffuse- porous species at the Smithonian Conservation Biology Institute and Harvard Forest. Shown are Pearson correlations between ring-width index and and monthly Tmax. Species codes are as given in Table 2."
 
 # SUPPLEMENTARY INFO (this chunk must be repeated in Dow_SI.Rmd)
 #SI table numbers
