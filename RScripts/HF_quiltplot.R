@@ -164,7 +164,7 @@ save.plots = TRUE
 for(v in climate_variables) {
   print(v)
 
-  X <- all.dcc.output[all.dcc.output$variable %in% "tmn", ]
+  X <- all.dcc.output[all.dcc.output$variable %in% v, ]
 
   x <- data.frame(reshape(X[, c("month", "Species", "coef")], idvar = "month", timevar = "Species", direction = "wide"))
   rownames(x) <- ifelse(grepl("curr",  rownames(x)), toupper(rownames(x)), tolower( rownames(x)))
@@ -193,9 +193,9 @@ for(v in climate_variables) {
 
   v <-  toupper(v)
   v <- gsub("PDSI_PREWHITEN" , "PDSI", v)
-  x <- x[,c(3,2,1)]
-  x.sig <- x.sig[,c(3,2,1)]
-  x.sig2 <- x.sig2[,c(3,2,1)]
+  x <- x[,c(2,1,3)]
+  x.sig <- x.sig[,c(2,1,3)]
+  x.sig2 <- x.sig2[,c(2,1,3)]
   png(paste0("results/", "monthly_", "correlation", "Harvard", v, ".png"), res = 150, width = 169, height = 169, units = "mm", pointsize = 10)
 
   my.dccplot(x = as.data.frame(t(x)), sig = as.data.frame(t(x.sig)), sig2 = as.data.frame(t(x.sig2)),  main = ifelse(v %in% "PETminusPRE", "PET-PRE", v), method = "correlation")

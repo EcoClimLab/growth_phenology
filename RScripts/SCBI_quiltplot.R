@@ -265,7 +265,7 @@ for(f in species) {
 all.dcc.output$variable <- substr(paste(row.names(all.dcc.output)), 1, 3)#get variable from row name
 all.dcc.output$month <- substr(paste(row.names(all.dcc.output)), 5, 12)#get month from row name
 
-write.csv(all.dcc.output, file = "results/SCBI_core_corr.csv", row.names = FALSE)
+#write.csv(all.dcc.output, file = "results/SCBI_core_corr.csv", row.names = FALSE)
 #} # for(f in species)
 
 #############################################
@@ -305,9 +305,9 @@ for(v in climate_variables) {
   v <-  toupper(v)
   v <- gsub("PDSI_PREWHITEN" , "PDSI", v)
   #x <- x[,c(5,9,1,2,3,4,6,7,11,12,13,14)]
-  x <- x[,c(14,13,12,11,7,6,4,3,2,1,9,5)]
-  x.sig <- x.sig[,c(14,13,12,11,7,6,4,3,2,1,9,5)]
-  x.sig2 <- x.sig2[,c(14,13,12,11,7,6,4,3,2,1,9,5)]
+  x <- x[,c(9,5,14,13,12,11,6,4,3,2,1)]
+  x.sig <- x.sig[,c(9,5,14,13,12,11,6,4,3,2,1)]
+  x.sig2 <- x.sig2[,c(9,5,14,13,12,11,6,4,3,2,1)]
 
   png(paste0("results/", "monthly_", "correlation", "SCBI", v, ".png"), res = 150, width = 169, height = 169, units = "mm", pointsize = 10)
 
