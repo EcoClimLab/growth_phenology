@@ -21,7 +21,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Cameron Dow^1^
 
-Loïc D’Orangeville
+Albert Y. Kim^1,2^
+
+Loïc D’Orangeville^3,4^
 
 Erika B. Gonzalez-Akre^1^
 
@@ -29,18 +31,17 @@ Ryan Helcoski^1^
 
 Valentine Herrmann^1^
 
-Ian McGregor^1^
+Ian McGregor^1,5^
 
-Sean McMahon
+William McShea^1^
 
-Albert Y. Kim^1,2^
+Sean McMahon^6,7^
 
-David A. Orwig
+David A. Orwig^3^
 
-Neil Pederson
+Neil Pederson^3^
 
-Kristina J. Anderson-Teixeira^1,n^*
-
+Kristina J. Anderson-Teixeira^1,7^*
 
 
 **Author Affiliations:**
@@ -49,7 +50,19 @@ Kristina J. Anderson-Teixeira^1,n^*
 
 2. Statistical & Data Sciences; Smith College; Northampton, MA 01063, USA
 
-n. Center for Tropical Forest Science-Forest Global Earth Observatory; Smithsonian Tropical Research Institute; Panama, Republic of Panama
+3. Harvard Forest, Petersham, MA 01366, USA
+
+4. Faculty of Forestry and Environmental Management, University of New Brunswick, Fredericton, NB, E3B 5A3, Canada.
+
+5. NCSU
+
+6. SERC
+
+7. Center for Tropical Forest Science-Forest Global Earth Observatory; Smithsonian Tropical Research Institute; Panama, Republic of Panama
+
+
+
+
 
 
 *corresponding author: teixeirak@si.edu; +1 540 635 6546
