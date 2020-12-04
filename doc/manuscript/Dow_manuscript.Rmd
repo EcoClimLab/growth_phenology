@@ -255,24 +255,24 @@ First, when a weekly measurement was drastically different from previous week an
 Second, when measurements remained essentially unchanged for several readings, followed by a sudden jump followed by normal growth pattern, this was assumed to be a case where the band was stuck and then released. In these cases, the full annual record for the tree was removed.
 Third, there were cases where data were clearly wrong but with unknown causes. In cases where several measurements were an issue, they were simply removed. If there were no clear solutions to ‘fix’ the data, the entire year was removed from the analysis.
 
-We fit the model of @mcmahon_general_2015 to define *phenological dates and growth rates* (Fig. `r schematic`). This 5 parameter logistic model was fitted to each tag year's dendrometer band measurements in R: 
+We fit the model of @mcmahon_general_2015 to define phenological dates and growth rates (Fig. `r schematic`). 
+This five-parameter logistic model was fitted to dendrometer band data from each tree-year in R: 
 $$ DBH = L + \frac{K - L} { 1 + 1/\theta \cdot exp[-r(DOY - DOY_{ip}) / \theta)] ^ \theta}$$  **(Cameron, please check equation following formatting. )**
 Here, $L$ and $K$ are lower and upper asymptotes of the model, corresponding to $DBH$ at the beginning and end of the year, respectively. 
-$\theta$ is a tuning parameter controlling the slope of the curve toward the upper asymptote, $r$ is the slope of the curve at the inflection point, $doy_{ip}$ is the day of year where the inflection point occurs, and $doy$ are the modeled days of year, in this case, 1-365. 
-*We note that the maximum growth rate does not always occur on the doy_ip, and is controlled magically by theta somehow.* 
-Using the optimized parameters for each tree year, we could then determine the $DBH$ on every day within that year, giving us the ability to extract the intra-annual growth variables we were interested in. 
+$\theta$ is a tuning parameter controlling the slope of the curve toward the upper asymptote, $r$ is the slope of the curve at the inflection point, $DOY_{ip}$ is the day of year where the inflection point in growth rate occurs, and $DOY$ are the modeled days of year (*i.e.*, julian days). 
+*We note that the maximum growth rate does not always occur on the doy_ip, and is controlled magically by theta somehow. (???)* 
+Using the optimized parameters for each tree-year, we could then determine the $DBH$ on every day within that year, giving us the ability to extract the intra-annual growth variables of interest (Fig. `r schematic`). 
 
-After model fitting, we used a script to remove poorly fit models. 
+After fitting the  @mcmahon_general_2015 model, we used a script to remove poorly fit models. 
 Models were judged to be poorly fit if certain modeled growth characteristics fell outside of the acceptable range we determined. 
-Modeled tag years were removed under five conditions:  
+Modeled fits for tree-years were removed under five conditions:  
 (1) single day growth rates were higher than 2 standard deviations away from the mean for each wood-type (SCBI = 2, HF = 34); 
-(2) DOY where peak growth rate occurred was 2 standard deviations away, calculated for each wood-type in each year (aimed to remove models which predicted growth to peak during the winter; SCBI = 62, HF = 106); 
+(2) $DOY_{ip}$ was $\ge 2$ standard deviations away from the mean for it's xylem architecture group, year, and site (SCBI = 62, HF = 106); 
 (3) tree-years with small or negligible total growth ($\Delta DBH$ < 0.02 mm; SCBI = 0, HF = 66); 
-(4) model fit predicted total yearly growth to take longer than 365 days (SCBI = 181, HF = 199); 
+(4) model fit predicted total yearly growth to take longer than 365 days, indicating poor model fit (SCBI = 181, HF = 199); 
 and (5) models with unexplained sharp spikes in growth rate (SCBI = 0, HF = 3). 
 At Harvard Forest the tag years removed through this method was proportional to the original sample size, indicating that no species or size class was disproportionately removed compared to others *(SI figure? data_cleaning_figure_hf in manuscript folder)*. 
-At SCBI a higher proportion of oak trees were removed *(data_cleaning_figure_scbi)*. 
-The majority (White oak = 91, Red oak = 79) were removed in step 5 above, indicating that the LG5 model struggled to accurately model these these species.  
+At SCBI a higher proportion of RP trees were removed--the majority in step 4 *(data_cleaning_figure_scbi)*. 
 
 ### Tree-rings
 Dominant tree species were cored at both sites following sampling designs that covered a broad range of $DBH$.
