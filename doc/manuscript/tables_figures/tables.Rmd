@@ -46,9 +46,9 @@ kableExtra::footnote(number = c("One of nine species analyzed had significant po
 ```{r species_table, eval=TRUE, echo=FALSE, warning=FALSE}
 library(knitr)
 library(kableExtra)
-species_table <- read.csv(file = "species_table.csv", col.names = c("site", "xylem porosity","species","n trees", "n tree-years", "n cores", "date range"),  stringsAsFactors = FALSE, check.names = FALSE)
+species_table <- read.csv(file = "species_table.csv", col.names = c("site", "xylem porosity","species", "species code", "n trees", "n tree-years", "n cores", "date range"),  stringsAsFactors = FALSE, check.names = FALSE)
 kable(species_table, caption = "Table 2. Dominant ring- and diffuse-porous species at SCBI and Harvard Forest analyzed here, along with sample sizes.",  format = "latex", booktabs = TRUE,  escape = F) %>%
-add_header_above(c(" ", " ", " ", "Dendrometer Bands" = 2, "Tree Cores"=2 )) %>%
+add_header_above(c(" ", " ", " ", " ", "dendrometer bands" = 2, "tree cores"=2 )) %>%
 kable_styling(latex_options = c("scale_down", "hold_position"), protect_latex = T) 
 ```
 

@@ -1,16 +1,16 @@
-Site,Xylem porosity,Species,trees,tree-years,trees cores,cores date range
-SCBI,ring,Red Oak,34,197,,
-,,White Oak,35,229,,
-,diffuse,American Beech,13,89,,
-,,Tulip Poplar,41,354,,
-Harvard,ring,Red Oak,118,575,,1901-2014
-,,Black Oak,11,50,,
-,,White Ash,9,27,,
-,diffuse,American Beech,8,45,,
-,,Black Birch,8,44,,
-,,Grey Birch,5,24,,
-,,White Birch,3,13,,
-,,Yellow Birch,21,90,,1952-2013
-,,Black Cherry,9,37,,
-,,Red Maple,144,669,,1930-2014
-,,Striped Maple,4,16,,
+Site,Xylem porosity,Species,Species code,trees,tree-years,trees cores,cores date range
+SCBI,ring,Red Oak,QURU,34,197,,
+,,White Oak,QUAL,35,229,,
+,diffuse,American Beech,FAGR,13,89,,
+,,Tulip Poplar,LITU,41,354,,
+Harvard,ring,Red Oak,,118,575,,1901-2014
+,,Black Oak,,11,50,,
+,,White Ash,,9,27,,
+,diffuse,American Beech,,8,45,,
+,,Black Birch,,8,44,,
+,,Grey Birch,,5,24,,
+,,White Birch,,3,13,,
+,,Yellow Birch,,21,90,,1952-2013
+,,Black Cherry,,9,37,,
+,,Red Maple,,144,669,,1930-2014
+,,Striped Maple,,4,16,,
