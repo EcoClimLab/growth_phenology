@@ -39,7 +39,7 @@ kable(hypothesis_table, col.names = c("Hypotheses and Specific Predictions", "RP
   kable_styling(latex_options = c("scale_down", "hold_position"), protect_latex = T) %>%
 
 #add footnote: 
-kableExtra::footnote(number = c("One of nine species analyzed had significant positive response to April $T_{max}$; one had significant negative response to March $T_{max}$", "One of two species analyzed had signficant positive response to April $T_{max}$, both had negative response to May $T_{max}$", "The one species analyzed had a signficant negative response to April $T_{max}$."), footnote_as_chunk = FALSE, threeparttable=TRUE, escape = FALSE)
+kableExtra::footnote(number = c("One of nine species analyzed had significant positive response to April $T_{max}$; one had significant negative response to March $T_{max}$", "One of two species analyzed had signficant positive response to April $T_{max}$, both had negative response to May $T_{max}$", "One of the two species was negatively correlated with April $T_{max}$, and the other positively correlated with May $T_{max}$."), footnote_as_chunk = FALSE, threeparttable=TRUE, escape = FALSE)
 ```
 
 \newpage
