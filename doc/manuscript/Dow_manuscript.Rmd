@@ -1,9 +1,10 @@
 ---
 title: ''
 output:
-  bookdown::word_document2: 
-    reference_docx: word-styles-reference.docx #make sure this line is indented! see this guide for formatting: https://rmarkdown.rstudio.com/articles_docx.html
-    fig_caption: yes
+  word_document
+  #bookdown::word_document2: 
+    #reference_docx: word-styles-reference.docx #make sure this line is indented! see this guide for formatting: https://rmarkdown.rstudio.com/articles_docx.html
+    #fig_caption: yes
 bibliography: references.bib
 csl: global-change-biology.csl
 ---
