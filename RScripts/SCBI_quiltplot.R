@@ -47,7 +47,7 @@ type.of.start.date <- c("1901_2009", "1920_1949", "1950_1979", "1980_2009")
 
 
 ## Define sss threshold ####
-sss.threshold = 0.75
+sss.threshold = 0.80
 ## Define start and end month for anlaysis ####
 start <- 1 # April of previous year
 end <- 8 # August of current year
