@@ -210,7 +210,7 @@ The second study site was Harvard Forest (42.5388° N, 72.1755° W, 340-368 m.a.
 ## Data preparation
 ### Dendrometer bands
 
-Metal dendrometer bands installed on *99-145* and *700-755* trees within the SCBI and Harvard Forest ForestGEO plots, respectively, were measured with a digital caliper approximately every 1-2 weeks within the growing season from 2011-2020 and 1998-2003, respectively. The number of bands measured at each site fluctuated somewhat as trees were added or dropped (e.g., because of tree mortality) from the census (Table `r sample_size_by_year`) *(tags_per_year_preclean in data folder)*. Across years, the number of bands sampled averaged *~135* at SCBI and  *~717* at Harvard Forest. At SCBI, four species were sampled including two diffuse-porous (Lirodendron tulipfera and Fagus grandafolia) and two ring-porous (Quercus rubra and Quercus alba) species. At Harvard Forest, eleven species were sampled including eight diffuse-porous and three ring-porous (Table `r species_table`)*(bands_bySP csv's in data folder)*.     
+Metal dendrometer bands installed on *99-145* and *700-755* trees within the SCBI and Harvard Forest ForestGEO plots, respectively, were measured with a digital caliper approximately every 1-2 weeks within the growing season from 2011-2020 and 1998-2003, respectively. The number of bands measured at each site fluctuated somewhat as trees were added or dropped (e.g., because of tree mortality) from the census (Table `r sample_size_by_year`) *(tags_per_year_preclean in data folder)*. Across years, the number of bands sampled averaged *~135* at SCBI and  *~717* at Harvard Forest. At SCBI, four species were sampled including two diffuse-porous (Lirodendron tulipfera and Fagus grandafolia) and two ring-porous (Quercus rubra and Quercus alba) species. At Harvard Forest, eleven species were sampled including eight diffuse-porous and three ring-porous (Table `r species_table`).     
 
 ```{r species_table, eval=TRUE, echo=FALSE, warning=FALSE}
 knitr::include_graphics("tables_figures/species_table.png")
@@ -300,11 +300,9 @@ Growth of ring-porous species was spread out over a longer growing season, with 
 knitr::include_graphics("tables_figures/growth_curves_all.png")
 ```
 
-\newpage
-```{r mean_growth_parameters_table,  eval=TRUE, echo=FALSE, warning=FALSE}
-library(knitr)
-mean_growth_parameters <- read.csv("tables_figures/mean_growth_parameters.csv",stringsAsFactors = FALSE, check.names = FALSE)
-knitr::kable(mean_growth_parameters) 
+
+```{r mean_growth_parameters_table, out.width="100%", echo=FALSE, fig.align="center"}
+knitr::include_graphics("tables_figures/mean_growth_parameters_table.png")
 ```
 
 ## Optimal climate windows
