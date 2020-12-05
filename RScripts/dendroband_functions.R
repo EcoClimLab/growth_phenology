@@ -336,3 +336,8 @@ get.lg5.ML <- function(params, doy, dbh, resid.sd) {
   return(pred.ML)
 }
 
+lg5 <- function(L, K, doy_ip, r, theta, doy) {
+  # For specified 5 parameters and x = doy, compute y = dbh
+  dbh <- L + ((K - L) / (1 + 1/theta * exp(-(r * (doy - doy_ip) / theta)) ^ theta))
+  return(dbh)
+}
