@@ -470,12 +470,12 @@ trace("plotbetas", edit = TRUE)
 #  ylab("Window open") +
 #  xlab("Window close")
 cw = 0.95
-SCBI_dp <- read_csv("results/Climwin_results/Weekly/SCBI/MassOutput_25_diffuse-porous.csv")
+SCBI_dp <- read_csv("results/Climwin_results/Weekly/SCBI/MassOutput_0.25diffuse-porous.csv")
 SCBI_dp    <- SCBI_dp[order(-SCBI_dp$ModWeight), ]
 SCBI_dp$cw <- as.numeric(cumsum(SCBI_dp$ModWeight) <= cw)
 SCBI_dp$ID <- "SCBI Diffuse-porous"
 
-SCBI_rp <- read_csv("results/Climwin_results/Weekly/SCBI/MassOutput_25_ring-porous.csv")
+SCBI_rp <- read_csv("results/Climwin_results/Weekly/SCBI/MassOutput_0.25ring-porous.csv")
 SCBI_rp    <- SCBI_rp[order(-SCBI_rp$ModWeight), ]
 SCBI_rp$cw <- as.numeric(cumsum(SCBI_rp$ModWeight) <= cw)
 SCBI_rp$ID <- "SCBI Ring-porous"
