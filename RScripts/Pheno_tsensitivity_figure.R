@@ -208,13 +208,13 @@ predictions_RP <- subset(predictions, wood_type == "ring-porous")
 predictions_DP <- subset(predictions, wood_type == "diffuse-porous")
 Wood_pheno_table_RP <- subset(Wood_pheno_table, wood_type == "ring-porous")
 Wood_pheno_table_DP <- subset(Wood_pheno_table, wood_type == "diffuse-porous")
-
+predictions_RP$sig <- ifelse(predictions_RP$perc == "DOY_75", 1, 0)
 fig6_RP <- ggplot() +
   # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
-  stat_lineribbon(data = predictions_RP, aes(x = climwinmean, y = predictions_rstanarm, group = perc, col = perc), .width = c(.99, .95)) +
+  stat_lineribbon(data = predictions_RP, aes(x = climwinmean, y = predictions_rstanarm, group = perc, col = perc, linetype = as.factor(sig)), .width = c(.99, .95)) +
   geom_point(data = Wood_pheno_table_RP, aes(x = climwinmean, y = DOY, col = perc)) +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
-  scale_linetype_manual(values = c("dashed", "solid")) +
+  scale_linetype_manual(values = c("solid", "dashed")) +
   scale_fill_brewer() +
   # facet_grid(perc) +
   coord_cartesian(xlim = c(11.8, 19.7), ylim = c(80, 240)) +
@@ -338,7 +338,7 @@ fig6_RP_sl <- ggplot() +
 
 fig6_DP_sl <- ggplot() +
   # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
-  stat_lineribbon(data = predictions_sl_DP, aes(x = climwinmean, y = predictions_rstanarm), .width = c(.99, .95), linetype = "dashed") +
+  stat_lineribbon(data = predictions_sl_DP, aes(x = climwinmean, y = predictions_rstanarm), .width = c(.99, .95), linetype = "solid") +
   geom_point(data = Wood_pheno_table_DP_sl, aes(x = climwinmean, y = seasonlength)) +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
@@ -394,7 +394,7 @@ fig6_RP_mr <-  ggplot() +
 
 fig6_DP_mr <- ggplot() +
   # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
-  stat_lineribbon(data = predictions_mr_DP, aes(x = climwinmean, y = predictions_rstanarm), .width = c(.99, .95), linetype = "dashed") +
+  stat_lineribbon(data = predictions_mr_DP, aes(x = climwinmean, y = predictions_rstanarm), .width = c(.99, .95), linetype = "solid") +
   geom_point(data = Wood_pheno_table_DP_mr, aes(x = climwinmean, y = max_rate)) +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
