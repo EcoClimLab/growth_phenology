@@ -99,17 +99,26 @@ knitr::include_graphics("tables_figures/SCBI_diffuse-porous_TMIN.png")
 \newpage
 
 **(a) $T_{max}$**
-```{r climwin_rp_tmax_HARV, out.width="100%", echo=FALSE, fig.align="left", fig.cap= climwin_rp_DOY25_HARV_short_caption}
-knitr::include_graphics("tables_figures/HF_ring-porous_DOY25.png")
+```{r climwin_rp_tmax_HARV, out.width="70%", echo=FALSE, fig.align="left"}
+knitr::include_graphics("tables_figures/HF_ring-porous_TMAX.png")
 ```
 
 **(b) $T_{min}$**
+```{r climwin_rp_tmin_HARV, out.width="70%", echo=FALSE, fig.align="left", fig.cap= climwin_rp_DOY25_HARV_short_caption}
+knitr::include_graphics("tables_figures/HF_ring-porous_TMIN.png")
+```
+
 
 \newpage
 
 **(a) $T_{max}$**
-```{r climwin_dp_tmin_HARV, out.width="100%", echo=FALSE, fig.align="left", fig.cap= climwin_dp_DOY25_HARV_short_caption}
-knitr::include_graphics("tables_figures/HF_diffuse-porous_DOY25.png")
+```{r climwin_dp_tmax_HARV, out.width="70%", echo=FALSE, fig.align="left"}
+knitr::include_graphics("tables_figures/HF_diffuse-porous_TMAX.png")
 ```
 
 **(b) $T_{min}$**
+```{r climwin_dp_tmin_HARV, out.width="70%", echo=FALSE, fig.align="left", fig.cap= climwin_dp_DOY25_HARV_short_caption}
+knitr::include_graphics("tables_figures/HF_diffuse-porous_TMIN.png")
+```
+
+
