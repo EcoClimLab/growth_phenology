@@ -223,13 +223,19 @@ knitr::include_graphics("tables_figures/hypothesis_table.png")
 
 ## Study sites
 
-Study sites included two temperate forests in the eastern United States, both part of the Forest Global Earth Observatory [ForestGEO; Anderson-Teixeira et al. 2015]. 
+Study sites included two temperate forests in the eastern United States, both part of the Forest Global Earth Observatory [ForestGEO; Anderson-Teixeira et al. 2015; Davies et al. 2021]. 
 
-Our first study site was the forest dynamics plot located at the Smithsonian Conservation Biology Institute 5 km South of Front Royal, Virginia within the Blue Ridge Mountains (38.8935° N, 78.1454° W; elevation 273–338 m.a.s.l.). The forest here was established in the mid-19th century after conversion from agricultural fields. Dominate canopy species within the 25.6 ha forest plot include tulip poplar (*Liriodendron tulipifera*), oaks (*Quercus spp.*), hickories (*Carya spp.*). The climate is humid temperate, with a mean annual precipitation of 998 mm, January temperatures averaging 1 degrees C and July temperatures averaging 24 degrees C (Helcoski et al, 2019).  
+Our first study site was the forest dynamics plot located at the Smithsonian Conservation Biology Institute 5 km South of Front Royal, Virginia within the Blue Ridge Mountains (38.8935° N, 78.1454° W; elevation 273–338 m.a.s.l.). 
+The forest here was established in the mid-19th century after conversion from agricultural fields. 
+Dominate canopy species within the 25.6 ha forest plot include tulip poplar (*Liriodendron tulipifera*), oaks (*Quercus spp.*), hickories (*Carya spp.*). 
+The climate is humid temperate, with a mean annual precipitation of 998 mm and temperatures averaging 1° C in January and 24° C in July (Helcoski et al, 2019).  
 
-The second study site was Harvard Forest (42.5388° N, 72.1755° W, 340-368 m.a.s.l.), located near the central Massachusetts town of Petersham. *Harvard Forest was established in 1907 as a study site for university students and researchers. (Previous use?)* Dominate species within the approximately 13 HA plot are hemlock (*Tsuga spp.*), oak (*Quercus spp.*) and maple (*Acer spp.*). The climate is temperate continental with a mean annual precipitation of 1120 mm, January temperatures averaging -12 degrees C and July temperatures averaging 19 degrees C (D'Orangeville et al, ).
+The second study site was Harvard Forest (42.5388° N, 72.1755° W, 340-368 m.a.s.l.), located near the central Massachusetts town of Petersham.
+Harvard forest is a secondary forest, having re-established following agricultural use *(time frame)* and signficant hurricane damage in *YEAR*. 
+Dominate species within the 35 ha ForestGEO plot are hemlock (*Tsuga spp.*), oak (*Quercus spp.*) and maple (*Acer spp.*). 
+The climate is temperate continental with a mean annual precipitation of 1120 mm and temperatures  averaging -12° C in January and 19° C in July (D'Orangeville et al, ).
 
-## Data preparation
+## Data collection and preparation
 ### Dendrometer bands
 
 Metal dendrometer bands installed on a total of `r n_dendro_trees` trees within the SCBI and Harvard Forest ForestGEO plots (Table `r table_species`). 
@@ -257,13 +263,13 @@ Third, there were cases where data were clearly wrong but with unknown causes. I
 
 We fit the model of @mcmahon_general_2015 to define phenological dates and growth rates (Fig. `r schematic`). 
 This five-parameter logistic model was fitted to dendrometer band data from each tree-year in R: 
-$$ DBH = L + \frac{K - L} { 1 + 1/\theta \cdot exp[-r(DOY - DOY_{ip}) / \theta)] ^ \theta}$$  **(Cameron, please check equation following formatting. )**
+$$ DBH = L + \frac{K - L} { 1 + 1/\theta \cdot exp[-r(DOY - DOY_{ip}) / \theta)] ^ \theta}$$ 
 Here, $L$ and $K$ are lower and upper asymptotes of the model, corresponding to $DBH$ at the beginning and end of the year, respectively. 
 $\theta$ is a tuning parameter controlling the slope of the curve toward the upper asymptote, $r$ is the slope of the curve at the inflection point, $DOY_{ip}$ is the day of year where the inflection point in growth rate occurs, and $DOY$ are the modeled days of year (*i.e.*, julian days). 
 *We note that the maximum growth rate does not always occur on the doy_ip, and is controlled magically by theta somehow. (???)* 
 Using the optimized parameters for each tree-year, we could then determine the $DBH$ on every day within that year, giving us the ability to extract the intra-annual growth variables of interest (Fig. `r schematic`). 
 
-After fitting the  @mcmahon_general_2015 model, we used a script to remove poorly fit models. 
+After fitting the @mcmahon_general_2015 model, we used a script to remove poorly fit models. 
 Models were judged to be poorly fit if certain modeled growth characteristics fell outside of the acceptable range we determined. 
 Modeled fits for tree-years were removed under five conditions:  
 (1) single day growth rates were higher than 2 standard deviations away from the mean for each wood-type (SCBI = 2, HF = 34); 
@@ -283,8 +289,9 @@ At Harvard Forest, ...(*Neil can write this easily, or KAT probably has the info
 In total, we analyzed `r n_cores` cores from eleven species at SCBI and three species at Harvard Forest (Table `r table_species`).
 
 All cores were mounted, sanded, cross-dated, and measured using standard methodology. 
-(*describe chronology building-- as in @helcoski_growing_2019-- Neil can do this quickly*)
-Start year was defined at SSS=0.8.
+We standardized ring-width series from each core via ARSTAN using a 2/3rds $n$ spline, where $n$ is the number of years in the series [@cook_time_1985; @cook_methods_1990]. 
+*(The following italic text is self-plagarized from Helcoski and needs to be reworded:)* *The influence of outliers in all series was reduced using the adaptive power transformation, which also stabilises the variance over time [@cook_calculating_1997]. Next, each series was stabilised using either the average correlation between raw ring-width series (rbar) method or a 1/3rds spline method to adjust changes in variance as series replication decreased towards the earlier portion of each chronology [@jones_estimating_1997]. The 1/3rds spline method was chosen when replication in the inner portion of each chronology (c. the inner 30–50 yr of each record depending on full chronology length) dropped below three trees. Once that step was complete, a robust biweight mean chronology for each species was calculated from the ring-width indices [@cook_time_1985]. We chose to use residual chronologies because the autoregressive standardisation process in creating them removes much of the tree-level autocorrelation in growth and these chronologies would most likely contain the most conservative information on drivers of interannual growth [@cook_time_1985].* 
+We defined chronology start year (Table `r table_species`) as the year where subsample signal strength (SSS) passed a threshold of SSS = 0.8, or where $\ge$ 80% of the population signal was captured in the chronology.
 
 ### Climate
 For the dendrometer band analysis, we used climate data from local weather stations. 
@@ -297,25 +304,26 @@ Gaps in the SCBI meteorological tower data were subsequently filled using temper
 
 For the tree-ring analysis, we obtained monthly $T_{max}$ and $T_{min}$ data for 1901-2019 from CRU v.4.04 [@harris_version_2020], again via the ForestGEO Climate Data Portal v1.0 [@anderson-teixeira_forestgeoclimate_2020].
 
-## (Climwin)
+## Determining critical temperature windows
 
-The period where the phenology milestone(s) were most affected by changes in early spring temperature was determined using the R package Climwin. This package tests the correlation between climate variables ($T_{MAX}$) and biological variables (DOY, max rate DOY, total growth) within a specified time-frame, reporting correlation and delta AIC's of each 'window'. as the best-model. We instructed Climwin to search for the best window beginning at February 1st and ending at the mean DOY for each phenology variable (chart in SI?). This was done to find corresponding (median of 95% CI window open and close) start and end dates for the analysis of ring-porous and diffuse-porous trees, as well as all trees pooled together.
+The period where the phenology milestone(s) were most affected by changes in early spring temperature was determined using the R package *climwin* [@van_de_pol_identifying_2016]. 
+This package tests the correlation between one or more climate variables and a biological variable over all consecutive time windows within a specified time-frame, reporting correlation and \$Delta AIC$ of each window. 
+Here, we tested for correlation between temperature ($T_{max}$, $T_{min}$) and $DOY_{25}$ over the time window from February 1 (Julian day = 32) and the mean $DOY_{25}$ for the species group and site (Table `r mean_growth_parameters_table`).
+*The critical time window is determined based on the subset of models that fall within the 95% confidence set.*
+Here, we focused on defining critical temperature windows for $DOY_{25}$, as opposed to other growth phenology parameters (Figure `r schematic`), because we were interested in the influence of temperature on the initiation of woody growth. 
+We note that other growth parameters would be controlled by different critical temperature windows; for example, at SCBI $\Delta DBH$ responds most strongly to May-July climate [@helcoski_growing_2019]. Determining the climate variables that most strongly control all parameters is beyond the scope of this analysis.
+
 
 ## Hypothesis testing
 
-Correlation between these variables and spring temperatures over the 15 year study period (1998-2003; 2011-2019) were assessed using a linear mixed model in a heriarchal bayesian framework.
+(*This section needs more detail.*)
 
-Notes for now:
+Correlation between these variables and spring temperatures were assessed using a linear mixed model in a hierarchical Bayesian framework.
 
-1. The multivariate model for $(DOY_{25}, DOY_{50}, DOY_{75})$ has:
-    1. Fixed effects: The interaction between wood type (diffuse vs ring porous) and climwin mean
-    1. Random effects: tag number (no species just yet)
+Mixed effects models were used to test the response of growth phenology variables ($DOY_{25}$, $DOY_{50}$, $DOY_{75}$, $DOY_{ip}$, $r_{max}$, and $\Delta DBH$) to fixed effects of xylem porosity and mean temperature ($T_{max}$, $T_{min}$) during the critical temperature window selected by *climwin*, along with random effects of species and tree. 
+We ran separate models for each species group at each site, and for the response of all growth phenology variables to $T_{max}$ and $T_{min}$. 
+Models were run using the LME4 package in R [@bates_fitting_2015]. 
 
--Mixed effect model
-
-A mixed effect model was used to test the response of wood phenology variables (25% DOY, 50% DOY, 75% DOY, max-rate, max-rate DOY, total growth) to fixed effects of wood-type and spring temperature, along with random effects of species and tag. We ran two separate models of each wood phenology variable for each of our major wood-types, and one combined model to use for comparison. Models were run using the LME4 package in R (Bates, D., Mächler, M., Bolker, B. & Walker, S. (2015). Fitting linear mixed‐effects models using lme4. J. Stat. Softw., 67, 1–48.)
-
-•	Bayesian heirarchical model
 This mixed-effect model was run within a hierarchical Bayesian framework and fit using the `rstanarm` R interface to the Stan programming language @rstanarm_2020. In all cases unless otherwise specified, all prior distributions are set to be the weakly informative defaults. 
 <!--
 TODO added by Bert: Whereever we specify model details, include details about prior from here:
@@ -343,7 +351,8 @@ Maximum growth rate occurred on June 24 ($DOY_{max}$=174).
 
 At both sites, growth phenology differed between ring- and diffuse- porous species (Fig. `r growth_curves_all`, Table `r mean_growth_parameters_table`). 
 Specifically, ring-porous species began growing earlier, reaching the $DOY_{25}$ benchmark `r 154-123` days earlier at SCBI and `r 164-132` days earlier at Harvard Forest. 
-Growth of ring-porous species was spread out over a longer growing season, with average $L_{PGS}$ of ring-porous species being **21** days longer at SCBI and **19** days longer at Harvard Forest. *(These numbers are calculated as based on `mean DOY75- mean DOY25`, whereas we want `mean [DOY75- DOY25]`. Need to fix this, but I filled in approximate numbers for now.)* 
+Growth of ring-porous species was spread out over a longer growing season, with average $L_{PGS}$ of ring-porous species being 21 days longer at SCBI and 19 days longer at Harvard Forest. 
+Growing season length was similar across sites, with $L_{PGS}$ being, on average, only two days longer at SCBI for ring-porous species and <1 day longer for diffuse-porous species. 
 
 
 ```{r growth_curves_all, out.width="100%", echo=FALSE, fig.align="center", fig.cap= growth_curves_all_caption}
@@ -356,7 +365,7 @@ knitr::include_graphics("tables_figures/growth_curves_all.png")
 knitr::include_graphics("tables_figures/mean_growth_parameters_table.png")
 ```
 
-## Optimal climate windows
+## Critical temperature windows
 
 For the majority of weekly time windows from Jan. 1 to $DOY_{25}$, there was neutral negative relationship between temperature and $DOY_{25}$, meaning that warmer temperatures shifted growth earlier in the season (Figs. `r climwin`, `r all_climwin_SI_figs`). 
 This held true for both ring- and diffuse-porous trees at both sites. 
