@@ -218,7 +218,10 @@ fig6_RP <- ggplot() +
   scale_fill_brewer() +
   # facet_grid(perc) +
   coord_cartesian(xlim = c(11.8, 19.7), ylim = c(80, 240)) +
-  theme(legend.position = "none") +
+  theme_bw()+
+  theme(legend.position = "none",
+        axis.text.x = element_blank(),
+        text = element_text(size = 10)) +
   labs(x = "", y = "DOY", col = "Percentile", title = "SCBI", subtitle = "Ring-porous")
 
 fig6_DP <- ggplot() +
@@ -227,7 +230,11 @@ fig6_DP <- ggplot() +
   geom_point(data = Wood_pheno_table_DP, aes(x = climwinmean, y = DOY, col = perc)) +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
-  theme(legend.position = "none") +
+  theme_bw()+
+  theme(legend.position = "none",
+        axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        text = element_text(size = 10)) +
   # facet_grid(perc) +
   coord_cartesian(xlim = c(14.7, 19.2), ylim = c(80, 240)) +
   labs(x = "", y = "", col = "Percentile", title = "SCBI", subtitle = "Diffuse-porous")
@@ -276,7 +283,9 @@ fig6_RP_tot <-  ggplot() +
   scale_fill_brewer() +
   # facet_grid(perc) +
   coord_cartesian(xlim = c(11.8, 19.7), ylim = c(-.4, 1.5)) +
-  theme(legend.position = "none") +
+  theme_bw()+
+  theme(legend.position = "none",
+        text = element_text(size = 10)) +
   labs(x = "Temperature (c) 3/22-4/9", y = "Total Growth (cm)")
 
 fig6_DP_tot <-  ggplot() +
@@ -287,7 +296,10 @@ fig6_DP_tot <-  ggplot() +
   scale_fill_brewer() +
   # facet_grid(perc) +
   coord_cartesian(xlim = c(14.7, 19.2), ylim = c(-.4, 1.5)) +
-  theme(legend.position = "none") +
+  theme_bw()+
+  theme(legend.position = "none",
+        axis.text.y = element_blank(),
+        text = element_text(size = 10)) +
   labs(x = "Temperature (c) 2/19-5/21", y = "")
 
 # Clean-up
@@ -333,7 +345,10 @@ fig6_RP_sl <- ggplot() +
   scale_fill_brewer() +
   # facet_grid(perc) +
   coord_cartesian(xlim = c(11.8, 19.7), ylim = c(3, 106)) +
-  theme(legend.position = "none") +
+  theme_bw()+
+  theme(legend.position = "none",
+        axis.text.x = element_blank(),
+        text = element_text(size = 10)) +
   labs(x = "", y = "Season Length (# of Days)")
 
 fig6_DP_sl <- ggplot() +
@@ -344,7 +359,11 @@ fig6_DP_sl <- ggplot() +
   scale_fill_brewer() +
   # facet_grid(perc) +
   coord_cartesian(xlim = c(14.7, 19.2), ylim = c(3, 90)) +
-  theme(legend.position = "none") +
+  theme_bw()+
+  theme(legend.position = "none",
+        axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        text = element_text(size = 10)) +
   labs(x = "", y = "")
 
 # Clean-up
@@ -389,7 +408,10 @@ fig6_RP_mr <-  ggplot() +
   scale_fill_brewer() +
   # facet_grid(perc) +
   coord_cartesian(xlim = c(11.8, 19.7), ylim = c(-.007, 0.02)) +
-  theme(legend.position = "none") +
+  theme_bw()+
+  theme(legend.position = "none",
+        axis.text.x = element_blank(),
+        text = element_text(size = 10)) +
   labs(x = "", y = "Maximum Growth Rate (cm/day)")
 
 fig6_DP_mr <- ggplot() +
@@ -400,7 +422,11 @@ fig6_DP_mr <- ggplot() +
   scale_fill_brewer() +
   # facet_grid(perc) +
   coord_cartesian(xlim = c(14.7, 19.2), ylim = c(-.007, 0.02)) +
-  theme(legend.position = "none") +
+  theme_bw()+
+  theme(legend.position = "none",
+        axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        text = element_text(size = 10)) +
   labs(x = "", y = "")
 
 # Clean-up
@@ -445,7 +471,10 @@ fig6_RP_mrdoy <- ggplot() +
   scale_fill_brewer() +
   # facet_grid(perc) +
   coord_cartesian(xlim = c(11.8, 19.7), ylim = c(99, 235)) +
-  theme(legend.position = "none") +
+  theme_bw()+
+  theme(legend.position = "none",
+        axis.text.x = element_blank(),
+        text = element_text(size = 10)) +
   labs(x = "", y = "Max Rate DOY")
 
 fig6_DP_mrdoy <-  ggplot() +
@@ -456,7 +485,11 @@ fig6_DP_mrdoy <-  ggplot() +
   scale_fill_brewer() +
   # facet_grid(perc) +
   coord_cartesian(xlim = c(14.7, 19.2), ylim = c(99, 235)) +
-  theme(legend.position = "none") +
+  theme_bw()+
+  theme(legend.position = "none",
+        axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        text = element_text(size = 10)) +
   labs(x = "", y = "")
 
 # Clean-up
@@ -646,7 +679,11 @@ fig6_RP_hf <- ggplot() +
   scale_fill_brewer() +
   # facet_grid(perc) +
   coord_cartesian(xlim = c(12.3, 16), ylim = c(44, 261)) +
-  theme(legend.position = "none") +
+  theme_bw()+
+  theme(legend.position = "none",
+        axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        text = element_text(size = 10)) +
   labs(x = "", y = "", col = "Percentile", title = "Harvard Forest", subtitle = "Ring-porous")
 # geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
 
@@ -656,7 +693,11 @@ fig6_DP_hf <- ggplot() +
   geom_point(data = Wood_pheno_table_DP_hf, aes(x = climwinmean, y = DOY, col = perc)) +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
-  theme(legend.position = c(.95, .5)) +
+  theme_bw()+
+  theme(legend.position = c(.95, .5),
+        axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        text = element_text(size = 10)) +
   # facet_grid(perc) +
   coord_cartesian(xlim = c(11.7, 15.5), ylim = c(80, 240)) +
   labs(x = "", y = "", col = "Percentile", title = "Harvard Forest", subtitle = "Diffuse-porous")
@@ -706,7 +747,10 @@ fig6_RP_tot_hf <-   ggplot() +
   scale_fill_brewer() +
   # facet_grid(perc) +
   coord_cartesian(xlim = c(12.3, 16), ylim = c(-.27, 1.28)) +
-  theme(legend.position = "none") +
+  theme_bw()+
+  theme(legend.position = "none",
+        axis.text.y = element_blank(),
+        text = element_text(size = 10)) +
   labs(x = "Temperature (c) 4/2-5/7", y = "")
 
 fig6_DP_tot_hf <- ggplot() +
@@ -717,7 +761,10 @@ fig6_DP_tot_hf <- ggplot() +
   scale_fill_brewer() +
   # facet_grid(perc) +
   coord_cartesian(xlim = c(11.7, 15), ylim = c(-.27, 1)) +
-  theme(legend.position = "none") +
+  theme_bw()+
+  theme(legend.position = "none",
+        axis.text.y = element_blank(),
+        text = element_text(size = 10)) +
   labs(x = "Temperature (c) 3/19-5/7", y = "")
 
 # Clean-up
@@ -762,7 +809,11 @@ fig6_RP_sl_hf <- ggplot() +
   scale_fill_brewer() +
   # facet_grid(perc) +
   coord_cartesian(xlim = c(12.3, 16), ylim = c(3, 106)) +
-  theme(legend.position = "none") +
+  theme_bw()+
+  theme(legend.position = "none",
+        axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        text = element_text(size = 10)) +
   labs(x = "", y = "")
 
 fig6_DP_sl_hf <- ggplot() +
@@ -773,7 +824,11 @@ fig6_DP_sl_hf <- ggplot() +
   scale_fill_brewer() +
   # facet_grid(perc) +
   coord_cartesian(xlim = c(11.7, 15), ylim = c(3, 106)) +
-  theme(legend.position = "none") +
+  theme_bw()+
+  theme(legend.position = "none",
+        axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        text = element_text(size = 10)) +
   labs(x = "", y = "")
 
 # Clean-up
@@ -818,7 +873,11 @@ fig6_RP_mr_hf <- ggplot() +
   scale_fill_brewer() +
   # facet_grid(perc) +
   coord_cartesian(xlim = c(12.3, 16), ylim = c(-.007, 0.02)) +
-  theme(legend.position = "none") +
+  theme_bw()+
+  theme(legend.position = "none",
+        axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        text = element_text(size = 10)) +
   labs(x = "", y = "")
 
 fig6_DP_mr_hf <-   ggplot() +
@@ -829,7 +888,11 @@ fig6_DP_mr_hf <-   ggplot() +
   scale_fill_brewer() +
   # facet_grid(perc) +
   coord_cartesian(xlim = c(11.7, 15), ylim = c(-.007, 0.02)) +
-  theme(legend.position = "none") +
+  theme_bw()+
+  theme(legend.position = "none",
+        axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        text = element_text(size = 10)) +
   labs(x = "", y = "")
 
 # Clean-up
@@ -874,8 +937,12 @@ fig6_RP_mrdoy_hf <- ggplot() +
   scale_fill_brewer() +
   # facet_grid(perc) +
   coord_cartesian(xlim = c(12.3, 16), ylim = c(99, 235)) +
-  theme(legend.position = "none") +
-  labs(x = "", y = "DOY")
+  theme_bw()+
+  theme(legend.position = "none",
+        axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        text = element_text(size = 10)) +
+  labs(x = "", y = "")
 
 fig6_DP_mrdoy_hf <- ggplot() +
   # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
@@ -885,7 +952,11 @@ fig6_DP_mrdoy_hf <- ggplot() +
   scale_fill_brewer() +
   # facet_grid(perc) +
   coord_cartesian(xlim = c(11.7, 15), ylim = c(99, 235)) +
-  theme(legend.position = "none") +
+  theme_bw()+
+  theme(legend.position = "none",
+        axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        text = element_text(size = 10)) +
   labs(x = "", y = "")
 
 # Clean-up
@@ -918,8 +989,6 @@ fig6_RP + fig6_DP + fig6_RP_hf + fig6_DP_hf +
   fig6_RP_tot + fig6_DP_tot + fig6_RP_tot_hf + fig6_DP_tot_hf +
   plot_layout(nrow = 5)
 dev.off()
-
-
 
 ## Create single figure using grid.arrange ----------
 png(
