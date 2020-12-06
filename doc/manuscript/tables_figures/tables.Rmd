@@ -47,8 +47,12 @@ kableExtra::footnote(number = c("One of nine species analyzed had significant po
 library(knitr)
 library(kableExtra)
 species_table <- read.csv(file = "species_table.csv", col.names = c("site", "xylem porosity","species", "species code", "n trees", "n tree-years", "n cores", "date range"),  stringsAsFactors = FALSE, check.names = FALSE)
-kable(species_table, caption = "Table 2. Dominant ring- and diffuse-porous species at SCBI and Harvard Forest analyzed here, along with sample sizes.",  format = "latex", booktabs = TRUE,  escape = F) %>%
+kable(species_table, caption = "Table 2. Dominant ring- and diffuse-porous species at SCBI and Harvard Forest, along with sample sizes analyzed here.",  format = "latex", booktabs = TRUE,  escape = F) %>%
 add_header_above(c(" ", " ", " ", " ", "dendrometer bands" = 2, "tree cores"=2 )) %>%
+  pack_rows("", 1, 9, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
+  pack_rows("", 10, 11, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
+  pack_rows("", 12, 14, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
+  pack_rows("", 15, 22, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
 kable_styling(latex_options = c("scale_down", "hold_position"), protect_latex = T) 
 ```
 
