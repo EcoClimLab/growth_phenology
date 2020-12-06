@@ -14,6 +14,7 @@ library(patchwork)
 
 #Edit the plotbetas function in climwin
 #In the function, change scale_fill_gradientn(colours = c("red", "yellow", "blue"), name = "") to scale_fill_gradient2(high = "blue", mid = "yellow", low = "red")
+#Change Circle coordinates from best window to median of windows which make up 95% cw <median(dataset[dataset$cw == 1,]$WindowOpen)>
 trace("plotbetas", edit = TRUE)
 
 #ggplot(MassOutput, aes(x = WindowClose, y = WindowOpen, z = ModelBeta)) +
@@ -110,7 +111,7 @@ for (w in unique(Wood_pheno_table$wood_type)) {
     df <- data.frame(w, j, round(mean(biodata$DOY) / 7), refdate$Month, refdate$Day, MassWin[[1]][["Dataset"]][[1, 2]], MassWin[[1]][["Dataset"]][[1, 3]], MassOutput[1, 4], as.character(medianwindowopen), as.character(medianwindowclose)) # add w, #add/7
     names(dffinal) <- names(df)
     dffinal <- rbind(dffinal, df)
-    png(filename = paste("SCBI", w, j, ".png", sep = "_"), width = 10, height = 8, units = "in", res = 300) # add w
+    png(filename = paste("doc/manuscript/tables_figures/" ,"SCBI", w, j, ".png", sep = "_"), width = 10, height = 8, units = "in", res = 300) # add w
     plotalloutput <- plotall(
       dataset = MassOutput,
       datasetrand = MassRand,
@@ -122,7 +123,7 @@ for (w in unique(Wood_pheno_table$wood_type)) {
     dev.off()
 
     plotbetas(MassOutput, arrow = TRUE)
-    ggsave(filename = paste("SCBI","Plotbetas", w, j, ".png", sep = "_"), width = 10, height = 8, units = "in") # add w
+    ggsave(filename = paste("doc/manuscript/tables_figures/","SCBI","Plotbetas", w, j, ".png", sep = "_"), width = 10, height = 8, units = "in") # add w
 
 
 

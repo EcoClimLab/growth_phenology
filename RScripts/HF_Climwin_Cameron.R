@@ -135,7 +135,7 @@ for (w in unique(Wood_pheno_table$wood_type)) {
     names(dffinal) <- names(df)
     dffinal <- rbind(dffinal, df)
 
-    png(filename = paste("HF", w, j, ".png", sep = "_"), width = 10, height = 8, units = "in", res = 300) # add w
+    png(filename = paste("doc/manuscript/tables_figures/","HF", w, j, ".png", sep = "_"), width = 10, height = 8, units = "in", res = 300) # add w
     plotalloutput <- plotall(
       dataset = MassOutput,
       datasetrand = MassRand,
@@ -147,7 +147,7 @@ for (w in unique(Wood_pheno_table$wood_type)) {
 
 
     plotbetas(MassOutput, arrow = TRUE)
-    ggsave(filename = paste("HF","Plotbetas", w, j, ".png", sep = "_"), width = 10, height = 8, units = "in") # add w
+    ggsave(filename = paste("doc/manuscript/tables_figures/","HF","Plotbetas", w, j, ".png", sep = "_"), width = 10, height = 8, units = "in") # add w
 
 
   }
@@ -233,7 +233,7 @@ for (w in unique(Wood_pheno_table$wood_type)) {
     df <- data.frame(w, j, round(mean(biodata$DOY) / 7), refdate$Month, refdate$Day, MassWin[[1]][["Dataset"]][[1, 2]], MassWin[[1]][["Dataset"]][[1, 3]], MassOutput[1, 4], as.character(medianwindowopen), as.character(medianwindowclose)) # add w, #add/7
     names(dffinal) <- names(df)
     dffinal <- rbind(dffinal, df)
-    png(filename = paste("HF", w, j, ".png", sep = "_"), width = 10, height = 8, units = "in", res = 300) # add w
+    png(filename = paste("doc/manuscript/tables_figures/","HF", w, j, ".png", sep = "_"), width = 10, height = 8, units = "in", res = 300) # add w
     plotalloutput <- plotall(
       dataset = MassOutput,
       datasetrand = MassRand,
@@ -243,7 +243,7 @@ for (w in unique(Wood_pheno_table$wood_type)) {
     )
     dev.off()
     plotbetas(MassOutput, arrow = TRUE)
-    ggsave(filename = paste("HF","Plotbetas", w, j, ".png", sep = "_"), width = 10, height = 8, units = "in") # add w
+    ggsave(filename = paste("doc/manuscript/tables_figures/","HF","Plotbetas", w, j, ".png", sep = "_"), width = 10, height = 8, units = "in") # add w
 
 
   }
