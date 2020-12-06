@@ -271,7 +271,7 @@ Using the optimized parameters for each tree-year, we could then determine the $
 
 After fitting the @mcmahon_general_2015 model, we used a script to remove poorly fit models. 
 Models were judged to be poorly fit if certain modeled growth characteristics fell outside of the acceptable range we determined. 
-Modeled fits for tree-years were removed under five conditions:  
+Modeled fits for tree-years were removed under five conditions:
 (1) single day growth rates were higher than 2 standard deviations away from the mean for each wood-type (SCBI = 2, HF = 34); 
 (2) $DOY_{ip}$ was $\ge 2$ standard deviations away from the mean for it's xylem architecture group, year, and site (SCBI = 62, HF = 106); 
 (3) tree-years with small or negligible total growth ($\Delta DBH$ < 0.02 mm; SCBI = 0, HF = 66); 
@@ -308,7 +308,7 @@ For the tree-ring analysis, we obtained monthly $T_{max}$ and $T_{min}$ data for
 
 The period where the phenology milestone(s) were most affected by changes in early spring temperature was determined using the R package *climwin* [@van_de_pol_identifying_2016]. 
 This package tests the correlation between one or more climate variables and a biological variable over all consecutive time windows within a specified time-frame, reporting correlation and \$Delta AIC$ of each window. 
-Here, we tested for correlation between temperature ($T_{max}$, $T_{min}$) and $DOY_{25}$ over the time window from February 1 (Julian day = 32) and the mean $DOY_{25}$ for the species group and site (Table `r mean_growth_parameters_table`).
+Here, we tested for correlation between temperature ($T_{max}$, $T_{min}$) and $DOY_{25}$ over the time window from January 1 to the mean $DOY_{25}$ for the species group and site (Table `r mean_growth_parameters_table`).
 *The critical time window is determined based on the subset of models that fall within the 95% confidence set.*
 Here, we focused on defining critical temperature windows for $DOY_{25}$, as opposed to other growth phenology parameters (Figure `r schematic`), because we were interested in the influence of temperature on the initiation of woody growth. 
 We note that other growth parameters would be controlled by different critical temperature windows; for example, at SCBI $\Delta DBH$ responds most strongly to May-July climate [@helcoski_growing_2019]. Determining the climate variables that most strongly control all parameters is beyond the scope of this analysis.
@@ -367,18 +367,22 @@ knitr::include_graphics("tables_figures/mean_growth_parameters_table.png")
 
 ## Critical temperature windows
 
-For the majority of weekly time windows from Jan. 1 to $DOY_{25}$, there was neutral negative relationship between temperature and $DOY_{25}$, meaning that warmer temperatures shifted growth earlier in the season (Figs. `r climwin`, `r all_climwin_SI_figs`). 
+For the majority of weekly time windows from Jan. 1 to $DOY_{25}$, there was a negative or neutral relationship between $T_{max}$ and $DOY_{25}$, meaning that warmer temperatures shifted growth earlier in the season (Figs. `r climwin`, `r all_climwin_SI_figs`). 
 This held true for both ring- and diffuse-porous trees at both sites. 
 The strongest relationships, including but not limited to the optimal time windows (Table `r mean_growth_parameters_table`), occurred for time windows closing $\le$ 5 weeks prior to $DOY_{25}$. 
 (In general, there were significant negative relationships between temperature and $DOY_{25}$ for any time period beginning $\ge$ **5** weeks prior to $DOY_{25}$, ending  $\le$ **8-20** weeks prior depending on wood-type and site, and covering at least a **3**-week period (`r all_climwin_SI_figs`).
 Relationships tended to be weaker and more stochastic in sign for short time periods, particularly those just prior to $DOY_{25}$.)
-(**Cameron, I'm not sure if the above text is up-to-date... Also, see [issue 34](https://github.com/EcoClimLab/growth_phenology/issues/34)** )
+(**Cameron, I'm not sure if the above text is up-to-date... ** )
 
 ```{r climwin, out.width="80%", echo=FALSE, fig.align="center", fig.cap= climwin_caption}
 # Created in RScripts/additional_figures.R
 knitr::include_graphics("tables_figures/climwin_figure.png")
 ```
 
+*$DOY_{25}$ was generally less strongly correlated with $T_{min}$ than with $T_{max}$.-- not sure this is true*
+(*give some details, cite SI tables.*)
+
+Henceforth, we focus on $T_{max}$.
 
 ## Climate sensitivity of phenology 
 
