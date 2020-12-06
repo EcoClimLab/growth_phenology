@@ -1,23 +1,23 @@
 Site,Xylem porosity,Species,Species code,n.trees,n.tree.years,n.cores,cores.date.range
-SCBI,ring,$$Carya$$ $cordiformis$ ,CACO,0,0,18,
-,,$Carya$ $glabra$ ,CAGL,0,0,39,
-,,$Carya$ $ovalis$ ,CAOVL,0,0,24,
-,,$Carya$ $tomentosa$ ,CATO,0,0,17,
-,,$Fraxinus$ $americana$ ,FRAM,0,0,69,
-,,$Quercus$ $alba$,QURU,34,197,66,
-,,$Quercus$ $montana$,QUPR,0,0,67,
-,,$Quercus$ $rubra$ ,QUAL,35,229,71,
-,,$Quercus$ $velutina$,QUVE,0,0,83,
-,diffuse,$Fagus$ $grandifolia$,FAGR,13,89,81,
-,,$Liriodendron$ $tulipifera$,LITU,41,354,109,
+SCBI,ring,$$Carya$$ $cordiformis$ ,CACO,0,0,18,1917-2009
+,,$Carya$ $glabra$ ,CAGL,0,0,39,1901-2009
+,,$Carya$ $ovalis$ ,CAOVL,0,0,24,1896-2009
+,,$Carya$ $tomentosa$ ,CATO,0,0,17,1926-2009
+,,$Fraxinus$ $americana$ ,FRAM,0,0,69,1910-2009
+,,$Quercus$ $alba$,QURU,34,197,66,1904-2009
+,,$Quercus$ $montana$,QUPR,0,0,67,1893-2009
+,,$Quercus$ $rubra$ ,QUAL,35,229,71,1870-2009
+,,$Quercus$ $velutina$,QUVE,0,0,83,1902-2009
+,diffuse,$Fagus$ $grandifolia$,FAGR,13,89,81,1932-2009
+,,$Liriodendron$ $tulipifera$,LITU,41,354,109,1920-2009
 Harvard,ring,$Fraxinus$ $americana$ ,FRAM,9,27,0,
 ,,$Quercus$ $alba$,QURU,118,575,179,1901-2014
 ,,$Quercus$ $velutina$,QUVE,11,50,0,
 ,diffuse,$Fagus$ $grandifolia$,FAGR,8,45,0,
-,,Black Birch,,8,44,0,
-,,Grey Birch,,5,24,0,
-,,White Birch,,3,13,0,
+,,$Betula$ $lenta$,BELE,8,44,0,
+,,$Betula$ $populifolia$,BEPO,5,24,0,
+,,$Betula$ $papyrifera$,BEPA,3,13,0,
 ,,$Betula$ $alleghaniensis$,BEAL,21,90,44,1952-2013
-,,Black Cherry,,9,37,0,
+,,$Prunus$ $serotina$,PRSE2,9,37,0,
 ,,$Acer$ $rubrum$,ACRU,144,669,59,1930-2014
-,,Striped Maple,,4,16,0,
+,,$Acer$ $pensylvanicum$,ACPE,4,16,0,
