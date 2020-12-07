@@ -211,11 +211,11 @@ Wood_pheno_table_DP <- subset(Wood_pheno_table, wood_type == "diffuse-porous")
 predictions_RP$sig <- ifelse(predictions_RP$perc == "DOY_75", 1, 0)
 fig6_RP <- ggplot() +
   # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
-  stat_lineribbon(data = predictions_RP, aes(x = climwinmean, y = predictions_rstanarm, group = perc, col = perc, linetype = as.factor(sig)), .width = c(.99, .95)) +
+  stat_lineribbon(data = predictions_RP, aes(x = climwinmean, y = predictions_rstanarm, col = perc, fill = perc, linetype = as.factor(sig)), .width = .95, alpha = 0.5) +
   geom_point(data = Wood_pheno_table_RP, aes(x = climwinmean, y = DOY, col = perc)) +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_linetype_manual(values = c("solid", "dashed")) +
-  scale_fill_brewer() +
+  # scale_fill_brewer() +
   # facet_grid(perc) +
   coord_cartesian(xlim = c(11.8, 19.7), ylim = c(80, 240)) +
   theme_bw()+
