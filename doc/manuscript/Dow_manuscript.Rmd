@@ -268,9 +268,12 @@ We fit the model of @mcmahon_general_2015 to define phenological dates and growt
 This five-parameter logistic model was fitted to dendrometer band data from each tree-year in R: 
 $$ DBH = L + \frac{K - L} { 1 + 1/\theta \cdot exp[-r(DOY - DOY_{ip}) / \theta)] ^ \theta}$$ 
 Here, $L$ and $K$ are lower and upper asymptotes of the model, corresponding to $DBH$ at the beginning and end of the year, respectively. 
-$\theta$ is a tuning parameter controlling the slope of the curve toward the upper asymptote, $r$ is the slope of the curve at the inflection point, $DOY_{ip}$ is the day of year where the inflection point in growth rate occurs, and $DOY$ are the modeled days of year (*i.e.*, julian days). 
-*We note that the maximum growth rate does not always occur on the doy_ip, and is controlled magically by theta somehow. (???)* 
-Using the optimized parameters for each tree-year, we could then determine the $DBH$ on every day within that year, giving us the ability to extract the intra-annual growth variables of interest (Fig. `r schematic`). 
+$DOY$ are the modeled days of year (*i.e.*, julian days), 
+$DOY_{ip}$ is the day of year where the inflection point in growth rate occurs,
+$r$ *shapes the slope of the curve at the inflection point*,
+and $\theta$ is a tuning parameter controlling the slope of the curve toward the upper asymptote. 
+*We note that the DOY on which maximum growth occurs, $DOY_{g_{max}}$ (Fig. `r schematic`) occurs on $DOY_{ip}$ only when $\theta = 1$.*
+Using the optimized parameters for each tree-year, we then modeled $DBH$ throughout the year and extracted the intra-annual growth variables of interest (Fig. `r schematic`). 
 
 After fitting the @mcmahon_general_2015 model, we used a script to remove poorly fit models. 
 Models were judged to be poorly fit if certain modeled growth characteristics fell outside of the acceptable range we determined. 
@@ -323,7 +326,7 @@ We note that other growth parameters would be controlled by different critical t
 
 Correlation between these variables and spring temperatures were assessed using a linear mixed model in a hierarchical Bayesian framework.
 
-Mixed effects models were used to test the response of growth phenology variables ($DOY_{25}$, $DOY_{50}$, $DOY_{75}$, $DOY_{ip}$, $r_{max}$, and $\Delta DBH$) to fixed effects of xylem porosity and mean temperature ($T_{max}$, $T_{min}$) during the critical temperature window selected by *climwin*, along with random effects of species and tree. 
+Mixed effects models were used to test the response of growth phenology variables ($DOY_{25}$, $DOY_{50}$, $DOY_{75}$, $DOY_{g_max}}$, $g_{max}$, and $\Delta DBH$) to fixed effects of xylem porosity and mean temperature ($T_{max}$, $T_{min}$) during the critical temperature window selected by *climwin*, along with random effects of species and tree. 
 We ran separate models for each species group at each site, and for the response of all growth phenology variables to $T_{max}$ and $T_{min}$. 
 Models were run using the LME4 package in R [@bates_fitting_2015]. 
 
