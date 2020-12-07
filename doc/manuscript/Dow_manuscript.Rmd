@@ -383,7 +383,7 @@ knitr::include_graphics("tables_figures/climwin_figure.png")
 ```
 
 The correlation of $DOY_{25}$ to $T_{min}$ was less consistent than that of $T_{max}$ (Figs. `r climwin`, `r all_climwin_SI_figs`). 
-At SCBI, patterns were quite similar to those described above for $T_{max}$, with similar timing and strengths of correlations across the two temperature variables (Figs. ` r climwin_rp_DOY25_SCBI` - `climwin_dp_DOY25_SCBI`).
+At SCBI, patterns were quite similar to those described above for $T_{max}$, with similar timing and strengths of correlations across the two temperature variables (Figs. `r climwin_rp_DOY25_SCBI` - `r climwin_dp_DOY25_SCBI`).
 In contrast, at Harvard Forest, where we had only six years of data, *climwin* selected windows, both > 5 weeks prior to $DOY_{25}$, had positive correlations between $DOY_{25}$ and $T_{min}$.
 However, for both ring- and diffuse- porous species, average $T_{min}$ of the selected period was below freezing (<0° C) in all years, suggesting that these are sporadic correlations that are unlikely to be biologically meaningful.
 
