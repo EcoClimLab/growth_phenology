@@ -127,13 +127,16 @@ sample_size_by_year_caption <- "Table S1. Sample size by year"
 all_climwin_SI_figs = " S1-S4"
 climwin_rp_DOY25_SCBI = "S1"
 climwin_dp_DOY25_SCBI = "S2"
-climwin_rp_DOY25_SCBI = "S3"
-climwin_dp_DOY25_SCBI = "S4"
+climwin_rp_DOY25_HARV = "S3"
+climwin_dp_DOY25_HARV = "S4"
+tree_rings_TMIN = "S5"
+
 #SI figure captions
 climwin_rp_DOY25_SCBI_short_caption <- "Figure S1. Full climwin output for DOY 25 for ring porous species at SCBI."
 climwin_dp_DOY25_SCBI_short_caption <- "Figure S2. Full climwin output for DOY 25 for diffuse porous species at SCBI."
 climwin_rp_DOY25_HARV_short_caption <- "Figure S3. Full climwin output for DOY 25 for ring porous species at Harvard Forest."
 climwin_dp_DOY25_HARV_short_caption <- "Figure S4. Full climwin output for DOY 25 for diffuse porous species at Harvard Forest."
+tree_rings_TMIN_short_caption <- "Figure S5. ..."
 
 ## some stats/ 
 species_table <- read.csv(file = "tables_figures/species_table.csv")
@@ -368,28 +371,27 @@ knitr::include_graphics("tables_figures/mean_growth_parameters_table.png")
 ## Critical temperature windows
 
 For the majority of weekly time windows from Jan. 1 to $DOY_{25}$, there was a negative or neutral relationship between $T_{max}$ and $DOY_{25}$, meaning that warmer temperatures shifted growth earlier in the season (Figs. `r climwin`, `r all_climwin_SI_figs`). 
-This held true for both ring- and diffuse-porous trees at both sites. 
+This held true for both ring- and diffuse-porous trees at both sites, *albiet* with less consistent patterns at Harvard Forest, which was sampled for fewer years. 
 The strongest relationships, including but not limited to the optimal time windows (Table `r mean_growth_parameters_table`), occurred for time windows closing $\le$ 5 weeks prior to $DOY_{25}$. 
-(In general, there were significant negative relationships between temperature and $DOY_{25}$ for any time period beginning $\ge$ **5** weeks prior to $DOY_{25}$, ending  $\le$ **8-20** weeks prior depending on wood-type and site, and covering at least a **3**-week period (`r all_climwin_SI_figs`).
-Relationships tended to be weaker and more stochastic in sign for short time periods, particularly those just prior to $DOY_{25}$.)
-(**Cameron, I'm not sure if the above text is up-to-date... ** )
 
 ```{r climwin, out.width="80%", echo=FALSE, fig.align="center", fig.cap= climwin_caption}
 # Created in RScripts/additional_figures.R
 knitr::include_graphics("tables_figures/climwin_figure.png")
 ```
 
-*$DOY_{25}$ was generally less strongly correlated with $T_{min}$ than with $T_{max}$.-- not sure this is true*
-(*give some details, cite SI tables.*)
+The correlation of $DOY_{25}$ to $T_{min}$ was less consistent than that of $T_{max}$ (Figs. `r climwin`, `r all_climwin_SI_figs`). 
+At SCBI, patterns were quite similar to those described above for $T_{max}$, with similar timing and strengths of correlations across the two temperature variables (Figs. ` r climwin_rp_DOY25_SCBI` - `climwin_dp_DOY25_SCBI`).
+In contrast, at Harvard Forest, where we had only six years of data, *climwin* selected windows, both > 5 weeks prior to $DOY_{25}$, had positive correlations between $DOY_{25}$ and $T_{min}$.
+However, for both ring- and diffuse- porous species, average $T_{min}$ of the selected period was below freezing (<0° C) in all years, suggesting that these are sporadic correlations that are unlikely to be biologically meaningful.
 
 Henceforth, we focus on $T_{max}$.
 
 ## Climate sensitivity of phenology 
 
-For both ring- and diffuse- porous species at both sites, warmer spring temperatures resulted in earlier achievement of growth milestones (Tables `r hypothesis_table`, Figs. `r pheno_Tsensitivity`, `r DOYtiming`).
-Specifically, $DOY_{25}$, $DOY_{50}$, and $DOY_{g.max}$ at SCBI and $DOY_{25}$, $DOY_{50}$, $DOY_{75}$, and $DOY_{g.max}$ at Harvard Forest all decreased significantly with increasing $T_{max}$ during the critical period (Table `r mean_growth_parameters_table`).
+For both ring- and diffuse- porous species at both sites, warmer spring $T_{max}$ resulted in earlier achievement of growth milestones (Tables `r hypothesis_table`, Figs. `r pheno_Tsensitivity`, `r DOYtiming`).
+Specifically, $DOY_{25}$, $DOY_{50}$, and $DOY_{g.max}$ at SCBI and $DOY_{25}$, $DOY_{50}$, $DOY_{75}$, and $DOY_{g.max}$ at Harvard Forest all decreased significantly with increasing $T_{max}$ during the critical temperature window (Table `r hypothesis_table`, `r pheno_Tsensitivity`, `r DOYtiming`).
 
-```{r pheno_Tsensitivity, out.width="100%", echo=FALSE, fig.align="center", fig.cap=pheno_Tsensitivity_caption}
+```{r pheno_Tsensitivity, out.width="80%", echo=FALSE, fig.align="center", fig.cap=pheno_Tsensitivity_caption}
 # Created in RScripts/bert/wood_phenology_analysis_bert.R
 knitr::include_graphics("tables_figures/pheno_Tsensitivity_combo.png")
 ```
@@ -399,23 +401,24 @@ knitr::include_graphics("tables_figures/pheno_Tsensitivity_combo.png")
 knitr::include_graphics("tables_figures/DOYtiming_allyears.png")
 ```
 
-At SCBI, ring-porous $DOY_{25}$ and $DOY_{50}$ shifted earlier while ${DOY_75}$ did not shift, resulting in longer peak growing season length when critical window temperatures were warmer (Tables `r hypothesis_table`, Figs. `r pheno_Tsensitivity`, `r DOYtiming`).
-Diffuse-porous $DOY_{25}$, $DOY_{50}$, and ${DOY_75}$ shifted earlier uniformly resulting in no significant change in peak growing season length. 
-At Harvard Forest, ring-porous ${DOY_75}$ shifted more than ${DOY_25}$, resulting in shorter peak growing season length, while diffuse-porous ${DOY_25}$ shifted more than ${DOY_75}$, resulting in an extended peak growing season length in response to warmer critical window temperatures.  
+For three of the four species group-site combinations (exception: ring-porous at Harvard Forest), warmer $T_{max}$ during the critical temperature window resulted in increased $L_{PGS}$ (Tables `r hypothesis_table`, Figs. `r pheno_Tsensitivity`, `r DOYtiming`).
+At SCBI, ring-porous $DOY_{25}$ and $DOY_{50}$ shifted earlier as a result of warmer springs whereas ${DOY_75}$ did not shift significantly, resulting in a positive correlation between $L_{PGS}$ and $T_{max}$ during the critical temperature.
+For diffuse-porous species at both SCBI and Harvard Forest, all growth milestones occurred earlier in warmer springs, but $DOY_{25}$ was more strongly affected than ${DOY_75}$, resulting in increased $L_{PGS}$.
+At Harvard Forest,  all growth milestones occurred earlier in warmer springs, but ring-porous ${DOY_75}$ shifted more than ${DOY_25}$, resulting in shorter peak growing season length.  
 
 ## Climate sensitivity of growth
 
 Maximum growth rate, $g_{max}$, was not consistently linked to early spring temperatures (Tables `r hypothesis_table`, Fig. `r pheno_Tsensitivity`). 
-Ring-porous species exhibited no change (SCBI) or a slight increase (Harvard Forest) with warmer early spring temperatures.
-In contrast, diffuse-porous species exhibited no change (SCBI) or lower $g_{max}$ in years with higher early spring $T_{max}$.
+Ring-porous species exhibited no change (SCBI) or a slight increase (Harvard Forest) with warmer $T_{max}$ during the critical temperature window.
+In contrast, diffuse-porous species at both sites exhibited lower $g_{max}$ in years with higher early spring $T_{max}$.
 
-Total annual growth measured with dendrometer bands, $\Delta DBH$, also was not consistently linked to early spring temperatures, displaying either no relationship (SCBI) or extremely small changes (Harvard Forest) (Tables `r hypothesis_table`, Fig. `r pheno_Tsensitivity`).
+Total annual growth was not consistently linked to spring temperatures (Table `r hypothesis_table`).
+Annual growth measured with dendrometer bands, $\Delta DBH$, also was not consistently linked to early spring temperatures, displaying either no relationship (SCBI) or extremely small changes in opposite directions for ring- and diffuse- porous species (Harvard Forest) (Fig. `r pheno_Tsensitivity`).
 
-Annual growth recorded in tree-ring records, $RW$, ...
+Similarly, annual growth recorded in tree-ring records, $RW$, rarely displayed a significant correlation to spring  $T_{max}$ (Fig. `r tree_rings` or  $T_{min}$ (Fig. `r tree_rings_TMIN`).
 
 
 ```{r tree_rings, out.width="100%", echo=FALSE, fig.align="center", fig.cap= tree_rings_caption}
-# Created in RScripts/additional_figures.R
 knitr::include_graphics("tables_figures/tree_cores_tmax.tif")
 ```
 

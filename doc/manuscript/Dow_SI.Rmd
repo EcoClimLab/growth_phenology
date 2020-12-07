@@ -37,16 +37,19 @@ sample_size_by_year= "S1"
 sample_size_by_year_caption <- "Table S1. Sample size by year"
 
 #SI figure numbers
+all_climwin_SI_figs = " S1-S4"
 climwin_rp_DOY25_SCBI = "S1"
 climwin_dp_DOY25_SCBI = "S2"
 climwin_rp_DOY25_HARV = "S3"
 climwin_dp_DOY25_HARV = "S4"
+tree_rings_TMIN = "S5"
+
 #SI figure captions
 climwin_rp_DOY25_SCBI_short_caption <- "Figure S1. Full climwin output for DOY 25 for ring porous species at SCBI."
 climwin_dp_DOY25_SCBI_short_caption <- "Figure S2. Full climwin output for DOY 25 for diffuse porous species at SCBI."
 climwin_rp_DOY25_HARV_short_caption <- "Figure S3. Full climwin output for DOY 25 for ring porous species at Harvard Forest."
 climwin_dp_DOY25_HARV_short_caption <- "Figure S4. Full climwin output for DOY 25 for diffuse porous species at Harvard Forest."
-
+tree_rings_TMIN_short_caption <- "Figure S5. ..."
 ```
 
 ```{r, Table HF_bands_bySP, eval=TRUE, echo=FALSE, message=FALSE}
@@ -122,3 +125,7 @@ knitr::include_graphics("tables_figures/HF_diffuse-porous_TMIN.png")
 ```
 
 
+\newpage
+```{r tree_rings_TMIN, out.width="120%", echo=FALSE, fig.align="center", fig.cap= tree_rings_TMIN_short_caption}
+#knitr::include_graphics("tables_figures/tree_cores_tmin.tif")
+```
