@@ -3,7 +3,7 @@ critical $T_{max}$ window,3/22-4/9,2/19-5/21,4/2-5/7,3/19-5/7
 $DOY_{25}$,123 (May 4),154 (June 4),132 (May 15),164 (June 14)
 $DOY_{50}$,152 (June 2),172 (June 22),159 (June 9),182 (July 2)
 $DOY_{75}$,180 (June 30),190 (July 9),186 (July 6),199 (July 19)
-$DOY_{ip}$,152 (June 2),173 (June 23),161 (June 11),183 (July 3)
+$DOY_{g_{max}}$,152 (June 2),173 (June 23),161 (June 11),183 (July 3)
 $g_{max}$  (mm/day),0.046,0.061,0.03,0.025
 $L_{pgs}$,56.5,35.8,54.5,35.1
 $\Delta DBH$ (mm/yr),4.7,3.6,3.1,1.4
