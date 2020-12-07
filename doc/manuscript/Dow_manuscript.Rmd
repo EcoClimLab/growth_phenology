@@ -436,34 +436,37 @@ There were no significant correlations to $T_{min}$ prior to May at SCBI or June
 
 # Discussion
 
-We found that warmer spring temperatures in temperate deciduous forests cause earlier tree growth but have little effect on annual woody productivity...
+We found that warmer spring temperatures in temperate deciduous forests cause earlier tree growth but have little effect on annual woody productivity. 
 
 
-Although the number of years analyzed here is limited (# years at SCBI, # years at HF), the signal is clear and consistent: for both species groups at both sites, warmer temperatures during virtually any part of the spring led to significantly earlier achievement of growth milestones (*CITE RELEVANT FIGS & TABLES* ).
-This indicates that this is not a subtle effect.
-However, the effect on L_PGS, r_max, and $\Delta DBH$, if any, is subtle, and a much longer record would be needed to detect such effects. 
-Fortunately, we were able to get at annual growth using tree-ring data (Fig. `r tree_rings`).
-These confirm that the effect of spring temperatures on annual growth is modest and generally not significant, while revealing a slightly more complex picture.
-Although spring temperatures prior to May rarely had a significant influence on ...
+Although the number of years analyzed here is limited (# years at SCBI, 6 years at HF), the signal is clear and consistent: for both species groups at both sites, warmer temperatures during virtually any part of the spring led to significantly earlier achievement of growth milestones (Table `r hypothesis_table`, Figs. `r  climwin`-`r DOYtiming`).
+This indicates that the effect of $T_{max}$ on the timing of growth ($DOY_{25}$, $DOY_{50}$, $DOY_{75}$,and $DOY_{g_{max}}$) is not subtle; 
+indeed, growth milestones advanced by #-# days per degree Celsius during the critical temperature window.
+This is consistent with previous studies showing that ... *(find/cite some statistics on how rapidly leaf phenology or start of C sequestration advance with T)*
 
-THe tree-rings also reveal that the strongest temperature sensitivity aligned with peak growing season.
-This pattern is common across tree-ring studies in temperate deciduous forests.
+In contrast to the pronounced effects of $T_{max}$ on the timing of growth, its effects on $g_{max}$ and $\Delta DBH$ were less consistent and generally quite subtle (Table `r hypothesis_table`, Fig. `r pheno_Tsensitivity`), such that a much longer record would be needed to clarify what, if any, effect spring temperatures have on maximum daily and annual growth rates. 
+Fortunately, we were able to use tree-ring data to understand centennial-scale temperature sensitivity of annual growth (Fig. `r tree_rings`).
+This analysis confirms that the effect of spring temperatures on annual growth is modest and not statistically significant for most species, while revealing a slightly more complex picture.
+It appears that temperatures--particularly $T_{max}$--during one spring month at each site (April at SCBI, May at Harvard Forest) consistently have a weakly positive (*albiet* rarely significant) effect on annual growth, in striking contrast to the predominantly negative correlations of growth rates with $T_{max}$ in preceding and subsequent months.
+This suggests that spring $T_{max}$, though it's pronounced influence on the start of woody growth and subtle influence on length of the peak growing season, has a modestly positive influence on annual tree growth, but that this influence is generally of secondary importance to other factors. 
+
+Indeed, the tree-ring records reveal that at SCBI the strongest temperature sensitivity aligned with peak growing season [@helcoski_growing_2019], whereas there were fewer significant climate correlations for the species at Harvard Forest (Fig. `r tree_rings`).
+Relative to other temperate deciduous forest sites, the pattern at SCBI tends to be more typical: annual growth is most commonly controlled by climate conditions during the peak growing season.
 (*1-2 sentences generalizing about climate sensitivity of temperate deciduous forest growth--Neil can do this most easily.*)
 Thus, while our analysis is limited to two sites, we expect that the finding that spring temperatures have limited effect on annual tree growth will hold generally.
 
-
 Our findings contribute to a broader picture of the influence of spring temperatures on forest ecosystem function. 
-Warm spring temperatures result in earlier leaf-out (REFS), an earlier start to net C sequestration (REFS), and--as shown here--earlier initiation of stem growth (*CITE RELEVANT FIGS & TABLES* ).
-Yet, an earlier start to the growing season does not imply a longer growing season [Table `r hypothesis_table`, Figs `r pheno_Tsensitivity`, `r DOYtiming`;  @zani_increased_2020].
+Warm spring temperatures result in earlier leaf-out (REFS), an earlier start to net C sequestration (REFS), and--as shown here--earlier initiation of stem growth (Figs. `r climwin`- `r DOYtiming`).
+Yet, an earlier start to the growing season does not imply a longer growing season [Table `r hypothesis_table`, Figs. `r pheno_Tsensitivity`, `r DOYtiming`;  @zani_increased_2020].
 Rather, growth finishes sooner-- presumably because of *C sink limitation* [@zani_increased_2020].
-As sink limitation controls the end of woody growing season [@zani_increased_2020], we might expect that an earlier start to growth buffers against unfavorable growth conditions during the peak growing season (e.g., drought).
-*Do we see any evidence of this???*
+
 
 As climate change accelerates and spring temperatures become increasingly warmer, growing seasons will start earlier, but this is unlikely to provide the increased carbon sequestration that is anticipated in most models [Table `r hypothesis_table`; Figs. `r pheno_Tsensitivity`, `r tree_rings`; @zani_increased_2020].
 The implication is that temperate deciduous forests are likely to sequester less CO~2~ than most models suggest, implying that models are underestimating future atmospheric CO~2~ overall.
 
 
 ~~~~
+
 ## Cam's previous content
 
 We have shown that intraannual growth patterns in North American temperate trees change in response to increasing spring temperatures. The magnitude of these changes depends largely on the evolutionary differences inherent in the two wood types analyzed here. Ring-porous trees must repair winter embolism of their large xylem vessels before leaf expansion, achieving roughly 25% total yearly growth simultaneously with bud burst, and 50% yearly growth around the time of 75% leaf emergence (D'Orangeville et al,). On the other hand, diffuse-porous trees are less prone to cavitation and so do not need to repair winter embolism before bud burst, allowing up to 75% leaf out before reaching their 25% yearly growth totals (D'Orangeville et al). These differences are likely evolutionary hydraulic adaptations to climate (Baas & Wheeler, 2011). The presence of wide-xylem cells in ring-porous trees allows for greater water conductivity in the spring at the cost of increased cavitation risk during spring drought, and high likelihood of damage during frost events (Cochard & Tyree, 1990; Sperry et al, 1994). The pre-leaf stem growth occurring in these species is fueled by non-structural carbon stores, often used for other cell maintenance activities within the plant (Sperry et al, 1994; Palacio et al, 2014; Sevanto et al, 2014). The dependence on these carbon stores for cambial activation could prove to be detrimental to long-term health of the tree, as exhaustion of reserves leads to carbon starvation (Sevanto et al, 2014). Diffuse-porous trees have narrower xylem cells lowering the risk of cavitation, but leading to a decreased water conductivity in the spring, revealing a growth strategy more focused on a relatively faster, shorter growing season in the Summer (Sperry et al, 1994). This allows the diffuse-porous trees to conserve their carbon stores, making them potentially more resistant to pest/pathogen invasions?, but exposing them to higher temperatures and drought risk during their Summer-centered growth period. 
