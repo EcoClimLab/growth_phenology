@@ -415,12 +415,21 @@ In contrast, diffuse-porous species at both sites exhibited lower $g_{max}$ in y
 Total annual growth was not consistently linked to spring temperatures (Table `r hypothesis_table`).
 Annual growth measured with dendrometer bands, $\Delta DBH$, also was not consistently linked to early spring temperatures, displaying either no relationship (SCBI) or extremely small changes in opposite directions for ring- and diffuse- porous species (Harvard Forest) (Fig. `r pheno_Tsensitivity`).
 
-Similarly, annual growth recorded in tree-ring records, $RW$, rarely displayed a significant correlation to spring  $T_{max}$ (Fig. `r tree_rings` or  $T_{min}$ (Fig. `r tree_rings_TMIN`).
-
+Similarly, between species-level residual chronologies rarely exhibited significant correlations to either $T_{max}$ or $T_{min}$ in the months corresponding to the critical temperature windows identified here (Figs. `r tree_rings`, `r tree_rings_TMIN`).
+Although correlations were rarely significant, there was a consistent pattern in responses to $T_{max}$ across all species at both sites:
+responses to $T_{max}$ were negative or neutral in all months from February to August, with the exception of one spring month at each site (April at SCBI, May at Harvard Forest) where growth displayed a positive or neutral responses to $T_{max}$ (Fig. `r tree_rings`).
+In these months, positive correlations to $T_{max}$ were statistically significant (at p=0.05) for one of nine ring-porous species at SCBI and one of two diffuse-porous species at each site.
+In the prior months, the generally negative correlations to $T_{max}$ were not significant, excepting significant correlations of one species at each site  (ring-porous *Carya tomentosa* in March at SCBI; diffuse-porous *Acer rubrum* in April at Harvard Forest).
+Starting in May at SCBI, significant correlations to $T_{max}$ were common, occurring for nine of the eleven species in May and 3-7 species for each month June through August.
+At Harvard Forest, there was only one statistically significant negative correlation to post-May $T_{max}$ (*Quercus rubra* in June). 
 
 ```{r tree_rings, out.width="100%", echo=FALSE, fig.align="center", fig.cap= tree_rings_caption}
 knitr::include_graphics("tables_figures/tree_cores_tmax.tif")
 ```
+
+Patterns in $T_{min}$ were fairly similar to those of $T_{max}$, but weaker and more stochastic, with more (non-significant) correlations going in opposite directions (Fig. `r tree_rings_TMIN`). 
+There were no significant correlations to $T_{min}$ prior to May at SCBI or June at Harvard Forest. 
+
 
 # Discussion
 
@@ -492,7 +501,7 @@ Another study found that the velocity of leaf development is correlated to bud b
 The timing of tree growth has profound impacts on ecosystem interactions, as well as dictates periods of highest drought sensitivity in temperate forests (Foster, 2014; D’Orangeville et al. in review). Species have co-evolved to utilize the phenological stages of trees at specific times in the year. If the timing of intraannual phenology traits were to shift, that could harm the species depending on the trees (). Additionally, if a drought were to occur when trees were at their peak growth rates, the resulting decrease in that year's NPP would reduce the total amount of carbon sequestered, contributing to a climate feedback loop further exacerbating these potential shifts (source?). 
 
 # Acknowledgements
-people: (everyone who helped collect data), Jess Shue (data)
+people: (everyone who helped collect data-- see list on GitHub), Jess Shue (data)
 Funding: ForestGEO
 
 # Author Contributions
