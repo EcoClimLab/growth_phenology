@@ -234,7 +234,7 @@ MRDOY_scbi <- mixedmodel_stanlmerRP_maxrateDOY %>%
   tidy(conf.int = TRUE)
 write.csv(MRDOY_scbi, file = "Results/Bayesian outputs/MRDOY_SCBI.csv", row.names = FALSE)
 
-y_hst <- mixedmodel_stanlmerRP_maxrateDOY %>%
+y_hat <- mixedmodel_stanlmerRP_maxrateDOY %>%
   posterior_predict() %>%
   c()
 
@@ -242,7 +242,7 @@ predictions_mrdoy <- woodtable %>%
   add_predicted_draws(mixedmodel_stanlmerRP_maxrateDOY) %>%
   ungroup() %>%
   arrange(tag, year) %>%
-  mutate(predictions_rstanarm = y_hst)
+  mutate(predictions_rstanarm = y_hat)
 
 predictions_mrdoy_RP <- subset(predictions_mrdoy, wood_type == "ring-porous")
 predictions_mrdoy_RP$perc <- "Max Rate DOY"
@@ -500,7 +500,7 @@ MRDOY_scbi <- mixedmodel_stanlmerRP_maxrateDOY %>%
   tidy(conf.int = TRUE)
 write.csv(MRDOY_scbi, file = "Results/Bayesian outputs/MRDOY_SCBI.csv", row.names = FALSE)
 
-y_hst <- mixedmodel_stanlmerRP_maxrateDOY %>%
+y_hat <- mixedmodel_stanlmerRP_maxrateDOY %>%
   posterior_predict() %>%
   c()
 
@@ -508,7 +508,7 @@ predictions_mrdoy <- woodtable %>%
   add_predicted_draws(mixedmodel_stanlmerRP_maxrateDOY) %>%
   ungroup() %>%
   arrange(tag, year) %>%
-  mutate(predictions_rstanarm = y_hst)
+  mutate(predictions_rstanarm = y_hat)
 
 predictions_mrdoy_RP <- subset(predictions_mrdoy, wood_type == "ring-porous")
 predictions_mrdoy_RP$perc <- "Max Rate DOY"
@@ -749,7 +749,7 @@ MRDOY_hf <- mixedmodel_stanlmerRP_maxrateDOY_hf %>%
   tidy(conf.int = TRUE)
 write.csv(MRDOY_hf, file = "Results/Bayesian outputs/MRDOY_HF.csv", row.names = FALSE)
 
-y_hst_hf <- mixedmodel_stanlmerRP_maxrateDOY_hf %>%
+y_hat_hf <- mixedmodel_stanlmerRP_maxrateDOY_hf %>%
   posterior_predict() %>%
   c()
 
@@ -757,7 +757,7 @@ predictions_mrdoy_hf <- woodtable_hf %>%
   add_predicted_draws(mixedmodel_stanlmerRP_maxrateDOY_hf) %>%
   ungroup() %>%
   arrange(tag, year) %>%
-  mutate(predictions_rstanarm = y_hst_hf)
+  mutate(predictions_rstanarm = y_hat_hf)
 
 predictions_mrdoy_RP_hf <- subset(predictions_mrdoy_hf, wood_type == "ring-porous")
 predictions_mrdoy_DP_hf <- subset(predictions_mrdoy_hf, wood_type == "diffuse-porous")
@@ -1018,7 +1018,7 @@ MRDOY_hf <- mixedmodel_stanlmerRP_maxrateDOY_hf %>%
   tidy(conf.int = TRUE)
 write.csv(MRDOY_hf, file = "Results/Bayesian outputs/MRDOY_HF.csv", row.names = FALSE)
 
-y_hst_hf <- mixedmodel_stanlmerRP_maxrateDOY_hf %>%
+y_hat_hf <- mixedmodel_stanlmerRP_maxrateDOY_hf %>%
   posterior_predict() %>%
   c()
 
@@ -1026,7 +1026,7 @@ predictions_mrdoy_hf <- woodtable_hf %>%
   add_predicted_draws(mixedmodel_stanlmerRP_maxrateDOY_hf) %>%
   ungroup() %>%
   arrange(tag, year) %>%
-  mutate(predictions_rstanarm = y_hst_hf)
+  mutate(predictions_rstanarm = y_hat_hf)
 
 predictions_mrdoy_RP_hf <- subset(predictions_mrdoy_hf, wood_type == "ring-porous")
 predictions_mrdoy_DP_hf <- subset(predictions_mrdoy_hf, wood_type == "diffuse-porous")
