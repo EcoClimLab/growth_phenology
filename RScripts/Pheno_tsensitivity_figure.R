@@ -209,37 +209,85 @@ predictions_DP <- subset(predictions, wood_type == "diffuse-porous")
 Wood_pheno_table_RP <- subset(Wood_pheno_table, wood_type == "ring-porous")
 Wood_pheno_table_DP <- subset(Wood_pheno_table, wood_type == "diffuse-porous")
 predictions_RP$sig <- ifelse(predictions_RP$perc == "DOY_75", 1, 0)
+
+woodtable <- subset(Wood_pheno_table, perc == "DOY_25")
+
+#Add Max rate DOY line
+maxrateDOY_formulaRP <- "max_rate_DOY ~wood_type + wood_type:climwinmean + (1|tag)" %>% as.formula()
+
+mixedmodel_stanlmerRP_maxrateDOY <- stan_lmer(
+  formula = maxrateDOY_formulaRP,
+  data = woodtable,
+  seed = 349,
+  iter = n_iter,
+  chains = n_chains
+)
+
+MRDOY_scbi <- mixedmodel_stanlmerRP_maxrateDOY %>%
+  tidy(conf.int = TRUE)
+write.csv(MRDOY_scbi, file = "Results/Bayesian outputs/MRDOY_SCBI.csv", row.names = FALSE)
+
+y_hst <- mixedmodel_stanlmerRP_maxrateDOY %>%
+  posterior_predict() %>%
+  c()
+
+predictions_mrdoy <- woodtable %>%
+  add_predicted_draws(mixedmodel_stanlmerRP_maxrateDOY) %>%
+  ungroup() %>%
+  arrange(tag, year) %>%
+  mutate(predictions_rstanarm = y_hst)
+
+predictions_mrdoy_RP <- subset(predictions_mrdoy, wood_type == "ring-porous")
+predictions_mrdoy_RP$perc <- "Max Rate DOY"
+predictions_mrdoy_RP$sig <- 0
+predictions_RP <- rbind(predictions_RP, predictions_mrdoy_RP)
+predictions_mrdoy_DP <- subset(predictions_mrdoy, wood_type == "diffuse-porous")
+predictions_mrdoy_DP$perc <- "Max Rate DOY"
+predictions_DP <- rbind(predictions_DP, predictions_mrdoy_DP)
+
+Wood_pheno_table_RP_mrdoy <- subset(woodtable, wood_type == "ring-porous")
+Wood_pheno_table_RP_mrdoy$perc <- "Max Rate DOY"
+Wood_pheno_table_RP_mrdoy$DOY <- Wood_pheno_table_RP_mrdoy$max_rate_DOY
+Wood_pheno_table_RP <- rbind(Wood_pheno_table_RP_mrdoy,Wood_pheno_table_RP)
+
+Wood_pheno_table_DP_mrdoy <- subset(woodtable, wood_type == "diffuse-porous")
+Wood_pheno_table_DP_mrdoy$perc <- "Max Rate DOY"
+Wood_pheno_table_DP_mrdoy$DOY <- Wood_pheno_table_DP_mrdoy$max_rate_DOY
+Wood_pheno_table_DP <- rbind(Wood_pheno_table_DP_mrdoy, Wood_pheno_table_DP)
+#Wood_pheno_table_DP2 <- Wood_pheno_table_DP %>% mutate(perc = factor(perc, levels = c("Max Rate DOY", "DOY_25", "DOY_50", "DOY_75")))
+
+
 fig6_RP <- ggplot() +
   # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
-  stat_lineribbon(data = predictions_RP, aes(x = climwinmean, y = predictions_rstanarm, group = perc, col = perc, linetype = as.factor(sig)), .width = c(.99, .95)) +
+  stat_lineribbon(data = predictions_RP, aes(x = climwinmean, y = predictions_rstanarm, col = perc, fill = perc, linetype = as.factor(sig)), .width = .95, alpha = 0.5) +
   geom_point(data = Wood_pheno_table_RP, aes(x = climwinmean, y = DOY, col = perc)) +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_linetype_manual(values = c("solid", "dashed")) +
-  scale_fill_brewer() +
+  scale_color_manual(values = c("red","dark green","blue", "purple"))+
+  #scale_fill_brewer() +
   # facet_grid(perc) +
-  coord_cartesian(xlim = c(11.8, 19.7), ylim = c(80, 240)) +
+  coord_cartesian(xlim = c(11.8, 19.2), ylim = c(min(Wood_pheno_table_RP$DOY)-3,max(Wood_pheno_table_RP$DOY)+3)) +
   theme_bw()+
   theme(legend.position = "none",
         axis.text.x = element_blank(),
         text = element_text(size = 20)) +
   labs(x = "", y = "DOY", col = "Percentile", title = "SCBI", subtitle = "Ring-porous")
 
+
 fig6_DP <- ggplot() +
   # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
-  stat_lineribbon(data = predictions_DP, aes(x = climwinmean, y = predictions_rstanarm, group = perc, col = perc), .width = c(.99, .95), linetype = "solid") +
+  stat_lineribbon(data = predictions_DP, aes(x = climwinmean, y = predictions_rstanarm, col = perc, fill = perc), .width = .95, alpha = 0.5, linetype = "solid") +
   geom_point(data = Wood_pheno_table_DP, aes(x = climwinmean, y = DOY, col = perc)) +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
-  scale_fill_brewer() +
+  scale_color_manual(values = c("red","dark green","blue", "purple"))+
+  #scale_fill_brewer() +
   theme_bw()+
   theme(legend.position = "none",
         axis.text.x = element_blank(),
-        axis.text.y = element_blank(),
         text = element_text(size = 20)) +
   # facet_grid(perc) +
-  coord_cartesian(xlim = c(14.7, 19.2), ylim = c(80, 240)) +
+  coord_cartesian(xlim = c(14.7, 19.2), ylim = c(min(Wood_pheno_table_DP$DOY)-3,max(Wood_pheno_table_DP$DOY)+3)) +
   labs(x = "", y = "", col = "Percentile", title = "SCBI", subtitle = "Diffuse-porous")
-
-woodtable <- subset(Wood_pheno_table, perc == "DOY_25")
 
 # Clean-up
 rm(list = setdiff(ls(), objects_to_keep))
@@ -282,12 +330,11 @@ fig6_RP_tot <-  ggplot() +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
   # facet_grid(perc) +
-  coord_cartesian(xlim = c(11.8, 19.7), ylim = c(-.4, 1.5)) +
+  coord_cartesian(xlim = c(11.8, 19.7), c(min(Wood_pheno_table_RP_tot$tot),max(Wood_pheno_table_RP_tot$tot))) +
   theme_bw()+
   theme(legend.position = "none",
         text = element_text(size = 20)) +
-  labs(x = "Temperature (c) 3/22-4/9", y = expression(Delta * "DBH"))
-fig6_RP_tot
+  labs(x =expression(paste("3/22-4/9 ", T[max], " (°C)")) , y = expression(paste(Delta * "DBH", " (cm)")))
 
 fig6_DP_tot <-  ggplot() +
   # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
@@ -296,12 +343,11 @@ fig6_DP_tot <-  ggplot() +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
   # facet_grid(perc) +
-  coord_cartesian(xlim = c(14.7, 19.2), ylim = c(-.4, 1.5)) +
+  coord_cartesian(xlim = c(14.7, 19.2), ylim = c(min(Wood_pheno_table_DP_tot$tot),max(Wood_pheno_table_DP_tot$tot))) +
   theme_bw()+
   theme(legend.position = "none",
-        axis.text.y = element_blank(),
         text = element_text(size = 20)) +
-  labs(x = "Temperature (c) 2/19-5/21", y = "")
+  labs(x = expression(paste("2/19-5/9 ", T[max], " (°C)")), y = "")
 
 # Clean-up
 rm(list = setdiff(ls(), objects_to_keep))
@@ -345,12 +391,12 @@ fig6_RP_sl <- ggplot() +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
   # facet_grid(perc) +
-  coord_cartesian(xlim = c(11.8, 19.7), ylim = c(3, 106)) +
+  coord_cartesian(xlim = c(11.8, 19.7), ylim = c(min(Wood_pheno_table_RP_sl$seasonlength),95)) +
   theme_bw()+
   theme(legend.position = "none",
         axis.text.x = element_blank(),
         text = element_text(size = 20)) +
-  labs(x = "", y = "Season Length (# of Days)")
+  labs(x = "", y = expression(L[pgs]))
 
 fig6_DP_sl <- ggplot() +
   # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
@@ -363,7 +409,6 @@ fig6_DP_sl <- ggplot() +
   theme_bw()+
   theme(legend.position = "none",
         axis.text.x = element_blank(),
-        axis.text.y = element_blank(),
         text = element_text(size = 20)) +
   labs(x = "", y = "")
 
@@ -408,12 +453,12 @@ fig6_RP_mr <-  ggplot() +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
   # facet_grid(perc) +
-  coord_cartesian(xlim = c(11.8, 19.7), ylim = c(-.007, 0.02)) +
+  coord_cartesian(xlim = c(11.8, 19.7), ylim = c(-.001, 0.015)) +
   theme_bw()+
   theme(legend.position = "none",
         axis.text.x = element_blank(),
         text = element_text(size = 20)) +
-  labs(x = "", y = "Maximum Growth Rate (cm/day)")
+  labs(x = "", y = expression(paste(g[max], " (cm/day)")))
 
 fig6_DP_mr <- ggplot() +
   # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
@@ -422,11 +467,10 @@ fig6_DP_mr <- ggplot() +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
   # facet_grid(perc) +
-  coord_cartesian(xlim = c(14.7, 19.2), ylim = c(-.007, 0.02)) +
+  coord_cartesian(xlim = c(14.7, 19.2), ylim = c(-.001, 0.015)) +
   theme_bw()+
   theme(legend.position = "none",
         axis.text.x = element_blank(),
-        axis.text.y = element_blank(),
         text = element_text(size = 20)) +
   labs(x = "", y = "")
 
@@ -460,7 +504,13 @@ predictions_mrdoy <- woodtable %>%
   mutate(predictions_rstanarm = y_hst)
 
 predictions_mrdoy_RP <- subset(predictions_mrdoy, wood_type == "ring-porous")
+predictions_mrdoy_RP$perc <- "Max Rate DOY"
+predictions_mrdoy_RP$sig <- 0
+predictions_RP <- rbind(predictions_RP, predictions_mrdoy_RP)
 predictions_mrdoy_DP <- subset(predictions_mrdoy, wood_type == "diffuse-porous")
+predictions_mrdoy_DP$perc <- "Max Rate DOY"
+predictions_DP <- rbind(predictions_DP, predictions_mrdoy_DP)
+
 Wood_pheno_table_RP_mrdoy <- subset(woodtable, wood_type == "ring-porous")
 Wood_pheno_table_DP_mrdoy <- subset(woodtable, wood_type == "diffuse-porous")
 
@@ -471,12 +521,12 @@ fig6_RP_mrdoy <- ggplot() +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
   # facet_grid(perc) +
-  coord_cartesian(xlim = c(11.8, 19.7), ylim = c(99, 235)) +
+  coord_cartesian(xlim = c(11.8, 19.7), ylim = c(110, 200)) +
   theme_bw()+
   theme(legend.position = "none",
         axis.text.x = element_blank(),
         text = element_text(size = 20)) +
-  labs(x = "", y = "Max Rate DOY")
+  labs(x = "", y = expression(DOY[g[max]]))
 
 fig6_DP_mrdoy <-  ggplot() +
   # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
@@ -485,11 +535,10 @@ fig6_DP_mrdoy <-  ggplot() +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
   # facet_grid(perc) +
-  coord_cartesian(xlim = c(14.7, 19.2), ylim = c(99, 235)) +
+  coord_cartesian(xlim = c(14.7, 19.2), ylim = c(133, 210)) +
   theme_bw()+
   theme(legend.position = "none",
         axis.text.x = element_blank(),
-        axis.text.y = element_blank(),
         text = element_text(size = 20)) +
   labs(x = "", y = "")
 
@@ -672,42 +721,91 @@ predictions_DP_hf <- subset(predictions_hf, wood_type == "diffuse-porous")
 Wood_pheno_table_RP_hf <- subset(Wood_pheno_table_hf, wood_type == "ring-porous")
 Wood_pheno_table_DP_hf <- subset(Wood_pheno_table_hf, wood_type == "diffuse-porous")
 
+woodtable_hf <- subset(Wood_pheno_table_hf, perc == "DOY_25")
+
+#Add max rate DOY ----
+maxrateDOY_formulaRP <- "max_rate_DOY ~wood_type + wood_type:climwinmean + (1|site) + (1|tag)" %>% as.formula()
+
+mixedmodel_stanlmerRP_maxrateDOY_hf <- stan_lmer(
+  formula = maxrateDOY_formulaRP,
+  data = woodtable_hf,
+  seed = 349,
+  iter = n_iter,
+  chains = n_chains
+)
+
+MRDOY_hf <- mixedmodel_stanlmerRP_maxrateDOY_hf %>%
+  tidy(conf.int = TRUE)
+write.csv(MRDOY_hf, file = "Results/Bayesian outputs/MRDOY_HF.csv", row.names = FALSE)
+
+y_hst_hf <- mixedmodel_stanlmerRP_maxrateDOY_hf %>%
+  posterior_predict() %>%
+  c()
+
+predictions_mrdoy_hf <- woodtable_hf %>%
+  add_predicted_draws(mixedmodel_stanlmerRP_maxrateDOY_hf) %>%
+  ungroup() %>%
+  arrange(tag, year) %>%
+  mutate(predictions_rstanarm = y_hst_hf)
+
+predictions_mrdoy_RP_hf <- subset(predictions_mrdoy_hf, wood_type == "ring-porous")
+predictions_mrdoy_DP_hf <- subset(predictions_mrdoy_hf, wood_type == "diffuse-porous")
+Wood_pheno_table_RP_mrdoy_hf <- subset(woodtable_hf, wood_type == "ring-porous")
+Wood_pheno_table_DP_mrdoy_hf <- subset(woodtable_hf, wood_type == "diffuse-porous")
+
+predictions_mrdoy_RP_hf <- subset(predictions_mrdoy_hf, wood_type == "ring-porous")
+predictions_mrdoy_RP_hf$perc <- "Max Rate DOY"
+#predictions_mrdoy_RP_hf$sig <- 0
+predictions_RP_hf <- rbind(predictions_RP_hf, predictions_mrdoy_RP_hf)
+predictions_mrdoy_DP_hf <- subset(predictions_mrdoy_hf, wood_type == "diffuse-porous")
+predictions_mrdoy_DP_hf$perc <- "Max Rate DOY"
+predictions_DP_hf <- rbind(predictions_DP_hf, predictions_mrdoy_DP_hf)
+
+Wood_pheno_table_RP_mrdoy_hf <- subset(woodtable_hf, wood_type == "ring-porous")
+Wood_pheno_table_RP_mrdoy_hf$perc <- "Max Rate DOY"
+Wood_pheno_table_RP_mrdoy_hf$DOY <- Wood_pheno_table_RP_mrdoy_hf$max_rate_DOY
+Wood_pheno_table_RP_hf <- rbind(Wood_pheno_table_RP_mrdoy_hf,Wood_pheno_table_RP_hf)
+
+Wood_pheno_table_DP_mrdoy_hf <- subset(woodtable_hf, wood_type == "diffuse-porous")
+Wood_pheno_table_DP_mrdoy_hf$perc <- "Max Rate DOY"
+Wood_pheno_table_DP_mrdoy_hf$DOY <- Wood_pheno_table_DP_mrdoy_hf$max_rate_DOY
+Wood_pheno_table_DP_hf <- rbind(Wood_pheno_table_DP_mrdoy_hf,Wood_pheno_table_DP_hf)
+#----
+
 fig6_RP_hf <- ggplot() +
   # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
-  stat_lineribbon(data = predictions_RP_hf, aes(x = climwinmean, y = predictions_rstanarm, group = perc, col = perc), .width = c(.99, .95), linetype = "solid") +
+  stat_lineribbon(data = predictions_RP_hf, aes(x = climwinmean, y = predictions_rstanarm, fill = perc, col = perc), .width = .95, alpha = 0.5, linetype = "solid") +
   geom_point(data = Wood_pheno_table_RP_hf, aes(x = climwinmean, y = DOY, col = perc)) +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
-  scale_fill_brewer() +
+  scale_color_manual(values = c("red","dark green","blue","purple"))+
+  #scale_fill_brewer() +
   # facet_grid(perc) +
-  coord_cartesian(xlim = c(12.3, 16), ylim = c(44, 261)) +
+  coord_cartesian(xlim = c(12.3, 16), ylim = c(min(Wood_pheno_table_RP_hf$DOY), max(Wood_pheno_table_RP_hf$DOY))) +
   theme_bw()+
   theme(legend.position = "none",
         axis.text.x = element_blank(),
-        axis.text.y = element_blank(),
         text = element_text(size = 20)) +
   labs(x = "", y = "", col = "Percentile", title = "Harvard Forest", subtitle = "Ring-porous")
 # geom_text(data = climwin_windows, aes(label = window), x = -Inf, y = -Inf, hjust = -0.01, vjust = -0.5, family = "Avenir")
 
 fig6_DP_hf <- ggplot() +
   # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
-  stat_lineribbon(data = predictions_DP_hf, aes(x = climwinmean, y = predictions_rstanarm, group = perc, col = perc), .width = c(.99, .95), linetype = "solid") +
+  stat_lineribbon(data = predictions_DP_hf, aes(x = climwinmean, y = predictions_rstanarm, fill = perc, col = perc), .width = .95, alpha = 0.5, linetype = "solid",show.legend = FALSE) +
   geom_point(data = Wood_pheno_table_DP_hf, aes(x = climwinmean, y = DOY, col = perc)) +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
-  scale_fill_brewer() +
+  scale_color_manual(values = c("red","dark green","blue","purple"),  labels = expression(DOY[25], DOY[50],DOY[75],DOY[g[max]]))+
+  #scale_fill_brewer() +
   theme_bw()+
   theme(legend.position = c(.90, .5),
+        legend.text.align = 0,
         axis.text.x = element_blank(),
-        axis.text.y = element_blank(),
         text = element_text(size = 20)) +
   # facet_grid(perc) +
-  coord_cartesian(xlim = c(11.7, 15.5), ylim = c(80, 240)) +
-  labs(x = "", y = "", col = "Percentile", title = "Harvard Forest", subtitle = "Diffuse-porous")
-
-woodtable_hf <- subset(Wood_pheno_table_hf, perc == "DOY_25")
+  coord_cartesian(xlim = c(11.7, 15.5), ylim = c(min(Wood_pheno_table_DP_hf$DOY), max(Wood_pheno_table_DP_hf$DOY))) +
+  labs(x = "", y = "", fill = "Percentile", col = "Variable", title = "Harvard Forest", subtitle = "Diffuse-porous")
 
 # Clean-up
 rm(list = setdiff(ls(), objects_to_keep))
-
 
 
 ### Model Fit 2: TOTAL GROWTH ----
@@ -747,12 +845,11 @@ fig6_RP_tot_hf <-   ggplot() +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
   # facet_grid(perc) +
-  coord_cartesian(xlim = c(12.3, 16), ylim = c(-.27, 1.28)) +
+  coord_cartesian(xlim = c(12.3, 16), ylim = c(-.1, 1.20)) +
   theme_bw()+
   theme(legend.position = "none",
-        axis.text.y = element_blank(),
         text = element_text(size = 20)) +
-  labs(x = "Temperature (c) 4/2-5/7", y = "")
+  labs(x = expression(paste("4/2-5/7 ", T[max], " (°C)")), y = "")
 
 fig6_DP_tot_hf <- ggplot() +
   # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
@@ -761,12 +858,11 @@ fig6_DP_tot_hf <- ggplot() +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
   # facet_grid(perc) +
-  coord_cartesian(xlim = c(11.7, 15), ylim = c(-.27, 1)) +
+  coord_cartesian(xlim = c(11.7, 15.5), ylim = c(-.15, 1)) +
   theme_bw()+
   theme(legend.position = "none",
-        axis.text.y = element_blank(),
         text = element_text(size = 20)) +
-  labs(x = "Temperature (c) 3/19-5/7", y = "")
+  labs(x = expression(paste("3/19-5/7 ", T[max], " (°C)")), y = "")
 
 # Clean-up
 rm(list = setdiff(ls(), objects_to_keep))
@@ -809,11 +905,10 @@ fig6_RP_sl_hf <- ggplot() +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
   # facet_grid(perc) +
-  coord_cartesian(xlim = c(12.3, 16), ylim = c(3, 106)) +
+  coord_cartesian(xlim = c(12.3, 16), ylim = c(15, 100)) +
   theme_bw()+
   theme(legend.position = "none",
         axis.text.x = element_blank(),
-        axis.text.y = element_blank(),
         text = element_text(size = 20)) +
   labs(x = "", y = "")
 
@@ -824,11 +919,10 @@ fig6_DP_sl_hf <- ggplot() +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
   # facet_grid(perc) +
-  coord_cartesian(xlim = c(11.7, 15), ylim = c(3, 106)) +
+  coord_cartesian(xlim = c(11.7, 15.5), ylim = c(3, 100)) +
   theme_bw()+
   theme(legend.position = "none",
         axis.text.x = element_blank(),
-        axis.text.y = element_blank(),
         text = element_text(size = 20)) +
   labs(x = "", y = "")
 
@@ -873,11 +967,10 @@ fig6_RP_mr_hf <- ggplot() +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
   # facet_grid(perc) +
-  coord_cartesian(xlim = c(12.3, 16), ylim = c(-.007, 0.02)) +
+  coord_cartesian(xlim = c(12.3, 16), ylim = c(-.001, 0.01)) +
   theme_bw()+
   theme(legend.position = "none",
         axis.text.x = element_blank(),
-        axis.text.y = element_blank(),
         text = element_text(size = 20)) +
   labs(x = "", y = "")
 
@@ -888,11 +981,10 @@ fig6_DP_mr_hf <-   ggplot() +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
   # facet_grid(perc) +
-  coord_cartesian(xlim = c(11.7, 15), ylim = c(-.007, 0.02)) +
+  coord_cartesian(xlim = c(11.7, 15.5), ylim = c(-.001, 0.01)) +
   theme_bw()+
   theme(legend.position = "none",
         axis.text.x = element_blank(),
-        axis.text.y = element_blank(),
         text = element_text(size = 20)) +
   labs(x = "", y = "")
 
@@ -937,11 +1029,10 @@ fig6_RP_mrdoy_hf <- ggplot() +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
   # facet_grid(perc) +
-  coord_cartesian(xlim = c(12.3, 16), ylim = c(99, 235)) +
+  coord_cartesian(xlim = c(12.3, 16), ylim = c(110, 210)) +
   theme_bw()+
   theme(legend.position = "none",
         axis.text.x = element_blank(),
-        axis.text.y = element_blank(),
         text = element_text(size = 20)) +
   labs(x = "", y = "")
 
@@ -952,11 +1043,10 @@ fig6_DP_mrdoy_hf <- ggplot() +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
   # facet_grid(perc) +
-  coord_cartesian(xlim = c(11.7, 15), ylim = c(99, 235)) +
+  coord_cartesian(xlim = c(11.7, 15.5), ylim = c(120, 235)) +
   theme_bw()+
   theme(legend.position = "none",
         axis.text.x = element_blank(),
-        axis.text.y = element_blank(),
         text = element_text(size = 20)) +
   labs(x = "", y = "")
 
@@ -974,21 +1064,21 @@ timer$toc - timer$tic
 
 ## Create single figure using patchwork ----------
 png(
-  filename = "doc/manuscript/tables_figures/pheno_Tsensitivity_combo_patchwork.png", width = 15, height = 25,
+  filename = "doc/manuscript/tables_figures/pheno_Tsensitivity_combo_patchwork.png", width = 24, height = 20,
   pointsize = 12, bg = "transparent", units = "in", res = 600
   #restoreConsole = FALSE
 )
 # DOY:
 fig6_RP + fig6_DP + fig6_RP_hf + fig6_DP_hf +
   # Max rate DOY:
-  fig6_RP_mrdoy + fig6_DP_mrdoy + fig6_RP_mrdoy_hf + fig6_DP_mrdoy_hf +
+  #fig6_RP_mrdoy + fig6_DP_mrdoy + fig6_RP_mrdoy_hf + fig6_DP_mrdoy_hf +
   # Season length:
   fig6_RP_sl + fig6_DP_sl + fig6_RP_sl_hf + fig6_DP_sl_hf +
   # Maximum growth rate:
   fig6_RP_mr + fig6_DP_mr + fig6_RP_mr_hf + fig6_DP_mr_hf +
   # Total growth:
   fig6_RP_tot + fig6_DP_tot + fig6_RP_tot_hf + fig6_DP_tot_hf +
-  plot_layout(nrow = 5)
+  plot_layout(nrow = 4)
 dev.off()
 
 ## Create single figure using grid.arrange ----------
