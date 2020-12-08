@@ -159,16 +159,15 @@ n_cores <- sum(na.omit(species_table[, "n.cores"]))
 ```
 
 
-I like the [Nature summary paragraph template](https://cbs.umn.edu/sites/cbs.umn.edu/files/public/downloads/Annotated_Nature_abstract.pdf):
 
-- One or two sentences providing a basic introduction to the field, comprehensible to a scientist in any discipline.
-- Two to three sentences ofmore detailed background, comprehensible to scientists in related disciplines.
-- One sentence clearly stating the general problem being addressed by this particular study.
-- One sentence summarising the main result (with the words “here we show” or their equivalent).
-- Two or three sentences explaining what the main result reveals in direct comparison to what was thought to be the case previously, or how the main result adds to previous knowledge.
-- One or two sentences to put the results into a more general context.
-- Two or three sentences to provide a broader perspective, readily comprehensible to a scientist in any discipline
-
+As the climate changes, warmer spring temperatures are causing earlier leaf-out in temperate deciduous forests, along with earlier initiation of the annual period where these ecosystems are net sinks of carbon dioxide (CO~2~).
+As a result, there is a tendency towards increased growing season length and annual CO~2~ sequestration.
+However, little is known about how spring temperatures affect tree stem growth, which consumes a modest portion of the carbon fixed annually but is critical in that wood has a long residence time in the ecosystem.
+We need to know how the timing and rate of woody growth are affected by warming spring temperatures.
+Here, we show that in two temperate deciduous forests warmer maximum temperatures in the spring shift growth milestones earlier in the year, but have only a modest effect on peak growing season length and little effect on annual growth.
+This contrasts with the expectation *in most models* that an earlier start to growing season would significantly increase the rate of biomass accumulation and thereby enhance the CO~2~ sink of temperate deciduous forests.
+It is, however, consistent with most tree-ring studies in temperate deciduous forests showing that annual growth tends to be more sensitive to climatic conditions during the peak growing season than in the spring, with eddy-covariance records showing that annual CO~2~ sequestration is more strongly linked to conditions in the peak growing season than to growing season length, and with evidence that forest CO~2~ sequestration is sink-limited.
+Thus, our findings indicate that warming spring conditions are unlikely to impact temperate deciduous forest growth sufficiently to produce any substantial negative climate change feedback.
 
 **Keywords**:  
 
