@@ -86,11 +86,17 @@ climwindows <-
   read.csv("results/Climwin_results/Weekly/SCBI/weekly_climwin_results_SCBI_TMAX.csv") %>%
   filter(wood_type != "other") %>%
   mutate(
-    median_windowopendate = as.Date(median_windowopendate),
-    median_windowclosedate = as.Date(median_windowclosedate),
-    opendoy = yday(median_windowopendate),
-    closedoy = yday(median_windowclosedate)
+    #median_windowopendate = as.Date(median_windowopendate),
+    #median_windowclosedate = as.Date(median_windowclosedate),
+    #opendoy = yday(median_windowopendate),
+    #closedoy = yday(median_windowclosedate)
+    winopen = as.Date(refwoy * 7 - winopenwoy * 7, origin = paste0("2011-01-01")),
+    winclose = as.Date(refwoy * 7 - winclosewoy * 7, origin = paste0("2011-01-01")),
+    opendoy = yday(winopen),
+    closedoy = yday(winclose)+7
   )
+#climwindows$winopen <- as.Date(climwindows$refwoy * 7 - climwindows$winopenwoy * 7, origin = paste0("2011-01-01"))
+#climwindows$winclose <- as.Date(climwindows$refwoy * 7 - climwindows$winclosewoy * 7, origin = paste0("2011-01-01"))
 
 #TMIN
 #climwindows <-
@@ -104,7 +110,7 @@ climwindows <-
 #  )
 #TMAX
 climwinmeans_rp <- weatherdata %>%
-  filter(doy %in% c(climwindows[1, 11]:climwindows[1, 12])) %>%
+  filter(doy %in% c(climwindows[1, 13]:climwindows[1, 14])) %>%
   group_by(year) %>%
   summarize(climwinmean = mean(cleantmax)) %>%
   mutate(wood_type = "ring-porous")
@@ -117,7 +123,7 @@ climwinmeans_rp <- weatherdata %>%
 #  mutate(wood_type = "ring-porous")
 #TMAX
 climwinmeans_dp <- weatherdata %>%
-  filter(doy %in% c(climwindows[4, 11]:climwindows[4, 12])) %>% # 68:135
+  filter(doy %in% c(climwindows[4, 13]:climwindows[4, 14])) %>% # 68:135
   group_by(year) %>%
   summarize(climwinmean = mean(cleantmax)) %>%
   mutate(wood_type = "diffuse-porous")
@@ -602,10 +608,14 @@ climwindows_hf <-
   read.csv("results/Climwin_results/Weekly/Harvard Forest/weekly_climwin_results_HF_TMAX.csv") %>%
   filter(wood_type != "other") %>%
   mutate(
-    median_windowopendate = as.Date(median_windowopendate, format = "%Y-%m-%d"),
-    median_windowclosedate = as.Date(median_windowclosedate, format = "%Y-%m-%d"),
-    opendoy = yday(median_windowopendate),
-    closedoy = yday(median_windowclosedate)
+    #median_windowopendate = as.Date(median_windowopendate, format = "%Y-%m-%d"),
+    #median_windowclosedate = as.Date(median_windowclosedate, format = "%Y-%m-%d"),
+    #opendoy = yday(median_windowopendate),
+    #closedoy = yday(median_windowclosedate)
+    winopen = as.Date(refwoy * 7 - winopenwoy * 7, origin = paste0("2011-01-01")),
+    winclose = as.Date(refwoy * 7 - winclosewoy * 7, origin = paste0("2011-01-01")),
+    opendoy = yday(winopen),
+    closedoy = yday(winclose)+7
   )
 
 #TMIN
@@ -622,7 +632,7 @@ climwindows_hf <-
 
 #TMAX
 climwinmeans_rp_hf <- weatherdata_hf %>%
-  filter(DOY %in% c(climwindows_hf[4, 11]:climwindows_hf[4, 12])) %>%
+  filter(DOY %in% c(climwindows_hf[4, 13]:climwindows_hf[4, 14])) %>%
   group_by(year) %>%
   summarize(climwinmean = mean(airtmax)) %>%
   mutate(wood_type = "ring-porous")
@@ -636,7 +646,7 @@ climwinmeans_rp_hf <- weatherdata_hf %>%
 
 #TMAX
 climwinmeans_dp_hf <- weatherdata_hf %>%
-  filter(DOY %in% c(climwindows_hf[1, 11]:climwindows_hf[1, 12])) %>% # 68:135
+  filter(DOY %in% c(climwindows_hf[1, 13]:climwindows_hf[1, 14])) %>% # 68:135
   group_by(year) %>%
   summarize(climwinmean = mean(airtmax)) %>%
   mutate(wood_type = "diffuse-porous")
