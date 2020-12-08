@@ -356,7 +356,7 @@ Wood_pheno_table_hf <- read_csv("Data/Wood_pheno_table_HarvardForest_CLEAN.csv")
   # Rename ring porous to not have a space
   mutate(wood_type = ifelse(wood_type == "ring porous", "ring-porous", wood_type))
 
-warmestRP_scbi <- subset(Wood_pheno_table_scbi, year == 2012 & wood_type == "ring-porous")
+warmestRP_scbi <- subset(Wood_pheno_table_scbi, year == 2013 & wood_type == "ring-porous")
 warmestDP_scbi <- subset(Wood_pheno_table_scbi, year == 2012 & wood_type == "diffuse-porous")
 warmest_scbi <- rbind(warmestDP_scbi, warmestRP_scbi)
 coldestRP_scbi <- subset(Wood_pheno_table_scbi, year == 2013 & wood_type == "ring-porous")
@@ -495,10 +495,10 @@ png(filename = "doc/manuscript/tables_figures/climwin_figure.png", width=10, hei
     restoreConsole=FALSE)
 
 grid.arrange(
-  plotbetas(SCBI_dp, arrow = TRUE),
   plotbetas(SCBI_rp, arrow = TRUE),
-  plotbetas(HF_dp, arrow = TRUE),
+  plotbetas(SCBI_dp, arrow = TRUE),
   plotbetas(HF_rp, arrow = TRUE),
+  plotbetas(HF_dp, arrow = TRUE),
 
 
   as.table = TRUE, nrow=2, ncol=2) ###as.table specifies order if multiple rows
