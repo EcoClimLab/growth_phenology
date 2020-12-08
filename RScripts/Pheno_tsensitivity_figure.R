@@ -219,7 +219,7 @@ predictions_RP$sig <- ifelse(predictions_RP$perc == "DOY_75", 1, 0)
 
 woodtable <- subset(Wood_pheno_table, perc == "DOY_25")
 
-#Add Max rate DOY line
+# Add max rate DOY
 maxrateDOY_formulaRP <- "max_rate_DOY ~wood_type + wood_type:climwinmean + (1|tag)" %>% as.formula()
 
 mixedmodel_stanlmerRP_maxrateDOY <- stan_lmer(
@@ -734,7 +734,7 @@ Wood_pheno_table_DP_hf <- subset(Wood_pheno_table_hf, wood_type == "diffuse-poro
 
 woodtable_hf <- subset(Wood_pheno_table_hf, perc == "DOY_25")
 
-#Add max rate DOY ----
+# Add max rate DOY
 maxrateDOY_formulaRP <- "max_rate_DOY ~wood_type + wood_type:climwinmean + (1|site) + (1|tag)" %>% as.formula()
 
 mixedmodel_stanlmerRP_maxrateDOY_hf <- stan_lmer(
@@ -781,7 +781,6 @@ Wood_pheno_table_DP_mrdoy_hf <- subset(woodtable_hf, wood_type == "diffuse-porou
 Wood_pheno_table_DP_mrdoy_hf$perc <- "Max Rate DOY"
 Wood_pheno_table_DP_mrdoy_hf$DOY <- Wood_pheno_table_DP_mrdoy_hf$max_rate_DOY
 Wood_pheno_table_DP_hf <- rbind(Wood_pheno_table_DP_mrdoy_hf,Wood_pheno_table_DP_hf)
-#----
 
 fig6_RP_hf <- ggplot() +
   # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
