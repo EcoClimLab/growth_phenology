@@ -344,13 +344,13 @@ grid.arrange(
 dev.off()
 # ----
 #DOY timing figure (Replace with figure created in DOYtiming_all_years.R)----
-Wood_pheno_table_scbi <- read_csv("Data/Wood_pheno_table_CLEAN.csv") %>%
+Wood_pheno_table_scbi <- read_csv("Data/Wood_pheno_table_SCBI_CLEAN.csv") %>%
   # Keep only RP and DP for now
   filter(wood_type != "other") %>%
   # Rename ring porous to not have a space
   mutate(wood_type = ifelse(wood_type == "ring porous", "ring-porous", wood_type))
 
-Wood_pheno_table_hf <- read_csv("Data/Wood_pheno_table_HarvardForest_V9CLEAN.csv") %>%
+Wood_pheno_table_hf <- read_csv("Data/Wood_pheno_table_HarvardForest_CLEAN.csv") %>%
   # Keep only RP and DP for now
   filter(wood_type != "other") %>%
   # Rename ring porous to not have a space
