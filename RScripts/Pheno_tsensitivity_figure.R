@@ -50,9 +50,9 @@ Wood_pheno_table <- read_csv("Data/Wood_pheno_table_SCBI_CLEAN.csv") %>%
   # Rename ring porous to not have a space
   mutate(wood_type = ifelse(wood_type == "ring porous", "ring-porous", wood_type))
 
-twofive <- subset(Wood_pheno_table, perc == .25)
-fifty <- subset(Wood_pheno_table, perc == .5)
-sevenfive <- subset(Wood_pheno_table, perc == .75)
+twofive <- filter(Wood_pheno_table, perc == .25)
+fifty <- filter(Wood_pheno_table, perc == .5)
+sevenfive <- filter(Wood_pheno_table, perc == .75)
 # 25-50
 twofifty <- cbind(twofive, fifty$DOY)
 twofifty$twentyfive_to_fifty <- twofifty$`fifty$DOY` - twofifty$DOY
@@ -141,7 +141,7 @@ climwinmeans <- bind_rows(climwinmeans_rp, climwinmeans_dp)
 
 # 3. Add to growth data
 Wood_pheno_table <- Wood_pheno_table %>%
- # left_join(marchmeans, by = "year") %>%
+  # left_join(marchmeans, by = "year") %>%
   left_join(climwinmeans, by = c("year", "wood_type")) %>%
   left_join(twosevenfive, by = c("tag", "year")) %>%
   left_join(fiftyseventy, by = c("tag", "year")) %>%
@@ -211,13 +211,13 @@ predictions <- Wood_pheno_table %>%
   arrange(perc, tag, year) %>%
   mutate(predictions_rstanarm = y_hat)
 
-predictions_RP <- subset(predictions, wood_type == "ring-porous")
-predictions_DP <- subset(predictions, wood_type == "diffuse-porous")
-Wood_pheno_table_RP <- subset(Wood_pheno_table, wood_type == "ring-porous")
-Wood_pheno_table_DP <- subset(Wood_pheno_table, wood_type == "diffuse-porous")
+predictions_RP <- filter(predictions, wood_type == "ring-porous")
+predictions_DP <- filter(predictions, wood_type == "diffuse-porous")
+Wood_pheno_table_RP <- filter(Wood_pheno_table, wood_type == "ring-porous")
+Wood_pheno_table_DP <- filter(Wood_pheno_table, wood_type == "diffuse-porous")
 predictions_RP$sig <- ifelse(predictions_RP$perc == "DOY_75", 1, 0)
 
-woodtable <- subset(Wood_pheno_table, perc == "DOY_25")
+woodtable <- filter(Wood_pheno_table, perc == "DOY_25")
 
 # Add max rate DOY
 maxrateDOY_formulaRP <- "max_rate_DOY ~wood_type + wood_type:climwinmean + (1|tag)" %>% as.formula()
@@ -244,23 +244,23 @@ predictions_mrdoy <- woodtable %>%
   arrange(tag, year) %>%
   mutate(predictions_rstanarm = y_hat)
 
-predictions_mrdoy_RP <- subset(predictions_mrdoy, wood_type == "ring-porous")
+predictions_mrdoy_RP <- filter(predictions_mrdoy, wood_type == "ring-porous")
 predictions_mrdoy_RP$perc <- "Max Rate DOY"
 predictions_mrdoy_RP$sig <- 0
-predictions_RP <- rbind(predictions_RP, predictions_mrdoy_RP)
-predictions_mrdoy_DP <- subset(predictions_mrdoy, wood_type == "diffuse-porous")
+predictions_RP <- bind_rows(predictions_RP, predictions_mrdoy_RP)
+predictions_mrdoy_DP <- filter(predictions_mrdoy, wood_type == "diffuse-porous")
 predictions_mrdoy_DP$perc <- "Max Rate DOY"
-predictions_DP <- rbind(predictions_DP, predictions_mrdoy_DP)
+predictions_DP <- bind_rows(predictions_DP, predictions_mrdoy_DP)
 
-Wood_pheno_table_RP_mrdoy <- subset(woodtable, wood_type == "ring-porous")
+Wood_pheno_table_RP_mrdoy <- filter(woodtable, wood_type == "ring-porous")
 Wood_pheno_table_RP_mrdoy$perc <- "Max Rate DOY"
 Wood_pheno_table_RP_mrdoy$DOY <- Wood_pheno_table_RP_mrdoy$max_rate_DOY
-Wood_pheno_table_RP <- rbind(Wood_pheno_table_RP_mrdoy,Wood_pheno_table_RP)
+Wood_pheno_table_RP <- bind_rows(Wood_pheno_table_RP_mrdoy,Wood_pheno_table_RP)
 
-Wood_pheno_table_DP_mrdoy <- subset(woodtable, wood_type == "diffuse-porous")
+Wood_pheno_table_DP_mrdoy <- filter(woodtable, wood_type == "diffuse-porous")
 Wood_pheno_table_DP_mrdoy$perc <- "Max Rate DOY"
 Wood_pheno_table_DP_mrdoy$DOY <- Wood_pheno_table_DP_mrdoy$max_rate_DOY
-Wood_pheno_table_DP <- rbind(Wood_pheno_table_DP_mrdoy, Wood_pheno_table_DP)
+Wood_pheno_table_DP <- bind_rows(Wood_pheno_table_DP_mrdoy, Wood_pheno_table_DP)
 #Wood_pheno_table_DP2 <- Wood_pheno_table_DP %>% mutate(perc = factor(perc, levels = c("Max Rate DOY", "DOY_25", "DOY_50", "DOY_75")))
 
 
@@ -325,10 +325,10 @@ predictions_tot <- woodtable %>%
   arrange(tag, year) %>%
   mutate(predictions_rstanarm = y_hot)
 
-predictions_tot_RP <- subset(predictions_tot, wood_type == "ring-porous")
-predictions_tot_DP <- subset(predictions_tot, wood_type == "diffuse-porous")
-Wood_pheno_table_RP_tot <- subset(woodtable, wood_type == "ring-porous")
-Wood_pheno_table_DP_tot <- subset(woodtable, wood_type == "diffuse-porous")
+predictions_tot_RP <- filter(predictions_tot, wood_type == "ring-porous")
+predictions_tot_DP <- filter(predictions_tot, wood_type == "diffuse-porous")
+Wood_pheno_table_RP_tot <- filter(woodtable, wood_type == "ring-porous")
+Wood_pheno_table_DP_tot <- filter(woodtable, wood_type == "diffuse-porous")
 
 fig6_RP_tot <-  ggplot() +
   # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
@@ -386,10 +386,10 @@ predictions_sl <- woodtable %>%
   arrange(tag, year) %>%
   mutate(predictions_rstanarm = y_hit)
 
-predictions_sl_RP <- subset(predictions_sl, wood_type == "ring-porous")
-predictions_sl_DP <- subset(predictions_sl, wood_type == "diffuse-porous")
-Wood_pheno_table_RP_sl <- subset(woodtable, wood_type == "ring-porous")
-Wood_pheno_table_DP_sl <- subset(woodtable, wood_type == "diffuse-porous")
+predictions_sl_RP <- filter(predictions_sl, wood_type == "ring-porous")
+predictions_sl_DP <- filter(predictions_sl, wood_type == "diffuse-porous")
+Wood_pheno_table_RP_sl <- filter(woodtable, wood_type == "ring-porous")
+Wood_pheno_table_DP_sl <- filter(woodtable, wood_type == "diffuse-porous")
 
 fig6_RP_sl <- ggplot() +
   # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
@@ -448,10 +448,10 @@ predictions_mr <- woodtable %>%
   arrange(tag, year) %>%
   mutate(predictions_rstanarm = y_het)
 
-predictions_mr_RP <- subset(predictions_mr, wood_type == "ring-porous")
-predictions_mr_DP <- subset(predictions_mr, wood_type == "diffuse-porous")
-Wood_pheno_table_RP_mr <- subset(woodtable, wood_type == "ring-porous")
-Wood_pheno_table_DP_mr <- subset(woodtable, wood_type == "diffuse-porous")
+predictions_mr_RP <- filter(predictions_mr, wood_type == "ring-porous")
+predictions_mr_DP <- filter(predictions_mr, wood_type == "diffuse-porous")
+Wood_pheno_table_RP_mr <- filter(woodtable, wood_type == "ring-porous")
+Wood_pheno_table_DP_mr <- filter(woodtable, wood_type == "diffuse-porous")
 
 fig6_RP_mr <-  ggplot() +
   # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
@@ -510,16 +510,16 @@ predictions_mrdoy <- woodtable %>%
   arrange(tag, year) %>%
   mutate(predictions_rstanarm = y_hat)
 
-predictions_mrdoy_RP <- subset(predictions_mrdoy, wood_type == "ring-porous")
+predictions_mrdoy_RP <- filter(predictions_mrdoy, wood_type == "ring-porous")
 predictions_mrdoy_RP$perc <- "Max Rate DOY"
 predictions_mrdoy_RP$sig <- 0
-predictions_RP <- rbind(predictions_RP, predictions_mrdoy_RP)
-predictions_mrdoy_DP <- subset(predictions_mrdoy, wood_type == "diffuse-porous")
+predictions_RP <- bind_rows(predictions_RP, predictions_mrdoy_RP)
+predictions_mrdoy_DP <- filter(predictions_mrdoy, wood_type == "diffuse-porous")
 predictions_mrdoy_DP$perc <- "Max Rate DOY"
-predictions_DP <- rbind(predictions_DP, predictions_mrdoy_DP)
+predictions_DP <- bind_rows(predictions_DP, predictions_mrdoy_DP)
 
-Wood_pheno_table_RP_mrdoy <- subset(woodtable, wood_type == "ring-porous")
-Wood_pheno_table_DP_mrdoy <- subset(woodtable, wood_type == "diffuse-porous")
+Wood_pheno_table_RP_mrdoy <- filter(woodtable, wood_type == "ring-porous")
+Wood_pheno_table_DP_mrdoy <- filter(woodtable, wood_type == "diffuse-porous")
 
 fig6_RP_mrdoy <- ggplot() +
   # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
@@ -567,9 +567,9 @@ Wood_pheno_table_hf <- read_csv("Data/Wood_pheno_table_HarvardForest_CLEAN.csv")
   mutate(wood_type = ifelse(wood_type == "ring porous", "ring-porous", wood_type))
 # Wood_pheno_table$tag <- substr(Wood_pheno_table$tag,1, nchar(as.character(Wood_pheno_table$tag))-4)
 
-twofive_hf <- subset(Wood_pheno_table_hf, perc == .25)
-fifty_hf <- subset(Wood_pheno_table_hf, perc == .5)
-sevenfive_hf <- subset(Wood_pheno_table_hf, perc == .75)
+twofive_hf <- filter(Wood_pheno_table_hf, perc == .25)
+fifty_hf <- filter(Wood_pheno_table_hf, perc == .5)
+sevenfive_hf <- filter(Wood_pheno_table_hf, perc == .75)
 # 25-50
 twofifty_hf <- cbind(twofive_hf, fifty_hf$DOY)
 twofifty_hf$twentyfive_to_fifty <- twofifty_hf$`fifty_hf$DOY` - twofifty_hf$DOY
@@ -664,7 +664,7 @@ climwinmeans_hf <- bind_rows(climwinmeans_rp_hf, climwinmeans_dp_hf)
 
 # 3. Add to growth data
 Wood_pheno_table_hf <- Wood_pheno_table_hf %>%
-#  left_join(marchmeans_hf, by = "year") %>%
+  #  left_join(marchmeans_hf, by = "year") %>%
   left_join(climwinmeans_hf, by = c("year", "wood_type")) %>%
   left_join(twosevenfive_hf, by = c("tag", "year")) %>%
   left_join(fiftyseventy_hf, by = c("tag", "year")) %>%
@@ -727,12 +727,12 @@ predictions_hf <- Wood_pheno_table_hf %>%
   arrange(perc, tag, year) %>%
   mutate(predictions_rstanarm = y_hat_hf)
 
-predictions_RP_hf <- subset(predictions_hf, wood_type == "ring-porous")
-predictions_DP_hf <- subset(predictions_hf, wood_type == "diffuse-porous")
-Wood_pheno_table_RP_hf <- subset(Wood_pheno_table_hf, wood_type == "ring-porous")
-Wood_pheno_table_DP_hf <- subset(Wood_pheno_table_hf, wood_type == "diffuse-porous")
+predictions_RP_hf <- filter(predictions_hf, wood_type == "ring-porous")
+predictions_DP_hf <- filter(predictions_hf, wood_type == "diffuse-porous")
+Wood_pheno_table_RP_hf <- filter(Wood_pheno_table_hf, wood_type == "ring-porous")
+Wood_pheno_table_DP_hf <- filter(Wood_pheno_table_hf, wood_type == "diffuse-porous")
 
-woodtable_hf <- subset(Wood_pheno_table_hf, perc == "DOY_25")
+woodtable_hf <- filter(Wood_pheno_table_hf, perc == "DOY_25")
 
 # Add max rate DOY
 maxrateDOY_formulaRP <- "max_rate_DOY ~wood_type + wood_type:climwinmean + (1|site) + (1|tag)" %>% as.formula()
@@ -759,28 +759,28 @@ predictions_mrdoy_hf <- woodtable_hf %>%
   arrange(tag, year) %>%
   mutate(predictions_rstanarm = y_hat_hf)
 
-predictions_mrdoy_RP_hf <- subset(predictions_mrdoy_hf, wood_type == "ring-porous")
-predictions_mrdoy_DP_hf <- subset(predictions_mrdoy_hf, wood_type == "diffuse-porous")
-Wood_pheno_table_RP_mrdoy_hf <- subset(woodtable_hf, wood_type == "ring-porous")
-Wood_pheno_table_DP_mrdoy_hf <- subset(woodtable_hf, wood_type == "diffuse-porous")
+predictions_mrdoy_RP_hf <- filter(predictions_mrdoy_hf, wood_type == "ring-porous")
+predictions_mrdoy_DP_hf <- filter(predictions_mrdoy_hf, wood_type == "diffuse-porous")
+Wood_pheno_table_RP_mrdoy_hf <- filter(woodtable_hf, wood_type == "ring-porous")
+Wood_pheno_table_DP_mrdoy_hf <- filter(woodtable_hf, wood_type == "diffuse-porous")
 
-predictions_mrdoy_RP_hf <- subset(predictions_mrdoy_hf, wood_type == "ring-porous")
+predictions_mrdoy_RP_hf <- filter(predictions_mrdoy_hf, wood_type == "ring-porous")
 predictions_mrdoy_RP_hf$perc <- "Max Rate DOY"
 #predictions_mrdoy_RP_hf$sig <- 0
-predictions_RP_hf <- rbind(predictions_RP_hf, predictions_mrdoy_RP_hf)
-predictions_mrdoy_DP_hf <- subset(predictions_mrdoy_hf, wood_type == "diffuse-porous")
+predictions_RP_hf <- bind_rows(predictions_RP_hf, predictions_mrdoy_RP_hf)
+predictions_mrdoy_DP_hf <- filter(predictions_mrdoy_hf, wood_type == "diffuse-porous")
 predictions_mrdoy_DP_hf$perc <- "Max Rate DOY"
-predictions_DP_hf <- rbind(predictions_DP_hf, predictions_mrdoy_DP_hf)
+predictions_DP_hf <- bind_rows(predictions_DP_hf, predictions_mrdoy_DP_hf)
 
-Wood_pheno_table_RP_mrdoy_hf <- subset(woodtable_hf, wood_type == "ring-porous")
+Wood_pheno_table_RP_mrdoy_hf <- filter(woodtable_hf, wood_type == "ring-porous")
 Wood_pheno_table_RP_mrdoy_hf$perc <- "Max Rate DOY"
 Wood_pheno_table_RP_mrdoy_hf$DOY <- Wood_pheno_table_RP_mrdoy_hf$max_rate_DOY
-Wood_pheno_table_RP_hf <- rbind(Wood_pheno_table_RP_mrdoy_hf,Wood_pheno_table_RP_hf)
+Wood_pheno_table_RP_hf <- bind_rows(Wood_pheno_table_RP_mrdoy_hf,Wood_pheno_table_RP_hf)
 
-Wood_pheno_table_DP_mrdoy_hf <- subset(woodtable_hf, wood_type == "diffuse-porous")
+Wood_pheno_table_DP_mrdoy_hf <- filter(woodtable_hf, wood_type == "diffuse-porous")
 Wood_pheno_table_DP_mrdoy_hf$perc <- "Max Rate DOY"
 Wood_pheno_table_DP_mrdoy_hf$DOY <- Wood_pheno_table_DP_mrdoy_hf$max_rate_DOY
-Wood_pheno_table_DP_hf <- rbind(Wood_pheno_table_DP_mrdoy_hf,Wood_pheno_table_DP_hf)
+Wood_pheno_table_DP_hf <- bind_rows(Wood_pheno_table_DP_mrdoy_hf,Wood_pheno_table_DP_hf)
 
 fig6_RP_hf <- ggplot() +
   # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
@@ -843,10 +843,10 @@ predictions_tot_hf <- woodtable_hf %>%
   arrange(tag, year) %>%
   mutate(predictions_rstanarm = y_hot_hf)
 
-predictions_tot_RP_hf <- subset(predictions_tot_hf, wood_type == "ring-porous")
-predictions_tot_DP_hf <- subset(predictions_tot_hf, wood_type == "diffuse-porous")
-Wood_pheno_table_RP_tot_hf <- subset(woodtable_hf, wood_type == "ring-porous")
-Wood_pheno_table_DP_tot_hf <- subset(woodtable_hf, wood_type == "diffuse-porous")
+predictions_tot_RP_hf <- filter(predictions_tot_hf, wood_type == "ring-porous")
+predictions_tot_DP_hf <- filter(predictions_tot_hf, wood_type == "diffuse-porous")
+Wood_pheno_table_RP_tot_hf <- filter(woodtable_hf, wood_type == "ring-porous")
+Wood_pheno_table_DP_tot_hf <- filter(woodtable_hf, wood_type == "diffuse-porous")
 
 fig6_RP_tot_hf <-   ggplot() +
   # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
@@ -903,10 +903,10 @@ predictions_sl_hf <- woodtable_hf %>%
   arrange(tag, year) %>%
   mutate(predictions_rstanarm = y_hit_hf)
 
-predictions_sl_RP_hf <- subset(predictions_sl_hf, wood_type == "ring-porous")
-predictions_sl_DP_hf <- subset(predictions_sl_hf, wood_type == "diffuse-porous")
-Wood_pheno_table_RP_sl_hf <- subset(woodtable_hf, wood_type == "ring-porous")
-Wood_pheno_table_DP_sl_hf <- subset(woodtable_hf, wood_type == "diffuse-porous")
+predictions_sl_RP_hf <- filter(predictions_sl_hf, wood_type == "ring-porous")
+predictions_sl_DP_hf <- filter(predictions_sl_hf, wood_type == "diffuse-porous")
+Wood_pheno_table_RP_sl_hf <- filter(woodtable_hf, wood_type == "ring-porous")
+Wood_pheno_table_DP_sl_hf <- filter(woodtable_hf, wood_type == "diffuse-porous")
 
 fig6_RP_sl_hf <- ggplot() +
   # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
@@ -965,10 +965,10 @@ predictions_mr_hf <- woodtable_hf %>%
   arrange(tag, year) %>%
   mutate(predictions_rstanarm = y_het_hf)
 
-predictions_mr_RP_hf <- subset(predictions_mr_hf, wood_type == "ring-porous")
-predictions_mr_DP_hf <- subset(predictions_mr_hf, wood_type == "diffuse-porous")
-Wood_pheno_table_RP_mr_hf <- subset(woodtable_hf, wood_type == "ring-porous")
-Wood_pheno_table_DP_mr_hf <- subset(woodtable_hf, wood_type == "diffuse-porous")
+predictions_mr_RP_hf <- filter(predictions_mr_hf, wood_type == "ring-porous")
+predictions_mr_DP_hf <- filter(predictions_mr_hf, wood_type == "diffuse-porous")
+Wood_pheno_table_RP_mr_hf <- filter(woodtable_hf, wood_type == "ring-porous")
+Wood_pheno_table_DP_mr_hf <- filter(woodtable_hf, wood_type == "diffuse-porous")
 
 fig6_RP_mr_hf <- ggplot() +
   # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
@@ -1027,10 +1027,10 @@ predictions_mrdoy_hf <- woodtable_hf %>%
   arrange(tag, year) %>%
   mutate(predictions_rstanarm = y_hat_hf)
 
-predictions_mrdoy_RP_hf <- subset(predictions_mrdoy_hf, wood_type == "ring-porous")
-predictions_mrdoy_DP_hf <- subset(predictions_mrdoy_hf, wood_type == "diffuse-porous")
-Wood_pheno_table_RP_mrdoy_hf <- subset(woodtable_hf, wood_type == "ring-porous")
-Wood_pheno_table_DP_mrdoy_hf <- subset(woodtable_hf, wood_type == "diffuse-porous")
+predictions_mrdoy_RP_hf <- filter(predictions_mrdoy_hf, wood_type == "ring-porous")
+predictions_mrdoy_DP_hf <- filter(predictions_mrdoy_hf, wood_type == "diffuse-porous")
+Wood_pheno_table_RP_mrdoy_hf <- filter(woodtable_hf, wood_type == "ring-porous")
+Wood_pheno_table_DP_mrdoy_hf <- filter(woodtable_hf, wood_type == "diffuse-porous")
 
 fig6_RP_mrdoy_hf <- ggplot() +
   # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
