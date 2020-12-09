@@ -103,7 +103,7 @@ for (w in unique(Wood_pheno_table$wood_type)) {
     )
 
     MassRand <- randwin(
-      repeats = 5,
+      repeats = 500,
       xvar = list(Temp = climate$TMAX),
       cdate = climate$DATE,
       bdate = biodata$date,
@@ -203,7 +203,7 @@ for (w in unique(Wood_pheno_table$wood_type)) {
     )
 
     MassRand <- randwin(
-      repeats = 5,
+      repeats = 500,
       xvar = list(Temp = climate$TMIN),
       cdate = climate$DATE,
       bdate = biodata$date,
