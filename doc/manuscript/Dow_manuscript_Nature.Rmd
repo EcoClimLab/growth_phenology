@@ -81,7 +81,7 @@ Kristina J. Anderson-Teixeira^1,7^*
 #Table numbers
 hypothesis_table=1
 table_species=2  #goes to SI
-mean_growth_parameters_table=3 
+mean_growth_parameters_table=3  #probably goes to SI
 
 #Figure numbers
 schematic=1 #illustrates parameters
@@ -216,7 +216,7 @@ knitr::include_graphics("tables_figures/hypothesis_table.png")
 
 ## (Phenological patterns)
 
-(*most of this is too detailed for Nature*)
+(*most or all of this should be cut-- first paragraph too detailed for Nature, and we want minimal comparison of ring vs diffuse porous*)
 
 Across all trees and years at SCBI, 
 25% of annual growth was achieved on May 20 ($DOY_{25}$=139), 
