@@ -76,66 +76,58 @@ Kristina J. Anderson-Teixeira^1,7^*
 
 ## Nature articles: 3-4 modest display items
 
-#Figures & Tables: listing figures and their number here is helpful for planning, and also allows automatic numbering within text -->easy changing of order. 
-
-#Table numbers
-hypothesis_table=1
-table_species=2  #goes to SI
-mean_growth_parameters_table=3  #probably goes to SI
+#Display items: listing figures and their number here is helpful for planning, and also allows automatic numbering within text -->easy changing of order. 
 
 #Figure numbers
-schematic=1 #illustrates parameters
-growth_curves_all = 2  #goes to SI
-    rel_growth_SCBI = "2a" 
-    rel_growth_HF = "2b" 
-    cum_growth_SCBI = "2c" 
-    cum_growth_HF = "2d" 
-climwin = 3 # probably stays?
-pheno_Tsensitivity = 4 
-DOYtiming = 5
-DOYtiming_SCBI = "5a"
-DOYtiming_Harvard = "5b"
-tree_rings = 6  #stays, hopefully adding a lot more sites
+schematic_summary=1 #illustrates parameters
+climwin = 2 # probably stays?
+pheno_Tsensitivity = 3 
+tree_rings = 4  #stays, hopefully adding a lot more sites
 
 #figure captions
 
-schematic_caption <- "Figure 1. Schematic illustrating the parameters considered here. Shown are measurements for an example tree (## cm SPECIES), fit with the model of McMahon & Parker (2015), from which phenology and growth rate parameters are obtained."
-
-growth_curves_all_caption  <- "Figure 2.  Growth trajectories for ring- and diffuse-porous trees, as both relative and cumulative fractions of total annual growth. Each line represents one year's growth for a given tree, fit with McMahon model. (THIS FIGURE GOES TO SI.)"
+schematic_summary_caption <- "Figure 1. Summary of results."
 
 climwin_caption <- "Figure 3. Landscapes of relationships between the day of year on which 25% of annual growth is achieved ($DOY_{25}$) and temperature in prior weeks for ring- and diffuse-porous trees at SCBI and Harvard Forest. Shown are matrices of linear coefficients of first-order linear regressions between temperature and $DOY_{25}$, where Window Open and Window Close indicate number of weeks prior to $DOY_{25}$ (ring-porous: May 5 at SCBI, May 13 at HF; diffuse-porous: June 4 at SCBI, June 14 at HF). Black circles indicate the critical $T_{max}$ window (ring-porous:  March 22- April 9 at SCBI, April 2 - May 07 at HF; diffuse-porous: Feb. 19- May 21 at SCBI, March 19 - May 07 at HF)."
-
 
 pheno_Tsensitivity_caption <- "Figure 4. Relationship between growth parameters and climwin mean temperatures. For each 
 observed climwin mean temperature value, the posterior mean of the fitted day of year
 is represented by the solid blue line and 95% credible intervals are represented by bands."
 
-DOYtiming_caption <- "Figure 5. Day of year where growth milestones were achieved at (a) the Smithonian Conservation Biology Institute and (b) Harvard Forest. Each line represents a single year of ring-porous (dotted line) or diffuse-porous (solid line) trees at each site. Mean temperature was calculated for each wood-type/site combination over the respective critical $T_{max}$ window, then turned into a ratio and assigned a color on a gradient where the coldest year in the sample is blue and the warmest is red."
-
-tree_rings_caption <- "Figure 6. Climate sensitivity of annual growth, as derived from tree-rings, for dominant ring- and diffuse- porous species at the Smithsonian Conservation Biology Institute and Harvard Forest. Shown are Pearson correlations between ring-width index and and monthly Tmax. Species codes are as given in Table 2.(THIS FIGURE STAYS, PROBABLY MODIFIED SIGNFICANTLY TO INCLUDE LOTS MORE SITES.)"
+tree_rings_caption <- "Figure 6. Climate sensitivity of annual growth, as derived from tree-rings, for dominant ring- and diffuse- porous species at the Smithsonian Conservation Biology Institute and Harvard Forest. Shown are Pearson correlations between ring-width index and and monthly Tmax. Species codes are as given in Table 2.(THIS FIGURE WILL PROBABLY BE PROBABLY MODIFIED SIGNFICANTLY TO INCLUDE LOTS MORE SITES.)"
 
 # SUPPLEMENTARY INFO (this chunk must be repeated in Dow_SI.Rmd)
-#SI table numbers
-sample_size_by_year= "S1"
+##SI table numbers
+table_species="S1"  
+sample_size_by_year= "S2"
+mean_growth_parameters_table="S3" 
 
 #SI table captions
-sample_size_by_year_caption <- "Table S1. Sample size by year (THIS TABLE GOES TO SI)"
+sample_size_by_year_caption <- "Table S1. Sample size by year "
 
 #SI figure numbers
-all_climwin_SI_figs = " S1-S4"
-climwin_rp_DOY25_SCBI = "S1"
-climwin_dp_DOY25_SCBI = "S2"
-climwin_rp_DOY25_HARV = "S3"
-climwin_dp_DOY25_HARV = "S4"
-tree_rings_TMIN = "S5"
+growth_curves_all = "S1"  
+all_climwin_SI_figs = " S2-S5"
+  climwin_rp_DOY25_SCBI = "S2"
+  climwin_dp_DOY25_SCBI = "S3"
+  climwin_rp_DOY25_HARV = "S4"
+  climwin_dp_DOY25_HARV = "S5"
+DOYtiming = "S6"
+  DOYtiming_SCBI = "S6a"
+  DOYtiming_Harvard = "S6b"
+tree_rings_TMIN = "S7"
 
 #SI figure captions
-climwin_rp_DOY25_SCBI_short_caption <- "Figure S1. Full climwin output for $DOY_{25}$ for ring porous species at SCBI."
-climwin_dp_DOY25_SCBI_short_caption <- "Figure S2. Full climwin output for $DOY_{25}$ for diffuse porous species at SCBI."
-climwin_rp_DOY25_HARV_short_caption <- "Figure S3. Full climwin output for $DOY_{25}$ for ring porous species at Harvard Forest."
-climwin_dp_DOY25_HARV_short_caption <- "Figure S4. Full climwin output for $DOY_{25}$ for diffuse porous species at Harvard Forest."
-tree_rings_TMIN_short_caption <- "Figure S5. ..."
+growth_curves_all_caption  <- "Growth trajectories for ring- and diffuse-porous trees, as both relative and cumulative fractions of total annual growth. Each line represents one year's growth for a given tree, fit with McMahon model. "
 
+climwin_rp_DOY25_SCBI_short_caption <- "Full climwin output for $DOY_{25}$ for ring porous species at SCBI."
+climwin_dp_DOY25_SCBI_short_caption <- "Full climwin output for $DOY_{25}$ for diffuse porous species at SCBI."
+climwin_rp_DOY25_HARV_short_caption <- "Full climwin output for $DOY_{25}$ for ring porous species at Harvard Forest."
+climwin_dp_DOY25_HARV_short_caption <- "Full climwin output for $DOY_{25}$ for diffuse porous species at Harvard Forest."
+DOYtiming_caption <- "Day of year where growth milestones were achieved at (a) the Smithonian Conservation Biology Institute and (b) Harvard Forest. Each line represents a single year of ring-porous (dotted line) or diffuse-porous (solid line) trees at each site. Mean temperature was calculated for each wood-type/site combination over the respective critical $T_{max}$ window, then turned into a ratio and assigned a color on a gradient where the coldest year in the sample is blue and the warmest is red."
+tree_rings_TMIN_short_caption <- "Climate sensitivity of annual growth, as derived from tree-rings, for dominant ring- and diffuse- porous species at the Smithsonian Conservation Biology Institute and Harvard Forest. Shown are Pearson correlations between ring-width index and and monthly Tmin. Species codes are as given in Table 2.(THIS FIGURE WILL PROBABLY BE PROBABLY MODIFIED SIGNFICANTLY TO INCLUDE LOTS MORE SITES.)"
+
+###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ## some stats/ 
 species_table <- read.csv(file = "tables_figures/species_table.csv")
 n_dendro_trees <- sum(na.omit(species_table[, "n.trees"]))
@@ -199,16 +191,11 @@ Leaf and wood phenology traits, along with their apparent relationships, are dis
 
 
 ## (Here, we...)
-Here, we characterize how early spring temperatures affect stem growth phenology and rates of temperate deciduous trees within two forest dynamics plots in the Eastern USA. Using data from dendrometer bands measured throughout the growing season, we fit a growth model to the time series of individual trees to determine the day of year where 25, 50, and 75% annual growth was achieved ($DOY_{25}$, $DOY_{50}$, $DOY_{75}$); maximum growth rates ($g_{max}$) and the DOY on which they occurred ($DOY_{g_{max}}$); total annual growth ($\Delta DBH$); and peak growing season length ($DOY_{75}$-$DOY_{25}$; $L_{pgs}$) [Fig. `r schematic`; @mcmahon_general_2015]. We test the hypotheses that (1) warmer early springs result in earlier stem growth and a longer period of growth, but (2) maximum growth rates are independent of spring temperatures, and as a result (3) total annual growth increases in response to warmer spring temperatures (Table `r hypothesis_table`).
+Here, we characterize how early spring temperatures affect stem growth phenology and rates of temperate deciduous trees within two forest dynamics plots in the Eastern USA. Using data from dendrometer bands measured throughout the growing season, we fit a growth model to the time series of individual trees to determine the day of year where 25, 50, and 75% annual growth was achieved ($DOY_{25}$, $DOY_{50}$, $DOY_{75}$); maximum growth rates ($g_{max}$) and the DOY on which they occurred ($DOY_{g_{max}}$); total annual growth ($\Delta DBH$); and peak growing season length ($DOY_{75}$-$DOY_{25}$; $L_{pgs}$) [Fig. `r schematic_summary`; @mcmahon_general_2015]. We test the hypotheses that (1) warmer early springs result in earlier stem growth and a longer period of growth, but (2) maximum growth rates are independent of spring temperatures, and as a result (3) total annual growth increases in response to warmer spring temperatures (Fig. `r schematic_summary`).
 
-```{r schematic, out.width="100%", echo=FALSE, fig.align="center", fig.cap= schematic_caption}
+```{r schematic_summary, out.width="100%", echo=FALSE, fig.align="center", fig.cap= schematic_summary_caption}
 # Created in RScripts/additional_figures.R
-knitr::include_graphics("tables_figures/schematic.png")
-```
-
-
-```{r hypothesis_table, eval=TRUE, echo=FALSE, warning=FALSE}
-knitr::include_graphics("tables_figures/hypothesis_table.png")
+knitr::include_graphics("tables_figures/schematic_summary.png")
 ```
 
 
@@ -237,15 +224,6 @@ Growth of ring-porous species was spread out over a longer growing season, with 
 Growing season length was similar across sites, with $L_{PGS}$ being, on average, only two days longer at SCBI for ring-porous species and <1 day longer for diffuse-porous species. 
 
 
-```{r growth_curves_all, out.width="100%", echo=FALSE, fig.align="center", fig.cap= growth_curves_all_caption}
-# Created in RScripts/additional_figures.R
-knitr::include_graphics("tables_figures/growth_curves_all.png")
-```
-
-
-```{r mean_growth_parameters_table, out.width="100%", echo=FALSE, fig.align="center"}
-knitr::include_graphics("tables_figures/mean_growth_parameters_table.png")
-```
 
 ## (Critical temperature windows)
 
@@ -267,31 +245,26 @@ Henceforth, we focus on $T_{max}$.
 
 ## (Climate sensitivity of phenology )
 
-For both ring- and diffuse- porous species at both sites, warmer spring $T_{max}$ resulted in earlier achievement of growth milestones (Tables `r hypothesis_table`, Figs. `r pheno_Tsensitivity`, `r DOYtiming`).
-Specifically, $DOY_{25}$, $DOY_{50}$, and $DOY_{g.max}$ at SCBI and $DOY_{25}$, $DOY_{50}$, $DOY_{75}$, and $DOY_{g.max}$ at Harvard Forest all decreased significantly with increasing $T_{max}$ during the critical temperature window (Table `r hypothesis_table`, `r pheno_Tsensitivity`, `r DOYtiming`).
+For both ring- and diffuse- porous species at both sites, warmer spring $T_{max}$ resulted in earlier achievement of growth milestones (Fig. `r schematic_summary`, Figs. `r pheno_Tsensitivity`).
+Specifically, $DOY_{25}$, $DOY_{50}$, and $DOY_{g.max}$ at SCBI and $DOY_{25}$, $DOY_{50}$, $DOY_{75}$, and $DOY_{g.max}$ at Harvard Forest all decreased significantly with increasing $T_{max}$ during the critical temperature window (Figs. `r schematic_summary`, `r pheno_Tsensitivity`).
 
 ```{r pheno_Tsensitivity, out.width="80%", echo=FALSE, fig.align="center", fig.cap=pheno_Tsensitivity_caption}
 # Created in RScripts/bert/wood_phenology_analysis_bert.R
 knitr::include_graphics("tables_figures/pheno_Tsensitivity_combo.png")
 ```
 
-```{r DOYtiming, out.width="100%", echo=FALSE, fig.align="center", fig.cap= DOYtiming_caption}
-# Created in RScripts/additional_figures.R
-knitr::include_graphics("tables_figures/DOYtiming_allyears.png")
-```
-
-For three of the four species group-site combinations (exception: ring-porous at Harvard Forest), warmer $T_{max}$ during the critical temperature window resulted in increased $L_{PGS}$ (Tables `r hypothesis_table`, Figs. `r pheno_Tsensitivity`, `r DOYtiming`).
+For three of the four species group-site combinations (exception: ring-porous at Harvard Forest), warmer $T_{max}$ during the critical temperature window resulted in increased $L_{PGS}$ (Figs. `r schematic_summary`, `r pheno_Tsensitivity`).
 At SCBI, ring-porous $DOY_{25}$ and $DOY_{50}$ shifted earlier as a result of warmer springs whereas ${DOY_75}$ did not shift significantly, resulting in a positive correlation between $L_{PGS}$ and $T_{max}$ during the critical temperature.
 For diffuse-porous species at both SCBI and Harvard Forest, all growth milestones occurred earlier in warmer springs, but $DOY_{25}$ was more strongly affected than ${DOY_75}$, resulting in increased $L_{PGS}$.
 At Harvard Forest,  all growth milestones occurred earlier in warmer springs, but ring-porous ${DOY_75}$ shifted more than ${DOY_25}$, resulting in shorter peak growing season length.  
 
 ## (Climate sensitivity of growth)
 
-Maximum growth rate, $g_{max}$, was not consistently linked to early spring temperatures (Tables `r hypothesis_table`, Fig. `r pheno_Tsensitivity`). 
+Maximum growth rate, $g_{max}$, was not consistently linked to early spring temperatures (Figs. `r schematic_summary`, `r pheno_Tsensitivity`). 
 Ring-porous species exhibited no change (SCBI) or a slight increase (Harvard Forest) with warmer $T_{max}$ during the critical temperature window.
 In contrast, diffuse-porous species at both sites exhibited lower $g_{max}$ in years with higher early spring $T_{max}$.
 
-Total annual growth was not consistently linked to spring temperatures (Table `r hypothesis_table`).
+Total annual growth was not consistently linked to spring temperatures (Fig. `r schematic_summary`).
 Annual growth measured with dendrometer bands, $\Delta DBH$, also was not consistently linked to early spring temperatures, displaying either no relationship (SCBI) or extremely small changes in opposite directions for ring- and diffuse- porous species (Harvard Forest) (Fig. `r pheno_Tsensitivity`).
 
 Similarly, between species-level residual chronologies rarely exhibited significant correlations to either $T_{max}$ or $T_{min}$ in the months corresponding to the critical temperature windows identified here (Figs. `r tree_rings`, `r tree_rings_TMIN`).
@@ -316,12 +289,12 @@ There were no significant correlations to $T_{min}$ prior to May at SCBI or June
 
 We found that warmer spring temperatures in temperate deciduous forests cause earlier tree growth but have little effect on annual woody productivity. Using dendroband data, we found that the peak growing season is generally advancing as the critical spring windows are warming but having little, or negative effect, on $L_{pgs}$. $g_{max}$ and $\Delta DBH$ were virtually unchanged when this period warmed, but $DOY_{g_{max}}$ shifted back almost in unison with $DOY_{50}$. The lack of influence Spring TMAX exudes on $\Delta DBH$ found with the dendroband data agrees with patterns observed in tree cores. Annual tree growth depends more on peak growing season conditions than early season advancement.   
 
-Although the number of years analyzed here is limited (10 years at SCBI, 6 years at HF), the signal is clear and consistent: for both species groups at both sites, warmer temperatures during virtually any part of the spring led to significantly earlier achievement of growth milestones (Table `r hypothesis_table`, Figs. `r  climwin`-`r DOYtiming`).
+Although the number of years analyzed here is limited (10 years at SCBI, 6 years at HF), the signal is clear and consistent: for both species groups at both sites, warmer temperatures during virtually any part of the spring led to significantly earlier achievement of growth milestones (Figs. `r schematic_summary`-`r pheno_Tsensitivity`).
 This indicates that the effect of $T_{max}$ on the timing of growth ($DOY_{25}$, $DOY_{50}$, $DOY_{75}$,and $DOY_{g_{max}}$) is not subtle; 
 indeed, growth milestones advanced by 1-8 days per degree Celsius during the critical temperature window.
 This is consistent with previous studies showing that ... *(find/cite some statistics on how rapidly leaf phenology or start of C sequestration advance with T)*
 
-In contrast to the pronounced effects of $T_{max}$ on the timing of growth, its effects on $g_{max}$ and $\Delta DBH$ were less consistent and generally quite subtle (Table `r hypothesis_table`, Fig. `r pheno_Tsensitivity`), such that a much longer record would be needed to clarify what, if any, effect spring temperatures have on maximum daily and annual growth rates. 
+In contrast to the pronounced effects of $T_{max}$ on the timing of growth, its effects on $g_{max}$ and $\Delta DBH$ were less consistent and generally quite subtle (Figs. `r schematic_summary`, `r pheno_Tsensitivity`), such that a much longer record would be needed to clarify what, if any, effect spring temperatures have on maximum daily and annual growth rates. 
 Fortunately, we were able to use tree-ring data to understand centennial-scale temperature sensitivity of annual growth (Fig. `r tree_rings`).
 This analysis confirms that the effect of spring temperatures on annual growth is modest and not statistically significant for most species, while revealing a slightly more complex picture.
 It appears that temperatures--particularly $T_{max}$--during one spring month at each site (April at SCBI, May at Harvard Forest) consistently have a weakly positive (*albiet* rarely significant) effect on annual growth, in striking contrast to the predominantly negative correlations of growth rates with $T_{max}$ in preceding and subsequent months.
@@ -332,12 +305,12 @@ Indeed, the tree-ring records reveal that *annual growth is most commonly contro
 Thus, although our dendrometer band analysis is limited to two sites, the finding that spring temperatures have limited effect on annual tree growth holds generally.
 
 Our findings contribute to a broader picture of the influence of spring temperatures on forest ecosystem function. 
-Warm spring temperatures result in earlier leaf-out (fig., REFS), an earlier start to net C sequestration (REFS), and--as shown here--earlier initiation of stem growth (Figs. `r climwin`- `r DOYtiming`).
-Yet, an earlier start to the growing season does not imply a longer growing season [Table `r hypothesis_table`, Figs. `r pheno_Tsensitivity`, `r DOYtiming`;  @zani_increased_2020].
+Warm spring temperatures result in earlier leaf-out (fig., REFS), an earlier start to net C sequestration (REFS), and--as shown here--earlier initiation of stem growth (Figs. `r climwin`- `r pheno_Tsensitivity`).
+Yet, an earlier start to the growing season does not imply a longer growing season (Figs. `r schematic_summary`, `r pheno_Tsensitivity`) [@zani_increased_2020].
 Rather, growth finishes sooner-- presumably because of *C sink limitation* [@zani_increased_2020].
 
 
-As climate change accelerates and spring temperatures become increasingly warmer, growing seasons will start earlier, but this is unlikely to provide the increased carbon sequestration that is anticipated in most models [Table `r hypothesis_table`; Figs. `r pheno_Tsensitivity`, `r tree_rings`; @zani_increased_2020].
+As climate change accelerates and spring temperatures become increasingly warmer, growing seasons will start earlier, but this is unlikely to provide the increased carbon sequestration that is anticipated in most models (Figs. `r schematic_summary`, `r pheno_Tsensitivity`, `r tree_rings`)[@zani_increased_2020].
 The implication is that temperate deciduous forests are likely to sequester less CO~2~ than most models suggest, implying that models are underestimating future atmospheric CO~2~ overall.
 
 
@@ -390,10 +363,6 @@ Across years, the number of bands sampled averaged *~135* (range: 99-145) at SCB
 In total, our analysis included `r n_tree_years` tree-years (Table `r table_species`).
 
 
-```{r species, eval=TRUE, echo=FALSE, warning=FALSE}
-knitr::include_graphics("tables_figures/species_table.png")
-```
-
 
 Measurements were timed to begin before the beginning of spring growth and to continue through the cessation of growth in the fall. 
 At SCBI, the median start date was 4/14, which was adjusted when early leaf-out of understory shrubs and herbs was observed, with the earliest start date being March 30, 2020. Measurements were continued through to fall leaf senescence, with the median end date being 10/17 and the latest end date was November 26, 2012. 
@@ -405,7 +374,7 @@ First, when a weekly measurement was drastically different from previous week an
 Second, when measurements remained essentially unchanged for several readings, followed by a sudden jump followed by normal growth pattern, this was assumed to be a case where the band was stuck and then released. In these cases, the full annual record for the tree was removed.
 Third, there were cases where data were clearly wrong but with unknown causes. In cases where several measurements were an issue, they were simply removed. If there were no clear solutions to ‘fix’ the data, the entire year was removed from the analysis.
 
-We fit the model of @mcmahon_general_2015 to define phenological dates and growth rates (Fig. `r schematic`). 
+We fit the model of @mcmahon_general_2015 to define phenological dates and growth rates (Fig. `r schematic_summary`). 
 This five-parameter logistic model was fitted to dendrometer band data from each tree-year in R: 
 $$ DBH = L + \frac{K - L} { 1 + 1/\theta \cdot exp[-r(DOY - DOY_{ip}) / \theta)] ^ \theta}$$ 
 Here, $L$ and $K$ are lower and upper asymptotes of the model, corresponding to $DBH$ at the beginning and end of the year, respectively. 
@@ -413,8 +382,8 @@ $DOY$ are the modeled days of year (*i.e.*, julian days),
 $DOY_{ip}$ is the day of year where the inflection point in growth rate occurs,
 $r$ *shapes the slope of the curve at the inflection point*,
 and $\theta$ is a tuning parameter controlling the slope of the curve toward the upper asymptote. 
-*We note that the DOY on which maximum growth occurs, $DOY_{g_{max}}$ (Fig. `r schematic`) occurs on $DOY_{ip}$ only when $\theta = 1$.*
-Using the optimized parameters for each tree-year, we then modeled $DBH$ throughout the year and extracted the intra-annual growth variables of interest (Fig. `r schematic`). 
+*We note that the DOY on which maximum growth occurs, $DOY_{g_{max}}$ (Fig. `r schematic_summary`) occurs on $DOY_{ip}$ only when $\theta = 1$.*
+Using the optimized parameters for each tree-year, we then modeled $DBH$ throughout the year and extracted the intra-annual growth variables of interest (Fig. `r schematic_summary`). 
 
 After fitting the @mcmahon_general_2015 model, we used a script to remove poorly fit models. 
 Models were judged to be poorly fit if certain modeled growth characteristics fell outside of the acceptable range we determined. 
@@ -457,7 +426,7 @@ The period where the phenology milestone(s) were most affected by changes in ear
 This package tests the correlation between one or more climate variables and a biological variable over all consecutive time windows within a specified time-frame, reporting correlation and \$Delta AIC$ of each window. 
 Here, we tested for correlation between temperature ($T_{max}$, $T_{min}$) and $DOY_{25}$ over the time window from January 1 to the mean $DOY_{25}$ for the species group and site (Table `r mean_growth_parameters_table`).
 *The critical time window is determined based on the subset of models that fall within the 95% confidence set.*
-Here, we focused on defining critical temperature windows for $DOY_{25}$, as opposed to other growth phenology parameters (Figure `r schematic`), because we were interested in the influence of temperature on the initiation of woody growth. 
+Here, we focused on defining critical temperature windows for $DOY_{25}$, as opposed to other growth phenology parameters (Figure `r schematic_summary`), because we were interested in the influence of temperature on the initiation of woody growth. 
 We note that other growth parameters would be controlled by different critical temperature windows; for example, at SCBI $\Delta DBH$ responds most strongly to May-July climate [@helcoski_growing_2019]. Determining the climate variables that most strongly control all parameters is beyond the scope of this analysis.
 
 

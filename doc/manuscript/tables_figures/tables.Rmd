@@ -20,6 +20,7 @@ options(tinytex.verbose = TRUE)
 options(knitr.table.format = "latex")
 ```
 
+
 ```{r eval = TRUE, echo=FALSE, warning=FALSE}
 library(knitr)
 library(kableExtra)
@@ -42,27 +43,3 @@ kable(hypothesis_table, col.names = c("Hypotheses and Specific Predictions", "RP
 kableExtra::footnote(number = c("One of nine species analyzed had significant positive response to April $T_{max}$; one had significant negative response to March $T_{max}$", "One of two species analyzed had signficant positive response to April $T_{max}$, both had negative response to May $T_{max}$", "One of the two species was negatively correlated with April $T_{max}$, and the other positively correlated with May $T_{max}$."), footnote_as_chunk = FALSE, threeparttable=TRUE, escape = FALSE)
 ```
 
-\newpage
-```{r species_table, eval=TRUE, echo=FALSE, warning=FALSE}
-library(knitr)
-library(kableExtra)
-species_table <- read.csv(file = "species_table.csv", col.names = c("site", "xylem porosity","species", "species code", "n trees", "n tree-years", "n cores", "date range"),  stringsAsFactors = FALSE, check.names = FALSE)
-kable(species_table, caption = "Table 2. Dominant ring- and diffuse-porous species at the Smithsonian Conservation Biology Institute (SCBI) and Harvard Forest, along with sample sizes analyzed here.",  format = "latex", booktabs = TRUE,  escape = F) %>%
-add_header_above(c(" ", " ", " ", " ", "dendrometer bands" = 2, "tree cores"=2 )) %>%
-  pack_rows("", 1, 9, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
-  pack_rows("", 10, 11, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
-  pack_rows("", 12, 14, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
-  pack_rows("", 15, 22, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
-kable_styling(latex_options = c("scale_down", "hold_position"), protect_latex = T) 
-```
-
-\newpage
-```{r mean_growth_parameters_table,  eval=TRUE, echo=FALSE, warning=FALSE}
-library(knitr)
-library(kableExtra)
-mean_growth_parameters <- read.csv("mean_growth_parameters.csv",  col.names = c("", "ring","diffuse","ring", "diffuse"), stringsAsFactors = FALSE, check.names = FALSE)
-kable(mean_growth_parameters, caption = "Table 3. Summary of parameters describing the phenology and rate of growth for ring- and diffuse- porous species at SCBI and Harvard Forest. ",  format = "latex", booktabs = TRUE,  escape = F) %>%
-add_header_above(c(" ",  "SCBI" = 2, "Harvard Forest"=2 )) %>%
-    column_spec(1, width = "4cm") %>%
-kable_styling(latex_options = c("scale_down", "hold_position"), protect_latex = T) 
-```
