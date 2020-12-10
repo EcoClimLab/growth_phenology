@@ -32,7 +32,7 @@ header-includes:
 path_to_results <- paste0(dirname(dirname(getwd())), "/results/") #I was trying to read directly from results folder, but couldn't get it working.
 
 # SUPPLEMENTARY INFO (copied from Dow_manuscript.Rmd)
-#SI table numbers
+##SI table numbers
 table_species="S1"  
 sample_size_by_year= "S2"
 mean_growth_parameters_table="S3" 
@@ -47,19 +47,16 @@ all_climwin_SI_figs = " S2-S5"
   climwin_dp_DOY25_SCBI = "S3"
   climwin_rp_DOY25_HARV = "S4"
   climwin_dp_DOY25_HARV = "S5"
-DOYtiming = "S6"
-  DOYtiming_SCBI = "S6a"
-  DOYtiming_Harvard = "S6b"
+
 tree_rings_TMIN = "S7"
 
 #SI figure captions
 growth_curves_all_caption  <- "Growth trajectories for ring- and diffuse-porous trees, as both relative and cumulative fractions of total annual growth. Each line represents one year's growth for a given tree, fit with McMahon model. "
-
 climwin_rp_DOY25_SCBI_short_caption <- "Full climwin output for $DOY_{25}$ for ring porous species at SCBI."
 climwin_dp_DOY25_SCBI_short_caption <- "Full climwin output for $DOY_{25}$ for diffuse porous species at SCBI."
 climwin_rp_DOY25_HARV_short_caption <- "Full climwin output for $DOY_{25}$ for ring porous species at Harvard Forest."
 climwin_dp_DOY25_HARV_short_caption <- "Full climwin output for $DOY_{25}$ for diffuse porous species at Harvard Forest."
-DOYtiming_caption <- "Day of year where growth milestones were achieved at (a) the Smithonian Conservation Biology Institute and (b) Harvard Forest. Each line represents a single year of ring-porous (dotted line) or diffuse-porous (solid line) trees at each site. Mean temperature was calculated for each wood-type/site combination over the respective critical $T_{max}$ window, then turned into a ratio and assigned a color on a gradient where the coldest year in the sample is blue and the warmest is red."
+
 tree_rings_TMIN_short_caption <- "Climate sensitivity of annual growth, as derived from tree-rings, for dominant ring- and diffuse- porous species at the Smithsonian Conservation Biology Institute and Harvard Forest. Shown are Pearson correlations between ring-width index and and monthly Tmin. Species codes are as given in Table 2.(THIS FIGURE WILL PROBABLY BE PROBABLY MODIFIED SIGNFICANTLY TO INCLUDE LOTS MORE SITES.)"
 
 
@@ -182,12 +179,6 @@ knitr::include_graphics("tables_figures/HF_diffuse-porous_TMIN.png")
 ```
 
 
-\newpage
-
-```{r DOYtiming, out.width="100%", echo=FALSE, fig.align="center", fig.cap= DOYtiming_caption, fig.pos="H"}
-# Created in RScripts/additional_figures.R
-knitr::include_graphics("tables_figures/DOYtiming_allyears.png")
-```
 
 \newpage
 ```{r tree_rings_TMIN, out.width="120%", echo=FALSE, fig.align="center", fig.cap= tree_rings_TMIN_short_caption, fig.pos="H"}
