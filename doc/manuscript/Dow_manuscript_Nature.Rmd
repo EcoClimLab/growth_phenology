@@ -88,15 +88,15 @@ tree_rings = 4  #stays, hopefully adding a lot more sites
 
 #figure captions
 
-schematic_summary_caption <- "Figure 1. Summary of results."
+schematic_summary_caption <- "Figure 1 | Summary of tree growth changes under warmer spring temperatures at two temperate forests and for two groups of broadleaf deciduous species (RP=ring porous; DP=diffuse porous). (a) Schematic illustrating parameters of interest and summarizing how each responds to warmer maximum temperatures during a 'critical temperature window', defined as that with the strongest control over DOY25; (b) Variable definitions and summary responses to warmer temperatures, where up and down arrows indicate increases and decreases, respectively, 'n.s.' indicates no signficant correlation, and 'mixed' indicates a mix of signficant and non-signficant correlations, often in different directions."
 
-pheno_Tsensitivity_caption <- "Figure 4. Relationship between growth parameters and climwin mean temperatures. For each 
+pheno_Tsensitivity_caption <- "Figure 2 | Relationship between growth parameters and climwin mean temperatures. For each 
 observed climwin mean temperature value, the posterior mean of the fitted day of year
 is represented by the solid blue line and 95% credible intervals are represented by bands."
 
-DOYtiming_caption <- "Day of year where growth milestones were achieved at (a) the Smithonian Conservation Biology Institute and (b) Harvard Forest. Each line represents a single year of ring-porous (dotted line) or diffuse-porous (solid line) trees at each site. Mean temperature was calculated for each wood-type/site combination over the respective critical $T_{max}$ window, then turned into a ratio and assigned a color on a gradient where the coldest year in the sample is blue and the warmest is red. (WE WILL ADD LEAF PHENOLOGY HERE)"
+DOYtiming_caption <- "Figure 3 | Day of year where growth milestones were achieved at (a) the Smithsonian Conservation Biology Institute and (b) Harvard Forest. Each line represents a single year of ring-porous (dotted line) or diffuse-porous (solid line) trees at each site. Mean temperature was calculated for each wood-type/site combination over the respective critical $T_{max}$ window, then turned into a ratio and assigned a color on a gradient where the coldest year in the sample is blue and the warmest is red. (WE WILL ADD LEAF PHENOLOGY HERE)"
 
-tree_rings_caption <- "Figure 6. Climate sensitivity of annual growth, as derived from tree-rings, for dominant ring- and diffuse- porous species at the Smithsonian Conservation Biology Institute and Harvard Forest. Shown are Pearson correlations between ring-width index and and monthly Tmax. Species codes are as given in Table 2.(THIS FIGURE WILL PROBABLY BE PROBABLY MODIFIED SIGNFICANTLY TO INCLUDE LOTS MORE SITES.)"
+tree_rings_caption <- "Figure 4 | Climate sensitivity of annual growth, as derived from tree-rings, for dominant ring- and diffuse- porous species at the Smithsonian Conservation Biology Institute and Harvard Forest. Shown are Pearson correlations between ring-width index and and monthly Tmax. Species codes are as given in Table 2.(THIS FIGURE WILL PROBABLY BE PROBABLY MODIFIED SIGNFICANTLY TO INCLUDE LOTS MORE SITES.)"
 
 # SUPPLEMENTARY INFO (this chunk must be repeated in Dow_SI.Rmd)
 ##SI table numbers
@@ -245,7 +245,7 @@ Specifically, $DOY_{25}$, $DOY_{50}$, and $DOY_{g.max}$ at SCBI and $DOY_{25}$, 
 
 ```{r pheno_Tsensitivity, out.width="80%", echo=FALSE, fig.align="center", fig.cap=pheno_Tsensitivity_caption}
 # Created in RScripts/bert/wood_phenology_analysis_bert.R
-knitr::include_graphics("tables_figures/pheno_Tsensitivity_combo.png")
+knitr::include_graphics("tables_figures/pheno_Tsensitivity_combo_patchwork_AIC.png")
 ```
 
 ```{r DOYtiming, out.width="100%", echo=FALSE, fig.align="center", fig.cap= DOYtiming_caption}
