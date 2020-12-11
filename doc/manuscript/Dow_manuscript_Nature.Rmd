@@ -146,17 +146,15 @@ n_cores <- sum(na.omit(species_table[, "n.cores"]))
 
 ```
 
-(*word limit 200; this is currently 266*)
+(*word limit 200. italic=tentative*)
 
 
-As the climate changes, warmer spring temperatures are causing earlier leaf-out in temperate deciduous forests, along with earlier initiation of the annual period where these ecosystems are net sinks of carbon dioxide (CO~2~).
-As a result, there is a tendency towards increased growing season length and annual CO~2~ sequestration.
-However, little is known about how spring temperatures affect tree stem growth, which consumes a modest portion of the carbon fixed annually but is critical in that wood has a long residence time in the ecosystem.
-We need to know how the timing and rate of woody growth are affected by warming spring temperatures.
-Here, we show that in two temperate deciduous forests warmer maximum temperatures in the spring shift growth milestones earlier in the year, but have only a modest effect on peak growing season length and little effect on annual growth.
-This contrasts with the expectation *in most models* that an earlier start to growing season would significantly increase the rate of biomass accumulation and thereby enhance the CO~2~ sink of temperate deciduous forests.
-It is, however, consistent with most tree-ring studies in temperate deciduous forests showing that annual growth tends to be more sensitive to climatic conditions during the peak growing season than in the spring[@helcoski_growing_2019], with eddy-covariance records showing that annual CO~2~ sequestration is more strongly linked to conditions in the peak growing season than to growing season length[@fu_maximum_2019], and with evidence that forest CO~2~ sequestration is sink-limited[@zani_increased_2020].
-Thus, our findings indicate that warming spring conditions are unlikely to impact temperate deciduous forest growth sufficiently to produce any substantial negative climate change feedback.
+As the climate changes, warmer spring temperatures are causing earlier leaf-out[REFS] and commencement of net carbon dioxide (CO~2~) sequestration[REFS] in temperate deciduous forests, resulting in a tendency towards increased growing season length[REFS] and annual CO~2~ sequestration[REFS].
+However, little is known about how spring temperatures affect tree stem growth, which consumes a modest portion of the carbon fixed annually[REFS] but is the longest-lived carbon sink[REFS].
+Here, we show that in two temperate deciduous forests, warmer maximum spring temperatures consistently shifted *both leaf phenology* and woody growth milestones earlier but had mixed, weak effects on peak growing season length, maximum daily growth rates, and annual growth.
+*The latter finding is confirmed on the centennial scale by tree-ring records across # forests.*
+These findings are consistent with *~~most tree-ring studies in temperate deciduous forests showing that annual growth tends to be more sensitive to climatic conditions during the peak growing season than in the spring[REFS], with~~* eddy-covariance records showing that annual CO~2~ sequestration is more strongly linked to conditions in the peak growing season than to growing season length[@fu_maximum_2019], with observations that warm springs result in earlier leaf senescence[@zohner_ongoing_2019,@zani_increased_2020], and with evidence that forest CO~2~ sequestration is sink-limited[@zani_increased_2020].
+They contrast, however, with the expectation *in most models[@zani_increased_2020]* that an earlier start to growing season would significantly increase the rate of biomass accumulation and thereby enhance the CO~2~ sink of temperate deciduous forests, implying that warming spring conditions are unlikely to impact temperate deciduous forest growth sufficiently to produce any substantial negative climate change feedback.
 
 
 \newpage
@@ -202,9 +200,10 @@ knitr::include_graphics("tables_figures/schematic_summary.png")
 
 ## (Phenological patterns)
 
-(*most or all of this should be cut-- first paragraph too detailed for Nature, and we want minimal comparison of ring vs diffuse porous*)
-Growth milestones were achieved earlier at SCBI than at Harvard Forest (average difference: #-# days) and differed between ring- and diffuse-porous species (Fig. `r growth_curves_all`, Table `r mean_growth_parameters_table`).
-Across all trees and years, $DOY_{25}$ occurred on day 139 (May 20) at SCBI and day 151 (June 1) at Harvard Forest, while $DOY_{75}$ occurred on day 139 (May 20) at SCBI and day 151 (June 1) at Harvard Forest.
+*(we will need to add leaf phenology to this paragraph)*
+
+**Growth milestones were achieved earlier at SCBI than at Harvard Forest (average difference: #-# days) and differed between ring- and diffuse-porous species (Fig. `r growth_curves_all`, Table `r mean_growth_parameters_table`).**
+Across all trees and years, $DOY_{25}$ occurred on day 139 (May 20) at SCBI and day 151 (June 1) at Harvard Forest, while $DOY_{75}$ occurred on day 185 (July 5) at SCBI and day 194 (July 14) at Harvard Forest.
 Ring-porous species began growing earlier, reaching the $DOY_{25}$ benchmark earlier (by `r 154-123` days at SCBI and `r 164-132` at Harvard Forest), and their growth was spread out over a longer growing season (average $L_{PGS}$ 21 and 19 days longer at SCBI and Harvard Forest, respectively). 
 Growing season length was similar across sites, with $L_{PGS}$ being, on average, only two days longer at SCBI for ring-porous species and <1 day longer for diffuse-porous species. 
 
