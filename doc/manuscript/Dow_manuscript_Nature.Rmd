@@ -162,44 +162,36 @@ They contrast, however, with the expectation *in most models[@zani_increased_202
 
 # (Introduction)
 
-(*this will need to be shortened signficantly*)
-
-## (ftemperate deciduous forests are critical for climate change regulation, so we need to understand better how they're responding to climate change)
-
-(*this part needs to be re-written (very concisely, and focused on the temperate forest C sink and its uncertainty*)
+(*this first paragraph needs to be re-written (very concisely, and focused on the temperate forest C sink and its uncertainty*)
 
 As global atmospheric greenhouse gas levels are rising, and little meaningful policy is being implemented in response, our planet is expected to surpass the 2.5 degree C warming mark that the Paris accord pledged to avoid. The absence of human intervention increases our reliance on natural systems to soften the blow of climate change. Plant life, especially forests, make up a large portion of these natural systems, offering many valuable ecosystem services. For one, they house an astonishing 80% of terrestrial species and are capable of removing the greenhouse gas CO~2~ from the atmosphere and storing it in the trees or soil. Forests sequester about one-third of all anthropogenic CO~2~ and store ~45% of all terrestrial carbon[@bonan_forests_2008]. However, their future under the current era of rapid change is uncertain[@friedlingstein_climatecarbon_2006]. 
 
 
-## (spring temperatures are rising, and this is affecting leaf phenology and carbon cycling)
-In recent decades, warming temperatures have resulted in widespread phenological changes indicative of earlier arrival of spring[@parmesan_globally_2003] and (*often later autumn*[REFS].
+**In recent decades, warming temperatures have resulted in widespread phenological changes indicative of earlier arrival of spring[@parmesan_globally_2003] and *often later autumn*[REFS].**
 In temperate deciduous forests, spring leaf-out has been occurring earlier[REFS], as has the beginning of the annual period of net CO~2~ sequestration[REFS].
-The timing of autumn senescence is less straightforward (*need to do more lit review on this*).
+Controls on the timing of autumn senescence are less clearly understood (*need to do more lit review on this*).
 In some regions earlier leaf out has been matched or exceeded by delays in leaf senescence *when springtime temperatures are above average(??)*[@ibanez_forecasting_2010;@jeong_phenology_2011;@crabbe_extreme_2016]. (*is this just spring temperatures? Or autumn? how widespread is this?*)
 Experimental evidence demonstrates that warmer spring temperatures lead to earlier leaf-out and earlier leaf senescence[@zohner_ongoing_2019], apparently because of sink-limitation to CO~2~ sequestration[@zani_increased_2020], whereas warmer summer and autumn temperatures delay leaf senescence[@zohner_ongoing_2019].
 Whatever the mechanisms controlling autumn senescence, the observed pattern is that spring warming generally results in an increased growing season length, measured as the period over which trees have leaves[REFS] and the ecosystem is a net CO~2~ sink[REFS].
 
-The expectation is that as growing season length increases, net annual carbon sequestered will increase as well (*i,e*, net ecosystem exchange, $NEE$)[@churkina_spatial_2005; @keenan_net_2014; @zhou_explaining_2016]. 
-*This expectation is represented in models [@zani_increased_2020].*
-However, recent evidence that leaf senescence is induced when the seasonal carbon-sink capacities of trees are reached suggests that warmer spring temperatures and earlier leaf-out will not lead to drastically increased C sequestration[@zani_increased_2020]. 
+~~~~~~~~~~
+##(content --with associated refs--that we don't want to lose, but that needs to be worked into reworded text above)
 
-
-
-## (However, we don't know how warming springs affect stem-growth, which matters because the C allocated to stem growth will be retained in the ecosystem for decades to millenia )
-Earlier timing of spring leaf-up and initiation of carbon sequestration signals that these trees are shifting their growth windows in response to increasing spring temperatures, but to date, very little research on the characteristics of stem-growth during this shift has been done. In fact, we know little about the stem-growth phenology of temperate deciduous species — let alone how these are affected by changes in spring temperature patterns (but see Ref. [D'Orangeville], *and we need to make sure we're not missing anything*). 
-
-Tree-ring records give some hints that warmer springs may increase annual growth (e.g., Refs.[@helcoski_growing_2019] [MORE]), but tree-rings tell us nothing about the timing of that growth. On the other hand, earlier leaf development shows us how the growing season is advancing, but can't tell us about the total carbon sequestered, while neither can be used to map out intra-annual growth patterns.
-
-Thus, while it is increasingly clear that warming spring temperatures lengthen the growing season and modestly increase annual carbon sequestration, current methods do not allow firm conclusions on the future of forests. A combination of existing methods - tree cores and remote sensing of leaf-phenology traits - should be supplemented by dendrometer band data which allows for the modeling of intra-annual growth patterns in individuals. A mixture of these three would produce the most complete picture of spring climate influence on forests.  
-
-##(temporarily removed intro content)
-
-(*Cameron, this is content --with associated refs--that I don't want to lose, but that needs to be worked into reworded text above*)
 The effects of this spring warming are most apparent when examining leaf phenology shifts, *which have been extensively studied ([@way_tree_2011]; [@klosterman_later_2018]), leading to many critical observations*. 
 For example, some regions have seen earlier leaf out in deciduous trees, which is often matched or exceeded by delays in leaf senescence timing, when springtime temperatures are above average [@ibanez_forecasting_2010;@jeong_phenology_2011;@crabbe_extreme_2016]. 
+~~~~~~~~~~~~~~~~
 
-## (Here, we...)
-Here, we characterize how early spring temperatures affect stem growth phenology, maximum daily growth rates, and annual growth of temperate deciduous trees, separated into ring- and diffuse-porous groupings, which differ in growth phenology[*D'Orangeville*]. 
+**The expectation is that as growing season length increases, net annual carbon sequestered will increase as well (*i,e*, net ecosystem exchange, $NEE$)[@churkina_spatial_2005; @keenan_net_2014; @zhou_explaining_2016].** 
+*This expectation is represented in models [@zani_increased_2020].*
+However, recent evidence that leaf senescence is induced when the seasonal carbon-sink capacities of trees are reached suggests that warmer spring temperatures and earlier leaf-out could advance autumn senescence and *will not necessarily lead to drastically increased C sequestration*[@zani_increased_2020]. 
+
+**We know very little about how the longest-lived component of fixed carbon, the woody growth of trees, is responding to warming spring temperatures.** 
+In fact, we know little about the stem-growth phenology of temperate deciduous species [but see Ref. D'Orangeville]. (*Here, we need to review the literature to make sure we're not missing anything. We also want to set up the fact that our dataset is unique/justify just 2 sites*). 
+Tree-ring records give some hints that warmer springs may increase annual growth (e.g., Refs.[@helcoski_growing_2019] [MORE]), but rely purely on correlations of annual growth to monthly temperatures and can tell us nothing about the timing of that growth. 
+
+*Thus, while it is increasingly clear that warming spring temperatures lengthen the growing season and modestly increase annual carbon sequestration, current methods do not allow firm conclusions on how forest biomass growth is likely to respond to warming spring temperatures.  A combination of existing methods - tree cores and remote sensing of leaf-phenology traits - should be supplemented by dendrometer band data which allows for the modeling of intra-annual growth patterns in individuals. A mixture of these three would produce the most complete picture of spring climate influence on forests.*  
+
+**Here, we characterize how early spring temperatures affect stem growth phenology, maximum daily growth rates, and annual growth of temperate deciduous trees, separated into ring- and diffuse-porous groupings, which differ in growth phenology[*D'Orangeville*].** 
 First, using data from dendrometer bands measured throughout the growing season in two forests in the Eastern USA (n=`r n_tree_years` tree-years), we fit a growth model[@mcmahon_general_2015] to determine the days of year where 25, 50, and 75% annual growth was achieved ($DOY_{25}$, $DOY_{50}$, $DOY_{75}$), peak growing season length ($L_{pgs}= DOY_{75}$-$DOY_{25}$), maximum growth rates ($g_{max}$) and the DOY on which they occurred ($DOY_{g_{max}}$), and total annual growth ($\Delta DBH$; Fig. `r schematic_summary`). 
 *(We also look at leaf phenology.)*
 Second, at these focal sites and *#* additional sites distributed *xxxx*, we analyze *#* tree-ring chronologies to understand how annual growth, as registered in ring width indices ($RWI$), have responded to spring temperatures at the centennial scale. 
@@ -212,7 +204,7 @@ knitr::include_graphics("tables_figures/schematic_summary.png")
 
 # (Results)
 
-## (Phenological patterns)
+## (overview of phenological patterns)
 
 *(we will need to add leaf phenology to this paragraph)*
 
