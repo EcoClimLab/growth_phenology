@@ -153,7 +153,7 @@ As the climate changes, warmer spring temperatures are causing earlier leaf-out[
 However, little is known about how spring temperatures affect tree stem growth, which consumes a modest portion of the carbon fixed annually[REFS] but is the longest-lived carbon sink[REFS].
 Here, we show that in two temperate deciduous forests, warmer maximum spring temperatures consistently shifted *both leaf phenology* and woody growth milestones earlier but had mixed, weak effects on peak growing season length, maximum daily growth rates, and annual growth.
 *The latter finding is confirmed on the centennial scale by tree-ring records across # forests.*
-These findings are consistent with *~~most tree-ring studies in temperate deciduous forests showing that annual growth tends to be more sensitive to climatic conditions during the peak growing season than in the spring[REFS], with~~* eddy-covariance records showing that annual CO~2~ sequestration is more strongly linked to conditions in the peak growing season than to growing season length[@fu_maximum_2019], with observations that warm springs result in earlier leaf senescence[@zohner_ongoing_2019,@zani_increased_2020], and with evidence that forest CO~2~ sequestration is sink-limited[@zani_increased_2020].
+These findings are consistent with *~~most tree-ring studies in temperate deciduous forests showing that annual growth tends to be more sensitive to climatic conditions during the peak growing season than in the spring[REFS], with~~* eddy-covariance records showing that annual CO~2~ sequestration is more strongly linked to conditions in the peak growing season than to growing season length[@fu_maximum_2019], with *previous* observations that warm springs result in earlier leaf senescence[@zohner_ongoing_2019,@zani_increased_2020], and with evidence that forest CO~2~ sequestration is sink-limited[@zani_increased_2020].
 They contrast, however, with the expectation *in most models[@zani_increased_2020]* that an earlier start to growing season would significantly increase the rate of biomass accumulation and thereby enhance the CO~2~ sink of temperate deciduous forests, implying that warming spring conditions are unlikely to impact temperate deciduous forest growth sufficiently to produce any substantial negative climate change feedback.
 
 
@@ -188,7 +188,10 @@ Leaf and wood phenology traits, along with their apparent relationships, are dis
 
 
 ## (Here, we...)
-Here, we characterize how early spring temperatures affect stem growth phenology and rates of temperate deciduous trees within two forest dynamics plots in the Eastern USA. Using data from dendrometer bands measured throughout the growing season, we fit a growth model to the time series of individual trees to determine the day of year where 25, 50, and 75% annual growth was achieved ($DOY_{25}$, $DOY_{50}$, $DOY_{75}$); maximum growth rates ($g_{max}$) and the DOY on which they occurred ($DOY_{g_{max}}$); total annual growth ($\Delta DBH$); and peak growing season length ($DOY_{75}$-$DOY_{25}$; $L_{pgs}$) [Fig. `r schematic_summary`; @mcmahon_general_2015]. We test the hypotheses that (1) warmer early springs result in earlier stem growth and a longer period of growth, but (2) maximum growth rates are independent of spring temperatures, and as a result (3) total annual growth increases in response to warmer spring temperatures (Fig. `r schematic_summary`).
+Here, we characterize how early spring temperatures affect stem growth phenology, maximum daily growth rates, and annual growth of temperate deciduous trees, separated into ring- and diffuse-porous groupings based on their differing growth phenology[*D'Orangeville*]. 
+First, using data from dendrometer bands measured throughout the growing season in two forests in the Eastern USA (n=`r n_tree_years` tree-years), we fit a growth model[@mcmahon_general_2015]to determine the days of year where 25, 50, and 75% annual growth was achieved ($DOY_{25}$, $DOY_{50}$, $DOY_{75}$), peak growing season length ($L_{pgs}= DOY_{75}$-$DOY_{25}$), maximum growth rates ($g_{max}$) and the DOY on which they occurred ($DOY_{g_{max}}$), and total annual growth ($\Delta DBH$; Fig. `r schematic_summary`). 
+*(We also look at leaf phenology.)*
+Second, at these focal sites and *#* additional sites distributed *xxxx*, we analyze *#* tree-ring chronologies to understand how annual growth, as registered in ring width indices ($RWI$), have responded to spring temperatures at the centennial scale. 
 
 ```{r schematic_summary, out.width="100%", echo=FALSE, fig.align="center", fig.cap= schematic_summary_caption}
 # Created in RScripts/additional_figures.R
@@ -217,9 +220,9 @@ The strongest relationships, including but not limited to the optimal time windo
 The correlation of $DOY_{25}$ to $T_{min}$ was less consistent than that of $T_{max}$ (Figs. `r all_climwin_SI_figs`). 
 At SCBI, patterns were quite similar to those described above for $T_{max}$, with similar timing and strengths of correlations across the two temperature variables (Figs. `r climwin_rp_DOY25_SCBI` - `r climwin_dp_DOY25_SCBI`).
 In contrast, at Harvard Forest, where we had only six years of data, *climwin* selected windows, both > 5 weeks prior to $DOY_{25}$, had positive correlations between $DOY_{25}$ and $T_{min}$.
-However, for both ring- and diffuse- porous species, average $T_{min}$ of the selected period was below freezing (<0° C) in all years, suggesting that these are sporadic correlations that are unlikely to be biologically meaningful.
+However, for both ring- and diffuse- porous species, average $T_{min}$ of the selected period was below freezing (<0°C) in all years, suggesting that these are sporadic correlations that are unlikely to be biologically meaningful.
 
-Henceforth, we focus on $T_{max}$.
+Henceforth, we focus on $T_{max}$ assessed over *climwin*-selected critical temperature windows, *noting that similar results are obtained using alternate temperature window ([GitHub issue #42](https://github.com/EcoClimLab/growth_phenology/issues/42)).*
 
 ## (Climate sensitivity of phenology )
 

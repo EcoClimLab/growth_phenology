@@ -179,7 +179,6 @@ knitr::include_graphics("tables_figures/HF_diffuse-porous_TMIN.png")
 ```
 
 
-
 \newpage
 ```{r tree_rings_TMIN, out.width="120%", echo=FALSE, fig.align="center", fig.cap= tree_rings_TMIN_short_caption, fig.pos="H"}
 #knitr::include_graphics("tables_figures/tree_cores_tmin.tif")
