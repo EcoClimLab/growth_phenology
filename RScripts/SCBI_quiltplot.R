@@ -309,7 +309,7 @@ for(v in climate_variables) {
   x.sig <- x.sig[,c(9,5,14,13,12,11,6,4,3,2,1)]
   x.sig2 <- x.sig2[,c(9,5,14,13,12,11,6,4,3,2,1)]
 
-  png(paste0("results/", "monthly_", "correlation", "SCBI", v,"October","2", ".png"), res = 150, width = 169, height = 169, units = "mm", pointsize = 10)
+  png(paste0("results/", "monthly_", "correlation", "SCBI", v, ".png"), res = 150, width = 169, height = 169, units = "mm", pointsize = 10)
 
   my.dccplot(x = as.data.frame(t(x)), sig = as.data.frame(t(x.sig)), sig2 = as.data.frame(t(x.sig2)),  main = ifelse(v %in% "PETminusPRE", "PET-PRE", v), method = "correlation")
 
