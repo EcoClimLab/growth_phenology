@@ -50,7 +50,7 @@ type.of.start.date <- c("1901_2009", "1920_1949", "1950_1979", "1980_2009")
 sss.threshold = 0.80
 ## Define start and end month for anlaysis ####
 start <- 1 # April of previous year
-end <- 8 # August of current year
+end <- 10 # August of current year
 
 start.frs <- -10 # october of previous year (for freeze days variable only - otherwise error because all 0 in other months)
 end.frs <- 5 # may of current year (for freeze days variable only)
@@ -309,7 +309,7 @@ for(v in climate_variables) {
   x.sig <- x.sig[,c(9,5,14,13,12,11,6,4,3,2,1)]
   x.sig2 <- x.sig2[,c(9,5,14,13,12,11,6,4,3,2,1)]
 
-  png(paste0("results/", "monthly_", "correlation", "SCBI", v, ".png"), res = 150, width = 169, height = 169, units = "mm", pointsize = 10)
+  png(paste0("results/", "monthly_", "correlation", "SCBI", v,"October","2", ".png"), res = 150, width = 169, height = 169, units = "mm", pointsize = 10)
 
   my.dccplot(x = as.data.frame(t(x)), sig = as.data.frame(t(x.sig)), sig2 = as.data.frame(t(x.sig2)),  main = ifelse(v %in% "PETminusPRE", "PET-PRE", v), method = "correlation")
 
