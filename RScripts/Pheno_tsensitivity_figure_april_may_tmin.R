@@ -83,32 +83,32 @@ twosevenfive <- twosevenfive[, c(3, 7, 16)]
 #8. Change windowopen and windowclose values in rp & dp subsets (lines 149 & 167)
 ################################################################
 
-weatherdata <-
-  read_csv("climate data/met_tower_data_sensor2_ncdc_supplemented.csv") %>%
-  filter(!is.na(cleantmax)) %>%
-  mutate(year = year.x)
-#TMIN
 #weatherdata <-
-#  read_csv("climate data/SCBI_tmin.csv") %>%
-#  filter(!is.na(TMIN))
+#  read_csv("climate data/met_tower_data_sensor2_ncdc_supplemented.csv") %>%
+#  filter(!is.na(cleantmax)) %>%
+#  mutate(year = year.x)
+#TMIN
+weatherdata <-
+  read_csv("climate data/SCBI_tmin.csv") %>%
+  filter(!is.na(TMIN))
 
 # 2. Get climwin data
 #TMAX
-climwindows <-
-  read.csv("results/Climwin_results/Weekly/SCBI/weekly_climwin_results_SCBI_TMAX.csv") %>%
-  filter(wood_type != "other") %>%
-  mutate(
+#climwindows <-
+#  read.csv("results/Climwin_results/Weekly/SCBI/weekly_climwin_results_SCBI_TMAX.csv") %>%
+#  filter(wood_type != "other") %>%
+#  mutate(
     #median_windowopendate = as.Date(median_windowopendate),
     #median_windowclosedate = as.Date(median_windowclosedate),
     #opendoy = yday(median_windowopendate),
     #closedoy = yday(median_windowclosedate)
     #winopen = as.Date(refwoy * 7 - winopenwoy * 7, origin = paste0("2011-01-01")),
     #winclose = as.Date(refwoy * 7 - winclosewoy * 7, origin = paste0("2011-01-01")),
-    winopen = as.Date(paste(refwoy-winopenwoy, 1, sep="-"), "%U-%u"),
-    winclose = as.Date(paste(refwoy-winclosewoy, 1, sep="-"), "%U-%u"),
-    opendoy = yday(winopen),
-    closedoy = yday(winclose)
-  )
+#    winopen = as.Date(paste(refwoy-winopenwoy, 1, sep="-"), "%U-%u"),
+#    winclose = as.Date(paste(refwoy-winclosewoy, 1, sep="-"), "%U-%u"),
+#    opendoy = yday(winopen),
+#    closedoy = yday(winclose)
+#  )
 
 #correct <- data.frame(1,1)
 #names(correct) <- c("min","max")
@@ -138,21 +138,21 @@ climwindows <-
 #climwindows$winopen <- as.Date(climwindows$refwoy * 7 - climwindows$winopenwoy * 7, origin = paste0("2011-01-01"))
 #climwindows$winclose <- as.Date(climwindows$refwoy * 7 - climwindows$winclosewoy * 7, origin = paste0("2011-01-01"))
 #TMIN
-#climwindows <-
-#  read.csv("results/Climwin_results/Weekly/SCBI/TMIN/weekly_climwin_results_SCBI_TMIN.csv") %>%
-#  filter(wood_type != "other") %>%
-#  mutate(
-#    median_windowopendate = as.Date(median_windowopendate),
-#    median_windowclosedate = as.Date(median_windowclosedate),
-#    opendoy = yday(median_windowopendate),
-#    closedoy = yday(median_windowclosedate)
-#  )
+climwindows <-
+  read.csv("results/Climwin_results/Weekly/SCBI/TMIN/weekly_climwin_results_SCBI_TMIN.csv") %>%
+  filter(wood_type != "other") %>%
+  mutate(
+    median_windowopendate = as.Date(median_windowopendate),
+    median_windowclosedate = as.Date(median_windowclosedate),
+    opendoy = yday(median_windowopendate),
+    closedoy = yday(median_windowclosedate)
+  )
 #TMAX
-climwinmeans_rp <- weatherdata %>%
-  filter(doy %in% c(92:98)) %>%
-  group_by(year) %>%
-  summarize(climwinmean = mean(cleantmax)) %>%
-  mutate(wood_type = "ring-porous")
+#climwinmeans_rp <- weatherdata %>%
+#  filter(doy %in% c(92:98)) %>%
+#  group_by(year) %>%
+#  summarize(climwinmean = mean(cleantmax)) %>%
+#  mutate(wood_type = "ring-porous")
 
 #actual 14.5-20
 #4/6-4/12 11-24.5
@@ -166,11 +166,11 @@ climwinmeans_rp <- weatherdata %>%
 #  summarize(climwinmean = mean(TMIN)) %>%
 #  mutate(wood_type = "ring-porous")
 #TMAX
-climwinmeans_dp <- weatherdata %>%
-  filter(doy %in% c(78:140)) %>% # 68:135
-  group_by(year) %>%
-  summarize(climwinmean = mean(cleantmax)) %>%
-  mutate(wood_type = "diffuse-porous")
+#climwinmeans_dp <- weatherdata %>%
+#  filter(doy %in% c(78:140)) %>% # 68:135
+#  group_by(year) %>%
+#  summarize(climwinmean = mean(cleantmax)) %>%
+#  mutate(wood_type = "diffuse-porous")
 
 #TMIN
 #climwinmeans_dp <- weatherdata %>%
@@ -180,14 +180,14 @@ climwinmeans_dp <- weatherdata %>%
 #  mutate(wood_type = "diffuse-porous")
 
 # Combine
-climwinmeans <- bind_rows(climwinmeans_rp, climwinmeans_dp)
+#climwinmeans <- bind_rows(climwinmeans_rp, climwinmeans_dp)
 
-#TMAX-April Means
-#climwinmeans <- weatherdata %>%
-#  filter(month == 4) %>%
-#  group_by(year) %>%
-#  summarize(climwinmean = mean(cleantmax))
-#TMIN - April means
+#TMAX
+climwinmeans <- weatherdata %>%
+  filter(month == 4) %>%
+  group_by(year) %>%
+  summarize(climwinmean = mean(TMIN))
+#TMIN
 #april_means <- weatherdata %>%
 #  filter(month == 4) %>%
 #  group_by(year) %>%
@@ -196,7 +196,7 @@ climwinmeans <- bind_rows(climwinmeans_rp, climwinmeans_dp)
 # 3. Add to growth data
 Wood_pheno_table <- Wood_pheno_table %>%
   #left_join(april_means, by = "year") %>%
-  left_join(climwinmeans, by = c("year", "wood_type")) %>%
+  left_join(climwinmeans, by = c("year")) %>%#, "wood_type")) %>%
   left_join(twosevenfive, by = c("tag", "year")) %>%
   left_join(fiftyseventy, by = c("tag", "year")) %>%
   left_join(twofifty, by = c("tag", "year")) %>%
@@ -248,7 +248,7 @@ bayesian_regression_table <- joint_model_climwinmeans %>%
   filter(!str_detect(coefficient, "Sigma")) %>%
   filter(str_detect(coefficient, "(Intercept)") | str_detect(coefficient, "wood_type"))
 bayesian_regression_table
-write.csv(bayesian_regression_table, file = "Results/Bayesian outputs/DOY_SCBI.csv", row.names = FALSE)
+write.csv(bayesian_regression_table, file = "Results/Bayesian outputs/DOY_SCBI_april_tmin.csv", row.names = FALSE)
 # Extract predicted DOY_25, DOY_50, DOY_75
 # Note we need to take this long approach since tidybayes::add_predicted_draws()
 # yields incorrected predicted/fitted values for stan_mvmer models as of 2020/11/18
@@ -269,7 +269,7 @@ predictions_RP <- filter(predictions, wood_type == "ring-porous")
 predictions_DP <- filter(predictions, wood_type == "diffuse-porous")
 Wood_pheno_table_RP <- filter(Wood_pheno_table, wood_type == "ring-porous")
 Wood_pheno_table_DP <- filter(Wood_pheno_table, wood_type == "diffuse-porous")
-#predictions_RP$sig <- ifelse(predictions_RP$perc == "DOY_25", 1, 0)
+predictions_RP$sig <- ifelse(predictions_RP$perc == "DOY_25", 1, 0)
 
 woodtable <- filter(Wood_pheno_table, perc == "DOY_25")
 
@@ -286,7 +286,7 @@ mixedmodel_stanlmerRP_maxrateDOY <- stan_lmer(
 
 MRDOY_scbi <- mixedmodel_stanlmerRP_maxrateDOY %>%
   tidy(conf.int = TRUE)
-write.csv(MRDOY_scbi, file = "Results/Bayesian outputs/MRDOY_SCBI.csv", row.names = FALSE)
+write.csv(MRDOY_scbi, file = "Results/Bayesian outputs/MRDOY_SCBI_april_tmin.csv", row.names = FALSE)
 
 y_hat <- mixedmodel_stanlmerRP_maxrateDOY %>%
   posterior_predict() %>%
@@ -300,7 +300,7 @@ predictions_mrdoy <- woodtable %>%
 
 predictions_mrdoy_RP <- filter(predictions_mrdoy, wood_type == "ring-porous")
 predictions_mrdoy_RP$perc <- "Max Rate DOY"
-#predictions_mrdoy_RP$sig <- 0
+predictions_mrdoy_RP$sig <- 0
 predictions_RP <- bind_rows(predictions_RP, predictions_mrdoy_RP)
 predictions_mrdoy_DP <- filter(predictions_mrdoy, wood_type == "diffuse-porous")
 predictions_mrdoy_DP$perc <- "Max Rate DOY"
@@ -320,10 +320,10 @@ Wood_pheno_table_DP <- bind_rows(Wood_pheno_table_DP_mrdoy, Wood_pheno_table_DP)
 
 fig6_RP <- ggplot() +
   # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
-  stat_lineribbon(data = predictions_RP, aes(x = climwinmean, y = predictions_rstanarm, col = perc, fill = per,), .width = .95, alpha = 0.5) +
+  stat_lineribbon(data = predictions_RP, aes(x = climwinmean, y = predictions_rstanarm, col = perc, fill = perc, linetype = as.factor(sig)), .width = .95, alpha = 0.5) +
   geom_point(data = Wood_pheno_table_RP, aes(x = climwinmean, y = DOY, col = perc)) +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
-  scale_linetype_manual(values = c("solid")) +
+  scale_linetype_manual(values = c("solid", "dashed")) +
   scale_color_manual(values = c("red","dark green","blue", "purple"))+
   #scale_fill_brewer() +
   # facet_grid(perc) +
@@ -368,7 +368,7 @@ mixedmodel_stanlmerRP_total <- stan_lmer(
 
 tot_scbi <- mixedmodel_stanlmerRP_total %>%
   tidy(conf.int = TRUE)
-write.csv(tot_scbi, file = "Results/Bayesian outputs/TOT_SCBI.csv", row.names = FALSE)
+write.csv(tot_scbi, file = "Results/Bayesian outputs/TOT_SCBI_april_tmin.csv", row.names = FALSE)
 y_hot <- mixedmodel_stanlmerRP_total %>%
   posterior_predict() %>%
   c()
@@ -386,7 +386,7 @@ Wood_pheno_table_DP_tot <- filter(woodtable, wood_type == "diffuse-porous")
 
 fig6_RP_tot <-  ggplot() +
   # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
-  stat_lineribbon(data = predictions_tot_RP, aes(x = climwinmean, y = predictions_rstanarm), .width = .95, linetype = "dashed") +
+  stat_lineribbon(data = predictions_tot_RP, aes(x = climwinmean, y = predictions_rstanarm), .width = .95, linetype = "solid") +
   geom_point(data = Wood_pheno_table_RP_tot, aes(x = climwinmean, y = tot)) +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
@@ -395,7 +395,7 @@ fig6_RP_tot <-  ggplot() +
   theme_bw()+
   theme(legend.position = "none",
         text = element_text(size = 20)) +
-  labs(x =expression(paste("3/22-4/9 ", T[max], " (°C)")) , y = expression(paste(Delta * "DBH", " (cm)")))
+  labs(x =expression(paste("April ", T[min], " (°C)")) , y = expression(paste(Delta * "DBH", " (cm)")))
 
 fig6_DP_tot <-  ggplot() +
   # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
@@ -408,7 +408,7 @@ fig6_DP_tot <-  ggplot() +
   theme_bw()+
   theme(legend.position = "none",
         text = element_text(size = 20)) +
-  labs(x = expression(paste("2/19-5/9 ", T[max], " (°C)")), y = "")
+  labs(x = expression(paste("April ", T[min], " (°C)")), y = "")
 
 # Clean-up
 rm(list = setdiff(ls(), objects_to_keep))
@@ -428,7 +428,7 @@ mixedmodel_stanlmerRP_seasonlength <- stan_lmer(
 
 SL_scbi <- mixedmodel_stanlmerRP_seasonlength %>%
   tidy(conf.int = TRUE)
-write.csv(SL_scbi, file = "Results/Bayesian outputs/SL_SCBI.csv", row.names = FALSE)
+write.csv(SL_scbi, file = "Results/Bayesian outputs/SL_SCBI_april_tmin.csv", row.names = FALSE)
 
 y_hit <- mixedmodel_stanlmerRP_seasonlength %>%
   posterior_predict() %>%
@@ -490,7 +490,7 @@ mixedmodel_stanlmerRP_maxrate <- stan_lmer(
 
 MR_scbi <- mixedmodel_stanlmerRP_maxrate %>%
   tidy(conf.int = TRUE)
-write.csv(MR_scbi, file = "Results/Bayesian outputs/MR_SCBI.csv", row.names = FALSE)
+write.csv(MR_scbi, file = "Results/Bayesian outputs/MR_SCBI_april_tmin.csv", row.names = FALSE)
 
 y_het <- mixedmodel_stanlmerRP_maxrate %>%
   posterior_predict() %>%
@@ -509,7 +509,7 @@ Wood_pheno_table_DP_mr <- filter(woodtable, wood_type == "diffuse-porous")
 
 fig6_RP_mr <-  ggplot() +
   # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
-  stat_lineribbon(data = predictions_mr_RP, aes(x = climwinmean, y = predictions_rstanarm), .width = .95, linetype = "dashed") +
+  stat_lineribbon(data = predictions_mr_RP, aes(x = climwinmean, y = predictions_rstanarm), .width = .95, linetype = "solid") +
   geom_point(data = Wood_pheno_table_RP_mr, aes(x = climwinmean, y = max_rate)) +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
@@ -523,7 +523,7 @@ fig6_RP_mr <-  ggplot() +
 
 fig6_DP_mr <- ggplot() +
   # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
-  stat_lineribbon(data = predictions_mr_DP, aes(x = climwinmean, y = predictions_rstanarm), .width = .95, linetype = "dashed") +
+  stat_lineribbon(data = predictions_mr_DP, aes(x = climwinmean, y = predictions_rstanarm), .width = .95, linetype = "solid") +
   geom_point(data = Wood_pheno_table_DP_mr, aes(x = climwinmean, y = max_rate)) +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
@@ -552,7 +552,7 @@ mixedmodel_stanlmerRP_maxrateDOY <- stan_lmer(
 
 MRDOY_scbi <- mixedmodel_stanlmerRP_maxrateDOY %>%
   tidy(conf.int = TRUE)
-write.csv(MRDOY_scbi, file = "Results/Bayesian outputs/MRDOY_SCBI.csv", row.names = FALSE)
+write.csv(MRDOY_scbi, file = "Results/Bayesian outputs/MRDOY_SCBI_april_tmin.csv", row.names = FALSE)
 
 #y_hat <- mixedmodel_stanlmerRP_maxrateDOY %>%
 #  posterior_predict() %>%
@@ -641,35 +641,35 @@ twosevenfive_hf <- twosevenfive_hf[, c(3, 6, 17)]
 ## Create temperature variables -------------------------------------------------
 # 0. Get all weather data
 #TMAX
-weatherdata_hf <-
-  read_csv("climate data/HF_weatherdata.csv") %>%
-  filter(!is.na(airtmax))
+#weatherdata_hf <-
+#  read_csv("climate data/HF_weatherdata.csv") %>%
+#  filter(!is.na(airtmax))
 
 #TMIN
-#weatherdata_hf <-
-#  read_csv("climate data/HF_weatherdata_TMIN.csv") %>%
-#  filter(!is.na(airtmin))
+weatherdata_hf <-
+  read_csv("climate data/HF_weatherdata_TMIN.csv") %>%
+  filter(!is.na(airtmin))
 
 # 1. Get mean march daily maximum temperatures
 #marchmeans_hf <- weatherdata_hf %>%
 #  filter(month == 3) %>%
 #  group_by(year) %>%
 #  summarize(marchmean = mean(airtmax))
-climwindows_hf <-
-  read.csv("results/Climwin_results/Weekly/Harvard Forest/weekly_climwin_results_HF_TMAX.csv") %>%
-  filter(wood_type != "other") %>%
-  mutate(
+#climwindows_hf <-
+#  read.csv("results/Climwin_results/Weekly/Harvard Forest/weekly_climwin_results_HF_TMAX.csv") %>%
+#  filter(wood_type != "other") %>%
+#  mutate(
     #median_windowopendate = as.Date(median_windowopendate, format = "%Y-%m-%d"),
     #median_windowclosedate = as.Date(median_windowclosedate, format = "%Y-%m-%d"),
     #opendoy = yday(median_windowopendate),
     #closedoy = yday(median_windowclosedate)
     #winopen = as.Date(refwoy * 7 - winopenwoy * 7, origin = paste0("2011-01-01")),
     #winclose = as.Date(refwoy * 7 - winclosewoy * 7, origin = paste0("2011-01-01")),
-    winopen = as.Date(paste(refwoy-winopenwoy, 1, sep="-"), "%U-%u"),
-    winclose = as.Date(paste(refwoy-winclosewoy, 1, sep="-"), "%U-%u"),
-    opendoy = yday(winopen),
-    closedoy = yday(winclose)+4
-  )
+#    winopen = as.Date(paste(refwoy-winopenwoy, 1, sep="-"), "%U-%u"),
+ #   winclose = as.Date(paste(refwoy-winclosewoy, 1, sep="-"), "%U-%u"),
+#    opendoy = yday(winopen),
+#    closedoy = yday(winclose)+4
+#  )
 
 
 #correct <- data.frame(1,1)
@@ -700,23 +700,23 @@ climwindows_hf <-
 # 2. Get climwin data
 #TMAX
 #TMIN
-#climwindows_hf <-
-#  read.csv("results/Climwin_results/Weekly/Harvard Forest/TMIN/weekly_climwin_results_HF_TMIN.csv") %>%
-#  filter(wood_type != "other") %>%
-#  mutate(
-#    median_windowopendate = as.Date(median_windowopendate, format = "%Y-%m-%d"),
-#    median_windowclosedate = as.Date(median_windowclosedate, format = "%Y-%m-%d"),
-#    opendoy = yday(median_windowopendate),
-#    closedoy = yday(median_windowclosedate)
-#  )
+climwindows_hf <-
+  read.csv("results/Climwin_results/Weekly/Harvard Forest/TMIN/weekly_climwin_results_HF_TMIN.csv") %>%
+  filter(wood_type != "other") %>%
+  mutate(
+    median_windowopendate = as.Date(median_windowopendate, format = "%Y-%m-%d"),
+    median_windowclosedate = as.Date(median_windowclosedate, format = "%Y-%m-%d"),
+    opendoy = yday(median_windowopendate),
+    closedoy = yday(median_windowclosedate)
+  )
 
 
 #TMAX
-climwinmeans_rp_hf <- weatherdata_hf %>%
-  filter(DOY %in% c(85:133)) %>%
-  group_by(year) %>%
-  summarize(climwinmean = mean(airtmax)) %>%
-  mutate(wood_type = "ring-porous")
+#climwinmeans_rp_hf <- weatherdata_hf %>%
+#  filter(DOY %in% c(85:133)) %>%
+#  group_by(year) %>%
+#  summarize(climwinmean = mean(airtmax)) %>%
+#  mutate(wood_type = "ring-porous")
 
 #TMIN
 #climwinmeans_rp_hf <- weatherdata_hf %>%
@@ -726,11 +726,11 @@ climwinmeans_rp_hf <- weatherdata_hf %>%
 #  mutate(wood_type = "ring-porous")
 
 #TMAX
-climwinmeans_dp_hf <- weatherdata_hf %>%
-  filter(DOY %in% c(78:133)) %>% # 68:135
-  group_by(year) %>%
-  summarize(climwinmean = mean(airtmax)) %>%
-  mutate(wood_type = "diffuse-porous")
+#climwinmeans_dp_hf <- weatherdata_hf %>%
+#  filter(DOY %in% c(78:133)) %>% # 68:135
+#  group_by(year) %>%
+#  summarize(climwinmean = mean(airtmax)) %>%
+#  mutate(wood_type = "diffuse-porous")
 
 #TMIN
 #climwinmeans_dp_hf <- weatherdata_hf %>%
@@ -740,17 +740,17 @@ climwinmeans_dp_hf <- weatherdata_hf %>%
 #  mutate(wood_type = "diffuse-porous")
 
 # Combine
-climwinmeans_hf <- bind_rows(climwinmeans_rp_hf, climwinmeans_dp_hf)
+#climwinmeans_hf <- bind_rows(climwinmeans_rp_hf, climwinmeans_dp_hf)
 
-#climwinmeans_hf <- weatherdata_hf %>%
-#  filter(month == 5) %>%
-#  group_by(year) %>%
-#  summarize(climwinmean = mean(airtmax))
+climwinmeans_hf <- weatherdata_hf %>%
+  filter(month == 5) %>%
+  group_by(year) %>%
+  summarize(climwinmean = mean(airtmin))
 
 # 3. Add to growth data
 Wood_pheno_table_hf <- Wood_pheno_table_hf %>%
   #  left_join(marchmeans_hf, by = "year") %>%
-  left_join(climwinmeans_hf, by = c("year", "wood_type")) %>%
+  left_join(climwinmeans_hf, by = c("year"))%>%#, "wood_type")) %>%
   left_join(twosevenfive_hf, by = c("tag", "year")) %>%
   left_join(fiftyseventy_hf, by = c("tag", "year")) %>%
   left_join(twofifty_hf, by = c("tag", "year")) %>%
@@ -794,7 +794,7 @@ bayesian_regression_table_hf <- joint_model_climwinmeans_hf %>%
   filter(!str_detect(coefficient, "Sigma")) %>%
   filter(str_detect(coefficient, "(Intercept)") | str_detect(coefficient, "wood_type"))
 bayesian_regression_table_hf
-write.csv(bayesian_regression_table_hf, file = "Results/Bayesian outputs/DOY_HF.csv", row.names = FALSE)
+write.csv(bayesian_regression_table_hf, file = "Results/Bayesian outputs/DOY_HF_may_tmin.csv", row.names = FALSE)
 
 # Extract predicted DOY_25, DOY_50, DOY_75
 # Note we need to take this long approach since tidybayes::add_predicted_draws()
@@ -813,7 +813,11 @@ predictions_hf <- Wood_pheno_table_hf %>%
   mutate(predictions_rstanarm = y_hat_hf)
 
 predictions_RP_hf <- filter(predictions_hf, wood_type == "ring-porous")
+predictions_RP_hf$sig <- ifelse(predictions_RP_hf$perc == "DOY_25", 1, 0)
+
 predictions_DP_hf <- filter(predictions_hf, wood_type == "diffuse-porous")
+predictions_DP_hf$sig <- ifelse(predictions_DP_hf$perc == "DOY_25", 1, 0)
+
 Wood_pheno_table_RP_hf <- filter(Wood_pheno_table_hf, wood_type == "ring-porous")
 Wood_pheno_table_DP_hf <- filter(Wood_pheno_table_hf, wood_type == "diffuse-porous")
 
@@ -832,7 +836,7 @@ mixedmodel_stanlmerRP_maxrateDOY_hf <- stan_lmer(
 
 MRDOY_hf <- mixedmodel_stanlmerRP_maxrateDOY_hf %>%
   tidy(conf.int = TRUE)
-write.csv(MRDOY_hf, file = "Results/Bayesian outputs/MRDOY_HF.csv", row.names = FALSE)
+write.csv(MRDOY_hf, file = "Results/Bayesian outputs/MRDOY_HF_may_tmin.csv", row.names = FALSE)
 
 y_hat_hf <- mixedmodel_stanlmerRP_maxrateDOY_hf %>%
   posterior_predict() %>%
@@ -851,10 +855,11 @@ Wood_pheno_table_DP_mrdoy_hf <- filter(woodtable_hf, wood_type == "diffuse-porou
 
 predictions_mrdoy_RP_hf <- filter(predictions_mrdoy_hf, wood_type == "ring-porous")
 predictions_mrdoy_RP_hf$perc <- "Max Rate DOY"
-#predictions_mrdoy_RP_hf$sig <- 0
+predictions_mrdoy_RP_hf$sig <- 0
 predictions_RP_hf <- bind_rows(predictions_RP_hf, predictions_mrdoy_RP_hf)
 predictions_mrdoy_DP_hf <- filter(predictions_mrdoy_hf, wood_type == "diffuse-porous")
 predictions_mrdoy_DP_hf$perc <- "Max Rate DOY"
+predictions_mrdoy_DP_hf$sig <- 0
 predictions_DP_hf <- bind_rows(predictions_DP_hf, predictions_mrdoy_DP_hf)
 
 Wood_pheno_table_RP_mrdoy_hf <- filter(woodtable_hf, wood_type == "ring-porous")
@@ -869,9 +874,10 @@ Wood_pheno_table_DP_hf <- bind_rows(Wood_pheno_table_DP_mrdoy_hf,Wood_pheno_tabl
 
 fig6_RP_hf <- ggplot() +
   # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
-  stat_lineribbon(data = predictions_RP_hf, aes(x = climwinmean, y = predictions_rstanarm, fill = perc, col = perc), .width = .95, alpha = 0.5, linetype = "solid") +
+  stat_lineribbon(data = predictions_RP_hf, aes(x = climwinmean, y = predictions_rstanarm, fill = perc, col = perc, linetype = as.factor(sig)), .width = .95, alpha = 0.5) +
   geom_point(data = Wood_pheno_table_RP_hf, aes(x = climwinmean, y = DOY, col = perc)) +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
+  scale_linetype_manual(values = c("solid", "dashed")) +
   scale_color_manual(values = c("red","dark green","blue","purple"))+
   #scale_fill_brewer() +
   # facet_grid(perc) +
@@ -885,9 +891,10 @@ fig6_RP_hf <- ggplot() +
 
 fig6_DP_hf <- ggplot() +
   # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
-  stat_lineribbon(data = predictions_DP_hf, aes(x = climwinmean, y = predictions_rstanarm, fill = perc, col = perc), .width = .95, alpha = 0.5, linetype = "solid",show.legend = FALSE) +
+  stat_lineribbon(data = predictions_DP_hf, aes(x = climwinmean, y = predictions_rstanarm, fill = perc, col = perc, linetype = as.factor(sig)), .width = .95, alpha = 0.5,show.legend = FALSE) +
   geom_point(data = Wood_pheno_table_DP_hf, aes(x = climwinmean, y = DOY, col = perc)) +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
+  scale_linetype_manual(values = c("solid", "dashed")) +
   scale_color_manual(values = c("red","dark green","blue","purple"),  labels = expression(DOY[25], DOY[50],DOY[75],DOY[g[max]]))+
   #scale_fill_brewer() +
   theme_bw()+
@@ -916,7 +923,7 @@ mixedmodel_stanlmerRP_total_hf <- stan_lmer(
 
 tot_hf <- mixedmodel_stanlmerRP_total_hf %>%
   tidy(conf.int = TRUE)
-write.csv(tot_hf, file = "Results/Bayesian outputs/TOT_HF.csv", row.names = FALSE)
+write.csv(tot_hf, file = "Results/Bayesian outputs/TOT_HF_may_tmin.csv", row.names = FALSE)
 
 y_hot_hf <- mixedmodel_stanlmerRP_total_hf %>%
   posterior_predict() %>%
@@ -935,7 +942,7 @@ Wood_pheno_table_DP_tot_hf <- filter(woodtable_hf, wood_type == "diffuse-porous"
 
 fig6_RP_tot_hf <-   ggplot() +
   # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
-  stat_lineribbon(data = predictions_tot_RP_hf, aes(x = climwinmean, y = predictions_rstanarm), .width = .95, linetype = "dashed") +
+  stat_lineribbon(data = predictions_tot_RP_hf, aes(x = climwinmean, y = predictions_rstanarm), .width = .95, linetype = "solid") +
   geom_point(data = Wood_pheno_table_RP_tot_hf, aes(x = climwinmean, y = tot)) +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_fill_brewer() +
@@ -944,7 +951,7 @@ fig6_RP_tot_hf <-   ggplot() +
   theme_bw()+
   theme(legend.position = "none",
         text = element_text(size = 20)) +
-  labs(x = expression(paste("4/2-5/7 ", T[max], " (°C)")), y = "")
+  labs(x = expression(paste("May ", T[min], " (°C)")), y = "")
 
 fig6_DP_tot_hf <- ggplot() +
   # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
@@ -957,7 +964,7 @@ fig6_DP_tot_hf <- ggplot() +
   theme_bw()+
   theme(legend.position = "none",
         text = element_text(size = 20)) +
-  labs(x = expression(paste("3/19-5/7 ", T[max], " (°C)")), y = "")
+  labs(x = expression(paste("May ", T[min], " (°C)")), y = "")
 
 # Clean-up
 rm(list = setdiff(ls(), objects_to_keep))
@@ -976,7 +983,7 @@ mixedmodel_stanlmerRP_seasonlength_hf <- stan_lmer(
 
 SL_hf <- mixedmodel_stanlmerRP_seasonlength_hf %>%
   tidy(conf.int = TRUE)
-write.csv(SL_hf, file = "Results/Bayesian outputs/SL_HF.csv", row.names = FALSE)
+write.csv(SL_hf, file = "Results/Bayesian outputs/SL_HF_may_tmin.csv", row.names = FALSE)
 
 y_hit_hf <- mixedmodel_stanlmerRP_seasonlength_hf %>%
   posterior_predict() %>%
@@ -1038,7 +1045,7 @@ mixedmodel_stanlmerRP_maxrate_hf <- stan_lmer(
 
 MR_hf <- mixedmodel_stanlmerRP_maxrate_hf %>%
   tidy(conf.int = TRUE)
-write.csv(MR_hf, file = "Results/Bayesian outputs/MR_HF.csv", row.names = FALSE)
+write.csv(MR_hf, file = "Results/Bayesian outputs/MR_HF_may_tmin.csv", row.names = FALSE)
 
 y_het_hf <- mixedmodel_stanlmerRP_maxrate_hf %>%
   posterior_predict() %>%
@@ -1100,7 +1107,7 @@ mixedmodel_stanlmerRP_maxrateDOY_hf <- stan_lmer(
 
 MRDOY_hf <- mixedmodel_stanlmerRP_maxrateDOY_hf %>%
   tidy(conf.int = TRUE)
-write.csv(MRDOY_hf, file = "Results/Bayesian outputs/MRDOY_HF.csv", row.names = FALSE)#
+write.csv(MRDOY_hf, file = "Results/Bayesian outputs/MRDOY_HF_may_tmin.csv", row.names = FALSE)#
 
 #y_hat_hf <- mixedmodel_stanlmerRP_maxrateDOY_hf %>%
 #  posterior_predict() %>%
@@ -1159,7 +1166,7 @@ timer$toc - timer$tic
 
 ## Create single figure using patchwork ----------
 png(
-  filename = "doc/manuscript/tables_figures/pheno_Tsensitivity_combo_patchwork_AIC.png", width = 24, height = 20,
+  filename = "doc/manuscript/tables_figures/pheno_Tsensitivity_combo_patchwork_april_may_tmin.png", width = 24, height = 20,
   pointsize = 12, bg = "transparent", units = "in", res = 600
   #restoreConsole = FALSE
 )

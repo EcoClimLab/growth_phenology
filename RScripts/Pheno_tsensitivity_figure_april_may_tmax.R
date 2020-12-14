@@ -20,7 +20,7 @@ library(rstanarm)
 library(patchwork)
 # Number of MCMC chains & number of simulations per chain.
 # Need to increase this at the end
-n_iter <- 100
+n_iter <- 10000
 n_chains <- 2
 
 # Objects to keep during memory management clean-up
@@ -395,7 +395,7 @@ fig6_RP_tot <-  ggplot() +
   theme_bw()+
   theme(legend.position = "none",
         text = element_text(size = 20)) +
-  labs(x =expression(paste("3/22-4/9 ", T[max], " (°C)")) , y = expression(paste(Delta * "DBH", " (cm)")))
+  labs(x =expression(paste("April ", T[max], " (°C)")) , y = expression(paste(Delta * "DBH", " (cm)")))
 
 fig6_DP_tot <-  ggplot() +
   # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
@@ -408,7 +408,7 @@ fig6_DP_tot <-  ggplot() +
   theme_bw()+
   theme(legend.position = "none",
         text = element_text(size = 20)) +
-  labs(x = expression(paste("2/19-5/9 ", T[max], " (°C)")), y = "")
+  labs(x = expression(paste("April ", T[max], " (°C)")), y = "")
 
 # Clean-up
 rm(list = setdiff(ls(), objects_to_keep))
@@ -944,7 +944,7 @@ fig6_RP_tot_hf <-   ggplot() +
   theme_bw()+
   theme(legend.position = "none",
         text = element_text(size = 20)) +
-  labs(x = expression(paste("4/2-5/7 ", T[max], " (°C)")), y = "")
+  labs(x = expression(paste("May ", T[max], " (°C)")), y = "")
 
 fig6_DP_tot_hf <- ggplot() +
   # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
@@ -957,7 +957,7 @@ fig6_DP_tot_hf <- ggplot() +
   theme_bw()+
   theme(legend.position = "none",
         text = element_text(size = 20)) +
-  labs(x = expression(paste("3/19-5/7 ", T[max], " (°C)")), y = "")
+  labs(x = expression(paste("May ", T[max], " (°C)")), y = "")
 
 # Clean-up
 rm(list = setdiff(ls(), objects_to_keep))

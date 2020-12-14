@@ -192,7 +192,7 @@ for (w in unique(Wood_pheno_table$wood_type)) {
     )
 
     MassRand <- randwin(
-      repeats = 5,
+      repeats = 50,
       xvar = list(Temp = climate$TMIN),
       cdate = climate$DATE,
       bdate = biodata$date,
@@ -207,6 +207,7 @@ for (w in unique(Wood_pheno_table$wood_type)) {
     pvalue(dataset = MassWin[[1]]$Dataset, datasetrand = MassRand[[1]], metric = "AIC")
 
     MassOutput <- MassWin[[1]][["Dataset"]]
+    write.csv(MassOutput, file = paste0("Results/Climwin_results/Weekly/SCBI/TMIN/", "MassOutput_",j, w, ".csv"), row.names = FALSE)
     MassRand <- MassRand[[1]]
     # windowopen <- as.Date((refdateround*7)- (MassWin[[1]][["Dataset"]][[1,2]]*7) , origin = paste0("2011-01-01"))
     # windowclose <- as.Date((refdateround*7) - (MassWin[[1]][["Dataset"]][[1,3]]*7) , origin = paste0("2011-01-01"))
@@ -234,7 +235,7 @@ for (w in unique(Wood_pheno_table$wood_type)) {
     dev.off()
 
     plotbetas(MassOutput, arrow = TRUE)
-    ggsave(filename = paste("doc/manuscript/tables_figures/","SCBI","Plotbetas", w, j, ".png", sep = "_"), width = 10, height = 8, units = "in") # add w
+    ggsave(filename = paste("doc/manuscript/tables_figures/","SCBI","Plotbetas","tmin", w, j, ".png", sep = "_"), width = 10, height = 8, units = "in") # add w
 
 
 
@@ -242,4 +243,4 @@ for (w in unique(Wood_pheno_table$wood_type)) {
 } # }
 dffinal <- dffinal[-1, ]
 names(dffinal) <- c("wood_type", "percs", "refwoy", "refmonth", "refday", "winopenwoy", "winclosewoy", "bestmodel_beta", "median_windowopendate", "median_windowclosedate")
-write.csv(dffinal, file = "results/Climwin_results/Weekly/SCBI/weekly_climwin_results_SCBI_TMIN.csv", row.names = FALSE)
+write.csv(dffinal, file = "results/Climwin_results/Weekly/SCBI/TMIN/weekly_climwin_results_SCBI_TMIN.csv", row.names = FALSE)
