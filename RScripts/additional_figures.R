@@ -3,6 +3,7 @@ library(scales)
 library(ggrepel)
 library(tidybayes)
 
+
 # Figure numbers from: https://github.com/SCBI-ForestGEO/growth_phenology/issues/13
 
 # Figure 1: Logistic growth curve and parameter illustration -------------------
