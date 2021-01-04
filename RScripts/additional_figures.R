@@ -3,7 +3,6 @@ library(scales)
 library(ggrepel)
 library(tidybayes)
 
-
 # Figure numbers from: https://github.com/SCBI-ForestGEO/growth_phenology/issues/13
 
 # Figure 1: Logistic growth curve and parameter illustration -------------------
@@ -205,13 +204,106 @@ schematic <- ggplot() +
 
 schematic
 fig_width <- 9
-ggsave("doc/manuscript/tables_figures/schematic.png", plot = schematic, width = fig_width, height = fig_width * 9 / 16)
+# ggsave("doc/manuscript/tables_figures/schematic.png", plot = schematic, width = fig_width, height = fig_width * 9 / 16)
 
 
 
 
 
-#----
+# Updated Figure 1: Schematic illustrating parameters and general sense of results
+
+
+
+
+
+
+
+#schematic_v2 <-
+  ggplot() +
+  # Overall theme:
+  theme_bw() +
+  theme(
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    axis.text = element_text(size = theme.size),
+    axis.title = element_text(size = theme.size)
+  ) +
+  coord_cartesian(xlim = c(30, 280))+
+  # Mark DOY's on x-axis:
+  geom_vline(data = doy_diameter_quartile, aes(xintercept = doy), linetype = "dashed", show.legend = FALSE, col = "grey") +
+  scale_x_continuous(
+    name = "Day of year (1 to 365)",
+    breaks = c(doy_diameter_quartile$doy, doy.ip, window_open, window_close),
+    labels = c(1, expression(DOY[25]), expression(DOY[50]), expression(DOY[75]), 365, expression(DOY[g[max]]), expression(w[open]), expression(w[close]))
+  ) +
+  # Mark growth percentages on y-axis:
+  geom_hline(data = doy_diameter_quartile, aes(yintercept = diameter), linetype = "dashed", show.legend = FALSE, col = "grey") +
+  scale_y_continuous(
+    name = expression(paste("% of annual growth ", Delta[DBH])),
+    breaks = doy_diameter_quartile$diameter,
+    labels = doy_diameter_quartile$label
+  ) +
+  # Inflection point & max growth rate
+  annotate("point", x = doy.ip, y = lg5.pred(params, doy.ip), shape = 18, size = 4) +
+  geom_vline(xintercept = doy.ip, linetype = "dotted") +
+  annotate(
+    geom = "text",
+    x = doy.ip,
+    y = lg5.pred(params, doy.ip) + 0.025,
+    label = expression(paste(g[max], " = slope of tangent line  ")),
+    hjust = 1,
+    size = geom.text.size
+  ) +
+  # Growth window:
+  geom_segment(
+    aes(
+      x = doy_diameter_quartile$doy[2],
+      y = L + 0.05,
+      xend = doy_diameter_quartile$doy[4],
+      yend = L + 0.05
+    ),
+    arrow = arrow(length = unit(0.25, "cm"), ends = "both")
+  ) +
+  annotate(
+    "text",
+    x = doy_diameter_quartile$doy[2] + (doy_diameter_quartile$doy[4] - doy_diameter_quartile$doy[2]) * 0.5,
+    y = L + 0.025,
+    label = expression(L[PGS]),
+    hjust = 0.5,
+    size = geom.text.size
+  ) +
+  # Critical temperature window:
+  geom_rect(aes(xmin = window_open, xmax = window_close, ymin = -Inf, ymax = Inf), alpha = 0.4) +
+  geom_segment(
+    aes(
+      x = window_open,
+      y = L + (K-L) * 0.45 + 0.025,
+      xend = window_close,
+      yend = L + (K-L) * 0.45 + 0.025
+    ),
+    arrow = arrow(length = unit(0.25, "cm"), ends = "both")
+  ) +
+  annotate(
+    "text",
+    x = window_open + (window_close - window_open) * 0.5,
+    y = L + (K-L) * 0.45,
+    label = "Critical\nTemperature\nWindow",
+    hjust = 0.5,
+    vjust = 1,
+    size = geom.text.size
+  ) +
+  # True growth curve
+  geom_line(data = true_values, mapping = aes(x = doy, y = diameter))
+
+schematic_v2
+
+fig_width <- 9
+# ggsave("doc/manuscript/tables_figures/schematic_v2.png", plot = schematic_v2, width = fig_width, height = fig_width * 9 / 16)
+
+
+
+
+
 
 
 
