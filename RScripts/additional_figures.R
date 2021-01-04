@@ -1,9 +1,9 @@
+# Figure numbers from: https://github.com/SCBI-ForestGEO/growth_phenology/issues/13
 library(tidyverse)
 library(scales)
 library(ggrepel)
 library(tidybayes)
 
-# Figure numbers from: https://github.com/SCBI-ForestGEO/growth_phenology/issues/13
 
 # Figure 1: Logistic growth curve and parameter illustration -------------------
 # Set parameters from McMahon & Parker (2014)
@@ -210,16 +210,126 @@ fig_width <- 9
 
 
 
-# Updated Figure 1: Schematic illustrating parameters and general sense of results
+# Figure 1 v2: Schematic illustrating parameters and general sense of results ----
+## Setup ----
+# DOY:
+start_doy <- 1
+end_doy <- 365
+
+# Critical temperature window:
+window_open <- 60
+window_close <- 105
+
+# Function for logistic growth model written by Sean. Supposed to be in RDendrom
+# package https://github.com/seanmcm/RDendrom, but function does not seem to be included
+lg5.pred <- function(params, doy) {
+  L <- params[1] # min(dbh, na.rm = T)
+  K <- params[2]
+  doy.ip <- params[3]
+  r <- params[4]
+  theta <- params[5]
+  dbh <- vector(length = length(doy))
+  dbh <- L + ((K - L) / (1 + 1 / theta * exp(-(r * (doy - doy.ip) / theta))^theta))
+  return(dbh)
+}
+
+# Red/hot curve values:
+L_hot <- 13
+K_hot <- 14
+doy.ip_hot <- 182
+r_hot <- 0.025
+theta_hot <- 1.5
+params_hot <- c(L_hot, K_hot, doy.ip_hot, r_hot, theta_hot)
+total_growth_hot <- K_hot - L_hot
+
+# Blue/cold curve values:
+L_cold <- 13
+K_cold <- 14
+doy.ip_cold <- 160
+r_cold <- 0.025
+theta_cold <- 1.5
+params_cold <- c(L_cold, K_cold, doy.ip_cold, r_cold, theta_cold)
+total_growth_cold <- K_cold - L_cold
+
+## 1. True growth (logistic curve) ----
+true_values_hot <-
+  tibble(
+    doy = seq(from = start_doy, to = end_doy, by = 1),
+    diameter = lg5.pred(params_hot, doy)
+  )
+true_values_cold <-
+  tibble(
+    doy = seq(from = start_doy, to = end_doy, by = 1),
+    diameter = lg5.pred(params_cold, doy)
+  )
+true_values <-
+  bind_rows(
+    true_values_hot %>% mutate(year = "hot"),
+    true_values_cold %>% mutate(year = "cold")
+  )
+
+
+## 2. Max growth rate/inflection point (tangent line) ----
+# Incorrect intercept since r is not true slope at inflection point:
+# intercept <- lg5.pred(params, doy.ip) - r *doy.ip
+
+# Version 1 of correct slope and intercept
+r_true <- ((K-L)*r/theta )/(1 + 1/theta)^2
+intercept_true <- lg5.pred(params, doy.ip) - r_true *doy.ip
+
+# Version 2 of correct doy/ip, slope, and intercept
+doy.ip_true <- -log(theta)/r + doy.ip
+r_true_true <- r*(K-L)/4
+intercept_true_true <- lg5.pred(params, doy.ip_true) - r_true_true *doy.ip_true
+
+ggplot(true_values, aes(x = doy, y = diff)) +
+  geom_line() +
+  geom_vline(xintercept = doy.ip_true) +
+  geom_hline(yintercept = r_true_true)
 
 
 
+## 4. Compute 25%/50%/75% growth values and DOY ----
+doy_diameter_quartile_hot <- bind_rows(
+  tibble(doy = 1, diameter = L_hot),
+  true_values_hot %>% filter(diameter >= (L_hot + total_growth_hot * .25)) %>% slice(1),
+  true_values_hot %>% filter(diameter >= (L_hot + total_growth_hot * .5)) %>% slice(1),
+  true_values_hot %>% filter(diameter >= (L_hot + total_growth_hot * .75)) %>% slice(1),
+  tibble(doy = 365, diameter = K_hot)
+) %>%
+  mutate(
+    growth = c(0, 0.25, 0.5, 0.75, 1),
+    label = c("0%", "25%", "50%", "75%", "100%"),
+    label = factor(label, levels = c("0%", "25%", "50%", "75%", "100%")),
+    year = "hot"
+  )
+
+doy_diameter_quartile_cold <- bind_rows(
+  tibble(doy = 1, diameter = L_cold),
+  true_values_cold %>% filter(diameter >= (L_cold + total_growth_cold * .25)) %>% slice(1),
+  true_values_cold %>% filter(diameter >= (L_cold + total_growth_cold * .5)) %>% slice(1),
+  true_values_cold %>% filter(diameter >= (L_cold + total_growth_cold * .75)) %>% slice(1),
+  tibble(doy = 365, diameter = K_cold)
+) %>%
+  mutate(
+    growth = c(0, 0.25, 0.5, 0.75, 1),
+    label = c("0%", "25%", "50%", "75%", "100%"),
+    label = factor(label, levels = c("0%", "25%", "50%", "75%", "100%")),
+    year = "cold"
+  )
+
+doy_diameter_quartile <- bind_rows(
+  doy_diameter_quartile_hot %>% mutate(year = "hot"),
+  doy_diameter_quartile_cold %>% mutate(year = "cold")
+)
 
 
-
+## Output figure ----
+geom.text.size <- 4
+theme.size <- (14/5) * geom.text.size
 
 #schematic_v2 <-
-  ggplot() +
+ggplot() +
   # Overall theme:
   theme_bw() +
   theme(
@@ -228,12 +338,12 @@ fig_width <- 9
     axis.text = element_text(size = theme.size),
     axis.title = element_text(size = theme.size)
   ) +
-  coord_cartesian(xlim = c(30, 280))+
-  # Mark DOY's on x-axis:
-  geom_vline(data = doy_diameter_quartile, aes(xintercept = doy), linetype = "dashed", show.legend = FALSE, col = "grey") +
+  coord_cartesian(xlim = c(20, 345))+
+  # # Mark DOY's on x-axis:
+  geom_vline(data = doy_diameter_quartile, aes(xintercept = doy, col = year), linetype = "dashed", show.legend = FALSE, alpha = 0.5) +
   scale_x_continuous(
     name = "Day of year (1 to 365)",
-    breaks = c(doy_diameter_quartile$doy, doy.ip, window_open, window_close),
+    breaks = c(doy_diameter_quartile_hot$doy, doy.ip_hot, window_open, window_close),
     labels = c(1, expression(DOY[25]), expression(DOY[50]), expression(DOY[75]), 365, expression(DOY[g[max]]), expression(w[open]), expression(w[close]))
   ) +
   # Mark growth percentages on y-axis:
@@ -243,60 +353,82 @@ fig_width <- 9
     breaks = doy_diameter_quartile$diameter,
     labels = doy_diameter_quartile$label
   ) +
-  # Inflection point & max growth rate
-  annotate("point", x = doy.ip, y = lg5.pred(params, doy.ip), shape = 18, size = 4) +
-  geom_vline(xintercept = doy.ip, linetype = "dotted") +
-  annotate(
-    geom = "text",
-    x = doy.ip,
-    y = lg5.pred(params, doy.ip) + 0.025,
-    label = expression(paste(g[max], " = slope of tangent line  ")),
-    hjust = 1,
-    size = geom.text.size
-  ) +
-  # Growth window:
-  geom_segment(
-    aes(
-      x = doy_diameter_quartile$doy[2],
-      y = L + 0.05,
-      xend = doy_diameter_quartile$doy[4],
-      yend = L + 0.05
-    ),
-    arrow = arrow(length = unit(0.25, "cm"), ends = "both")
-  ) +
+  # # Inflection point & max growth rate
+  # annotate("point", x = doy.ip, y = lg5.pred(params, doy.ip), shape = 18, size = 4) +
+  # geom_vline(xintercept = doy.ip, linetype = "dotted") +
+  # annotate(
+  #   geom = "text",
+  #   x = doy.ip,
+  #   y = lg5.pred(params, doy.ip) + 0.025,
+  #   label = expression(paste(g[max], " = slope of tangent line  ")),
+  #   hjust = 1,
+  #   size = geom.text.size
+  # ) +
+# Growth window:
+geom_segment(
+  aes(
+    x = doy_diameter_quartile_hot$doy[2],
+    y = L_hot + 0.05,
+    xend = doy_diameter_quartile_hot$doy[4],
+    yend = L_hot + 0.05
+  ),
+  arrow = arrow(length = unit(0.25, "cm"), ends = "both"),
+  col = "red"
+) +
   annotate(
     "text",
-    x = doy_diameter_quartile$doy[2] + (doy_diameter_quartile$doy[4] - doy_diameter_quartile$doy[2]) * 0.5,
-    y = L + 0.025,
+    x = doy_diameter_quartile_hot$doy[2] + (doy_diameter_quartile_hot$doy[4] - doy_diameter_quartile_hot$doy[2]) * 0.5,
+    y = L_hot + 0.025,
     label = expression(L[PGS]),
     hjust = 0.5,
-    size = geom.text.size
+    size = geom.text.size,
+    col = "red"
   ) +
-  # Critical temperature window:
-  geom_rect(aes(xmin = window_open, xmax = window_close, ymin = -Inf, ymax = Inf), alpha = 0.4) +
   geom_segment(
     aes(
-      x = window_open,
-      y = L + (K-L) * 0.45 + 0.025,
-      xend = window_close,
-      yend = L + (K-L) * 0.45 + 0.025
+      x = doy_diameter_quartile_cold$doy[2],
+      y = L_cold + 0.05 + 0.075,
+      xend = doy_diameter_quartile_cold$doy[4],
+      yend = L_cold + 0.05 + 0.075
     ),
-    arrow = arrow(length = unit(0.25, "cm"), ends = "both")
+    arrow = arrow(length = unit(0.25, "cm"), ends = "both"),
+    col = "blue"
   ) +
   annotate(
     "text",
-    x = window_open + (window_close - window_open) * 0.5,
-    y = L + (K-L) * 0.45,
-    label = "Critical\nTemperature\nWindow",
+    x = doy_diameter_quartile_cold$doy[2] + (doy_diameter_quartile_cold$doy[4] - doy_diameter_quartile_cold$doy[2]) * 0.5,
+    y = L_cold + 0.025 + 0.075,
+    label = expression(L[PGS]),
     hjust = 0.5,
-    vjust = 1,
-    size = geom.text.size
+    size = geom.text.size,
+    col = "blue"
   ) +
+  # # Critical temperature window:
+  # geom_rect(aes(xmin = window_open, xmax = window_close, ymin = -Inf, ymax = Inf), alpha = 0.4) +
+  # geom_segment(
+  #   aes(
+  #     x = window_open,
+  #     y = L + (K-L) * 0.45 + 0.025,
+  #     xend = window_close,
+  #     yend = L + (K-L) * 0.45 + 0.025
+  #   ),
+  #   arrow = arrow(length = unit(0.25, "cm"), ends = "both")
+  # ) +
+  # annotate(
+  #   "text",
+  #   x = window_open + (window_close - window_open) * 0.5,
+  #   y = L + (K-L) * 0.45,
+  #   label = "Critical\nTemperature\nWindow",
+  #   hjust = 0.5,
+  #   vjust = 1,
+  #   size = geom.text.size
+  # ) +
   # True growth curve
-  geom_line(data = true_values, mapping = aes(x = doy, y = diameter))
+  geom_line(data = true_values, mapping = aes(x = doy, y = diameter, col = year)) +
+  scale_color_manual(values = c("blue", "red"))
+
 
 schematic_v2
-
 fig_width <- 9
 # ggsave("doc/manuscript/tables_figures/schematic_v2.png", plot = schematic_v2, width = fig_width, height = fig_width * 9 / 16)
 
