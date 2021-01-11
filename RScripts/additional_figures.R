@@ -343,8 +343,8 @@ hot_color <- "#F8766D"
 cold_color <- "#00BFC4"
 
 
-#schematic_v2 <-
-ggplot() +
+schematic_v2 <-
+  ggplot() +
   # Overall theme:
   theme_bw() +
   theme(
@@ -386,17 +386,17 @@ ggplot() +
   #   hjust = 1,
   #   size = geom.text.size
   # ) +
-# Growth window:
-geom_segment(
-  aes(
-    x = doy_diameter_quartile_cold$doy[2],
-    y = L_cold + 0.05,
-    xend = doy_diameter_quartile_cold$doy[4],
-    yend = L_cold + 0.05
-  ),
-  arrow = arrow(length = unit(0.25, "cm"), ends = "both"),
-  col = cold_color
-) +
+  # Growth window:
+  geom_segment(
+    aes(
+      x = doy_diameter_quartile_cold$doy[2],
+      y = L_cold + 0.05,
+      xend = doy_diameter_quartile_cold$doy[4],
+      yend = L_cold + 0.05
+    ),
+    arrow = arrow(length = unit(0.25, "cm"), ends = "both"),
+    col = cold_color
+  ) +
   annotate(
     "text",
     x = doy_diameter_quartile_cold$doy[2] + (doy_diameter_quartile_cold$doy[4] - doy_diameter_quartile_cold$doy[2]) * 0.5,
@@ -461,7 +461,7 @@ geom_segment(
 
 schematic_v2
 fig_width <- 9
-# ggsave("doc/manuscript/tables_figures/schematic_v2.png", plot = schematic_v2, width = fig_width, height = fig_width * 9 / 16)
+ggsave("doc/manuscript/tables_figures/schematic_v2.png", plot = schematic_v2, width = fig_width, height = fig_width * 9 / 16)
 
 
 
