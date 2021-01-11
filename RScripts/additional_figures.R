@@ -336,6 +336,8 @@ ggplot() +
     panel.grid.major = element_blank(),
     panel.grid.minor = element_blank(),
     axis.text = element_text(size = theme.size),
+    axis.text.x.bottom = element_text(color = "red"),
+    axis.text.x.top = element_text(color = "blue"),
     axis.title = element_text(size = theme.size)
   ) +
   coord_cartesian(xlim = c(20, 345))+
@@ -344,7 +346,12 @@ ggplot() +
   scale_x_continuous(
     name = "Day of year (1 to 365)",
     breaks = c(doy_diameter_quartile_hot$doy, doy.ip_hot, window_open, window_close),
-    labels = c(1, expression(DOY[25]), expression(DOY[50]), expression(DOY[75]), 365, expression(DOY[g[max]]), expression(w[open]), expression(w[close]))
+    labels = c(1, expression(DOY[25]), expression(DOY[50]), expression(DOY[75]), 365, expression(DOY[g[max]]), expression(w[open]), expression(w[close])),
+    sec.axis = sec_axis(
+      ~ . * 1,
+      breaks = c(doy_diameter_quartile_cold$doy, doy.ip_cold) ,
+      labels = c(1, expression(DOY[25]), expression(DOY[50]), expression(DOY[75]), 365, expression(DOY[g[max]]))
+    )
   ) +
   # Mark growth percentages on y-axis:
   geom_hline(data = doy_diameter_quartile, aes(yintercept = diameter), linetype = "dashed", show.legend = FALSE, col = "grey") +
@@ -567,8 +574,7 @@ grid.arrange(
   as.table = TRUE, nrow=2, ncol=2) ###as.table specifies order if multiple rows
 
 dev.off()
-# ----
-#DOY timing figure (Replace with figure created in DOYtiming_all_years.R)----
+# DOY timing figure (Replace with figure created in DOYtiming_all_years.R)----
 Wood_pheno_table_scbi <- read_csv("Data/Wood_pheno_table_SCBI_CLEAN.csv") %>%
   # Keep only RP and DP for now
   filter(wood_type != "other") %>%
