@@ -3,6 +3,7 @@ library(tidyverse)
 library(scales)
 library(ggrepel)
 library(tidybayes)
+library(ggnewscale)
 
 
 # Figure 1: Logistic growth curve and parameter illustration -------------------
@@ -236,7 +237,7 @@ lg5.pred <- function(params, doy) {
 # Red/hot curve values:
 L_hot <- 13
 K_hot <- 14
-doy.ip_hot <- 182
+doy.ip_hot <- 160
 r_hot <- 0.025
 theta_hot <- 1.5
 params_hot <- c(L_hot, K_hot, doy.ip_hot, r_hot, theta_hot)
@@ -245,7 +246,7 @@ total_growth_hot <- K_hot - L_hot
 # Blue/cold curve values:
 L_cold <- 13
 K_cold <- 14
-doy.ip_cold <- 160
+doy.ip_cold <- 182
 r_cold <- 0.025
 theta_cold <- 1.5
 params_cold <- c(L_cold, K_cold, doy.ip_cold, r_cold, theta_cold)
@@ -323,6 +324,17 @@ doy_diameter_quartile <- bind_rows(
   doy_diameter_quartile_cold %>% mutate(year = "cold")
 )
 
+# Identify significant shifts
+significance_data <- inner_join(
+  doy_diameter_quartile_hot %>%
+    filter(!label %in% c("0%", "100%")) %>%
+    select(doy_hot = doy, diameter),
+  doy_diameter_quartile_cold %>%
+    filter(!label %in% c("0%", "100%")) %>%
+    select(doy_cold = doy, diameter),
+  by = "diameter"
+) %>%
+  mutate(significant = c(TRUE, TRUE, FALSE))
 
 ## Output figure ----
 geom.text.size <- 4
@@ -339,20 +351,20 @@ ggplot() +
     panel.grid.major = element_blank(),
     panel.grid.minor = element_blank(),
     axis.text = element_text(size = theme.size),
-    axis.text.x.bottom = element_text(color = c(hot_color, hot_color, hot_color, "black", "black")),
-    axis.text.x.top = element_text(color = cold_color),
+    axis.text.x.top = element_text(color = hot_color),
+    axis.text.x.bottom = element_text(color = c(cold_color, cold_color, cold_color, "black", "black")),
     axis.title = element_text(size = theme.size)
   ) +
-  coord_cartesian(xlim = c(20, 345))+
+  coord_cartesian(xlim = c(20, 275))+
   # # Mark DOY's on x-axis:
   geom_vline(data = doy_diameter_quartile, aes(xintercept = doy, col = year), linetype = "dashed", show.legend = FALSE, alpha = 0.5) +
   scale_x_continuous(
     name = "Day of year (1 to 365)",
-    breaks = c(doy_diameter_quartile_hot$doy, window_open, window_close),
+    breaks = c(doy_diameter_quartile_cold$doy, window_open, window_close),
     labels = c(1, expression(DOY[25]), expression(DOY[50]), expression(DOY[75]), 365, expression(w[open]), expression(w[close])),
     sec.axis = sec_axis(
       ~ . * 1,
-      breaks = c(doy_diameter_quartile_cold$doy) ,
+      breaks = c(doy_diameter_quartile_hot$doy) ,
       labels = c(1, expression(DOY[25]), expression(DOY[50]), expression(DOY[75]), 365)
     )
   ) +
@@ -377,65 +389,74 @@ ggplot() +
 # Growth window:
 geom_segment(
   aes(
-    x = doy_diameter_quartile_hot$doy[2],
-    y = L_hot + 0.05,
-    xend = doy_diameter_quartile_hot$doy[4],
-    yend = L_hot + 0.05
+    x = doy_diameter_quartile_cold$doy[2],
+    y = L_cold + 0.05,
+    xend = doy_diameter_quartile_cold$doy[4],
+    yend = L_cold + 0.05
   ),
   arrow = arrow(length = unit(0.25, "cm"), ends = "both"),
-  col = hot_color
+  col = cold_color
 ) +
   annotate(
     "text",
+    x = doy_diameter_quartile_cold$doy[2] + (doy_diameter_quartile_cold$doy[4] - doy_diameter_quartile_cold$doy[2]) * 0.5,
+    y = L_cold + 0.025,
+    label = expression(L[PGS]),
+    hjust = 0.5,
+    size = geom.text.size,
+    col = cold_color
+  ) +
+  geom_segment(
+    aes(
+      x = doy_diameter_quartile_hot$doy[2],
+      y = K_hot - 0.05 - 0.075,
+      xend = doy_diameter_quartile_hot$doy[4],
+      yend = K_hot - 0.05 - 0.075
+    ),
+    arrow = arrow(length = unit(0.25, "cm"), ends = "both"),
+    col = hot_color
+  ) +
+  annotate(
+    "text",
     x = doy_diameter_quartile_hot$doy[2] + (doy_diameter_quartile_hot$doy[4] - doy_diameter_quartile_hot$doy[2]) * 0.5,
-    y = L_hot + 0.025,
+    y = K_hot - 0.025 - 0.075,
     label = expression(L[PGS]),
     hjust = 0.5,
     size = geom.text.size,
     col = hot_color
   ) +
+  # Critical temperature window:
+  geom_rect(aes(xmin = window_open, xmax = window_close, ymin = -Inf, ymax = Inf), alpha = 0.4) +
   geom_segment(
     aes(
-      x = doy_diameter_quartile_cold$doy[2],
-      y = K_cold - 0.05 - 0.075,
-      xend = doy_diameter_quartile_cold$doy[4],
-      yend = K_cold - 0.05 - 0.075
+      x = window_open,
+      y = L + (K-L) * 0.45 + 0.025,
+      xend = window_close,
+      yend = L + (K-L) * 0.45 + 0.025
     ),
-    arrow = arrow(length = unit(0.25, "cm"), ends = "both"),
-    col = cold_color
+    arrow = arrow(length = unit(0.25, "cm"), ends = "both")
   ) +
   annotate(
     "text",
-    x = doy_diameter_quartile_cold$doy[2] + (doy_diameter_quartile_cold$doy[4] - doy_diameter_quartile_cold$doy[2]) * 0.5,
-    y = K_cold - 0.025 - 0.075,
-    label = expression(L[PGS]),
+    x = window_open + (window_close - window_open) * 0.5,
+    y = L + (K-L) * 0.45,
+    label = "Critical\nTemperature\nWindow",
     hjust = 0.5,
-    size = geom.text.size,
-    col = cold_color
+    vjust = 1,
+    size = geom.text.size
   ) +
-  # # Critical temperature window:
-  # geom_rect(aes(xmin = window_open, xmax = window_close, ymin = -Inf, ymax = Inf), alpha = 0.4) +
-  # geom_segment(
-  #   aes(
-  #     x = window_open,
-  #     y = L + (K-L) * 0.45 + 0.025,
-  #     xend = window_close,
-  #     yend = L + (K-L) * 0.45 + 0.025
-  #   ),
-  #   arrow = arrow(length = unit(0.25, "cm"), ends = "both")
-  # ) +
-  # annotate(
-  #   "text",
-  #   x = window_open + (window_close - window_open) * 0.5,
-  #   y = L + (K-L) * 0.45,
-  #   label = "Critical\nTemperature\nWindow",
-  #   hjust = 0.5,
-  #   vjust = 1,
-  #   size = geom.text.size
-  # ) +
   # True growth curve
   geom_line(data = true_values, mapping = aes(x = doy, y = diameter, col = year)) +
-  scale_color_manual(values = c(cold_color, hot_color))
+  scale_color_manual(values = c(cold_color, hot_color)) +
+  # Significance arrows
+  geom_segment(
+    data = significance_data,
+    aes(xend = doy_hot, x = doy_cold, yend = diameter, y = diameter),
+    col = ifelse(significance_data$significant, "black", "grey"),
+    size = 2,
+    arrow = arrow(length = unit(0.25, "cm"), type = "closed", angle = 40),
+    linejoin = "mitre"
+  )
 
 
 schematic_v2
