@@ -341,6 +341,8 @@ geom.text.size <- 4
 theme.size <- (14/5) * geom.text.size
 hot_color <- "#F8766D"
 cold_color <- "#00BFC4"
+hot_color <- "red"
+cold_color <- "dodgerblue3"
 
 
 schematic_v2 <-
@@ -457,8 +459,6 @@ schematic_v2 <-
     arrow = arrow(length = unit(0.25, "cm"), type = "closed", angle = 40),
     linejoin = "mitre"
   )
-
-
 schematic_v2
 fig_width <- 9
 ggsave("doc/manuscript/tables_figures/schematic_v2.png", plot = schematic_v2, width = fig_width, height = fig_width * 9 / 16)
