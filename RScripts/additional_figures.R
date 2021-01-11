@@ -217,8 +217,8 @@ start_doy <- 1
 end_doy <- 365
 
 # Critical temperature window:
-window_open <- 60
-window_close <- 105
+window_open <- 60-30
+window_close <- 105-30
 
 # Function for logistic growth model written by Sean. Supposed to be in RDendrom
 # package https://github.com/seanmcm/RDendrom, but function does not seem to be included
@@ -327,6 +327,9 @@ doy_diameter_quartile <- bind_rows(
 ## Output figure ----
 geom.text.size <- 4
 theme.size <- (14/5) * geom.text.size
+hot_color <- "#F8766D"
+cold_color <- "#00BFC4"
+
 
 #schematic_v2 <-
 ggplot() +
@@ -336,8 +339,8 @@ ggplot() +
     panel.grid.major = element_blank(),
     panel.grid.minor = element_blank(),
     axis.text = element_text(size = theme.size),
-    axis.text.x.bottom = element_text(color = "red"),
-    axis.text.x.top = element_text(color = "blue"),
+    axis.text.x.bottom = element_text(color = c(hot_color, hot_color, hot_color, "black", "black")),
+    axis.text.x.top = element_text(color = cold_color),
     axis.title = element_text(size = theme.size)
   ) +
   coord_cartesian(xlim = c(20, 345))+
@@ -345,12 +348,12 @@ ggplot() +
   geom_vline(data = doy_diameter_quartile, aes(xintercept = doy, col = year), linetype = "dashed", show.legend = FALSE, alpha = 0.5) +
   scale_x_continuous(
     name = "Day of year (1 to 365)",
-    breaks = c(doy_diameter_quartile_hot$doy, doy.ip_hot, window_open, window_close),
-    labels = c(1, expression(DOY[25]), expression(DOY[50]), expression(DOY[75]), 365, expression(DOY[g[max]]), expression(w[open]), expression(w[close])),
+    breaks = c(doy_diameter_quartile_hot$doy, window_open, window_close),
+    labels = c(1, expression(DOY[25]), expression(DOY[50]), expression(DOY[75]), 365, expression(w[open]), expression(w[close])),
     sec.axis = sec_axis(
       ~ . * 1,
-      breaks = c(doy_diameter_quartile_cold$doy, doy.ip_cold) ,
-      labels = c(1, expression(DOY[25]), expression(DOY[50]), expression(DOY[75]), 365, expression(DOY[g[max]]))
+      breaks = c(doy_diameter_quartile_cold$doy) ,
+      labels = c(1, expression(DOY[25]), expression(DOY[50]), expression(DOY[75]), 365)
     )
   ) +
   # Mark growth percentages on y-axis:
@@ -380,7 +383,7 @@ geom_segment(
     yend = L_hot + 0.05
   ),
   arrow = arrow(length = unit(0.25, "cm"), ends = "both"),
-  col = "red"
+  col = hot_color
 ) +
   annotate(
     "text",
@@ -389,26 +392,26 @@ geom_segment(
     label = expression(L[PGS]),
     hjust = 0.5,
     size = geom.text.size,
-    col = "red"
+    col = hot_color
   ) +
   geom_segment(
     aes(
       x = doy_diameter_quartile_cold$doy[2],
-      y = L_cold + 0.05 + 0.075,
+      y = K_cold - 0.05 - 0.075,
       xend = doy_diameter_quartile_cold$doy[4],
-      yend = L_cold + 0.05 + 0.075
+      yend = K_cold - 0.05 - 0.075
     ),
     arrow = arrow(length = unit(0.25, "cm"), ends = "both"),
-    col = "blue"
+    col = cold_color
   ) +
   annotate(
     "text",
     x = doy_diameter_quartile_cold$doy[2] + (doy_diameter_quartile_cold$doy[4] - doy_diameter_quartile_cold$doy[2]) * 0.5,
-    y = L_cold + 0.025 + 0.075,
+    y = K_cold - 0.025 - 0.075,
     label = expression(L[PGS]),
     hjust = 0.5,
     size = geom.text.size,
-    col = "blue"
+    col = cold_color
   ) +
   # # Critical temperature window:
   # geom_rect(aes(xmin = window_open, xmax = window_close, ymin = -Inf, ymax = Inf), alpha = 0.4) +
@@ -432,7 +435,7 @@ geom_segment(
   # ) +
   # True growth curve
   geom_line(data = true_values, mapping = aes(x = doy, y = diameter, col = year)) +
-  scale_color_manual(values = c("blue", "red"))
+  scale_color_manual(values = c(cold_color, hot_color))
 
 
 schematic_v2
