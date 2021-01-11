@@ -747,8 +747,8 @@ schematic_v2_HF
 
 ### Combine ----
 fig_width <- 9
-(schematic_v2_SCBI + theme(axis.title.x = element_blank()) / schematic_v2_HF
-ggsave("doc/manuscript/tables_figures/schematic_v2.png", plot = schematic_v2_SCBI / schematic_v2_HF, width = fig_width, height = 2* fig_width * 9 / 16)
+(schematic_v2_SCBI + theme(axis.title.x = element_blank())) / schematic_v2_HF
+ggsave("doc/manuscript/tables_figures/schematic_v2.png", plot = last_plot(), width = fig_width, height = 2* fig_width * 9 / 16)
 
 
 
