@@ -339,15 +339,17 @@ HF_total_growth_cold <- HF_K_cold - HF_L_cold
 
 # From Cam's analysis
 HF_doy_max_rate <- read_csv("Data/Wood_pheno_table_HarvardForest_CLEAN.csv") %>%
+  # 2002 = hot year, 2003 = cold year
   filter(year %in% c(2002, 2003)) %>%
+  # For each year, tag_year, take first value since max_rate_DOY doesn't change
   group_by(year, tag_year) %>%
-  summarize(max_rate_DOY = mean(max_rate_DOY)) %>%
+  slice(1) %>%
+  # Average for each year
   group_by(year) %>%
   summarize(max_rate_DOY = mean(max_rate_DOY)) %>%
+  # Relabel
   mutate(year = c("Hot", "Cold")) %>%
   rename(doy = max_rate_DOY)
-
-
 
 
 ## 2. Compute LG5 growth curve ----
@@ -504,7 +506,7 @@ HF_significant_perc <- inner_join(
     select(doy_cold = doy, perc),
   by = "perc"
 ) %>%
-  mutate(significant = c(TRUE, TRUE, FALSE))
+  mutate(significant = c(TRUE, TRUE, TRUE))
 
 # Vertical shift
 HF_vertical_shift_doy <- 200
