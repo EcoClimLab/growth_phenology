@@ -337,8 +337,15 @@ HF_theta_cold <- HF_cold_LG5_values$theta
 HF_params_cold <- c(HF_L_cold, HF_K_cold, HF_doy.ip_cold, HF_r_cold, HF_theta_cold)
 HF_total_growth_cold <- HF_K_cold - HF_L_cold
 
-
-
+# From Cam's analysis
+HF_doy_max_rate <- read_csv("Data/Wood_pheno_table_HarvardForest_CLEAN.csv") %>%
+  filter(year %in% c(2002, 2003)) %>%
+  group_by(year, tag_year) %>%
+  summarize(max_rate_DOY = mean(max_rate_DOY)) %>%
+  group_by(year) %>%
+  summarize(max_rate_DOY = mean(max_rate_DOY)) %>%
+  mutate(year = c("Hot", "Cold")) %>%
+  rename(doy = max_rate_DOY)
 
 
 
@@ -365,8 +372,8 @@ SCBI_true_values_cold <-
 
 SCBI_true_values <-
   bind_rows(
-    SCBI_true_values_hot %>% mutate(year = "hot"),
-    SCBI_true_values_cold %>% mutate(year = "cold")
+    SCBI_true_values_hot %>% mutate(year = "Hot"),
+    SCBI_true_values_cold %>% mutate(year = "Cold")
   )
 
 ### Compute HF values ----
@@ -390,8 +397,8 @@ HF_true_values_cold <-
 
 HF_true_values <-
   bind_rows(
-    HF_true_values_hot %>% mutate(year = "hot"),
-    HF_true_values_cold %>% mutate(year = "cold")
+    HF_true_values_hot %>% mutate(year = "Hot"),
+    HF_true_values_cold %>% mutate(year = "Cold")
   )
 
 
@@ -408,7 +415,7 @@ SCBI_doy_diameter_quartile_hot <- bind_rows(
     growth = c(0, 0.25, 0.5, 0.75, 1),
     label = c("0%", "25%", "50%", "75%", "100%"),
     label = factor(label, levels = c("0%", "25%", "50%", "75%", "100%")),
-    year = "hot"
+    year = "Hot"
   ) %>%
   select(-perc) %>%
   rename(perc = growth)
@@ -424,14 +431,14 @@ SCBI_doy_diameter_quartile_cold <- bind_rows(
     growth = c(0, 0.25, 0.5, 0.75, 1),
     label = c("0%", "25%", "50%", "75%", "100%"),
     label = factor(label, levels = c("0%", "25%", "50%", "75%", "100%")),
-    year = "cold"
+    year = "Cold"
   ) %>%
   select(-perc) %>%
   rename(perc = growth)
 
 SCBI_doy_diameter_quartile <- bind_rows(
-  SCBI_doy_diameter_quartile_hot %>% mutate(year = "hot"),
-  SCBI_doy_diameter_quartile_cold %>% mutate(year = "cold")
+  SCBI_doy_diameter_quartile_hot %>% mutate(year = "Hot"),
+  SCBI_doy_diameter_quartile_cold %>% mutate(year = "Cold")
 )
 
 ### Compute HF values ----
@@ -446,10 +453,11 @@ HF_doy_diameter_quartile_hot <- bind_rows(
     growth = c(0, 0.25, 0.5, 0.75, 1),
     label = c("0%", "25%", "50%", "75%", "100%"),
     label = factor(label, levels = c("0%", "25%", "50%", "75%", "100%")),
-    year = "hot"
+    year = "Hot"
   ) %>%
   select(-perc) %>%
   rename(perc = growth)
+
 
 HF_doy_diameter_quartile_cold <- bind_rows(
   tibble(doy = 1, diameter = HF_L_cold),
@@ -462,14 +470,14 @@ HF_doy_diameter_quartile_cold <- bind_rows(
     growth = c(0, 0.25, 0.5, 0.75, 1),
     label = c("0%", "25%", "50%", "75%", "100%"),
     label = factor(label, levels = c("0%", "25%", "50%", "75%", "100%")),
-    year = "cold"
+    year = "Cold"
   ) %>%
   select(-perc) %>%
   rename(perc = growth)
 
 HF_doy_diameter_quartile <- bind_rows(
-  HF_doy_diameter_quartile_hot %>% mutate(year = "hot"),
-  HF_doy_diameter_quartile_cold %>% mutate(year = "cold")
+  HF_doy_diameter_quartile_hot %>% mutate(year = "Hot"),
+  HF_doy_diameter_quartile_cold %>% mutate(year = "Cold")
 )
 
 
@@ -498,6 +506,14 @@ HF_significant_perc <- inner_join(
 ) %>%
   mutate(significant = c(TRUE, TRUE, FALSE))
 
+# Vertical shift
+HF_vertical_shift_doy <- 200
+HF_significant_vertical <- HF_true_values %>%
+  mutate(diff = abs(doy - HF_vertical_shift_doy)) %>%
+  arrange(diff) %>%
+  slice(1:2) %>%
+  pull(perc)
+
 
 ## 5. Output figure ----
 geom.text.size <- 4
@@ -506,125 +522,8 @@ hot_color <- "#F8766D"
 cold_color <- "#00BFC4"
 hot_color <- "red"
 cold_color <- "dodgerblue3"
-plot_xlim <- c(90, 225)
+plot_xlim <- c(window_open, 225)
 
-### Output for SCBI ----
-schematic_v2_SCBI <-
-  ggplot() +
-  # Overall theme:
-  theme_bw() +
-  theme(
-    panel.grid.major = element_blank(),
-    panel.grid.minor = element_blank(),
-    axis.text = element_text(size = theme.size),
-    axis.text.x.top = element_text(color = hot_color),
-    axis.text.x.bottom = element_text(color = c(cold_color, cold_color, cold_color, "black", "black")),
-    axis.title = element_text(size = theme.size)
-  ) +
-  coord_cartesian(xlim = plot_xlim) +
-  # True growth curve
-  geom_line(data = SCBI_true_values, mapping = aes(x = doy, y = perc, col = year)) +
-  scale_color_manual(values = c(cold_color, hot_color)) +
-  # Mark DOY's on x-axis:
-  geom_vline(data = SCBI_doy_diameter_quartile, aes(xintercept = doy, col = year), linetype = "dashed", show.legend = FALSE, alpha = 0.5) +
-  scale_x_continuous(
-    name = "Day of year (1 to 365)",
-    breaks = c(SCBI_doy_diameter_quartile_cold$doy, window_open, window_close),
-    labels = c(1, expression(DOY[25]), expression(DOY[50]), expression(DOY[75]), 365, expression(w[open]), expression(w[close])),
-    sec.axis = sec_axis(
-      ~ . * 1,
-      breaks = c(SCBI_doy_diameter_quartile_hot$doy) ,
-      labels = c(1, expression(DOY[25]), expression(DOY[50]), expression(DOY[75]), 365)
-    )
-  ) +
-  # Mark growth percentages on y-axis:
-  geom_hline(data = SCBI_doy_diameter_quartile, aes(yintercept = perc), linetype = "dashed", show.legend = FALSE, col = "grey") +
-  scale_y_continuous(
-    name = expression(paste("% of annual growth ", Delta[DBH])),
-    breaks = SCBI_doy_diameter_quartile$perc,
-    labels = SCBI_doy_diameter_quartile$label
-  ) +
-  # # Inflection point & max growth rate
-  # annotate("point", x = doy.ip, y = lg5.pred(params, doy.ip), shape = 18, size = 4) +
-  # geom_vline(xintercept = doy.ip, linetype = "dotted") +
-  # annotate(
-  #   geom = "text",
-  #   x = doy.ip,
-  #   y = lg5.pred(params, doy.ip) + 0.025,
-  #   label = expression(paste(g[max], " = slope of tangent line  ")),
-  #   hjust = 1,
-  #   size = geom.text.size
-  # ) +
-  # Growth window:
-  geom_segment(
-    aes(
-      x = SCBI_doy_diameter_quartile_cold$doy[2],
-      y = 0 + 0.05,
-      xend = SCBI_doy_diameter_quartile_cold$doy[4],
-      yend = 0 + 0.05
-    ),
-    arrow = arrow(length = unit(0.25, "cm"), ends = "both"),
-    col = cold_color
-  ) +
-  annotate(
-    "text",
-    x = SCBI_doy_diameter_quartile_cold$doy[2] + (SCBI_doy_diameter_quartile_cold$doy[4] - SCBI_doy_diameter_quartile_cold$doy[2]) * 0.5,
-    y = 0 + 0.025,
-    label = expression(L[PGS]),
-    hjust = 0.5,
-    size = geom.text.size,
-    col = cold_color
-  ) +
-  geom_segment(
-    aes(
-      x = SCBI_doy_diameter_quartile_hot$doy[2],
-      y = 1 - 0.05 - 0.075,
-      xend = SCBI_doy_diameter_quartile_hot$doy[4],
-      yend = 1 - 0.05 - 0.075
-    ),
-    arrow = arrow(length = unit(0.25, "cm"), ends = "both"),
-    col = hot_color
-  ) +
-  annotate(
-    "text",
-    x = SCBI_doy_diameter_quartile_hot$doy[2] + (SCBI_doy_diameter_quartile_hot$doy[4] - SCBI_doy_diameter_quartile_hot$doy[2]) * 0.5,
-    y = 1 - 0.025 - 0.075,
-    label = expression(L[PGS]),
-    hjust = 0.5,
-    size = geom.text.size,
-    col = hot_color
-  ) +
-  # Critical temperature window:
-  geom_rect(aes(xmin = window_open, xmax = window_close, ymin = -Inf, ymax = Inf), alpha = 0.4) +
-  geom_segment(
-    aes(
-      x = window_open,
-      y = 0 + (1-0) * 0.45 + 0.025,
-      xend = window_close,
-      yend = 0 + (1-0) * 0.45 + 0.025
-    ),
-    arrow = arrow(length = unit(0.25, "cm"), ends = "both")
-  ) +
-  annotate(
-    "text",
-    x = window_open + (window_close - window_open) * 0.5,
-    y = 0 + (1-0) * 0.45,
-    label = "Critical\nTemperature\nWindow",
-    hjust = 0.5,
-    vjust = 1,
-    size = geom.text.size
-  ) +
-  # Significance arrows
-  geom_segment(
-    data = SCBI_significant_perc,
-    aes(xend = doy_hot, x = doy_cold, yend = perc, y = perc),
-    col = ifelse(SCBI_significant_perc$significant, "black", "grey"),
-    size = 2,
-    arrow = arrow(length = unit(0.25, "cm"), type = "closed", angle = 40),
-    linejoin = "mitre"
-  ) +
-  labs(col = "SCBI")
-schematic_v2_SCBI
 
 ### Output for HF ----
 schematic_v2_HF <-
@@ -636,7 +535,7 @@ schematic_v2_HF <-
     panel.grid.minor = element_blank(),
     axis.text = element_text(size = theme.size),
     axis.text.x.top = element_text(color = hot_color),
-    axis.text.x.bottom = element_text(color = c(cold_color, cold_color, cold_color, "black", "black")),
+    axis.text.x.bottom = element_text(color = c(cold_color, cold_color, cold_color)),
     axis.title = element_text(size = theme.size)
   ) +
   coord_cartesian(xlim = plot_xlim) +
@@ -645,45 +544,35 @@ schematic_v2_HF <-
   scale_color_manual(values = c(cold_color, hot_color)) +
   # Mark DOY's on x-axis:
   geom_vline(data = HF_doy_diameter_quartile, aes(xintercept = doy, col = year), linetype = "dashed", show.legend = FALSE, alpha = 0.5) +
+  geom_vline(data = HF_doy_max_rate, aes(xintercept = doy, col = year), linetype = "dotted", show.legend = FALSE, alpha = 0.5) +
   scale_x_continuous(
-    name = "Day of year (1 to 365)",
-    breaks = c(HF_doy_diameter_quartile_cold$doy, window_open, window_close),
-    labels = c(1, expression(DOY[25]), expression(DOY[50]), expression(DOY[75]), 365, expression(w[open]), expression(w[close])),
+    name = "Day of year",
+    breaks = c(HF_doy_diameter_quartile_cold$doy, HF_doy_max_rate %>% filter(year == "Cold") %>% pull(doy)),
+    labels = c(1, expression(DOY[25]), expression(paste(DOY[50], "      ")), expression(DOY[75]), 365, expression(DOY[g[max]])),
     sec.axis = sec_axis(
       ~ . * 1,
-      breaks = c(HF_doy_diameter_quartile_hot$doy) ,
-      labels = c(1, expression(DOY[25]), expression(DOY[50]), expression(DOY[75]), 365)
+      breaks = c(HF_doy_diameter_quartile_hot$doy, HF_doy_max_rate %>% filter(year == "Hot") %>% pull(doy)),
+      labels = c(1, expression(DOY[25]), expression(DOY[50]), expression(paste("        ", DOY[75])), 365, expression(paste(DOY[g[max]], "      ")))
     )
   ) +
   # Mark growth percentages on y-axis:
-  geom_hline(data = HF_doy_diameter_quartile, aes(yintercept = perc), linetype = "dashed", show.legend = FALSE, col = "grey") +
   scale_y_continuous(
-    name = expression(paste("% of annual growth ", Delta[DBH])),
-    breaks = HF_doy_diameter_quartile$perc,
-    labels = HF_doy_diameter_quartile$label
+    # name = expression(paste("% of annual growth ", Delta[DBH])),
+    name = expression(paste(Delta,"DBH")),
+    breaks = NULL, # HF_doy_diameter_quartile$perc,
+    labels = NULL, # HF_doy_diameter_quartile$label
   ) +
-  # # Inflection point & max growth rate
-  # annotate("point", x = doy.ip, y = lg5.pred(params, doy.ip), shape = 18, size = 4) +
-  # geom_vline(xintercept = doy.ip, linetype = "dotted") +
-  # annotate(
-  #   geom = "text",
-  #   x = doy.ip,
-  #   y = lg5.pred(params, doy.ip) + 0.025,
-  #   label = expression(paste(g[max], " = slope of tangent line  ")),
-  #   hjust = 1,
-  #   size = geom.text.size
-  # ) +
-# Growth window:
-geom_segment(
-  aes(
-    x = HF_doy_diameter_quartile_cold$doy[2],
-    y = 0 + 0.05,
-    xend = HF_doy_diameter_quartile_cold$doy[4],
-    yend = 0 + 0.05
-  ),
-  arrow = arrow(length = unit(0.25, "cm"), ends = "both"),
-  col = cold_color
-) +
+  # Cold/blue primary growing season:
+  geom_segment(
+    aes(
+      x = HF_doy_diameter_quartile_cold$doy[2],
+      y = 0 + 0.05,
+      xend = HF_doy_diameter_quartile_cold$doy[4],
+      yend = 0 + 0.05
+    ),
+    arrow = arrow(length = unit(0.25, "cm"), ends = "both"),
+    col = cold_color
+  ) +
   annotate(
     "text",
     x = HF_doy_diameter_quartile_cold$doy[2] + (HF_doy_diameter_quartile_cold$doy[4] - HF_doy_diameter_quartile_cold$doy[2]) * 0.5,
@@ -693,12 +582,13 @@ geom_segment(
     size = geom.text.size,
     col = cold_color
   ) +
+  # Hot/red primary growing season:
   geom_segment(
     aes(
       x = HF_doy_diameter_quartile_hot$doy[2],
-      y = 1 - 0.05 - 0.075,
+      y = 0.85 + 0.05,
       xend = HF_doy_diameter_quartile_hot$doy[4],
-      yend = 1 - 0.05 - 0.075
+      yend = 0.85 + 0.05
     ),
     arrow = arrow(length = unit(0.25, "cm"), ends = "both"),
     col = hot_color
@@ -706,7 +596,7 @@ geom_segment(
   annotate(
     "text",
     x = HF_doy_diameter_quartile_hot$doy[2] + (HF_doy_diameter_quartile_hot$doy[4] - HF_doy_diameter_quartile_hot$doy[2]) * 0.5,
-    y = 1 - 0.025 - 0.075,
+    y =  0.85 + 0.025,
     label = expression(L[PGS]),
     hjust = 0.5,
     size = geom.text.size,
@@ -717,38 +607,57 @@ geom_segment(
   geom_segment(
     aes(
       x = window_open,
-      y = 0 + (1-0) * 0.45 + 0.025,
+      y = 0.35 + 0.025,
       xend = window_close,
-      yend = 0 + (1-0) * 0.45 + 0.025
+      yend = 0.35 + 0.025
     ),
     arrow = arrow(length = unit(0.25, "cm"), ends = "both")
   ) +
   annotate(
     "text",
     x = window_open + (window_close - window_open) * 0.5,
-    y = 0 + (1-0) * 0.45,
-    label = "Critical\nTemperature\nWindow",
+    y = 0.35,
+    label = "Critical\nTemperature\nWindow\n(CTW)",
     hjust = 0.5,
     vjust = 1,
     size = geom.text.size
   ) +
-  # Significance arrows
+  # Horizontal significance arrows
   geom_segment(
     data = HF_significant_perc,
     aes(xend = doy_hot, x = doy_cold, yend = perc, y = perc),
     col = ifelse(HF_significant_perc$significant, "black", "grey"),
     size = 2,
-    arrow = arrow(length = unit(0.25, "cm"), type = "closed", angle = 40),
+    arrow = arrow(length = unit(0.20, "cm"), type = "closed", angle = 40),
     linejoin = "mitre"
   ) +
-  labs(col = "HF")
+  # Vertical significance arrows
+  #
+  geom_segment(
+    data = HF_significant_perc,
+    aes(xend = HF_vertical_shift_doy, x = HF_vertical_shift_doy, yend = HF_significant_vertical[1], y = HF_significant_vertical[2]),
+    col = "grey",
+    size = 2,
+    arrow = arrow(length = unit(0.20, "cm"), type = "closed", angle = 40),
+    linejoin = "mitre"
+  ) +
+  labs(col = "Temp in CTW", fill = "Cold to Hot Shift") +
+  theme(
+    # legend.position = c(0.14, 0.725),
+    legend.position =  c(0.9, 0.25),
+    legend.background = element_rect(fill="white", size=0.25, linetype="solid", color = "black")
+  ) +
+  geom_tile(data = tibble(x = c(0, 0), y = c(0.5, 0.5), z = factor(c("Not significant", "Significant"))), aes(x = x, y = y, fill = z)) +
+  scale_fill_manual(values = alpha(c("grey", "black")))
 schematic_v2_HF
+
+
 
 
 ### Combine ----
 fig_width <- 9
-(schematic_v2_SCBI + theme(axis.title.x = element_blank())) / schematic_v2_HF
-ggsave("doc/manuscript/tables_figures/schematic_v2.png", plot = last_plot(), width = fig_width, height = 2* fig_width * 9 / 16)
+schematic_v2_HF
+ggsave("doc/manuscript/tables_figures/schematic_v2.png", plot = last_plot(), width = fig_width, height = fig_width * 9 / 16)
 
 
 
@@ -923,7 +832,7 @@ aggregates_scbi <- aggregates_scbi %>% mutate(temp_type = factor(temp_type, leve
 
 #aggregates <- left_join(aggregates, aggregates_cold, by = c("Group.1", "Group.2"))
 #aggregates <- left_join(aggregates, aggregates_warm, by = c("Group.1", "Group.2"))
-#names(aggregates) <- c("Group.1", "Group.2","x","cold", "warm")
+#names(aggregates) <- c("Group.1", "Group.2","x","Cold", "warm")
 #names(aggregates) <- c("Wood type", "Growth vari", "DOY")
 doytiming_scbi <- ggplot(aggregates_scbi, aes(x=x, y = as.character(Group.2), group = interaction(Group.1, temp_type), color = temp_type, linetype = Group.1))+
   geom_point(size = 3)+
@@ -962,7 +871,7 @@ aggregates_hf <- aggregates_hf %>% mutate(temp_type = factor(temp_type, levels =
 
 #aggregates <- left_join(aggregates, aggregates_cold, by = c("Group.1", "Group.2"))
 #aggregates <- left_join(aggregates, aggregates_warm, by = c("Group.1", "Group.2"))
-#names(aggregates) <- c("Group.1", "Group.2","x","cold", "warm")
+#names(aggregates) <- c("Group.1", "Group.2","x","Cold", "warm")
 #names(aggregates) <- c("Wood type", "Growth vari", "DOY")
 doytiming_hf <- ggplot(aggregates_hf, aes(x=x, y = as.character(Group.2), group = interaction(Group.1, temp_type), color = temp_type, linetype = Group.1))+
   geom_point(size = 3)+
