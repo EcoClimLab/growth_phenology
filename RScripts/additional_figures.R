@@ -641,7 +641,7 @@ schematic_v2_HF <-
     arrow = arrow(length = unit(0.20, "cm"), type = "closed", angle = 40),
     linejoin = "mitre"
   ) +
-  labs(col = "Temp in CTW", fill = "Cold to Hot Shift") +
+  labs(col = "Temp in CTW", fill = "Effect of +1°C\n CTW Temp") +
   theme(
     # legend.position = c(0.14, 0.725),
     legend.position =  c(0.9, 0.25),
