@@ -492,7 +492,7 @@ SCBI_significant_perc <- inner_join(
     select(doy_cold = doy, perc),
   by = "perc"
 ) %>%
-  mutate(significant = c(TRUE, TRUE, FALSE))
+  mutate(significant = c(TRUE, TRUE, TRUE))
 
 ### Identify HF values ----
 HF_significant_perc <- inner_join(
@@ -607,17 +607,17 @@ schematic_v2_HF <-
   geom_segment(
     aes(
       x = window_open,
-      y = 0.35 + 0.025,
+      y = 0.30 + 0.025,
       xend = window_close,
-      yend = 0.35 + 0.025
+      yend = 0.30 + 0.025
     ),
     arrow = arrow(length = unit(0.25, "cm"), ends = "both")
   ) +
   annotate(
     "text",
     x = window_open + (window_close - window_open) * 0.5,
-    y = 0.35,
-    label = "Critical\nTemperature\nWindow\n(CTW)",
+    y = 0.30,
+    label = "Critical\nTemperature\nWindow (CTW)",
     hjust = 0.5,
     vjust = 1,
     size = geom.text.size
@@ -635,16 +635,17 @@ schematic_v2_HF <-
   #
   geom_segment(
     data = HF_significant_perc,
-    aes(xend = HF_vertical_shift_doy, x = HF_vertical_shift_doy, yend = HF_significant_vertical[1], y = HF_significant_vertical[2]),
+    # aes(xend = HF_vertical_shift_doy, x = HF_vertical_shift_doy, yend = HF_significant_vertical[1], y = HF_significant_vertical[2]),
+    aes(xend = plot_xlim[2] + 5, x = plot_xlim[2] + 5, yend = HF_significant_vertical[1] + 0.12, y = HF_significant_vertical[2] + 0.09),
     col = "grey",
     size = 2,
-    arrow = arrow(length = unit(0.20, "cm"), type = "closed", angle = 40),
+    arrow = arrow(length = unit(0.20, "cm"), type = "closed", angle = 40, ends = "both"),
     linejoin = "mitre"
   ) +
-  labs(col = "Temp in CTW", fill = "Effect of +1°C\n CTW Temp") +
+  labs(col = "Temp in CTW", fill = "Effect of +1°C \nTemp in CTW") +
   theme(
     # legend.position = c(0.14, 0.725),
-    legend.position =  c(0.9, 0.25),
+    legend.position =  c(0.14, 0.70),
     legend.background = element_rect(fill="white", size=0.25, linetype="solid", color = "black")
   ) +
   geom_tile(data = tibble(x = c(0, 0), y = c(0.5, 0.5), z = factor(c("Not significant", "Significant"))), aes(x = x, y = y, fill = z)) +
