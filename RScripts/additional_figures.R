@@ -337,19 +337,6 @@ HF_theta_cold <- HF_cold_LG5_values$theta
 HF_params_cold <- c(HF_L_cold, HF_K_cold, HF_doy.ip_cold, HF_r_cold, HF_theta_cold)
 HF_total_growth_cold <- HF_K_cold - HF_L_cold
 
-# From Cam's analysis
-HF_doy_max_rate <- read_csv("Data/Wood_pheno_table_HarvardForest_CLEAN.csv") %>%
-  # 2002 = hot year, 2003 = cold year
-  filter(year %in% c(2002, 2003)) %>%
-  # For each year, tag_year, take first value since max_rate_DOY doesn't change
-  group_by(year, tag_year) %>%
-  slice(1) %>%
-  # Average for each year
-  group_by(year) %>%
-  summarize(max_rate_DOY = mean(max_rate_DOY)) %>%
-  # Relabel
-  mutate(year = c("Hot", "Cold")) %>%
-  rename(doy = max_rate_DOY)
 
 
 ## 2. Compute LG5 growth curve ----
@@ -482,6 +469,11 @@ HF_doy_diameter_quartile <- bind_rows(
   HF_doy_diameter_quartile_cold %>% mutate(year = "Cold")
 )
 
+# Semi-synthetic DOY_g_max dates
+HF_doy_max_rate <- HF_doy_diameter_quartile %>%
+  filter(perc == 0.5) %>%
+  mutate(doy = doy + 2)
+
 
 ## 4. Identify significant shifts ----
 ### Identify SCBI values ----
@@ -508,13 +500,7 @@ HF_significant_perc <- inner_join(
 ) %>%
   mutate(significant = c(TRUE, TRUE, TRUE))
 
-# Vertical shift
-HF_vertical_shift_doy <- 200
-HF_significant_vertical <- HF_true_values %>%
-  mutate(diff = abs(doy - HF_vertical_shift_doy)) %>%
-  arrange(diff) %>%
-  slice(1:2) %>%
-  pull(perc)
+
 
 
 ## 5. Output figure ----
@@ -525,6 +511,16 @@ cold_color <- "#00BFC4"
 hot_color <- "red"
 cold_color <- "dodgerblue3"
 plot_xlim <- c(window_open, 225)
+
+# Vertical shift
+HF_vertical_shift_doy <- 200
+HF_significant_vertical <- HF_true_values %>%
+  mutate(diff = abs(doy - HF_vertical_shift_doy)) %>%
+  arrange(diff) %>%
+  slice(1:2) %>%
+  pull(perc)
+
+
 
 
 ### Output for HF ----
@@ -550,11 +546,11 @@ schematic_v2_HF <-
   scale_x_continuous(
     name = "Day of year",
     breaks = c(HF_doy_diameter_quartile_cold$doy, HF_doy_max_rate %>% filter(year == "Cold") %>% pull(doy)),
-    labels = c(1, expression(DOY[25]), expression(paste(DOY[50], "      ")), expression(DOY[75]), 365, expression(DOY[g[max]])),
+    labels = c(1, expression(DOY[25]), expression(paste("     ", DOY[50], " ", DOY[g[max]])), expression(DOY[75]), 365, expression(paste(""))),
     sec.axis = sec_axis(
       ~ . * 1,
       breaks = c(HF_doy_diameter_quartile_hot$doy, HF_doy_max_rate %>% filter(year == "Hot") %>% pull(doy)),
-      labels = c(1, expression(DOY[25]), expression(DOY[50]), expression(paste("        ", DOY[75])), 365, expression(paste(DOY[g[max]], "      ")))
+      labels = c(1, expression(DOY[25]), expression(paste("     ", DOY[50], " ", DOY[g[max]])), expression(DOY[75]), 365, expression(paste("")))
     )
   ) +
   # Mark growth percentages on y-axis:
@@ -577,7 +573,7 @@ schematic_v2_HF <-
   ) +
   annotate(
     "text",
-    x = HF_doy_diameter_quartile_cold$doy[2] + (HF_doy_diameter_quartile_cold$doy[4] - HF_doy_diameter_quartile_cold$doy[2]) * 0.5,
+    x = HF_doy_diameter_quartile_cold$doy[2] + (HF_doy_diameter_quartile_cold$doy[4] - HF_doy_diameter_quartile_cold$doy[2]) * 0.35,
     y = 0 + 0.025,
     label = expression(L[PGS]),
     hjust = 0.5,
@@ -597,7 +593,7 @@ schematic_v2_HF <-
   ) +
   annotate(
     "text",
-    x = HF_doy_diameter_quartile_hot$doy[2] + (HF_doy_diameter_quartile_hot$doy[4] - HF_doy_diameter_quartile_hot$doy[2]) * 0.5,
+    x = HF_doy_diameter_quartile_hot$doy[2] + (HF_doy_diameter_quartile_hot$doy[4] - HF_doy_diameter_quartile_hot$doy[2]) * 0.22,
     y =  0.85 + 0.025,
     label = expression(L[PGS]),
     hjust = 0.5,
@@ -634,10 +630,8 @@ schematic_v2_HF <-
     linejoin = "mitre"
   ) +
   # Vertical significance arrows
-  #
   geom_segment(
     data = HF_significant_perc,
-    # aes(xend = HF_vertical_shift_doy, x = HF_vertical_shift_doy, yend = HF_significant_vertical[1], y = HF_significant_vertical[2]),
     aes(xend = plot_xlim[2] + 5, x = plot_xlim[2] + 5, yend = HF_significant_vertical[1] + 0.12, y = HF_significant_vertical[2] + 0.09),
     col = "grey",
     size = 2,
