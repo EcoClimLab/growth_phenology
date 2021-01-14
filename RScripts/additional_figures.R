@@ -510,16 +510,15 @@ hot_color <- "#F8766D"
 cold_color <- "#00BFC4"
 hot_color <- "red"
 cold_color <- "dodgerblue3"
-plot_xlim <- c(window_open, 225)
+plot_xlim <- c(window_open, 220)
 
 # Vertical shift
-HF_vertical_shift_doy <- 200
+HF_vertical_shift_doy <- plot_xlim[2] + 4
 HF_significant_vertical <- HF_true_values %>%
   mutate(diff = abs(doy - HF_vertical_shift_doy)) %>%
   arrange(diff) %>%
   slice(1:2) %>%
-  pull(perc)
-
+  select(doy, perc)
 
 
 
@@ -632,7 +631,11 @@ schematic_v2_HF <-
   # Vertical significance arrows
   geom_segment(
     data = HF_significant_perc,
-    aes(xend = plot_xlim[2] + 5, x = plot_xlim[2] + 5, yend = HF_significant_vertical[1] + 0.12, y = HF_significant_vertical[2] + 0.09),
+    aes(
+      x = HF_significant_vertical %>% pull(doy) %>% .[1],
+      xend = HF_significant_vertical %>% pull(doy) %>% .[1],
+      y = HF_significant_vertical %>% pull(perc) %>% .[1] + 0.04,
+      yend = HF_significant_vertical %>% pull(perc) %>% .[2] - 0.04),
     col = "grey",
     size = 2,
     arrow = arrow(length = unit(0.20, "cm"), type = "closed", angle = 40, ends = "both"),
