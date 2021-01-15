@@ -1,10 +1,12 @@
+# Figure numbers from: https://github.com/SCBI-ForestGEO/growth_phenology/issues/13
 library(tidyverse)
 library(scales)
 library(ggrepel)
 library(tidybayes)
+library(ggnewscale)
+library(patchwork)
+library(lubridate)
 
-
-# Figure numbers from: https://github.com/SCBI-ForestGEO/growth_phenology/issues/13
 
 # Figure 1: Logistic growth curve and parameter illustration -------------------
 # Set parameters from McMahon & Parker (2014)
@@ -81,9 +83,9 @@ observed_values <- tibble(
 # 4. Compute 25%/50%/75% growth values and DOY
 doy_diameter_quartile <- bind_rows(
   tibble(doy = 1, diameter = L),
-  true_values %>% filter(diameter >= (L + total_growth * .25)) %>% slice(1),
-  true_values %>% filter(diameter >= (L + total_growth * .5)) %>% slice(1),
-  true_values %>% filter(diameter >= (L + total_growth * .75)) %>% slice(1),
+  true_values %>% dplyr::filter(diameter >= (L + total_growth * .25)) %>% slice(1),
+  true_values %>% dplyr::filter(diameter >= (L + total_growth * .5)) %>% slice(1),
+  true_values %>% dplyr::filter(diameter >= (L + total_growth * .75)) %>% slice(1),
   tibble(doy = 365, diameter = K)
 ) %>%
   mutate(
@@ -205,13 +207,472 @@ schematic <- ggplot() +
 
 schematic
 fig_width <- 9
-ggsave("doc/manuscript/tables_figures/schematic.png", plot = schematic, width = fig_width, height = fig_width * 9 / 16)
+# ggsave("doc/manuscript/tables_figures/schematic.png", plot = schematic, width = fig_width, height = fig_width * 9 / 16)
 
 
 
 
 
-#----
+# Figure 1 v2: Schematic illustrating parameters and general sense of results ----
+## Setup ----
+# DOY:
+start_doy <- 1
+end_doy <- 365
+
+# Function for logistic growth model written by Sean. Supposed to be in RDendrom
+# package https://github.com/seanmcm/RDendrom, but function does not seem to be included
+lg5.pred <- function(params, doy) {
+  L <- params[1] # min(dbh, na.rm = T)
+  K <- params[2]
+  doy.ip <- params[3]
+  r <- params[4]
+  theta <- params[5]
+  dbh <- vector(length = length(doy))
+  dbh <- L + ((K - L) / (1 + 1 / theta * exp(-(r * (doy - doy.ip) / theta))^theta))
+  return(dbh)
+}
+
+
+# Critical temperature window:
+window_open <- 91
+window_close <- 120
+
+
+## 1. Get LG5 parameter values ----
+### Dummy values ----
+# # Dummy red/hot curve values:
+# L_hot <- 13
+# K_hot <- 14
+# doy.ip_hot <- 160
+# r_hot <- 0.025
+# theta_hot <- 1.5
+# params_hot <- c(L_hot, K_hot, doy.ip_hot, r_hot, theta_hot)
+# total_growth_hot <- K_hot - L_hot
+#
+# # Dummy blue/cold curve values:
+# L_cold <- 13
+# K_cold <- 14
+# doy.ip_cold <- 182
+# r_cold <- 0.025
+# theta_cold <- 1.5
+# params_cold <- c(L_cold, K_cold, doy.ip_cold, r_cold, theta_cold)
+# total_growth_cold <- K_cold - L_cold
+
+### Set SCBI values ----
+# Identify cold and hot aprils
+read_csv("climate data/NCDC_NOAA_precip_temp.csv") %>%
+  mutate(month = month(DATE)) %>%
+  dplyr::filter(month == 4) %>%
+  group_by(year) %>%
+  summarize(TMAX = mean(TMAX, na.rm = TRUE)) %>%
+  arrange(desc(TMAX))
+
+# Real red/hot curve values:
+SCBI_hot_LG5_values <- read_csv("Data/LG5_parameter_values_SCBI_CLEAN.csv") %>%
+  dplyr::filter(year == 2019) %>%
+  group_by(tag_year) %>%
+  summarize(L = mean(L), K = mean(K), doy_ip = mean(doy_ip), r = mean(r), theta = mean(theta)) %>%
+  summarize(L = mean(L), K = mean(K), doy_ip = mean(doy_ip), r = mean(r), theta = mean(theta))
+
+SCBI_L_hot <- SCBI_hot_LG5_values$L
+SCBI_K_hot <- SCBI_hot_LG5_values$K
+SCBI_doy.ip_hot <- SCBI_hot_LG5_values$doy_ip
+SCBI_r_hot <- SCBI_hot_LG5_values$r
+SCBI_theta_hot <- SCBI_hot_LG5_values$theta
+SCBI_params_hot <- c(SCBI_L_hot, SCBI_K_hot, SCBI_doy.ip_hot, SCBI_r_hot, SCBI_theta_hot)
+SCBI_total_growth_hot <- SCBI_K_hot - SCBI_L_hot
+
+# Real blue/cold curve values:
+SCBI_cold_LG5_values <- read_csv("Data/LG5_parameter_values_SCBI_CLEAN.csv") %>%
+  dplyr::filter(year == 2018) %>%
+  group_by(tag_year) %>%
+  summarize(L = mean(L), K = mean(K), doy_ip = mean(doy_ip), r = mean(r), theta = mean(theta)) %>%
+  summarize(L = mean(L), K = mean(K), doy_ip = mean(doy_ip), r = mean(r), theta = mean(theta))
+
+SCBI_L_cold <- SCBI_cold_LG5_values$L
+SCBI_K_cold <- SCBI_cold_LG5_values$K
+SCBI_doy.ip_cold <- SCBI_cold_LG5_values$doy_ip
+SCBI_r_cold <- SCBI_cold_LG5_values$r
+SCBI_theta_cold <- SCBI_cold_LG5_values$theta
+SCBI_params_cold <- c(SCBI_L_cold, SCBI_K_cold, SCBI_doy.ip_cold, SCBI_r_cold, SCBI_theta_cold)
+SCBI_total_growth_cold <- SCBI_K_cold - SCBI_L_cold
+
+
+### Set HF values ----
+# Identify cold and hot aprils
+read_csv("climate data/HF_weatherdata.csv") %>%
+  dplyr::filter(month == 4) %>%
+  group_by(year) %>%
+  summarize(TMAX = mean(airtmax, na.rm = TRUE)) %>%
+  arrange(desc(TMAX))
+
+
+# Real red/hot curve values:
+HF_hot_LG5_values <- read_csv("Data/LG5_parameter_values_HarvardForest_CLEAN.csv") %>%
+  dplyr::filter(year == 2002) %>%
+  group_by(tag_year) %>%
+  summarize(L = mean(L), K = mean(K), doy_ip = mean(doy_ip), r = mean(r), theta = mean(theta)) %>%
+  summarize(L = mean(L), K = mean(K), doy_ip = mean(doy_ip), r = mean(r), theta = mean(theta))
+
+HF_L_hot <- HF_hot_LG5_values$L
+HF_K_hot <- HF_hot_LG5_values$K
+HF_doy.ip_hot <- HF_hot_LG5_values$doy_ip
+HF_r_hot <- HF_hot_LG5_values$r
+HF_theta_hot <- HF_hot_LG5_values$theta
+HF_params_hot <- c(HF_L_hot, HF_K_hot, HF_doy.ip_hot, HF_r_hot, HF_theta_hot)
+HF_total_growth_hot <- HF_K_hot - HF_L_hot
+
+# Real blue/cold curve values:
+HF_cold_LG5_values <- read_csv("Data/LG5_parameter_values_HarvardForest_CLEAN.csv") %>%
+  dplyr::filter(year == 2003) %>%
+  group_by(tag_year) %>%
+  summarize(L = mean(L), K = mean(K), doy_ip = mean(doy_ip), r = mean(r), theta = mean(theta)) %>%
+  summarize(L = mean(L), K = mean(K), doy_ip = mean(doy_ip), r = mean(r), theta = mean(theta))
+
+HF_L_cold <- HF_cold_LG5_values$L
+HF_K_cold <- HF_cold_LG5_values$K
+HF_doy.ip_cold <- HF_cold_LG5_values$doy_ip
+HF_r_cold <- HF_cold_LG5_values$r
+HF_theta_cold <- HF_cold_LG5_values$theta
+HF_params_cold <- c(HF_L_cold, HF_K_cold, HF_doy.ip_cold, HF_r_cold, HF_theta_cold)
+HF_total_growth_cold <- HF_K_cold - HF_L_cold
+
+
+
+## 2. Compute LG5 growth curve ----
+### Compute SCBI values ----
+SCBI_true_values_hot <-
+  tibble(
+    doy = seq(from = start_doy, to = end_doy, by = 1),
+    diameter = lg5.pred(SCBI_params_hot, doy)
+  ) %>%
+  mutate(
+    perc = (diameter - SCBI_L_hot)/SCBI_total_growth_hot
+  )
+
+SCBI_true_values_cold <-
+  tibble(
+    doy = seq(from = start_doy, to = end_doy, by = 1),
+    diameter = lg5.pred(SCBI_params_cold, doy)
+  ) %>%
+  mutate(
+    perc = (diameter - SCBI_L_cold)/SCBI_total_growth_cold
+  )
+
+SCBI_true_values <-
+  bind_rows(
+    SCBI_true_values_hot %>% mutate(year = "Hot"),
+    SCBI_true_values_cold %>% mutate(year = "Cold")
+  )
+
+### Compute HF values ----
+HF_true_values_hot <-
+  tibble(
+    doy = seq(from = start_doy, to = end_doy, by = 1),
+    diameter = lg5.pred(HF_params_hot, doy)
+  ) %>%
+  mutate(
+    perc = (diameter - HF_L_hot)/HF_total_growth_hot
+  )
+
+HF_true_values_cold <-
+  tibble(
+    doy = seq(from = start_doy, to = end_doy, by = 1),
+    diameter = lg5.pred(HF_params_cold, doy)
+  ) %>%
+  mutate(
+    perc = (diameter - HF_L_cold)/HF_total_growth_cold
+  )
+
+HF_true_values <-
+  bind_rows(
+    HF_true_values_hot %>% mutate(year = "Hot"),
+    HF_true_values_cold %>% mutate(year = "Cold")
+  )
+
+
+## 3. Compute 25%/50%/75% growth values and DOY ----
+### Compute SCBI values ----
+SCBI_doy_diameter_quartile_hot <- bind_rows(
+  tibble(doy = 1, diameter = SCBI_L_hot),
+  SCBI_true_values_hot %>% dplyr::filter(diameter >= (SCBI_L_hot + SCBI_total_growth_hot * .25)) %>% slice(1),
+  SCBI_true_values_hot %>% dplyr::filter(diameter >= (SCBI_L_hot + SCBI_total_growth_hot * .5)) %>% slice(1),
+  SCBI_true_values_hot %>% dplyr::filter(diameter >= (SCBI_L_hot + SCBI_total_growth_hot * .75)) %>% slice(1),
+  tibble(doy = 365, diameter = SCBI_K_hot)
+) %>%
+  mutate(
+    growth = c(0, 0.25, 0.5, 0.75, 1),
+    label = c("0%", "25%", "50%", "75%", "100%"),
+    label = factor(label, levels = c("0%", "25%", "50%", "75%", "100%")),
+    year = "Hot"
+  ) %>%
+  select(-perc) %>%
+  rename(perc = growth)
+
+SCBI_doy_diameter_quartile_cold <- bind_rows(
+  tibble(doy = 1, diameter = SCBI_L_cold),
+  SCBI_true_values_cold %>% dplyr::filter(diameter >= (SCBI_L_cold + SCBI_total_growth_cold * .25)) %>% slice(1),
+  SCBI_true_values_cold %>% dplyr::filter(diameter >= (SCBI_L_cold + SCBI_total_growth_cold * .5)) %>% slice(1),
+  SCBI_true_values_cold %>% dplyr::filter(diameter >= (SCBI_L_cold + SCBI_total_growth_cold * .75)) %>% slice(1),
+  tibble(doy = 365, diameter = SCBI_K_cold)
+) %>%
+  mutate(
+    growth = c(0, 0.25, 0.5, 0.75, 1),
+    label = c("0%", "25%", "50%", "75%", "100%"),
+    label = factor(label, levels = c("0%", "25%", "50%", "75%", "100%")),
+    year = "Cold"
+  ) %>%
+  select(-perc) %>%
+  rename(perc = growth)
+
+SCBI_doy_diameter_quartile <- bind_rows(
+  SCBI_doy_diameter_quartile_hot %>% mutate(year = "Hot"),
+  SCBI_doy_diameter_quartile_cold %>% mutate(year = "Cold")
+)
+
+### Compute HF values ----
+HF_doy_diameter_quartile_hot <- bind_rows(
+  tibble(doy = 1, diameter = HF_L_hot),
+  HF_true_values_hot %>% dplyr::filter(diameter >= (HF_L_hot + HF_total_growth_hot * .25)) %>% slice(1),
+  HF_true_values_hot %>% dplyr::filter(diameter >= (HF_L_hot + HF_total_growth_hot * .5)) %>% slice(1),
+  HF_true_values_hot %>% dplyr::filter(diameter >= (HF_L_hot + HF_total_growth_hot * .75)) %>% slice(1),
+  tibble(doy = 365, diameter = HF_K_hot)
+) %>%
+  mutate(
+    growth = c(0, 0.25, 0.5, 0.75, 1),
+    label = c("0%", "25%", "50%", "75%", "100%"),
+    label = factor(label, levels = c("0%", "25%", "50%", "75%", "100%")),
+    year = "Hot"
+  ) %>%
+  select(-perc) %>%
+  rename(perc = growth)
+
+
+HF_doy_diameter_quartile_cold <- bind_rows(
+  tibble(doy = 1, diameter = HF_L_cold),
+  HF_true_values_cold %>% dplyr::filter(diameter >= (HF_L_cold + HF_total_growth_cold * .25)) %>% slice(1),
+  HF_true_values_cold %>% dplyr::filter(diameter >= (HF_L_cold + HF_total_growth_cold * .5)) %>% slice(1),
+  HF_true_values_cold %>% dplyr::filter(diameter >= (HF_L_cold + HF_total_growth_cold * .75)) %>% slice(1),
+  tibble(doy = 365, diameter = HF_K_cold)
+) %>%
+  mutate(
+    growth = c(0, 0.25, 0.5, 0.75, 1),
+    label = c("0%", "25%", "50%", "75%", "100%"),
+    label = factor(label, levels = c("0%", "25%", "50%", "75%", "100%")),
+    year = "Cold"
+  ) %>%
+  select(-perc) %>%
+  rename(perc = growth)
+
+HF_doy_diameter_quartile <- bind_rows(
+  HF_doy_diameter_quartile_hot %>% mutate(year = "Hot"),
+  HF_doy_diameter_quartile_cold %>% mutate(year = "Cold")
+)
+
+# Semi-synthetic DOY_g_max dates
+HF_doy_max_rate_offset <- 2
+HF_doy_max_rate <- HF_doy_diameter_quartile %>%
+  filter(perc == 0.5) %>%
+  mutate(doy = doy + HF_doy_max_rate_offset)
+
+
+## 4. Identify significant shifts ----
+### Identify SCBI values ----
+SCBI_significant_perc <- inner_join(
+  SCBI_doy_diameter_quartile_hot %>%
+    dplyr::filter(!label %in% c("0%", "100%")) %>%
+    select(doy_hot = doy, perc),
+  SCBI_doy_diameter_quartile_cold %>%
+    dplyr::filter(!label %in% c("0%", "100%")) %>%
+    select(doy_cold = doy, perc),
+  by = "perc"
+) %>%
+  mutate(significant = c(TRUE, TRUE, TRUE))
+
+### Identify HF values ----
+HF_significant_perc <- inner_join(
+  HF_doy_diameter_quartile_hot %>%
+    dplyr::filter(!label %in% c("0%", "100%")) %>%
+    select(doy_hot = doy, perc),
+  HF_doy_diameter_quartile_cold %>%
+    dplyr::filter(!label %in% c("0%", "100%")) %>%
+    select(doy_cold = doy, perc),
+  by = "perc"
+) %>%
+  mutate(significant = c(TRUE, TRUE, TRUE))
+
+HF_significant_perc <- bind_rows(
+  HF_significant_perc,
+  HF_significant_perc %>%
+    filter(perc == 0.5) %>%
+    mutate(doy_hot = doy_hot + HF_doy_max_rate_offset, doy_cold = doy_cold + HF_doy_max_rate_offset) %>%
+    mutate(perc = 0.53)
+)
+
+
+
+
+
+## 5. Output figure ----
+geom.text.size <- 4
+theme.size <- (14/5) * geom.text.size
+hot_color <- "#F8766D"
+cold_color <- "#00BFC4"
+hot_color <- "red"
+cold_color <- "dodgerblue3"
+plot_xlim <- c(window_open, 220)
+
+# Vertical shift
+HF_vertical_shift_doy <- plot_xlim[2] + 4
+HF_significant_vertical <- HF_true_values %>%
+  mutate(diff = abs(doy - HF_vertical_shift_doy)) %>%
+  arrange(diff) %>%
+  slice(1:2) %>%
+  select(doy, perc)
+
+
+
+### Output for HF ----
+schematic_v2_HF <-
+  ggplot() +
+  # Overall theme:
+  theme_bw() +
+  theme(
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    axis.text = element_text(size = theme.size),
+    axis.text.x.top = element_text(color = hot_color),
+    axis.text.x.bottom = element_text(color = c(cold_color, cold_color, cold_color)),
+    axis.title = element_text(size = theme.size)
+  ) +
+  coord_cartesian(xlim = plot_xlim) +
+  # True growth curve
+  geom_line(data = HF_true_values, mapping = aes(x = doy, y = perc, col = year)) +
+  scale_color_manual(values = c(cold_color, hot_color)) +
+  # Mark DOY's on x-axis:
+  geom_vline(data = HF_doy_diameter_quartile, aes(xintercept = doy, col = year), linetype = "dashed", show.legend = FALSE, alpha = 0.5) +
+  geom_vline(data = HF_doy_max_rate, aes(xintercept = doy, col = year), linetype = "dotted", show.legend = FALSE, alpha = 0.5) +
+  scale_x_continuous(
+    name = "Day of year",
+    breaks = c(HF_doy_diameter_quartile_cold$doy, HF_doy_max_rate %>% filter(year == "Cold") %>% pull(doy)),
+    labels = c(1, expression(DOY[25]), expression(paste("     ", DOY[50], " ", DOY[g[max]])), expression(DOY[75]), 365, expression(paste(""))),
+    sec.axis = sec_axis(
+      ~ . * 1,
+      breaks = c(HF_doy_diameter_quartile_hot$doy, HF_doy_max_rate %>% filter(year == "Hot") %>% pull(doy)),
+      labels = c(1, expression(DOY[25]), expression(paste("     ", DOY[50], " ", DOY[g[max]])), expression(DOY[75]), 365, expression(paste("")))
+    )
+  ) +
+  # Mark growth percentages on y-axis:
+  scale_y_continuous(
+    # name = expression(paste("% of annual growth ", Delta[DBH])),
+    name = expression(paste(Delta,"DBH")),
+    breaks = NULL, # HF_doy_diameter_quartile$perc,
+    labels = NULL, # HF_doy_diameter_quartile$label
+  ) +
+  # Cold/blue primary growing season:
+  geom_segment(
+    aes(
+      x = HF_doy_diameter_quartile_cold$doy[2],
+      y = 0 + 0.05,
+      xend = HF_doy_diameter_quartile_cold$doy[4],
+      yend = 0 + 0.05
+    ),
+    arrow = arrow(length = unit(0.25, "cm"), ends = "both"),
+    col = cold_color
+  ) +
+  annotate(
+    "text",
+    x = HF_doy_diameter_quartile_cold$doy[2] + (HF_doy_diameter_quartile_cold$doy[4] - HF_doy_diameter_quartile_cold$doy[2]) * 0.35,
+    y = 0 + 0.025,
+    label = expression(L[PGS]),
+    hjust = 0.5,
+    size = geom.text.size,
+    col = cold_color
+  ) +
+  # Hot/red primary growing season:
+  geom_segment(
+    aes(
+      x = HF_doy_diameter_quartile_hot$doy[2],
+      y = 0.85 + 0.05,
+      xend = HF_doy_diameter_quartile_hot$doy[4],
+      yend = 0.85 + 0.05
+    ),
+    arrow = arrow(length = unit(0.25, "cm"), ends = "both"),
+    col = hot_color
+  ) +
+  annotate(
+    "text",
+    x = HF_doy_diameter_quartile_hot$doy[2] + (HF_doy_diameter_quartile_hot$doy[4] - HF_doy_diameter_quartile_hot$doy[2]) * 0.22,
+    y =  0.85 + 0.025,
+    label = expression(L[PGS]),
+    hjust = 0.5,
+    size = geom.text.size,
+    col = hot_color
+  ) +
+  # Critical temperature window:
+  geom_rect(aes(xmin = window_open, xmax = window_close, ymin = -Inf, ymax = Inf), alpha = 0.4) +
+  geom_segment(
+    aes(
+      x = window_open,
+      y = 0.30 + 0.025,
+      xend = window_close,
+      yend = 0.30 + 0.025
+    ),
+    arrow = arrow(length = unit(0.25, "cm"), ends = "both")
+  ) +
+  annotate(
+    "text",
+    x = window_open + (window_close - window_open) * 0.5,
+    y = 0.30,
+    label = "Critical\nTemperature\nWindow (CTW)",
+    hjust = 0.5,
+    vjust = 1,
+    size = geom.text.size
+  ) +
+  # Horizontal significance arrows
+  geom_segment(
+    data = HF_significant_perc,
+    aes(xend = doy_hot, x = doy_cold, yend = perc, y = perc),
+    col = ifelse(HF_significant_perc$significant, "black", "grey"),
+    size = 2,
+    arrow = arrow(length = unit(0.20, "cm"), type = "closed", angle = 40),
+    linejoin = "mitre"
+  ) +
+  # Vertical significance arrows
+  geom_segment(
+    data = HF_significant_perc,
+    aes(
+      x = HF_significant_vertical %>% pull(doy) %>% .[1],
+      xend = HF_significant_vertical %>% pull(doy) %>% .[1],
+      y = HF_significant_vertical %>% pull(perc) %>% .[1] + 0.04,
+      yend = HF_significant_vertical %>% pull(perc) %>% .[2] - 0.04),
+    col = "grey",
+    size = 2,
+    arrow = arrow(length = unit(0.20, "cm"), type = "closed", angle = 40, ends = "both"),
+    linejoin = "mitre"
+  ) +
+  labs(col = "Temp in CTW", fill = "Effect of ↑ in\nTemp in CTW") +
+  theme(
+    # legend.position = c(0.14, 0.725),
+    legend.position =  c(0.14, 0.70),
+    legend.background = element_rect(fill="white", size=0.25, linetype="solid", color = "black")
+  ) +
+  geom_tile(data = tibble(x = c(0, 0), y = c(0.5, 0.5), z = factor(c("Not significant", "Significant"))), aes(x = x, y = y, fill = z)) +
+  scale_fill_manual(values = alpha(c("grey", "black")))
+schematic_v2_HF
+
+
+
+
+### Combine ----
+fig_width <- 9
+schematic_v2_HF
+ggsave("doc/manuscript/tables_figures/schematic_v2.png", plot = last_plot(), width = fig_width, height = fig_width * 9 / 16)
+
+
+
+
+
 
 
 
@@ -220,13 +681,13 @@ ggsave("doc/manuscript/tables_figures/schematic.png", plot = schematic, width = 
 # Growth_Cruves_all: Percent modeled growth and cummulative percent modeled growth ----
 Wood_pheno_table_scbi <- read_csv("Data/Wood_pheno_table_SCBI_CLEAN.csv") %>%
   # Keep only RP and DP for now
-  filter(wood_type != "other") %>%
+  dplyr::filter(wood_type != "other") %>%
   # Rename ring porous to not have a space
   mutate(wood_type = ifelse(wood_type == "ring porous", "ring-porous", wood_type))
 
 Wood_pheno_table_hf <- read_csv("Data/Wood_pheno_table_HarvardForest_CLEAN.csv") %>%
   # Keep only RP and DP for now
-  filter(wood_type != "other") %>%
+  dplyr::filter(wood_type != "other") %>%
   # Rename ring porous to not have a space
   mutate(wood_type = ifelse(wood_type == "ring porous", "ring-porous", wood_type))
 
@@ -264,7 +725,7 @@ percent_growth_scbi <-Wood_pheno_table_scbi %>%
     dbh_total_growth = K - L,
     dbh_growth_percent = dbh_growth/dbh_total_growth
   ) %>%
-  filter(!is.na(dbh_growth)) %>%
+  dplyr::filter(!is.na(dbh_growth)) %>%
   mutate(
     dbh_growth_percent_cummulative = cumsum(dbh_growth_percent)
   )
@@ -290,7 +751,7 @@ percent_growth_hf <- Wood_pheno_table_hf %>%
     dbh_total_growth = K-L,
     dbh_growth_percent = dbh_growth/dbh_total_growth
   ) %>%
-  filter(!is.na(dbh_growth)) %>%
+  dplyr::filter(!is.na(dbh_growth)) %>%
   mutate(
     dbh_growth_percent_cummulative = cumsum(dbh_growth_percent)
   )
@@ -343,17 +804,16 @@ grid.arrange(
   as.table = TRUE, nrow=2, ncol=2) ###as.table specifies order if multiple rows
 
 dev.off()
-# ----
-#DOY timing figure (Replace with figure created in DOYtiming_all_years.R)----
+# DOY timing figure (Replace with figure created in DOYtiming_all_years.R)----
 Wood_pheno_table_scbi <- read_csv("Data/Wood_pheno_table_SCBI_CLEAN.csv") %>%
   # Keep only RP and DP for now
-  filter(wood_type != "other") %>%
+  dplyr::filter(wood_type != "other") %>%
   # Rename ring porous to not have a space
   mutate(wood_type = ifelse(wood_type == "ring porous", "ring-porous", wood_type))
 
 Wood_pheno_table_hf <- read_csv("Data/Wood_pheno_table_HarvardForest_CLEAN.csv") %>%
   # Keep only RP and DP for now
-  filter(wood_type != "other") %>%
+  dplyr::filter(wood_type != "other") %>%
   # Rename ring porous to not have a space
   mutate(wood_type = ifelse(wood_type == "ring porous", "ring-porous", wood_type))
 
@@ -382,7 +842,7 @@ aggregates_scbi <- aggregates_scbi %>% mutate(temp_type = factor(temp_type, leve
 
 #aggregates <- left_join(aggregates, aggregates_cold, by = c("Group.1", "Group.2"))
 #aggregates <- left_join(aggregates, aggregates_warm, by = c("Group.1", "Group.2"))
-#names(aggregates) <- c("Group.1", "Group.2","x","cold", "warm")
+#names(aggregates) <- c("Group.1", "Group.2","x","Cold", "warm")
 #names(aggregates) <- c("Wood type", "Growth vari", "DOY")
 doytiming_scbi <- ggplot(aggregates_scbi, aes(x=x, y = as.character(Group.2), group = interaction(Group.1, temp_type), color = temp_type, linetype = Group.1))+
   geom_point(size = 3)+
@@ -421,7 +881,7 @@ aggregates_hf <- aggregates_hf %>% mutate(temp_type = factor(temp_type, levels =
 
 #aggregates <- left_join(aggregates, aggregates_cold, by = c("Group.1", "Group.2"))
 #aggregates <- left_join(aggregates, aggregates_warm, by = c("Group.1", "Group.2"))
-#names(aggregates) <- c("Group.1", "Group.2","x","cold", "warm")
+#names(aggregates) <- c("Group.1", "Group.2","x","Cold", "warm")
 #names(aggregates) <- c("Wood type", "Growth vari", "DOY")
 doytiming_hf <- ggplot(aggregates_hf, aes(x=x, y = as.character(Group.2), group = interaction(Group.1, temp_type), color = temp_type, linetype = Group.1))+
   geom_point(size = 3)+
