@@ -470,9 +470,10 @@ HF_doy_diameter_quartile <- bind_rows(
 )
 
 # Semi-synthetic DOY_g_max dates
+HF_doy_max_rate_offset <- 2
 HF_doy_max_rate <- HF_doy_diameter_quartile %>%
   filter(perc == 0.5) %>%
-  mutate(doy = doy + 2)
+  mutate(doy = doy + HF_doy_max_rate_offset)
 
 
 ## 4. Identify significant shifts ----
@@ -499,6 +500,15 @@ HF_significant_perc <- inner_join(
   by = "perc"
 ) %>%
   mutate(significant = c(TRUE, TRUE, TRUE))
+
+HF_significant_perc <- bind_rows(
+  HF_significant_perc,
+  HF_significant_perc %>%
+    filter(perc == 0.5) %>%
+    mutate(doy_hot = doy_hot + HF_doy_max_rate_offset, doy_cold = doy_cold + HF_doy_max_rate_offset) %>%
+    mutate(perc = 0.53)
+)
+
 
 
 
