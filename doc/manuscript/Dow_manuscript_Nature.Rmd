@@ -170,8 +170,7 @@ As global atmospheric greenhouse gas levels are rising, and little meaningful po
 **In recent decades, warming temperatures have resulted in widespread phenological changes indicative of earlier arrival of spring[@parmesan_globally_2003] and *often later autumn*[REFS].**
 In temperate deciduous forests, spring leaf-out has been occurring earlier[REFS], as has the beginning of the annual period of net CO~2~ sequestration[REFS].
 Controls on the timing of autumn senescence are less clearly understood (*need to do more lit review on this*).
-In some regions earlier leaf out has been matched or exceeded by delays in leaf senescence *when springtime temperatures are above average(??)*[@ibanez_forecasting_2010;@jeong_phenology_2011;@crabbe_extreme_2016]. (*is this just spring temperatures? Or autumn? how widespread is this?*)
-Experimental evidence demonstrates that warmer spring temperatures lead to earlier leaf-out and earlier leaf senescence[@zohner_ongoing_2019], apparently because of sink-limitation to CO~2~ sequestration[@zani_increased_2020], whereas warmer summer and autumn temperatures delay leaf senescence[@zohner_ongoing_2019].
+Experimental evidence demonstrates that warmer spring temperatures lead to earlier leaf-out and earlier leaf senescence[@zohner_ongoing_2019;@keenan_timing_2015], apparently because of sink-limitation to CO~2~ sequestration[@zani_increased_2020], whereas warmer summer and autumn temperatures delay leaf senescence[@zohner_ongoing_2019;@crabbe_extreme_2016;@dragoni_evidence_2011;@jeong_phenology_2011;@ibanez_forecasting_2010;@vitasse_responses_2009].
 Whatever the mechanisms controlling autumn senescence, the observed pattern is that spring warming generally results in an increased growing season length, measured as the period over which trees have leaves[REFS] and the ecosystem is a net CO~2~ sink[REFS].
 
 ~~~~~~~~~~
@@ -189,8 +188,7 @@ However, recent evidence that leaf senescence is induced when the seasonal carbo
 In fact, we know little about the stem-growth phenology of temperate deciduous species [but see Ref. D'Orangeville]. (*Here, we need to review the literature to make sure we're not missing anything. We also want to set up the fact that our dataset is unique/justify just 2 sites*). 
 Tree-ring records give some hints that warmer springs may increase annual growth (e.g., Refs.[@helcoski_growing_2019] [MORE]), but rely purely on correlations of annual growth to monthly temperatures and can tell us nothing about the timing of that growth. 
 
-*Thus, while it is increasingly clear that warming spring temperatures lengthen the growing season and modestly increase annual carbon sequestration, current methods do not allow firm conclusions on how forest biomass growth is likely to respond to warming spring temperatures.  A combination of existing methods - tree cores and remote sensing of leaf-phenology traits - should be supplemented by dendrometer band data which allows for the modeling of intra-annual growth patterns in individuals. A mixture of these three would produce the most complete picture of spring climate influence on forests.*  
-
+*Thus, while it is increasingly clear that warming spring temperatures lengthen the growing season and modestly increase annual carbon sequestration, current methods do not allow firm conclusions on how forest biomass growth is likely to respond to warming spring temperatures.  To produce the most complete picture of spring influence on forests, a combination of established data types - tree cores, for inter-annual stem growth, and remote sensing, for leaf phenology - should be used in conjunction with a recently developed intra-annual modeling technique [@mcmahon_general_2015]. * 
 **Here, we characterize how early spring temperatures affect stem growth phenology, maximum daily growth rates, and annual growth of temperate deciduous trees, separated into ring- and diffuse-porous groupings, which differ in growth phenology[*D'Orangeville*].** 
 First, using data from dendrometer bands measured throughout the growing season in two forests in the Eastern USA (n=`r n_tree_years` tree-years), we fit a growth model[@mcmahon_general_2015] to determine the days of year where 25, 50, and 75% annual growth was achieved ($DOY_{25}$, $DOY_{50}$, $DOY_{75}$), peak growing season length ($L_{pgs}= DOY_{75}$-$DOY_{25}$), maximum growth rates ($g_{max}$) and the DOY on which they occurred ($DOY_{g_{max}}$), and total annual growth ($\Delta DBH$; Fig. `r schematic_summary`). 
 *(We also look at leaf phenology.)*
@@ -208,8 +206,8 @@ knitr::include_graphics("tables_figures/schematic_summary.png")
 
 *(we will need to add leaf phenology to this paragraph)*
 
-**Growth milestones were achieved earlier at SCBI than at Harvard Forest (average difference: #-# days) and differed between ring- and diffuse-porous species (Fig. `r growth_curves_all`, Table `r mean_growth_parameters_table`).**
-Across all trees and years, $DOY_{25}$ occurred on day 139 (May 20) at SCBI and day 151 (June 1) at Harvard Forest, while $DOY_{75}$ occurred on day 185 (July 5) at SCBI and day 194 (July 14) at Harvard Forest.
+**Growth milestones were achieved earlier at SCBI than at Harvard Forest (average difference: 6-10 days) and differed between ring- and diffuse-porous species (Fig. `r growth_curves_all`, Table `r mean_growth_parameters_table`).**
+Across all trees and years, $DOY_{25}$ occurred on day 139 (May 20) at SCBI and day 148 (May 29) at Harvard Forest, while $DOY_{75}$ occurred on day 185 (July 5) at SCBI and day 193 (July 13) at Harvard Forest.
 Consistent with the results of Ref[D'Orangeville], ring-porous species began growing earlier, reaching the $DOY_{25}$ benchmark earlier (by `r 154-123` days at SCBI and `r 164-132` at Harvard Forest), and their growth was spread out over a longer growing season (average $L_{PGS}$ 21 and 19 days longer at SCBI and Harvard Forest, respectively). 
 Growing season length was similar across sites, with $L_{PGS}$ being, on average, only two days longer at SCBI for ring-porous species and <1 day longer for diffuse-porous species. 
 
@@ -230,7 +228,7 @@ Henceforth, we focus on $T_{max}$ assessed over *climwin*-selected critical temp
 ## (Climate sensitivity of phenology )
 
 For both ring- and diffuse- porous species at both sites, warmer spring $T_{max}$ resulted in earlier achievement of growth milestones (Fig. `r schematic_summary`, Figs. `r pheno_Tsensitivity`).
-Specifically, $DOY_{25}$, $DOY_{50}$, and $DOY_{g.max}$ at SCBI and $DOY_{25}$, $DOY_{50}$, $DOY_{75}$, and $DOY_{g.max}$ at Harvard Forest all decreased significantly with increasing $T_{max}$ during the critical temperature window (Figs. `r schematic_summary`, `r pheno_Tsensitivity`, `r DOYtiming`).
+Specifically, $DOY_{25}$, $DOY_{50}$, $DOY_{75}$, and $DOY_{g.max}$ at both sites all decreased significantly with increasing $T_{max}$ during the critical temperature window (Figs. `r schematic_summary`, `r pheno_Tsensitivity`, `r DOYtiming`).
 
 ```{r pheno_Tsensitivity, out.width="80%", echo=FALSE, fig.align="center", fig.cap=pheno_Tsensitivity_caption}
 # Created in RScripts/bert/wood_phenology_analysis_bert.R
@@ -242,9 +240,9 @@ knitr::include_graphics("tables_figures/pheno_Tsensitivity_combo_patchwork_AIC.p
 knitr::include_graphics("tables_figures/DOYtiming_allyears.png")
 ```
 
-For three of the four species group-site combinations (exception: ring-porous at Harvard Forest), warmer $T_{max}$ during the critical temperature window resulted in increased $L_{PGS}$ (Figs. `r schematic_summary`, `r pheno_Tsensitivity`).
-At SCBI, ring-porous $DOY_{25}$ and $DOY_{50}$ shifted earlier as a result of warmer springs whereas ${DOY_75}$ did not shift significantly, resulting in a positive correlation between $L_{PGS}$ and $T_{max}$ during the critical temperature.
-For diffuse-porous species at both SCBI and Harvard Forest, all growth milestones occurred earlier in warmer springs, but $DOY_{25}$ was more strongly affected than ${DOY_75}$, resulting in increased $L_{PGS}$.
+For two of the four species group-site combinations (ring-porous at SCBI and diffuse-porous at Harvard Forest), warmer $T_{max}$ during the critical temperature window resulted in increased $L_{PGS}$ (Figs. `r schematic_summary`, `r pheno_Tsensitivity`).
+*At SCBI, ring-porous $DOY_{25}$ and $DOY_{50}$ shifted earlier as a result of warmer springs whereas ${DOY_75}$ did not shift significantly, resulting in a positive correlation between $L_{PGS}$ and $T_{max}$ during the critical temperature.*
+*For diffuse-porous species* At SCBI, all growth milestones occurred earlier in warmer springs, but $DOY_{25}$ was more strongly affected than ${DOY_75}$, resulting in increased $L_{PGS}$.
 At Harvard Forest,  all growth milestones occurred earlier in warmer springs, but ring-porous ${DOY_75}$ shifted more than ${DOY_25}$, resulting in shorter peak growing season length.  
 
 ## (Climate sensitivity of growth)
