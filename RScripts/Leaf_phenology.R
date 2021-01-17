@@ -62,6 +62,24 @@ pheno_events$peak <- as.Date(pheno_events$peak, origin = "1970-01-01")
 pheno_events$senescence <- as.Date(pheno_events$senescence, origin = "1970-01-01")
 
 write.csv(pheno_events, file = "Data/Leaf phenology/leaf_phenology.csv", row.names = FALSE)
+pheno_events <- pheno_events[-21,]
+pheno_events2 <- pheno_events[,-7]
+meltpheno <- melt(pheno_events2, id.vars = c("site","year","tmp"))
+meltpheno$value <- as.Date(meltpheno$value, origin = "1970-01-01")
+
+library(reshape2)
+ggplot(pheno_events, aes(x=tmp,y=yday(greenup),color=site))+geom_point()
+lpp <- ggplot(meltpheno, aes(x=tmp,y=yday(value),color=site, shape = variable))+
+  geom_point()+
+  theme_bw()+
+  geom_smooth(method = "lm")+
+  scale_colour_viridis_d("", begin = 1/3, end = 4/5)+
+  labs(x = expression(paste("Critical Window ", T[max], " (°C)")), y= "Day of Year", title = "Leaf Phenology", color = "Site", shape = "Pheno Stage")+
+  theme(axis.text=element_text(size=14),
+        axis.title=element_text(size=14)) +
+  theme(legend.text=element_text(size=18))+
+  theme(legend.title = element_text(size = 20))
+ggsave("Leaf Phenology.png", plot = lpp, width = 8, height = 8)
 
 #hf <- subset(pheno_events, site == "HF")
 #plot(hf$los~hf$tmp)
