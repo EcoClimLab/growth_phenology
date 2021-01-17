@@ -56,10 +56,13 @@ names(HF_agg) <- c("year","tmp", "site")
 temp_variables <- rbind(scbi_agg, HF_agg)
 pheno_events <- left_join(pheno_events, temp_variables , by = c("year","site"))
 
+pheno_events$greenup <- as.Date(pheno_events$greenup, origin = "1970-01-01")
+pheno_events$midgreenup <- as.Date(pheno_events$midgreenup, origin = "1970-01-01")
+pheno_events$peak <- as.Date(pheno_events$peak, origin = "1970-01-01")
+pheno_events$senescence <- as.Date(pheno_events$senescence, origin = "1970-01-01")
+
 write.csv(pheno_events, file = "Data/Leaf phenology/leaf_phenology.csv", row.names = FALSE)
 
-pheno_events$greenuptry <- as.Date(pheno_events$greenup, origin = "1950-01-01")
-?as.Date
 #hf <- subset(pheno_events, site == "HF")
 #plot(hf$los~hf$tmp)
 #abline(lm(hf$los~hf$tmp))
