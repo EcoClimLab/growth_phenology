@@ -149,7 +149,7 @@ n_cores <- sum(na.omit(species_table[, "n.cores"]))
 (*word limit 200. italic=tentative*)
 
 
-As the climate changes, warmer spring temperatures are causing earlier leaf-out[REFS] and commencement of net carbon dioxide (CO~2~) sequestration[REFS] in temperate deciduous forests, resulting in a tendency towards increased growing season length[REFS] and annual CO~2~ sequestration[REFS].
+As the climate changes, warmer spring temperatures are causing earlier leaf-out[REFS] and commencement of net carbon dioxide (CO~2~) sequestration[REFS] in temperate deciduous forests, resulting in a tendency towards increased growing season length[@menzel_growing_1999;@menzel_european_2006;@ibanez_forecasting_2010;@jeong_phenology_2011] and annual CO~2~ sequestration[@keeling_increased_1996;@dragoni_evidence_2011;@crabbe_extreme_2016].
 However, little is known about how spring temperatures affect tree stem growth, which consumes a modest portion of the carbon fixed annually[REFS] but is the longest-lived carbon sink[REFS].
 Here, we show that in two temperate deciduous forests, warmer maximum spring temperatures consistently shifted *both leaf phenology* and woody growth milestones earlier but had mixed, weak effects on peak growing season length, maximum daily growth rates, and annual growth.
 *The latter finding is confirmed on the centennial scale by tree-ring records across # forests.*
