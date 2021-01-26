@@ -31,6 +31,8 @@ Ryan Helcoski^1^
 
 Valentine Herrmann^1^
 
+Justin Maxwell
+
 Ian McGregor^1,5^
 
 William McShea^1^
@@ -88,7 +90,7 @@ tree_rings = 4  #stays, hopefully adding a lot more sites
 
 #figure captions
 
-schematic_summary_caption <- "Figure 1 | Summary of tree growth changes under warmer spring temperatures at two temperate forests and for two groups of broadleaf deciduous species (RP=ring porous; DP=diffuse porous). (a) Schematic illustrating parameters of interest and summarizing how each responds to warmer maximum temperatures during a 'critical temperature window', defined as that with the strongest control over DOY25; (b) Variable definitions and summary responses to warmer temperatures, where up and down arrows indicate increases and decreases, respectively, 'n.s.' indicates no signficant correlation, and 'mixed' indicates a mix of signficant and non-signficant correlations, often in different directions."
+schematic_summary_caption <- "Figure 1 | Summary of tree growth changes under warmer spring temperatures. (a) Schematic illustrating parameters of interest and summarizing how each responds to warmer maximum temperatures during a 'critical temperature window', defined as that with the strongest control over $DOY_{25}$; (b) Variable definitions and summary responses to warmer spring temperatures at two temperate forests and for two groups of broadleaf deciduous species (RP=ring porous; DP=diffuse porous), where up and down arrows indicate increases and decreases, respectively, 'n.s.' indicates no signficant correlation, and 'mixed' indicates a mix of signficant and non-signficant correlations, often in different directions."
 
 pheno_Tsensitivity_caption <- "Figure 2 | Relationship between growth parameters and climwin mean temperatures. For each 
 observed climwin mean temperature value, the posterior mean of the fitted day of year
@@ -424,7 +426,7 @@ We note that other growth parameters would be controlled by different critical t
 
 Correlation between these variables and spring temperatures were assessed using a linear mixed model in a hierarchical Bayesian framework.
 
-Mixed effects models were used to test the response of growth phenology variables ($DOY_{25}$, $DOY_{50}$, $DOY_{75}$, $DOY_{g_max}}$, $g_{max}$, and $\Delta DBH$) to fixed effects of xylem porosity and mean temperature ($T_{max}$, $T_{min}$) during the critical temperature window selected by *climwin*, along with random effects of species and tree. 
+Mixed effects models were used to test the response of growth phenology variables ($DOY_{25}$, $DOY_{50}$, $DOY_{75}$, $DOY_{g_max}$, $g_{max}$, and $\Delta DBH$) to fixed effects of xylem porosity and mean temperature ($T_{max}$, $T_{min}$) during the critical temperature window selected by *climwin*, along with random effects of species and tree. 
 We ran separate models for each species group at each site, and for the response of all growth phenology variables to $T_{max}$ and $T_{min}$. 
 Models were run using the LME4 package in R [@bates_fitting_2015]. 
 
