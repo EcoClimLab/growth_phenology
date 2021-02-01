@@ -441,7 +441,8 @@ It appears that temperatures--particularly $T_{max}$--during one spring month at
 This suggests that spring $T_{max}$, though it's pronounced influence on the start of woody growth and subtle influence on length of the peak growing season, has a modestly positive influence on annual tree growth, but that this influence is generally of secondary importance to other factors. 
 
 Indeed, the tree-ring records reveal that at SCBI the strongest temperature sensitivity aligned with peak growing season [@helcoski_growing_2019], whereas there were fewer significant climate correlations for the species at Harvard Forest (Fig. `r tree_rings`).
-Relative to other temperate deciduous forest sites, the pattern at SCBI tends to be more typical: annual growth is most commonly controlled by climate conditions during the peak growing season.
+Relative to other temperate deciduous forest sites, the pattern at SCBI tends to be more typical: annual growth is most commonly controlled most strongly by climate conditions during the peak growing season [@babst_twentieth_2019].
+There is, however, evidence that growth of some trees in humid temperate regions increases in response to warmer late winter/ early spring conditions [e.g., Anderson-Teixeira et al. in prep; @babst_twentieth_2019].
 (*1-2 sentences generalizing about climate sensitivity of temperate deciduous forest growth--Neil can do this most easily.*)
 Thus, while our analysis is limited to two sites, we expect that the finding that spring temperatures have limited effect on annual tree growth will hold generally.
 
