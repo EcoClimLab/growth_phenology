@@ -62,13 +62,25 @@ pheno_events$peak <- as.Date(pheno_events$peak, origin = "1970-01-01")
 pheno_events$senescence <- as.Date(pheno_events$senescence, origin = "1970-01-01")
 
 write.csv(pheno_events, file = "Data/Leaf phenology/leaf_phenology.csv", row.names = FALSE)
+
 pheno_events <- pheno_events[-21,]
+#LOS
+ggplot(pheno_events, aes(x = tmp, y = los, group = site, color = site))+geom_point()+geom_smooth(method = "lm")+
+  stat_fit_glance(method = 'lm',
+                  method.args = list(formula = y~x),
+                  geom = 'text',
+                  aes(label = paste("P-value = ", signif(..p.value.., digits = 4), sep = "")),
+                  size = 3)
 pheno_events2 <- pheno_events[,-7]
+
+library(reshape2)
 meltpheno <- melt(pheno_events2, id.vars = c("site","year","tmp"))
 meltpheno$value <- as.Date(meltpheno$value, origin = "1970-01-01")
 
-library(reshape2)
 ggplot(pheno_events, aes(x=tmp,y=yday(greenup),color=site))+geom_point()
+library(ggpmisc)
+?
+
 lpp <- ggplot(meltpheno, aes(x=tmp,y=yday(value),color=site, shape = variable))+
   geom_point()+
   theme_bw()+
@@ -78,10 +90,17 @@ lpp <- ggplot(meltpheno, aes(x=tmp,y=yday(value),color=site, shape = variable))+
   theme(axis.text=element_text(size=14),
         axis.title=element_text(size=14)) +
   theme(legend.text=element_text(size=18))+
-  theme(legend.title = element_text(size = 20))
+  theme(legend.title = element_text(size = 20))+
+  stat_fit_glance(method = 'lm',
+   method.args = list(formula = y~x),
+   geom = 'text',
+   aes(label = paste("P-value = ", signif(..p.value.., digits = 4), sep = "")),
+   size = 3)
+lpp
 ggsave("Leaf Phenology.png", plot = lpp, width = 8, height = 8)
 
 #hf <- subset(pheno_events, site == "HF")
 #plot(hf$los~hf$tmp)
 #abline(lm(hf$los~hf$tmp))
 #summary(lm(hf$los~hf$tmp))
+
