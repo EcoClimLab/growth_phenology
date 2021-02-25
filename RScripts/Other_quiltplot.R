@@ -13,22 +13,36 @@ library(climwin)
 crns <- read.csv("Data/tree_rings/Other/all_crns_res_1901.csv")
 TRW_coord <- read_excel("Data/tree_rings/Other/TRW_coord.xlsx")
 
+species <- NULL
+sites <- NULL
 for(i in 1:ncol(crns)){
   new <- crns[c(1:119), c(1,1+i)]
   name <- colnames(new)
   name <- name[2]
 
-  write.csv(assign(as.character(name),new), file = paste0("Data/tree_rings/",name,".csv"), row.names = FALSE)
-  }# source function ####
+  sp <- substr(name,nchar(as.character(name))-3, nchar(as.character(name)))
+  species <- append(species,sp)
+
+  site <- substr(name,1, nchar(as.character(name))-5)
+  sites <- append(sites,site)
+  #write.csv(assign(as.character(name),new), file = paste0("Data/tree_rings/",name,".csv"), row.names = FALSE)
+  assign(as.character(name),new)
+
+}
+
+sites <- unique(sites)
+species <- unique(species)
+
+# source function ####
 #Change my.dccplot function to remove previous / current year lines
 #Manually rearrange x to put in desired plotting order right before plotting
 #source("https://raw.githubusercontent.com/SCBI-ForestGEO/climate_sensitivity_cores/master/scripts/0-My_dplR_functions.R")
 source("Rscripts/0-My_dplR_functions.R")
-path_to_sp_res_chrons <- "C:/Users/world/Documents/GitHub/growth_phenology/Data/tree_rings/Other/" # replace to the path where Neil's chronlogies are
+#path_to_sp_res_chrons <- "C:/Users/world/Documents/GitHub/growth_phenology/Data/tree_rings/Other/" # replace to the path where Neil's chronlogies are
 
 
 #species <-  c("vector_species_you_have", "as they are names in Neils files")
-species <-  c("ACRU", "BEAL", "QURU", "TSCA")
+#species <-  c("ACRU", "BEAL", "QURU", "TSCA")
 
 climate_variables <- c("tmx", "tmn")
 
