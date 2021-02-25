@@ -8,10 +8,38 @@ rm(list = ls())
 library(bootRes)
 library(dplR) # for read.rwl
 library(climwin)
+library(tidyverse)
 
 #Prepare csv's
 crns <- read.csv("Data/tree_rings/Other/all_crns_res_1901.csv")
 TRW_coord <- read_excel("Data/tree_rings/Other/TRW_coord.xlsx")
+
+# Bert approach
+crns <- read_csv("Data/tree_rings/Other/all_crns_res_1901.csv") %>%
+  # clean up
+  select(-c(BearIs, OH_Gol_QUAL_1)) %>%
+  rename(IL_Fer_LITU = IL_Fer_LTU) %>%
+  # convert to long format
+  pivot_longer(-Year, names_to = "site_sp", values_to = "ring_width") %>%
+  # drop years with missing data
+  filter(!is.na(ring_width)) %>%
+  # for each site/sp extract start and end
+  group_by(site_sp) %>%
+  summarize(start = min(Year), end = max(Year)) %>%
+  # split site_sp variable into site, sp
+  mutate(
+    site = str_sub(site_sp, 1, -6),
+    sp = str_sub(site_sp, -4, n())
+  )
+
+# Generate named vector: start year
+start.years.sss_bert <- crns$start
+names(start.years.sss_bert) <- crns$site_sp
+start.years.sss_bert
+
+# end year
+
+
 
 species <- NULL
 sites <- NULL
