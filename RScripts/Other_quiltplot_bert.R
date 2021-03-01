@@ -9,10 +9,13 @@ library(bootRes)
 library(dplR) # for read.rwl
 library(climwin)
 library(tidyverse)
+library(lubridate)
+
+source("Rscripts/0-My_dplR_functions.R")
 
 #Prepare csv's
 crns <- read.csv("Data/tree_rings/Other/all_crns_res_1901.csv")
-TRW_coord <- read_excel("Data/tree_rings/Other/TRW_coord.xlsx")
+#TRW_coord <- read_excel("Data/tree_rings/Other/TRW_coord.xlsx")
 
 # Bert approach
 crns <- read_csv("Data/tree_rings/Other/all_crns_res_1901.csv") %>%
@@ -45,6 +48,42 @@ start.years.sss_bert
 
 
 
+# Load climate data ####
+
+## needs to be in different format: column for Date, year and then one column per climate variable
+climate_variables <- c("tmn", "tmx")
+clim_v <- NULL
+# something like this should do
+for(clim_v in climate_variables) {
+  print(clim_v)
+  x <- read.csv(paste0("climate data/CRU/", clim_v,  ".1901.2019-Other_sites-3-01.csv"))
+
+
+  ### subset for the sites we care about
+
+  #x <- droplevels(x[x$sites.sitename %in% "Harvard_Forest", ])
+
+  ### reshape to long format
+  x_long <- reshape(x,
+                    times = names(x)[-1],
+                    timevar = "Date",
+                    varying = list(names(x)[-1]),
+                    direction = "long", v.names = clim_v)
+  ### format date
+  x_long$Date <- gsub("X", "", x_long$Date)
+  x_long$Date <- as.Date(x_long$Date , format = "%Y.%m.%d")#changed format to work with Harvard data
+
+
+  ### combine all variables in one
+  if(clim_v == climate_variables[1]) all_Clim <- x_long[, c(1:3)]
+  else all_Clim <- merge(all_Clim, x_long[, c(1:3)], by = c("sites.sitename", "Date"), all = T)
+
+}
+
+### add year column
+all_Clim$year <- as.numeric(format(as.Date(all_Clim$Date, format = "%d/%m/%Y"), "%Y"))
+### add month column
+all_Clim$month <- as.numeric(format(as.Date(all_Clim$Date, format = "%d/%m/%Y"), "%m"))
 
 # Get unique site and species names ----
 species <- NULL
@@ -84,7 +123,8 @@ SD_of_each_detrended_chronologies_bert <- crns_long %>%
 all.dcc.output <- NULL#
 corr.dcc.output <- NULL#
 for(f in site_species) {
-  print(f)
+f <- site_species[1]
+    print(f)
 
   end.year <- crns_long_start_end %>%
     filter(site_sp == f) %>%
@@ -102,8 +142,13 @@ for(f in site_species) {
   rownames(core) <- core$Year
 
   # load climate data for corresponding site (not necessary since you have only one site, but renaming to clim so that the rest works)  ####
-  clim <- all_Clim
+  site <- substr(f,1, nchar(as.character(f))-5)
 
+  clim <- all_Clim[all_Clim$sites.sitename %in% site,]
+  clim <- clim[,c(-1)]
+  clim <- clim[,c(4,1,3,2,5)]
+
+  clim$year <- year(clim$Date)
   ### crop last year to full.time.frame.end.year
   clim <- clim[clim$year <= end.year, ]
 
@@ -120,20 +165,74 @@ for(f in site_species) {
   start.year <- max(min(clim$year), start.year)# max(min(clim$year), start.years[which(site_sps[!site_sps %in% species_to_drop] %in% f)])
 
   # run analysis for each variable
+  #v <- "tmn"
+
   for (v in  climate_variables) {
     print(v)
 
 
-    corr.dcc.output <- my.dcc(chrono = core["res"], clim = clim[, c("year", "month", v)], method = "correlation", start = start, end =  end, timespan = c(start.year, end.year), ci = 0.05, ci2 = 0.002)
-    all.dcc.output <- rbind(all.dcc.output, data.frame(cbind(Species = substr(f, 1, 4), corr.dcc.output)))#
+    corr.dcc.output <- my.dcc(chrono = core["res"], clim = clim[, c("year", "month", v)], method = "correlation", start = 1, end =  8, timespan = c(start.year, end.year), ci = 0.05, ci2 = 0.002)
+    all.dcc.output <- rbind(all.dcc.output, data.frame(cbind(Site = site, Species = substr(f, nchar(f)-3, nchar(f)), corr.dcc.output)))#
 
   }
 
-  ### plot ####
-
-  # you should know ploting function
-
 }
+all.dcc.output$variable <- substr(paste(row.names(all.dcc.output)), 1, 3)#get variable from row name
+all.dcc.output$month <- substr(paste(row.names(all.dcc.output)), 5, 12)#get month from row name
+
+all.dcc.output <- all.dcc.output %>%
+  mutate(Species = str_c(Site, Species, sep = "_")) %>%
+  select(-Site)
+  ### plot ####
+  #############################################
+  ##Copy/Paste this section from other script##
+  #############################################
+  save.plots = TRUE
+v <- "tmn"
+  for(v in climate_variables) {
+    print(v)
+
+    X <- all.dcc.output[all.dcc.output$variable %in% v, ]
+
+    x <- data.frame(reshape(X[, c("month","Species", "coef")], idvar = "month", timevar = "Species", direction = "wide"))
+    rownames(x) <- ifelse(grepl("curr",  rownames(x)), toupper(rownames(x)), tolower( rownames(x)))
+    rownames(x) <- gsub(".*curr.|.*prev.", "",   rownames(x), ignore.case = T)
+
+    x.sig <- reshape(X[, c("month", "Species", "significant")], idvar = "month", timevar = "Species", direction = "wide")
+    x.sig2 <- reshape(X[, c("month", "Species", "significant2")], idvar = "month", timevar = "Species", direction = "wide")
+
+    colnames(x) <- gsub("coef.", "", colnames(x))#Here is naming issue. Fixed by multiple column?
+    colnames(x.sig) <- gsub("significant.", "", colnames(x.sig))
+    colnames(x.sig2) <- gsub("significant2.", "", colnames(x.sig2))
+
+    x <- x[, -1]
+    x.sig <- x.sig[, -1]
+    x.sig2 <- x.sig2[, -1]
+
+    # x <- x[, rev(SPECIES_IN_ORDER[!SPECIES_IN_ORDER %in% gsub("CAOVL", "CAOV", species_to_drop)])]
+    #  x.sig <- x.sig[, rev(SPECIES_IN_ORDER[!SPECIES_IN_ORDER %in% gsub("CAOVL", "CAOV", species_to_drop)])]
+    #  x.sig2 <- x.sig2[, rev(SPECIES_IN_ORDER[!SPECIES_IN_ORDER %in% gsub("CAOVL", "CAOV", species_to_drop)])]
+
+    # if(save.plots)  {
+    #    dir.create(paste0("results/", type.start, "/figures/monthly_", method.to.run), showWarnings = F)
+    #    dir.create(paste0("results/", type.start, "/figures/monthly_", method.to.run, "/", c), showWarnings = F)
+    #    tiff(paste0("results/", type.start, "/figures/monthly_", method.to.run, "/", c, "/", v, ".tif"), res = 150, width = 169, height = 169, units = "mm", pointsize = 10)
+    #  }
+
+    v <-  toupper(v)
+    v <- gsub("PDSI_PREWHITEN" , "PDSI", v)
+    #x <- x[,c(2,1,3)]
+    #x.sig <- x.sig[,c(2,1,3)]
+    #x.sig2 <- x.sig2[,c(2,1,3)]
+    png(paste0("results/", "monthly_", "correlation", "Harvard", v, ".png"), res = 150, width = 169, height = 169, units = "mm", pointsize = 10)
+
+    my.dccplot(x = as.data.frame(t(x)), sig = as.data.frame(t(x.sig)), sig2 = as.data.frame(t(x.sig2)),  main = ifelse(v %in% "PETminusPRE", "PET-PRE", v), method = "correlation")
+
+    if(save.plots) dev.off()
+  }
+
+
+
 
 all.dcc.output$variable <- substr(paste(row.names(all.dcc.output)), 1, 3)#get variable from row name
 all.dcc.output$month <- substr(paste(row.names(all.dcc.output)), 5, 12)#get month from row name
