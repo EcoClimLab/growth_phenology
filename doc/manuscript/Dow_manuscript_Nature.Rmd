@@ -31,6 +31,8 @@ Ryan Helcoski^1^
 
 Valentine Herrmann^1^
 
+*Grant Harley (ASSUMING WE USE SMOKIES TREE RING RECORDS)*
+
 Justin Maxwell
 
 Ian McGregor^1,5^
@@ -60,7 +62,7 @@ Kristina J. Anderson-Teixeira^1,7^*
 
 6. SERC
 
-7. Center for Tropical Forest Science-Forest Global Earth Observatory; Smithsonian Tropical Research Institute; Panama, Republic of Panama
+7. Forest Global Earth Observatory; Smithsonian Tropical Research Institute; Panama, Republic of Panama
 
 
 
@@ -393,6 +395,10 @@ At SCBI, cores were collected as described in @helcoski_growing_2019.
 Briefly, cores were taken from living or recently dead trees $\ge$ 10 cm $DBH$, including a randomly sampled subset of all dominant species within the ForestGEO plot [live trees in 2010-2011; @bourg_initial_2013] and trees found newly dead in annual tree mortality in 2016 and 2017 [@helcoski_growing_2019].
 At Harvard Forest, ...(*Neil can write this easily, or KAT probably has the info*)
 In total, we analyzed `r n_cores` cores from eleven species at SCBI and three species at Harvard Forest (Table `r table_species`).
+
+The tree-ring records from our focal sites were complemented with a much larger collection spanning **#** deciduous and mixed forest sites in Eastern North America.
+Again, species were limited to broadleaf deciduous species with clearly defined xylem porosity (i.e., excluding semi-ring porous). 
+
 
 All cores were mounted, sanded, cross-dated, and measured using standard methodology. 
 We standardized ring-width series from each core via ARSTAN using a 2/3rds $n$ spline, where $n$ is the number of years in the series [@cook_time_1985; @cook_methods_1990]. 
