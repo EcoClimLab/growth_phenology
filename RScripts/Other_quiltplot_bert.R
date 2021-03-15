@@ -1,5 +1,9 @@
 # clear environment ####
 rm(list = ls())
+#Go into code and follow one weird looking one –
+#Sort by mean April temp? leaf pheno? Tick mark for degree latitude (unevenly spaced)
+#Replace y labels with some breakpoint or number, then don’t need a number on each tick
+#Remove sig symbols?
 
 #tightly condensed plot by latitude.
 #Two panels, rp/dp
@@ -10,9 +14,12 @@ library(dplR) # for read.rwl
 library(climwin)
 library(tidyverse)
 library(lubridate)
-
+library(readxl)
 source("Rscripts/0-My_dplR_functions.R")
 
+#Load in lat lon for plotting sort
+TRW_coord <- read_excel("Data/tree_rings/Other/TRW_coord2.xlsx")
+TRW_coord <- TRW_coord[,c(1,3)]
 #Prepare csv's
 crns <- read.csv("Data/tree_rings/Other/all_crns_res_1901.csv")
 #TRW_coord <- read_excel("Data/tree_rings/Other/TRW_coord.xlsx")
@@ -56,7 +63,7 @@ clim_v <- NULL
 # something like this should do
 for(clim_v in climate_variables) {
   print(clim_v)
-  x <- read.csv(paste0("climate data/CRU/", clim_v,  ".1901.2019-Other_sites-3-01.csv"))
+  x <- read.csv(paste0("climate data/CRU/", clim_v,  ".1901.2019-Other_sites-3-11.csv"))
 
 
   ### subset for the sites we care about
@@ -85,6 +92,14 @@ all_Clim$year <- as.numeric(format(as.Date(all_Clim$Date, format = "%d/%m/%Y"), 
 ### add month column
 all_Clim$month <- as.numeric(format(as.Date(all_Clim$Date, format = "%d/%m/%Y"), "%m"))
 
+clim_means <- all_Clim %>%
+  filter(month == 4) %>%
+  group_by(sites.sitename) %>%
+  summarize(tmn = mean(tmn),
+            tmx = mean(tmx)) %>%
+  rename(Location = sites.sitename)
+
+
 # Get unique site and species names ----
 species <- NULL
 sites <- NULL
@@ -108,8 +123,6 @@ species <- unique(species)
 
 site_species <- unique(crns_long$site_sp)
 
-
-
 # Code to produce csv in results/SD_of_each_detrended_chronologies.csv
 SD_of_each_detrended_chronologies_bert <- crns_long %>%
   group_by(site_sp) %>%
@@ -118,14 +131,12 @@ SD_of_each_detrended_chronologies_bert <- crns_long %>%
 
 
 
-
 ## Run analysis to compare BERT ####
 all.dcc.output <- NULL#
 corr.dcc.output <- NULL#
 for(f in site_species) {
-f <- site_species[1]
+#f <- site_species[1]
     print(f)
-
   end.year <- crns_long_start_end %>%
     filter(site_sp == f) %>%
     pull(end)
@@ -147,7 +158,9 @@ f <- site_species[1]
   clim <- all_Clim[all_Clim$sites.sitename %in% site,]
   clim <- clim[,c(-1)]
   clim <- clim[,c(4,1,3,2,5)]
-
+if(nrow(clim) == 0){
+  next
+}
   clim$year <- year(clim$Date)
   ### crop last year to full.time.frame.end.year
   clim <- clim[clim$year <= end.year, ]
@@ -165,7 +178,7 @@ f <- site_species[1]
   start.year <- max(min(clim$year), start.year)# max(min(clim$year), start.years[which(site_sps[!site_sps %in% species_to_drop] %in% f)])
 
   # run analysis for each variable
-  #v <- "tmn"
+  v <- "tmn"
 
   for (v in  climate_variables) {
     print(v)
@@ -177,6 +190,7 @@ f <- site_species[1]
   }
 
 }
+#unique(all_Clim$sites.sitename)
 all.dcc.output$variable <- substr(paste(row.names(all.dcc.output)), 1, 3)#get variable from row name
 all.dcc.output$month <- substr(paste(row.names(all.dcc.output)), 5, 12)#get month from row name
 
@@ -188,14 +202,45 @@ all.dcc.output <- all.dcc.output %>%
   ##Copy/Paste this section from other script##
   #############################################
   save.plots = TRUE
-v <- "tmn"
+
+climate_variables <- "tmn"
   for(v in climate_variables) {
     print(v)
-
+#TRW_coord$Location
+    TRW_coord <- TRW_coord[!(duplicated(TRW_coord$Location)),]
     X <- all.dcc.output[all.dcc.output$variable %in% v, ]
+    X$Location <- substr(X$Species, 1, nchar(X$Species)-5)
+    X$numid <- seq(1,8,1)
+    # X <- X %>%
+    #  mutate(
+    #    month_new = case_when(
+    #      month == "curr.jan" ~ 1,
+    #      month == "curr.feb" ~ 2,
+    #      TRUE ~ 0
+    #    )
+    #  )
+    #ctrl shift c
+
+    #SORT BY LATITUDE
+    # X <- X %>%
+    #   left_join(TRW_coord, by = "Location")
+    #
+    # X <- X %>%
+    #   arrange(desc(Latitude), Species, numid)
+    #
+
+    #SORT BY APRIL TEMP
+    X <- X %>%
+      left_join(clim_means, by = "Location")
+
+    X <- X %>%
+      arrange(desc(tmn), Species, numid)
+
+    #X <- merge(X,TRW_coord$Latitude, all.x = TRUE, all.y = FALSE)
+    #X <- X[order(as.numeric(X$Latitude), X$numid, X$Species),]
 
     x <- data.frame(reshape(X[, c("month","Species", "coef")], idvar = "month", timevar = "Species", direction = "wide"))
-    rownames(x) <- ifelse(grepl("curr",  rownames(x)), toupper(rownames(x)), tolower( rownames(x)))
+    rownames(x) <- ifelse(grepl("curr",  x$month), toupper(x$month), tolower( x$month))
     rownames(x) <- gsub(".*curr.|.*prev.", "",   rownames(x), ignore.case = T)
 
     x.sig <- reshape(X[, c("month", "Species", "significant")], idvar = "month", timevar = "Species", direction = "wide")
@@ -224,7 +269,7 @@ v <- "tmn"
     #x <- x[,c(2,1,3)]
     #x.sig <- x.sig[,c(2,1,3)]
     #x.sig2 <- x.sig2[,c(2,1,3)]
-    png(paste0("results/", "monthly_", "correlation", "Harvard", v, ".png"), res = 150, width = 169, height = 169, units = "mm", pointsize = 10)
+    png(paste0("results/", "monthly_", "correlation", "other", v, ".png"), res = 150, width = 169, height = 2*169, units = "mm", pointsize = 10)
 
     my.dccplot(x = as.data.frame(t(x)), sig = as.data.frame(t(x.sig)), sig2 = as.data.frame(t(x.sig2)),  main = ifelse(v %in% "PETminusPRE", "PET-PRE", v), method = "correlation")
 
@@ -237,4 +282,4 @@ v <- "tmn"
 all.dcc.output$variable <- substr(paste(row.names(all.dcc.output)), 1, 3)#get variable from row name
 all.dcc.output$month <- substr(paste(row.names(all.dcc.output)), 5, 12)#get month from row name
 
-write.csv(all.dcc.output, file = "results/Harvard_Forest_core_corr.csv", row.names = FALSE)
+write.csv(all.dcc.output, file = "results/Other_core_corr.csv", row.names = FALSE)
