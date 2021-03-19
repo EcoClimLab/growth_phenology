@@ -154,11 +154,13 @@ n_cores <- sum(na.omit(species_table[, "n.cores"]))
 
 
 As the climate changes, warmer spring temperatures are causing earlier leaf-out[REFS] and commencement of net carbon dioxide (CO~2~) sequestration[REFS] in temperate deciduous forests, resulting in a tendency towards increased growing season length[@menzel_growing_1999;@menzel_european_2006;@ibanez_forecasting_2010;@jeong_phenology_2011] and annual CO~2~ sequestration[@keeling_increased_1996;@dragoni_evidence_2011;@crabbe_extreme_2016].
-However, little is known about how spring temperatures affect tree stem growth, which consumes a modest portion of the carbon fixed annually[REFS] but is the longest-lived carbon sink[REFS].
-Here, we show that in two temperate deciduous forests, warmer maximum spring temperatures consistently shifted *both leaf phenology* and woody growth milestones earlier but had mixed, weak effects on peak growing season length, maximum daily growth rates, and annual growth.
-*The latter finding is confirmed on the centennial scale by tree-ring records across # forests.*
-These findings are consistent with *~~most tree-ring studies in temperate deciduous forests showing that annual growth tends to be more sensitive to climatic conditions during the peak growing season than in the spring[REFS], with~~* eddy-covariance records showing that annual CO~2~ sequestration is more strongly linked to conditions in the peak growing season than to growing season length[@fu_maximum_2019], with *previous* observations that warm springs result in earlier leaf senescence[@zohner_ongoing_2019; @zani_increased_2020], and with evidence that forest CO~2~ sequestration is sink-limited[@zani_increased_2020].
-They contrast, however, with the expectation *in most models[@zani_increased_2020]* that an earlier start to growing season would significantly increase the rate of biomass accumulation and thereby enhance the CO~2~ sink of temperate deciduous forests, implying that warming spring conditions are unlikely to impact temperate deciduous forest growth sufficiently to produce any substantial negative climate change feedback.
+However, little is known about how spring temperatures affect tree stem growth, which consumes only a modest portion of the carbon fixed annually[@anderson-teixeira_carbon_2021] but sequesters that carbon in wood, which has a long residence time in the ecosystem [@xue_global_2017;@russell_residence_2014] or as wood products[@profft_forest_2009].
+Here, we show that in two temperate deciduous forests, warmer maximum spring temperatures consistently shifted woody growth milestones earlier but had mixed, weak effects on peak growing season length, maximum daily growth rates, and annual growth.
+The latter finding is confirmed on the centennial scale by **#** tree-ring chronologies from **#** forests across eastern North America, which show that annual growth is by far more sensitive to temperatures during the peak growing season than in the spring.
+These findings align with eddy-covariance records showing that annual CO~2~ sequestration is more strongly linked to conditions in the peak growing season than to growing season length[@fu_maximum_2019], with *previous* observations that warm springs result in earlier leaf senescence[@zohner_ongoing_2019; @zani_increased_2020], and with evidence that forest CO~2~ sequestration is sink-limited[@zani_increased_2020].
+They contrast, however, with the expectation *in most models[@zani_increased_2020]* that an earlier start to growing season would significantly increase the rate of biomass accumulation and thereby enhance the CO~2~ sink of temperate deciduous forests.
+Rather, our findings imply that *the extra CO~2~ sequestered in years with warmer springs[@keeling_increased_1996;@dragoni_evidence_2011;@crabbe_extreme_2016] must be allocated primarily to relatively short-lived C pools and therefore unlikely to have a lasting impact on the forest C balance.*
+Thus, warming spring temperatures are unlikely to increase the woody productivity or strengthen the carbon sink of temperate deciduous forests.
 
 
 \newpage
@@ -168,8 +170,9 @@ They contrast, however, with the expectation *in most models[@zani_increased_202
 
 (*this first paragraph needs to be re-written (very concisely, and focused on the temperate forest C sink and its uncertainty*)
 
-As global atmospheric greenhouse gas levels are rising, and little meaningful policy is being implemented in response, our planet is expected to surpass the 2.5 degree C warming mark that the Paris accord pledged to avoid. The absence of human intervention increases our reliance on natural systems to soften the blow of climate change. Plant life, especially forests, make up a large portion of these natural systems, offering many valuable ecosystem services. For one, they house an astonishing 80% of terrestrial species and are capable of removing the greenhouse gas CO~2~ from the atmosphere and storing it in the trees or soil. Forests sequester about one-third of all anthropogenic CO~2~ and store ~45% of all terrestrial carbon[@bonan_forests_2008]. However, their future under the current era of rapid change is uncertain[@friedlingstein_climatecarbon_2006]. 
-
+As global atmospheric CO~2~ concentrations increase and Earth's temperatures increase, the responses and feedbacks of forests will play an important yet uncertain role in influencing atmospheric CO~2~ and climate change[@bonan_forests_2008; @friedlingstein_climate_2006]. 
+Temperate deciduous forests, including those in eastern North America, *(have been net carbon sinks over the past several decades)*... 
+*[Discuss this sink, mechanisms, uncertainties, ending with the point that one meaningful uncertainty is how the C sink will respond to warming springs]*
 
 **In recent decades, warming temperatures have resulted in widespread phenological changes indicative of earlier arrival of spring[@parmesan_globally_2003] and *often later autumn*[REFS].**
 In temperate deciduous forests, spring leaf-out has been occurring earlier[REFS], as has the beginning of the annual period of net CO~2~ sequestration[REFS].
@@ -339,7 +342,7 @@ Study sites included two temperate forests in the eastern United States, both pa
 Our first study site was the forest dynamics plot located at the Smithsonian Conservation Biology Institute 5 km South of Front Royal, Virginia within the Blue Ridge Mountains (38.8935° N, 78.1454° W; elevation 273–338 m.a.s.l.). 
 The forest here was established in the mid-19th century after conversion from agricultural fields. 
 Dominate canopy species within the 25.6 ha forest plot include tulip poplar (*Liriodendron tulipifera*), oaks (*Quercus spp.*), hickories (*Carya spp.*). 
-The climate is humid temperate, with a mean annual precipitation of 998 mm and temperatures averaging 1° C in January and 24° C in July ([@Helcoski_growing_2019]).  
+The climate is humid temperate, with a mean annual precipitation of 998 mm and temperatures averaging 1° C in January and 24° C in July ([helcoski_growing_2019]).  
 
 The second study site was Harvard Forest (42.5388° N, 72.1755° W, 340-368 m.a.s.l.), located near the central Massachusetts town of Petersham.
 Harvard forest is a secondary forest, having re-established following agricultural use *(time frame)* and signficant hurricane damage in *YEAR*. 
@@ -409,18 +412,18 @@ We defined chronology start year (Table `r table_species`) as the year where sub
 
 ### Climate
 For the dendrometer band analysis, we used climate data from local weather stations. 
-Daily maximum and minimum temperatures ($T_{max}$ and $T_{min}$, respectively) for SCBI were obtained from a meteorological tower adjacent to the SCBI ForestGEO plot, via the ForestGEO Climate Data Portal v1.0 [https://forestgeo.github.io/Climate/; @anderson-teixeira_forestgeoclimate_2020]. 
+Daily maximum and minimum temperatures ($T_{max}$ and $T_{min}$, respectively) for SCBI were obtained from a meteorological tower adjacent to the SCBI ForestGEO plot, via the ForestGEO Climate Data Portal v1.0 [https://forestgeo.github.io/Climate/; @anderson-teixeira_forestgeo_2020]. 
 Daily temperature records for Harvard Forest were obtained from the Harvard Forest weather station (Boose & Gould, 2004; Boose, 2018).
 The R package climpact () was used to plot temperatures for visual inspection. 
 Climpact also identifies readings that were greater than 3 standard deviations away from yearly means. These points were labeled as outliers and removed from the dataset. 
 Gaps in the SCBI meteorological tower data were subsequently filled using temperature readings obtained from a National Center for Environmental Information (NCEI) weather station located in Front Royal, Virginia (https://www.ncdc.noaa.gov/cdo-web/datasets/GHCND/stations/GHCND:USC00443229/detail). 
 (*how were gaps filled for Harvard? Or was the record good?*)
 
-For the tree-ring analysis, we obtained monthly $T_{max}$ and $T_{min}$ data for 1901-2019 from CRU v.4.04 [@harris_version_2020], again via the ForestGEO Climate Data Portal v1.0 [@anderson-teixeira_forestgeoclimate_2020].
+For the tree-ring analysis, we obtained monthly $T_{max}$ and $T_{min}$ data for 1901-2019 from CRU v.4.04 [@harris_version_2020], again via the ForestGEO Climate Data Portal v1.0 [@anderson-teixeira_forestgeo_2020].
 
 ## Determining critical temperature windows
 
-The period where the phenology milestone(s) were most affected by changes in early spring temperature was determined using the R package *climwin* [@van_de_pol_identifying_2016]. 
+The period where the phenology milestone(s) were most affected by changes in early spring temperature was determined using the R package *climwin* [@vandepol_identifying_2016]. 
 This package tests the correlation between one or more climate variables and a biological variable over all consecutive time windows within a specified time-frame, reporting correlation and \$Delta AIC$ of each window. 
 Here, we tested for correlation between temperature ($T_{max}$, $T_{min}$) and $DOY_{25}$ over the time window from January 1 to the mean $DOY_{25}$ for the species group and site (Table `r mean_growth_parameters_table`).
 *The critical time window is determined based on the subset of models that fall within the 95% confidence set.*
