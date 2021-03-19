@@ -98,7 +98,7 @@ pheno_Tsensitivity_caption <- "Figure 2 | Relationship between growth parameters
 observed climwin mean temperature value, the posterior mean of the fitted day of year
 is represented by the solid blue line and 95% credible intervals are represented by bands."
 
-DOYtiming_caption <- "Figure 3 | Day of year where growth milestones were achieved at (a) the Smithsonian Conservation Biology Institute and (b) Harvard Forest. Each line represents a single year of ring-porous (dotted line) or diffuse-porous (solid line) trees at each site. Mean temperature was calculated for each wood-type/site combination over the respective critical $T_{max}$ window, then turned into a ratio and assigned a color on a gradient where the coldest year in the sample is blue and the warmest is red. (WE WILL ADD LEAF PHENOLOGY HERE)"
+DOYtiming_caption <- "Figure 3 | Leaf (a,b) and stem growth (c,d) phenology at the Smithsonian Conservation Biology Institute (a,c) and Harvard Forest (b,d) from 1998 to 2020 (when available). **DRAFT FIGURE-- REAL DATA BUT NEEDS FORMATTING.** Panels (a-b) show leaf phenology... Panels (c-d) show the dates at which stem growth milestones were acheived, on average, for sampled populations of ring-porous and diffuse-porous trees at each site. Mean temperature was calculated for each wood-type/site combination over the respective critical $T_{max}$ window, then turned into a ratio and assigned a color on a gradient where the coldest year in the sample is blue and the warmest is red."
 
 tree_rings_caption <- "Figure 4 | Climate sensitivity of annual growth, as derived from tree-rings, for dominant ring- and diffuse- porous species at the Smithsonian Conservation Biology Institute and Harvard Forest. Shown are Pearson correlations between ring-width index and and monthly Tmax. Species codes are as given in Table 2.(THIS FIGURE WILL PROBABLY BE PROBABLY MODIFIED SIGNFICANTLY TO INCLUDE LOTS MORE SITES.)"
 
@@ -170,7 +170,7 @@ Thus, warming spring temperatures are unlikely to increase the woody productivit
 
 (*this first paragraph needs to be re-written (very concisely, and focused on the temperate forest C sink and its uncertainty*)
 
-As global atmospheric CO~2~ concentrations increase and Earth's temperatures increase, the responses and feedbacks of forests will play an important yet uncertain role in influencing atmospheric CO~2~ and climate change[@bonan_forests_2008; @friedlingstein_climate_2006]. 
+As global atmospheric CO~2~ concentrations increase and Earth's temperatures increase, the responses and feedbacks of forests will play an important yet uncertain role in influencing atmospheric CO~2~ and climate change[@arora_carbon_2020; @friedlingstein_global_2020]. 
 Temperate deciduous forests, including those in eastern North America, *(have been net carbon sinks over the past several decades)*... 
 *[Discuss this sink, mechanisms, uncertainties, ending with the point that one meaningful uncertainty is how the C sink will respond to warming springs]*
 
@@ -244,7 +244,7 @@ knitr::include_graphics("tables_figures/pheno_Tsensitivity_combo_patchwork_AIC.p
 
 ```{r DOYtiming, out.width="100%", echo=FALSE, fig.align="center", fig.cap= DOYtiming_caption}
 # Created in RScripts/additional_figures.R
-knitr::include_graphics("tables_figures/DOYtiming_allyears.png")
+knitr::include_graphics("tables_figures/DOYtiming_stemgrowth+foliage.png")
 ```
 
 For two of the four species group-site combinations (ring-porous at SCBI and diffuse-porous at Harvard Forest), warmer $T_{max}$ during the critical temperature window resulted in increased $L_{PGS}$ (Figs. `r schematic_summary`, `r pheno_Tsensitivity`).
