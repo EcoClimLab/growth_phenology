@@ -25,20 +25,20 @@ climwindows <-
   read.csv("results/Climwin_results/Weekly/SCBI/weekly_climwin_results_SCBI_TMAX.csv") %>%
   filter(wood_type != "other") %>%
   mutate(
-    median_windowopendate = as.Date(median_windowopendate),
-    median_windowclosedate = as.Date(median_windowclosedate),
-    opendoy = yday(median_windowopendate),
-    closedoy = yday(median_windowclosedate)
+    winopen = as.Date(paste(refwoy-winopenwoy, 1, sep="-"), "%U-%u"),
+    winclose = as.Date(paste(refwoy-winclosewoy, 1, sep="-"), "%U-%u"),
+    opendoy = yday(winopen),
+    closedoy = yday(winclose)
   )
 
 climwinmeans_rp <- weatherdata %>%
-  filter(doy %in% c(climwindows[1,11]:climwindows[1,12])) %>%
+  filter(doy %in% c(92:98)) %>% #April 2 - April 8
   group_by(year) %>%
   summarize(climwinmean = mean(cleantmax)) %>%
   mutate(wood_type = "ring-porous")
 
 climwinmeans_dp <- weatherdata %>%
-  filter(doy %in% c(climwindows[4,11]:climwindows[4,12])) %>% #68:135
+  filter(doy %in% c(78:140)) %>% # March 19 - May 20
   group_by(year) %>%
   summarize(climwinmean = mean(cleantmax)) %>%
   mutate(wood_type = "diffuse-porous")
@@ -120,11 +120,13 @@ g
 #Leaf phenology
 leaf_phenology <- read_csv("Data/Leaf phenology/leaf_phenology.csv") %>%
   filter(site == "SCBI")
-
+library(reshape2)
 names(leaf_phenology) <- c("site","year","Greenup", "Mid-greenup", "Peak","Senescence","los","tmp")
 leaf_phenology_melt <- melt(leaf_phenology, id.vars = c("site","year","tmp","los"))
-leaf_phenology_melt <- leaf_phenology_melt[leaf_phenology_melt$year %in% c(2018,2010),]
-scbi_leaf <- ggplot(leaf_phenology_melt, aes(x=yday(value), y = as.character(variable), group = year, color = tmp))+
+leaf_phenology_melt$value <- yday(leaf_phenology_melt$value)
+aggregate(leaf_phenology_melt$value, by = list(leaf_phenology_melt$variable), FUN = mean)
+#leaf_phenology_melt <- leaf_phenology_melt[leaf_phenology_melt$year %in% c(2018,2010),]
+scbi_leaf <- ggplot(leaf_phenology_melt, aes(x=value, y = as.character(variable), group = year, color = tmp))+
   geom_point(size = 3)+
   geom_line(size = 1)+
   theme_bw()+
@@ -185,24 +187,24 @@ weatherdata <-
 #%>%
 # Rename RP flag set by Cam
 #rename(flagrp = flag)
-climwindows <-
-  read.csv("results/Climwin_results/Weekly/Harvard Forest/weekly_climwin_results_HF_TMAX.csv") %>%
-  filter(wood_type != "other") %>%
-  mutate(
-    median_windowopendate = as.Date(median_windowopendate, format = "%Y-%m-%d"),
-    median_windowclosedate = as.Date(median_windowclosedate, format = "%Y-%m-%d"),
-    opendoy = yday(median_windowopendate),
-    closedoy = yday(median_windowclosedate)
-  )
+# climwindows <-
+#   read.csv("results/Climwin_results/Weekly/Harvard Forest/weekly_climwin_results_HF_TMAX.csv") %>%
+#   filter(wood_type != "other") %>%
+#   mutate(
+#     median_windowopendate = as.Date(median_windowopendate, format = "%Y-%m-%d"),
+#     median_windowclosedate = as.Date(median_windowclosedate, format = "%Y-%m-%d"),
+#     opendoy = yday(median_windowopendate),
+#     closedoy = yday(median_windowclosedate)
+#   )
 
 climwinmeans_rp_hf <- weatherdata %>%
-  filter(DOY %in% c(climwindows[4,11]:climwindows[4,12])) %>%
+  filter(DOY %in% c(85:133)) %>% # March 26 - May 13
   group_by(year) %>%
   summarize(climwinmean = mean(airtmax)) %>%
   mutate(wood_type = "ring-porous")
 
 climwinmeans_dp_hf <- weatherdata %>%
-  filter(DOY %in% c(climwindows[1,11]:climwindows[1,12])) %>% #68:135
+  filter(DOY %in% c(78:133)) %>% # March 19 - May 13
   group_by(year) %>%
   summarize(climwinmean = mean(airtmax)) %>%
   mutate(wood_type = "diffuse-porous")
@@ -287,8 +289,10 @@ leaf_phenology <- read_csv("Data/Leaf phenology/leaf_phenology.csv") %>%
 leaf_phenology <- leaf_phenology[-3,]
 names(leaf_phenology) <- c("site","year","Greenup", "Mid-greenup", "Peak","Senescence","los","tmp")
 hf_leaf_phenology_melt <- melt(leaf_phenology, id.vars = c("site","year","tmp","los"))
-hf_leaf_phenology_melt <- hf_leaf_phenology_melt[hf_leaf_phenology_melt$year %in% c(2018,2010),]
-hf_leaf <- ggplot(hf_leaf_phenology_melt, aes(x=yday(value), y = as.character(variable), group = year, color = tmp))+
+hf_leaf_phenology_melt$value <- yday(hf_leaf_phenology_melt$value)
+aggregate(hf_leaf_phenology_melt$value, by = list(hf_leaf_phenology_melt$variable), FUN = mean)
+#hf_leaf_phenology_melt <- hf_leaf_phenology_melt[hf_leaf_phenology_melt$year %in% c(2018,2010),]
+hf_leaf <- ggplot(hf_leaf_phenology_melt, aes(x=value, y = as.character(variable), group = year, color = tmp))+
   geom_point(size = 3)+
   geom_line(size = 1)+
   theme_bw()+
@@ -354,44 +358,131 @@ ggsave("doc/manuscript/tables_figures/HF_leaf.png", plot = hf_leaf, width = 15, 
 
 #ALL YEARS PLOT
 library(gridExtra)
-png(filename = "doc/manuscript/tables_figures/DOYtiming_allyears.png", width=10, height=10,
+library(patchwork)
+# png(filename = "doc/manuscript/tables_figures/DOYtiming_allyears.png", width=14, height=14,
+#     pointsize=12, bg="transparent", units="in", res=600,
+#     restoreConsole=FALSE)
+#
+# grid.arrange(
+#
+#
+#   ggplot(leaf_phenology_melt, aes(x=value, y = as.character(variable), group = year, color = tmp))+
+#     geom_point(size = 3)+
+#     geom_line(size = 1)+
+#     xlim(80,240)+
+#     theme_bw()+
+#     theme(legend.position = "none",
+#           axis.text.y = element_text(angle = 90, hjust = 0.5))+
+#     labs(x = "Day of Year", y = "Leaf Stage", title = "(a) SCBI Leaf Phenology", color = "Temp Ratio (1= Warmest pre-season)", linetype = "")+
+#     scale_colour_gradient(low = "blue", high = "red"),
+#
+#   ggplot(hf_leaf_phenology_melt, aes(x=value, y = as.character(variable), group = year, color = tmp))+
+#     geom_point(size = 3)+
+#     geom_line(size = 1)+
+#     xlim(95,240)+
+#     theme_bw()+
+#     theme(legend.position = "none",
+#           axis.text.y = element_blank())+
+#     labs(x = "Day of Year", y = "", title = "(b) Harvard Forest Leaf Phenology", color = "Temp Ratio (1= Warmest pre-season)", linetype = "")+
+#     scale_colour_gradient(low = "blue", high = "red"),
+#
+#   ggplot(aggregates_scbi, aes(x=x, y = as.character(Group.2), group = interaction(Group.1, year), color = stanT, linetype = Group.1))+
+#     geom_point(size = 3)+
+#     geom_line(size = 1)+
+#     theme_bw()+
+#     theme(legend.position = c(.87,.5),
+#           axis.text.x = element_blank())+
+#     xlim(80,240)+
+#     labs(x = "Day of Year", y = "Percent of Total Annual Growth", title = "(c) SCBI", color = "Temperature Ratio", linetype = "Wood Type")+
+#     #scale_colour_manual(values = c("red", "blue", "purple"))
+#     scale_colour_gradient(low = "blue", high = "red"),
+#
+#   ggplot(aggregates_hf, aes(x=x, y = as.character(Group.2), group = interaction(Group.1, year), color = stanT, linetype = Group.1))+
+#     geom_point(size = 3)+
+#     geom_line(size = 1)+
+#     theme_bw()+
+#     theme(legend.position = "none",
+#           axis.text.y = element_blank(),
+#           axis.text.x = element_blank())+
+#     xlim(95,240)+
+#     labs(x = "Day of Year", y = "", title = "(d) Harvard Forest", color = "Temp", linetype = "")+
+#     scale_colour_gradient(low = "blue", high = "red"),
+#
+#   as.table = TRUE, nrow=2, ncol=2) ###as.table specifies order if multiple rows
+#
+# dev.off()
+
+
+
+
+leaf_phenology_melt$variable <- ifelse(leaf_phenology_melt$variable == "Greenup", "G",
+                                       ifelse(leaf_phenology_melt$variable == "Mid-greenup", "M",
+                                              ifelse(leaf_phenology_melt$variable == "Peak", "P",
+                                                     ifelse(leaf_phenology_melt$variable == "Senescence", "S",NA))))
+#Patchwork try
+p1 <- ggplot(leaf_phenology_melt, aes(x=value, y = as.character(variable), group = year, color = tmp))+
+  geom_point(size = 3)+
+  geom_line(size = 1)+
+  xlim(80,240)+
+  annotate("text", x=85, y=4.35, label= "(a)",size = 10)+
+  theme_bw()+
+  theme(legend.position = "none",
+        #axis.text.y = element_text(angle = 90, hjust = 0.5),
+        axis.text.x = element_blank(),
+        text = element_text(size = 20),
+        plot.title = element_text(hjust = 0.5))+
+  labs(x = "", y = "Leaf Stage", title = "SCBI", color = "Temp Ratio (1= Warmest pre-season)", linetype = "")+
+  scale_colour_gradient(low = "blue", high = "red")
+
+p2 <- ggplot(hf_leaf_phenology_melt, aes(x=value, y = as.character(variable), group = year, color = tmp))+
+  geom_point(size = 3)+
+  geom_line(size = 1)+
+  xlim(95,240)+
+  annotate("text", x=100, y=4.35, label= "(b)",size = 10)+
+  theme_bw()+
+  theme(legend.position = "none",
+        axis.text.y = element_blank(),
+        axis.text.x = element_blank(),
+        text = element_text(size = 20),
+        plot.title = element_text(hjust = 0.5))+
+  labs(x = "", y = "", title = "(b) Harvard Forest", color = "Temp Ratio (1= Warmest pre-season)", linetype = "")+
+  scale_colour_gradient(low = "blue", high = "red")
+
+p3 <- ggplot(aggregates_scbi, aes(x=x, y = Group.2, group = interaction(Group.1, year), color = stanT, linetype = Group.1))+
+  geom_point(size = 3)+
+  geom_line(size = 1)+
+  theme_bw()+
+  annotate("text", x=85, y=75, label= "(c)",size = 10)+
+  theme(legend.position = c(.85,.5),
+        text = element_text(size = 20),
+        legend.text=element_text(size=10),
+        legend.title=element_text(size=10))+
+  guides(shape = guide_legend(override.aes = list(size = 1)),
+         color = guide_legend(override.aes = list(size = 1)))+
+  xlim(80,240)+
+  ylim(20,80)+
+  labs(x = "Day of Year", y = "Stem Growth (% of anuual total)", title = "", color = "Temperature Ratio", linetype = "Wood Type")+
+  #scale_colour_manual(values = c("red", "blue", "purple"))
+  scale_colour_gradient(low = "blue", high = "red",breaks=c(0,0.5,1),labels=c("0.0 Coldest Year","0.5 Average Year","1.0 Hottest Year"))
+
+p4 <- ggplot(aggregates_hf, aes(x=x, y = Group.2, group = interaction(Group.1, year), color = stanT, linetype = Group.1))+
+  geom_point(size = 3)+
+  geom_line(size = 1)+
+  annotate("text", x=100, y=75, label= "(d)", size = 10)+
+  theme_bw()+
+  theme(legend.position = "none",
+        axis.text.y = element_blank(),
+        text = element_text(size = 20))+
+  xlim(95,240)+
+  ylim(20,80)+
+  labs(x = "Day of Year", y = "", title = "", color = "Temp", linetype = "")+
+  scale_colour_gradient(low = "blue", high = "red")
+
+plotall <- p1 + p2 + p3 + p4 +
+  plot_layout(heights = c(1,2))
+
+png(filename = "doc/manuscript/tables_figures/DOYtiming_allyears.png", width=12, height=10,
     pointsize=12, bg="transparent", units="in", res=600,
     restoreConsole=FALSE)
-
-grid.arrange(
-
-  ggplot(aggregates_scbi, aes(x=x, y = as.character(Group.2), group = interaction(Group.1, year), color = stanT, linetype = Group.1))+
-    geom_point(size = 3)+
-    geom_line(size = 1)+
-    theme_bw()+
-    theme(legend.position = "top")+
-    labs(x = "Day of Year", y = "Percent of Total Annual Growth", title = "(a) SCBI", color = "Temperature Ratio", linetype = "Wood Type")+
-    #scale_colour_manual(values = c("red", "blue", "purple"))
-    scale_colour_gradient(low = "blue", high = "red"),
-
-  ggplot(aggregates_hf, aes(x=x, y = as.character(Group.2), group = interaction(Group.1, year), color = stanT, linetype = Group.1))+
-    geom_point(size = 3)+
-    geom_line(size = 1)+
-    theme_bw()+
-    theme(legend.position = "none")+
-    labs(x = "Day of Year", y = "Percent of Total Annual Growth", title = "(b) Harvard Forest", color = "Temp", linetype = "")+
-    scale_colour_gradient(low = "blue", high = "red"),
-
-  ggplot(leaf_phenology_melt, aes(x=yday(value), y = as.character(variable), group = year, color = tmp))+
-    geom_point(size = 3)+
-    geom_line(size = 1)+
-    theme(legend.position = "none")+
-    labs(x = "Day of Year", y = "Leaf Stage", title = "(c) SCBI Leaf Phenology", color = "Temp Ratio (1= Warmest pre-season)", linetype = "")+
-    scale_colour_gradient(low = "blue", high = "red"),
-
-  ggplot(hf_leaf_phenology_melt, aes(x=yday(value), y = as.character(variable), group = year, color = tmp))+
-    geom_point(size = 3)+
-    geom_line(size = 1)+
-    theme(legend.position = "none")+
-    labs(x = "Day of Year", y = "Leaf Stage", title = "(d) Harvard Forest Leaf Phenology", color = "Temp Ratio (1= Warmest pre-season)", linetype = "")+
-    scale_colour_gradient(low = "blue", high = "red"),
-
-
-  as.table = TRUE, nrow=2, ncol=2) ###as.table specifies order if multiple rows
-
+plotall
 dev.off()
