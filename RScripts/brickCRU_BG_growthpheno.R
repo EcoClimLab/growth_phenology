@@ -48,7 +48,7 @@ as.data.frame(points)
 
 ###   --- Set and check the working directory ----------------------------------------------------------- ####
 
-# BG: See instuctions doc to download CRU 
+# BG: See instuctions doc to download CRU
 #v4.04 version - 2019 data - updated in 2020 by BG
 setwd("~/GitHub/growth_phenology/climate data/CRU") # replace with your local path name
 
@@ -66,15 +66,15 @@ ncfilenames <- gsub(".nc.gz", ".nc", gzfilenames)
 ncfilenames <- gsub("gzfiles", "ncfiles", ncfilenames)
 
 # unzip files using gunzip in package 'R.utils'
-# batch gunzip not working - so I've been doing it one file at a time 
+# batch gunzip not working - so I've been doing it one file at a time
 # to gunzip 1 file takes ~3 mins
 
-for(i in 1:length(gzfilenames)) { # BG needs to post instructions file on github repo as well 
+for(i in 1:length(gzfilenames)) { # BG needs to post instructions file on github repo as well
   print(paste("unzipping", gzfilenames[i], "into", ncfilenames[i]))
   gunzip(gzfilenames[i], ncfilenames[i], remove=FALSE)
 }
 
-# sometimes you may want to unzip one or two files that are of type .gz 
+# sometimes you may want to unzip one or two files that are of type .gz
 gunzip("S:/Global Maps Data/CRU/v4.04/gzfiles/cru_ts4.04.1901.2019.wet.dat.gz")
 detach("package:R.utils", unload=TRUE)
 
@@ -96,23 +96,23 @@ detach("package:R.utils", unload=TRUE)
 
 
 ##### ---------- brick function to extract data at the coordinate points -----------------------####
-# Extract data from a single .nc file 
+# Extract data from a single .nc file
 setwd('~/GitHub/growth_phenology/climate data/CRU') # replace with your local path name
 
 v <- "tmx"
 for(v in c("tmn", "tmx")) {
   print(paste("extracting", v, "data for ForestGEo sites"))
   r <- brick(paste0("cru_ts4.04.1901.2019.", v, ".dat.nc"), varname = v)   #maybe ~3mins
-  
+
   print("extracting points")
   x <- raster::extract(r, points) #maybe ~15 mins # ncol=2
   head(x)
   x <- cbind(sites.sitename = gsub(" ", "_", points@data$Location), x)
-  write.csv(x, file = paste0(v, ".1901.2019-Other_sites-3-01.csv"), row.names = F)
+  write.csv(x, file = paste0(v, ".1901.2019-Other_sites-3-11.csv"), row.names = F)
 }
 
 ##### let's see if we can extract for the single file that isn't .dat.nc using below script!
-# cru_ts4.04.1901.2019.wet.dat 
+# cru_ts4.04.1901.2019.wet.dat
 
 
 #### Extractintg Individual climate data
@@ -133,20 +133,20 @@ write.csv(x, "wet.1901.2019-ForestGE_sites-6-03.csv")
 # pre.1901.2014 <- extract(r,points,ncol=2)
 # hist(pre.1901.2014)
 # write.csv(pre.1901.2014, "pre.1901.2014-ForestGEO-6-17.csv")
-# 
-# 
+#
+#
 # #### ----- Daily Mean T data ----- ####
 # r <- brick("R:/Global Maps Data/CRU/v3.23/ncfiles/cru_ts3.23.1901.2014.tmp.dat.nc", varname="tmp") #takes 1 min
 # tmp.1901.2014 <- extract(r,points,ncol=2) #11.52am-11.56am
 # write.csv(tmp.1901.2014, "tmp.1901.2014-ForestGEO-6-17.csv")
-# 
-# 
+#
+#
 # #### ----- Min T data ----- ####
 # r <- brick("R:/Global Maps Data/CRU/v3.23/ncfiles/cru_ts3.23.1901.2014.tmn.dat.nc", varname="tmn")
 # tmn.1901.2014 <- extract(r,points,ncol=2)
 # write.csv(tmn.1901.2014, "tmn.1901.2014-ForestGEO-6-17.csv")
-# 
-# 
+#
+#
 # #### ----- Max T data ----- ####
 # r <- brick("ncfiles/cru_ts3.23.1901.2014.tmx.dat.nc", varname="tmx")
 # tmx.1901.2014 <- extract(r,points,ncol=2)
@@ -157,22 +157,22 @@ write.csv(x, "wet.1901.2019-ForestGE_sites-6-03.csv")
 ######## ---------------- Average of monthly temps across all years ------------------ ####
 # library(dplyr)
 # library(tidyr)
-# 
+#
 # dpet <- read.csv("pet.1901.2016-ForestGEO_sites-8-18.csv")
 # names(dpet)
-# 
+#
 # #Transposing dataframe
-# dpet2 <- dpet %>% gather(key = date, value = dailypet, X1901.01.16:X2016.12.16) 
-# 
+# dpet2 <- dpet %>% gather(key = date, value = dailypet, X1901.01.16:X2016.12.16)
+#
 # #Separating date in one column into three to isolate out the months
 # dpet3 <- dpet2 %>% separate(date, c("YYYY", "MM", "DD"), sep = "[.]")
 # str(dpet3)
 # dpet3$MM <- as.numeric(dpet3$MM)
-# 
+#
 # dpet4 <- dpet3 %>% group_by(sites.sitename, MM) %>% summarize(meanPET = mean(dailypet))
-# 
+#
 # dpet5 <- dpet4 %>% spread(MM, meanPET) #mean PET by month
 # dpet5$coldestmonthT <- apply(dpet5[ , 2:13], 1, min)
 # dpet5$warmestmonthT <- apply(dpet5[ , 2:13], 1, max)
-# 
+#
 # write.csv(dpet5, "ForestGEO-CRU-monthlypet.csv")

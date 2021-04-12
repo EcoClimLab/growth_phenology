@@ -94,21 +94,21 @@ weatherdata <-
 
 # 2. Get climwin data
 #TMAX
-climwindows <-
-  read.csv("results/Climwin_results/Weekly/SCBI/weekly_climwin_results_SCBI_TMAX.csv") %>%
-  filter(wood_type != "other") %>%
-  mutate(
-    #median_windowopendate = as.Date(median_windowopendate),
-    #median_windowclosedate = as.Date(median_windowclosedate),
-    #opendoy = yday(median_windowopendate),
-    #closedoy = yday(median_windowclosedate)
-    #winopen = as.Date(refwoy * 7 - winopenwoy * 7, origin = paste0("2011-01-01")),
-    #winclose = as.Date(refwoy * 7 - winclosewoy * 7, origin = paste0("2011-01-01")),
-    winopen = as.Date(paste(refwoy-winopenwoy, 1, sep="-"), "%U-%u"),
-    winclose = as.Date(paste(refwoy-winclosewoy, 1, sep="-"), "%U-%u"),
-    opendoy = yday(winopen),
-    closedoy = yday(winclose)
-  )
+# climwindows <-
+#   read.csv("results/Climwin_results/Weekly/SCBI/weekly_climwin_results_SCBI_TMAX.csv") %>%
+#   filter(wood_type != "other") %>%
+#   mutate(
+#     #median_windowopendate = as.Date(median_windowopendate),
+#     #median_windowclosedate = as.Date(median_windowclosedate),
+#     #opendoy = yday(median_windowopendate),
+#     #closedoy = yday(median_windowclosedate)
+#     #winopen = as.Date(refwoy * 7 - winopenwoy * 7, origin = paste0("2011-01-01")),
+#     #winclose = as.Date(refwoy * 7 - winclosewoy * 7, origin = paste0("2011-01-01")),
+#     winopen = as.Date(paste(refwoy-winopenwoy, 1, sep="-"), "%U-%u"),
+#     winclose = as.Date(paste(refwoy-winclosewoy, 1, sep="-"), "%U-%u"),
+#     opendoy = yday(winopen),
+#     closedoy = yday(winclose)
+#   )
 
 #correct <- data.frame(1,1)
 #names(correct) <- c("min","max")
@@ -655,21 +655,21 @@ weatherdata_hf <-
 #  filter(month == 3) %>%
 #  group_by(year) %>%
 #  summarize(marchmean = mean(airtmax))
-climwindows_hf <-
-  read.csv("results/Climwin_results/Weekly/Harvard Forest/weekly_climwin_results_HF_TMAX.csv") %>%
-  filter(wood_type != "other") %>%
-  mutate(
-    #median_windowopendate = as.Date(median_windowopendate, format = "%Y-%m-%d"),
-    #median_windowclosedate = as.Date(median_windowclosedate, format = "%Y-%m-%d"),
-    #opendoy = yday(median_windowopendate),
-    #closedoy = yday(median_windowclosedate)
-    #winopen = as.Date(refwoy * 7 - winopenwoy * 7, origin = paste0("2011-01-01")),
-    #winclose = as.Date(refwoy * 7 - winclosewoy * 7, origin = paste0("2011-01-01")),
-    winopen = as.Date(paste(refwoy-winopenwoy, 1, sep="-"), "%U-%u"),
-    winclose = as.Date(paste(refwoy-winclosewoy, 1, sep="-"), "%U-%u"),
-    opendoy = yday(winopen),
-    closedoy = yday(winclose)+4
-  )
+# climwindows_hf <-
+#   read.csv("results/Climwin_results/Weekly/Harvard Forest/weekly_climwin_results_HF_TMAX.csv") %>%
+#   filter(wood_type != "other") %>%
+#   mutate(
+#     #median_windowopendate = as.Date(median_windowopendate, format = "%Y-%m-%d"),
+#     #median_windowclosedate = as.Date(median_windowclosedate, format = "%Y-%m-%d"),
+#     #opendoy = yday(median_windowopendate),
+#     #closedoy = yday(median_windowclosedate)
+#     #winopen = as.Date(refwoy * 7 - winopenwoy * 7, origin = paste0("2011-01-01")),
+#     #winclose = as.Date(refwoy * 7 - winclosewoy * 7, origin = paste0("2011-01-01")),
+#     winopen = as.Date(paste(refwoy-winopenwoy, 1, sep="-"), "%U-%u"),
+#     winclose = as.Date(paste(refwoy-winclosewoy, 1, sep="-"), "%U-%u"),
+#     opendoy = yday(winopen),
+#     closedoy = yday(winclose)+4
+#   )
 
 
 #correct <- data.frame(1,1)

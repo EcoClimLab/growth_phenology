@@ -1,6 +1,7 @@
 library(readr)
 library(lubridate)
 library(tidyverse)
+library(ggpmisc)
 
 pheno <- read_csv("Data/Leaf phenology/scbiPhen.csv")
 pheno_hf <- subset(pheno, pointid == "HARV")
@@ -63,6 +64,7 @@ pheno_events$senescence <- as.Date(pheno_events$senescence, origin = "1970-01-01
 
 write.csv(pheno_events, file = "Data/Leaf phenology/leaf_phenology.csv", row.names = FALSE)
 
+pheno_events <- read.csv("Data/Leaf phenology/leaf_phenology.csv")
 pheno_events <- pheno_events[-21,]
 #LOS
 ggplot(pheno_events, aes(x = tmp, y = los, group = site, color = site))+geom_point()+geom_smooth(method = "lm")+
@@ -72,14 +74,12 @@ ggplot(pheno_events, aes(x = tmp, y = los, group = site, color = site))+geom_poi
                   aes(label = paste("P-value = ", signif(..p.value.., digits = 4), sep = "")),
                   size = 3)
 pheno_events2 <- pheno_events[,-7]
-
+library(ggplot2)
 library(reshape2)
 meltpheno <- melt(pheno_events2, id.vars = c("site","year","tmp"))
 meltpheno$value <- as.Date(meltpheno$value, origin = "1970-01-01")
 
 ggplot(pheno_events, aes(x=tmp,y=yday(greenup),color=site))+geom_point()
-library(ggpmisc)
-?
 
 lpp <- ggplot(meltpheno, aes(x=tmp,y=yday(value),color=site, shape = variable))+
   geom_point()+
