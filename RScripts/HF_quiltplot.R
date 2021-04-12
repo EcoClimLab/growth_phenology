@@ -48,7 +48,7 @@ end <- 10 # August of current year
 # something like this should do
 for(clim_v in climate_variables) {
   print(clim_v)
-             x <- read.csv(paste0("https://raw.githubusercontent.com/forestgeo/Climate/master/Climate_Data/CRU/CRU_v4_04/", clim_v,  ".1901.2019-ForestGEO_sites-6-03.csv"))
+  x <- read.csv(paste0("https://raw.githubusercontent.com/forestgeo/Climate/master/Climate_Data/CRU/CRU_v4_04/", clim_v,  ".1901.2019-ForestGEO_sites-6-03.csv"))
 
 
   ### subset for the sites we care about
@@ -63,7 +63,7 @@ for(clim_v in climate_variables) {
   x_long$Date <- gsub("X", "", x_long$Date)
   x_long$Date <- as.Date(x_long$Date , format = "%Y.%m.%d")#changed format to work with Harvard data
 
-
+#write.csv(x_long, file = "Harvard_forest_cru.csv", row.names = FALSE)
   ### combine all variables in one
   if(clim_v == climate_variables[1]) all_Clim <- x_long[, c(1:3)]
   else all_Clim <- merge(all_Clim, x_long[, c(1:3)], by = c("sites.sitename", "Date"), all = T)
@@ -154,7 +154,7 @@ for(f in species) {
 all.dcc.output$variable <- substr(paste(row.names(all.dcc.output)), 1, 3)#get variable from row name
 all.dcc.output$month <- substr(paste(row.names(all.dcc.output)), 5, 12)#get month from row name
 
-write.csv(all.dcc.output, file = "results/Harvard_Forest_core_corr.csv", row.names = FALSE)
+write.csv(all.dcc.output, file = "all.dcc.output_hf.csv", row.names = FALSE)
 #} # for(f in species)
 
 #############################################
