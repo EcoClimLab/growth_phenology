@@ -461,7 +461,7 @@ p3 <- ggplot(aggregates_scbi, aes(x=x, y = Group.2, group = interaction(Group.1,
          color = guide_legend(override.aes = list(size = 1)))+
   xlim(80,240)+
   ylim(20,80)+
-  labs(x = "Day of Year", y = "Stem Growth (% of anuual total)", title = "", color = "Temperature Ratio", linetype = "Wood Type")+
+  labs(x = "Day of Year", y = "Stem Growth (% of annual total)", title = "", color = "Temperature Ratio", linetype = "Wood Type")+
   #scale_colour_manual(values = c("red", "blue", "purple"))
   scale_colour_gradient(low = "blue", high = "red",breaks=c(0,0.5,1),labels=c("0.0 Coldest Year","0.5 Average Year","1.0 Hottest Year"))
 
