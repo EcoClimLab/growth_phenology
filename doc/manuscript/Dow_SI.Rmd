@@ -36,6 +36,7 @@ path_to_results <- paste0(dirname(dirname(getwd())), "/results/") #I was trying 
 table_species="S1"  
 sample_size_by_year= "S2"
 mean_growth_parameters_table="S3" 
+chronologies_table="S4" 
 
 #SI table captions
 sample_size_by_year_caption <- "Table S1. Sample size by year "
@@ -121,6 +122,8 @@ add_header_above(c(" ",  "SCBI" = 2, "Harvard Forest"=2 )) %>%
 kable_styling(latex_options = c("scale_down", "hold_position"), protect_latex = T) 
 ```
 
+\newpage
+# (placeholder for Table S4-- chronologies table.)
 
 \newpage
 

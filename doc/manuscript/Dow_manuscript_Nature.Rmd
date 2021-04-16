@@ -31,7 +31,7 @@ Ryan Helcoski^1^
 
 Valentine Herrmann^1^
 
-*Grant Harley (ASSUMING WE USE SMOKIES TREE RING RECORDS)*
+*Grant Harley*
 
 Justin Maxwell
 
@@ -100,13 +100,14 @@ is represented by the solid blue line and 95% credible intervals are represented
 
 DOYtiming_caption <- "Figure 3 | Leaf (a,b) and stem growth (c,d) phenology at the Smithsonian Conservation Biology Institute (a,c) and Harvard Forest (b,d) from 1998 to 2020 (when available). Panels (a-b) show leaf phenology... Panels (c-d) show the dates at which stem growth milestones were acheived, on average, for sampled populations of ring-porous and diffuse-porous trees at each site. Mean temperature was calculated for each wood-type/site combination over the respective critical $T_{max}$ window, then turned into a ratio and assigned a color on a gradient where the coldest year in the sample is blue and the warmest is red."
 
-tree_rings_caption <- "Figure 4 | Climate sensitivity of annual growth, as derived from tree-rings, for dominant ring- and diffuse- porous species at the Smithsonian Conservation Biology Institute and Harvard Forest. Shown are Pearson correlations between ring-width index and and monthly Tmax. Species codes are as given in Table 2.(THIS FIGURE WILL PROBABLY BE PROBABLY MODIFIED SIGNFICANTLY TO INCLUDE LOTS MORE SITES.)"
+tree_rings_caption <- "Figure 4 | Sensitivity of annual growth, as derived from tree-rings, to monthly maximum temperatures, for ## chronologies from ## sites across eastern North America. Chronologies are grouped by xylem porosity and ordered by mean April T_max. Chronology details are given in Table S4. (NOTE: Figure still needs some work. See [GitHub Issue #49](https://github.com/EcoClimLab/growth_phenology/issues/49).)"
 
 # SUPPLEMENTARY INFO (this chunk must be repeated in Dow_SI.Rmd)
 ##SI table numbers
 table_species="S1"  
 sample_size_by_year= "S2"
 mean_growth_parameters_table="S3" 
+chronologies_table="S4" 
 
 #SI table captions
 sample_size_by_year_caption <- "Table S1. Sample size by year "
@@ -272,7 +273,7 @@ Starting in May at SCBI, significant correlations to $T_{max}$ were common, occu
 At Harvard Forest, there was only one statistically significant negative correlation to post-May $T_{max}$ (*Quercus rubra* in June). 
 
 ```{r tree_rings, out.width="100%", echo=FALSE, fig.align="center", fig.cap= tree_rings_caption}
-knitr::include_graphics("tables_figures/tree_cores_tmax.tif")
+knitr::include_graphics("tables_figures/tree_rings_tmax.png")
 ```
 
 Patterns in $T_{min}$ were fairly similar to those of $T_{max}$, but weaker and more stochastic, with more (non-significant) correlations going in opposite directions (Fig. `r tree_rings_TMIN`). 
