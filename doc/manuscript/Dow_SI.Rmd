@@ -119,6 +119,9 @@ mean_growth_parameters <- read.csv("tables_figures/mean_growth_parameters.csv", 
 kable(mean_growth_parameters, caption = "Summary of parameters describing the phenology and rate of growth for ring- and diffuse- porous species at SCBI and Harvard Forest. ",  format = "latex", booktabs = TRUE,  escape = F) %>%
 add_header_above(c(" ",  "SCBI" = 2, "Harvard Forest"=2 )) %>%
     column_spec(1, width = "4cm") %>%
+     pack_rows("Stem Growth", 1, 8, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
+    pack_rows("Leaf Phenology (ecosystem level)", 9, 12, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
+    #add_indent(9:12)
 kable_styling(latex_options = c("scale_down", "hold_position"), protect_latex = T) 
 ```
 
