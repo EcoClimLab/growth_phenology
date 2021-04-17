@@ -96,9 +96,9 @@ schematic_summary_caption <- "Figure 1 | Summary of tree growth changes under wa
 
 pheno_Tsensitivity_caption <- "Figure 2 | Relationship between growth parameters and climwin mean temperatures. For each 
 observed climwin mean temperature value, the posterior mean of the fitted day of year
-is represented by the solid blue line and 95% credible intervals are represented by bands."
+is represented by the solid blue line and 95% credible intervals are represented by bands. (**SHOULD WE SHOW ONLY THE DOY TRENDS (top row), GIVEN LACK OF SIGNIFICANT TRENDS IN THE OTHERS AND BECAUSE WE NEED TO KEEP FIGURES COMPACT?**)"
 
-DOYtiming_caption <- "Figure 3 | Leaf (a,b) and stem growth (c,d) phenology at the Smithsonian Conservation Biology Institute (a,c) and Harvard Forest (b,d) from 1998 to 2020 (when available). Panels (a-b) show leaf phenology... Panels (c-d) show the dates at which stem growth milestones were acheived, on average, for sampled populations of ring-porous and diffuse-porous trees at each site. Mean temperature was calculated for each wood-type/site combination over the respective critical $T_{max}$ window, then turned into a ratio and assigned a color on a gradient where the coldest year in the sample is blue and the warmest is red."
+DOYtiming_caption <- "Figure 3 | Leaf (a,b) and stem growth (c,d) phenology at the Smithsonian Conservation Biology Institute (a,c) and Harvard Forest (b,d) from 1998 to 2020 (when available). Panels (a-b) show leaf phenology... Panels (c-d) show the dates at which stem growth milestones were acheived, on average, for sampled populations of ring-porous and diffuse-porous trees at each site. Mean temperature was calculated for each wood-type/site combination over the respective critical $T_{max}$ window, then turned into a ratio and assigned a color on a gradient where the coldest year in the sample is blue and the warmest is red. (**I THINK WE SHOULD COMBINE LEAF AND STEM PHENOLOGY ON A SINGLE PLOT WITH SEPARATE Y-AXES** See [GitHub Issue #50](https://github.com/EcoClimLab/growth_phenology/issues/50). )"
 
 tree_rings_caption <- "Figure 4 | Sensitivity of annual growth, as derived from tree-rings, to monthly maximum temperatures, for ## chronologies from ## sites across eastern North America. Chronologies are grouped by xylem porosity and ordered by mean April T_max. Chronology details are given in Table S4. (NOTE: Figure still needs some work. See [GitHub Issue #49](https://github.com/EcoClimLab/growth_phenology/issues/49).)"
 
@@ -136,8 +136,11 @@ tree_rings_TMIN_short_caption <- "Climate sensitivity of annual growth, as deriv
 species_table <- read.csv(file = "tables_figures/species_table.csv")
 n_dendro_trees <- sum(na.omit(species_table[, "n.trees"]))
 n_tree_years <- sum(na.omit(species_table[, "n.tree.years"]))
-n_cores <- sum(na.omit(species_table[, "n.cores"]))
-
+n_cores_focal_sites <- sum(na.omit(species_table[, "n.cores"]))
+n_chronologies <- NA
+n_cores_sites <- NA
+n_chronologies_SCBI <- NA
+n_chronologies_HF <- NA
 ```
 
 
@@ -157,7 +160,7 @@ n_cores <- sum(na.omit(species_table[, "n.cores"]))
 As the climate changes, warmer spring temperatures are causing earlier leaf-out[REFS] and commencement of net carbon dioxide (CO~2~) sequestration[REFS] in temperate deciduous forests, resulting in a tendency towards increased growing season length[@menzel_growing_1999;@menzel_european_2006;@ibanez_forecasting_2010;@jeong_phenology_2011] and annual CO~2~ sequestration[@keeling_increased_1996;@dragoni_evidence_2011;@crabbe_extreme_2016].
 However, little is known about how spring temperatures affect tree stem growth, which consumes only a modest portion of the carbon fixed annually[@anderson-teixeira_carbon_2021] but sequesters that carbon in wood, which has a long residence time in the ecosystem [@xue_global_2017;@russell_residence_2014] or as wood products[@profft_forest_2009].
 Here, we show that in two temperate deciduous forests, warmer maximum spring temperatures consistently shifted woody growth milestones earlier but had mixed, weak effects on peak growing season length, maximum daily growth rates, and annual growth.
-The latter finding is confirmed on the centennial scale by **#** tree-ring chronologies from **#** forests across eastern North America, which show that annual growth is by far more sensitive to temperatures during the peak growing season than in the spring.
+The latter finding is confirmed on the centennial scale by `r n_chronologies` tree-ring chronologies from `r n_cores_sites` forests across eastern North America, which show that annual growth is by far more sensitive to temperatures during the peak growing season than in the spring.
 These findings align with eddy-covariance records showing that annual CO~2~ sequestration is more strongly linked to conditions in the peak growing season than to growing season length[@fu_maximum_2019], with *previous* observations that warm springs result in earlier leaf senescence[@zohner_ongoing_2019; @zani_increased_2020], and with evidence that forest CO~2~ sequestration is sink-limited[@zani_increased_2020].
 They contrast, however, with the expectation *in most models[@zani_increased_2020]* that an earlier start to growing season would significantly increase the rate of biomass accumulation and thereby enhance the CO~2~ sink of temperate deciduous forests.
 Rather, our findings imply that *the extra CO~2~ sequestered in years with warmer springs[@keeling_increased_1996;@dragoni_evidence_2011;@crabbe_extreme_2016] must be allocated primarily to relatively short-lived C pools and therefore unlikely to have a lasting impact on the forest C balance.*
@@ -171,7 +174,7 @@ Thus, warming spring temperatures are unlikely to increase the woody productivit
 
 (*this first paragraph needs to be re-written (very concisely, and focused on the temperate forest C sink and its uncertainty*)
 
-As global atmospheric CO~2~ concentrations increase and Earth's temperatures increase, the responses and feedbacks of forests will play an important yet uncertain role in influencing atmospheric CO~2~ and climate change[@arora_carbon_2020; @friedlingstein_global_2020]. 
+As Earth's atmospheric CO~2~ concentrations and temperatures increase, the responses and feedbacks of forests will play an important yet uncertain role in influencing atmospheric CO~2~ and climate change[@arora_carbon_2020; @friedlingstein_global_2020]. 
 Temperate deciduous forests, including those in eastern North America, *(have been net carbon sinks over the past several decades)*... 
 *[Discuss this sink, mechanisms, uncertainties, ending with the point that one meaningful uncertainty is how the C sink will respond to warming springs]*
 
@@ -193,14 +196,15 @@ For example, some regions have seen earlier leaf out in deciduous trees, which i
 However, recent evidence that leaf senescence is induced when the seasonal carbon-sink capacities of trees are reached suggests that warmer spring temperatures and earlier leaf-out could advance autumn senescence and *will not necessarily lead to drastically increased C sequestration*[@zani_increased_2020]. 
 
 **We know very little about how the longest-lived component of fixed carbon, the woody growth of trees, is responding to warming spring temperatures.** 
-In fact, we know little about the stem-growth phenology of temperate deciduous species [but see Ref. D'Orangeville]. (*Here, we need to review the literature to make sure we're not missing anything. We also want to set up the fact that our dataset is unique/justify just 2 sites*). 
-Tree-ring records give some hints that warmer springs may increase annual growth (e.g., Refs.[@helcoski_growing_2019] [MORE]), but rely purely on correlations of annual growth to monthly temperatures and can tell us nothing about the timing of that growth. 
+In fact, we know little about the stem-growth phenology of temperate deciduous species, with multi-year records of growth phenology having been published for only one site [D'Orangeville]. *(We need to make sure we're not missing anything.)* 
+Tree-ring records, which can be used to examine correlations of annual growth to monthly temperatures but not to understand growth phenology, reveal that growth of temperate deciduous trees tends to be most sensitive to summer temperatures (REFS), with some hints that warmer springs may have a modest positive effect on growth (e.g., Refs.[@helcoski_growing_2019] [MORE]).
+Thus, tree-ring records do not necessarily corroborate findings that warming spring temperatures lengthen the growing season and increase annual CO~2~ sequestration. 
+Characterizing phenological responses of stem growth to warming spring temperatures is critical to bridging this conceptual disconnect and understanding how forest biomass growth is likely to change as the climate warms.
 
-*Thus, while it is increasingly clear that warming spring temperatures lengthen the growing season and modestly increase annual carbon sequestration, current methods do not allow firm conclusions on how forest biomass growth is likely to respond to warming spring temperatures.  To produce the most complete picture of spring influence on forests, a combination of established data types - tree cores, for inter-annual stem growth, and remote sensing, for leaf phenology - should be used in conjunction with a recently developed intra-annual modeling technique [@mcmahon_general_2015]. * 
-**Here, we characterize how early spring temperatures affect stem growth phenology, maximum daily growth rates, and annual growth of temperate deciduous trees, separated into ring- and diffuse-porous groupings, which differ in growth phenology[*D'Orangeville*].** 
-First, using data from dendrometer bands measured throughout the growing season in two forests in the Eastern USA (n=`r n_tree_years` tree-years), we fit a growth model[@mcmahon_general_2015] to determine the days of year where 25, 50, and 75% annual growth was achieved ($DOY_{25}$, $DOY_{50}$, $DOY_{75}$), peak growing season length ($L_{pgs}= DOY_{75}$-$DOY_{25}$), maximum growth rates ($g_{max}$) and the DOY on which they occurred ($DOY_{g_{max}}$), and total annual growth ($\Delta DBH$; Fig. `r schematic_summary`). 
-*(We also look at leaf phenology.)*
-Second, at these focal sites and *#* additional sites distributed *xxxx*, we analyze *#* tree-ring chronologies to understand how annual growth, as registered in ring width indices ($RWI$), have responded to spring temperatures at the centennial scale. 
+**Here, we characterize how early spring temperatures affect stem growth phenology, growth rates, and annual growth of temperate deciduous trees in two forests (Fig. `r schematic_summary`) and annual growth across these and an additional `r n_cores_sites-2` forests spanning eastern North America.** 
+First, using dendrometer band measurements taken throughout the growing season at the Smithsonian Conservation Biology Institute (SCBI; Virginia; n = **##** trees over 10 years) and Harvard Forest (Massachusetts; n = **##** trees over six years), we fit a growth model[@mcmahon_general_2015] to determine the days of year where 25, 50, and 75% annual growth was achieved ($DOY_{25}$, $DOY_{50}$, $DOY_{75}$), peak growing season length ($L_{pgs}= DOY_{75}$-$DOY_{25}$), maximum growth rates ($g_{max}$) and the DOY on which they occurred ($DOY_{g_{max}}$), and total annual growth ($\Delta DBH$; Fig. `r schematic_summary`). 
+This analysis was performed separately for ring- and diffuse-porous species, which differ in growth phenology[*D'Orangeville*], and set in the context of leaf phenology at these sites.
+
 
 ```{r schematic_summary, out.width="100%", echo=FALSE, fig.align="center", fig.cap= schematic_summary_caption}
 # Created in RScripts/additional_figures.R
@@ -264,7 +268,9 @@ In contrast, diffuse-porous species at both sites exhibited lower $g_{max}$ in y
 Total annual growth was not consistently linked to spring temperatures (Fig. `r schematic_summary`).
 Annual growth measured with dendrometer bands, $\Delta DBH$, also was not consistently linked to early spring temperatures, displaying either no relationship (SCBI) or extremely small changes in opposite directions for ring- and diffuse- porous species (Harvard Forest) (Fig. `r pheno_Tsensitivity`).
 
-Similarly, between species-level residual chronologies rarely exhibited significant correlations to either $T_{max}$ or $T_{min}$ in the months corresponding to the critical temperature windows identified here (Figs. `r tree_rings`, `r tree_rings_TMIN`).
+**To understand how annual growth, as registered in ring width indices ($RWI$), have responded to spring temperatures at the centennial scale, we analyzed tree-ring chronologies for `r n_chronologies_SCBI` species at SCBI, `r n_chronologies_HF` species at Harvard Forest.**
+*(The following should be condensed:)*
+Residual chronologies rarely exhibited significant correlations to either $T_{max}$ or $T_{min}$ in the months corresponding to the critical temperature windows identified here (Figs. `r tree_rings`, `r tree_rings_TMIN`).
 Although correlations were rarely significant, there was a consistent pattern in responses to $T_{max}$ across all species at both sites:
 responses to $T_{max}$ were negative or neutral in all months from February to August, with the exception of one spring month at each site (April at SCBI, May at Harvard Forest) where growth displayed a positive or neutral responses to $T_{max}$ (Fig. `r tree_rings`).
 In these months, positive correlations to $T_{max}$ were statistically significant (at p=0.05) for one of nine ring-porous species at SCBI and one of two diffuse-porous species at each site.
@@ -278,6 +284,11 @@ knitr::include_graphics("tables_figures/tree_rings_tmax.png")
 
 Patterns in $T_{min}$ were fairly similar to those of $T_{max}$, but weaker and more stochastic, with more (non-significant) correlations going in opposite directions (Fig. `r tree_rings_TMIN`). 
 There were no significant correlations to $T_{min}$ prior to May at SCBI or June at Harvard Forest. 
+
+**To set these findings in a broader scale context, we analyzed an additional `r n_chronologies-n_chronologies_SCBI-n_chronologies_HF` chronologies from `r n_cores_sites-2`.** 
+In total, our analysis included # species at sites distributed from XXX to XXX and spanning a ## degree range in April T.** 
+*(describe results across all sites)*
+(Fig. `r tree_rings`)
 
 
 # (Discussion)
@@ -400,7 +411,7 @@ We analyzed records for the dominant ring- and diffuse- porous species at each s
 At SCBI, cores were collected as described in @helcoski_growing_2019. 
 Briefly, cores were taken from living or recently dead trees $\ge$ 10 cm $DBH$, including a randomly sampled subset of all dominant species within the ForestGEO plot [live trees in 2010-2011; @bourg_initial_2013] and trees found newly dead in annual tree mortality in 2016 and 2017 [@helcoski_growing_2019].
 At Harvard Forest, ...(*Neil can write this easily, or KAT probably has the info*)
-In total, we analyzed `r n_cores` cores from eleven species at SCBI and three species at Harvard Forest (Table `r table_species`).
+In total, we analyzed `r n_cores_focal_sites` cores from eleven species at SCBI and three species at Harvard Forest (Table `r table_species`).
 
 The tree-ring records from our focal sites were complemented with a much larger collection spanning **#** deciduous and mixed forest sites in Eastern North America.
 Again, species were limited to broadleaf deciduous species with clearly defined xylem porosity (i.e., excluding semi-ring porous). 
