@@ -39,34 +39,123 @@ all.dcc.output_all$wood_type <-  ifelse(all.dcc.output_all$Species %in% RP, "RP"
 wood_types <- c("RP","SP", "DP")
 climate_variables <- c("tmn","tmx")
 save.plots <- TRUE
-
-#For loop to create plots. Cycles through wood types (RP, DP, SP) & clim variables (tmx, tmn)
+# all.dcc.output_all_plt1 <- subset(all.dcc.output_all, all.dcc.output_all$wood_type == "RP" & all.dcc.output_all$variable == "tmx")
+#
+# all.dcc.output_all_plt1 <- all.dcc.output_all_plt1 %>% #number each month for sorting
+#   mutate(
+#     month_new = case_when(
+#       month == "curr.jan" ~ 1,
+#       month == "curr.feb" ~ 2,
+#       month == "curr.mar" ~ 3,
+#       month == "curr.apr" ~ 4,
+#       month == "curr.may" ~ 5,
+#       month == "curr.jun" ~ 6,
+#       month == "curr.jul" ~ 7,
+#       month == "curr.aug" ~ 8,
+#       TRUE ~ 0
+#     )
+#   )
+# all.dcc.output_all_plt1 <- all.dcc.output_all_plt1[all.dcc.output_all_plt1$month_new != 0,]#remove months outside of desired Jan-Aug range. SCBI dcc extended to september, so need to remove the september rows
+#
+# all.dcc.output_all_plt1 <- all.dcc.output_all_plt1 %>%
+#   ungroup()%>%
+#   arrange(tmx, site, month_new)
+#
+# data2 <- data2 %>%                              # Create numbering variable
+#   group_by(group) %>%
+#   mutate(numbering = row_number())
+#Forloop to create plots. Cycles through wood types (RP, DP, SP) & clim variables (tmx, tmn)
 #Sorts by average April temp across all years of core data at each site
+#First, create numbering scheme and prepare data
+for(v in climate_variables) {
+  print(v)
+  TRW_coord <- TRW_coord[!(duplicated(TRW_coord$Location)),]#removes duplicate locations added by original author of TRW_coord excel sheet
+  X <- all.dcc.output_all[all.dcc.output_all$variable %in% v, ]#subset core by clim variable
+  X$Location <- ifelse(X$site =="SCBI", "SCBI",#assigns value of location
+                       ifelse(X$site == "HF", "HF",
+                              substr(X$site, 1, nchar(X$site)-5)))
+
+  X <- X %>% #number each month for sorting
+    mutate(
+      month_new = case_when(
+        month == "curr.jan" ~ 1,
+        month == "curr.feb" ~ 2,
+        month == "curr.mar" ~ 3,
+        month == "curr.apr" ~ 4,
+        month == "curr.may" ~ 5,
+        month == "curr.jun" ~ 6,
+        month == "curr.jul" ~ 7,
+        month == "curr.aug" ~ 8,
+        TRUE ~ 0
+      )
+    )
+  X <- X[X$month_new != 0,]#remove months outside of desired Jan-Aug range. SCBI dcc extended to september, so need to remove the september rows
+
+  #SORT BY LATITUDE
+  # X <- X %>%
+  #   left_join(TRW_coord, by = "Location")
+  #
+  # X <- X %>%
+  #   arrange(desc(Latitude), Species, numid)
+  #
+
+  #SORT BY APRIL TEMP
+  X <- X %>%
+    left_join(clim_means, by = "Location") %>%
+    group_by(site)
+
+  X <- X %>%
+    ungroup()%>%
+    arrange( wood_type, tmx, site, month_new)
+
+  X$site <- as.factor(X$site)
+  X$month <- as.factor(X$month)
+
+  X <- X[!(is.na(X$wood_type)),]
+
+  levels(X$site)
+  X <- X %>%
+  #group_by(site) %>%
+  #mutate(id = as.integer(site) )
+    #mutate(site = as.character(site))%>%
+    mutate(site = as.character(site)) %>%
+  mutate(group = match(site, unique(site)))
+
+  # X$entry_number <- seq(1, nrow(X)/8, 1)
+  #
+  write.csv(X, file = paste0("Data/", v, "_quilt_plot_data.csv"), row.names = FALSE)
+}
+
+tmx_data <- read.csv("Data/tmx_quilt_plot_data.csv")
+tmn_data <- read.csv("Data/tmn_quilt_plot_data.csv")
+
 for(WT in wood_types){
-  all.dcc.output <- all.dcc.output_all[all.dcc.output_all$wood_type %in% WT,]#subset by wood type
-  for(v in climate_variables) {
-    print(v)
+  #all.dcc.output <- all.dcc.output_all[all.dcc.output_all$wood_type %in% WT,]#subset by wood type
+  X <- tmx_data[tmx_data$wood_type %in% WT,]#subset by wood type
+
+  # for(v in climate_variables) {
+  #   print(v)
 
     TRW_coord <- TRW_coord[!(duplicated(TRW_coord$Location)),]#removes duplicate locations added by original author of TRW_coord excel sheet
-    X <- all.dcc.output[all.dcc.output$variable %in% v, ]#subset core by clim variable
-    X$Location <- ifelse(X$site =="SCBI", "SCBI",#assigns value of location
-                         ifelse(X$site == "HF", "HF",
-                                substr(X$site, 1, nchar(X$site)-5)))
+    # X <- all.dcc.output[all.dcc.output$variable %in% v, ]#subset core by clim variable
+    # X$Location <- ifelse(X$site =="SCBI", "SCBI",#assigns value of location
+    #                      ifelse(X$site == "HF", "HF",
+    #                             substr(X$site, 1, nchar(X$site)-5)))
 
-    X <- X %>% #number each month for sorting
-      mutate(
-        month_new = case_when(
-          month == "curr.jan" ~ 1,
-          month == "curr.feb" ~ 2,
-          month == "curr.mar" ~ 3,
-          month == "curr.apr" ~ 4,
-          month == "curr.may" ~ 5,
-          month == "curr.jun" ~ 6,
-          month == "curr.jul" ~ 7,
-          month == "curr.aug" ~ 8,
-          TRUE ~ 0
-        )
-      )
+    # X <- X %>% #number each month for sorting
+    #   mutate(
+    #     month_new = case_when(
+    #       month == "curr.jan" ~ 1,
+    #       month == "curr.feb" ~ 2,
+    #       month == "curr.mar" ~ 3,
+    #       month == "curr.apr" ~ 4,
+    #       month == "curr.may" ~ 5,
+    #       month == "curr.jun" ~ 6,
+    #       month == "curr.jul" ~ 7,
+    #       month == "curr.aug" ~ 8,
+    #       TRUE ~ 0
+    #     )
+    #   )
     X <- X[X$month_new != 0,]#remove months outside of desired Jan-Aug range. SCBI dcc extended to september, so need to remove the september rows
 
     #SORT BY LATITUDE
@@ -78,21 +167,22 @@ for(WT in wood_types){
     #
 
     #SORT BY APRIL TEMP
-    X <- X %>%
-      left_join(clim_means, by = "Location") %>%
-      group_by(site)
+    # X <- X %>%
+    #   left_join(clim_means, by = "Location") %>%
+    #   group_by(site)
 
     X <- X %>%
       ungroup()%>%
-      arrange(tmn, site, month_new)
+      arrange(tmx, site, month_new)
 
     X$site <- as.factor(X$site)
     X$month <- as.factor(X$month)
 
+
     #COnvert from long to wide
-    x <- X[, c("month", "site", "coef")]
+    x <- X[, c("month", "group", "coef")]
     x <- x %>%
-      pivot_wider(names_from = site,
+      pivot_wider(names_from = group,
                   id_cols = month,
                   values_from = coef)%>%
                   as.data.frame()
@@ -101,8 +191,19 @@ for(WT in wood_types){
     rownames(x) <- ifelse(grepl("curr",  x$month), toupper(x$month), tolower( x$month))
     rownames(x) <- gsub(".*curr.|.*prev.", "",   rownames(x), ignore.case = T)
 
-    x.sig <- reshape(X[, c("month", "site", "significant")], idvar = "month", timevar = "site", direction = "wide")
-    x.sig2 <- reshape(X[, c("month", "site", "significant2")], idvar = "month", timevar = "site", direction = "wide")
+    x.sig <- X[, c("month", "group", "significant")]
+    x.sig <- x.sig %>%
+      pivot_wider(names_from = group,
+                  id_cols = month,
+                  values_from = significant)%>%
+                  as.data.frame()   #reshape(X[, c("month", "site", "significant")], idvar = "month", timevar = "site", direction = "wide")
+
+    x.sig2 <- X[, c("month", "group", "significant2")]
+    x.sig2 <- x.sig2 %>%
+      pivot_wider(names_from = group,
+                  id_cols = month,
+                  values_from = significant2)%>%
+                  as.data.frame()#reshape(X[, c("month", "site", "significant2")], idvar = "month", timevar = "site", direction = "wide")
 
     colnames(x) <- gsub("coef.", "", colnames(x))
     colnames(x.sig) <- gsub("significant.", "", colnames(x.sig))
@@ -121,7 +222,7 @@ for(WT in wood_types){
     #    dir.create(paste0("results/", type.start, "/figures/monthly_", method.to.run, "/", c), showWarnings = F)
     #    tiff(paste0("results/", type.start, "/figures/monthly_", method.to.run, "/", c, "/", v, ".tif"), res = 150, width = 169, height = 169, units = "mm", pointsize = 10)
     #  }
-
+#colnames(x) <- seq(1, ncol(x), 1)
     v <-  toupper(v)
     v <- gsub("PDSI_PREWHITEN" , "PDSI", v)
     #x <- x[,c(2,1,3)]
@@ -133,4 +234,4 @@ for(WT in wood_types){
 
     if(save.plots) dev.off()
   }
-}
+
