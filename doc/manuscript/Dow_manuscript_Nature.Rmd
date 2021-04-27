@@ -120,7 +120,10 @@ species_table <- read.csv(file = "tables_figures/species_table.csv")
 n_dendro_trees <- sum(na.omit(species_table[, "n.trees"]))
 n_tree_years <- sum(na.omit(species_table[, "n.tree.years"]))
 n_cores_focal_sites <- sum(na.omit(species_table[, "n.cores"]))
-n_chronologies <- NA
+
+#copy over chronologies table
+chronologies_table <- read.csv(file ="tables_figures/chronology_table.csv")
+n_chronologies <- nrow(chronologies_table) 
 n_cores_sites <- NA
 n_chronologies_SCBI <- NA
 n_chronologies_HF <- NA
@@ -449,7 +452,11 @@ Funding: ForestGEO
 
 # Author Contributions
 
-# Supporting Information
+# Additional Information
+
+*Supplementary Information* is available for this paper.
+
+Correspondence and requests for materials should be addressed to Kristina Anderson-Teixeira (teixeirak@si.edu).
 
 
 
