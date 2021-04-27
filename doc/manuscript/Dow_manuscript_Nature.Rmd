@@ -100,7 +100,7 @@ is represented by the solid blue line and 95% credible intervals are represented
 
 DOYtiming_caption <- "Figure 3 | Leaf (a,b) and stem growth (c,d) phenology at the Smithsonian Conservation Biology Institute (a,c) and Harvard Forest (b,d) from 1998 to 2020 (when available). Panels (a-b) show leaf phenology... Panels (c-d) show the dates at which stem growth milestones were acheived, on average, for sampled populations of ring-porous and diffuse-porous trees at each site. Mean temperature was calculated for each wood-type/site combination over the respective critical $T_{max}$ window, then turned into a ratio and assigned a color on a gradient where the coldest year in the sample is blue and the warmest is red. (**SHOULD WE COMBINE LEAF AND STEM PHENOLOGY ON A SINGLE PLOT WITH SEPARATE Y-AXES?** See [GitHub Issue #50](https://github.com/EcoClimLab/growth_phenology/issues/50). )"
 
-tree_rings_caption <- "Figure 4 | Sensitivity of annual growth, as derived from tree-rings, to monthly maximum temperatures, for ## chronologies from ## sites across eastern North America. Chronologies are grouped by xylem porosity and ordered by mean April T_max. Chronology details are given in the Supplementary Information. (NOTE: Figure still needs some work. **COLOR SCALE IS  A BIT OFF.**  See [GitHub Issue #49](https://github.com/EcoClimLab/growth_phenology/issues/49).)"
+tree_rings_caption <- "Figure 4 | Sensitivity of annual growth, as derived from tree-rings, to monthly maximum temperatures, for 207 chronologies from 114 sites across eastern North America. Chronologies are grouped by xylem porosity and ordered by mean April T_max. Chronology details are given in the Supplementary Information. (NOTE: Figure still needs some work. **COLOR SCALE IS  A BIT OFF.**  See [GitHub Issue #49](https://github.com/EcoClimLab/growth_phenology/issues/49).)"
 
 # EXTENDED DATA  (this chunk must be repeated in Dow_Extended_Data.Rmd)
 ##tables
@@ -120,10 +120,11 @@ species_table <- read.csv(file = "tables_figures/species_table.csv")
 n_dendro_trees <- sum(na.omit(species_table[, "n.trees"]))
 n_tree_years <- sum(na.omit(species_table[, "n.tree.years"]))
 n_cores_focal_sites <- sum(na.omit(species_table[, "n.cores"]))
-n_chronologies <- NA
-n_cores_sites <- NA
-n_chronologies_SCBI <- NA
-n_chronologies_HF <- NA
+chronology_table <- read.csv(file = "tables_figures/chronology_table.csv")
+n_chronologies <- nrow(chronology_table)  #!!! entered by hand in figure captions
+n_cores_sites <- length(unique(chronology_table[, "Location"])) #!!! entered by hand in figure captions
+n_chronologies_SCBI <- 12
+n_chronologies_HF <- 3
 ```
 
 
@@ -449,7 +450,11 @@ Funding: ForestGEO
 
 # Author Contributions
 
-# Supporting Information
+# Additional Information
+
+**Supplementary Information** is available for this paper.
+
+Correspondence and requests for materials should be addressed to Kristina Anderson-Teixeira (teixeirak@si.edu).
 
 
 
