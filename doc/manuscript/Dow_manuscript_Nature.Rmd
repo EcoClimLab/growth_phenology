@@ -92,15 +92,13 @@ tree_rings = 4
 
 #figure captions
 
-schematic_summary_caption <- "Figure 1 | Summary of tree growth changes under warmer spring temperatures. (a) Schematic illustrating parameters of interest and summarizing how each responds to warmer maximum temperatures during a 'critical temperature window', defined as that with the strongest control over $DOY_{25}$; (b) Variable definitions and summary responses to warmer spring temperatures at two temperate forests and for two groups of broadleaf deciduous species (RP=ring porous; DP=diffuse porous), where up and down arrows indicate increases and decreases, respectively, 'n.s.' indicates no signficant correlation, and 'mixed' indicates a mix of signficant and non-signficant correlations, often in different directions."
+schematic_summary_caption <- "**Figure 1 | Summary of tree growth changes under warmer spring temperatures.** (a) Schematic illustrating parameters of interest and summarizing how each responds to warmer maximum temperatures during a 'critical temperature window', defined as that with the strongest control over $DOY_{25}$; (b) Variable definitions and summary responses to warmer spring temperatures at two temperate forests and for two groups of broadleaf deciduous species (RP=ring porous; DP=diffuse porous), where up and down arrows indicate increases and decreases, respectively, 'n.s.' indicates no signficant correlation, and 'mixed' indicates a mix of signficant and non-signficant correlations, often in different directions."
 
-pheno_Tsensitivity_caption <- "Figure 2 | Relationship between growth parameters and climwin mean temperatures. For each 
-observed climwin mean temperature value, the posterior mean of the fitted day of year
-is represented by the solid blue line and 95% credible intervals are represented by bands. (**SHOULD WE SHOW ONLY THE DOY TRENDS and Lpgs (top 2 rows), GIVEN LACK OF SIGNIFICANT TRENDS IN THE OTHERS AND BECAUSE WE NEED TO KEEP FIGURES COMPACT?**)" #needs attention!!!
+DOY_Tsensitivity_caption <- "**Figure 2 | Relationship between growth parameters and climwin mean temperatures.** For each observed climwin mean temperature value, the posterior mean of the fitted day of year is represented by the solid blue line and 95% credible intervals are represented by bands. (**NOTE THAT THIS PARTIALLY REPLICATES EXTENDED DATA FIG 4**)" #needs attention!!!
 
-DOYtiming_caption <- "Figure 3 | Leaf (a,b) and stem growth (c,d) phenology at the Smithsonian Conservation Biology Institute (a,c) and Harvard Forest (b,d) from 1998 to 2020 (when available). Panels (a-b) show leaf phenology... Panels (c-d) show the dates at which stem growth milestones were acheived, on average, for sampled populations of ring-porous and diffuse-porous trees at each site. Mean temperature was calculated for each wood-type/site combination over the respective critical $T_{max}$ window, then turned into a ratio and assigned a color on a gradient where the coldest year in the sample is blue and the warmest is red. (**SHOULD WE COMBINE LEAF AND STEM PHENOLOGY ON A SINGLE PLOT WITH SEPARATE Y-AXES?** See [GitHub Issue #50](https://github.com/EcoClimLab/growth_phenology/issues/50). )" #needs attention!!!
+DOYtiming_caption <- "**Figure 3 | Leaf (a,b) and stem growth (c,d) phenology at the Smithsonian Conservation Biology Institute (a,c) and Harvard Forest (b,d) from 1998 to 2020 (when available).** Panels (a-b) show leaf phenology... Panels (c-d) show the dates at which stem growth milestones were acheived, on average, for sampled populations of ring-porous and diffuse-porous trees at each site. Mean temperature was calculated for each wood-type/site combination over the respective critical $T_{max}$ window, then turned into a ratio and assigned a color on a gradient where the coldest year in the sample is blue and the warmest is red. (**SHOULD WE COMBINE LEAF AND STEM PHENOLOGY ON A SINGLE PLOT WITH SEPARATE Y-AXES?** See [GitHub Issue #50](https://github.com/EcoClimLab/growth_phenology/issues/50). )" #needs attention!!!
 
-tree_rings_caption <- "Figure 4 | Sensitivity of annual growth, as derived from tree-rings, to monthly maximum temperatures, for 207 chronologies from 114 sites across eastern North America (Extended Data Figure 1). Chronologies are grouped by xylem porosity and ordered by mean April T_max. Chronology details are given in the Supplementary Information. (NOTE: Figure still needs some work. **COLOR SCALE IS  A BIT OFF.**  See [GitHub Issue #49](https://github.com/EcoClimLab/growth_phenology/issues/49).)" #needs attention!!! #info subject to change!!!
+tree_rings_caption <- "**Figure 4 | Sensitivity of annual growth, as derived from tree-rings, to monthly maximum temperatures, for 207 chronologies from 114 sites across eastern North America** (Extended Data Figure 1). Chronologies are grouped by xylem porosity and ordered by mean April T_max. Chronology details are given in the Supplementary Information. (NOTE: Figure still needs some work. **COLOR SCALE IS  A BIT OFF IN THIS COMPOSITE FIGURE (scales not identical across panels).**  See [GitHub Issue #49](https://github.com/EcoClimLab/growth_phenology/issues/49).)" #needs attention!!! #info subject to change!!!
 
 # EXTENDED DATA  (this chunk must be repeated in Dow_Extended_Data.Rmd)
 ##tables
@@ -213,8 +211,8 @@ Growing season length was similar across sites, with $L_{PGS}$ being, on average
 
 ## (Critical temperature windows)
 
-For the majority of weekly time windows from Jan. 1 to $DOY_{25}$, there was a negative or neutral relationship between $T_{max}$ and $DOY_{25}$, meaning that warmer temperatures shifted growth earlier in the season (`r EDF_climwin`). 
-This held true for both ring- and diffuse-porous trees at both sites, *albiet* with less consistent patterns at Harvard Forest, which was sampled for fewer years. 
+For the majority of consecutive weekly time windows from Jan. 1 to $DOY_{25}$, there was a negative or neutral relationship between $T_{max}$ and $DOY_{25}$, meaning that warmer temperatures shifted growth earlier in the season (`r EDF_climwin`). 
+This held true for both ring- and diffuse-porous trees at both sites, *albeit* with less consistent patterns at Harvard Forest, which was sampled for fewer years. 
 The strongest relationships, including but not limited to the optimal time windows (`r  EDT_mean_growth_parameters`), occurred for time windows closing $\le$ 5 weeks prior to $DOY_{25}$. 
 Henceforth, we focus on $T_{max}$ assessed over *climwin*-selected critical temperature windows, *noting that similar results are obtained using alternate temperature window ([GitHub issue #42](https://github.com/EcoClimLab/growth_phenology/issues/42)).*
 
@@ -223,9 +221,9 @@ Henceforth, we focus on $T_{max}$ assessed over *climwin*-selected critical temp
 For both ring- and diffuse- porous species at both sites, warmer spring $T_{max}$ resulted in earlier achievement of growth milestones (Fig. `r schematic_summary`, Figs. `r pheno_Tsensitivity`).
 Specifically, $DOY_{25}$, $DOY_{50}$, $DOY_{75}$, $DOY_{g.max}$, leaf greenup, and mid-greenup, at both sites all decreased significantly with increasing $T_{max}$ during the critical temperature window (Figs. `r schematic_summary`, `r pheno_Tsensitivity`, `r DOYtiming`).
 
-```{r pheno_Tsensitivity, out.width="80%", echo=FALSE, fig.align="center", fig.cap=pheno_Tsensitivity_caption}
+```{r pheno_Tsensitivity, out.width="80%", echo=FALSE, fig.align="center", fig.cap=DOY_Tsensitivity_caption}
 # Created in RScripts/bert/wood_phenology_analysis_bert.R
-knitr::include_graphics("tables_figures/pheno_Tsensitivity_combo_patchwork_AIC.png")
+knitr::include_graphics("tables_figures/DOY_Tsensitivity.png")
 ```
 
 ```{r DOYtiming, out.width="100%", echo=FALSE, fig.align="center", fig.cap= DOYtiming_caption}
