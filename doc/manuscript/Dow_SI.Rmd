@@ -33,8 +33,7 @@ climwin = "S2"
 tree_rings_TMIN = "S3"
 
 #SI table captions
-species_table_caption <-"Table S1 | Dominant ring- and diffuse-porous species at the Smithsonian Conservation Biology Institute (SCBI) and Harvard Forest, along with sample sizes analyzed here."
-sample_size_by_species_caption <-"Table EXTRA | Dendrometer band sample size by species at SCBI and HF. TO BE REMOVED"
+species_table_caption <-"Table S1 | Dominant ring- and diffuse-porous species at the Smithsonian Conservation Biology Institute (SCBI) and Harvard Forest, along with sample sizes included in this analysis."
 sample_size_by_year_caption <- "Table S2 | Sample size by year "
 mean_growth_parameters_caption = "Table S3 | Summary of parameters describing the phenology and rate of growth for ring- and diffuse- porous species at SCBI and Harvard Forest. "
 
@@ -63,27 +62,6 @@ add_header_above(c(" ", " ", " ", " ", "dendrometer bands" = 2, "tree cores"=2 )
   pack_rows("", 15, 22, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
 kable_styling(latex_options = c("scale_down", "hold_position"), protect_latex = T) 
 ```
-
-\newpage
-
-```{r, Table SCBI_bands_bySP, eval=TRUE, echo=FALSE, message=FALSE}
-library(knitr)
-library(kableExtra)
-table <- read.csv("tables_figures/SCBI_bands_bySP.csv",stringsAsFactors = FALSE, check.names = FALSE)
-kbl(table, caption = sample_size_by_species_caption , format = "latex", booktabs = T) %>%
-  kable_styling(latex_options = "hold_position")
-```
-
-
-```{r, Table HF_bands_bySP, eval=TRUE, echo=FALSE, message=FALSE}
-library(knitr)
-library(kableExtra)
-table <- read.csv("tables_figures/HF_bands_bySP.csv",stringsAsFactors = FALSE, check.names = FALSE)
-kbl(table, caption = sample_size_by_species_caption, format = "latex", booktabs = T) %>%
-  kable_styling(latex_options = "hold_position")
-```
-
-*These tables overlap with the species table, and probably is not necessary. They also do not match-- probably out of date.*
 
 \newpage
 

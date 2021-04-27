@@ -105,7 +105,6 @@ tree_rings_caption <- "Figure 4 | Sensitivity of annual growth, as derived from 
 # SUPPLEMENTARY INFO (this chunk must be repeated in Dow_SI.Rmd)
 ##SI table numbers
 table_species="S1"  
-sample_size_by_species= "S2"
 sample_size_by_year= "S2"
 mean_growth_parameters_table="S3" 
 chronologies_table="S4" #!!! Hand-numbered in tree-ring figure captions
