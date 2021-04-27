@@ -105,31 +105,15 @@ tree_rings_caption <- "Figure 4 | Sensitivity of annual growth, as derived from 
 # SUPPLEMENTARY INFO (this chunk must be repeated in Dow_SI.Rmd)
 ##SI table numbers
 table_species="S1"  
+sample_size_by_species= "S2"
 sample_size_by_year= "S2"
 mean_growth_parameters_table="S3" 
-chronologies_table="S4" 
-
-#SI table captions
-sample_size_by_year_caption <- "Table S1. Sample size by year "
+chronologies_table="S4" #!!! Hand-numbered in tree-ring figure captions
 
 #SI figure numbers
 growth_curves_all = "S1"  
-all_climwin_SI_figs = " S2-S5"
-  climwin_rp_DOY25_SCBI = "S2"
-  climwin_dp_DOY25_SCBI = "S3"
-  climwin_rp_DOY25_HARV = "S4"
-  climwin_dp_DOY25_HARV = "S5"
-
-tree_rings_TMIN = "S7"
-
-#SI figure captions
-growth_curves_all_caption  <- "Growth trajectories for ring- and diffuse-porous trees, as both relative and cumulative fractions of total annual growth. Each line represents one year's growth for a given tree, fit with McMahon model. "
-climwin_rp_DOY25_SCBI_short_caption <- "Full climwin output for $DOY_{25}$ for ring porous species at SCBI."
-climwin_dp_DOY25_SCBI_short_caption <- "Full climwin output for $DOY_{25}$ for diffuse porous species at SCBI."
-climwin_rp_DOY25_HARV_short_caption <- "Full climwin output for $DOY_{25}$ for ring porous species at Harvard Forest."
-climwin_dp_DOY25_HARV_short_caption <- "Full climwin output for $DOY_{25}$ for diffuse porous species at Harvard Forest."
-
-tree_rings_TMIN_short_caption <- "Climate sensitivity of annual growth, as derived from tree-rings, for dominant ring- and diffuse- porous species at the Smithsonian Conservation Biology Institute and Harvard Forest. Shown are Pearson correlations between ring-width index and and monthly Tmin. Species codes are as given in Table 2.(THIS FIGURE WILL PROBABLY BE PROBABLY MODIFIED SIGNFICANTLY TO INCLUDE LOTS MORE SITES.)"
+climwin = "S2"
+tree_rings_TMIN = "S3"
 
 ###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ## some stats/ 
@@ -225,13 +209,13 @@ Growing season length was similar across sites, with $L_{PGS}$ being, on average
 
 ## (Critical temperature windows)
 
-For the majority of weekly time windows from Jan. 1 to $DOY_{25}$, there was a negative or neutral relationship between $T_{max}$ and $DOY_{25}$, meaning that warmer temperatures shifted growth earlier in the season (Figs. `r all_climwin_SI_figs`). 
+For the majority of weekly time windows from Jan. 1 to $DOY_{25}$, there was a negative or neutral relationship between $T_{max}$ and $DOY_{25}$, meaning that warmer temperatures shifted growth earlier in the season (Fig. `r climwin`). 
 This held true for both ring- and diffuse-porous trees at both sites, *albiet* with less consistent patterns at Harvard Forest, which was sampled for fewer years. 
 The strongest relationships, including but not limited to the optimal time windows (Table `r mean_growth_parameters_table`), occurred for time windows closing $\le$ 5 weeks prior to $DOY_{25}$. 
 
 
-The correlation of $DOY_{25}$ to $T_{min}$ was less consistent than that of $T_{max}$ (Figs. `r all_climwin_SI_figs`). 
-At SCBI, patterns were quite similar to those described above for $T_{max}$, with similar timing and strengths of correlations across the two temperature variables (Figs. `r climwin_rp_DOY25_SCBI` - `r climwin_dp_DOY25_SCBI`).
+The correlation of $DOY_{25}$ to $T_{min}$ was less consistent than that of $T_{max}$ (**NEEDS SUPPORTING FIG**). 
+At SCBI, patterns were quite similar to those described above for $T_{max}$, with similar timing and strengths of correlations across the two temperature variables (**NEEDS SUPPORTING FIG**).
 In contrast, at Harvard Forest, where we had only six years of data, *climwin* selected windows greater than five weeks prior to $DOY_{25}$, had positive correlations between $DOY_{25}$ and $T_{min}$.
 However, for both ring- and diffuse- porous species, average $T_{min}$ of the selected period was below freezing (<0°C) in all years, suggesting that these are sporadic correlations that are unlikely to be biologically meaningful.
 
@@ -308,8 +292,8 @@ This analysis confirms that the effect of spring temperatures on annual growth i
 It appears that temperatures--particularly $T_{max}$--during one spring month at each site (April at SCBI, May at Harvard Forest) consistently have a weakly positive (*albiet* rarely significant) effect on annual growth, in striking contrast to the predominantly negative correlations of growth rates with $T_{max}$ in preceding and subsequent months.
 This suggests that spring $T_{max}$, though it's pronounced influence on the start of woody growth and subtle influence on length of the peak growing season, has a modestly positive influence on annual tree growth, but that this influence is generally of secondary importance to other factors. 
 
-Indeed, the tree-ring records reveal that *annual growth is most commonly controlled by climate conditions during the peak growing season*  [Fig. `r tree_rings`; @helcoski_growing_2019], .
-(*1-2 sentences reviewing our regional analysis results (HOPEFULLY) generalizing about climate sensitivity of temperate deciduous forest growth.*)
+Indeed, the tree-ring records reveal that annual growth is most commonly controlled by climate conditions during the peak growing season [Fig. `r tree_rings`; @helcoski_growing_2019], .
+(*1-2 sentences reviewing our regional analysis results /generalizing about climate sensitivity of temperate deciduous forest growth.*)
 Thus, although our dendrometer band analysis is limited to two sites, the finding that spring temperatures have limited effect on annual tree growth holds generally.
 
 Our findings contribute to a broader picture of the influence of spring temperatures on forest ecosystem function. 
@@ -468,15 +452,7 @@ Funding: ForestGEO
 
 # Supporting Information
 
-`r sample_size_by_year_caption`
 
-`r climwin_rp_DOY25_SCBI_short_caption`
-
-`r climwin_dp_DOY25_SCBI_short_caption`
-
-`r climwin_rp_DOY25_HARV_short_caption` 
-
-`r climwin_dp_DOY25_HARV_short_caption`
 
 # References
 
