@@ -21,27 +21,40 @@ path_to_results <- paste0(dirname(dirname(getwd())), "/results/") #I was trying 
 
 # EXTENDED DATA 
 ##tables
-table_species="Extended Data Table 1"  
-sample_size_by_year= "Extended Data Table 2"
-mean_growth_parameters_table="Extended Data Table 3" 
-chronologies_table="S4" #!!! Hand-numbered in tree-ring figure captions
+EDT_species="Extended Data Table 1"  
+EDT_mean_growth_parameters="Extended Data Table 2" 
+EDT_tree_ring_summary="Extended Data Table 3" 
+
+sample_size_by_year= "XX"
+#chronologies_table="S4" #!!! Hand-numbered in tree-ring figure captions
 
 ##figures
-growth_curves_all = "Extended Data Figure 1"  
-climwin = "Extended Data Figure 2"
-tree_rings_TMIN = "Extended Data Figure 3"
+EDF_map = "Extended Data Figure 1" 
+EDF_growth_curves_all = "Extended Data Figure 2"  
+EDF_climwin = "Extended Data Figure 3"
+EDF_pheno_Tmax_climwin = "Extended Data Figure 4"
+EDF_pheno_Tmax_AprilMay = "Extended Data Figure 5"
+EDF_pheno_Tmin_AprilMay = "Extended Data Figure 6"
+EDF_tree_rings_TMIN = "Extended Data Figure 7"
 
 ## table captions
 species_table_caption <-"Extended Data Table 1 | Dominant ring- and diffuse-porous species at the Smithsonian Conservation Biology Institute (SCBI) and Harvard Forest, along with sample sizes included in this analysis."
-sample_size_by_year_caption <- "Extended Data Table 2 | Sample size by year "
-mean_growth_parameters_caption = "Extended Data Table 3 | Summary of parameters describing the phenology and rate of growth for ring- and diffuse- porous species at SCBI and Harvard Forest. "
+sample_size_by_year_caption <- "TO BE REMOVED | Sample size by year "
+mean_growth_parameters_caption = "Extended Data Table 2 | Summary of parameters describing the phenology and rate of growth for ring- and diffuse- porous species at SCBI and Harvard Forest. "
+tree_ring_summary_caption =  "Extended Data Table 3 | Summary of tree-ring data and analysis ( including species, n chronologies (= n sites), n positively correlated with April T, n sig.)" 
 
 ## figure captions
-growth_curves_all_caption  <- " Extended Data Figure 1 | Growth trajectories for ring- and diffuse-porous trees, as both relative and cumulative fractions of total annual growth. Each line represents one year's growth for a given tree, fit with McMahon model. "
+growth_curves_all_caption  <- " Extended Data Figure 2 | Growth trajectories for ring- and diffuse-porous trees, as both relative and cumulative fractions of total annual growth. Each line represents one year's growth for a given tree, fit with McMahon model. " #needs wordsmithing!!!
 
-climwin_caption <- "Extended Data Figure 2 | Landscapes of relationships between the day of year on which 25% of annual growth is achieved ($DOY_{25}$) and temperature in prior weeks for ring- and diffuse-porous trees at SCBI and Harvard Forest. Shown are matrices of linear coefficients of first-order linear regressions between temperature and $DOY_{25}$, where Window Open and Window Close indicate number of weeks prior to $DOY_{25}$ (ring-porous: May 5 at SCBI, May 13 at HF; diffuse-porous: June 4 at SCBI, June 14 at HF). Black circles indicate the critical $T_{max}$ window (ring-porous:  March 22- April 9 at SCBI, April 2 - May 07 at HF; diffuse-porous: Feb. 19- May 21 at SCBI, March 19 - May 07 at HF)."
+climwin_caption <- "Extended Data Figure 3 | Landscapes of relationships between the day of year on which 25% of annual growth is achieved ($DOY_{25}$) and temperature in prior weeks for ring- and diffuse-porous trees at SCBI and Harvard Forest. Shown are matrices of linear coefficients of first-order linear regressions between temperature and $DOY_{25}$, where Window Open and Window Close indicate number of weeks prior to $DOY_{25}$ (ring-porous: May 5 at SCBI, May 13 at HF; diffuse-porous: June 4 at SCBI, June 14 at HF). Black circles indicate the critical $T_{max}$ window (ring-porous:  March 22- April 9 at SCBI, April 2 - May 07 at HF; diffuse-porous: Feb. 19- May 21 at SCBI, March 19 - May 07 at HF)." #info subject to change!!!
 
-tree_rings_TMIN_short_caption <- "Extended Data Figure 3 | Sensitivity of annual growth, as derived from tree-rings, to monthly minimum temperatures, for 207 chronologies from 114 sites across eastern North America. Chronologies are grouped by xylem porosity and ordered by mean April T_max. Chronology details are given in the Supplementary Information. (**NOTE: Figure still needs some work. Chronology numbers are off.**  See [GitHub Issue #49](https://github.com/EcoClimLab/growth_phenology/issues/49).)"
+pheno_Tmax_climwin_caption <- "**Extended Data Figure 4 | Relationship between growth parameters and mean maximum temperature within the critical temperature window (CTW).** CTW was defined using *climwin*. For each observed climwin mean temperature value, the posterior mean of the fitted day of year is represented by the solid blue line and 95% credible intervals are represented by bands.(**NEEDS MORE DETAIL**)" #needs attention!!!
+
+pheno_Tmax_AprilMay_caption <- "**Extended Data Figure 5 | Relationship between growth parameters and mean maximum temperature in April (SCBI) or May (HF).** For each observed climwin mean temperature value, the posterior mean of the fitted day of year is represented by the solid blue line and 95% credible intervals are represented by bands.(**NEEDS MORE DETAIL**)" #needs attention!!!
+
+pheno_Tmin_AprilMay_caption <- "**Extended Data Figure 6 | Relationship between growth parameters and mean minimum temperature in April (SCBI) or May (HF).** For each observed climwin mean temperature value, the posterior mean of the fitted day of year is represented by the solid blue line and 95% credible intervals are represented by bands.(**NEEDS MORE DETAIL**)" #needs attention!!!
+
+tree_rings_TMIN_caption <- "Extended Data Figure 7 | Sensitivity of annual growth, as derived from tree-rings, to monthly minimum temperatures, for 207 chronologies from 114 sites across eastern North America (Extended Data Figure 1). Chronologies are grouped by xylem porosity and ordered by mean April T_max. Chronology details are given in the Supplementary Information. (**NOTE: Figure still needs some work. Chronology numbers are off.**  See [GitHub Issue #49](https://github.com/EcoClimLab/growth_phenology/issues/49).)" #needs attention!!! #info subject to change!!!
 
 
 ```
@@ -72,7 +85,7 @@ kbl(table, caption = sample_size_by_year_caption, format = "latex", booktabs = T
   kable_styling(latex_options = "hold_position")
 ```
 
-*This figure needs some work if we choose to include it. It would also probably make sense to include years for which leaf phenology is available.*
+*This figure PROBABLY NEEDS TO GO. It needs some work if we choose to include it. *
 
 \newpage
 
@@ -89,6 +102,13 @@ add_header_above(c(" ",  "SCBI" = 2, "Harvard Forest"=2 )) %>%
 kable_styling(latex_options = c("scale_down", "hold_position"), protect_latex = T) 
 ```
 
+\newpage
+
+## (PLACEHOLDER FOR `r tree_ring_summary_caption` )
+
+\newpage
+
+## (PLACEHOLDER FOR MAP OF STUDY SITES -- [GITHUB ISSUE #54](https://github.com/EcoClimLab/growth_phenology/issues/54))
 
 \newpage
 
@@ -98,6 +118,19 @@ kable_styling(latex_options = c("scale_down", "hold_position"), protect_latex = 
 
 ![`r climwin_caption`](tables_figures/climwin_figure.png){ width=70% }
 
+
 \newpage
 
-![`r tree_rings_TMIN_short_caption`](tables_figures/tree_rings_tmin.png){ width=90% }
+![`r pheno_Tmax_climwin_caption`](tables_figures/pheno_Tsensitivity_combo_patchwork_AIC.png){ width=90% }
+
+\newpage
+
+![`r pheno_Tmax_AprilMay_caption`](tables_figures/pheno_Tsensitivity_combo_patchwork_april_may.png){ width=90% }
+
+\newpage
+
+![`r pheno_Tmin_AprilMay_caption`](tables_figures/pheno_Tsensitivity_combo_patchwork_april_may_tmin.png){ width=90% }
+
+\newpage
+
+![`r tree_rings_TMIN_caption`](tables_figures/tree_rings_tmin.png){ width=90% } 
