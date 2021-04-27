@@ -1,5 +1,5 @@
 ---
-title: "Extended Data"
+title: ""
 author:
 output: 
   pdf_document:
@@ -92,18 +92,12 @@ kable_styling(latex_options = c("scale_down", "hold_position"), protect_latex = 
 
 \newpage
 
-```{r growth_curves_all, out.width="100%", echo=FALSE, fig.align="center", fig.cap= growth_curves_all_caption, fig.pos="H", warning=FALSE}
-knitr::include_graphics("tables_figures/growth_curves_all.png")
-```
+![`r growth_curves_all_caption`](tables_figures/growth_curves_all.png){ width=100% }
 
 \newpage
-```{r climwin, out.width="70%", echo=FALSE, fig.align="center", fig.cap= climwin_caption, warning=FALSE}
-knitr::include_graphics("tables_figures/climwin_figure.png")
-```
 
+![`r climwin_caption`](tables_figures/climwin_figure.png){ width=70% }
 
 \newpage
-```{r tree_rings_TMIN, out.width="120%", echo=FALSE, fig.align="center", fig.cap= tree_rings_TMIN_short_caption, warning=FALSE}
-knitr::include_graphics("tables_figures/tree_rings_tmin.png")
-```
 
+![`r tree_rings_TMIN_short_caption`](tables_figures/tree_rings_tmin.png){ width=90% }
