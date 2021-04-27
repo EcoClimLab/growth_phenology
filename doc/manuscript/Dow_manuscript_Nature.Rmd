@@ -210,18 +210,12 @@ Across all trees and years, the mean $DOY_{25}$ occurred on day 139 (May 20) at 
 Consistent with the results of Ref[D'Orangeville], ring-porous species began growing earlier, reaching the $DOY_{25}$ benchmark earlier (by `r 154-123` days at SCBI and `r 164-132` at Harvard Forest), and their growth was spread out over a longer growing season (average $L_{PGS}$ 21 and 19 days longer at SCBI and Harvard Forest, respectively). 
 Growing season length was similar across sites, with $L_{PGS}$ being, on average, only two days longer at SCBI for ring-porous species and less than one day longer for diffuse-porous species. 
 
+
 ## (Critical temperature windows)
 
 For the majority of weekly time windows from Jan. 1 to $DOY_{25}$, there was a negative or neutral relationship between $T_{max}$ and $DOY_{25}$, meaning that warmer temperatures shifted growth earlier in the season (`r EDF_climwin`). 
 This held true for both ring- and diffuse-porous trees at both sites, *albiet* with less consistent patterns at Harvard Forest, which was sampled for fewer years. 
 The strongest relationships, including but not limited to the optimal time windows (`r  EDT_mean_growth_parameters`), occurred for time windows closing $\le$ 5 weeks prior to $DOY_{25}$. 
-
-
-The correlation of $DOY_{25}$ to $T_{min}$ was less consistent than that of $T_{max}$ (**NEEDS SUPPORTING FIG**). 
-At SCBI, patterns were quite similar to those described above for $T_{max}$, with similar timing and strengths of correlations across the two temperature variables (**NEEDS SUPPORTING FIG**).
-In contrast, at Harvard Forest, where we had only six years of data, *climwin* selected windows greater than five weeks prior to $DOY_{25}$, had positive correlations between $DOY_{25}$ and $T_{min}$.
-However, for both ring- and diffuse- porous species, average $T_{min}$ of the selected period was below freezing (<0°C) in all years, suggesting that these are sporadic correlations that are unlikely to be biologically meaningful.
-
 Henceforth, we focus on $T_{max}$ assessed over *climwin*-selected critical temperature windows, *noting that similar results are obtained using alternate temperature window ([GitHub issue #42](https://github.com/EcoClimLab/growth_phenology/issues/42)).*
 
 ## (Climate sensitivity of phenology )
