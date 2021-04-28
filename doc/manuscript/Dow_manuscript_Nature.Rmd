@@ -226,10 +226,10 @@ Patterns in $T_{min}$ were fairly similar to those of $T_{max}$, but weaker and 
 ![`r tree_rings_caption`](tables_figures/tree_rings_tmax.png){ width=100% }
 
 
-**The patterns observed at our focual sites were mirrored across an additional `r n_chronologies-n_chronologies_SCBI-n_chronologies_HF` chronologies from `r n_cores_sites-2` (`r EDF_map`).** 
-In total, our analysis included # species at sites distributed from XXX to XXX and spanning a ## degree range in April T.** 
-*(describe results across all sites)*
-(Fig. `r tree_rings`)
+**The patterns observed at our focual sites were mirrored across an additional `r n_chronologies-n_chronologies_SCBI-n_chronologies_HF` chronologies from `r n_cores_sites-2` (Fig. `r tree_rings`; `r EDF_map`).** 
+In total, our analysis included # species at sites distributed from XXX to XXX and spanning a ## $^\circ$C range in April T.
+Across all chronologies (focal sites included), RWI was significantly positively correlated with April $T_{max}$ for only #% of records: # of # ring-porous and # or # diffuse-porous species-site combinations.
+In contrast, RWI was frequently significantly negatively correlated with $T_{max}$ during peak growing season months (May-August), with significant correlations for #% and #% of species-site-month combinations for ring-porous and diffuse-porous species, respectively.
 
 
 # (Discussion)
