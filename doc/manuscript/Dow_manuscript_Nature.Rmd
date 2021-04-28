@@ -211,31 +211,22 @@ Similarly, $DOY_{25}$, $DOY_{50}$, $DOY_{75}$, and $DOY_{g.max}$ at both sites a
 Whereas the length of time between leaf greenup and senescence (i.e., **DEFINE**) increased in years with warmer springs (Fig. `r DOY_timing`), there was no consistent lengthening of the period of peak stem growth. 
 Specifically, because $DOY_{75}$ -- and not only $DOY_{25}$ -- shifted earlier in years with warm springs, $L_{PGS}$ displayed mixed responses to spring temperatures (Fig. `r schematic_summary`, Extended Data Figures **4-6**).
 
-## (Climate sensitivity of growth)
+**Neither maximum seasonal growth rate, $g_{max}$, nor annual growth measured with dendrometer bands, $\Delta DBH$, was consistently linked to early spring temperatures (Fig. `r schematic_summary`, Extended Data Figures **4-6**).** 
+Specifically, $g_{max}$ displayed either no relationship to CTW $T_{max}$ (SCBI), or extremely small changes in opposite directions for ring- and diffuse- porous species (Harvard Forest),
+while $\Delta DBH$ displayed no relationship CTW $T_{max}$ (`r EDF_pheno_Tmax_climwin`). 
 
-Maximum growth rate, $g_{max}$, was not consistently linked to early spring temperatures (Figs. `r schematic_summary`, `r pheno_Tsensitivity`). 
-Ring-porous species exhibited no change (SCBI) or a slight increase (Harvard Forest) with warmer $T_{max}$ during the critical temperature window.
-In contrast, diffuse-porous species at both sites exhibited lower $g_{max}$ in years with higher early spring $T_{max}$.
-
-Total annual growth was not consistently linked to spring temperatures (Fig. `r schematic_summary`).
-Annual growth measured with dendrometer bands, $\Delta DBH$, also was not consistently linked to early spring temperatures, displaying either no relationship (SCBI) or extremely small changes in opposite directions for ring- and diffuse- porous species (Harvard Forest) (Fig. `r pheno_Tsensitivity`).
-
-**To understand how annual growth, as registered in ring width indices ($RWI$), have responded to spring temperatures at the centennial scale, we analyzed tree-ring chronologies for `r n_chronologies_SCBI` species at SCBI, `r n_chronologies_HF` species at Harvard Forest.**
-*(The following should be condensed:)*
-Residual chronologies rarely exhibited significant correlations to either $T_{max}$ or $T_{min}$ in the months corresponding to the critical temperature windows identified here (Fig. `r tree_rings`, `r EDF_tree_rings_TMIN`).
+**To understand how annual growth increments, as registered in ring width indices (RWI), have responded to spring temperatures at the centennial scale, we analyzed tree-ring chronologies from our focal study sites  (`r EDT_species`) and across an additional `r n_cores_sites-2` (Fig. `r tree_rings`, `r EDF_map`).**
+For `r n_chronologies_SCBI` species at SCBI and `r n_chronologies_HF` species at Harvard Forest, residual chronologies rarely exhibited significant correlations to either $T_{max}$ or $T_{min}$ in the months corresponding to the CTWs identified here (Fig. `r tree_rings`, `r EDF_tree_rings_TMIN`).
 Although correlations were rarely significant, there was a consistent pattern in responses to $T_{max}$ across all species at both sites:
 responses to $T_{max}$ were negative or neutral in all months from February to August, with the exception of one spring month at each site (April at SCBI, May at Harvard Forest) where growth displayed a positive or neutral responses to $T_{max}$ (Fig. `r tree_rings`).
 In these months, positive correlations to $T_{max}$ were statistically significant (at p=0.05) for one of nine ring-porous species at SCBI and one of two diffuse-porous species at each site.
-In the prior months, the generally negative correlations to $T_{max}$ were not significant, excepting significant correlations of one species at each site  (ring-porous *Carya tomentosa* in March at SCBI; diffuse-porous *Acer rubrum* in April at Harvard Forest).
-Starting in May at SCBI, significant correlations to $T_{max}$ were common, occurring for nine of the eleven species in May and 3-7 species for each month June through August.
-At Harvard Forest, there was only one statistically significant negative correlation to post-May $T_{max}$ (*Quercus rubra* in June). 
+Starting in May at SCBI and June at Harvard Forest, negative correlations of RWI to $T_{max}$ were predominant, being statistically significant in at least one growing season month for all `r n_chronologies_SCBI` species at SCBI and one of `r n_chronologies_HF` species at Harvard Forest. 
+Patterns in $T_{min}$ were fairly similar to those of $T_{max}$, but weaker and more stochastic, with more (non-significant) correlations going in opposite directions (`r EDF_tree_rings_TMIN`). 
 
 ![`r tree_rings_caption`](tables_figures/tree_rings_tmax.png){ width=100% }
 
-Patterns in $T_{min}$ were fairly similar to those of $T_{max}$, but weaker and more stochastic, with more (non-significant) correlations going in opposite directions (`r EDF_tree_rings_TMIN`). 
-There were no significant correlations to $T_{min}$ prior to May at SCBI or June at Harvard Forest. 
 
-**To set these findings in a broader scale context, we analyzed an additional `r n_chronologies-n_chronologies_SCBI-n_chronologies_HF` chronologies from `r n_cores_sites-2` (`r EDF_map`).** 
+**The patterns observed at our focual sites were mirrored across an additional `r n_chronologies-n_chronologies_SCBI-n_chronologies_HF` chronologies from `r n_cores_sites-2` (`r EDF_map`).** 
 In total, our analysis included # species at sites distributed from XXX to XXX and spanning a ## degree range in April T.** 
 *(describe results across all sites)*
 (Fig. `r tree_rings`)
