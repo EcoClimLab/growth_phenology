@@ -240,10 +240,10 @@ all.dcc.output$Species <- substr(all.dcc.output$Species, nchar(all.dcc.output$Sp
 #write.csv(all.dcc.output, file = "all.dcc.output_other.csv", row.names = FALSE)
 library(readr)
 #Merge dcc outputs to plot on the same quilt plot
-all_dcc_output_hf <- read_csv("all.dcc.output_hf.csv")
+all_dcc_output_hf <- read_csv("results/all.dcc.output_hf.csv")
 all_dcc_output_hf$site <- paste0("HF_", all_dcc_output_hf$Species)
-all_dcc_output_other <- read_csv("all.dcc.output_other.csv")
-all_dcc_output_scbi <- read_csv("scbi_core_corr.csv")
+all_dcc_output_other <- read_csv("results/all.dcc.output_other.csv")
+all_dcc_output_scbi <- read_csv("results/scbi_core_corr.csv")
 all_dcc_output_scbi$site <- paste0("SCBI_", all_dcc_output_scbi$Species)
 
 all.dcc.output_all <- rbind(all_dcc_output_other,all_dcc_output_scbi,all_dcc_output_hf)
