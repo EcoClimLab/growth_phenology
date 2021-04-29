@@ -146,7 +146,7 @@ n_chronologies_HF <- 3
 (*word limit 200. italic=tentative*)
 
 
-As the climate changes, warmer spring temperatures are causing earlier leaf-out[@jeong_phenology_2011] and commencement of net carbon dioxide (CO~2~) sequestration[@churkina_spatial_2005; @keenan_net_2014; @zhou_explaining_2016] in temperate deciduous forests, resulting in a tendency towards increased growing season length[@menzel_growing_1999;@menzel_european_2006;@ibanez_forecasting_2010;@jeong_phenology_2011] and annual CO~2~ sequestration[@keeling_increased_1996;@dragoni_evidence_2011;@crabbe_extreme_2016].
+As the climate changes, warmer spring temperatures are causing earlier leaf-out[@jeong_phenology_2011] and commencement of net carbon dioxide (CO~2~) sequestration[@keenan_net_2014] in temperate deciduous forests, resulting in a tendency towards increased growing season length[@menzel_growing_1999;@menzel_european_2006;@ibanez_forecasting_2010;@jeong_phenology_2011] and annual CO~2~ sequestration[*@keeling_increased_1996;@dragoni_evidence_2011;@crabbe_extreme_2016*; @zhou_explaining_2016;  @fu_maximum_2019].
 However, less is known about how spring temperatures affect tree stem growth, which consumes only a modest portion of the carbon fixed annually[@anderson-teixeira_carbon_2021] but sequesters that carbon in wood that has a long residence time in the ecosystem [@xue_global_2017;@russell_residence_2014] or as wood products[@profft_forest_2009].
 Here, we show that in two temperate deciduous forests, warmer maximum spring temperatures consistently shifted woody growth milestones earlier but had mixed, weak effects on peak growing season length, maximum daily growth rates, and annual growth.
 The latter finding is confirmed on the centennial scale by `r n_chronologies` tree-ring chronologies from `r n_cores_sites` forests across eastern North America, which show that annual growth is by far more sensitive to temperatures during the peak growing season than in the spring.
@@ -171,7 +171,7 @@ Warmer spring temperatures and earlier leaf-out are also linked to earlier leaf 
 However, warmer summer and autumn temperatures can delay leaf senescence[@zohner_ongoing_2019;@crabbe_extreme_2016;@dragoni_evidence_2011;@jeong_phenology_2011;@ibanez_forecasting_2010;@vitasse_responses_2009].
 The net result is that spring warming generally results in an increased growing season length, measured as the period over which trees have leaves[@jeong_phenology_2011;@menzel_growing_1999;@menzel_european_2006;@ibanez_forecasting_2010;@jeong_phenology_2011] and the ecosystem is a net CO~2~ sink[REFS].
 
-**The expectation is that as growing season length increases, net annual carbon sequestered will increase as well (*i,e*, net ecosystem exchange, $NEE$)[@churkina_spatial_2005; @keenan_net_2014; @zhou_explaining_2016].** 
+**The expectation is that as growing season length increases, net annual carbon sequestered will increase as well (*i,e*, net ecosystem exchange, $NEE$)[@churkina_spatial_2005; @keenan_net_2014; @zhou_explaining_2016; @fu_maximum_2019].** 
 *This expectation is represented in models [@zani_increased_2020].*
 However, recent evidence that leaf senescence is induced when the seasonal carbon-sink capacities of trees are reached suggests that warmer spring temperatures and earlier leaf-out could advance autumn senescence and *will not necessarily lead to drastically increased C sequestration*[@zani_increased_2020]. 
 
@@ -245,13 +245,20 @@ This suggests that stem growth, like leaf phenology[@zani_increased_2020], may b
 
 The concept that stem growth is not enhanced under a longer growing season was supported by our tree-ring analysis, which showed that the effect of spring temperatures on annual growth is negligible for most species and locations, with at most modest influence for some species and locations (Fig. `r tree_rings`, `r EDF_tree_rings_TMIN`)[@alexander_potential_2019; @helcoski_growing_2019].
 Rather, the primary effect of temperature on annual growth is a negative effect of $T_{max}$ during the peak growing season, which is most likely a signal of drought stress driven by increased vapor pressure deficit[**REFS**].
-*It is possible that an earlier start to the growing season may provide some buffer against drought later in the growing season, effectively reducing drought sensitivity, but this hypothesis remains to be evaluated.*
-Our finding that interannual variation in woody growth is more strongly linked to conditions during the peak growing season than to growing season length aligns with parallel findings for NEE [@fu_maximum_2019].
+It is possible that an earlier start to the growing season may provide some buffer against drought later in the growing season, effectively reducing drought sensitivity, but this hypothesis remains to be evaluated.
 
-However, there is also a disconnect between the woody growth responses to spring temperatures observed here and parallel studies on NEE implying that annual C sequestration increases with spring temperatures.
+Our finding that interannual variation in woody growth is more strongly linked to conditions during the peak growing season than to growing season length aligns with parallel findings for NEE [@zhou_explaining_2016; @fu_maximum_2019].
+However, there is also a disconnect between the woody growth responses to spring temperatures observed here and parallel studies on NEE implying that annual C sequestration increases -- at least modestly -- with spring temperatures[@keenan_net_2014] or with the length of the carbon uptake period[@zhou_explaining_2016; @fu_maximum_2019].
 We show that the extra C does not go into woody growth, raising the question of where this C goes.
+There are two main possibilities, which hold contrasting implications for the response of forest C balance to rising spring temperatures.
+First, C that is fixed in late summer or fall may be used for woody growth that is not apparent in the current year's diameter increment: either used to provide extra thickening of cell walls, a process that lags behind stem expansion[REF], or saved within trees as non-structural carbohydrates and used towards growth the following year. Indeed, tree-ring evidence from SCBI indicates that favorable growing conditions during this time enhance the next year's growth[@helcoski_growing_2019].
+Second, the additional C may be allocated, likely in the following growing season, to short-lived C pools such as reproduction, foliage, fine roots, or root exudates. Most of this carbon would have a relatively low residence time in the ecosystem, although a small fraction would be incorporated into soil organic carbon pools with residence times rivaling that of wood [REFS].
+Notably, both of these involve lags of a year or more and would not be captured in interannual variation in NEE, implying that the long-term effect of lengthened growing season on NEE may not be captured in studies, including this one, that consider time frames of a year or less[@keenan_net_2014;@zhou_explaining_2016; @fu_maximum_2019].
 
 *(KAT edits end here)*
+
+*There is a difference between interannual variation and directional change: the latter is likely to result in acclimatization, and eventually changes in forest composition/ adaptation.* 
+If we look across spatial gradients where the latter have had time to play out, we see that longer growing seasons are correlated with greater tree growth[**REF?**], woody productivity[@banburymorgan_global_2021], and NEE [@churkina_spatial_2005].
 
 Our findings contribute to a broader picture of the influence of spring temperatures on forest ecosystem function. 
 Warm spring temperatures result in earlier leaf-out (Fig. `r DOY_timing` , REFS), an earlier start to net C sequestration (REFS), and, as shown here, earlier initiation of stem growth (Figs. `r schematic_summary`- `r DOY_timing`).
@@ -266,8 +273,6 @@ Because of this, temperate deciduous forests are likely to sequester less CO~2~ 
 # (Content to incorporate) 
 
 
-However, more of the interannual variation in forest $NEE$ is explained by variation in maximum C uptake rates than by the length of the carbon uptake period [@zhou_explaining_2016; @fu_maximum_2019]. This idea agrees with patterns seen in tree cores, where peak growing season climate was more influential than spring climate [@helcoski_growing_2019] but many models still predict the extension of growing season will increase NEE. 
-
 @delgado_differences_2020 
 
 From Neil: @zhang_drought_2021, @zhang_extended_2020
@@ -276,10 +281,7 @@ Geng et al. 2020 GCB- Climate warming increases spring phenological differences 
 
 N. American strategies have conservative strategies when it comes to phenology, as historically they’ve been subject to more spring frosts. Thus, climate change is having less impact (Zohner et al., 2020); Leaf velocity discussion? - - RP trees BB = 25% and 75% leaf development = 50% growth [@doranngeville_radial_inreview]. Are DP trees leafing up earlier? If yes, how much earlier? Similar to 25,50,75% DOY retreat? 
 
-Another study found that the velocity of leaf development is correlated to bud burst timing, such that the later in the spring bud burst occurred, the faster leaves developed and vice versa (Klosterman & Hufkins & Richardson, 2018).  
-
-The timing of tree growth has profound impacts on ecosystem interactions, as well as dictates periods of highest drought sensitivity in temperate forests (Foster, 2014; D’Orangeville et al. in review). Species have co-evolved to utilize the phenological stages of trees at specific times in the year. If the timing of intraannual phenology traits were to shift, that could harm the species depending on the trees (). Additionally, if a drought were to occur when trees were at their peak growth rates, the resulting decrease in that year's NPP would reduce the total amount of carbon sequestered, contributing to a climate feedback loop further exacerbating these potential shifts (source?). 
-
+The timing of tree growth has profound impacts on ecosystem interactions, as well as dictates periods of highest drought sensitivity in temperate forests (Foster, 2014; D’Orangeville et al. in review). 
 
 
 # Methods {-#Methods} 
