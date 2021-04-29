@@ -251,19 +251,23 @@ Our finding that interannual variation in woody growth is more strongly linked t
 However, there is also a disconnect between the woody growth responses to spring temperatures observed here and parallel studies on NEE implying that annual C sequestration increases -- at least modestly -- with spring temperatures[@keenan_net_2014] or with the length of the carbon uptake period[@zhou_explaining_2016; @fu_maximum_2019].
 We show that the extra C does not go into woody growth, raising the question of where this C goes.
 There are two main possibilities, which hold contrasting implications for the response of forest C balance to rising spring temperatures.
-First, C that is fixed in late summer or fall may be used for woody growth that is not apparent in the current year's diameter increment: either used to provide extra thickening of cell walls, a process that lags behind stem expansion[REF], or saved within trees as non-structural carbohydrates and used towards growth the following year. Indeed, tree-ring evidence from SCBI indicates that favorable growing conditions during this time enhance the next year's growth[@helcoski_growing_2019].
-Second, the additional C may be allocated, likely in the following growing season, to short-lived C pools such as reproduction, foliage, fine roots, or root exudates. Most of this carbon would have a relatively low residence time in the ecosystem, although a small fraction would be incorporated into soil organic carbon pools with residence times rivaling that of wood [REFS].
-Notably, both of these involve lags of a year or more and would not be captured in interannual variation in NEE, implying that the long-term effect of lengthened growing season on NEE may not be captured in studies, including this one, that consider time frames of a year or less[@keenan_net_2014;@zhou_explaining_2016; @fu_maximum_2019].
+First, C that is fixed in late summer or fall may be used for woody growth that is not apparent from diameter measurements in the current year: either used for thickening of cell walls, a process that lags behind stem expansion[@cuny_woody_2015], or saved within trees as non-structural carbohydrates and used towards growth the following year[@trumbore_quantifying_2002;@richardson_seasonal_2013]. 
+Tree-ring evidence from SCBI suggests that both processes may influence the climate sensitivity of annual woody growth, and that this dynamic is likely complex[@helcoski_growing_2019].
+Second, any additional C that is not rapidly respired may be allocated, likely in the following growing season, to plant functions other than stem growth, including respiration, reproduction, foliage, fine roots, or root exudates[@trumbore_quantifying_2002]. 
+Most of this carbon would have a relatively low residence time in the ecosystem[@trumbore_quantifying_2002], although a small fraction would be incorporated into soil organic carbon pools *with residence times rivaling that of wood [REFS]*.
+Notably, both of these involve lags of a year or more and would not be captured in interannual variation in NEE, implying that the long-term effect of lengthened growing season on NEE may not be captured in studies, including this one, that consider time frames of a year or less[@zhou_explaining_2016; @fu_maximum_2019].
+A study examining long-term trends in growing season length and NEE[@keenan_net_2014] -- as opposed to their interannual variation -- showed increasing trends in both within the temperate deciduous biome, suggesting that the C that is not allocated to current year growth may have a fairly long residence time within the ecosystem; however, the amount and fate of this carbon remains unknown.
+
+Thus, a distinction between interannual variation and directional change may be critical when considering how directional climate change is likely to affect tree growth and ecosystem C dynamics. 
+In addition to the existence of temporal lags between C uptake and release, which introduce a lot of uncertainty[@trumbore_quantifying_2002], trees are likely to  acclimate *to some extent* to warming temperatures[**REFS?**], and on even longer time scales, we are likely to see changes in forest composition and adaptation.
+If we look across spatial gradients where the latter have had time to play out, we see that longer growing seasons are correlated with greater tree growth[**REF?**], woody productivity[@banburymorgan_global_2021], and NEE [@churkina_spatial_2005].
+*Future research will be important to sortitng this out.*
 
 *(KAT edits end here)*
 
-*There is a difference between interannual variation and directional change: the latter is likely to result in acclimatization, and eventually changes in forest composition/ adaptation.* 
-If we look across spatial gradients where the latter have had time to play out, we see that longer growing seasons are correlated with greater tree growth[**REF?**], woody productivity[@banburymorgan_global_2021], and NEE [@churkina_spatial_2005].
-
-Our findings contribute to a broader picture of the influence of spring temperatures on forest ecosystem function. 
-Warm spring temperatures result in earlier leaf-out (Fig. `r DOY_timing` , REFS), an earlier start to net C sequestration (REFS), and, as shown here, earlier initiation of stem growth (Figs. `r schematic_summary`- `r DOY_timing`).
-Yet, an earlier start to the growing season is not associated with a longer growing season (Figs. `r schematic_summary`, `r pheno_Tsensitivity`) [@zani_increased_2020]
-because growth finishes sooner under these conditions, presumably because of *C sink limitation* [@zani_increased_2020].
+Despite remaining uncertainties, our findings contribute substantially to a broader picture of the influence of spring temperatures on forest ecosystem function. 
+Warm spring temperatures result in earlier leaf-out (Fig. `r DOY_timing` , REFS), an earlier start to net C sequestration[@keenan_net_2014], and, as shown here, earlier initiation of stem growth (Figs. `r schematic_summary`- `r pheno_Tsensitivity`).
+Yet, an earlier start to the growing season is not associated with a longer growing season or increased growth (Figs. `r schematic_summary`- `r tree_ring`), presumably because stem diameter increases are curtailed by other factors such as...., supporting the concept of *C sink limitation* [@zani_increased_2020].
 
 
 As climate change accelerates and spring temperatures become increasingly warmer, growing seasons will start earlier, but this is unlikely to provide the increased carbon sequestration that is anticipated in most models (Figs. `r schematic_summary`, `r pheno_Tsensitivity`, `r tree_rings`)[@zani_increased_2020].
@@ -271,7 +275,6 @@ Because of this, temperate deciduous forests are likely to sequester less CO~2~ 
 
 
 # (Content to incorporate) 
-
 
 @delgado_differences_2020 
 
