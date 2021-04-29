@@ -17,7 +17,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Title:** Warmer spring temperatures in temperate deciduous forests cause earlier tree growth but have little effect on annual woody productivity
 
-**Authors (not yet complete, just alphabetical for now--final order TBD):** 
+**Authors:** 
 
 Cameron Dow^1^
 
@@ -31,23 +31,23 @@ Ryan Helcoski^1^
 
 Valentine Herrmann^1^
 
-Grant Harley
+Grant Harley^5^
 
-Justin Maxwell
+Justin Maxwell^6^
 
-Ian McGregor^1,6^
+Ian McGregor^1,7^
 
 William McShea^1^
 
-Sean McMahon^7,9^
+Sean McMahon^8,10^
 
 David A. Orwig^3^
 
 Neil Pederson^3^
 
-Alan Tepley^1,8^
+Alan Tepley^1,9^
 
-Kristina J. Anderson-Teixeira^1,9^*
+Kristina J. Anderson-Teixeira^1,10^*
 
 
 **Author Affiliations:**
@@ -62,13 +62,15 @@ Kristina J. Anderson-Teixeira^1,9^*
 
 5. Department of Geography & Geological Sciences, University of Idaho, ID, USA
 
-6. Center for Geospatial Analytics; North Carolina State University; Raleigh, NC 27607, USA
+6. Department of Geography, Indiana University, Bloomington, Indiana, USA
 
-7. Smithsonian Environmental Research Center, Edgewater, MD, USA
+7. Center for Geospatial Analytics; North Carolina State University; Raleigh, NC 27607, USA
 
-8. Canadian Forest Service, Northern Forestry Centre, Edmonton, Alberta, Canada
+8. Smithsonian Environmental Research Center, Edgewater, MD, USA
 
-9. Forest Global Earth Observatory; Smithsonian Tropical Research Institute; Panama, Republic of Panama
+9. Canadian Forest Service, Northern Forestry Centre, Edmonton, Alberta, Canada
+
+10. Forest Global Earth Observatory; Smithsonian Tropical Research Institute; Panama, Republic of Panama
 
 
 
@@ -143,10 +145,10 @@ n_chronologies_HF <- 3
 
 ```
 
-(*word limit 200. italic=tentative*)
+(*word limit 200 - this is currently way too long.*)
 
 
-As the climate changes, warmer spring temperatures are causing earlier leaf-out[@jeong_phenology_2011] and commencement of net carbon dioxide (CO~2~) sequestration[@keenan_net_2014] in temperate deciduous forests, resulting in a tendency towards increased growing season length[@menzel_growing_1999;@menzel_european_2006;@ibanez_forecasting_2010;@jeong_phenology_2011] and annual CO~2~ sequestration[*@keeling_increased_1996;@dragoni_evidence_2011;@crabbe_extreme_2016*; @zhou_explaining_2016;  @fu_maximum_2019].
+As the climate changes, warmer spring temperatures are causing earlier leaf-out[@jeong_phenology_2011] and commencement of net carbon dioxide (CO~2~) sequestration[@keenan_net_2014] in temperate deciduous forests, resulting in a tendency towards increased growing season length[@menzel_growing_1999;@menzel_european_2006;@ibanez_forecasting_2010;@jeong_phenology_2011] and annual CO~2~ sequestration[@keeling_increased_1996;@dragoni_evidence_2011;@crabbe_extreme_2016; @zhou_explaining_2016; @fu_maximum_2019].
 However, less is known about how spring temperatures affect tree stem growth, which consumes only a modest portion of the carbon fixed annually[@anderson-teixeira_carbon_2021] but sequesters that carbon in wood that has a long residence time in the ecosystem [@xue_global_2017;@russell_residence_2014] or as wood products[@profft_forest_2009].
 Here, we show that in two temperate deciduous forests, warmer maximum spring temperatures consistently shifted woody growth milestones earlier but had mixed, weak effects on peak growing season length, maximum daily growth rates, and annual growth.
 The latter finding is confirmed on the centennial scale by `r n_chronologies` tree-ring chronologies from `r n_cores_sites` forests across eastern North America, which show that annual growth is by far more sensitive to temperatures during the peak growing season than in the spring.
@@ -229,7 +231,7 @@ Patterns in $T_{min}$ were fairly similar to those of $T_{max}$, but weaker and 
 ![`r tree_rings_caption`](tables_figures/tree_rings_tmax.png){ width=100% }
 
 
-The patterns observed at our focual sites were mirrored across an additional `r n_chronologies-n_chronologies_SCBI-n_chronologies_HF` chronologies from `r n_cores_sites-2` (Fig. `r tree_rings`; `r EDF_map`).
+The patterns observed at our focal sites were mirrored across an additional `r n_chronologies-n_chronologies_SCBI-n_chronologies_HF` chronologies from `r n_cores_sites-2` sites (Fig. `r tree_rings`; `r EDF_map`)[@dorangeville_drought_2018].
 In total, our analysis included # species at sites distributed from XXX to XXX and spanning a ## $^\circ$C range in April T.
 Across all chronologies (focal sites included), RWI was significantly positively correlated with April $T_{max}$ for only #% of records: # of # ring-porous and # or # diffuse-porous species-site combinations.
 In contrast, RWI was frequently significantly negatively correlated with $T_{max}$ during peak growing season months (May-August), with significant correlations for #% and #% of species-site-month combinations for ring-porous and diffuse-porous species, respectively.
@@ -244,47 +246,44 @@ However, inconsistent with leaf phenology and NEE, we observed that the length o
 This suggests that stem growth, like leaf phenology[@zani_increased_2020], may be sink-limited, such that an advance in the start of growth ($DOY_25$) accompanied by little change in growth rate ($g_{max}$) results in an earlier end to the season of rapid growth ($DOY_{75}$). 
 
 The concept that stem growth is not enhanced under a longer growing season was supported by our tree-ring analysis, which showed that the effect of spring temperatures on annual growth is negligible for most species and locations, with at most modest influence for some species and locations (Fig. `r tree_rings`, `r EDF_tree_rings_TMIN`)[@alexander_potential_2019; @helcoski_growing_2019].
-Rather, the primary effect of temperature on annual growth is a negative effect of $T_{max}$ during the peak growing season, which is most likely a signal of drought stress driven by increased vapor pressure deficit[**REFS**].
-It is possible that an earlier start to the growing season may provide some buffer against drought later in the growing season, effectively reducing drought sensitivity, but this hypothesis remains to be evaluated.
+Rather, the primary effect of temperature on annual growth is a negative effect of $T_{max}$ during the peak growing season, which is most likely a signal of drought stress[@dorangeville_drought_2018].
+It is possible that an earlier start to the growing season may provide some buffer against drought later in the growing season, potentially contributing to observed trends of declining drought sensitivity in the region[@maxwell_declining_2016;@helcoski_growing_2019], but this hypothesis remains to be evaluated.
 
 Our finding that interannual variation in woody growth is more strongly linked to conditions during the peak growing season than to growing season length aligns with parallel findings for NEE [@zhou_explaining_2016; @fu_maximum_2019].
 However, there is also a disconnect between the woody growth responses to spring temperatures observed here and parallel studies on NEE implying that annual C sequestration increases -- at least modestly -- with spring temperatures[@keenan_net_2014] or with the length of the carbon uptake period[@zhou_explaining_2016; @fu_maximum_2019].
 We show that the extra C does not go into woody growth, raising the question of where this C goes.
 There are two main possibilities, which hold contrasting implications for the response of forest C balance to rising spring temperatures.
 First, C that is fixed in late summer or fall may be used for woody growth that is not apparent from diameter measurements in the current year: either used for thickening of cell walls, a process that lags behind stem expansion[@cuny_woody_2015], or saved within trees as non-structural carbohydrates and used towards growth the following year[@trumbore_quantifying_2002;@richardson_seasonal_2013]. 
-Tree-ring evidence from SCBI suggests that both processes may influence the climate sensitivity of annual woody growth, and that this dynamic is likely complex[@helcoski_growing_2019].
+Tree-ring evidence from SCBI suggests that both processes may influence the climate sensitivity of annual woody growth, but that this dynamic is complex and unlikely to result in substantial additional growth in the following year [@helcoski_growing_2019].
 Second, any additional C that is not rapidly respired may be allocated, likely in the following growing season, to plant functions other than stem growth, including respiration, reproduction, foliage, fine roots, or root exudates[@trumbore_quantifying_2002]. 
 Most of this carbon would have a relatively low residence time in the ecosystem[@trumbore_quantifying_2002], although a small fraction would be incorporated into soil organic carbon pools *with residence times rivaling that of wood [REFS]*.
 Notably, both of these involve lags of a year or more and would not be captured in interannual variation in NEE, implying that the long-term effect of lengthened growing season on NEE may not be captured in studies, including this one, that consider time frames of a year or less[@zhou_explaining_2016; @fu_maximum_2019].
-A study examining long-term trends in growing season length and NEE[@keenan_net_2014] -- as opposed to their interannual variation -- showed increasing trends in both within the temperate deciduous biome, suggesting that the C that is not allocated to current year growth may have a fairly long residence time within the ecosystem; however, the amount and fate of this carbon remains unknown.
+Studies examining long-term trends in growing season length and ecosystem C uptake[@keeling_increased_1996;@dragoni_evidence_2011;@keenan_net_2014] -- as opposed to their interannual variation -- within or including the temperate deciduous biome  showed increasing trends in both variables, suggesting that the C not allocated to current year growth may have a fairly long residence time within the ecosystem; however, the amount and fate of this carbon remains unknown.
 
 Thus, a distinction between interannual variation and directional change may be critical when considering how directional climate change is likely to affect tree growth and ecosystem C dynamics. 
 In addition to the existence of temporal lags between C uptake and release, which introduce a lot of uncertainty[@trumbore_quantifying_2002], trees are likely to  acclimate *to some extent* to warming temperatures[**REFS?**], and on even longer time scales, we are likely to see changes in forest composition and adaptation.
 If we look across spatial gradients where the latter have had time to play out, we see that longer growing seasons are correlated with greater tree growth[**REF?**], woody productivity[@banburymorgan_global_2021], and NEE [@churkina_spatial_2005].
-*Future research will be important to sortitng this out.*
-
-*(KAT edits end here)*
+*Future research will be important to sorting this out.*
 
 Despite remaining uncertainties, our findings contribute substantially to a broader picture of the influence of spring temperatures on forest ecosystem function. 
-Warm spring temperatures result in earlier leaf-out (Fig. `r DOY_timing` , REFS), an earlier start to net C sequestration[@keenan_net_2014], and, as shown here, earlier initiation of stem growth (Figs. `r schematic_summary`- `r pheno_Tsensitivity`).
-Yet, an earlier start to the growing season is not associated with a longer growing season or increased growth (Figs. `r schematic_summary`- `r tree_ring`), presumably because stem diameter increases are curtailed by other factors such as...., supporting the concept of *C sink limitation* [@zani_increased_2020].
+Warm spring temperatures result in earlier leaf-out (Fig. `r DOY_timing`)[@jeong_phenology_2011], an earlier start to net C sequestration[@keenan_net_2014], and, as shown here, earlier initiation of stem growth (Figs. `r schematic_summary`- `r pheno_Tsensitivity`).
+Yet, an earlier start to the growing season is not associated with a longer growing season or increased growth (Figs. `r schematic_summary`, `r tree_rings`), presumably because stem diameter growth is curtailed by C sink limitation[@zani_increased_2020] or drought[@dorangeville_drought_2018;@helcoski_growing_2019].
 
-
-As climate change accelerates and spring temperatures become increasingly warmer, growing seasons will start earlier, but this is unlikely to provide the increased carbon sequestration that is anticipated in most models (Figs. `r schematic_summary`, `r pheno_Tsensitivity`, `r tree_rings`)[@zani_increased_2020].
+As climate change accelerates and spring temperatures become increasingly warmer, growing seasons will start earlier, but this is unlikely to provide the sustained increase in carbon sequestration that is anticipated in most models (Fig. `r schematic_summary`)[@zani_increased_2020].
 Because of this, temperate deciduous forests are likely to sequester less CO~2~ than most models suggest, implying that these models are underestimating future overall atmospheric CO~2~.
+(*see [GitHub issue 56 on representation in models](https://github.com/EcoClimLab/growth_phenology/issues/56)*)
 
 
 # (Content to incorporate) 
 
 @delgado_differences_2020 
 
-From Neil: @zhang_drought_2021, @zhang_extended_2020
+From Neil: @zhang_drought_2021; @zhang_extended_2020
 
 Geng et al. 2020 GCB- Climate warming increases spring phenological differences among temperate trees.
 
 N. American strategies have conservative strategies when it comes to phenology, as historically they’ve been subject to more spring frosts. Thus, climate change is having less impact (Zohner et al., 2020); Leaf velocity discussion? - - RP trees BB = 25% and 75% leaf development = 50% growth [@doranngeville_radial_inreview]. Are DP trees leafing up earlier? If yes, how much earlier? Similar to 25,50,75% DOY retreat? 
 
-The timing of tree growth has profound impacts on ecosystem interactions, as well as dictates periods of highest drought sensitivity in temperate forests (Foster, 2014; D’Orangeville et al. in review). 
 
 
 # Methods {-#Methods} 
@@ -349,9 +348,10 @@ At Harvard Forest the tag years removed through this method was proportional to 
 At SCBI a higher proportion of RP trees were removed--the majority in step 4 *(data_cleaning_figure_scbi)*. 
 
 ### Leaf phenology
-description here: https://developers.google.com/earth-engine/datasets/catalog/MODIS_006_MCD12Q2#description
 
-MCD12Q2 V6 Land Cover Dynamics product (informally called the MODIS Global Vegetation Phenology product) [@friedl_mcd12q2_2019]
+Leaf phenology data for the years ### - ### were extracted for SCBI and Harvard forest from the MCD12Q2 V6 Land Cover Dynamics product (informally called the MODIS Global Vegetation Phenology product) [@friedl_mcd12q2_2019].
+
+description here: https://developers.google.com/earth-engine/datasets/catalog/MODIS_006_MCD12Q2#description
 
 ### Tree rings {-#Tree} 
 Dominant tree species were cored at both sites following sampling designs that covered a broad range of $DBH$.
@@ -361,7 +361,7 @@ Briefly, cores were taken from living or recently dead trees $\ge$ 10 cm $DBH$, 
 At Harvard Forest, ...(*Neil can write this easily, or KAT probably has the info*)
 In total, we analyzed `r n_cores_focal_sites` cores from eleven species at SCBI and three species at Harvard Forest (`r  EDT_species`).
 
-The tree-ring records from our focal sites were complemented with a much larger collection spanning **#** deciduous and mixed forest sites in Eastern North America.
+The tree-ring records from our focal sites were complemented with a much larger collection spanning `r n_cores_sites-2` deciduous and mixed forest sites in Eastern North America[@dorangeville_drought_2018] (**OTHER REFS??**).
 Again, species were limited to broadleaf deciduous species with clearly defined xylem porosity (i.e., excluding semi-ring porous). 
 
 
@@ -381,19 +381,20 @@ Gaps in the SCBI meteorological tower data were subsequently filled using temper
 
 For the tree-ring analysis, we obtained monthly $T_{max}$ and $T_{min}$ data for 1901-2019 from CRU v.4.04 [@harris_version_2020], again via the ForestGEO Climate Data Portal v1.0 [@anderson-teixeira_forestgeo_2020].
 
-## Determining critical temperature windows {-#Determining} 
+## Analyses
+### Determining critical temperature windows {-#Determining} 
 
 The period where the phenology milestone(s) were most affected by changes in early spring temperature was determined using the R package *climwin* [@vandepol_identifying_2016]. 
-This package tests the correlation between one or more climate variables and a biological variable over all consecutive time windows within a specified time-frame, reporting correlation and \$Delta AIC$ of each window. 
+This package tests the correlation between one or more climate variables and a biological variable over all consecutive time windows within a specified time-frame, reporting correlation and $\Delta AIC$ of each window. 
 Here, we tested for correlation between temperature ($T_{max}$, $T_{min}$) and $DOY_{25}$ over the time window from January 1 to the mean $DOY_{25}$ for the species group and site (`r  EDT_mean_growth_parameters`).
 *The critical time window is determined based on the subset of models that fall within the 95% confidence set.*
 Here, we focused on defining critical temperature windows for $DOY_{25}$, as opposed to other growth phenology parameters (Figure `r schematic_summary`), because we were interested in the influence of temperature on the initiation of woody growth. 
 We note that other growth parameters would be controlled by different critical temperature windows; for example, at SCBI $\Delta DBH$ responds most strongly to May-July climate [@helcoski_growing_2019]. Determining the climate variables that most strongly control all parameters is beyond the scope of this analysis.
 
 
-## Hypothesis testing {-#Hypothesis} 
+### Hypothesis testing {-#Hypothesis} 
 
-(*This section needs more detail.*)
+(*This section needs work/ more detail.*)
 
 Correlation between these variables and spring temperatures were assessed using a linear mixed model in a hierarchical Bayesian framework.
 
