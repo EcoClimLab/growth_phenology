@@ -243,18 +243,15 @@ The observed advance in the timing of stem growth milestones under warmer spring
 However, inconsistent with leaf phenology and NEE, we observed that the length of the period of most active stem growth does not increase under warmer springs.
 This suggests that stem growth, like leaf phenology[@zani_increased_2020], may be sink-limited, such that an advance in the start of growth ($DOY_25$) accompanied by little change in growth rate ($g_{max}$) results in an earlier end to the season of rapid growth ($DOY_{75}$). 
 
-The concept that stem growth is not enhanced under a longer growing season was supported by our tree-ring analysis, which showed that the effect of spring temperatures on tree growth is modest and not statistically significant for most species (Fig. `r tree_rings`, `r EDF_tree_rings_TMIN`).
+The concept that stem growth is not enhanced under a longer growing season was supported by our tree-ring analysis, which showed that the effect of spring temperatures on annual growth is negligible for most species and locations, with at most modest influence for some species and locations (Fig. `r tree_rings`, `r EDF_tree_rings_TMIN`)[@alexander_potential_2019; @helcoski_growing_2019].
+Rather, the primary effect of temperature on annual growth is a negative effect of $T_{max}$ during the peak growing season, which is most likely a signal of drought stress driven by increased vapor pressure deficit[**REFS**].
+*It is possible that an earlier start to the growing season may provide some buffer against drought later in the growing season, effectively reducing drought sensitivity, but this hypothesis remains to be evaluated.*
+Our finding that interannual variation in woody growth is more strongly linked to conditions during the peak growing season than to growing season length aligns with parallel findings for NEE [@fu_maximum_2019].
 
-*(KAT edits end here.)*
+However, there is also a disconnect between the woody growth responses to spring temperatures observed here and parallel studies on NEE implying that annual C sequestration increases with spring temperatures.
+We show that the extra C does not go into woody growth, raising the question of where this C goes.
 
-This analysis confirms that the effect of spring temperatures on annual growth is modest and not statistically significant for most species, while revealing a slightly more complex picture.
-It appears that temperatures--particularly $T_{max}$--during one spring month at each site (April at SCBI, May at Harvard Forest) consistently have a weakly positive (*albiet* rarely significant) effect on annual growth, in striking contrast to the predominantly negative correlations of growth rates with $T_{max}$ in preceding and subsequent months.
-This suggests that spring $T_{max}$, though it's pronounced influence on the start of woody growth and subtle influence on length of the peak growing season, has a modestly positive influence on annual tree growth, but that this influence is generally of secondary importance to other factors. 
-
-Indeed, the tree-ring records reveal that annual growth is most commonly controlled by climate conditions during the peak growing season (Fig. `r tree_rings`).
-(*1-2 sentences reviewing our regional analysis results /generalizing about climate sensitivity of temperate deciduous forest growth.*)
-These results align with other studies showing that while warmer spring temperatures can have a positive effect on annual growth for some species, most species show no significant response [@alexander_potential_2019; @helcoski_growing_2019].
-These results align with @fu_maximum_2019, which shows that interannual variation in NEE is more strongly linked to peak C uptake rates than to growing season length. Our study demonstrates that this holds true for $ANPP_{woody}$ as well as NEE.
+*(KAT edits end here)*
 
 Our findings contribute to a broader picture of the influence of spring temperatures on forest ecosystem function. 
 Warm spring temperatures result in earlier leaf-out (Fig. `r DOY_timing` , REFS), an earlier start to net C sequestration (REFS), and, as shown here, earlier initiation of stem growth (Figs. `r schematic_summary`- `r DOY_timing`).
