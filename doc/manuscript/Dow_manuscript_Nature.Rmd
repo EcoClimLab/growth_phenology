@@ -15,7 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 \raggedright
 
-**Title:** Warmer spring temperatures in temperate deciduous forests cause earlier tree growth but have little effect on annual woody productivity
+**Title:** Warmer spring temperatures in temperate deciduous forests advance the timing of tree growth but have little effect on annual woody productivity */annual increments*
 
 **Authors:** 
 
@@ -101,9 +101,9 @@ tree_rings = 4
 schematic_summary_caption <- "**Figure 1 | Summary of tree growth changes under warmer spring temperatures.** (a) Schematic illustrating parameters of interest and summarizing how each responds to warmer maximum temperatures during a 'critical temperature window', defined as that with the strongest control over $DOY_{25}$; (b) Variable definitions and summary responses to warmer spring temperatures at two temperate forests and for two groups of broadleaf deciduous species (RP=ring porous; DP=diffuse porous), where up and down arrows indicate increases and decreases, respectively, 'n.s.' indicates no signficant correlation, and 'mixed' indicates a mix of signficant and non-signficant correlations, often in different directions."
 
 
-DOY_timing_caption <- "**Figure 2 | Leaf (a,b) and stem growth (c,d) phenology at the Smithsonian Conservation Biology Institute (a,c) and Harvard Forest (b,d).** Panels (a-b) show ecosystem-level leaf phenology, obtained from the MODIS Global Vegetation Phenology product(**YEARS**), where G = Greenup, M=Mid-greenup, P=peak, and S=Senescence (i.e., beginning of green-down). Panels (c-d) show the dates at which stem growth milestones were acheived, on average, for sampled populations of ring-porous and diffuse-porous trees at SCBI (2011-2020) and Harvard Forest (1998-2003). Mean temperature was calculated for each wood-type/site combination over the respective critical $T_{max}$ window, then turned into a ratio and assigned a color on a gradient where the coldest year in the sample is blue and the warmest is red. (**SHOULD WE COMBINE LEAF AND STEM PHENOLOGY ON A SINGLE PLOT WITH SEPARATE Y-AXES?** See [GitHub Issue #50](https://github.com/EcoClimLab/growth_phenology/issues/50). )" #needs attention!!!
+DOY_timing_caption <- "**Figure 2 | Leaf (a,b) and stem growth (c,d) phenology at the Smithsonian Conservation Biology Institute (a,c) and Harvard Forest (b,d).** Panels (a-b) show ecosystem-level leaf phenology, obtained from the MODIS Global Vegetation Phenology product (2001-2018), where G = Greenup, M=Mid-greenup, P=peak, and S=Senescence (i.e., beginning of green-down). Panels (c-d) show the dates at which stem growth milestones were acheived, on average, for sampled populations of ring-porous and diffuse-porous trees at SCBI (2011-2020) and Harvard Forest (1998-2003). Mean temperature was calculated for each wood-type/site combination over the respective critical $T_{max}$ window, then turned into a ratio and assigned a color on a gradient where the coldest year in the sample is blue and the warmest is red. (**SHOULD WE COMBINE LEAF AND STEM PHENOLOGY ON A SINGLE PLOT WITH SEPARATE Y-AXES? (KAT thinks so)** See [GitHub Issue #50](https://github.com/EcoClimLab/growth_phenology/issues/50). )" #needs attention!!!
 
-DOY_Tsensitivity_caption <- "**Figure 3 | Response of the timing of stem growth phenology to spring temperatures.** The days of year on which 25, 50 and 75% of annual growth is acheived ($DOY_{25}$, $DOY_{50}$, and $DOY_{75}$, respectively) decline significantly with mean $T_{max}$ during the critical temperature window (CTW). For each CTW $T_{max}$, the posterior mean of the fitted day of year is represented by the solid line and 95% credible intervals are represented by bands. (**DOYrmax to be dropped. NOTE THAT THIS PARTIALLY REPLICATES EXTENDED DATA FIG 4**)" #needs attention!!!
+DOY_Tsensitivity_caption <- "**Figure 3 | Response of the timing of stem growth phenology to spring temperatures.** The days of year on which 25%, 50% and 75% of annual growth were acheived ($DOY_{25}$, $DOY_{50}$, and $DOY_{75}$, respectively) declinde significantly with mean $T_{max}$ during the critical temperature window (CTW). For each CTW $T_{max}$, the posterior mean of the fitted day of year is represented by the solid line and 95% credible intervals are represented by bands. Relationsips for additional growth parameters (Fig. 1a) aare given in Extended Data Figure 4. (**DOYrmax will be dropped.** [GitHub Issue 23](https://github.com/EcoClimLab/growth_phenology/issues/23))" #needs attention!!!
 
 tree_rings_caption <- "**Figure 4 | Sensitivity of annual growth, as derived from tree-rings, to monthly maximum temperatures, for 207 chronologies from 114 sites across eastern North America** (Extended Data Figure 1). Chronologies are grouped by xylem porosity and ordered by mean maximum April temperature. Chronology details are given in the Supplementary Information. (NOTE: Figure still needs some work. **COLOR SCALE IS  A BIT OFF IN THIS COMPOSITE FIGURE (scales not identical across panels).**  See [GitHub Issue #49](https://github.com/EcoClimLab/growth_phenology/issues/49).)" #needs attention!!! #info subject to change!!!
 
@@ -163,37 +163,37 @@ Thus, warming spring temperatures are unlikely to increase the woody productivit
 
 \newpage
 
+*The introduction and summary paragraph need work, and removal of overlap. Organizational/content suggestions are welcome, but we're not at the stage of word-smithing.*
+
 ***(DROP THIS FIRST PARAGRAPH?)***
 As Earth's atmospheric CO~2~ concentrations and temperatures increase, the responses and feedbacks of forests will play an important yet uncertain role in influencing atmospheric CO~2~ and climate change[@arora_carbon_2020; @friedlingstein_global_2020]. 
 Temperate deciduous forests, including those in eastern North America, *(have been net carbon sinks over the past several decades)*... 
 *[Discuss this sink, mechanisms, uncertainties, ending with the point that one meaningful uncertainty is how the C sink will respond to warming springs]*
 
-***(CONDENSE THE FOLLOWING 2 PARAGRAPHS INTO 1, AND REMOVE REPETITION WITH ABSTRACT:)***
-
-**In recent decades, warming temperatures have resulted in widespread phenological changes indicative of earlier arrival of spring[@parmesan_globally_2003, @ibanez_forecasting_2010,@jeong_phenology_2011,@friedl_tale_2014] and sometimes later autumn senesence[@ibanez_forecasting_2010,@jeong_phenology_2011; @keenan_net_2014].**
+In recent decades, warming temperatures have resulted in widespread phenological changes indicative of earlier arrival of spring[@parmesan_globally_2003, @ibanez_forecasting_2010,@jeong_phenology_2011,@friedl_tale_2014] and sometimes later autumn senesence[@ibanez_forecasting_2010,@jeong_phenology_2011; @keenan_net_2014].
 In temperate deciduous forests, spring leaf-out has been occurring earlier[@ibanez_forecasting_2010, @jeong_phenology_2011], as has the beginning of the annual period of net CO~2~ sequestration[@keenan_net_2014].
 Warmer spring temperatures and earlier leaf-out are also linked to earlier leaf senescence[@zohner_ongoing_2019;@keenan_timing_2015], apparently because of sink-limitation to CO~2~ sequestration[@zani_increased_2020].
-However, warmer summer and autumn temperatures can delay leaf senescence[@zohner_ongoing_2019; @crabbe_extreme_2016; @dragoni_evidence_2011; @jeong_phenology_2011; @ibanez_forecasting_2010; @vitasse_responses_2009].
+However, warmer summer and autumn temperatures can delay leaf senescence[@zohner_ongoing_2019; @crabbe_extreme_2016; @dragoni_evidence_2011; @jeong_phenology_2011; @ibanez_forecasting_2010; @vitasse_responses_2009], and as a result warming may advance or delay autumn senescence [REFS].
 The net result is that spring warming generally results in an increased growing season length, measured as the period over which trees have leaves[@jeong_phenology_2011;@menzel_growing_1999;@menzel_european_2006;@ibanez_forecasting_2010;@jeong_phenology_2011] and the ecosystem is a net CO~2~ sink[REFS].
-
-The expectation is that as growing season length increases, net annual carbon sequestered will increase as well (*i,e*, net ecosystem exchange, $NEE$)[@churkina_spatial_2005; @keenan_net_2014; @zhou_explaining_2016; @fu_maximum_2019].
-*This expectation is represented in models [@zani_increased_2020].*
+The expectation, is that as growing season length increases, net annual carbon sequestered will increase as well (*i,e*, net ecosystem exchange, $NEE$)[@churkina_spatial_2005; @keenan_net_2014; @zhou_explaining_2016; @fu_maximum_2019], and [this expectation is represented in models](https://github.com/EcoClimLab/growth_phenology/issues/56) [@zani_increased_2020].
 However, recent evidence that leaf senescence is induced when the seasonal carbon-sink capacities of trees are reached suggests that warmer spring temperatures and earlier leaf-out could advance autumn senescence and *will not necessarily lead to drastically increased C sequestration*[@zani_increased_2020]. 
 
-**We know very little about how the longest-lived component of fixed carbon, the woody growth of trees, is responding to warming spring temperatures.** 
+We know very little about how the longest-lived component of fixed carbon, the woody growth of trees, is responding to warming spring temperatures. 
 In fact, we know little about the stem-growth phenology of temperate deciduous species, with multi-year records of growth phenology having been published for only one site [@doranngeville_radial_inreview]. *(We need to make sure we're not missing anything.)* 
 Tree-ring records, which can be used to examine correlations of annual growth to monthly temperatures but not to understand growth phenology, reveal that growth of temperate deciduous trees tends to be most sensitive to summer temperatures (REFS), with some hints that warmer springs may have a modest positive effect on growth (e.g., Refs.[@helcoski_growing_2019] [MORE]).
 Thus, tree-ring records do not necessarily corroborate findings that warming spring temperatures lengthen the growing season and increase annual CO~2~ sequestration. 
 Characterizing phenological responses of stem growth to warming spring temperatures is critical to bridging this conceptual disconnect and understanding how forest biomass growth is likely to change as the climate warms.
 
-**Here, we characterize how early spring temperatures affect stem growth phenology, growth rates, and annual growth of temperate deciduous trees in two forests and annual growth across forests spanning eastern North America.** 
+Here, we characterize how early spring temperatures affect stem growth phenology, growth rates, and annual growth of temperate deciduous trees in two forests and annual growth across forests spanning eastern North America.
+
+## Dendrometer band analysis {-#Dendrometer} 
+
 First, using dendrometer band measurements taken throughout the growing season at the Smithsonian Conservation Biology Institute (SCBI; Virginia; n = **146** trees over 10 years) and Harvard Forest (Massachusetts; n = **755** trees over six years), we fit a growth model[@mcmahon_general_2015] to determine the days of year where 25, 50, and 75% annual growth was achieved ($DOY_{25}$, $DOY_{50}$, $DOY_{75}$), peak growing season length ($L_{pgs}= DOY_{75}$-$DOY_{25}$), maximum growth rates ($g_{max}$) and the DOY on which they occurred ($DOY_{g_{max}}$), and total annual growth ($\Delta DBH$; Fig. `r schematic_summary`). 
 This analysis was performed separately for ring- and diffuse-porous species, which differ in growth phenology[@doranngeville_radial_inreview], and set in the context of leaf phenology at these sites.
 
 ![`r schematic_summary_caption`](tables_figures/schematic_summary.png){ width=70% }
 
 
-## Dendrometer band analysis {-#Dendrometer} 
 
 Both leaf phenology and stem growth milestones occurred earlier at SCBI than at Harvard Forest, with stem growth milestones achieved on average 6-10 days earlier at SCBI (Fig. `r DOY_timing`, `r  EDT_mean_growth_parameters`).
 Consistent with the results of Ref[@doranngeville_radial_inreview], ring-porous species began growing earlier, reaching the $DOY_{25}$ benchmark earlier (by `r 154-123` days at SCBI and `r 164-132` at Harvard Forest), and their growth was spread out over a longer growing season (average $L_{PGS}$ 21 and 19 days longer at SCBI and Harvard Forest, respectively; Fig. `r DOY_timing`, `r  EDF_growth_curves_all`, `r  EDT_mean_growth_parameters`). 
@@ -210,8 +210,8 @@ The strongest relationships, including but not limited to the CTW (`r  EDT_mean_
 
 For both ring- and diffuse- porous species at both sites, warmer $T_{max}$ in the CTW resulted in earlier achievement of growth milestones (Figs. `r schematic_summary`-`r pheno_Tsensitivity`).
 Consistent with findings from previous studies[REFS], at our focal sites the DOYs of leaf greenup and mid-greenup (measured at ecosystem level via remote sensing) advanced significantly with increasing $T_{max}$ during the CTW (p=## and ##, respectively). 
-Specifically, greenup DOY occurred 21 days earlier at SCBI and 7 days earlier at Harvard Forest when comparing the years with the warmest and coldest CTW $T_{max}$, and mid-greenup also advanced, but to a lesser extent (Fig. `r DOY_timing`).
-Similarly, $DOY_{25}$, $DOY_{50}$, $DOY_{75}$, and $DOY_{g.max}$ at both sites all decreased significantly with CTW $T_{max}$, advancing 1-8 days per degree Celsius during the CTW (Figs. `r schematic_summary`- `r pheno_Tsensitivity`, `r DOY_timing`; see also Extended Data Figures **4-6**).
+Specifically, [greenup DOY occurred 21 days earlier at SCBI and 7 days earlier at Harvard Forest when comparing the years with the warmest and coldest CTW $T_{max}$](https://github.com/EcoClimLab/growth_phenology/issues/58), and mid-greenup also advanced, but to a lesser extent (Fig. `r DOY_timing`).
+Similarly, $DOY_{25}$, $DOY_{50}$, $DOY_{75}$, and $DOY_{g.max}$ at both sites all decreased significantly with CTW $T_{max}$, advancing [1-8 days per degree Celsius](https://github.com/EcoClimLab/growth_phenology/issues/58) during the CTW (Figs. `r schematic_summary`- `r pheno_Tsensitivity`, `r DOY_timing`; see also Extended Data Figures **4-6**).
 
 
 Whereas the length of time between leaf greenup and senescence (*i.e.,* the day when greenness dropped below 90% of its peak) increased in years with warmer springs (Fig. `r DOY_timing`), there was no consistent lengthening of the period of peak stem growth. 
@@ -278,19 +278,7 @@ Yet, an earlier start to the growing season is not associated with a longer grow
 As climate change accelerates and spring temperatures become increasingly warmer, growing seasons will start earlier, but this is unlikely to provide the sustained increase in carbon sequestration that is anticipated in most models (Fig. `r schematic_summary`)[@zani_increased_2020].
 Because of this, temperate deciduous forests are likely to sequester less CO~2~ than most models suggest, implying that these models are underestimating future overall atmospheric CO~2~.
 (*see [GitHub issue 56 on representation in models](https://github.com/EcoClimLab/growth_phenology/issues/56)*)
-
-
-# (Content to incorporate) 
-
-@delgado_differences_2020 
-
-From Neil: @zhang_drought_2021; @zhang_extended_2020
-
-Geng et al. 2020 GCB- Climate warming increases spring phenological differences among temperate trees.
-
-N. American strategies have conservative strategies when it comes to phenology, as historically they’ve been subject to more spring frosts. Thus, climate change is having less impact (Zohner et al., 2020); Leaf velocity discussion? - - RP trees BB = 25% and 75% leaf development = 50% growth [@doranngeville_radial_inreview]. Are DP trees leafing up earlier? If yes, how much earlier? Similar to 25,50,75% DOY retreat? 
-
-
+m
 
 # Methods {-#Methods} 
 
@@ -355,9 +343,10 @@ At SCBI a higher proportion of RP trees were removed--the majority in step 4 *(d
 
 ### Leaf phenology
 
-Leaf phenology data for the years ### - ### were extracted for SCBI and Harvard forest from the MCD12Q2 V6 Land Cover Dynamics product (informally called the MODIS Global Vegetation Phenology product) [@friedl_mcd12q2_2019].
+Leaf phenology data for the years 2001-2018 were extracted for SCBI and Harvard Forest from the MCD12Q2 V6 Land Cover Dynamics product (informally called the MODIS Global Vegetation Phenology product) [@friedl_mcd12q2_2019].
 
 description here: https://developers.google.com/earth-engine/datasets/catalog/MODIS_006_MCD12Q2#description
+
 
 ### Tree rings {-#Tree} 
 Dominant tree species were cored at both sites following sampling designs that covered a broad range of $DBH$.
