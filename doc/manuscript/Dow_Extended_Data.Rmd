@@ -77,18 +77,6 @@ kable_styling(latex_options = c("scale_down", "hold_position"), protect_latex = 
 
 \newpage
 
-```{r, Table sample_size_by_year, eval=TRUE, echo=FALSE, message=FALSE, fig.pos="H"}
-library(knitr)
-library(kableExtra)
-table <- read.csv("tables_figures/sample_size_by_year.csv",stringsAsFactors = FALSE, check.names = FALSE)
-kbl(table, caption = sample_size_by_year_caption, format = "latex", booktabs = T) %>%
-  kable_styling(latex_options = "hold_position")
-```
-
-*This figure PROBABLY NEEDS TO GO. It needs some work if we choose to include it. *
-
-\newpage
-
 ```{r mean_growth_parameters_table,  eval=TRUE, echo=FALSE, warning=FALSE}
 library(knitr)
 library(kableExtra)
