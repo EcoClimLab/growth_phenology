@@ -17,12 +17,12 @@ names(originals) <- c("Latitude", "Location")
 TRW_coord <- rbind(TRW_coord, originals)
 
 #Merge dcc outputs to plot on the same quilt plot
-all_dcc_output_hf <- read_csv("Results/all.dcc.output_hf.csv")#created in HF_quiltplot.R
+all_dcc_output_hf <- read_csv("Results/all.dcc.output_hf_EXTENDED.csv")#created in HF_quiltplot.R
 all_dcc_output_hf$site <- paste0("HF_", all_dcc_output_hf$Species)
-all_dcc_output_other <- read_csv("Results/other_core_corr.csv")#created in Other_quiltplot.R
+all_dcc_output_other <- read_csv("Results/other_core_corr_EXTENDED.csv")#created in Other_quiltplot.R
 all_dcc_output_other$site <- paste0(all_dcc_output_other$Site,"_", all_dcc_output_other$Species)
 all_dcc_output_other <- all_dcc_output_other[,-1]
-all_dcc_output_scbi <- read_csv("Results/scbi_core_corr.csv")#Created in scbi_quiltplot.R
+all_dcc_output_scbi <- read_csv("Results/scbi_core_corr_EXTENDED.csv")#Created in scbi_quiltplot.R
 all_dcc_output_scbi$site <- paste0("SCBI_", all_dcc_output_scbi$Species)
 
 all.dcc.output_all <- rbind(all_dcc_output_other,all_dcc_output_scbi,all_dcc_output_hf)
@@ -81,6 +81,18 @@ for(v in climate_variables) {
   X <- X %>% #number each month for sorting
     mutate(
       month_new = case_when(
+        month == "prev.jan" ~ -12,
+        month == "prev.feb" ~ -11,
+        month == "prev.mar" ~ -10,
+        month == "prev.apr" ~ -9,
+        month == "prev.may" ~ -8,
+        month == "prev.jun" ~ -7,
+        month == "prev.jul" ~ -6,
+        month == "prev.aug" ~ -5,
+        month == "prev.sep" ~ -4,
+        month == "prev.oct" ~ -3,
+        month == "prev.nov" ~ -2,
+        month == "prev.dec" ~ -1,
         month == "curr.jan" ~ 1,
         month == "curr.feb" ~ 2,
         month == "curr.mar" ~ 3,
@@ -89,6 +101,8 @@ for(v in climate_variables) {
         month == "curr.jun" ~ 6,
         month == "curr.jul" ~ 7,
         month == "curr.aug" ~ 8,
+        month == "curr.sep" ~ 9,
+        month == "curr.oct" ~ 10,
         TRUE ~ 0
       )
     )
@@ -127,7 +141,7 @@ X <- X[X$wood_type != "SP",]
 # write.csv(SI_table, file = paste0("doc/manuscript/tables_figures/", "chronology_table.csv"), row.names = FALSE)
   # X$entry_number <- seq(1, nrow(X)/8, 1)
   #
-  write.csv(X, file = paste0("Data/", v, "_quilt_plot_data.csv"), row.names = FALSE)
+  write.csv(X, file = paste0("Data/", v, "_quilt_plot_data_EXTENDED.csv"), row.names = FALSE)
 }
 
 TRW_coord <- read_excel("Data/tree_rings/Other/TRW_coord2.xlsx")
@@ -138,7 +152,7 @@ originals <- rbind(originals, c(38.8935,-78.14540, "SCBI")) #Lat for scbi = 38.8
 names(originals) <- c("Latitude","Longitude", "Location")
 TRW_coord <- rbind(TRW_coord, originals)
 
-tmx_data <- read.csv("Data/tmx_quilt_plot_data.csv")
+tmx_data <- read.csv("Data/tmx_quilt_plot_data_EXTENDED.csv")
 tmx_data_table <- tmx_data[,c(19,15,1,14,17,18)]
 tmx_data_table <- tmx_data_table[!(duplicated(tmx_data_table$group)),]
 tmx_data_table$Location <- ifelse(tmx_data_table$Location == "Fiddler<U+393C><U+3E32>s_Green,_VA_CAOV_CAOV", "Fiddler’s_Green,_VA_CAOV",
@@ -148,7 +162,7 @@ tmx_data_table$Location <- ifelse(tmx_data_table$Location == "Fiddler<U+393C><U+
 
 tmx_data_table <- left_join(tmx_data_table, TRW_coord, by = "Location")
 
-write.csv(tmx_data_table, "doc/manuscript/tables_figures/chronology_table.csv", row.names = FALSE)
+write.csv(tmx_data_table, "doc/manuscript/tables_figures/chronology_table_EXTENDED.csv", row.names = FALSE)
 
 tmn_data <- read.csv("Data/tmn_quilt_plot_data.csv")
 
@@ -252,7 +266,7 @@ for(WT in wood_types){#Have to manually change WT and run through the contents o
     #x <- x[,c(2,1,3)]
     #x.sig <- x.sig[,c(2,1,3)]
     #x.sig2 <- x.sig2[,c(2,1,3)]
-    png(paste0("results/", "monthly_", "correlation", "other", v,WT, ".png"), res = 150, width = 169, height = 2*169, units = "mm", pointsize = 10)
+    png(paste0("results/", "monthly_", "correlation", "other","EXTENDED", v,WT, ".png"), res = 150, width = 169, height = 2*169, units = "mm", pointsize = 10)
 
     my.dccplot(x = as.data.frame(t(x)), sig = as.data.frame(t(x.sig)), sig2 = as.data.frame(t(x.sig2)),  main = ifelse(v %in% "PETminusPRE", "PET-PRE", v), method = "correlation")
 

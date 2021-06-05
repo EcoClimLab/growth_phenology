@@ -101,7 +101,41 @@ aggregates_scbi_dp$stanT <- (aggregates_scbi_dp$window_temp-min(aggregates_scbi_
 
 aggregates_scbi <- rbind(aggregates_scbi_dp,aggregates_scbi_rp)
 
-#Add leaf Phenology
+#Add slopes of lines for each representing DOY change/degree C ----
+doy25_rp <- subset(aggregates_scbi_rp, aggregates_scbi_rp$Group.2 == "25")
+plot(doy25_rp$x~doy25_rp$window_temp)
+abline(lm(doy25_rp$x~doy25_rp$window_temp))
+summary(lm(doy25_rp$x~doy25_rp$window_temp))
+#DOY25 -1.9128 days/degree C (p = 0.02)
+doy25_dp <- subset(aggregates_scbi_dp, aggregates_scbi_dp$Group.2 == "25")
+plot(doy25_dp$x~doy25_dp$window_temp)
+abline(lm(doy25_dp$x~doy25_dp$window_temp))
+summary(lm(doy25_dp$x~doy25_dp$window_temp))
+#DOY25 -3.4774 days/degree C (p = 0.002)
+
+doy50_rp <- subset(aggregates_scbi_rp, aggregates_scbi_rp$Group.2 == "50")
+plot(doy50_rp$x~doy50_rp$window_temp)
+abline(lm(doy50_rp$x~doy50_rp$window_temp))
+summary(lm(doy50_rp$x~doy50_rp$window_temp))
+#DOY50 -1.5411 days/degree C (p = 0.128)
+doy50_dp <- subset(aggregates_scbi_dp, aggregates_scbi_dp$Group.2 == "50")
+plot(doy50_dp$x~doy50_dp$window_temp)
+abline(lm(doy50_dp$x~doy50_dp$window_temp))
+summary(lm(doy50_dp$x~doy50_dp$window_temp))
+#DOY50 -3.523 days/degree C (p = 0.01)
+
+doy75_rp <- subset(aggregates_scbi_rp, aggregates_scbi_rp$Group.2 == "75")
+plot(doy75_rp$x~doy75_rp$window_temp)
+abline(lm(doy75_rp$x~doy75_rp$window_temp))
+summary(lm(doy75_rp$x~doy75_rp$window_temp))
+#DOY75 -1.128 days/degree C (p = 0.506)
+doy75_dp <- subset(aggregates_scbi_dp, aggregates_scbi_dp$Group.2 == "75")
+plot(doy75_dp$x~doy75_dp$window_temp)
+abline(lm(doy75_dp$x~doy75_dp$window_temp))
+summary(lm(doy75_dp$x~doy75_dp$window_temp))
+#DOY75 -3.563 days/degree C (p = 0.04)
+
+#Add leaf Phenology----
 leaf_phenology <- read_csv("Data/Leaf phenology/leaf_phenology.csv") %>%
   filter(site == "SCBI")
 aggregates_scbi <- left_join(aggregates_scbi, leaf_phenology, by = "year")
@@ -125,6 +159,16 @@ names(leaf_phenology) <- c("site","year","Greenup", "Mid-greenup", "Peak","Senes
 leaf_phenology_melt <- melt(leaf_phenology, id.vars = c("site","year","tmp","los"))
 leaf_phenology_melt$value <- yday(leaf_phenology_melt$value)
 aggregate(leaf_phenology_melt$value, by = list(leaf_phenology_melt$variable), FUN = mean)
+
+#Get speed of greenup change / degree C ----
+leaf_phenology_melt_GU <- subset(leaf_phenology_melt, leaf_phenology_melt$variable == "Greenup")
+
+plot(leaf_phenology_melt_GU$value~leaf_phenology_melt_GU$tmp)
+abline(lm(leaf_phenology_melt_GU$value~leaf_phenology_melt_GU$tmp))
+summary(lm(leaf_phenology_melt_GU$value~leaf_phenology_melt_GU$tmp))
+#SCBI speed is -4.535 days/degree C
+
+#Plot leaf variables ----
 #leaf_phenology_melt <- leaf_phenology_melt[leaf_phenology_melt$year %in% c(2018,2010),]
 scbi_leaf <- ggplot(leaf_phenology_melt, aes(x=value, y = as.character(variable), group = year, color = tmp))+
   geom_point(size = 3)+
@@ -145,23 +189,25 @@ ggsave("doc/manuscript/tables_figures/SCBI_leaf.png", plot = scbi_leaf, width = 
 #  #scale_colour_manual(values = c("red", "blue", "purple"))
 #  scale_colour_gradient(low = "blue", high = "red")
 
-#SCBI_CMI <- read_csv("SCBI_CMI.csv")
-#CMI_ag_scbi <- aggregate(SCBI_CMI$CMI, by = list(SCBI_CMI$year), FUN = mean)
-#names(CMI_ag_scbi) <- c("year","CMI")
-#aggregates_scbi <- left_join(aggregates_scbi, CMI_ag_scbi, by = "year")
+#precip analysis ----
+SCBI_CMI <- read_csv("climate data/SCBI_CMI.csv")
+SCBI_CMI <- SCBI_CMI[SCBI_CMI$month %in% c("03", "04"),]
+pre_ag_scbi <- aggregate(SCBI_CMI$PRE, by = list(SCBI_CMI$year), FUN = mean)
+names(pre_ag_scbi) <- c("year","PRE")
+aggregates_scbi <- left_join(aggregates_scbi, pre_ag_scbi, by = "year")
 
-#CMI_ag_previousyear <- CMI_ag_scbi
-#CMI_ag_previousyear[,1] <- c(2012,2013,2014,2015,2016,2017,2018,2019,NA)
-#CMI_ag_previousyear <- CMI_ag_previousyear[-9,]
+pre_ag_previousyear <- pre_ag_scbi
+pre_ag_previousyear[,1] <- c(2012,2013,2014,2015,2016,2017,2018,2019,NA)
+pre_ag_previousyear <- pre_ag_previousyear[-9,]
 
-#aggregates_scbi$CMI_level <- ifelse(aggregates_scbi$CMI > mean(aggregates_scbi$CMI), "Above Average", "Below Average")
-#aggregates_scbi$previous_cmi <- left_join(aggregates_scbi, CMI_ag_previousyear, by = "year")
+#aggregates_scbi$PRE_level <- ifelse(aggregates_scbi$CMI > mean(aggregates_scbi$CMI), "Above Average", "Below Average")
+aggregates_scbi <- left_join(aggregates_scbi, pre_ag_previousyear, by = "year")
 
-#ggplot(aggregates_scbi, aes(x=x, y = as.character(Group.2), group = interaction(Group.1, year), color = CMI, linetype = Group.1))+
-#  geom_point(size = 3)+
-#  geom_line(size = 1)+
-#  labs(x = "Day of Year", y = "Percent of Total Annual Growth", title = "Harvard Forest Intraannual Growth Timing", color = "CMI", linetype = "Wood Type")+
-#  scale_colour_gradient(low = "blue", high = "red")
+ggplot(aggregates_scbi, aes(x=x, y = as.character(Group.2), group = interaction(Group.1, year), color = PRE.x.x.x, linetype = Group.1))+
+  geom_point(size = 3)+
+  geom_line(size = 1)+
+  labs(x = "Day of Year", y = "Percent of Total Annual Growth", title = "Harvard Forest Intraannual Growth Timing", color = "CMI", linetype = "Wood Type")+
+  scale_colour_gradient(low = "blue", high = "red")
 
 
 #Harvard Forest
@@ -302,6 +348,14 @@ hf_leaf <- ggplot(hf_leaf_phenology_melt, aes(x=value, y = as.character(variable
 hf_leaf
 
 ggsave("doc/manuscript/tables_figures/HF_leaf.png", plot = hf_leaf, width = 15, height = 7 / 1.25)
+
+#Get speed of greenup change / degree C ----
+hf_leaf_phenology_melt_GU <- subset(hf_leaf_phenology_melt, hf_leaf_phenology_melt$variable == "Greenup")
+
+plot(hf_leaf_phenology_melt_GU$value~hf_leaf_phenology_melt_GU$tmp)
+abline(lm(hf_leaf_phenology_melt_GU$value~hf_leaf_phenology_melt_GU$tmp))
+summary(lm(hf_leaf_phenology_melt_GU$value~hf_leaf_phenology_melt_GU$tmp))
+#HF speed is  -2.437 days/degree C (nonsig)
 
 # scale_colour_manual(values = c("red", "blue", "purple"))
 
@@ -486,3 +540,83 @@ png(filename = "doc/manuscript/tables_figures/DOYtiming_allyears.png", width=12,
     restoreConsole=FALSE)
 plotall
 dev.off()
+
+
+#Alan asked if we could calculate heat sum for greenup and other variables to compare ----
+Wood_pheno_table_scbi <- read_csv("Data/Wood_pheno_table_SCBI_CLEAN.csv") %>%
+  # Keep only RP and DP for now
+  filter(wood_type != "other") %>%
+  # Rename ring porous to not have a space
+  mutate(wood_type = ifelse(wood_type == "ring porous", "ring-porous", wood_type))
+
+wood_pheno_doy <- aggregate(Wood_pheno_table_scbi$DOY, by = list(Wood_pheno_table_scbi$perc, Wood_pheno_table_scbi$year, Wood_pheno_table_scbi$wood_type), FUN = mean)
+names(wood_pheno_doy) <- c("perc", "year", "wood_type", "doy")
+
+weatherdata <-
+  read_csv("climate data/met_tower_data_sensor2_ncdc_supplemented.csv") %>%
+  filter(!is.na(cleantmax)) %>%
+  mutate(year = year.x)
+
+#Wood pheno variables ----
+wood_pheno_doy$tmax_sum <- NA
+for(i in 1:nrow(wood_pheno_doy)){
+  #skip_to_next <- FALSE
+
+  weatherdata_sub <- weatherdata[weatherdata$year %in% wood_pheno_doy[i,2],]
+  #tryCatch(#trycatch to eliminate errors where no leaf data is present while wood data is
+    weatherdata_sub2 <- weatherdata_sub[weatherdata_sub$doy %in% 1:wood_pheno_doy[i,4],]
+   # error = function(b) {
+    #  skip_to_next <<- TRUE
+    #}
+  #)
+  wood_pheno_doy[i,5] <- sum(weatherdata_sub2$cleantmax)
+
+  #if (skip_to_next) {
+  #  next
+  #}
+}
+
+ggplot(wood_pheno_doy, aes(x = year, y = tmax_sum, group = interaction(perc, wood_type), color = as.factor(perc), shape = wood_type, linetype = wood_type))+
+  geom_point()+
+  geom_smooth(se = FALSE)
+
+#Leaf pheno variables ----
+#Leaf phenology
+leaf_phenology <- read_csv("Data/Leaf phenology/leaf_phenology.csv") %>%
+  filter(site == "SCBI")
+library(reshape2)
+names(leaf_phenology) <- c("site","year","Greenup", "Mid-greenup", "Peak","Senescence","los","tmp")
+leaf_phenology_melt <- melt(leaf_phenology, id.vars = c("site","year","tmp","los"))
+leaf_phenology_melt$value <- yday(leaf_phenology_melt$value)
+
+scbi <- read_csv("climate data/scbi_2001to2018.csv")
+scbi <- scbi[,c(3,4)]
+scbi <- scbi[complete.cases(scbi$TMAX),]
+scbi$month <- month(scbi$DATE)
+scbi$year <- year(scbi$DATE)
+scbi$doy <- yday(scbi$DATE)
+
+# scbi_combo <- left_join(wood_pheno_doy, leaf_phenology_melt[,c(2,5,6)], by = "year")
+# scbi_combo$tmax_sum <- NA
+
+leaf_phenology_melt$tmax_sum <- NA
+for(i in 1:nrow(leaf_phenology_melt)){
+ # skip_to_next <- FALSE
+
+weatherdata_sub <- scbi[scbi$year %in% leaf_phenology_melt[i,2],]
+#tryCatch(#trycatch to eliminate errors where no leaf data is present while wood data is
+weatherdata_sub2 <- weatherdata_sub[weatherdata_sub$doy %in% 1:leaf_phenology_melt[i,6],]
+#error = function(b) {
+#  skip_to_next <<- TRUE
+#}
+#)
+leaf_phenology_melt[i,7] <- sum(weatherdata_sub2$TMAX)
+
+#if (skip_to_next) {
+#  next
+#}
+}
+
+ggplot(leaf_phenology_melt, aes(x = year, y = tmax_sum, group = variable, color = variable))+
+  geom_point()+
+  geom_smooth(se = FALSE)

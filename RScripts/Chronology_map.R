@@ -37,7 +37,7 @@ levels(sfdat$wood_type) <- c("DP", "RP", "Both")
 chronology_map <- ggplot(data = sfdat) +
   scale_colour_viridis_d("Wood Type")+
   geom_map(data = us, map = us,aes(x=long, y=lat, map_id=region), fill = "grey")+
-  geom_sf( aes(color = wood_type), size = 1)+
+  geom_sf( aes(color = wood_type), size = 4)+
   #geom_sf_text(aes(label = group), nudge_x = -1, nudge_y = 0, size = 3, color = "white")+
   coord_sf(xlim = c(-95, -65), ylim = c(34, 50), expand = FALSE)+
   theme(text = element_text(size = 20),
