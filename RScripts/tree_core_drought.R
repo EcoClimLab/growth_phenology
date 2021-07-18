@@ -3,7 +3,8 @@
 #Last edit: 6/30/2021##############################################################################
 #Issues: 1.Ending left join isnt working for some sites - SCBI and HF arnt in the crns used here. Need to add them, probably manually and create a new file with them all merged
 #2. Some sites missing from "toadd" dataframe
-
+#3. add april and summer drought effects separate of interaction to the csv
+#4.
 rm(list = ls())
 
 library(tidyverse)
@@ -35,15 +36,15 @@ originals <- data.frame(42.5388, -72.18, "HF") #Lat for HF = 42.5388
 originals <- rbind(originals, c(38.8935, -78.1454, "SCBI")) #Lat for scbi = 38.8935
 names(originals) <- c("Latitude","Longitude", "Location")
 TRW_coord <- rbind(TRW_coord, originals)
-
+TRW_coord <- TRW_coord[!duplicated(TRW_coord$Location),]
 crns_long_try <- left_join(crns_long, TRW_coord, by = "Location")
 
 #replace na's with correct values somehow....no good way to do it. manually change csv.
-write.csv(crns_long_try, file = "crns_long_try.csv", row.names = FALSE)
+write.csv(crns_long_try, file = "data/crns_long.csv", row.names = FALSE)
 # crns_long_try$Latitude <- ifelse(is.na(crns_long_try$Latitude), "37.7", crns_long_try$Latitude)
 # is.na(crns_long_try$Latitude) <- "37.7"
 # Load climate data ####
-crns_long <- read.csv("crns_long_try.csv")
+crns_long <- read.csv("data/crns_long.csv")
 
 ## needs to be in different format: column for Date, year and then one column per climate variable
 climate_variables <- c("tmn", "tmx")
@@ -51,7 +52,7 @@ clim_v <- NULL
 # something like this should do
 for(clim_v in climate_variables) {
   print(clim_v)
-  x <- read.csv(paste0("climate data/CRU/", clim_v,  ".1901.2019-Other_sites-3-11.csv"))
+  x <- read.csv(paste0("climate data/CRU/", clim_v,  ".1901.2019-all_sites-3-11.csv"))
 
 
   ### subset for the sites we care about
@@ -112,6 +113,8 @@ crns_long <- left_join(crns_long, june_means, by = c("Location", "Year"))
 crns_long <- left_join(crns_long, june_july_means, by = c("Location", "Year"))
 crns_long <- left_join(crns_long, may_aug_means, by = c("Location", "Year"))
 
+
+
 species_all <- unique(crns_long$site_sp)
 p_vals <- data.frame(1,1,1,1)
 names(p_vals) <- c("cur_sp", "variable", "p-value", "est")
@@ -121,27 +124,44 @@ for(i in 1:length(species_all)){
 cur_sp <- species_all[i]
 crns_sub <- crns_long[crns_long$site_sp %in% cur_sp,]
 
+aa <- summary(lm(ring_width ~ april, data = crns_sub))
+apr <- aa[["coefficients"]][2,4]
+apr_est <- aa[["coefficients"]][2,1]
+
 a <- summary(lm(ring_width ~ april + april:june, data = crns_sub))
 apr_jun <- a[["coefficients"]][3,4]
 apr_jun_est <- a[["coefficients"]][3,1]
+
+ab <- summary(lm(ring_width ~ june, data = crns_sub))
+jun <- ab[["coefficients"]][2,4]
+jun_est <- ab[["coefficients"]][2,1]
 
 b <- summary(lm(ring_width ~ april + april:june_july, data = crns_sub))
 apr_jun_jul <- b[["coefficients"]][3,4]
 apr_jun_jul_est <- b[["coefficients"]][3,1]
 
+bb <- summary(lm(ring_width ~ june_july, data = crns_sub))
+jun_jul <- bb[["coefficients"]][2,4]
+jun_jul_est <- bb[["coefficients"]][2,1]
+
 c <- summary(lm(ring_width ~ april + april:may_aug, data = crns_sub))
 apr_summer <- c[["coefficients"]][3,4]
 apr_summer_est <- c[["coefficients"]][3,1]
 
-est <- c(apr_jun_est, apr_jun_jul_est, apr_summer_est)
+cb <- summary(lm(ring_width ~ may_aug, data = crns_sub))
+may_aug <- cb[["coefficients"]][2,4]
+may_aug_est <- cb[["coefficients"]][2,1]
 
-current_loop <- data.frame(cur_sp, apr_jun, apr_jun_jul, apr_summer)
+est <- c(apr_est, apr_jun_est,jun_est, apr_jun_jul_est,jun_jul_est, apr_summer_est, may_aug_est)
+
+current_loop <- data.frame(cur_sp, apr, apr_jun, jun, apr_jun_jul, jun_jul, apr_summer, may_aug)
 melt_cur <- melt(current_loop)
 names(melt_cur) <- c("cur_sp", "variable", "p-value")
 
-latlon <- crns_sub[c(1:3),c(5,6)]
+lat <- crns_sub[c(1),c(5)]
+lon <- crns_sub[c(1),c(6)]
 
-melt_cur <- cbind(melt_cur, est, latlon)
+melt_cur <- cbind(melt_cur, est, lat,lon)
 p_vals <- rbind(p_vals, melt_cur)
 }
 
@@ -150,18 +170,25 @@ write.csv(p_vals, file = "Data/Tree_core_drought.csv", row.names = FALSE)
 #Add sigs to chronology table
 rm(list = ls())
 
-toadd <- read_csv("Data/Tree_core_drought.csv")
+toadd <- read_csv("Data/Tree_core_drought.csv") %>%
+  rename(Latitude = lat,
+         Longitude = lon)
 
 #convert from long to wide so columns can be appended to chrono table
 toadd <- pivot_wider(data=toadd, id_cols = c(cur_sp), names_from = variable, values_from = c(`p-value`, est,Latitude, Longitude))
-toadd <- toadd[,c(1,11,8,2:7)]
+toadd <- toadd[,c(1,16,23,2:15)]
 #rename lat and lon columns
 toadd <- toadd %>%
-  rename(Latitude = Latitude_apr_jun,
-         Longitude = Longitude_apr_jun)
+  rename(Latitude = Latitude_apr,
+         Longitude = Longitude_apr)
+toadd$Latitude <- round(toadd$Latitude, digits = 7)
+toadd$Longitude <- round(toadd$Longitude, digits = 7)
+toadd$Latitude <- ifelse(is.na(toadd$Latitude), 37.7686833, toadd$Latitude)
+toadd$Longitude <- ifelse(is.na(toadd$Longitude), -79.2423833, toadd$Longitude)
 
 #Create sp code column for merge
 toadd$sp <- substr(toadd$cur_sp, nchar(toadd$cur_sp)-3, nchar(toadd$cur_sp))
+toadd$sp <- ifelse(toadd$sp == "ACSA", "ACSH", toadd$sp)
 #Create unique code column using lat, lon, and sp code for each entry
 toadd$ID <- paste0(toadd$Latitude, toadd$Longitude, toadd$sp)
 
@@ -172,6 +199,9 @@ names(sp_codes) <- c("sp", "Species")
 
 #read in chronology table csv which we are appending the lm results to
 chronology_table <- read.csv("doc/manuscript/tables_figures/chronology_table.csv")
+chronology_table$Latitude <- round(chronology_table$Latitude, digits = 7)
+chronology_table$Longitude <- round(chronology_table$Longitude, digits = 7)
+
 #Add sp codes to chrono table for unique ID's
 chronology_table <- left_join(chronology_table, sp_codes, by = "Species")
 chronology_table$ID <- paste0(chronology_table$Latitude, chronology_table$Longitude,chronology_table$sp)
@@ -179,11 +209,12 @@ chronology_table$ID <- paste0(chronology_table$Latitude, chronology_table$Longit
 #Left join the two to get LM results appended to chronology table
 attempt_3 <- left_join(chronology_table,toadd, by = "ID")
 attempt_4 <- attempt_3[!(duplicated(attempt_3$group)),]#Two sites are duplicated
-attempt_4 <- attempt_4[,c(1:8,14:19)]#remove unnecessary columns
+attempt_4 <- attempt_4[,c(1:8,14:27)]#remove unnecessary columns
 
 #Rename columns to something understandable
-names(attempt_4) <- c("Number", "Location", "Species", "Wood Type", "CTW Tmin", "CTW Tmax", "Latitude", "Longitude", "P-value April:June Tmax", "P-value April:June-July Tmax", "P-value April:May-August Tmax", "Slope April:June Tmax", "Slope April:June-July Tmax","Slope April:May-August Tmax")
+names(attempt_4) <- c("Number", "Location", "Species", "Wood Type", "CTW Tmin", "CTW Tmax", "Latitude", "Longitude","P-value April Tmax", "P-value April:June Tmax","P-value June Tmax", "P-value April:June-July Tmax","P-value June-July Tmax", "P-value April:May-August Tmax","P-value May-August Tmax","Slope April Tmax", "Slope April:June Tmax","Slope June Tmax", "Slope April:June-July Tmax","Slope June-July Tmax", "Slope April:May-August Tmax", "Slope May-August Tmax")
 #Rearrange so slopes are followed by their p-values
-attempt_4 <- attempt_4[,c(1:8,12,9,13,10,14,11)]
+attempt_4 <- attempt_4[,c(1:8,16,9,17,10,18,11,19,12,20,13,21,14,22,15)]
 
-write.csv(attempt_4, file = "doc/manuscript/tables_figures/chronology_table_drought_added.csv", row.names = FALSE)
+write.csv(attempt_4, file = "doc/manuscript/tables_figures/chronology_table.csv", row.names = FALSE)
+
