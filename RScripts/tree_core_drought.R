@@ -1,10 +1,8 @@
 #Script to analyze the joint effect of spring T and summer drought on tree growth using tree cores#
 #Written by: Cameron Dow###########################################################################
 #Last edit: 6/30/2021##############################################################################
-#Issues: 1.Ending left join isnt working for some sites - SCBI and HF arnt in the crns used here. Need to add them, probably manually and create a new file with them all merged
-#2. Some sites missing from "toadd" dataframe
-#3. add april and summer drought effects separate of interaction to the csv
-#4.
+#Issues: 1.Add each april effect from sep models to csv
+
 rm(list = ls())
 
 library(tidyverse)
@@ -116,9 +114,9 @@ crns_long <- left_join(crns_long, may_aug_means, by = c("Location", "Year"))
 
 
 species_all <- unique(crns_long$site_sp)
-p_vals <- data.frame(1,1,1,1)
-names(p_vals) <- c("cur_sp", "variable", "p-value", "est")
-p_vals <- p_vals[-1,]
+p_vals <- data.frame(NULL)
+#names(p_vals) <- c("cur_sp", "variable", "p-value", "est")
+#p_vals <- p_vals[-1,]
 #For loop runs through LM's for each clim variable and captures p-vals in one DF
 for(i in 1:length(species_all)){
 cur_sp <- species_all[i]
@@ -129,6 +127,8 @@ apr <- aa[["coefficients"]][2,4]
 apr_est <- aa[["coefficients"]][2,1]
 
 a <- summary(lm(ring_width ~ april + april:june, data = crns_sub))
+apr_jun_apr <- a[["coefficients"]][2,4]
+apr_jun_apr_est <- a[["coefficients"]][2,1]
 apr_jun <- a[["coefficients"]][3,4]
 apr_jun_est <- a[["coefficients"]][3,1]
 
@@ -137,6 +137,8 @@ jun <- ab[["coefficients"]][2,4]
 jun_est <- ab[["coefficients"]][2,1]
 
 b <- summary(lm(ring_width ~ april + april:june_july, data = crns_sub))
+apr_jun_jul_apr <- b[["coefficients"]][2,4]
+apr_jun_jul_apr_est <- b[["coefficients"]][2,1]
 apr_jun_jul <- b[["coefficients"]][3,4]
 apr_jun_jul_est <- b[["coefficients"]][3,1]
 
@@ -145,6 +147,8 @@ jun_jul <- bb[["coefficients"]][2,4]
 jun_jul_est <- bb[["coefficients"]][2,1]
 
 c <- summary(lm(ring_width ~ april + april:may_aug, data = crns_sub))
+apr_summer_apr <- c[["coefficients"]][2,4]
+apr_summer_apr_est <- c[["coefficients"]][2,1]
 apr_summer <- c[["coefficients"]][3,4]
 apr_summer_est <- c[["coefficients"]][3,1]
 
@@ -152,9 +156,9 @@ cb <- summary(lm(ring_width ~ may_aug, data = crns_sub))
 may_aug <- cb[["coefficients"]][2,4]
 may_aug_est <- cb[["coefficients"]][2,1]
 
-est <- c(apr_est, apr_jun_est,jun_est, apr_jun_jul_est,jun_jul_est, apr_summer_est, may_aug_est)
+est <- c(apr_est, apr_jun_apr_est, apr_jun_est, jun_est, apr_jun_jul_apr_est, apr_jun_jul_est, jun_jul_est, apr_summer_apr_est, apr_summer_est, may_aug_est)
 
-current_loop <- data.frame(cur_sp, apr, apr_jun, jun, apr_jun_jul, jun_jul, apr_summer, may_aug)
+current_loop <- data.frame(cur_sp, apr, apr_jun_apr, apr_jun, jun, apr_jun_jul_apr, apr_jun_jul, jun_jul, apr_summer_apr, apr_summer, may_aug)
 melt_cur <- melt(current_loop)
 names(melt_cur) <- c("cur_sp", "variable", "p-value")
 
@@ -170,21 +174,22 @@ write.csv(p_vals, file = "Data/Tree_core_drought.csv", row.names = FALSE)
 #Add sigs to chronology table
 rm(list = ls())
 
+#Read in Tree core drought data created in last step. Fiddler's green and some HF need their lat/lon manually changed to match the values in the chronology table
 toadd <- read_csv("Data/Tree_core_drought.csv") %>%
   rename(Latitude = lat,
          Longitude = lon)
 
 #convert from long to wide so columns can be appended to chrono table
 toadd <- pivot_wider(data=toadd, id_cols = c(cur_sp), names_from = variable, values_from = c(`p-value`, est,Latitude, Longitude))
-toadd <- toadd[,c(1,16,23,2:15)]
+toadd <- toadd[,c(1,22,32,2:21)]
 #rename lat and lon columns
 toadd <- toadd %>%
   rename(Latitude = Latitude_apr,
          Longitude = Longitude_apr)
 toadd$Latitude <- round(toadd$Latitude, digits = 7)
 toadd$Longitude <- round(toadd$Longitude, digits = 7)
-toadd$Latitude <- ifelse(is.na(toadd$Latitude), 37.7686833, toadd$Latitude)
-toadd$Longitude <- ifelse(is.na(toadd$Longitude), -79.2423833, toadd$Longitude)
+#toadd$Latitude <- ifelse(is.na(toadd$Latitude), 37.7686833, toadd$Latitude)
+#toadd$Longitude <- ifelse(is.na(toadd$Longitude), -79.2423833, toadd$Longitude)
 
 #Create sp code column for merge
 toadd$sp <- substr(toadd$cur_sp, nchar(toadd$cur_sp)-3, nchar(toadd$cur_sp))
@@ -199,6 +204,7 @@ names(sp_codes) <- c("sp", "Species")
 
 #read in chronology table csv which we are appending the lm results to
 chronology_table <- read.csv("doc/manuscript/tables_figures/chronology_table.csv")
+chronology_table <- chronology_table[,1:8]
 chronology_table$Latitude <- round(chronology_table$Latitude, digits = 7)
 chronology_table$Longitude <- round(chronology_table$Longitude, digits = 7)
 
@@ -208,13 +214,26 @@ chronology_table$ID <- paste0(chronology_table$Latitude, chronology_table$Longit
 
 #Left join the two to get LM results appended to chronology table
 attempt_3 <- left_join(chronology_table,toadd, by = "ID")
-attempt_4 <- attempt_3[!(duplicated(attempt_3$group)),]#Two sites are duplicated
-attempt_4 <- attempt_4[,c(1:8,14:27)]#remove unnecessary columns
+attempt_4 <- attempt_3[!(duplicated(attempt_3$Number)),]#Two sites are duplicated
+attempt_4 <- attempt_4[,c(1:8,14:33)]#remove unnecessary columns
 
 #Rename columns to something understandable
-names(attempt_4) <- c("Number", "Location", "Species", "Wood Type", "CTW Tmin", "CTW Tmax", "Latitude", "Longitude","P-value April Tmax", "P-value April:June Tmax","P-value June Tmax", "P-value April:June-July Tmax","P-value June-July Tmax", "P-value April:May-August Tmax","P-value May-August Tmax","Slope April Tmax", "Slope April:June Tmax","Slope June Tmax", "Slope April:June-July Tmax","Slope June-July Tmax", "Slope April:May-August Tmax", "Slope May-August Tmax")
+names(attempt_4) <- c("Number", "Location", "Species", "Wood Type",
+                      "CTW Tmin", "CTW Tmax", "Latitude", "Longitude",
+                      "P-value April Tmax", "P-value April - April:June Tmax",
+                      "P-value April:June Tmax","P-value June Tmax",
+                      "P-value April - April:June-July Tmax",
+                      "P-value April:June-July Tmax", "P-value June-July Tmax",
+                      "P-value April - April:May-August Tmax",
+                      "P-value April:May-August Tmax","P-value May-August Tmax",
+                      "Slope April Tmax", "Slope April - April:June Tmax",
+                      "Slope April:June Tmax", "Slope June Tmax",
+                      "Slope April - April:June-July Tmax",
+                      "Slope April:June-July Tmax","Slope June-July Tmax",
+                      "Slope April - April:May-August Tmax",
+                      "Slope April:May-August Tmax", "Slope May-August Tmax")
 #Rearrange so slopes are followed by their p-values
-attempt_4 <- attempt_4[,c(1:8,16,9,17,10,18,11,19,12,20,13,21,14,22,15)]
+attempt_4 <- attempt_4[,c(1:8,19, 9, 20, 10, 21, 11, 22 , 12, 23, 13, 24, 14, 25, 15, 26, 16, 27, 17, 28, 18)]
 
 write.csv(attempt_4, file = "doc/manuscript/tables_figures/chronology_table.csv", row.names = FALSE)
 
