@@ -1,7 +1,6 @@
 #Script to analyze the joint effect of spring T and summer drought on tree growth using tree cores#
 #Written by: Cameron Dow###########################################################################
-#Last edit: 6/30/2021##############################################################################
-#Issues: 1.Add each april effect from sep models to csv
+#Last edit: 7/26/2021##############################################################################
 
 rm(list = ls())
 
@@ -115,6 +114,7 @@ crns_long <- left_join(crns_long, may_aug_means, by = c("Location", "Year"))
 
 species_all <- unique(crns_long$site_sp)
 p_vals <- data.frame(NULL)
+rs <- data.frame(NULL)
 #names(p_vals) <- c("cur_sp", "variable", "p-value", "est")
 #p_vals <- p_vals[-1,]
 #For loop runs through LM's for each clim variable and captures p-vals in one DF
@@ -125,38 +125,50 @@ crns_sub <- crns_long[crns_long$site_sp %in% cur_sp,]
 aa <- summary(lm(ring_width ~ april, data = crns_sub))
 apr <- aa[["coefficients"]][2,4]
 apr_est <- aa[["coefficients"]][2,1]
+apr_r <- aa[["adj.r.squared"]]
 
 a <- summary(lm(ring_width ~ april + april:june, data = crns_sub))
 apr_jun_apr <- a[["coefficients"]][2,4]
 apr_jun_apr_est <- a[["coefficients"]][2,1]
 apr_jun <- a[["coefficients"]][3,4]
 apr_jun_est <- a[["coefficients"]][3,1]
+apr_jun_r <- a[["adj.r.squared"]]
 
 ab <- summary(lm(ring_width ~ june, data = crns_sub))
 jun <- ab[["coefficients"]][2,4]
 jun_est <- ab[["coefficients"]][2,1]
+jun_r <- ab[["adj.r.squared"]]
+
+jun_r <- ifelse(jun <= 0.05, apr_r, NA)
 
 b <- summary(lm(ring_width ~ april + april:june_july, data = crns_sub))
 apr_jun_jul_apr <- b[["coefficients"]][2,4]
 apr_jun_jul_apr_est <- b[["coefficients"]][2,1]
 apr_jun_jul <- b[["coefficients"]][3,4]
 apr_jun_jul_est <- b[["coefficients"]][3,1]
+apr_jun_jul_r <- b[["adj.r.squared"]]
 
 bb <- summary(lm(ring_width ~ june_july, data = crns_sub))
 jun_jul <- bb[["coefficients"]][2,4]
 jun_jul_est <- bb[["coefficients"]][2,1]
+jun_jul_r <- bb[["adj.r.squared"]]
 
 c <- summary(lm(ring_width ~ april + april:may_aug, data = crns_sub))
 apr_summer_apr <- c[["coefficients"]][2,4]
 apr_summer_apr_est <- c[["coefficients"]][2,1]
 apr_summer <- c[["coefficients"]][3,4]
 apr_summer_est <- c[["coefficients"]][3,1]
+apr_summer_r <- c[["adj.r.squared"]]
 
 cb <- summary(lm(ring_width ~ may_aug, data = crns_sub))
 may_aug <- cb[["coefficients"]][2,4]
 may_aug_est <- cb[["coefficients"]][2,1]
+may_aug_r <- cb[["adj.r.squared"]]
 
 est <- c(apr_est, apr_jun_apr_est, apr_jun_est, jun_est, apr_jun_jul_apr_est, apr_jun_jul_est, jun_jul_est, apr_summer_apr_est, apr_summer_est, may_aug_est)
+
+r_squared <- data.frame(cur_sp, apr_r,apr_jun_r,jun_r,apr_jun_jul_r,jun_jul_r ,apr_summer_r,may_aug_r)
+rs <- rbind(rs, r_squared)
 
 current_loop <- data.frame(cur_sp, apr, apr_jun_apr, apr_jun, jun, apr_jun_jul_apr, apr_jun_jul, jun_jul, apr_summer_apr, apr_summer, may_aug)
 melt_cur <- melt(current_loop)
@@ -171,7 +183,29 @@ p_vals <- rbind(p_vals, melt_cur)
 
 write.csv(p_vals, file = "Data/Tree_core_drought.csv", row.names = FALSE)
 
-#Add sigs to chronology table
+#messing around with r-squared ----
+rs$sp <- substr(rs$cur_sp, nchar(rs$cur_sp)-3, nchar(rs$cur_sp))
+RP <- c("CAGL","CAOV","CATO","CACO","QURU", "QUST", "QUAL","QUPR","QUMO", "FRAM", "QUVE", "FRNI","QUMA", "QUPA")
+SP <- c( "JUNI", "SAAL")
+DP <- c("FAGR", "LITU", "MAAC", "ACSA","ACRU", "NYSY","BELE","BEAL", "POGR")
+
+ring <- rs[rs$sp %in% RP ,]
+ring <- ring[!duplicated(ring$cur_sp),]
+diffuse <- rs[rs$sp %in% DP,]
+diffuse <- diffuse[!duplicated(diffuse$cur_sp),]
+
+# for(i in 1:ncol(rs)){
+#   ring[143,i] <-  mean(ring[,i], na.rm = TRUE)
+#   diffuse[68,i] <- mean(diffuse[,i], na.rm = TRUE)
+# }
+for(i in 1:ncol(rs)){
+  rs[216,i] <- mean(rs[,i], na.rm = TRUE)
+  }
+
+means <- rs[216,]
+ring_melt <- melt(ring, id.vars = c("cur_sp", "sp"))
+boxplot(ring_melt$value~ring_melt$variable)
+#Add sigs to chronology table----
 rm(list = ls())
 
 #Read in Tree core drought data created in last step. Fiddler's green and some HF need their lat/lon manually changed to match the values in the chronology table
@@ -233,7 +267,8 @@ names(attempt_4) <- c("Number", "Location", "Species", "Wood Type",
                       "Slope April - April:May-August Tmax",
                       "Slope April:May-August Tmax", "Slope May-August Tmax")
 #Rearrange so slopes are followed by their p-values
-attempt_4 <- attempt_4[,c(1:8,19, 9, 20, 10, 21, 11, 22 , 12, 23, 13, 24, 14, 25, 15, 26, 16, 27, 17, 28, 18)]
+#attempt_4 <- attempt_4[,c(1:8,19, 9, 20, 10, 21, 11, 22 , 12, 23, 13, 24, 14, 25, 15, 26, 16, 27, 17, 28, 18)]
+attempt_4 <- attempt_4[,c(1:8, 23, 13, 24, 14, 25, 15)]
 
 write.csv(attempt_4, file = "doc/manuscript/tables_figures/chronology_table.csv", row.names = FALSE)
 
