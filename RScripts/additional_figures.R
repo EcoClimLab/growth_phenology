@@ -34,24 +34,6 @@ lg5.pred <- function(params, doy) {
 
 
 ## 1. Get LG5 parameter values ----
-# # Set SCBI values
-# # Identify cold and hot aprils
-# read_csv("climate data/NCDC_NOAA_precip_temp.csv") %>%
-#   mutate(month = month(DATE)) %>%
-#   dplyr::filter(month == 4) %>%
-#   group_by(year) %>%
-#   summarize(TMAX = mean(TMAX, na.rm = TRUE)) %>%
-#   arrange(desc(TMAX))
-#
-# # Real red/hot curve values:
-# SCBI_hot_LG5_values <- read_csv("Data/LG5_parameter_values_SCBI_CLEAN.csv") %>%
-#   dplyr::filter(year == 2019) %>%
-#   group_by(tag_year) %>%
-#   summarize(L = mean(L), K = mean(K), doy_ip = mean(doy_ip), r = mean(r), theta = mean(theta)) %>%
-#   summarize(L = mean(L), K = mean(K), doy_ip = mean(doy_ip), r = mean(r), theta = mean(theta))
-
-
-### Get HF values ----
 # Identify cold and hot aprils
 read_csv("climate data/HF_weatherdata.csv") %>%
   dplyr::filter(month == 4) %>%
@@ -135,11 +117,6 @@ HF_doy_diameter_quartile_hot <- bind_rows(
   ) %>%
   select(-perc) %>%
   rename(perc = growth)
-  # mutate(perc = case_when(
-  #   growth == 0 ~ 0,
-  #   growth == 1 ~ 1,
-  #   TRUE ~ perc
-  # ))
 
 HF_doy_diameter_quartile_cold <- bind_rows(
   tibble(doy = 1, diameter = HF_L_cold),
@@ -156,11 +133,6 @@ HF_doy_diameter_quartile_cold <- bind_rows(
   ) %>%
   select(-perc) %>%
   rename(perc = growth)
-  # mutate(perc = case_when(
-  #   growth == 0 ~ 0,
-  #   growth == 1 ~ 1,
-  #   TRUE ~ perc
-  # ))
 
 HF_doy_diameter_quartile <- bind_rows(
   HF_doy_diameter_quartile_hot %>% mutate(year = "Hot"),
@@ -197,12 +169,7 @@ HF_significant_perc <-
       select(doy_cold = doy, perc),
     by = "perc"
   ) %>%
-  # bind_cols(
-  #   HF_doy_diameter_quartile_hot %>% dplyr::filter(!label %in% c("0%", "100%")) %>% select(doy_hot = doy),
-  #   HF_doy_diameter_quartile_cold %>% dplyr::filter(!label %in% c("0%", "100%")) %>% select(doy_cold = doy)
-  # ) %>%
   mutate(
-    # perc = c(0.25, 0.5, 0.75),
     significant = c(TRUE, TRUE, TRUE)
   )
 
@@ -315,6 +282,9 @@ schematic_v2_HF <-
     size = geom.text.size,
     col = hot_color
   ) +
+  # Add critical temperature window
+  geom_vline(aes(xintercept = window_open), linetype = "dashed", alpha = 0.5) +
+  geom_vline(aes(xintercept = window_close), linetype = "dashed", alpha = 0.5) +
   geom_segment(
     aes(
       x = window_open,
@@ -344,9 +314,8 @@ schematic_v2_HF <-
   # Add legend:
   labs(col = "Spring temp") +
   theme(
-    #legend.position =  c(0.1, 0.9),
-    legend.position = c(0.025, 0.975),
-    legend.justification = c(0, 1)
+    legend.position = c(0.975, 0.025),
+    legend.justification = c(1, 0)
   )
 schematic_v2_HF
 
