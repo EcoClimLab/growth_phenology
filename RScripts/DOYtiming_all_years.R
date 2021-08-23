@@ -2,6 +2,7 @@ library(ggplot2)
 library(readr)
 library(tidyverse)
 library(lubridate)
+library(patchwork)
 Wood_pheno_table_scbi <- read_csv("Data/Wood_pheno_table_SCBI_CLEAN.csv") %>%
   # Keep only RP and DP for now
   filter(wood_type != "other") %>%
@@ -484,7 +485,8 @@ p1 <- ggplot(leaf_phenology_melt, aes(x=value, y = as.character(variable), group
         #axis.text.y = element_text(angle = 90, hjust = 0.5),
         axis.text.x = element_blank(),
         text = element_text(size = 20),
-        plot.title = element_text(hjust = 0.5))+
+        plot.title = element_text(hjust = 0.5),
+        plot.margin = unit(c(-1,-1,-1,-1), "cm"))+
   labs(x = "", y = "Leaf Stage", title = "SCBI", color = "Temp Ratio (1= Warmest pre-season)", linetype = "")+
   scale_colour_gradient(low = "blue", high = "red")
 
@@ -498,8 +500,9 @@ p2 <- ggplot(hf_leaf_phenology_melt, aes(x=value, y = as.character(variable), gr
         axis.text.y = element_blank(),
         axis.text.x = element_blank(),
         text = element_text(size = 20),
-        plot.title = element_text(hjust = 0.5))+
-  labs(x = "", y = "", title = "(b) Harvard Forest", color = "Temp Ratio (1= Warmest pre-season)", linetype = "")+
+        plot.title = element_text(hjust = 0.5),
+        plot.margin = unit(c(-1,-1,-1,-1), "cm"))+
+  labs(x = "", y = "", title = "Harvard Forest", color = "Temp Ratio (1= Warmest pre-season)", linetype = "")+
   scale_colour_gradient(low = "blue", high = "red")
 
 p3 <- ggplot(aggregates_scbi, aes(x=x, y = Group.2, group = interaction(Group.1, year), color = stanT, linetype = Group.1))+
@@ -510,12 +513,13 @@ p3 <- ggplot(aggregates_scbi, aes(x=x, y = Group.2, group = interaction(Group.1,
   theme(legend.position = c(.85,.5),
         text = element_text(size = 20),
         legend.text=element_text(size=10),
-        legend.title=element_text(size=10))+
+        legend.title=element_text(size=10),
+        plot.margin = unit(c(-1,-1,-1,-1), "cm"))+
   guides(shape = guide_legend(override.aes = list(size = 1)),
          color = guide_legend(override.aes = list(size = 1)))+
   xlim(80,240)+
   ylim(20,80)+
-  labs(x = "Day of Year", y = "Stem Growth (% of annual total)", title = "", color = "Temperature Ratio", linetype = "Wood Type")+
+  labs(x = "Day of Year", y = "Stem Growth (% of annual total)", color = "Temperature Ratio", linetype = "Wood Type")+
   #scale_colour_manual(values = c("red", "blue", "purple"))
   scale_colour_gradient(low = "blue", high = "red",breaks=c(0,0.5,1),labels=c("0.0 Coldest Year","0.5 Average Year","1.0 Hottest Year"))
 
@@ -526,10 +530,11 @@ p4 <- ggplot(aggregates_hf, aes(x=x, y = Group.2, group = interaction(Group.1, y
   theme_bw()+
   theme(legend.position = "none",
         axis.text.y = element_blank(),
-        text = element_text(size = 20))+
+        text = element_text(size = 20),
+        plot.margin = unit(c(-1,-1,-1,-1), "cm"))+
   xlim(95,240)+
   ylim(20,80)+
-  labs(x = "Day of Year", y = "", title = "", color = "Temp", linetype = "")+
+  labs(x = "Day of Year", y = "", color = "Temp", linetype = "")+
   scale_colour_gradient(low = "blue", high = "red")
 
 plotall <- p1 + p2 + p3 + p4 +
@@ -541,7 +546,6 @@ png(filename = "doc/manuscript/tables_figures/DOYtiming_allyears.png", width=12,
 plotall
 dev.off()
 
-
 #Alan asked if we could calculate heat sum for greenup and other variables to compare ----
 Wood_pheno_table_scbi <- read_csv("Data/Wood_pheno_table_SCBI_CLEAN.csv") %>%
   # Keep only RP and DP for now
@@ -549,8 +553,64 @@ Wood_pheno_table_scbi <- read_csv("Data/Wood_pheno_table_SCBI_CLEAN.csv") %>%
   # Rename ring porous to not have a space
   mutate(wood_type = ifelse(wood_type == "ring porous", "ring-porous", wood_type))
 
-wood_pheno_doy <- aggregate(Wood_pheno_table_scbi$DOY, by = list(Wood_pheno_table_scbi$perc, Wood_pheno_table_scbi$year, Wood_pheno_table_scbi$wood_type), FUN = mean)
-names(wood_pheno_doy) <- c("perc", "year", "wood_type", "doy")
+weatherdata <-
+  read_csv("climate data/met_tower_data_sensor2_ncdc_supplemented.csv") %>%
+  filter(!is.na(cleantmax)) %>%
+  mutate(year = year.x)
+
+#mutate(
+#  DATE = dmy(DATE),
+#  months = month(DATE, label = TRUE, abbr = FALSE)
+#) %>%
+# Remove entries with no tmax data
+#%>%
+# Rename RP flag set by Cam
+#rename(flagrp = flag)
+climwindows <-
+  read.csv("results/Climwin_results/Weekly/SCBI/weekly_climwin_results_SCBI_TMAX.csv") %>%
+  filter(wood_type != "other") %>%
+  mutate(
+    winopen = as.Date(paste(refwoy-winopenwoy, 1, sep="-"), "%U-%u"),
+    winclose = as.Date(paste(refwoy-winclosewoy, 1, sep="-"), "%U-%u"),
+    opendoy = yday(winopen),
+    closedoy = yday(winclose)
+  )
+
+climwinmeans_rp <- weatherdata %>%
+  filter(doy %in% c(92:98)) %>% #April 2 - April 8
+  group_by(year) %>%
+  summarize(climwinmean = mean(cleantmax)) %>%
+  mutate(wood_type = "ring-porous")
+
+climwinmeans_dp <- weatherdata %>%
+  filter(doy %in% c(78:140)) %>% # March 19 - May 20
+  group_by(year) %>%
+  summarize(climwinmean = mean(cleantmax)) %>%
+  mutate(wood_type = "diffuse-porous")
+
+# Combine
+climwinmeans <- bind_rows(climwinmeans_rp, climwinmeans_dp)
+
+# 3. Add to growth data
+Wood_pheno_table_scbi <- Wood_pheno_table_scbi %>%
+  #left_join(marchmeans, by = "year") %>%
+  left_join(climwinmeans, by = c("year", "wood_type")) %>%
+  #left_join(twosevenfive, by = c("tag", "year"))%>%
+  #left_join(fiftyseventy, by = c("tag", "year")) %>%
+  #left_join(twofifty, by = c("tag", "year")) %>%
+  # Remove other variables
+  #select(-c(tot, dbh, max_rate_DOY, max_rate)) %>%
+  #mutate(
+  #  perc = case_when(
+  #    perc == 0.25 ~ "DOY_25",
+  #    perc == 0.5 ~ "DOY_50",
+  #    perc == 0.75 ~ "DOY_75"
+  #  )
+#) %>%
+arrange(tag, year)
+
+wood_pheno_doy <- aggregate(Wood_pheno_table_scbi$DOY, by = list(Wood_pheno_table_scbi$perc, Wood_pheno_table_scbi$year, Wood_pheno_table_scbi$wood_type, Wood_pheno_table_scbi$climwinmean), FUN = mean)
+names(wood_pheno_doy) <- c("perc", "year", "wood_type","climwin_mean",  "doy")
 
 weatherdata <-
   read_csv("climate data/met_tower_data_sensor2_ncdc_supplemented.csv") %>%
@@ -564,21 +624,24 @@ for(i in 1:nrow(wood_pheno_doy)){
 
   weatherdata_sub <- weatherdata[weatherdata$year %in% wood_pheno_doy[i,2],]
   #tryCatch(#trycatch to eliminate errors where no leaf data is present while wood data is
-    weatherdata_sub2 <- weatherdata_sub[weatherdata_sub$doy %in% 1:wood_pheno_doy[i,4],]
+    weatherdata_sub2 <- weatherdata_sub[weatherdata_sub$doy %in% 1:wood_pheno_doy[i,5],]
    # error = function(b) {
     #  skip_to_next <<- TRUE
     #}
   #)
-  wood_pheno_doy[i,5] <- sum(weatherdata_sub2$cleantmax)
+  wood_pheno_doy[i,6] <- sum(weatherdata_sub2$cleantmax)
 
   #if (skip_to_next) {
   #  next
   #}
 }
 
-ggplot(wood_pheno_doy, aes(x = year, y = tmax_sum, group = interaction(perc, wood_type), color = as.factor(perc), shape = wood_type, linetype = wood_type))+
+wood <- ggplot(wood_pheno_doy, aes(x = climwin_mean, y = tmax_sum, group = interaction(perc, wood_type), color = as.factor(perc), shape = wood_type, linetype = wood_type))+
   geom_point()+
-  geom_smooth(se = FALSE)
+  geom_smooth(se = FALSE)+
+  theme(legend.position = "top")+
+  labs(x = "Mean Window Tmax", y = "Tmax Sum", title= "Wood Phenology", color = "Leaf Stage")
+
 
 #Leaf pheno variables ----
 #Leaf phenology
@@ -617,6 +680,17 @@ leaf_phenology_melt[i,7] <- sum(weatherdata_sub2$TMAX)
 #}
 }
 
-ggplot(leaf_phenology_melt, aes(x = year, y = tmax_sum, group = variable, color = variable))+
+leaf <- ggplot(leaf_phenology_melt, aes(x = tmp, y = tmax_sum, group = variable, color = variable))+
   geom_point()+
-  geom_smooth(se = FALSE)
+  geom_smooth(se = FALSE)+
+  theme(legend.position = "top")+
+  labs(x = "Mean Window Tmax", y = "Tmax Sum", title= "Leaf Phenology", color = "Leaf Stage")
+
+both <- wood + leaf +
+  plot_layout(ncol = 2,nrow = 1, heights = c(1,1))
+
+png(filename = "doc/manuscript/tables_figures/tmax_sums.png", width=15, height=10,
+    pointsize=12, bg="transparent", units="in", res=600,
+    restoreConsole=FALSE)
+both
+dev.off()
