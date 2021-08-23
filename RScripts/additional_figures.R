@@ -9,211 +9,6 @@ library(lubridate)
 
 
 
-# Figure 1: Logistic growth curve and parameter illustration -------------------
-# # Set parameters from McMahon & Parker (2014)
-# # 1. L: lower asymptotes
-# # 2. K: upper asymptotes
-# # 3. doy.ip: inflection point
-# # 4. r: value that determines slope of curve at inflection point ((K-L)*r/theta )/(1 + 1/theta)^2
-# # 5. theta: theta = 1 indicates pre/post inflection post symmetry
-# L <- 13
-# K <- 14
-# doy.ip <- 182
-# r <- 0.025
-# theta <- 1.5
-# params <- c(L, K, doy.ip, r, theta)
-# total_growth <- K - L
-#
-# start_doy <- 1
-# end_doy <- 365
-#
-# window_open <- 60
-# window_close <- 105
-#
-#
-# # Function for logistic growth model written by Sean. Supposed to be in RDendrom
-# # package https://github.com/seanmcm/RDendrom, but function does not seem to be included
-# lg5.pred <- function(params, doy) {
-#   L <- params[1] # min(dbh, na.rm = T)
-#   K <- params[2]
-#   doy.ip <- params[3]
-#   r <- params[4]
-#   theta <- params[5]
-#   dbh <- vector(length = length(doy))
-#   dbh <- L + ((K - L) / (1 + 1 / theta * exp(-(r * (doy - doy.ip) / theta))^theta))
-#   return(dbh)
-# }
-#
-# # 1. True growth (logistic curve):
-# true_values <- tibble(
-#   doy = seq(from = start_doy, to = end_doy, by = 1),
-#   diameter = lg5.pred(params, doy)
-# ) %>%
-#   mutate(diff = diameter - lag(diameter))
-#
-#
-# # 2. Max growth rate/inflection point (tangent line):
-# # Incorrect intercept since r is not true slope at inflection point:
-# # intercept <- lg5.pred(params, doy.ip) - r *doy.ip
-#
-# # Version 1 of correct slope and intercept
-# r_true <- ((K-L)*r/theta )/(1 + 1/theta)^2
-# intercept_true <- lg5.pred(params, doy.ip) - r_true *doy.ip
-#
-# # Version 2 of correct doy/ip, slope, and intercept
-# doy.ip_true <- -log(theta)/r + doy.ip
-# r_true_true <- r*(K-L)/4
-# intercept_true_true <- lg5.pred(params, doy.ip_true) - r_true_true *doy.ip_true
-#
-# ggplot(true_values, aes(x = doy, y = diff)) +
-#   geom_line() +
-#   geom_vline(xintercept = doy.ip_true) +
-#   geom_hline(yintercept = r_true_true)
-#
-#
-# # 3. Observed values (noise/error added) (points)
-# set.seed(76)
-# observed_values <- tibble(
-#   doy = seq(from = start_doy + 14, to = end_doy - 14, length = 24),
-#   diameter = lg5.pred(params, doy)
-# ) %>%
-#   mutate(diameter = diameter + rnorm(n(), sd = 0.025))
-#
-#
-#
-# # 4. Compute 25%/50%/75% growth values and DOY
-# doy_diameter_quartile <- bind_rows(
-#   tibble(doy = 1, diameter = L),
-#   true_values %>% dplyr::filter(diameter >= (L + total_growth * .25)) %>% slice(1),
-#   true_values %>% dplyr::filter(diameter >= (L + total_growth * .5)) %>% slice(1),
-#   true_values %>% dplyr::filter(diameter >= (L + total_growth * .75)) %>% slice(1),
-#   tibble(doy = 365, diameter = K)
-# ) %>%
-#   mutate(
-#     growth = c(0, 0.25, 0.5, 0.75, 1),
-#     label = c("0%", "25%", "50%", "75%", "100%"),
-#     label = factor(label, levels = c("0%", "25%", "50%", "75%", "100%"))
-#   )
-#
-# # Function to create 25%/50%/75% growth polygons
-# create_growth_polygon <- function(doy_diameter_quartile, percent){
-#   index <- case_when(
-#     percent == 0.25 ~ 1,
-#     percent == 0.5 ~ 2,
-#     percent == 0.75 ~ 3
-#   )
-#   growth_doy_domain <- seq(from = doy_diameter_quartile$doy[index], to = doy_diameter_quartile$doy[4])
-#   n_days_domain <- length(growth_doy_domain)
-#
-#   growth_polygon <- tibble(
-#     doy = c(growth_doy_domain[1], growth_doy_domain, growth_doy_domain[n_days_domain], growth_doy_domain[1]),
-#     diameter = c(L, lg5.pred(params, growth_doy_domain), L, L)
-#   )
-#
-#   return(growth_polygon)
-# }
-#
-#
-# # Output figure
-# geom.text.size <- 4
-# theme.size <- (14/5) * geom.text.size
-#
-#
-# schematic <- ggplot() +
-#   # Overall theme:
-#   theme_bw() +
-#   theme(
-#     panel.grid.major = element_blank(),
-#     panel.grid.minor = element_blank(),
-#     axis.text = element_text(size = theme.size),
-#     axis.title = element_text(size = theme.size)
-#   ) +
-#   labs(
-#     x = "Day of year (1 to 365)",
-#     y = "Diameter at breast height"
-#   ) +
-#   coord_cartesian(xlim = c(30, 280))+
-#   # Mark DOY's on x-axis:
-#   geom_vline(data = doy_diameter_quartile, aes(xintercept = doy), linetype = "dashed", show.legend = FALSE, col = "grey") +
-#   scale_x_continuous(
-#     breaks = c(doy_diameter_quartile$doy, doy.ip, window_open, window_close),
-#     labels = c(1, expression(DOY[25]), expression(DOY[50]), expression(DOY[75]), 365, expression(DOY[ip]), expression(w[open]), expression(w[close]))
-#   ) +
-#   # Mark growth percentages on y-axis:
-#   geom_hline(data = doy_diameter_quartile, aes(yintercept = diameter), linetype = "dashed", show.legend = FALSE, col = "grey") +
-#   scale_y_continuous(
-#     breaks = c(L, K),
-#     labels = c("L", "K"),
-#     sec.axis = sec_axis(
-#       ~ . * 1,
-#       breaks = doy_diameter_quartile$diameter ,
-#       labels = doy_diameter_quartile$label,
-#       name = expression(paste("% of (fitted) annual growth ", Delta[DBH],  " = K - L"))
-#     )
-#   ) +
-#   # Inflection point & max growth rate
-#   annotate("point", x = doy.ip, y = lg5.pred(params, doy.ip), shape = 18, size = 4) +
-#   geom_vline(xintercept = doy.ip, linetype = "dotted") +
-#   geom_abline(intercept = intercept_true, slope = r_true, linetype = "dotted") +
-#   annotate(
-#     "text",
-#     x = doy.ip,
-#     y = lg5.pred(params, doy.ip) + 0.025,
-#     label = expression(paste(g[max], " = slope of tangent line  ")),
-#     hjust = 1,
-#     size = geom.text.size
-#   ) +
-#   # Growth window:
-#   geom_segment(
-#     aes(
-#       x = doy_diameter_quartile$doy[2],
-#       y = L + 0.05,
-#       xend = doy_diameter_quartile$doy[4],
-#       yend = L + 0.05
-#     ),
-#     arrow = arrow(length = unit(0.25, "cm"), ends = "both")
-#   ) +
-#   annotate(
-#     "text",
-#     x = doy_diameter_quartile$doy[2] + (doy_diameter_quartile$doy[4] - doy_diameter_quartile$doy[2]) * 0.5,
-#     y = L + 0.025,
-#     label = expression(L[PGS]),
-#     hjust = 0.5,
-#     size = geom.text.size
-#   ) +
-#   # Critical temperature window:
-#   geom_rect(aes(xmin = window_open, xmax = window_close, ymin = -Inf, ymax = Inf), alpha = 0.4) +
-#   geom_segment(
-#     aes(
-#       x = window_open,
-#       y = L + (K-L) * 0.45 + 0.025,
-#       xend = window_close,
-#       yend = L + (K-L) * 0.45 + 0.025
-#     ),
-#     arrow = arrow(length = unit(0.25, "cm"), ends = "both")
-#   ) +
-#   annotate(
-#     "text",
-#     x = window_open + (window_close - window_open) * 0.5,
-#     y = L + (K-L) * 0.45,
-#     label = "Critical\nTemperature\nWindow",
-#     hjust = 0.5,
-#     vjust = 1,
-#     size = geom.text.size
-#   ) +
-#   # True growth curve
-#   geom_line(data = true_values, mapping = aes(x = doy, y = diameter)) +
-#   # Observed values
-#   geom_point(data = observed_values, mapping = aes(x = doy, y = diameter), shape = 21, colour = "black", fill = "white", size = 3, stroke = 1)
-#
-# schematic
-# fig_width <- 9
-# # ggsave("doc/manuscript/tables_figures/schematic.png", plot = schematic, width = fig_width, height = fig_width * 9 / 16)
-
-
-
-
-
 # Figure 1 v2: Schematic illustrating parameters and general sense of results ----
 ## Setup ----
 # DOY:
@@ -300,7 +95,7 @@ HF_total_growth_cold <- HF_K_cold - HF_L_cold
 ### Compute HF values ----
 HF_true_values_hot <-
   tibble(
-    doy = seq(from = start_doy, to = end_doy, by = 1),
+    doy = seq(from = start_doy, to = end_doy, by = 0.01),
     diameter = lg5.pred(HF_params_hot, doy)
   ) %>%
   mutate(
@@ -309,7 +104,7 @@ HF_true_values_hot <-
 
 HF_true_values_cold <-
   tibble(
-    doy = seq(from = start_doy, to = end_doy, by = 1),
+    doy = seq(from = start_doy, to = end_doy, by = 0.01),
     diameter = lg5.pred(HF_params_cold, doy)
   ) %>%
   mutate(
@@ -340,6 +135,11 @@ HF_doy_diameter_quartile_hot <- bind_rows(
   ) %>%
   select(-perc) %>%
   rename(perc = growth)
+  # mutate(perc = case_when(
+  #   growth == 0 ~ 0,
+  #   growth == 1 ~ 1,
+  #   TRUE ~ perc
+  # ))
 
 HF_doy_diameter_quartile_cold <- bind_rows(
   tibble(doy = 1, diameter = HF_L_cold),
@@ -356,42 +156,66 @@ HF_doy_diameter_quartile_cold <- bind_rows(
   ) %>%
   select(-perc) %>%
   rename(perc = growth)
+  # mutate(perc = case_when(
+  #   growth == 0 ~ 0,
+  #   growth == 1 ~ 1,
+  #   TRUE ~ perc
+  # ))
 
 HF_doy_diameter_quartile <- bind_rows(
   HF_doy_diameter_quartile_hot %>% mutate(year = "Hot"),
   HF_doy_diameter_quartile_cold %>% mutate(year = "Cold")
-)
+) %>%
+  mutate(year = as.factor(year))
 
 # Semi-synthetic DOY_g_max dates
 HF_doy_max_rate_offset <- 2
 HF_doy_max_rate <- HF_doy_diameter_quartile %>%
   filter(perc == 0.5) %>%
-  mutate(doy = doy + HF_doy_max_rate_offset)
+  mutate(doy = doy + HF_doy_max_rate_offset) %>%
+  mutate(year = as.factor(year))
+
+HF_doy_max_rate <- bind_rows(
+  HF_true_values_cold %>% mutate(diff = abs(perc-0.53)) %>% arrange(diff) %>% slice(1) %>% mutate(year = "Cold"),
+  HF_true_values_hot %>% mutate(diff = abs(perc-0.53)) %>% arrange(diff) %>% slice(1) %>% mutate(year = "Hot")
+) %>%
+  mutate(year = as.factor(year))
+
+
 
 
 ## 4. Identify significant horizontal shifts for 25%/50%/75% and g_max ----
 ### Identify HF values ----
 # 25%/50%/75%
-HF_significant_perc <- inner_join(
-  HF_doy_diameter_quartile_hot %>%
-    dplyr::filter(!label %in% c("0%", "100%")) %>%
-    select(doy_hot = doy, perc),
-  HF_doy_diameter_quartile_cold %>%
-    dplyr::filter(!label %in% c("0%", "100%")) %>%
-    select(doy_cold = doy, perc),
-  by = "perc"
-) %>%
-  mutate(significant = c(TRUE, TRUE, TRUE))
+HF_significant_perc <-
+  inner_join(
+    HF_doy_diameter_quartile_hot %>%
+      dplyr::filter(!label %in% c("0%", "100%")) %>%
+      select(doy_hot = doy, perc),
+    HF_doy_diameter_quartile_cold %>%
+      dplyr::filter(!label %in% c("0%", "100%")) %>%
+      select(doy_cold = doy, perc),
+    by = "perc"
+  ) %>%
+  # bind_cols(
+  #   HF_doy_diameter_quartile_hot %>% dplyr::filter(!label %in% c("0%", "100%")) %>% select(doy_hot = doy),
+  #   HF_doy_diameter_quartile_cold %>% dplyr::filter(!label %in% c("0%", "100%")) %>% select(doy_cold = doy)
+  # ) %>%
+  mutate(
+    # perc = c(0.25, 0.5, 0.75),
+    significant = c(TRUE, TRUE, TRUE)
+  )
 
 # Add g_max
 HF_significant_perc <- bind_rows(
   HF_significant_perc,
-  HF_significant_perc %>%
-    filter(perc == 0.5) %>%
-    mutate(doy_hot = doy_hot + HF_doy_max_rate_offset, doy_cold = doy_cold + HF_doy_max_rate_offset) %>%
-    mutate(perc = 0.53)
+  tibble(
+    doy_hot = HF_doy_max_rate$doy[HF_doy_max_rate$year == "Hot"],
+    perc = 0.53,
+    doy_cold = HF_doy_max_rate$doy[HF_doy_max_rate$year == "Cold"],
+    significant = TRUE
+  )
 )
-
 
 
 
@@ -417,7 +241,7 @@ HF_significant_vertical <- HF_true_values %>%
 schematic_v2_HF <-
   ggplot() +
   # Overall theme:
-  coord_cartesian(xlim = plot_xlim) +
+  coord_cartesian(xlim = plot_xlim, ylim = c(0,1)) +
   theme_bw() +
   theme(
     panel.grid.major = element_blank(),
@@ -431,8 +255,10 @@ schematic_v2_HF <-
   geom_line(data = HF_true_values, mapping = aes(x = doy, y = perc, col = year)) +
   scale_color_manual(values = c(cold_color, hot_color)) +
   # Mark 25%/50%/75% and g_max DOY's on x-axis:
-  geom_vline(data = HF_doy_diameter_quartile, aes(xintercept = doy, col = year), linetype = "dashed", show.legend = FALSE, alpha = 0.5) +
-  geom_vline(data = HF_doy_max_rate, aes(xintercept = doy, col = year), linetype = "dotted", show.legend = FALSE, alpha = 0.5) +
+  geom_segment(data = HF_doy_diameter_quartile %>% filter(year == "Hot"), aes(x = doy, xend = doy, y = 1.25, yend = perc, col = year), linetype = "dashed", show.legend = FALSE, alpha = 0.5) +
+  geom_segment(data = HF_doy_diameter_quartile %>% filter(year == "Cold"), aes(x = doy, xend = doy, y = perc, yend = -0.25, col = year), linetype = "dashed", show.legend = FALSE, alpha = 0.5) +
+  geom_segment(data = HF_doy_max_rate %>% filter(year == "Hot"), aes(x = doy, xend = doy, y = 1.25, yend = perc, col = year), linetype = "dashed", show.legend = FALSE, alpha = 0.5) +
+  geom_segment(data = HF_doy_max_rate %>% filter(year == "Cold"), aes(x = doy, xend = doy, y = perc, yend = -0.25, col = year), linetype = "dashed", show.legend = FALSE, alpha = 0.5) +
   scale_x_continuous(
     name = "Day of year",
     breaks = c(HF_doy_diameter_quartile_cold$doy, HF_doy_max_rate %>% filter(year == "Cold") %>% pull(doy)),
@@ -445,7 +271,7 @@ schematic_v2_HF <-
   ) +
   # Mark growth percentages on y-axis:
   scale_y_continuous(
-    name = expression(paste(Delta,"DBH")),
+    name = "Stem diameter growth",
     breaks = NULL,
     labels = NULL,
   ) +
@@ -489,8 +315,6 @@ schematic_v2_HF <-
     size = geom.text.size,
     col = hot_color
   ) +
-  # Add shaded Critical Temperature Window area:
-  geom_rect(aes(xmin = window_open, xmax = window_close, ymin = -Inf, ymax = Inf), alpha = 0.4) +
   geom_segment(
     aes(
       x = window_open,
@@ -504,7 +328,7 @@ schematic_v2_HF <-
     "text",
     x = window_open + (window_close - window_open) * 0.5,
     y = 0.30,
-    label = "Critical\nTemperature\nWindow (CTW)",
+    label = "Critical\nTemperature\nWindow",
     hjust = 0.5,
     vjust = 1,
     size = geom.text.size
@@ -513,41 +337,23 @@ schematic_v2_HF <-
   geom_segment(
     data = HF_significant_perc,
     aes(xend = doy_hot, x = doy_cold, yend = perc, y = perc),
-    col = ifelse(HF_significant_perc$significant, "black", "grey"),
-    size = 2,
+    size = 1,
     arrow = arrow(length = unit(0.20, "cm"), type = "closed", angle = 40),
     linejoin = "mitre"
   ) +
-  # Add vertical shift significance arrows:
-  geom_segment(
-    data = HF_significant_perc,
-    aes(
-      x = HF_significant_vertical %>% pull(doy) %>% .[1],
-      xend = HF_significant_vertical %>% pull(doy) %>% .[1],
-      y = HF_significant_vertical %>% pull(perc) %>% .[1] + 0.04,
-      yend = HF_significant_vertical %>% pull(perc) %>% .[2] - 0.04),
-    col = "grey",
-    size = 2,
-    arrow = arrow(length = unit(0.20, "cm"), type = "closed", angle = 40, ends = "both"),
-    linejoin = "mitre"
-  ) +
   # Add legend:
-  scale_fill_manual(values = alpha(c("grey", "black"))) +
-  labs(col = "Temp in CTW", fill = "Effect of ↑ in\nTemp in CTW") +
+  labs(col = "Spring temp") +
   theme(
-    legend.position =  c(0.14, 0.70),
-    legend.background = element_rect(fill="white", size=0.25, linetype="solid", color = "black")
-  ) +
-  geom_tile(data = tibble(x = c(0, 0), y = c(0.5, 0.5), z = factor(c("Not significant", "Significant"))), aes(x = x, y = y, fill = z))
+    #legend.position =  c(0.1, 0.9),
+    legend.position = c(0.025, 0.975),
+    legend.justification = c(0, 1)
+  )
 schematic_v2_HF
 
 
-
-
-### Combine ----
-fig_width <- 9
+fig_width <- 8
 schematic_v2_HF
-ggsave("doc/manuscript/tables_figures/schematic_v2.png", plot = last_plot(), width = fig_width, height = fig_width * 9 / 16)
+ggsave("doc/manuscript/tables_figures/schematic_summary.png", plot = last_plot(), width = fig_width, height = fig_width * 9 / 16)
 
 
 
