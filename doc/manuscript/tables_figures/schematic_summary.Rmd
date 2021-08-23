@@ -21,7 +21,7 @@ options(knitr.table.format = "latex")
 ```
 (a)
 
-![](schematic.png)
+![](schematic_summary.png)
 
 (b)
 
