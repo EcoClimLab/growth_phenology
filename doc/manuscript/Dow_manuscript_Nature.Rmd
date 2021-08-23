@@ -93,19 +93,15 @@ schematic_summary=1 #illustrates parameters
 DOY_timing = 2
   DOY_timing_SCBI = "2a"  #currently 4 panel!!!!
   DOY_timing_Harvard = "2b"  #currently 4 panel!!!!
-pheno_Tsensitivity = 3 
-tree_rings = 4  
+tree_rings = 3  
 
 #figure captions
 
 schematic_summary_caption <- "**Figure 1 | Summary of tree growth changes under warmer spring temperatures.** (a) Schematic illustrating parameters of interest and summarizing how each responds to warmer maximum temperatures during a 'critical temperature window (CTW)', defined as that with the strongest control over $DOY_{25}$; (b) Variable definitions and summary responses to warmer spring temperatures at two temperate forests and for two groups of broadleaf deciduous species (RP=ring porous; DP=diffuse porous), where up and down arrows indicate increases and decreases, respectively, 'n.s.' indicates no signficant correlation, and 'mixed' indicates a mix of signficant and non-signficant correlations, often in different directions."
 
-
 DOY_timing_caption <- "**Figure 2 | Leaf (a,b) and stem growth (c,d) phenology at the Smithsonian Conservation Biology Institute (a,c) and Harvard Forest (b,d).** Panels (a-b) show ecosystem-level leaf phenology, obtained from the MODIS Global Vegetation Phenology product (2001-2018), where G = Greenup, M=Mid-greenup, P=peak, and S=Senescence (i.e., beginning of green-down). Panels (c-d) show the dates at which stem growth milestones were acheived, on average, for sampled populations of ring-porous and diffuse-porous trees at SCBI (2011-2020) and Harvard Forest (1998-2003). Mean temperature was calculated for each wood-type/site combination over the respective critical $T_{max}$ window, then turned into a ratio and assigned a color on a gradient where the coldest year in the sample is blue and the warmest is red. (**SHOULD WE COMBINE LEAF AND STEM PHENOLOGY ON A SINGLE PLOT WITH SEPARATE Y-AXES? (KAT thinks so)** See [GitHub Issue #50](https://github.com/EcoClimLab/growth_phenology/issues/50). )" #needs attention!!!
 
-DOY_Tsensitivity_caption <- "**Figure 3 | Response of the timing of stem growth phenology to spring temperatures.** The days of year on which 25%, 50% and 75% of annual growth were acheived ($DOY_{25}$, $DOY_{50}$, and $DOY_{75}$, respectively) declined significantly with mean $T_{max}$ during their respective critical temperature window (CTW). For each CTW $T_{max}$, the posterior mean of the fitted day of year is represented by the solid line and 95% credible intervals are represented by bands. Relationships for additional growth parameters (Fig. 1a) are given in Extended Data Figure 4. (**DOYrmax will be dropped.** [GitHub Issue 23](https://github.com/EcoClimLab/growth_phenology/issues/23))" #needs attention!!!
-
-tree_rings_caption <- "**Figure 4 | Sensitivity of annual growth, as derived from tree-rings, to monthly maximum temperatures, for 207 chronologies from 114 sites across eastern North America** (Extended Data Figure 1). Chronologies are grouped by xylem porosity and ordered by mean maximum April temperature. Chronology details are given in the Supplementary Information. (NOTE: Figure still needs some work. **COLOR SCALE IS  A BIT OFF IN THIS COMPOSITE FIGURE (scales not identical across panels).**  See [GitHub Issue #49](https://github.com/EcoClimLab/growth_phenology/issues/49).)" #needs attention!!! #info subject to change!!!
+tree_rings_caption <- "**Figure 3 | Sensitivity of annual growth, as derived from tree-rings, to monthly maximum temperatures, for 207 chronologies from 114 sites across eastern North America** (Extended Data Figure 1). Chronologies are grouped by xylem porosity and ordered by mean maximum April temperature. Chronology details are given in the Supplementary Information. (NOTE: Figure still needs some work. **COLOR SCALE IS  A BIT OFF IN THIS COMPOSITE FIGURE (scales not identical across panels).**  See [GitHub Issue #49](https://github.com/EcoClimLab/growth_phenology/issues/49).)" #needs attention!!! #info subject to change!!!
 
 # EXTENDED DATA  (this chunk must be repeated in Dow_Extended_Data.Rmd)
 ##tables
@@ -203,22 +199,20 @@ Growing season length was similar across sites, with $L_{PGS}$ being, on average
 ![`r DOY_timing_caption`](tables_figures/DOYtiming_allyears.png){ width=25% }
 
  
-Both leaf phenology and stem growth were sensitive to spring temperatures (Figs. `r DOY_timing` -`r pheno_Tsensitivity`). 
+Both leaf phenology and stem growth were sensitive to spring temperatures (Figs. `r DOY_timing`, `r EDF_pheno_Tmax_climwin`-`r EDF_pheno_Tmin_AprilMay`). 
 While the results described below were qualitatively consistent considering both maximum and minimum temperatures ($T_{max}$ and $T_{min}$, respectively) across a range of spring time windows (Extended Data Figures 3-7), we focused our analyses on the strongest relationships: responses to $T_{max}$ over the consecutive weekly time window between Jan. 1 and $DOY_{25}$  for which the correlation between $T_{max}$ and $DOY_{25}$ was strongest (henceforth, critical temperature window, CTW; Fig. `r schematic_summary`). 
 The strongest relationships, including but not limited to the CTW (`r  EDT_mean_growth_parameters`), occurred for time windows closing $\le$ 5 weeks prior to $DOY_{25}$ (`r EDF_climwin`). 
 
-![`r DOY_Tsensitivity_caption`](tables_figures/DOY_Tsensitivity.png){ width=50% }
-
-For both ring- and diffuse- porous species at both sites, warmer $T_{max}$ in the CTW resulted in earlier achievement of growth milestones (Figs. `r schematic_summary`-`r pheno_Tsensitivity`).
+For both ring- and diffuse- porous species at both sites, warmer $T_{max}$ in the CTW resulted in earlier achievement of growth milestones (Figs. `r schematic_summary`, `r EDF_pheno_Tmax_climwin`).
 Consistent with findings from previous studies[@parmesan_globally_2003, @ibanez_forecasting_2010,@friedl_tale_2014], at our focal sites the DOYs of leaf greenup and mid-greenup (measured at ecosystem level via remote sensing) advanced significantly with increasing $T_{max}$ during the CTW (p=## and ##, respectively). 
 Specifically, [greenup DOY occurred 21 days earlier at SCBI and 7 days earlier at Harvard Forest when comparing the years with the warmest and coldest CTW $T_{max}$](https://github.com/EcoClimLab/growth_phenology/issues/58), and mid-greenup also advanced, but to a lesser extent (Fig. `r DOY_timing`).
-Similarly, $DOY_{25}$, $DOY_{50}$, $DOY_{75}$, and $DOY_{g.max}$ at both sites all decreased significantly with CTW $T_{max}$, advancing [1-8 days per degree Celsius](https://github.com/EcoClimLab/growth_phenology/issues/58) during the CTW (Figs. `r schematic_summary`- `r pheno_Tsensitivity`, `r DOY_timing`; see also Extended Data Figures **4-6**).
+Similarly, $DOY_{25}$, $DOY_{50}$, $DOY_{75}$, and $DOY_{g.max}$ at both sites all decreased significantly with CTW $T_{max}$, advancing [1-8 days per degree Celsius](https://github.com/EcoClimLab/growth_phenology/issues/58) during the CTW (Figs. `r schematic_summary`, `r DOY_timing`; see also Extended Data Figures `r EDF_pheno_Tmax_climwin`-`r EDF_pheno_Tmin_AprilMay`).
 
 
 Whereas the length of time between leaf greenup and senescence (*i.e.,* the day when greenness dropped below 90% of its peak) increased in years with warmer springs (Fig. `r DOY_timing`), there was no consistent lengthening of the period of peak stem growth. 
-Specifically, because $DOY_{75}$ -- and not only $DOY_{25}$ -- shifted earlier in years with warm springs, $L_{PGS}$ displayed mixed responses to spring temperatures (Fig. `r schematic_summary`, Extended Data Figures **4-6**).
+Specifically, because $DOY_{75}$ -- and not only $DOY_{25}$ -- shifted earlier in years with warm springs, $L_{PGS}$ displayed mixed responses to spring temperatures (Fig. `r schematic_summary`, Extended Data Figures `r EDF_pheno_Tmax_climwin`-`r EDF_pheno_Tmin_AprilMay`).
 
-In contrast to the pronounced effects of $T_{max}$ on the timing of growth, its effects on $g_{max}$ and $\Delta DBH$ were less consistent and generally quite subtle (Figs. `r schematic_summary`, `r pheno_Tsensitivity`). 
+In contrast to the pronounced effects of $T_{max}$ on the timing of growth, its effects on $g_{max}$ and $\Delta DBH$ were less consistent and generally quite subtle (Figs. `r schematic_summary`, `r EDF_pheno_Tmax_climwin`). 
 Neither maximum seasonal growth rate, $g_{max}$, nor annual growth measured with dendrometer bands, $\Delta DBH$, was consistently linked to early spring temperatures (Fig. `r schematic_summary`, Extended Data Figures **4-6**).
 Specifically, $g_{max}$, which occurred very close to $DOY_{50}$ (on $DOY_{g.max}$; `r EDT_mean_growth_parameters`), displayed either no relationship to CTW $T_{max}$ (SCBI), or extremely small changes in opposite directions for ring- and diffuse- porous species (Harvard Forest),
 while $\Delta DBH$ displayed no relationship with CTW $T_{max}$ (`r EDF_pheno_Tmax_climwin`). 
@@ -279,7 +273,7 @@ If we look across spatial gradients where the latter have had time to play out, 
 *Future research will be important to sorting this out.*
 
 Despite remaining uncertainties, our findings contribute substantially to a broader picture of the influence of spring temperatures on forest ecosystem function. 
-Warm spring temperatures result in earlier leaf-out (Fig. `r DOY_timing`)[@jeong_phenology_2011], an earlier start to net C sequestration[@keenan_net_2014], and, as shown here, earlier initiation of stem growth (Figs. `r schematic_summary`- `r pheno_Tsensitivity`).
+Warm spring temperatures result in earlier leaf-out (Fig. `r DOY_timing`)[@jeong_phenology_2011], an earlier start to net C sequestration[@keenan_net_2014], and, as shown here, earlier initiation of stem growth (Figs. `r schematic_summary`, `r EDF_pheno_Tmax_climwin`).
 Yet, an earlier start to the growing season is not associated with a longer growing season or increased growth (Figs. `r schematic_summary`, `r tree_rings`), presumably because stem diameter growth is curtailed by C sink limitation[@zani_increased_2020] or drought[@dorangeville_drought_2018;@helcoski_growing_2019].
 
 As climate change accelerates and spring temperatures become increasingly warmer, growing seasons will start earlier, but this is unlikely to provide the sustained increase in carbon sequestration that is anticipated in most models (Fig. `r schematic_summary`)[@zani_increased_2020].
