@@ -1,0 +1,31 @@
+Column name,Definition 
+Number,The chronology number as seen on Figure 3. Each number corresponds to a unique site/species combo.
+Location,The geographical location that the cores were collected from to create the chronology.
+Species,The species used to create the chronology
+Wood Type,The porosity of the species used to generate the chronology. Either ring-porous (RP) or diffuse-porous (DP).
+CTW Tmin,The average minimum temperature in the critical temperature window (CTW)
+CTW Tmax,The average maximum temperature in the critical temperature window (CTW)
+Latitude,The latitude of the location where the cores used to generate the chronology were collected.
+Longitude,The longitude of the location where the cores used to generate the chronology were collected.
+Slope April - April:June-July Tmax,The slope of the April factor in the linear model run to determine the interacting effect between spring and summer temperatures on yearly ring-widths (SUPP Figure)
+P-value April - April:June-July Tmax,The p-value of the April factor in the linear model run to determine the interacting effect between spring and summer temperatures on yearly ring-widths (SUPP Figure)
+Slope June-July - April:June-July Tmax,The slope of the June-July factor in the linear model run to determine the interacting effect between spring and summer temperatures on yearly ring-widths (SUPP Figure)
+P-value June-July - April:June-July Tmax,The p-value of the June-July factor in the linear model run to determine the interacting effect between spring and summer temperatures on yearly ring-widths (SUPP Figure)
+Slope April:June-July Tmax,The slope of the interaction factor in the linear model run to determine the interacting effect between spring and summer temperatures on yearly ring-widths (SUPP Figure)
+P-value April:June-July Tmax,The p-value of the interaction factor in the linear model run to determine the interacting effect between spring and summer temperatures on yearly ring-widths (SUPP Figure)
+January,The correlation value between January maximum temperature and yearly ring-width across all study years. Represented by color in Figure 3.
+January Sig,The p-value of the correlation value between January maximum temperature and yearly ring-width across all study years. 
+February,The correlation value between February maximum temperature and yearly ring-width across all study years. Represented by color in Figure 3.
+February Sig,The p-value of the correlation value between February maximum temperature and yearly ring-width across all study years. 
+March,The correlation value between March maximum temperature and yearly ring-width across all study years. Represented by color in Figure 3.
+March Sig,The p-value of the correlation value between March maximum temperature and yearly ring-width across all study years. 
+April,The correlation value between April maximum temperature and yearly ring-width across all study years. Represented by color in Figure 3.
+April Sig,The p-value of the correlation value between April maximum temperature and yearly ring-width across all study years. 
+May,The correlation value between May maximum temperature and yearly ring-width across all study years. Represented by color in Figure 3.
+May Sig,The p-value of the correlation value between May maximum temperature and yearly ring-width across all study years. 
+June,The correlation value between June maximum temperature and yearly ring-width across all study years. Represented by color in Figure 3.
+June Sig,The p-value of the correlation value between June maximum temperature and yearly ring-width across all study years. 
+July,The correlation value between July maximum temperature and yearly ring-width across all study years. Represented by color in Figure 3.
+July Sig,The p-value of the correlation value between July maximum temperature and yearly ring-width across all study years. 
+August,The correlation value between August maximum temperature and yearly ring-width across all study years. Represented by color in Figure 3.
+August Sig,The p-value of the correlation value between August maximum temperature and yearly ring-width across all study years. 
