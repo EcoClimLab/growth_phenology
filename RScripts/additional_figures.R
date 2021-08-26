@@ -17,7 +17,7 @@ end_doy <- 365
 
 # Critical temperature window:
 window_open <- 91
-window_close <- 120
+window_close <- 130
 
 # Function for logistic growth model written by Sean. Supposed to be in RDendrom
 # package https://github.com/seanmcm/RDendrom, but function does not seem to be included
@@ -210,39 +210,57 @@ schematic_v2_HF <-
   # Overall theme:
   coord_cartesian(xlim = plot_xlim, ylim = c(0,1)) +
   theme_bw() +
+  # Axes tick marks
   theme(
     panel.grid.major = element_blank(),
     panel.grid.minor = element_blank(),
     axis.text = element_text(size = theme.size),
     axis.text.x.top = element_text(color = hot_color),
-    axis.text.x.bottom = element_text(color = c(cold_color, cold_color, cold_color)),
+    axis.text.x.bottom = element_text(color = c(rep(cold_color, 6), rep("black", 2))),
     axis.title = element_text(size = theme.size)
   ) +
-  # Add LG5 growth curves
-  geom_line(data = HF_true_values, mapping = aes(x = doy, y = perc, col = year)) +
-  scale_color_manual(values = c(cold_color, hot_color)) +
-  # Mark 25%/50%/75% and g_max DOY's on x-axis:
-  geom_segment(data = HF_doy_diameter_quartile %>% filter(year == "Hot"), aes(x = doy, xend = doy, y = 1.25, yend = perc, col = year), linetype = "dashed", show.legend = FALSE, alpha = 0.5) +
-  geom_segment(data = HF_doy_diameter_quartile %>% filter(year == "Cold"), aes(x = doy, xend = doy, y = perc, yend = -0.25, col = year), linetype = "dashed", show.legend = FALSE, alpha = 0.5) +
-  geom_segment(data = HF_doy_max_rate %>% filter(year == "Hot"), aes(x = doy, xend = doy, y = 1.25, yend = perc, col = year), linetype = "dashed", show.legend = FALSE, alpha = 0.5) +
-  geom_segment(data = HF_doy_max_rate %>% filter(year == "Cold"), aes(x = doy, xend = doy, y = perc, yend = -0.25, col = year), linetype = "dashed", show.legend = FALSE, alpha = 0.5) +
   scale_x_continuous(
     name = "Day of year",
-    breaks = c(HF_doy_diameter_quartile_cold$doy, HF_doy_max_rate %>% filter(year == "Cold") %>% pull(doy)),
-    labels = c(1, expression(DOY[25]), expression(paste("     ", DOY[50], " ", DOY[g[max]])), expression(DOY[75]), 365, expression(paste(""))),
+    # Bottom cold
+    breaks = c(HF_doy_diameter_quartile_cold$doy, HF_doy_max_rate %>% filter(year == "Cold") %>% pull(doy), window_open, window_close),
+    labels = c(1, expression(DOY[25]), expression(paste("     ", DOY[50], " ", DOY[g[max]])), expression(DOY[75]), 365, expression(paste("")), NA, NA),
+    # Top hot
     sec.axis = sec_axis(
       ~ . * 1,
       breaks = c(HF_doy_diameter_quartile_hot$doy, HF_doy_max_rate %>% filter(year == "Hot") %>% pull(doy)),
       labels = c(1, expression(DOY[25]), expression(paste("     ", DOY[50], " ", DOY[g[max]])), expression(DOY[75]), 365, expression(paste("")))
     )
   ) +
-  # Mark growth percentages on y-axis:
   scale_y_continuous(
     name = "Stem diameter growth",
     breaks = NULL,
     labels = NULL,
   ) +
-  # Add double-sided arrow marking cold/blue Primary Growing Season:
+  # Both LG5 growth curves
+  geom_line(data = HF_true_values, mapping = aes(x = doy, y = perc, col = year)) +
+  scale_color_manual(values = c(cold_color, hot_color)) +
+  # DOY for 25%/50%/75% and g_max:
+  geom_segment(
+    data = HF_doy_diameter_quartile %>% filter(year == "Hot"),
+    aes(x = doy, xend = doy, y = 1.25, yend = perc, col = year),
+    linetype = "dashed", show.legend = FALSE, alpha = 0.5
+  ) +
+  geom_segment(
+    data = HF_doy_diameter_quartile %>% filter(year == "Cold"),
+    aes(x = doy, xend = doy, y = perc, yend = -0.25, col = year),
+    linetype = "dashed", show.legend = FALSE, alpha = 0.5
+  ) +
+  geom_segment(
+    data = HF_doy_max_rate %>% filter(year == "Hot"),
+    aes(x = doy, xend = doy, y = 1.25, yend = perc, col = year),
+    linetype = "dashed", show.legend = FALSE, alpha = 0.5
+  ) +
+  geom_segment(
+    data = HF_doy_max_rate %>% filter(year == "Cold"),
+    aes(x = doy, xend = doy, y = perc, yend = -0.25, col = year),
+    linetype = "dashed", show.legend = FALSE, alpha = 0.5
+  ) +
+  # Cold/blue Primary Growing Season:
   geom_segment(
     aes(
       x = HF_doy_diameter_quartile_cold$doy[2],
@@ -262,7 +280,7 @@ schematic_v2_HF <-
     size = geom.text.size,
     col = cold_color
   ) +
-  # Add double-sided arrow marking hot/red Primary Growing Season:
+  # Hot/red Primary Growing Season:
   geom_segment(
     aes(
       x = HF_doy_diameter_quartile_hot$doy[2],
@@ -283,8 +301,8 @@ schematic_v2_HF <-
     col = hot_color
   ) +
   # Add critical temperature window
-  geom_vline(aes(xintercept = window_open), linetype = "dashed", alpha = 0.5) +
-  geom_vline(aes(xintercept = window_close), linetype = "dashed", alpha = 0.5) +
+  # geom_vline(aes(xintercept = window_open), linetype = "dashed", alpha = 0.5) +
+  # geom_vline(aes(xintercept = window_close), linetype = "dashed", alpha = 0.5) +
   geom_segment(
     aes(
       x = window_open,
@@ -294,16 +312,20 @@ schematic_v2_HF <-
     ),
     arrow = arrow(length = unit(0.25, "cm"), ends = "both")
   ) +
+  geom_segment(
+    aes(x = c(window_open, window_close), xend = c(window_open, window_close), y = c(0.3, 0.3), yend = c(-0.25, - 0.25)),
+    linetype = "dashed"
+  ) +
   annotate(
     "text",
     x = window_open + (window_close - window_open) * 0.5,
-    y = 0.30,
+    y = 0.3,
     label = "Critical\nTemperature\nWindow",
     hjust = 0.5,
     vjust = 1,
     size = geom.text.size
   ) +
-  # Add horizontal significant shift arrows:
+  # Horizontal significant shift arrows:
   geom_segment(
     data = HF_significant_perc,
     aes(xend = doy_hot, x = doy_cold, yend = perc, y = perc),
@@ -314,15 +336,18 @@ schematic_v2_HF <-
   # Add legend:
   labs(col = "Spring temp") +
   theme(
-    legend.position = c(0.975, 0.025),
-    legend.justification = c(1, 0)
+    legend.position = c(1-0.975, 1-0.025),
+    legend.justification = c(0, 1)
   )
 schematic_v2_HF
 
 
 fig_width <- 8
-schematic_v2_HF
-ggsave("doc/manuscript/tables_figures/schematic_summary.png", plot = last_plot(), width = fig_width, height = fig_width * 9 / 16)
+ggsave(
+  filename = "doc/manuscript/tables_figures/schematic_summary.png",
+  plot = schematic_v2_HF,
+  width = fig_width, height = fig_width * 9 / 16
+)
 
 
 
