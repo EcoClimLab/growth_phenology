@@ -226,7 +226,7 @@ schematic_v2_HF <-
     )
   ) +
   scale_x_continuous(
-    name = "Day of year",
+    name = "Day of Year",
     # Bottom cold
     breaks = c(
       HF_doy_diameter_quartile_cold %>% filter(perc %in% c(0.25, 0.5, 0.75)) %>% pull(doy),
@@ -252,7 +252,7 @@ schematic_v2_HF <-
     )
   ) +
   scale_y_continuous(
-    name = "Stem diameter growth",
+    name = "Stem Diameter Growth",
     breaks = NULL,
     labels = NULL,
   ) +
@@ -293,8 +293,8 @@ schematic_v2_HF <-
   ) +
   annotate(
     "text",
-    x = HF_doy_diameter_quartile_cold$doy[2] + (HF_doy_diameter_quartile_cold$doy[4] - HF_doy_diameter_quartile_cold$doy[2]) * 0.35,
-    y = 0 + 0.025,
+    x = mean(c(HF_doy_diameter_quartile_cold$doy[2], HF_doy_diameter_quartile_cold$doy[3])),
+    y = 0 + 0.015,
     label = expression(L[PGS]),
     hjust = 0.5,
     size = geom.text.size,
@@ -313,8 +313,8 @@ schematic_v2_HF <-
   ) +
   annotate(
     "text",
-    x = HF_doy_diameter_quartile_hot$doy[2] + (HF_doy_diameter_quartile_hot$doy[4] - HF_doy_diameter_quartile_hot$doy[2]) * 0.22,
-    y =  0.85 + 0.025,
+    x = mean(c(HF_doy_diameter_quartile_hot$doy[2], HF_doy_diameter_quartile_hot$doy[3])),
+    y =  0.85 + 0.015,
     label = expression(L[PGS]),
     hjust = 0.5,
     size = geom.text.size,
@@ -343,7 +343,7 @@ schematic_v2_HF <-
   ) +
   geom_segment(
     aes(x = c(window_open, window_close), xend = c(window_open, window_close), y = c(0.25, 0.25), yend = c(-0.25, - 0.25)),
-    linetype = "dashed"
+    linetype = "dashed", alpha = 0.5
   ) +
   # Horizontal significant shift arrows:
   geom_segment(
@@ -354,7 +354,7 @@ schematic_v2_HF <-
     linejoin = "mitre"
   ) +
   # Add legend:
-  labs(col = "Spring temp") +
+  labs(col = "Spring Temperature") +
   theme(
     legend.position = c(1-0.975, 1-0.025),
     legend.justification = c(0, 1)
