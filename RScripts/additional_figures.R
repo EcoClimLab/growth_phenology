@@ -17,7 +17,7 @@ end_doy <- 365
 
 # Critical temperature window:
 window_open <- 91
-window_close <- 130
+window_close <- 135
 
 # Function for logistic growth model written by Sean. Supposed to be in RDendrom
 # package https://github.com/seanmcm/RDendrom, but function does not seem to be included
@@ -214,16 +214,36 @@ schematic_v2_HF <-
   theme(
     panel.grid.major = element_blank(),
     panel.grid.minor = element_blank(),
+    axis.title = element_text(size = theme.size),
     axis.text = element_text(size = theme.size),
     axis.text.x.top = element_text(color = hot_color),
-    axis.text.x.bottom = element_text(color = c(rep(cold_color, 6), rep("black", 2))),
-    axis.title = element_text(size = theme.size)
+    axis.ticks.x.top = element_line(color = hot_color),
+    axis.ticks.x.bottom = element_line(
+      color = c(rep(cold_color, 4), rep("black", 2), "white")
+    ),
+    axis.text.x.bottom = element_text(
+      color = c(rep(cold_color, 4), rep("black", 3))
+    )
   ) +
   scale_x_continuous(
     name = "Day of year",
     # Bottom cold
-    breaks = c(HF_doy_diameter_quartile_cold$doy, HF_doy_max_rate %>% filter(year == "Cold") %>% pull(doy), window_open, window_close),
-    labels = c(1, expression(DOY[25]), expression(paste("     ", DOY[50], " ", DOY[g[max]])), expression(DOY[75]), 365, expression(paste("")), NA, NA),
+    breaks = c(
+      HF_doy_diameter_quartile_cold %>% filter(perc %in% c(0.25, 0.5, 0.75)) %>% pull(doy),
+      HF_doy_max_rate %>% filter(year == "Cold") %>% pull(doy),
+      window_open,
+      window_close,
+      mean(c(window_close, window_open))
+    ),
+    labels = c(
+      expression(DOY[25]),
+      expression(paste("     ", DOY[50], " ", DOY[g[max]])),
+      expression(DOY[75]),
+      expression(paste("")),
+      NA,
+      NA,
+      "Critical Temperature Window"
+      ),
     # Top hot
     sec.axis = sec_axis(
       ~ . * 1,
@@ -303,27 +323,27 @@ schematic_v2_HF <-
   # Add critical temperature window
   # geom_vline(aes(xintercept = window_open), linetype = "dashed", alpha = 0.5) +
   # geom_vline(aes(xintercept = window_close), linetype = "dashed", alpha = 0.5) +
+  # annotate(
+  #   "text",
+  #   x = window_open + (window_close - window_open) * 0.5,
+  #   y = 0.3,
+  #   label = "Critical\nTemperature\nWindow",
+  #   hjust = 0.5,
+  #   vjust = 1,
+  #   size = geom.text.size
+  # ) +
   geom_segment(
     aes(
       x = window_open,
-      y = 0.30 + 0.025,
       xend = window_close,
-      yend = 0.30 + 0.025
+      y = -0.025,
+      yend = -0.025
     ),
     arrow = arrow(length = unit(0.25, "cm"), ends = "both")
   ) +
   geom_segment(
-    aes(x = c(window_open, window_close), xend = c(window_open, window_close), y = c(0.3, 0.3), yend = c(-0.25, - 0.25)),
+    aes(x = c(window_open, window_close), xend = c(window_open, window_close), y = c(0.25, 0.25), yend = c(-0.25, - 0.25)),
     linetype = "dashed"
-  ) +
-  annotate(
-    "text",
-    x = window_open + (window_close - window_open) * 0.5,
-    y = 0.3,
-    label = "Critical\nTemperature\nWindow",
-    hjust = 0.5,
-    vjust = 1,
-    size = geom.text.size
   ) +
   # Horizontal significant shift arrows:
   geom_segment(
