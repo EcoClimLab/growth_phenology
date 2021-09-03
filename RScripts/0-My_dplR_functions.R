@@ -365,8 +365,8 @@ my.dccplot <- function (x, sig, sig2, rescale = TRUE, main, method = c('correlat
   n <- dim(x)[2]
 
   if (rescale & method == "correlation")  {
-    pos.max <- max(x)#1.2 #max(x)
-    neg.max <- abs(min(x))#0.65 #abs(min(x))
+    pos.max <-  0.660970142832834#abs(min(x))#.340875640731788max(x)
+    neg.max <-  0.660970142832834#abs(min(x))#
   }
 
   if (rescale & method == "response")  {
@@ -400,15 +400,17 @@ my.dccplot <- function (x, sig, sig2, rescale = TRUE, main, method = c('correlat
   xs.sig <- unlist(c(sig))
   xs.sig2 <- unlist(c(sig2))
 
+  #hm <- reds(abs(xs[xs <= 0])/ neg.max)
+  #hmm <- hm[is.na(hm)]
+  #xs <- ifelse(xs > pos.max, pos.max, xs)
   color <- xs
   color[xs <= 0] <- rgb(reds(abs(xs[xs <= 0])/ neg.max), maxColorValue = 255)
   color[xs > 0] <- rgb(blues(xs[xs > 0]/ pos.max), maxColorValue = 255)
 
   rect(x.left, y.bottom , x.right, y.top, col = color, border = "white")
 
-  points((x.left + x.right) /2 , (y.bottom + y.top) /2, bg = ifelse(xs.sig,  "white", "transparent"), col = ifelse(xs.sig, "black", "transparent"), pch = 21)
+  points((x.left + x.right) /2 , (y.bottom + y.top) /2, bg = ifelse(xs.sig,  "white", "transparent"), col = ifelse(xs.sig, "black", "transparent"), pch = 8)
   points((x.left + x.right) /2 , (y.bottom + y.top) /2, bg = ifelse(xs.sig2,  "white", "transparent"), col = ifelse(xs.sig2, "black", "transparent"), pch = 24)
-
   # current vs previous year bars ####
 
   #par(xpd= NA)
