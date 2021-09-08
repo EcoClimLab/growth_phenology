@@ -174,7 +174,7 @@ However, recent evidence that positive effects of warm springs are compensated b
 
 Temperate deciduous forests, including those in eastern North America, have historically been net carbon sinks.
 As Earth's atmospheric CO~2~ concentrations and temperatures increase, the responses and feedbacks of forests will play an important yet uncertain role in influencing atmospheric CO~2~ and climate change[@arora_carbon_2020; @friedlingstein_global_2020]. 
-Whether the primary effect of global warming will be an increase in forest sink capability though earlier spring leaf up [@keenan_net_2014] or if increased respiration following warmer autumns will reduce the effectiveness of spring warming [@piao_net_2008; @barichivich_large-scale_2013] is still debated. In both scenarios, earlier leaf up corresponds to increased C02 sequestration while the sensitivity of photosynthesis compared to respiration in autumn, and the role seasonal water stress plays in this process is the main point of contention.
+Whether forest sink capability will increase as spring leaf up advances[@keenan_net_2014] or if sink capacity is limited by some mechanism is unknown. In the former case, earlier leaf up appears to correspond with increased NEE, but little work has been done to understand where the extra sequestered carbon is being stored[]. 
 
 We know very little about how the longest-lived component of fixed carbon, the woody growth of trees, is responding to warming spring temperatures. 
 In fact, we know little about the stem-growth phenology of temperate deciduous species, with multi-year records of growth phenology having been published for only one site [@doranngeville_radial_inreview]. *(We need to make sure we're not missing anything. See European study cited in A-T et al in review)* 
@@ -244,15 +244,15 @@ Together, our results demonstrate that warmer spring temperatures in the tempera
 The observed advance in the timing of stem growth milestones under warmer springs is consistent with similar phenological advances observed for leaf development (Fig. `r DOY_timing`)[@keenan_net_2014] and NEE [@keenan_net_2014].
 *It would be interesting to compare the magnitude of these advances (days per degree C)*
 However, inconsistent with leaf phenology and NEE, we observed that the length of the period of most active stem growth does not increase under warmer springs. 
-This suggests that the growth benefit of warmer springs is compensated by negative effects later in the growing season, with two primary possibile mechanisms.
+This suggests that the growth benefit of warmer springs is compensated by negative effects later in the growing season, with two primary possible mechanisms.
 First, stem growth, like leaf phenology[@zani_increased_2020], may be sink-limited, such that an advance in the start of growth ($DOY_25$) accompanied by little change in growth rate ($g_{max}$) results in an earlier end to the season of rapid growth ($DOY_{75}$).
-Alternatively, warm springs may be associated with greater seasonal water stress, effectively canceling out any positive effects of an extended growing period.  [@buermann_widespread_2018]
+Alternatively, warm springs may be associated with greater seasonal water stress, effectively canceling out any positive effects of an extended growing period.  [@buermann_widespread_2018; ]
 
-However, spring warming at SCBI in the study years used here did not result in increased summer water stress (SPEI; Supp(?) SPEI Figure). This suggests that even when warmer springs are not associated with greater seasonal water stress, the lack of increased stem growth still prevails. 
+However, spring warming at SCBI in the study years used here did not result in increased summer water stress (SPEI; Supp(?) SPEI Figure). This suggests that even when warmer springs are not associated with greater seasonal water stress, the lack of increased stem growth still prevails. (Is SPEI a good measure of soil moisture?)
 
 The concept that stem growth is not enhanced under a longer growing season was supported by our tree-ring analysis, which showed that the effect of spring temperatures on annual growth is negligible for most species and locations, with at most modest influence for some species and locations (Fig. `r tree_rings`, `r EDF_tree_rings_TMIN`)[@alexander_potential_2019; @helcoski_growing_2019].
 Rather, the primary effect of temperature on annual growth is a negative effect of $T_{max}$ during the peak growing season, which is most likely a signal of drought stress[@dorangeville_drought_2018].
-Linear models were run to examine the relationship between spring, summer and an interaction effect with ring-width for each of our 208 chronologies. The results indicated that, across all latitudes, the interacting effect of warmer springs and summers resulted in negligable increase of ring-width (supp (?) rw_drought_plot).  
+Linear models were run to examine the relationship between spring, summer and an interaction effect with ring-width for each of our 208 chronologies. The results indicated that, across all latitudes, the interacting effect of warmer springs and summers resulted in negligible increase of ring-width (supp (?) rw_drought_plot).  
 It is possible that an earlier start to the growing season may provide some buffer against drought later in the growing season[@wolf_warm_2016], potentially contributing to observed trends of declining drought sensitivity in the region[@maxwell_declining_2016;@helcoski_growing_2019].
 *(ADD MORE ON DROUGHT HERE)*
 
