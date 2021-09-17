@@ -192,7 +192,7 @@ Here, we characterize how early spring temperatures affect stem growth phenology
 First, using dendrometer band measurements taken throughout the growing season at the Smithsonian Conservation Biology Institute (SCBI; Virginia; n = **146** trees from 2011-2020) and Harvard Forest (Massachusetts; n = **755** trees from 1998-2003), we fit a growth model[@mcmahon_general_2015] to determine the days of year where 25, 50, and 75% annual growth was achieved ($DOY_{25}$, $DOY_{50}$, $DOY_{75}$), peak growing season length ($L_{pgs}= DOY_{75}$-$DOY_{25}$), maximum growth rates ($g_{max}$) and the DOY on which they occurred ($DOY_{g_{max}}$), and total annual growth ($\Delta DBH$; Fig. `r schematic_summary`). 
 This analysis was performed separately for ring- and diffuse-porous species, which differ in growth phenology[@doranngeville_radial_inreview], and set in the context of leaf phenology at these sites.
 
-![`r schematic_summary_caption`](tables_figures/schematic_summary.png){ width=70% }
+![`r schematic_summary_caption`](tables_figures/schematic_summary_with_table.png){ width=70% }
 
 
 
