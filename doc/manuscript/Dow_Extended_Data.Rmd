@@ -39,8 +39,7 @@ EDF_tree_rings_TMIN = "Extended Data Figure 7"
 
 ## table captions
 species_table_caption <-"Extended Data Table 1 | Dominant ring- and diffuse-porous species at the Smithsonian Conservation Biology Institute (SCBI) and Harvard Forest, along with sample sizes included in this analysis."
-sample_size_by_year_caption <- "TO BE REMOVED | Sample size by year "
-mean_growth_parameters_caption = "Extended Data Table 2 | Summary of parameters describing the phenology and rate of growth for ring- and diffuse- porous species at SCBI and Harvard Forest. "
+mean_growth_parameters_caption = "Extended Data Table 2 | Summary of parameters describing the phenology and rate of growth for ring- and diffuse- porous species at SCBI and Harvard Forest."
 tree_ring_summary_caption =  "Extended Data Table 3 | Summary of tree-ring data and analysis ( including species, n chronologies (= n sites), n positively correlated with April T, n sig.)" 
 
 ## figure captions
