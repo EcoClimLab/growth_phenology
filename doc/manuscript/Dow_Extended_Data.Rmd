@@ -44,6 +44,9 @@ mean_growth_parameters_caption = "Extended Data Table 2 | Summary of parameters 
 tree_ring_summary_caption =  "Extended Data Table 3 | Summary of tree-ring data and analysis ( including species, n chronologies (= n sites), n positively correlated with April T, n sig.)" 
 
 ## figure captions
+
+map_caption <- "**Extended Data Figure 1 | Map of sampling locations of tree-ring chronologies analyzed in this study.** Sites are colored by the xylem porosity type of species sampled: ring poroous (RP), diffuse porous (DP), or both. Sampling details are provided in **SI TBALE NAME**" #needs attention!!!
+
 growth_curves_all_caption  <- " Extended Data Figure 2 | Growth trajectories for ring- and diffuse-porous trees, as both relative and cumulative fractions of total annual growth. Each line represents one year's growth for a given tree, fit with McMahon model. " #needs wordsmithing!!!
 
 climwin_caption <- "Extended Data Figure 3 | Landscapes of relationships between the day of year on which 25% of annual growth is achieved ($DOY_{25}$) and temperature in prior weeks for ring- and diffuse-porous trees at SCBI and Harvard Forest. Shown are matrices of linear coefficients of first-order linear regressions between temperature and $DOY_{25}$, where Window Open and Window Close indicate number of weeks prior to $DOY_{25}$ (ring-porous: May 5 at SCBI, May 13 at HF; diffuse-porous: June 4 at SCBI, June 14 at HF). Black circles indicate the critical $T_{max}$ window (ring-porous:  March 22- April 9 at SCBI, April 2 - May 07 at HF; diffuse-porous: Feb. 19- May 21 at SCBI, March 19 - May 07 at HF)." #info subject to change!!!
@@ -96,7 +99,9 @@ kable_styling(latex_options = c("scale_down", "hold_position"), protect_latex = 
 
 \newpage
 
-## (PLACEHOLDER FOR MAP OF STUDY SITES -- [GITHUB ISSUE #54](https://github.com/EcoClimLab/growth_phenology/issues/54))
+
+![`r map_caption`](tables_figures/chronology_map.png)
+
 
 \newpage
 
