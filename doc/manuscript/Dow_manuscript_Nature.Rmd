@@ -284,7 +284,7 @@ If we look across spatial gradients where the latter have had time to play out, 
 
 Despite remaining uncertainties, our findings contribute substantially to a broader picture of the influence of spring temperatures on forest ecosystem function. 
 Warm spring temperatures result in earlier leaf-out (Fig. `r DOY_timing`)[@jeong_phenology_2011], an earlier start to net C sequestration[@keenan_net_2014], and, as shown here, earlier initiation of stem growth (Figs. `r schematic_summary`, `r EDF_pheno_Tmax_climwin`).
-Yet, an earlier start to the growing season is not associated with a longer peak growing season or increased growth (Figs. `r schematic_summary`, `r tree_rings`), presumably because stem diameter growth is curtailed by C sink limitation[@zani_increased_2020] or drought[@zhang_drought_2021;@dorangeville_drought_2018;@helcoski_growing_2019].
+Yet, an earlier start to the growing season is not consistently associated with a longer peak growing season or increased growth (Figs. `r schematic_summary`, `r tree_rings`), presumably because stem diameter growth is curtailed by C sink limitation[@zani_increased_2020] or drought[@zhang_drought_2021;@dorangeville_drought_2018;@helcoski_growing_2019].
 
 As climate change accelerates and spring temperatures become increasingly warmer, growing seasons will start earlier, but this is unlikely to provide the sustained increase in carbon sequestration that is anticipated in most models (Fig. `r schematic_summary`)[@zani_increased_2020].
 Because of this, temperate deciduous forests are likely to sequester less CO~2~ than most models suggest, implying that these models are underestimating future overall atmospheric CO~2~.
