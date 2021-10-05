@@ -146,19 +146,17 @@ Thus, warming spring temperatures are unlikely to increase the woody productivit
 
 # (Body)
 
+As Earth's atmospheric CO~2~ concentrations and temperatures increase, the responses and feedbacks of forests will play an important yet uncertain role in influencing atmospheric CO~2~ and climate change[@arora_carbon_2020; @friedlingstein_global_2020]. 
+Temperate deciduous forests, including those in eastern North America, are important for reducing atmospheric CO~2~ concentrations(**REFS**).
+*yet models remain uncertain.*
+
 In temperate deciduous forests, spring warming generally results in an increased growing season length, measured as the period over which trees have photosynthetically active leaves[@jeong_phenology_2011;@ibanez_forecasting_2010;@menzel_european_2006;@menzel_growing_1999] and the ecosystem is a net CO~2~ sink[@keenan_net_2014].
 The expectation is that as growing season length increases, net annual carbon sequestered will increase as well (*i,e*, net ecosystem exchange, $NEE$)[@churkina_spatial_2005; @keenan_net_2014; @zhou_explaining_2016; @fu_maximum_2019], and [this expectation is represented in models](https://github.com/EcoClimLab/growth_phenology/issues/56) [@buermann_widespread_2018; @zani_increased_2020].
 However, recent evidence that positive effects of warm springs are compensated by negative effects of accumulation of seasonal water deficits [@buermann_widespread_2018] and that leaf senescence and stem growth cessation is induced when water deficits reach a certain point[@lempereur_growth_2015] or sink factors become limiting[@zani_increased_2020; @zohner_how_2021] suggests that warmer spring temperatures and earlier leaf-out may not have a positive effect on C sequestration in trees.
 
-This would be concerning in that the C sink of temperate deciduous forests, including those in eastern North America, is important for reducing atmospheric CO~2~ concentrations(**REFS**).
-
-As Earth's atmospheric CO~2~ concentrations and temperatures increase, the responses and feedbacks of forests will play an important yet uncertain role in influencing atmospheric CO~2~ and climate change[@arora_carbon_2020; @friedlingstein_global_2020]. 
-Understanding how trees are responding to warming temperatures and rising CO2 levels, and how growth may become limited because of interactions between the two is essential to improve our predictions. 
-Under controlled conditions, spring warming increases biomass accumulation in trees, with a larger proportion of root growth compared to shoot growth[@zohner_how_2021]. 
-To our knowledge, the link between stem phenology and growth has never been studied in-situ.
-
 We know very little about how the longest-lived component of fixed carbon in trees, the woody growth, is responding to warming spring temperatures. 
 In fact, we know little about the stem-growth phenology of temperate deciduous species, with multi-year records of growth phenology having been published for only a few site [@doranngeville_radial_inreview; @martin_hydrometeorology_2017]. *(We need to make sure we're not missing anything. See European study cited in A-T et al in review)* 
+To our knowledge, the link between stem phenology and growth has never been studied *in-situ*.
 Tree-ring records, which can be used to examine correlations of annual growth to monthly temperatures but not to understand growth phenology, reveal that growth of temperate deciduous trees tends to be most sensitive to summer temperatures (**MORE REFS--preferably some that are already cited**), with some hints that warmer springs may have a modest positive effect on growth (e.g., Refs.[@helcoski_growing_2019] [**MORE REFS--but only those that are already cited**]).
 Thus, tree-ring records do not necessarily support the suggestion that warming spring temperatures would increase annual CO~2~ sequestration. 
 Characterizing phenological responses of stem growth to warming spring temperatures is critical to bridging this conceptual disconnect and understanding how forest biomass growth is likely to change as the climate warms.(Loic suggests adding numbers to illustrate the importance of stem growth as a carbon sink.)
@@ -277,6 +275,7 @@ As a result, warming may advance or delay autumn senescence depending on timing 
 These findings align with those of previous studies that suggest annual CO~2~ sequestration is more strongly linked to conditions in the peak growing season than to growing season length[@fu_maximum_2019; @zhang_drought_2021] and with observations that warm springs result in earlier leaf senescence of deciduous trees because CO~2~ sequestration is sink limited [@zohner_ongoing_2019; @zani_increased_2020].
 They contrast, however, with the expectation *in most models[@zani_increased_2020]* that an earlier start to growing season would significantly increase the rate of biomass accumulation and thereby enhance the CO~2~ sink of temperate deciduous forests.
 
+Under controlled conditions, spring warming increases biomass accumulation in trees, with a larger proportion of root growth compared to shoot growth[@zohner_how_2021]. 
 
 # Methods {-#Methods} 
 
