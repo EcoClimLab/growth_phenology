@@ -126,9 +126,9 @@ n_chronologies_HF <- 4
 
 \newpage
 
-*NOTE: In general, this needs to be condensed. The typical length of an article with 3-4 modest display items (figures and tables) is 2000-2500 words (summary paragraph plus body text). We're currently at ~3333 words (or ~3690 with fig captions) and 1 modest + 2 large display items. Articles typically have 30-50 references (currently ok there)* 
+*NOTE: In general, this needs to be condensed. The typical length of an article with 3-4 modest display items (figures and tables) is 2000-2500 words (summary paragraph plus body text). We're currently at ~3116 words and 1 modest + 2 large display items. Articles typically have 30-50 references (currently ok there)* 
 
-# (Summary paragraph - 200 words)
+# (Summary paragraph)
 ```{r eval=FALSE, echo=FALSE}
 ## For Nature:
 # Articles start with a fully referenced summary paragraph, ideally of no more than 200 words, which is separate from the main text and avoids numbers, abbreviations, acronyms or measurements unless essential. It is aimed at readers outside the discipline. This summary paragraph should be structured as follows: 2-3 sentences of basic-level introduction to the field; a brief account of the background and rationale of the work; a statement of the main conclusions (introduced by the phrase 'Here we show' or its equivalent); and finally, 2-3 sentences putting the main findings into general context so it is clear how the results described in the paper have moved the field forwards. Please refer to our annotated example  to see how the summary paragraph should be constructed.
@@ -146,23 +146,22 @@ Thus, warming spring temperatures are unlikely to increase the woody productivit
 
 # (Body)
 
-In recent decades, forests have sequestered ~20% of anthropogenic CO~2~ emissions, thereby substantially slowing the pace of atmospheric CO~2~ accumulation and climate change(**REF**).
+In recent decades, forests have sequestered ~20% of anthropogenic CO~2~ emissions, thereby slowing the pace of atmospheric CO~2~ accumulation and climate change[@pan_large_2011].
 A large portion of this CO~2~ sink occurs in temperate deciduous forests, with uptake of >100 Tg C yr^-1^ (>10% of the total forest C sink) attributable to environmental (as opposed to demographic) changes [@pugh_role_2019]. 
-As Earth's atmospheric CO~2~ concentrations and temperatures continue to increase, the behavior of this CO~2~ sink will play an important yet uncertain role in influencing atmospheric CO~2~ and climate change[@arora_carbon_2020; @friedlingstein_global_2020]. 
-It remains difficult to predict how temperate deciduous forests will respond to the combined influences of multiple global change drivers, including warming temperatures(**REF**). 
+The future behavior of this CO~2~ sink will play an important yet uncertain role in influencing atmospheric CO~2~ and climate change[@arora_carbon_2020; @friedlingstein_global_2020]. 
 
 In temperate deciduous forests, spring warming generally results in an increased growing season length, measured as the period over which trees have photosynthetically active leaves[@jeong_phenology_2011;@ibanez_forecasting_2010;@menzel_european_2006;@menzel_growing_1999] and the ecosystem is a net CO~2~ sink[@keenan_net_2014].
-The expectation is that as growing season length increases, net annual carbon sequestered will increase as well (*i,e*, net ecosystem exchange, $NEE$)[@churkina_spatial_2005; @keenan_net_2014; @zhou_explaining_2016; @fu_maximum_2019], and [this expectation is represented in models](https://github.com/EcoClimLab/growth_phenology/issues/56) [@buermann_widespread_2018; @zani_increased_2020].
-However, recent evidence that positive effects of warm springs are compensated by negative effects of accumulation of seasonal water deficits [@buermann_widespread_2018] and that leaf senescence and stem growth cessation is induced when water deficits reach a certain point[@lempereur_growth_2015] or sink factors become limiting[@zani_increased_2020; @zohner_how_2021] suggests that warmer spring temperatures and earlier leaf-out may not have a positive effect on C sequestration in trees.
+The expectation is that as growing season length increases, net annual carbon sequestered will increase as well (*i,e*, net ecosystem exchange, _NEE_)[@churkina_spatial_2005; @keenan_net_2014; @zhou_explaining_2016; @fu_maximum_2019], and [this expectation is represented in models](https://github.com/EcoClimLab/growth_phenology/issues/56) [@buermann_widespread_2018; @zani_increased_2020].
+However, recent findings that positive effects of warm springs are compensated by negative effects of accumulation of seasonal water deficits [@buermann_widespread_2018] and that <!--leaf senescence and stem growth cessation is induced when water deficits reach a certain point[@lempereur_growth_2015] (lempereur_growth_2015 studied an evergreen)--> sink factors can limit annual growth[@zani_increased_2020; @zohner_how_2021] suggest that warmer spring temperatures and earlier leaf-out may not have a positive effect on C sequestration in trees.
 
 While the responses of leaf phenology and seasonal CO~2~ sequestration to warming spring temperatures have been relatively well-studied[@jeong_phenology_2011; @keenan_net_2014; @buermann_widespread_2018; @ibanez_forecasting_2010; @menzel_european_2006; @menzel_growing_1999], we know very little about how the longest-lived component of fixed carbon in trees, the woody growth, is responding to warming spring temperatures. 
-In fact, we know little about the stem-growth phenology of temperate deciduous species, with multi-year records of growth phenology having been published for only a few sites [e.g., Ref. @dorangeville_peak_2021]. 
+In fact, we know little about the stem-growth phenology of temperate deciduous species, with multi-year records of growth phenology having been published for only a few sites (e.g., Ref.[@dorangeville_peak_2021]). 
 <!-- one example will suffice here. others include one cited in Anderson-Teixeira et al. GCB tree rings. martin_hydrometeorology_2017 does this, but that is for conifers.-->
-To our knowledge, the climate sensitivity of woody growth phenology and its link to annual growth has never been studied *in-situ* (but see Ref.[@zohner_how_2021] for a sapling experiment).
+To our knowledge, the climate sensitivity of woody growth phenology and its link to annual growth has never been studied *in-situ* (but see Ref.[@zohner_how_2021] for a controlled sapling experiment).
 
 Tree-ring records, which can be used to examine correlations of annual growth to monthly temperatures but not to understand growth phenology, reveal that growth of temperate deciduous trees tends to be most sensitive to temperature or potential evapotranspiration between late spring and early summer[@dorangeville_drought_2018;@helcoski_growing_2019],
 <!-- dorangeville_drought_2018 looks at PET.-->
-with some hints that warmer springs may have a modest positive effect on growth (e.g., Ref.[@helcoski_growing_2019]).
+with some hints that warmer springs may have a modest positive effect on growth[@helcoski_growing_2019].
 <!-- add more refs here, but only if already cited elsewhere (to keep n references down-->
 Thus, tree-ring evidence does not necessarily align with the finding that warming spring temperatures increase annual CO~2~ sequestration, thereby providing a negative feedback to climate change[@keenan_net_2014]. 
 Characterizing phenological responses of stem growth to warming spring temperatures is critical to bridging this conceptual disconnect and understanding how forest biomass growth is likely to change as the climate warms.
@@ -171,8 +170,8 @@ Here, we characterize how early spring temperatures affect stem growth phenology
 
 ## Dendrometer band analysis {-#Dendrometer} 
 
-First, using dendrometer band measurements taken throughout the growing season at the Smithsonian Conservation Biology Institute (SCBI; Virginia; n = **146** trees from 2011-2020) and Harvard Forest (Massachusetts; n = **755** trees from 1998-2003), we fit a growth model[@mcmahon_general_2015] to determine the days of year where 25, 50, and 75% annual growth was achieved ($DOY_{25}$, $DOY_{50}$, $DOY_{75}$), peak growing season length ($L_{pgs}= DOY_{75}$-$DOY_{25}$), maximum growth rates ($g_{max}$) and the DOY on which they occurred ($DOY_{g_{max}}$), and total annual growth ($\Delta DBH$; Fig. `r schematic_summary`). 
-This analysis was performed separately for ring- and diffuse-porous species, which differ in growth phenology[@dorangeville_peak_2021], and set in the context of leaf phenology at these sites.
+Using dendrometer band measurements taken throughout the growing season at the Smithsonian Conservation Biology Institute (SCBI; Virginia, USA; n = **146** trees from 2011-2020) and Harvard Forest (Massachusetts, USA; n = **755** trees from 1998-2003), we fit a growth model[@mcmahon_general_2015] to determine the days of year where 25, 50, and 75% annual growth were achieved ($DOY_{25}$, $DOY_{50}$, $DOY_{75}$), peak growing season length ($L_{pgs}= DOY_{75}$-$DOY_{25}$), maximum growth rates ($g_{max}$) and the DOY on which they occurred ($DOY_{g_{max}}$), and total annual growth ($\Delta DBH$; Fig. `r schematic_summary`). 
+This analysis was performed separately for ring- and diffuse-porous species, which differ in growth phenology[@dorangeville_peak_2021], and set in the context of leaf phenology (measured at ecosystem level via remote sensing).
 
 ![**Figure 1 | Summary of tree growth changes under warmer spring temperatures.** (a) Schematic illustrating parameters of interest and summarizing how each responds to warmer maximum temperatures during a 'critical temperature window', defined as that with the strongest control over $DOY_{25}$; (b) Variable definitions and summary responses to warmer spring temperatures at two temperate forests and for two groups of broadleaf deciduous species (RP=ring porous; DP=diffuse porous), where up and down arrows indicate increases and decreases, respectively, 'n.s.' indicates no signficant correlation, and 'mixed' indicates a mix of signficant and non-signficant correlations, often in different directions.](tables_figures/schematic_summary_with_table.png){ width=70% }
 
@@ -186,12 +185,12 @@ Growing season length was similar across sites, with $L_{PGS}$ being, on average
 
  
 Both leaf phenology and stem growth were sensitive to spring temperatures (Figs. `r DOY_timing`, `r EDF_pheno_Tmax_climwin`-`r EDF_pheno_Tmin_AprilMay`). 
-While the results described below were qualitatively consistent considering both maximum and minimum temperatures ($T_{max}$ and $T_{min}$, respectively) across a range of spring time windows (Extended Data Figures 3-7), we focused our analyses on the strongest relationships: responses to $T_{max}$ over the consecutive weekly time window between Jan. 1 and $DOY_{25}$  for which the correlation between $T_{max}$ and $DOY_{25}$ was strongest (henceforth, critical temperature window; Fig. `r schematic_summary`). 
+While the results described below were qualitatively consistent considering both maximum and minimum temperatures ($T_{max}$ and $T_{min}$, respectively) across a range of spring time windows (Extended Data Figures 3-7), we focused our analyses on the strongest relationships: responses to $T_{max}$ over the consecutive weekly time window between Jan. 1 and $DOY_{25}$ for which the correlation between $T_{max}$ and $DOY_{25}$ was strongest (henceforth, critical temperature window; Fig. `r schematic_summary`). 
 The strongest relationships, including but not limited to the critical temperature window (`r  EDT_mean_growth_parameters`), occurred for time windows closing $\le$ 5 weeks prior to $DOY_{25}$ (`r EDF_climwin`). 
 
-For both ring- and diffuse- porous species at both sites, warmer $T_{max}$ in the critical temperature window resulted in earlier achievement of growth milestones (Figs. `r schematic_summary`, `r EDF_pheno_Tmax_climwin`).
-Consistent with findings from previous studies[@parmesan_globally_2003, @ibanez_forecasting_2010,@friedl_tale_2014], at our focal sites the DOY of leaf greenup (measured at ecosystem level via remote sensing) advanced with increasing $T_{max}$ during the critical temperature window (p=0.001). 
-Specifically, greenup DOY advanced 4.5 days/$^\circ$C at SCBI and 2.4 days/ $^\circ$C at Harvard Forest when comparing the years with the warmest and coldest mean $T_{max}$ during the critical temperature window, and mid-greenup also advanced, but to a lesser extent (Fig. `r DOY_timing`).
+For ring- and diffuse- porous species at both sites, warmer $T_{max}$ in the critical temperature window resulted in earlier achievement of growth milestones (Figs. `r schematic_summary`, `r EDF_pheno_Tmax_climwin`).
+Consistent with findings from previous studies[@parmesan_globally_2003, @ibanez_forecasting_2010,@friedl_tale_2014], the DOY of leaf greenup advanced with increasing $T_{max}$ during the critical temperature window (p=0.001). 
+Specifically, greenup DOY advanced 4.5 days/$^\circ$C at SCBI and 2.4 days/ $^\circ$C at Harvard Forest *when comparing the years with the warmest and coldest mean $T_{max}$ during the critical temperature window*<!--Cameron, was this based on comparing just the warmest and coldest years, or a linear regression. We want the latter, and to remove the italic text -->, and mid-greenup also advanced, but to a lesser extent (Fig. `r DOY_timing`).
 Similarly, at both sites, $DOY_{25}$, $DOY_{50}$, $DOY_{75}$, and $DOY_{g_{max}}$ all decreased with mean $T_{max}$ during the critical temperature window (Figs. `r schematic_summary`, `r DOY_timing`; see also Extended Data Figures `r EDF_pheno_Tmax_climwin`-`r EDF_pheno_Tmin_AprilMay`).
 Specifically, at SCBI, RP growth advanced 1.9, 1.5, and 1.1 days/ $^\circ$C for $DOY_{25}$, $DOY_{50}$, and $DOY_{75}$, respectively, while DP growth advanced 3.5, 3.5, and 3.6 days/ $^\circ$C for $DOY_{25}$, $DOY_{50}$, and $DOY_{75}$, respectively.
 At Harvard Forest, RP growth advanced 2.8, 5.0, and 7.2 days/ $^\circ$C for $DOY_{25}$, $DOY_{50}$, and $DOY_{75}$, respectively, while DP growth advanced 7.9, 7.3, and 6.6 days/ $^\circ$C for $DOY_{25}$, $DOY_{50}$, and $DOY_{75}$, respectively.
@@ -232,7 +231,8 @@ The observed advance in the timing of stem growth milestones under warmer spring
 However, inconsistent with leaf phenology and NEE, we observed that the length of the period of most active stem growth does not increase under warmer springs. 
 This suggests that the growth benefit of warmer springs is compensated by negative effects later in the growing season, with two primary possible mechanisms.
 First, stem growth, like leaf phenology[@zani_increased_2020], may be sink-limited, such that an advance in the start of growth ($DOY_25$) would lead to an earlier depletion of resources needed for growth resulting in an earlier end to the season of rapid growth ($DOY_{75}$).
-Warm springs may also be associated with greater seasonal water stress, effectively canceling out any positive effects of an extended growing period[@buermann_widespread_2018; ] or inducing the cessation of stem growth when a critical water deficit is reached[@lempereur_growth_2015].  
+Warm springs may also be associated with greater seasonal water stress, effectively canceling out any positive effects of an extended growing period[@buermann_widespread_2018; ] or inducing the cessation of stem growth when a critical water deficit is reached[@lempereur_growth_2015]. 
+<!-- lempereur_growth_2015 studied an evergreen oak-->
 
 Spring warming at SCBI and Harvard Forest in the study years used here did not result in increased $\Delta DBH$ or summer water stress (SPEI; Supp(?) SPEI Figure). This suggests that even when warmer springs are not associated with greater seasonal water stress, the lack of increased stem growth still prevails at these sites. This could be because the woody growth at these sites are already limited by some mechanism. 
 
@@ -275,6 +275,7 @@ Because of this, temperate deciduous forests are likely to sequester less CO~2~ 
 # content to incorporate or delete:
 
 Warmer spring temperatures and earlier leaf-out are also linked to earlier leaf senescence[@zohner_ongoing_2019;@keenan_timing_2015; @fu_variation_2014], apparently because of sink-limitation to CO~2~ sequestration[@zani_increased_2020; @lempereur_growth_2015].
+<!-- lempereur_growth_2015 studied an evergreen-->
 Additionally, Warmer summer and autumn temperatures coupled with drought led to a delay of leaf senescence[@zohner_ongoing_2019;@xie_predicting_2018; @crabbe_extreme_2016; @dragoni_evidence_2011; @jeong_phenology_2011; @ibanez_forecasting_2010; @vitasse_responses_2009] while heavy rainfall and heat stress led to earlier senescence[@xie_predicting_2018]. 
 As a result, warming may advance or delay autumn senescence depending on timing of warming and water availability, with delays more common across eastern North America [@buermann_widespread_2018]. 
 
