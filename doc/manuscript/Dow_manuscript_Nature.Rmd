@@ -146,34 +146,40 @@ Thus, warming spring temperatures are unlikely to increase the woody productivit
 
 # (Body)
 
-As Earth's atmospheric CO~2~ concentrations and temperatures increase, the responses and feedbacks of forests will play an important yet uncertain role in influencing atmospheric CO~2~ and climate change[@arora_carbon_2020; @friedlingstein_global_2020]. 
-Temperate deciduous forests, including those in eastern North America, are important for reducing atmospheric CO~2~ concentrations(**REFS**).
-*yet models remain uncertain.*
+In recent decades, forests have sequestered ~20% of anthropogenic CO~2~ emissions, thereby substantially slowing the pace of atmospheric CO~2~ accumulation and climate change(**REF**).
+A large portion of this CO~2~ sink occurs in temperate deciduous forests, with uptake of >100 Tg C yr^-1^ (>10% of the total forest C sink) attributable to environmental (as opposed to demographic) changes [@pugh_role_2019]. 
+As Earth's atmospheric CO~2~ concentrations and temperatures continue to increase, the behavior of this CO~2~ sink will play an important yet uncertain role in influencing atmospheric CO~2~ and climate change[@arora_carbon_2020; @friedlingstein_global_2020]. 
+It remains difficult to predict how temperate deciduous forests will respond to the combined influences of multiple global change drivers, including warming temperatures(**REF**). 
 
 In temperate deciduous forests, spring warming generally results in an increased growing season length, measured as the period over which trees have photosynthetically active leaves[@jeong_phenology_2011;@ibanez_forecasting_2010;@menzel_european_2006;@menzel_growing_1999] and the ecosystem is a net CO~2~ sink[@keenan_net_2014].
 The expectation is that as growing season length increases, net annual carbon sequestered will increase as well (*i,e*, net ecosystem exchange, $NEE$)[@churkina_spatial_2005; @keenan_net_2014; @zhou_explaining_2016; @fu_maximum_2019], and [this expectation is represented in models](https://github.com/EcoClimLab/growth_phenology/issues/56) [@buermann_widespread_2018; @zani_increased_2020].
 However, recent evidence that positive effects of warm springs are compensated by negative effects of accumulation of seasonal water deficits [@buermann_widespread_2018] and that leaf senescence and stem growth cessation is induced when water deficits reach a certain point[@lempereur_growth_2015] or sink factors become limiting[@zani_increased_2020; @zohner_how_2021] suggests that warmer spring temperatures and earlier leaf-out may not have a positive effect on C sequestration in trees.
 
-We know very little about how the longest-lived component of fixed carbon in trees, the woody growth, is responding to warming spring temperatures. 
-In fact, we know little about the stem-growth phenology of temperate deciduous species, with multi-year records of growth phenology having been published for only a few site [@doranngeville_radial_inreview; @martin_hydrometeorology_2017]. *(We need to make sure we're not missing anything. See European study cited in A-T et al in review)* 
-To our knowledge, the link between stem phenology and growth has never been studied *in-situ*.
-Tree-ring records, which can be used to examine correlations of annual growth to monthly temperatures but not to understand growth phenology, reveal that growth of temperate deciduous trees tends to be most sensitive to summer temperatures (**MORE REFS--preferably some that are already cited**), with some hints that warmer springs may have a modest positive effect on growth (e.g., Refs.[@helcoski_growing_2019] [**MORE REFS--but only those that are already cited**]).
-Thus, tree-ring records do not necessarily support the suggestion that warming spring temperatures would increase annual CO~2~ sequestration. 
-Characterizing phenological responses of stem growth to warming spring temperatures is critical to bridging this conceptual disconnect and understanding how forest biomass growth is likely to change as the climate warms.(Loic suggests adding numbers to illustrate the importance of stem growth as a carbon sink.)
+While the responses of leaf phenology and seasonal CO~2~ sequestration to warming spring temperatures have been relatively well-studied[@jeong_phenology_2011; @keenan_net_2014; @buermann_widespread_2018; @ibanez_forecasting_2010; @menzel_european_2006; @menzel_growing_1999], we know very little about how the longest-lived component of fixed carbon in trees, the woody growth, is responding to warming spring temperatures. 
+In fact, we know little about the stem-growth phenology of temperate deciduous species, with multi-year records of growth phenology having been published for only a few sites [e.g., Ref. @dorangeville_peak_2021]. 
+<!-- one example will suffice here. others include one cited in Anderson-Teixeira et al. GCB tree rings. martin_hydrometeorology_2017 does this, but that is for conifers.-->
+To our knowledge, the climate sensitivity of woody growth phenology and its link to annual growth has never been studied *in-situ* (but see Ref.[@zohner_how_2021] for a sapling experiment).
+
+Tree-ring records, which can be used to examine correlations of annual growth to monthly temperatures but not to understand growth phenology, reveal that growth of temperate deciduous trees tends to be most sensitive to temperature or potential evapotranspiration between late spring and early summer[@dorangeville_drought_2018;@helcoski_growing_2019],
+<!-- dorangeville_drought_2018 looks at PET.-->
+with some hints that warmer springs may have a modest positive effect on growth (e.g., Ref.[@helcoski_growing_2019]).
+<!-- add more refs here, but only if already cited elsewhere (to keep n references down-->
+Thus, tree-ring evidence does not necessarily align with the finding that warming spring temperatures increase annual CO~2~ sequestration, thereby providing a negative feedback to climate change[@keenan_net_2014]. 
+Characterizing phenological responses of stem growth to warming spring temperatures is critical to bridging this conceptual disconnect and understanding how forest biomass growth is likely to change as the climate warms.
 
 Here, we characterize how early spring temperatures affect stem growth phenology, growth rates, and annual growth of temperate deciduous trees in two forests and annual growth across forests spanning eastern North America.
 
 ## Dendrometer band analysis {-#Dendrometer} 
 
 First, using dendrometer band measurements taken throughout the growing season at the Smithsonian Conservation Biology Institute (SCBI; Virginia; n = **146** trees from 2011-2020) and Harvard Forest (Massachusetts; n = **755** trees from 1998-2003), we fit a growth model[@mcmahon_general_2015] to determine the days of year where 25, 50, and 75% annual growth was achieved ($DOY_{25}$, $DOY_{50}$, $DOY_{75}$), peak growing season length ($L_{pgs}= DOY_{75}$-$DOY_{25}$), maximum growth rates ($g_{max}$) and the DOY on which they occurred ($DOY_{g_{max}}$), and total annual growth ($\Delta DBH$; Fig. `r schematic_summary`). 
-This analysis was performed separately for ring- and diffuse-porous species, which differ in growth phenology[@doranngeville_radial_inreview], and set in the context of leaf phenology at these sites.
+This analysis was performed separately for ring- and diffuse-porous species, which differ in growth phenology[@dorangeville_peak_2021], and set in the context of leaf phenology at these sites.
 
 ![**Figure 1 | Summary of tree growth changes under warmer spring temperatures.** (a) Schematic illustrating parameters of interest and summarizing how each responds to warmer maximum temperatures during a 'critical temperature window', defined as that with the strongest control over $DOY_{25}$; (b) Variable definitions and summary responses to warmer spring temperatures at two temperate forests and for two groups of broadleaf deciduous species (RP=ring porous; DP=diffuse porous), where up and down arrows indicate increases and decreases, respectively, 'n.s.' indicates no signficant correlation, and 'mixed' indicates a mix of signficant and non-signficant correlations, often in different directions.](tables_figures/schematic_summary_with_table.png){ width=70% }
 
 
 
 Both leaf phenology and stem growth milestones occurred earlier at SCBI than at Harvard Forest, with stem growth milestones achieved on average 6-10 days earlier at SCBI (Fig. `r DOY_timing`, `r  EDT_mean_growth_parameters`).
-Consistent with the results of Ref[@doranngeville_radial_inreview], ring-porous species began growing earlier, reaching the $DOY_{25}$ benchmark earlier (by `r 154-123` days at SCBI and `r 164-132` at Harvard Forest), and their growth was spread out over a longer growing season (average $L_{PGS}$ 21 and 19 days longer at SCBI and Harvard Forest, respectively; Fig. `r DOY_timing`, `r  EDF_growth_curves_all`, `r  EDT_mean_growth_parameters`). 
+Consistent with the results of Ref[@dorangeville_peak_2021], ring-porous species began growing earlier, reaching the $DOY_{25}$ benchmark earlier (by `r 154-123` days at SCBI and `r 164-132` at Harvard Forest), and their growth was spread out over a longer growing season (average $L_{PGS}$ 21 and 19 days longer at SCBI and Harvard Forest, respectively; Fig. `r DOY_timing`, `r  EDF_growth_curves_all`, `r  EDT_mean_growth_parameters`). 
 Growing season length was similar across sites, with $L_{PGS}$ being, on average, only two days longer at SCBI for ring-porous species and less than one day longer for diffuse-porous species (`r  EDT_mean_growth_parameters`). 
 
 ![**Figure 2 | Leaf (a,b) and stem growth (c,d) phenology at the Smithsonian Conservation Biology Institute (a,c) and Harvard Forest (b,d).** Panels (a-b) show ecosystem-level leaf phenology, obtained from the MODIS Global Vegetation Phenology product (2001-2018), where G = Greenup, M=Mid-greenup, P=peak, and S=Senescence (i.e., beginning of green-down). Panels (c-d) show the dates at which stem growth milestones were acheived, on average, for sampled populations of ring-porous and diffuse-porous trees at SCBI (2011-2020) and Harvard Forest (1998-2003). Mean temperature was calculated for each wood-type/site combination over the respective critical $T_{max}$ window, then turned into a ratio and assigned a color on a gradient where the coldest year in the sample is blue and the warmest is red.](tables_figures/DOYtiming_allyears.png){ width=25% }
@@ -288,12 +294,13 @@ Study sites included two temperate forests in the eastern United States, both pa
 Our first study site was the forest dynamics plot located at the Smithsonian Conservation Biology Institute 5 km South of Front Royal, Virginia within the Blue Ridge Mountains (38.8935° N, 78.1454° W; elevation 273–338 m.a.s.l.). 
 The forest here was established in the mid-19th century after conversion from agricultural fields. 
 Dominate canopy species within the 25.6 ha forest plot include tulip poplar (*Liriodendron tulipifera*), oaks (*Quercus spp.*), and hickories (*Carya spp.*). 
-The climate is humid temperate, with a mean annual precipitation of 998 mm and temperatures averaging 1° C in January and 24° C in July ([helcoski_growing_2019]).  
+The climate is humid temperate, with a mean annual precipitation of 998 mm and temperatures averaging 1° C in January and 24° C in July (Ref.[@helcoski_growing_2019]).  
 
 The second study site was Harvard Forest (42.5388° N, 72.1755° W, 340-368 m.a.s.l.), located near the central Massachusetts town of Petersham.
 Harvard forest is a secondary forest, having re-established following agricultural use *(time frame)* and significant hurricane damage in 1938. 
 Dominate species within the 35 ha ForestGEO plot are hemlock (*Tsuga canadensis*), oak (*Quercus spp.*) and red maple (*Acer rubrum*). 
-The climate is temperate continental with a mean annual precipitation of 1120 mm and temperatures  averaging -12° C in January and 19° C in July (D'Orangeville et al, ).
+The climate is temperate continental with a mean annual precipitation of 1120 mm and temperatures  averaging -12° C in January and 19° C in July [@dorangeville_peak_2021].
+<!-- Is this the right reference? -->
 
 ## Data collection and preparation {-#Data} 
 ### Dendrometer bands {-#Dendrometer} 
