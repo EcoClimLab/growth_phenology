@@ -162,8 +162,6 @@ They contrast, however, with the expectation *in most models[@zani_increased_202
 
 \newpage
 
-*The introduction and summary paragraph need work, and removal of overlap. Organizational/content suggestions are welcome, but we're not at the stage of word-smithing.*
-
 Warming temperatures in recent decades have resulted in widespread phenological changes indicative of earlier arrival of spring[@parmesan_globally_2003, @ibanez_forecasting_2010,@jeong_phenology_2011,@friedl_tale_2014] and sometimes later autumn senesence[@ibanez_forecasting_2010,@jeong_phenology_2011; @keenan_net_2014].
 In temperate deciduous forests, spring leaf-out has been occurring earlier[@ibanez_forecasting_2010, @jeong_phenology_2011], as has the beginning of the annual period of net CO~2~ sequestration [@piao_net_2008; @barichivich_large-scale_2013; @keenan_net_2014].
 Warmer spring temperatures and earlier leaf-out are also linked to earlier leaf senescence[@zohner_ongoing_2019;@keenan_timing_2015; @fu_variation_2014], apparently because of sink-limitation to CO~2~ sequestration[@zani_increased_2020; @lempereur_growth_2015].
@@ -220,7 +218,7 @@ Whereas the length of time between leaf greenup and senescence (*i.e.,* the day 
 Specifically, because $DOY_{75}$ -- and not only $DOY_{25}$ -- shifted earlier in years with warm springs, $L_{PGS}$ displayed mixed responses to spring temperatures (Fig. `r schematic_summary`, Extended Data Figures `r EDF_pheno_Tmax_climwin`-`r EDF_pheno_Tmin_AprilMay`).
 
 In contrast to the pronounced effects of $T_{max}$ on the timing of growth, its effects on $g_{max}$ and $\Delta DBH$ were less consistent and generally quite subtle (Figs. `r schematic_summary`, `r EDF_pheno_Tmax_climwin`). 
-Neither maximum seasonal growth rate, $g_{max}$, nor annual growth measured with dendrometer bands, $\Delta DBH$, was consistently linked to early spring temperatures (Fig. `r schematic_summary`, Extended Data Figures **4-6**).
+Neither maximum seasonal growth rate, $g_{max}$, nor annual growth measured with dendrometer bands, $\Delta DBH$, was consistently linked to early spring temperatures (Fig. `r schematic_summary`, Extended Data Figures `r EDF_pheno_Tmax_climwin` - `r EDF_pheno_Tmin_AprilMay`).
 Specifically, $g_{max}$, which occurred very close to $DOY_{50}$ (on $DOY_{g.max}$; `r EDT_mean_growth_parameters`), displayed either no relationship to mean $T_{max}$ during the critical temperature window (SCBI), or extremely small changes in opposite directions for ring- and diffuse- porous species (Harvard Forest),
 while $\Delta DBH$ displayed no relationship with mean $T_{max}$ during the critical temperature window (`r EDF_pheno_Tmax_climwin`). 
 Given the subtlety of these responses, a much longer record was needed to clarify what, if any, effect spring temperatures have on stem growth.
@@ -241,7 +239,7 @@ Patterns in $T_{min}$ were fairly similar to those of $T_{max}$, but weaker and 
 The patterns observed at our focal sites were mirrored across an additional `r n_chronologies-n_chronologies_SCBI-n_chronologies_HF` chronologies from `r n_cores_sites-2` sites (Fig. `r tree_rings`; `r EDF_map`)[@dorangeville_drought_2018].
 In total, our analysis included `r_n_chronologies` species at sites distributed from Alabama (Lat = 34.35) to Michigan (Lat = 45.56) and spanning a 15 $^\circ$C range in April $T_{max}$.
 Across all chronologies (focal sites included), RWI was significantly positively correlated with April $T_{max}$ for only 1% of records: 1 of 142 ring-porous and 2 of 66 diffuse-porous species-site combinations.
-In contrast, RWI was frequently significantly negatively correlated with $T_{max}$ during peak growing season months (May-August), with significant correlations for 53% (Aug = 57, Jul = 90, Jun = 108, May = 47) and 46% (Aug = 22, Jul = 37, Jun = 53, May = 11) of species-site-month combinations for ring-porous and diffuse-porous species, respectively.
+In contrast, RWI was frequently significantly negatively correlated with $T_{max}$ during peak growing season months (May-August), with significant correlations for 53% (May: 47/142, Jun: 108/142, Jul: 90/142, Aug: 57/142) and 46% (May: 11/66, Jun: 53/66, Jul: 37/66, Aug: 22/66) of species-site-month combinations for ring-porous and diffuse-porous species, respectively.
 Again, $T_{min}$ generally exerted less influence over annual growth than $T_{max}$ (`r EDF_tree_rings_TMIN`), with few significant correlations between spring $T_{min}$ and RWI.
 
 ## Discussion {-#Discussion} 
