@@ -15,7 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 \raggedright
 
-**Title:** Warmer spring temperatures in temperate deciduous forests advance the timing of tree growth but have little effect on annual woody productivity */annual increments*
+**Title:** Warmer spring temperatures in temperate deciduous forests advance the timing of tree growth but have little effect on annual woody productivity 
 
 **Authors:** 
 
