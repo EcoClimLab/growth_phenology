@@ -126,7 +126,7 @@ n_chronologies_HF <- 4
 
 \newpage
 
-*NOTE: In general, this needs to be condensed. The typical length of an article with 3-4 modest display items (figures and tables) is 2000-2500 words (summary paragraph plus body text). We're currently at ~2700 words (or ~3000 with fig captions) and 2 modest + 2 large display items. Articles typically have 30-50 references (currently ok there)* 
+*NOTE: In general, this needs to be condensed. The typical length of an article with 3-4 modest display items (figures and tables) is 2000-2500 words (summary paragraph plus body text). We're currently at ~3333 words (or ~3690 with fig captions) and 1 modest + 2 large display items. Articles typically have 30-50 references (currently ok there)* 
 
 # (Summary paragraph)
 ```{r eval=FALSE, echo=FALSE}
