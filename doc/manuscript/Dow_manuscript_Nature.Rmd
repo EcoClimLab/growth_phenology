@@ -206,18 +206,17 @@ Given the subtlety of these responses, a much longer record was needed to clarif
 
 ## Tree ring analysis {-#Tree} 
 
-To understand how annual growth increments have responded to spring temperatures at the centennial scale, we analyzed tree-ring chronologies of `r n_chronologies_SCBI` species at SCBI and `r n_chronologies_HF` species at Harvard Forest (`r EDT_species`), and an additional `r n_chronologies-n_chronologies_SCBI-n_chronologies_HF` chronologies from `r n_cores_sites-2` sites (Fig. `r tree_rings`; `r EDF_map`)[@dorangeville_drought_2018].
+To understand how annual growth increments have responded to spring temperatures at the centennial scale, we analyzed tree-ring chronologies of `r n_chronologies_SCBI` species at SCBI and `r n_chronologies_HF` species at Harvard Forest (`r EDT_species`), and an additional `r n_chronologies-n_chronologies_SCBI-n_chronologies_HF` chronologies from `r n_cores_sites-2` sites (Fig. `r tree_rings`; `r EDF_map`; `r EDT_tree_ring_summary`)[@dorangeville_drought_2018].
 In total, our analysis included `r n_chronologies` species at sites distributed from Alabama (Lat = 34.35) to Michigan (Lat = 45.56) and spanning a 15 $^\circ$C range in April $T_{max}$.
-Across all chronologies, RWI was significantly (at p=0.05) positively correlated with April $T_{max}$ for only 1% of records: 1 of 142 ring-porous and 2 of 66 diffuse-porous species-site combinations.
+Across all chronologies, RWI was significantly (at p=0.05) positively correlated with April $T_{max}$ for only 1% of records: 1 of 142 ring-porous and 2 of 66 diffuse-porous species-site combinations (`r EDT_tree_ring_summary`).
 In contrast, RWI was frequently significantly negatively correlated with $T_{max}$ during peak growing season months (May-August), with significant correlations for 53% (May: 47/142, Jun: 108/142, Jul: 90/142, Aug: 57/142) and 46% (May: 11/66, Jun: 53/66, Jul: 37/66, Aug: 22/66) of species-site-month combinations for ring-porous and diffuse-porous species, respectively.
 $T_{min}$ generally exerted less influence over annual growth than $T_{max}$, with few significant correlations between spring $T_{min}$ and RWI (`r EDF_tree_rings_TMIN`).
 
-To test whether a positive effect of April temperatures might be offset by a negative effect of summer temperatures, we tested for their joint and interactive effects.
-Results were qualitatively similar to the univariate correlations (Fig. `r tree_rings`), with a positive effect of April $T_{max}$ for only **#**% of records and significant negative correlations with summer $T_{max}$ for **##-##**% of records, depending on the set of summer months included in the analysis (**(*Appendix Table*)**).
-Significant interactive effects between spring and summer temperatures were rare (**DETAILS**).
+To test whether a positive effect of spring temperatures might be offset by a negative effect of summer temperatures, we tested for the joint and interactive effects of April and June-July $T_{max}$ on RWI.
+Results were qualitatively similar to the univariate correlations (Fig. `r tree_rings`), with a positive effect of April $T_{max}$ for only **#**% of records and significant negative correlations with summer $T_{max}$ for **##**% of chronologies (`r EDT_tree_ring_summary`).
+Significant interactive effects between spring and summer temperatures were rare (**##**% of chronologies).
 
 ![**Figure 3 | Sensitivity of annual growth, as derived from tree-rings, to monthly maximum temperatures, for `r n_chronologies` chronologies from `r n_cores_sites` sites across eastern North America** (`r EDF_map `). Chronologies are grouped by xylem porosity and ordered by mean maximum April temperature. Chronology details are given in the Supplementary Information.](tables_figures/tree_rings_tmax.png){ width=100% }
-
 
 
 
