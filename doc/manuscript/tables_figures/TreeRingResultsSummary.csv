@@ -1,5 +1,5 @@
 ﻿xylem porosity,species,n,April pos,April neg,May pos,May neg,June pos,June neg,July pos,July neg,Aug pos,August neg,April pos,April neg,June-July pos,June-July neg,April x June-July pos,April x June-July neg
-ring,Carya cordifomis,1,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0
+ring,$Carya$ $cordifomis$,1,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0
 ,…,,,,,,,,,,,,,,,,,
 ,…,,,,,,,,,,,,,,,,,
 ,…,,,,,,,,,,,,,,,,,
@@ -15,8 +15,8 @@ ring,Carya cordifomis,1,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0
 ,…,,,,,,,,,,,,,,,,,
 ,…,,,,,,,,,,,,,,,,,
 ,TOTAL,142,,,,,,,,,,,,,,,1,3
-diffuse,Acer rubrum,4,0,1,0,0,0,1,0,1,0,0,0,0,0,0,0,0
-,Acer rubrum,16,1,,,2,,14,,12,,6,2,0,0,0,0,2
+diffuse,$Acer$ $rubrum$,4,0,1,0,0,0,1,0,1,0,0,0,0,0,0,0,0
+,$Acer$ $saccharum$,16,1,,,2,,14,,12,,6,2,0,0,0,0,2
 ,…,,,,,,,,,,,,,,,,,
 ,…,,,,,,,,,,,,,,,,,
 ,…,,,,,,,,,,,,,,,,,
