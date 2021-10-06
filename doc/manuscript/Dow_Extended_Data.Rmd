@@ -40,7 +40,7 @@ EDF_tree_rings_TMIN = "Extended Data Figure 7"
 ## table captions
 species_table_caption <-"Extended Data Table 1 | Dominant ring- and diffuse-porous species at the Smithsonian Conservation Biology Institute (SCBI) and Harvard Forest, along with sample sizes included in this analysis."
 mean_growth_parameters_caption = "Extended Data Table 2 | Summary of parameters describing the phenology and rate of growth for ring- and diffuse- porous species at SCBI and Harvard Forest."
-tree_ring_summary_caption =  "Extended Data Table 3 | Summary of tree-ring data and analysis" 
+tree_ring_summary_caption =  "Extended Data Table 3 | Summary of tree-ring chronologies analyzed and number of significant (at p=0.05) positive or negative correlations to monthly $T_{max}$ in univariate and multivariate analyses." 
 
 ## figure captions
 
@@ -94,8 +94,6 @@ kable_styling(latex_options = c("scale_down", "hold_position"), protect_latex = 
 
 \newpage
 
-## `r tree_ring_summary_caption` 
-
 ```{r tree_ring_summary,  eval=TRUE, echo=FALSE, warning=FALSE}
 library(knitr)
 library(kableExtra)
@@ -104,10 +102,10 @@ TreeRingResultsSummary <- read.csv("tables_figures/TreeRingResultsSummary.csv",
                                    stringsAsFactors = FALSE, check.names = FALSE)
 TreeRingResultsSummary <- TreeRingResultsSummary[c(2:19)]
 kable(TreeRingResultsSummary, 
-      #caption = tree_ring_summary_caption ,  
+      caption = tree_ring_summary_caption,  
       format = "latex", booktabs = TRUE,  escape = F) %>%
 add_header_above(c(" " = 2,  "April" = 2, "May" = 2,"June" = 2,"July" = 2,"Aug" = 2,"April" = 2,"June-July" = 2,"A:JJ" = 2)) %>%
-add_header_above(c(" " = 1,  "n sig. correlations in univariate analysis" = 10,"n sig. correlations in multivariate analysis" = 6)) %>%
+add_header_above(c(" " = 2,  "univariate analysis: n sig." = 10,"multivariate analysis: n sig." = 6)) %>%
     #column_spec(3:18, width = ".3cm") %>%
 pack_rows("Ring Porous", 1, 16, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
 pack_rows("Diffuse Porous", 17, 27, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
