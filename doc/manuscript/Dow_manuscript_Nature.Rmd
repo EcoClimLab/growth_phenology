@@ -142,7 +142,7 @@ However, less is known about how spring temperatures affect  tree stem growth, w
 Here, we show that in two forests, warmer spring temperatures consistently shifted the woody growth of deciduous trees earlier but had no consistent effect on peak growing season length, maximum daily growth rates, or annual growth.
 The latter finding was confirmed on the centennial scale by `r n_chronologies` tree-ring chronologies from `r n_cores_sites` forests across eastern North America, where annual growth was far more sensitive to temperatures during the peak growing season than in the spring.
 These findings imply that any extra CO~2~ sequestered in years with warmer springs[@keeling_increased_1996;@dragoni_evidence_2011;@crabbe_extreme_2016] is not allocated to long-lived woody biomass, where it could have a substantial and lasting impact on the forest C balance. 
-Thus, warming spring temperatures are unlikely to increase the woody productivity or strengthen the carbon sink of temperate deciduous forests.
+Thus, in contrast to global carbon cycle model expectations[@buermann_widespread_2018; @zani_increased_2020;@keenan_net_2014], warming spring temperatures are unlikely to increase the woody productivity or strengthen the carbon sink of temperate deciduous forests.
 
 
 # (Body)
@@ -152,12 +152,11 @@ A large portion of this CO~2~ sink occurs in temperate deciduous forests, with u
 The future behavior of this CO~2~ sink will play an important yet uncertain role in influencing atmospheric CO~2~ and climate change[@arora_carbon_2020; @friedlingstein_global_2020]. 
 
 In temperate deciduous forests, spring warming generally results in an increased growing season length, measured as the period over which trees have photosynthetically active leaves[@jeong_phenology_2011;@ibanez_forecasting_2010;@menzel_european_2006;@menzel_growing_1999] and the ecosystem is a net CO~2~ sink[@keenan_net_2014].
-The expectation is that as growing season length increases, net annual carbon sequestered will increase as well (*i,e*, net ecosystem exchange, _NEE_)[@churkina_spatial_2005; @keenan_net_2014; @zhou_explaining_2016; @fu_maximum_2019], and [this expectation is represented in models](https://github.com/EcoClimLab/growth_phenology/issues/56) [@buermann_widespread_2018; @zani_increased_2020].
+The expectation is that as growing season length increases, net annual carbon sequestered will increase as well (*i,e*, net ecosystem exchange, _NEE_)[@churkina_spatial_2005; @keenan_net_2014; @zhou_explaining_2016; @fu_maximum_2019], and this expectation is represented in models[@buermann_widespread_2018; @zani_increased_2020;@keenan_net_2014].
 However, recent findings that positive effects of warm springs are compensated by negative effects of accumulation of seasonal water deficits [@buermann_widespread_2018] and that <!--leaf senescence and stem growth cessation is induced when water deficits reach a certain point[@lempereur_growth_2015] (lempereur_growth_2015 studied an evergreen)--> sink factors can limit annual growth[@zani_increased_2020; @zohner_how_2021] suggest that warmer spring temperatures and earlier leaf-out may not have a positive effect on C sequestration in trees.
 
 While the responses of leaf phenology and seasonal CO~2~ sequestration to warming spring temperatures have been relatively well-studied[@jeong_phenology_2011; @keenan_net_2014; @buermann_widespread_2018; @ibanez_forecasting_2010; @menzel_european_2006; @menzel_growing_1999], we know very little about how the longest-lived component of fixed carbon in trees, the woody growth, is responding to warming spring temperatures. 
-In fact, we know little about the stem-growth phenology of temperate deciduous species, with *multi-year records of growth phenology having been published for only one site[@dorangeville_peak_2021]*. 
-<!-- I'm not aware of any others, but we do want to make sure we're not missing anything. klesse_integrating_2016 and martin_hydrometeorology_2017 both do this, but for conifers.-->
+In fact, we know little about the stem-growth phenology of temperate deciduous species, with *multi-year records of growth phenology having been published for only one site[@dorangeville_peak_2021]*. <!-- I'm not aware of any others, but we do want to make sure we're not missing anything. klesse_integrating_2016 and martin_hydrometeorology_2017 both do this, but for conifers.-->
 To our knowledge, the climate sensitivity of woody growth phenology and its link to annual growth has never been studied *in-situ* (but see Ref.[@zohner_how_2021] for a controlled sapling experiment).
 
 Tree-ring records, which can be used to examine correlations of annual growth to monthly temperatures but not to understand growth phenology, reveal that growth of temperate deciduous trees tends to be most sensitive to temperature or potential evapotranspiration between late spring and early summer[@dorangeville_drought_2018;@helcoski_growing_2019],
@@ -222,22 +221,22 @@ Significant interactive effects between spring and summer temperatures were rare
 
 ## Discussion {-#Discussion} 
 
+<!--1309 words before Krista's edits. Goal: 700-800-->
+
 Together, our results demonstrate that warmer spring temperatures in the temperate deciduous forests of eastern North America advance the phenology of tree stem growth but have little effect on annual woody productivity (Figs. `r schematic_summary`- `r tree_rings`). 
-The observed advance in the timing of stem growth milestones under warmer springs is consistent with similar phenological advances observed for leaf development (Fig. `r DOY_timing`)[@keenan_net_2014] and NEE [@keenan_net_2014].
-*It would be interesting to compare the magnitude of these advances (days per degree C)*
+
+The observed advance in the timing of stem growth milestones under warmer springs parallels phenological advances observed for leaf development (Fig. `r DOY_timing`)[@keenan_net_2014] and NEE [@keenan_net_2014].
 However, inconsistent with leaf phenology and NEE, we observed that the length of the period of most active stem growth does not increase under warmer springs. 
 This suggests that the growth benefit of warmer springs is compensated by negative effects later in the growing season, with two primary possible mechanisms.
 First, stem growth, like leaf phenology[@zani_increased_2020], may be sink-limited, such that an advance in the start of growth ($DOY_25$) would lead to an earlier depletion of resources needed for growth resulting in an earlier end to the season of rapid growth ($DOY_{75}$).
-Warm springs may also be associated with greater seasonal water stress, effectively canceling out any positive effects of an extended growing period[@buermann_widespread_2018; ] or inducing the cessation of stem growth when a critical water deficit is reached[@lempereur_growth_2015]. 
-<!-- lempereur_growth_2015 studied an evergreen oak-->
+Warm springs may also be associated with greater seasonal water stress, effectively canceling out any positive effects of an extended growing period[@buermann_widespread_2018].
 
 Spring warming at SCBI and Harvard Forest in the study years used here did not result in increased $\Delta DBH$ or summer water stress (SPEI; Supp(?) SPEI Figure). This suggests that even when warmer springs are not associated with greater seasonal water stress, the lack of increased stem growth still prevails at these sites. This could be because the woody growth at these sites are already limited by some mechanism. 
 
-The concept that stem growth is not enhanced under a longer growing season was supported by our tree-ring analysis, which showed that the effect of spring temperatures on annual growth is negligible for most species and locations, with at most modest influence for some species and locations (Fig. `r tree_rings`, `r EDF_tree_rings_TMIN`)[@alexander_potential_2019; @helcoski_growing_2019].
+The concept that stem growth is not enhanced under a longer growing season was supported by our tree-ring analysis, which showed that the effect of spring temperatures on annual growth is negligible for most species and locations, with at most modest influence for some species and locations (Fig. `r tree_rings`, `r EDF_tree_rings_TMIN`, `r EDT_tree_ring_summary`)[@alexander_potential_2019; @helcoski_growing_2019].
 Rather, the primary effect of temperature on annual growth is a negative effect of $T_{max}$ during the peak growing season, which is most likely a signal of drought stress[@dorangeville_drought_2018].
-Linear models were run to examine the relationship between spring, summer and an interaction effect with ring-width for each of our 208 chronologies. The results indicated that, across all latitudes, the interacting effect of warmer springs and summers resulted in negligible increase of ring-width (supp (?) rw_drought_plot).  
-*It is possible that an earlier start to the growing season may provide some buffer against drought later in the growing season[@wolf_warm_2016], potentially contributing to observed trends of declining drought sensitivity in the region[@maxwell_declining_2016;@helcoski_growing_2019; @zhang_drought_2021]. (Is this relevent?)*(Neil suggested that the zhang paper would be good here but i'm not sure I see how...)
-*(ADD MORE ON DROUGHT HERE)*
+*It is possible that an earlier start to the growing season may provide some buffer against drought later in the growing season[@wolf_warm_2016], potentially contributing to observed trends of declining drought sensitivity in the region[@maxwell_declining_2016;@helcoski_growing_2019; @zhang_drought_2021]. (Is this relevent?)*<!-- (Neil suggested that the zhang paper would be good here but i'm not sure I see how...)-->
+<!-- *(ADD MORE ON DROUGHT HERE)*-->
 
 Our finding that interannual variation in woody growth is more strongly linked to conditions during the peak growing season than to growing season length aligns with parallel findings for NEE [@zhou_explaining_2016; @fu_maximum_2019].
 However, there is also a disconnect between the woody growth responses to spring temperatures observed here and parallel studies on NEE implying that annual C sequestration increases -- at least modestly -- with spring temperatures[@keenan_net_2014] or with the length of the carbon uptake period[@zhou_explaining_2016; @fu_maximum_2019].
@@ -247,6 +246,8 @@ There are two main possibilities, which hold contrasting implications for the re
 First, C that is fixed in late summer or fall may be used for woody growth that is not apparent from diameter measurements in the current year: either used for thickening of cell walls, a process that lags behind stem expansion[@cuny_woody_2015], or saved within trees as non-structural carbohydrates and used towards growth the following year[@trumbore_quantifying_2002;@richardson_seasonal_2013].
 In fact, [extension of our tree-ring analysis](https://github.com/EcoClimLab/growth_phenology/issues/57) showed a generally positive, although often non-significant, correlation between ring-width and previous year growing season $T_{max}$ in RP trees, indicating this may be a possibility. *very little correlation between April $T_{max}$ and growth the following year (5 of 142 RP and 3 of 66 DP species-site combinations), refuting the latter possibility*.
 We also cannot rule out the possibility that warm springs promote formation of more carbon-dense cell walls in the current of following year (**coauthors, do any of you know literature related to this?**); however, our results suggest that little of the extra C that may be fixed in these years goes into wood formation.
+
+*There may be a shift towards greater belowground allocation[@zohner_how_2021].*
 
 A second possibility is that any additional C fixed during years with warm springs that is not rapidly respired may be allocated, potentially in the following growing season, to plant functions other than stem growth, including respiration, reproduction, foliage, fine roots, or root exudates[@trumbore_quantifying_2002]. 
 Stem growth is more sensitive to water deficit than is photosynthesis[@muller_water_2011]. [This seems to promote the investment of sequestered carbon into root growth in times of drought stress. Zoehner et al 2021[@zohner_how_2021] found that the proportion of root-to-stem growth increased under spring warming, suggesting that increased ecosystem sequestration resulting from spring warming may be promoting the growth of below-ground biomass. ~~However, this study was done under tightly controlled conditions within potted plants and does not represent the environmental conditions of forests.~~](https://github.com/EcoClimLab/growth_phenology/issues/72)
@@ -277,7 +278,7 @@ Additionally, Warmer summer and autumn temperatures coupled with drought led to 
 As a result, warming may advance or delay autumn senescence depending on timing of warming and water availability, with delays more common across eastern North America [@buermann_widespread_2018]. 
 
 These findings align with those of previous studies that suggest annual CO~2~ sequestration is more strongly linked to conditions in the peak growing season than to growing season length[@fu_maximum_2019; @zhang_drought_2021] and with observations that warm springs result in earlier leaf senescence of deciduous trees because CO~2~ sequestration is sink limited [@zohner_ongoing_2019; @zani_increased_2020].
-They contrast, however, with the expectation *in most models[@zani_increased_2020]* that an earlier start to growing season would significantly increase the rate of biomass accumulation and thereby enhance the CO~2~ sink of temperate deciduous forests.
+They contrast, however, with model expectations[@zani_increased_2020;@buermann_widespread_2018;@keenan_net_2014] that an earlier start to growing season would significantly increase the rate of biomass accumulation and thereby enhance the CO~2~ sink of temperate deciduous forests.
 
 Under controlled conditions, spring warming increases biomass accumulation in trees, with a larger proportion of root growth compared to shoot growth[@zohner_how_2021]. 
 
