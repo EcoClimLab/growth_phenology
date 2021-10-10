@@ -119,8 +119,8 @@ Export.table.toDrive(
 // MODIS B1=Red; B2=NIR; B3=Blue; B4=Green
 // EVI2 equation: 2.5 * ( NIR - RED) / ( NIR + 2.4 * RED + 1.0 )
 var getEVI2 = function(image) {
-  var RED = image.select('Nadir_Reflectance_Band1');
-  var NIR = image.select('Nadir_Reflectance_Band2');
+  var RED = image.select('Nadir_Reflectance_Band1').multiply(0.0001);
+  var NIR = image.select('Nadir_Reflectance_Band2').multiply(0.0001);
   var EVI2 = ((NIR.subtract(RED)).divide(NIR.add(RED.multiply(2.4)).add(1))).multiply(2.5).rename('EVI2');
   return image.addBands(EVI2);
 };
