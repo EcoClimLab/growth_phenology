@@ -211,9 +211,8 @@ Across all chronologies, RWI was significantly (at p=0.05) positively correlated
 In contrast, RWI was frequently significantly negatively correlated with $T_{max}$ during peak growing season months (May-August), with significant correlations for 53% (May: 47/142, Jun: 108/142, Jul: 90/142, Aug: 57/142) and 46% (May: 11/66, Jun: 53/66, Jul: 37/66, Aug: 22/66) of species-site-month combinations for ring-porous and diffuse-porous species, respectively.
 $T_{min}$ generally exerted less influence over annual growth than $T_{max}$, with few significant correlations between spring $T_{min}$ and RWI (`r EDF_tree_rings_TMIN`).
 
-To test whether a positive effect of spring temperatures might be offset by a negative effect of summer temperatures, we tested for the joint and interactive effects of April and June-July $T_{max}$ on RWI.
-Results were qualitatively similar to the univariate correlations (Fig. `r tree_rings`), with a positive effect of April $T_{max}$ for only **#**% of records and significant negative correlations with summer $T_{max}$ for **##**% of chronologies (`r EDT_tree_ring_summary`).
-Significant interactive effects between spring and summer temperatures were rare (**##**% of chronologies).
+To test whether a positive effect of spring temperatures might be offset by a negative effect of summer temperatures, we tested for the joint effects of April and June-July $T_{max}$ on RWI.
+Results were qualitatively similar to the univariate correlations (Fig. `r tree_rings`), with significant (at p = 0.05) positive correlations to April $T_{max}$ for only 7% of chronologies and significant negative correlations with June-July $T_{max}$ for 77% of chronologies (`r EDT_tree_ring_summary`).
 
 ![**Figure 3 | Sensitivity of annual growth, as derived from tree-rings, to monthly maximum temperatures, for `r n_chronologies` chronologies from `r n_cores_sites` sites across eastern North America** (`r EDF_map `). Chronologies are grouped by xylem porosity and ordered by mean maximum April temperature. Chronology details are given in the Supplementary Information.](tables_figures/tree_rings_tmax.png){ width=100% }
 
