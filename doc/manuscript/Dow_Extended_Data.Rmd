@@ -106,7 +106,7 @@ kable(TreeRingResultsSummary,
       format = "latex", booktabs = TRUE,  escape = F) %>%
 add_header_above(c(" " = 2,  "April" = 2, "May" = 2,"June" = 2,"July" = 2,"Aug" = 2,"April" = 2,"June-July" = 2)) %>%
 add_header_above(c(" " = 2,  "univariate analysis" = 10,"multivariate analysis" = 4)) %>%
-add_header_above(c(" " = 2,  "n. correlations significant at p=0.05" = 14)) %>%
+add_header_above(c(" " = 2,  "n. correlations to monthly max. T significant at p=0.05" = 14)) %>%
     #column_spec(3:18, width = ".3cm") %>%
 pack_rows("Ring Porous", 1, 16, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
 pack_rows("Diffuse Porous", 17, 26, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
