@@ -99,17 +99,18 @@ library(knitr)
 library(kableExtra)
 TreeRingResultsSummary <- read.csv("tables_figures/TreeRingResultsSummary.csv",  
                                    stringsAsFactors = FALSE, check.names = FALSE)
-TreeRingResultsSummary <- TreeRingResultsSummary[c(2:19)]
+TreeRingResultsSummary <- TreeRingResultsSummary[c(2:17)]
 kable(TreeRingResultsSummary, 
       caption = tree_ring_summary_caption,  
-      col.names = c("species","n","+", "-","+", "-","+", "-","+", "-","+", "-","+", "-","+", "-","+", "-"), 
+      col.names = c("species","n","+", "-","+", "-","+", "-","+", "-","+", "-","+", "-","+", "-"), 
       format = "latex", booktabs = TRUE,  escape = F) %>%
-add_header_above(c(" " = 2,  "April" = 2, "May" = 2,"June" = 2,"July" = 2,"Aug" = 2,"April" = 2,"June-July" = 2,"A:JJ" = 2)) %>%
-add_header_above(c(" " = 2,  "univariate analysis: n sig." = 10,"multivariate analysis: n sig." = 6)) %>%
+add_header_above(c(" " = 2,  "April" = 2, "May" = 2,"June" = 2,"July" = 2,"Aug" = 2,"April" = 2,"June-July" = 2)) %>%
+add_header_above(c(" " = 2,  "univariate analysis" = 10,"multivariate analysis" = 4)) %>%
+add_header_above(c(" " = 2,  "n. correlations significant at p=0.05" = 14)) %>%
     #column_spec(3:18, width = ".3cm") %>%
 pack_rows("Ring Porous", 1, 16, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
-pack_rows("Diffuse Porous", 17, 27, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
-row_spec(28, bold = T) %>%
+pack_rows("Diffuse Porous", 17, 26, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
+row_spec(27, bold = T) %>%
 kable_styling(latex_options = c("scale_down", "hold_position"), protect_latex = T) 
 ```
 
