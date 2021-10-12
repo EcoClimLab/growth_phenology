@@ -150,6 +150,13 @@ jun_apr_jun <- a[["coefficients"]][3,4]
 jun_apr_jun_est <- a[["coefficients"]][3,1]
 apr_jun_r <- a[["adj.r.squared"]]
 
+# #Estaban's way!
+# a <- lm(ring_width ~ april + june + april:june, data = crns_sub)
+# coefficients (a) #provides the coefficients of the model (these are conditional coefficients: focus on one variable holding the others constant)
+# summary(a) #provides the F, df, and P value for the whole model (check the last line of the output)
+# Anova(a, type =3) #provides the F, df, and P value for each independent factor
+# anova_stats(a, digits =3) #provides the effect size (we are reporting partial Omega squared)
+
 # ab <- summary(lm(ring_width ~ june, data = crns_sub))
 # jun <- ab[["coefficients"]][2,4]
 # jun_est <- ab[["coefficients"]][2,1]
@@ -165,6 +172,13 @@ jj_apr_jun_jul_est <- b[["coefficients"]][3,1]
 apr_jun_jul <- b[["coefficients"]][4,4]
 apr_jun_jul_est <- b[["coefficients"]][4,1]
 apr_jun_jul_r <- b[["adj.r.squared"]]
+
+#Estaban's way!
+# b <- lm(ring_width ~ april + june_july + april:june_july, data = crns_sub)
+# coefficients (b) #provides the coefficients of the model (these are conditional coefficients: focus on one variable holding the others constant)
+# summary(b) #provides the F, df, and P value for the whole model (check the last line of the output)
+# Anova(b, type =3) #provides the F, df, and P value for each independent factor
+# anova_stats(b, digits =3) #provides the effect size (we are reporting partial Omega squared)
 
 # bb <- summary(lm(ring_width ~ june_july, data = crns_sub))
 # jun_jul <- bb[["coefficients"]][2,4]
@@ -281,8 +295,21 @@ names(sp_codes) <- c("sp", "Species")
 #read in chronology table csv which we are appending the lm results to
 chronology_table <- read.csv("doc/manuscript/tables_figures/chronology_table.csv")
 chronology_table <- chronology_table[,1:8]
-chronology_table$Latitude <- round(chronology_table$Latitude, digits = 7)
-chronology_table$Longitude <- round(chronology_table$Longitude, digits = 7)
+
+chronology_table[chronology_table$Location %in% "Fiddler<U+393C><U+3E32>s_Green,_VA_CAOV", "Latitude"] <- "37.7707167"
+chronology_table[chronology_table$Location %in% "Fiddler<U+393C><U+3E32>s_Green,_VA_CAOV", "Longitude"] <- "-79.2416"
+
+chronology_table[chronology_table$Location %in% "Fiddler<U+393C><U+3E32>s_Green_QURU", "Latitude"] <- "37.7694333"
+chronology_table[chronology_table$Location %in% "Fiddler<U+393C><U+3E32>s_Green_QURU", "Longitude"] <- "-79.2415167"
+
+chronology_table[chronology_table$Location %in% "Fiddler<U+393C><U+3E32>s_Green,_VA_LITU", "Latitude"] <- "37.7694333"
+chronology_table[chronology_table$Location %in% "Fiddler<U+393C><U+3E32>s_Green,_VA_LITU", "Longitude"] <- "-79.2415167"
+
+chronology_table[chronology_table$Location %in% "Fiddler<U+393C><U+3E32>s_Green,_VA_MAAC", "Latitude"] <- "37.7686833"
+chronology_table[chronology_table$Location %in% "Fiddler<U+393C><U+3E32>s_Green,_VA_MAAC", "Longitude"] <- "-79.2423833"
+
+chronology_table$Latitude <- round(as.numeric(chronology_table$Latitude), digits = 7)
+chronology_table$Longitude <- round(as.numeric(chronology_table$Longitude), digits = 7)
 
 #Add sp codes to chrono table for unique ID's
 chronology_table <- left_join(chronology_table, sp_codes, by = "Species")
@@ -290,7 +317,7 @@ chronology_table$ID <- paste0(chronology_table$Latitude, chronology_table$Longit
 
 #Left join the two to get LM results appended to chronology table
 attempt_3 <- left_join(chronology_table,toadd, by = "ID")
-attempt_4 <- attempt_3[!(duplicated(attempt_3$Number)),]#Two sites are duplicated
+attempt_4 <- attempt_3[!(duplicated(attempt_3$group)),]#Two sites are duplicated
 attempt_4 <- attempt_4[,c(1:8,14:31)]#remove unnecessary columns
 
 #Rename columns to something understandable
