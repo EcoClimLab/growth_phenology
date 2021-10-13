@@ -170,7 +170,7 @@ Here, we describe how early spring temperatures affect stem growth phenology, gr
 
 ## Dendrometer band analysis {-#Dendrometer} 
 
-Using dendrometer band measurements taken throughout the growing season at the Smithsonian Conservation Biology Institute (SCBI; Virginia, USA; n = **146** <!--Cameron, please verify number--> trees from 2011-2020) and Harvard Forest (Massachusetts, USA; n = **755** <!--Cameron, please verify number--> trees from 1998-2003), we fit a growth model[@mcmahon_general_2015] to determine the days of year where 25, 50, and 75% annual growth were achieved ($DOY_{25}$, $DOY_{50}$, $DOY_{75}$), peak growing season length ($L_{pgs}= DOY_{75}$-$DOY_{25}$), maximum growth rates ($g_{max}$) and the DOY on which they occurred ($DOY_{g_{max}}$), and total annual growth ($\Delta DBH$; Fig. `r schematic_summary`). 
+Using dendrometer band measurements taken throughout the growing season at the Smithsonian Conservation Biology Institute (SCBI; Virginia, USA; n = **125** trees from 2011-2020) and Harvard Forest (Massachusetts, USA; n = **340** trees from 1998-2003), we fit a growth model[@mcmahon_general_2015] to determine the days of year where 25, 50, and 75% annual growth were achieved ($DOY_{25}$, $DOY_{50}$, $DOY_{75}$), peak growing season length ($L_{pgs}= DOY_{75}$-$DOY_{25}$), maximum growth rates ($g_{max}$) and the DOY on which they occurred ($DOY_{g_{max}}$), and total annual growth ($\Delta DBH$; Fig. `r schematic_summary`). 
 This analysis was performed separately for ring- and diffuse-porous species, which differ in growth phenology[@dorangeville_peak_2021], and set in the context of leaf phenology (measured at ecosystem level via remote sensing).
 
 ![**Figure 1 | Summary of tree growth changes under warmer spring temperatures.** (a) Schematic illustrating parameters of interest and summarizing how each responds to warmer maximum temperatures during a 'critical temperature window', defined as that with the strongest control over $DOY_{25}$; (b) Variable definitions and summary responses to warmer spring temperatures at two temperate forests and for two groups of broadleaf deciduous species (RP=ring porous; DP=diffuse porous), where up and down arrows indicate increases and decreases, respectively, 'n.s.' indicates no signficant correlation, and 'mixed' indicates a mix of signficant and non-signficant correlations, often in different directions.](tables_figures/schematic_summary_with_table.png){ width=70% }
@@ -190,7 +190,7 @@ The strongest relationships, including but not limited to the critical temperatu
 
 For ring- and diffuse- porous species at both sites, warmer $T_{max}$ in the critical temperature window resulted in earlier achievement of growth milestones (Figs. `r schematic_summary`, `r EDF_pheno_Tmax_climwin`).
 Consistent with findings from previous studies[@parmesan_globally_2003, @ibanez_forecasting_2010,@friedl_tale_2014], the DOY of leaf greenup advanced with increasing $T_{max}$ during the critical temperature window (p=0.001). 
-Specifically, greenup DOY advanced 4.5 days/$^\circ$C at SCBI and 2.4 days/ $^\circ$C at Harvard Forest ~~when comparing the years with the warmest and coldest mean $T_{max}$ during the critical temperature window~~<!--Cameron, was this based on comparing just the warmest and coldest years, or a linear regression. We want the latter, and to remove the italic text -->, and mid-greenup also advanced, but to a lesser extent (Fig. `r DOY_timing`).
+Specifically, greenup DOY advanced 4.5 days/$^\circ$C at SCBI and 2.4 days/ $^\circ$C at Harvard Forest, and mid-greenup also advanced, but to a lesser extent (Fig. `r DOY_timing`).
 Similarly, at both sites, $DOY_{25}$, $DOY_{50}$, $DOY_{75}$, and $DOY_{g_{max}}$ all decreased with mean $T_{max}$ during the critical temperature window (Figs. `r schematic_summary`, `r DOY_timing`; `r EDF_pheno_all`).
 Specifically, at SCBI, RP growth advanced 1.9, 1.5, and 1.1 days/ $^\circ$C for $DOY_{25}$, $DOY_{50}$, and $DOY_{75}$, respectively, while DP growth advanced 3.5, 3.5, and 3.6 days/ $^\circ$C for $DOY_{25}$, $DOY_{50}$, and $DOY_{75}$, respectively.
 At Harvard Forest, RP growth advanced 2.8, 5.0, and 7.2 days/ $^\circ$C for $DOY_{25}$, $DOY_{50}$, and $DOY_{75}$, respectively, while DP growth advanced 7.9, 7.3, and 6.6 days/ $^\circ$C for $DOY_{25}$, $DOY_{50}$, and $DOY_{75}$, respectively.
@@ -303,7 +303,7 @@ The second study site was Harvard Forest (42.5388° N, 72.1755° W, 340-368 m.a.
 Harvard forest is a secondary forest, having re-established following agricultural use *(time frame)* and significant hurricane damage in 1938. 
 Dominate species within the 35 ha ForestGEO plot are hemlock (*Tsuga canadensis*), oak (*Quercus spp.*) and red maple (*Acer rubrum*). 
 The climate is temperate continental with a mean annual precipitation of 1120 mm and temperatures  averaging -12° C in January and 19° C in July [@dorangeville_peak_2021].
-<!-- Is this the right reference? -->
+<!-- Is this the right reference? Yes, I got this info from the draft they sent. -->
 
 ## Data collection and preparation {-#Data} 
 ### Dendrometer bands {-#Dendrometer} 
@@ -312,7 +312,7 @@ Metal dendrometer bands were installed on a total of `r n_dendro_trees` trees wi
 Bands were placed on dominant species, including two diffuse- and two ring-porous species at SCBI and eight diffuse- and three ring-porous species at Harvard Forest.
 Bands were measured with a digital caliper approximately every 1-2 weeks within the growing season from 2011-2020 at SCBI and 1998-2003 at Harvard Forest. 
 The number of bands measured at each site fluctuated somewhat as trees were added or dropped (e.g., because of tree mortality) from the census. 
-Across years, the number of bands sampled averaged *~135* (range: 99-145) at SCBI and  *~717* (range: *700-755*) at Harvard Forest. 
+Across years, the number of bands sampled averaged *~124* (range: 91-138) at SCBI and  *~717* (range: *700-755*) at Harvard Forest. 
 In total, our analysis included `r n_tree_years` tree-years (`r  EDT_species`).
 
 
@@ -379,7 +379,7 @@ Daily temperature records for Harvard Forest were obtained from the Harvard Fore
 The R package climpact () was used to plot temperatures for visual inspection. 
 Climpact also identifies readings that were greater than 3 standard deviations away from yearly means. These points were labeled as outliers and removed from the dataset. 
 Gaps in the SCBI meteorological tower data were subsequently filled using temperature readings obtained from a National Center for Environmental Information (NCEI) weather station located in Front Royal, Virginia (https://www.ncdc.noaa.gov/cdo-web/datasets/GHCND/stations/GHCND:USC00443229/detail). 
-(*how were gaps filled for Harvard? Or was the record good?*)
+(*how were gaps filled for Harvard? Or was the record good? --- Data came "pre-cleaned" as far as I could tell*)
 
 For the tree-ring analysis, we obtained monthly $T_{max}$ and $T_{min}$ data for 1901-2019 from CRU v.4.04 [@harris_version_2020], again via the ForestGEO Climate Data Portal v1.0 [@anderson-teixeira_forestgeo_2020].
 
