@@ -180,7 +180,7 @@ scbi_leaf <- ggplot(leaf_phenology_melt, aes(x=value, y = as.character(variable)
   scale_colour_gradient(low = "blue", high = "red")
 scbi_leaf
 
-ggsave("doc/manuscript/tables_figures/SCBI_leaf.png", plot = scbi_leaf, width = 15, height = 7 / 1.25)
+#ggsave("doc/manuscript/tables_figures/SCBI_leaf.png", plot = scbi_leaf, width = 15, height = 7 / 1.25)
 
 #+ ggplot(aggregates_scbi_dp, aes(x=x, y = as.character(Group.2), group = interaction(Group.1, year), color = window_temp, linetype = Group.1))+
 #  geom_point(size = 3)+
@@ -313,6 +313,38 @@ aggregates_hf_dp$stanT <- (aggregates_hf_dp$window_temp-min(aggregates_hf_dp$win
 
 aggregates_hf <- rbind(aggregates_hf_dp,aggregates_hf_rp)
 
+#Add slopes of lines for each representing DOY change/degree C ----
+doy25_rp <- subset(aggregates_hf_rp, aggregates_hf_rp$Group.2 == "25")
+plot(doy25_rp$x~doy25_rp$window_temp)
+abline(lm(doy25_rp$x~doy25_rp$window_temp))
+summary(lm(doy25_rp$x~doy25_rp$window_temp))
+
+doy25_dp <- subset(aggregates_hf_dp, aggregates_hf_dp$Group.2 == "25")
+plot(doy25_dp$x~doy25_dp$window_temp)
+abline(lm(doy25_dp$x~doy25_dp$window_temp))
+summary(lm(doy25_dp$x~doy25_dp$window_temp))
+
+doy50_rp <- subset(aggregates_hf_rp, aggregates_hf_rp$Group.2 == "50")
+plot(doy50_rp$x~doy50_rp$window_temp)
+abline(lm(doy50_rp$x~doy50_rp$window_temp))
+summary(lm(doy50_rp$x~doy50_rp$window_temp))
+
+doy50_dp <- subset(aggregates_hf_dp, aggregates_hf_dp$Group.2 == "50")
+plot(doy50_dp$x~doy50_dp$window_temp)
+abline(lm(doy50_dp$x~doy50_dp$window_temp))
+summary(lm(doy50_dp$x~doy50_dp$window_temp))
+
+doy75_rp <- subset(aggregates_hf_rp, aggregates_hf_rp$Group.2 == "75")
+plot(doy75_rp$x~doy75_rp$window_temp)
+abline(lm(doy75_rp$x~doy75_rp$window_temp))
+summary(lm(doy75_rp$x~doy75_rp$window_temp))
+
+doy75_dp <- subset(aggregates_hf_dp, aggregates_hf_dp$Group.2 == "75")
+plot(doy75_dp$x~doy75_dp$window_temp)
+abline(lm(doy75_dp$x~doy75_dp$window_temp))
+summary(lm(doy75_dp$x~doy75_dp$window_temp))
+
+
 #Add leaf phenology
 #leaf_phenology <- read_csv("Data/Leaf phenology/leaf_phenology.csv") %>%
 #  filter(site == "HF")
@@ -348,7 +380,7 @@ hf_leaf <- ggplot(hf_leaf_phenology_melt, aes(x=value, y = as.character(variable
   scale_colour_gradient(low = "blue", high = "red")
 hf_leaf
 
-ggsave("doc/manuscript/tables_figures/HF_leaf.png", plot = hf_leaf, width = 15, height = 7 / 1.25)
+#ggsave("doc/manuscript/tables_figures/HF_leaf.png", plot = hf_leaf, width = 15, height = 7 / 1.25)
 
 #Get speed of greenup change / degree C ----
 hf_leaf_phenology_melt_GU <- subset(hf_leaf_phenology_melt, hf_leaf_phenology_melt$variable == "Greenup")
@@ -474,21 +506,27 @@ leaf_phenology_melt$variable <- ifelse(leaf_phenology_melt$variable == "Greenup"
                                        ifelse(leaf_phenology_melt$variable == "Mid-greenup", "M",
                                               ifelse(leaf_phenology_melt$variable == "Peak", "P",
                                                      ifelse(leaf_phenology_melt$variable == "Senescence", "S",NA))))
+leaf_phenology_melt$stanT <- (leaf_phenology_melt$tmp-min(leaf_phenology_melt$tmp))/(max(leaf_phenology_melt$tmp)-min(leaf_phenology_melt$tmp))
+
 #Patchwork try
-p1 <- ggplot(leaf_phenology_melt, aes(x=value, y = as.character(variable), group = year, color = tmp))+
+p1 <- ggplot(leaf_phenology_melt, aes(x=value, y = as.character(variable), group = year, color = stanT))+
   geom_point(size = 3)+
   geom_line(size = 1)+
   xlim(80,240)+
   annotate("text", x=85, y=4.35, label= "(a)",size = 10)+
   theme_bw()+
-  theme(legend.position = "none",
+  theme(legend.position = c(.65,.25),
         #axis.text.y = element_text(angle = 90, hjust = 0.5),
         axis.text.x = element_blank(),
         text = element_text(size = 20),
+        legend.text=element_text(size=14),
+        legend.title=element_text(size=13),
         plot.title = element_text(hjust = 0.5),
         plot.margin = unit(c(-1,-1,-1,-1), "cm"))+
+  guides(color = guide_legend(override.aes = list(size = 1)))+
   labs(x = "", y = "Leaf Stage", title = "SCBI", color = "Temp Ratio (1= Warmest pre-season)", linetype = "")+
-  scale_colour_gradient(low = "blue", high = "red")
+  #scale_colour_gradient(low = "blue", high = "red")+
+  scale_colour_gradient(low = "blue", high = "red",breaks=c(0,0.5,1),labels=c("0.0 Coldest Year","0.5 Average Year","1.0 Hottest Year"))
 
 p2 <- ggplot(hf_leaf_phenology_melt, aes(x=value, y = as.character(variable), group = year, color = tmp))+
   geom_point(size = 3)+
@@ -510,13 +548,13 @@ p3 <- ggplot(aggregates_scbi, aes(x=x, y = Group.2, group = interaction(Group.1,
   geom_line(size = 1)+
   theme_bw()+
   annotate("text", x=85, y=75, label= "(c)",size = 10)+
-  theme(legend.position = c(.85,.5),
+  theme(legend.position = c(.75,.3),
         text = element_text(size = 20),
-        legend.text=element_text(size=10),
-        legend.title=element_text(size=10),
+        legend.text=element_text(size=15),
+        legend.title=element_text(size=17),
         plot.margin = unit(c(-1,-1,-1,-1), "cm"))+
   guides(shape = guide_legend(override.aes = list(size = 1)),
-         color = guide_legend(override.aes = list(size = 1)))+
+         color = FALSE) +#guide_legend(override.aes = list(size = 1)))+
   xlim(80,240)+
   ylim(20,80)+
   labs(x = "Day of Year", y = "Stem Growth (% of annual total)", color = "Temperature Ratio", linetype = "Wood Type")+
@@ -538,7 +576,7 @@ p4 <- ggplot(aggregates_hf, aes(x=x, y = Group.2, group = interaction(Group.1, y
   scale_colour_gradient(low = "blue", high = "red")
 
 plotall <- p1 + p2 + p3 + p4 +
-  plot_layout(heights = c(1,2))
+  plot_layout(heights = c(1.5,2))
 
 png(filename = "doc/manuscript/tables_figures/DOYtiming_allyears.png", width=12, height=10,
     pointsize=12, bg="transparent", units="in", res=600,
