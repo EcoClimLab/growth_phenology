@@ -6,7 +6,7 @@ library(tidybayes)
 library(ggnewscale)
 library(patchwork)
 library(lubridate)
-
+library(gridExtra)
 
 
 # Figure 1 v2: Schematic illustrating parameters and general sense of results ----
@@ -456,19 +456,43 @@ percent_growth_hf <- Wood_pheno_table_hf %>%
     dbh_growth_percent_cummulative = cumsum(dbh_growth_percent)
   )
 
+#EVI2 plots
+scbiEVI2 <- read_csv("Data/Leaf phenology/scbiEVI2.csv")
+scbiEVI2$year <- year(scbiEVI2$date)
+scbiEVI2$doy <- yday(scbiEVI2$date)
+#SCBI plot
+scbiEVI <- scbiEVI2[scbiEVI2$pointid %in% "SCBI",]
+scbiEVI <- scbiEVI[scbiEVI$BRDF_Albedo_Band_Mandatory_Quality_Band1 %in% 0,]
+#HF plot
+hfEVI <- scbiEVI2[scbiEVI2$pointid %in% "HARV",]
+hfEVI <- hfEVI[hfEVI$BRDF_Albedo_Band_Mandatory_Quality_Band1 %in% 0,]
 
-
-png(filename = "doc/manuscript/tables_figures/growth_curves_all.png", width=10, height=5,
+png(filename = "doc/manuscript/tables_figures/growth_curves_all.png", width=10, height=10,
     pointsize=12, bg="transparent", units="in", res=600,
     restoreConsole=FALSE)
 
 grid.arrange(
+  ggplot(scbiEVI, aes(x = doy, y = EVI2, group = year)) +
+    geom_smooth(se = FALSE, size = .5) +
+    theme_bw() +
+    #scale_color_viridis_d("", end = 2/3)+
+    theme(legend.position = "none") +
+    labs(x = "", title = "SCBI") +
+    ylim(0, 0.8),
+
+  ggplot(hfEVI, aes(x = doy, y = EVI2, group = year)) +
+    geom_smooth(se = FALSE, size = 0.5) +
+    theme_bw() +
+    #scale_color_viridis_d("", end = 2/3)+
+    theme(legend.position = "none") +
+    labs(x = "",y = "", title = "Harvard Forest") +
+    ylim(0,0.8),
 
   ggplot(percent_growth_scbi, aes(x = doy, y = dbh_growth_percent, group = tag_year)) +
     coord_cartesian(ylim = c(0, 0.05)) +
     scale_y_continuous(labels = percent) +
     labs( x="",y = "Percent of total growth",
-          title = "SCBI") +
+          title = "") +
     theme_bw() +
     theme(legend.position = c(.75,.75))+
     geom_line(alpha = 0.2, aes(col = wood_type)) +
@@ -478,7 +502,7 @@ grid.arrange(
     coord_cartesian(ylim = c(0, 0.05)) +
     scale_y_continuous(labels = percent) +
     labs(x="", y = "",
-         title = "Harvard Forest") +
+         title = "") +
     theme_bw() +
     theme(legend.position = "none")+
     geom_line(alpha = 0.2, aes(col = wood_type)) +
@@ -501,7 +525,7 @@ grid.arrange(
     labs(x = "DOY", y = "")+
     scale_colour_viridis_d("Wood Type", end = 2/3),
 
-  as.table = TRUE, nrow=2, ncol=2) ###as.table specifies order if multiple rows
+  as.table = TRUE, nrow=3, ncol=2) ###as.table specifies order if multiple rows
 
 dev.off()
 # DOY timing figure (Replace with figure created in DOYtiming_all_years.R)----
