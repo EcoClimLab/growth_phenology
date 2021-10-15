@@ -32,31 +32,16 @@ sample_size_by_year= "XX"
 EDF_map = "Extended Data Figure 1" 
 EDF_growth_curves_all = "Extended Data Figure 2"  
 EDF_climwin = "Extended Data Figure 3"
+EDF_pheno_all = "Extended Data Figures 4-5"
 EDF_pheno_Tmax_climwin = "Extended Data Figure 4"
 EDF_pheno_Tmax_AprilMay = "Extended Data Figure 5"
-EDF_pheno_Tmin_AprilMay = "Extended Data Figure 6"
-EDF_tree_rings_TMIN = "Extended Data Figure 7"
+EDF_tree_rings_TMIN = "Extended Data Figure 6"
+EDF_tree_rings_TMAX_extended = "Extended Data Figure 7"
 
 ## table captions
 species_table_caption <-"Extended Data Table 1 | Dominant ring- and diffuse-porous species at the Smithsonian Conservation Biology Institute (SCBI) and Harvard Forest, along with sample sizes included in this analysis."
 mean_growth_parameters_caption = "Extended Data Table 2 | Summary of parameters describing the phenology and rate of growth for ring- and diffuse- porous species at SCBI and Harvard Forest."
 tree_ring_summary_caption =  "Extended Data Table 3 | Summary of tree-ring chronologies analyzed and number of significant (at p=0.05) positive or negative correlations to monthly $T_{max}$ in univariate and multivariate analyses." 
-
-## figure captions
-
-map_caption <- "**Extended Data Figure 1 | Map of sampling locations of tree-ring chronologies analyzed in this study.** Sites are colored by the xylem porosity type of species sampled: ring poroous (RP), diffuse porous (DP), or both. Sampling details are provided in **SI TBALE NAME**" #needs attention!!!
-
-growth_curves_all_caption  <- " **Extended Data Figure 2 | Phenological patterns of forest canopy greenness (top row) and stem growth of ring- and diffuse-porous trees, represented as both relative and cumulative fractions of total annual growth (middle and bottom rows, respectively), at our two focal study sites** In the top row, canopy greenness is characterized using the two band Enhanced Vegetation Index (EVI2) ..., with each line representing a year between 2000 and 2018. For stem growth, each line represents one year's growth for a given tree, fit with McMahon model. " #needs wordsmithing!!!
-
-climwin_caption <- "**Extended Data Figure 3 | Landscapes of relationships between the day of year on which 25% of annual growth is achieved ($DOY_{25}$) and temperature in prior weeks for ring- and diffuse-porous trees at SCBI and Harvard Forest.** Shown are matrices of linear coefficients of first-order linear regressions between temperature and $DOY_{25}$, where Window Open and Window Close indicate number of weeks prior to $DOY_{25}$ (ring-porous: May 5 at SCBI, May 13 at HF; diffuse-porous: June 4 at SCBI, June 14 at HF). Black circles indicate the critical $T_{max}$ window (ring-porous:  March 22- April 9 at SCBI, April 2 - May 07 at HF; diffuse-porous: Feb. 19- May 21 at SCBI, March 19 - May 07 at HF)." #info subject to change!!!
-
-pheno_Tmax_climwin_caption <- "**Extended Data Figure 4 | Response of the timing of stem growth phenology to spring temperatures.** Relationships between critical temperature window (CTW) $T_max$ and 25%, 50%, and 75% total stem growth (first row), the length of the peak growing season ($L_pgs$; second row), maximum growth rate ($g_max$; third row), and total seasonal radial stem growth ($\Delta DBH$; fourth row) are shown. Posterior predictions of each variable that did not include zero are represented with solid lines, while those that do include zero use dotted lines. 95% credible intervals are represented by bands. The days of year on which 25%, 50% and 75% of annual growth were acheived ($DOY_{25}$, $DOY_{50}$, and $DOY_{75}$, respectively) declined significantly with mean $T_{max}$ during their respective CTW. For each CTW $T_{max}$. Modeled values from dendrometer band measurements are represented by dots. (**[FIGURE NEEDS SOME WORK/ MORE INFO](https://github.com/EcoClimLab/growth_phenology/issues/59). CAPTION NEEDS MORE DETAIL**)" #needs attention!!!
-
-pheno_Tmax_AprilMay_caption <- "**Extended Data Figure 5 | Relationship between growth parameters and mean maximum temperature in April (SCBI) or May (HF). Relationships between critical temperature window (CTW) $T_max$ and 25%, 50%, and 75% total stem growth (first row), the length of the peak growing season ($L_pgs$; second row), maximum growth rate ($g_max$; third row), and total seasonal radial stem growth ($\Delta DBH$; fourth row) are shown. Posterior predictions of each variable that did not include zero are represented with solid lines, while those that do include zero use dotted lines. 95% credible intervals are represented by bands. (**[FIGURE NEEDS SOME WORK/ MORE INFO](https://github.com/EcoClimLab/growth_phenology/issues/59). CAPTION NEEDS MORE DETAIL**)" #needs attention!!!
-
-pheno_Tmin_AprilMay_caption <- "**Extended Data Figure 6 | Relationship between growth parameters and mean minimum temperature in April (SCBI) or May (HF). Relationships between critical temperature window (CTW) $T_min$ and 25%, 50%, and 75% total stem growth (first row), the length of the peak growing season ($L_pgs$; second row), maximum growth rate ($g_max$; third row), and total seasonal radial stem growth ($\Delta DBH$; fourth row) are shown. Posterior predictions of each variable that did not include zero are represented with solid lines, while those that do include zero use dotted lines. 95% credible intervals are represented by bands. (**[FIGURE NEEDS SOME WORK/ MORE INFO](https://github.com/EcoClimLab/growth_phenology/issues/59). CAPTION NEEDS MORE DETAIL**)" #needs attention!!!
-
-tree_rings_TMIN_caption <- "Extended Data Figure 7 | Sensitivity of annual growth, as derived from tree-rings, to monthly minimum temperatures, for 208 chronologies from 114 sites across eastern North America (Extended Data Figure 1). Chronologies are grouped by xylem porosity and ordered by mean April T_max. Chronology details are given in the Supplementary Information. (**NOTE: Figure still needs some work. Chronology numbers are off.**  See [GitHub Issue #49](https://github.com/EcoClimLab/growth_phenology/issues/49).)" #needs attention!!! #info subject to change!!!
 
 
 ```
@@ -118,30 +103,32 @@ kable_styling(latex_options = c("scale_down", "hold_position"), protect_latex = 
 \newpage
 
 
-![`r map_caption`](tables_figures/chronology_map.png)
+![**Extended Data Figure 1 | Map of sampling locations of tree-ring chronologies analyzed in this study.** Sites are colored by the xylem porosity type of species sampled: ring poroous (RP), diffuse porous (DP), or both. Sampling details are provided in **SI TBALE NAME**](tables_figures/chronology_map.png)
 
 
 \newpage
 
-![`r growth_curves_all_caption`](tables_figures/growth_curves_all.png){ width=100% }
+![**Extended Data Figure 2 | Phenological patterns of forest canopy greenness (top row) and stem growth of ring- and diffuse-porous trees, represented as both relative and cumulative fractions of total annual growth (middle and bottom rows, respectively), at our two focal study sites** In the top row, canopy greenness is characterized using the two band Enhanced Vegetation Index (EVI2) ..., with each line representing a year between 2000 and 2018. For stem growth, each line represents one year's growth for a given tree, fit with McMahon model.](tables_figures/growth_curves_all.png){ width=100% }
 
 \newpage
 
-![`r climwin_caption`](tables_figures/climwin_figure.png){ width=70% }
+![**Extended Data Figure 3 | Landscapes of relationships between the day of year on which 25% of annual growth is achieved ($DOY_{25}$) and temperature in prior weeks for ring- and diffuse-porous trees at SCBI and Harvard Forest.** Shown are matrices of linear coefficients of first-order linear regressions between temperature and $DOY_{25}$, where Window Open and Window Close indicate number of weeks prior to $DOY_{25}$ (ring-porous: May 5 at SCBI, May 13 at HF; diffuse-porous: June 4 at SCBI, June 14 at HF). Black circles indicate the critical $T_{max}$ window (ring-porous:  March 22- April 9 at SCBI, April 2 - May 07 at HF; diffuse-porous: Feb. 19- May 21 at SCBI, March 19 - May 07 at HF).](tables_figures/climwin_figure.png){ width=70% }
 
 
 \newpage
 
-![`r pheno_Tmax_climwin_caption`](tables_figures/pheno_Tsensitivity_combo_patchwork_AIC.png){ width=90% }
+![**Extended Data Figure 4 | Response of the timing of stem growth phenology to spring temperatures.** Relationships between critical temperature window (CTW) $T_max$ and 25%, 50%, and 75% total stem growth (first row), the length of the peak growing season ($L_pgs$; second row), maximum growth rate ($g_max$; third row), and total seasonal radial stem growth ($\Delta DBH$; fourth row) are shown. Posterior predictions of each variable that did not include zero are represented with solid lines, while those that do include zero use dotted lines. 95% credible intervals are represented by bands. The days of year on which 25%, 50% and 75% of annual growth were acheived ($DOY_{25}$, $DOY_{50}$, and $DOY_{75}$, respectively) declined significantly with mean $T_{max}$ during their respective CTW. For each CTW $T_{max}$. Modeled values from dendrometer band measurements are represented by dots.](tables_figures/pheno_Tsensitivity_combo_patchwork_AIC.png){ width=90% }
 
 \newpage
 
-![`r pheno_Tmax_AprilMay_caption`](tables_figures/pheno_Tsensitivity_combo_patchwork_april_may.png){ width=90% }
+![**Extended Data Figure 5 | Relationship between growth parameters and mean maximum temperature in April (SCBI) or May (HF). Relationships between critical temperature window (CTW) $T_max$ and 25%, 50%, and 75% total stem growth (first row), the length of the peak growing season ($L_pgs$; second row), maximum growth rate ($g_max$; third row), and total seasonal radial stem growth ($\Delta DBH$; fourth row) are shown. Posterior predictions of each variable that did not include zero are represented with solid lines, while those that do include zero use dotted lines. 95% credible intervals are represented by bands.](tables_figures/pheno_Tsensitivity_combo_patchwork_april_may.png){ width=90% }
 
 \newpage
 
-![`r pheno_Tmin_AprilMay_caption`](tables_figures/pheno_Tsensitivity_combo_patchwork_april_may_tmin.png){ width=90% }
+![Extended Data Figure 6 | Sensitivity of annual growth, as derived from tree-rings, to monthly minimum temperatures of the current year for 208 chronologies from 114 sites across eastern North America (Extended Data Figure 1). Chronologies are grouped by xylem porosity and ordered by mean April T_max. Chronology details are given in the Supplementary Information.](tables_figures/tree_rings_tmin.png){ width=90% } 
 
 \newpage
 
-![`r tree_rings_TMIN_caption`](tables_figures/tree_rings_tmin.png){ width=90% } 
+**THIS IS JUST A PLACEHOLDER! Figure needs to be made**
+
+![Extended Data Figure 7 | Sensitivity of annual growth, as derived from tree-rings, to monthly maximum temperatures of the current and past year for 208 chronologies from 114 sites across eastern North America (Extended Data Figure 1). Chronologies are grouped by xylem porosity and ordered by mean April T_max. Chronology details are given in the Supplementary Information.](tables_figures/tree_rings_tmax.png){ width=50% } 

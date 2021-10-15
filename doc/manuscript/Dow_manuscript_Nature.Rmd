@@ -107,8 +107,9 @@ EDF_climwin = "Extended Data Figure 3"
 EDF_pheno_all = "Extended Data Figures 4-5"
 EDF_pheno_Tmax_climwin = "Extended Data Figure 4"
 EDF_pheno_Tmax_AprilMay = "Extended Data Figure 5"
-EDF_tree_rings_TMAX_extended = "Extended Data Figure 6"
-EDF_tree_rings_TMIN = "Extended Data Figure 7"
+EDF_tree_rings_TMIN = "Extended Data Figure 6"
+EDF_tree_rings_TMAX_extended = "Extended Data Figure 7"
+
 
 ###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ## some stats/ 
