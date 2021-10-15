@@ -232,9 +232,7 @@ The observed phenological advance in the start of stem growth under warmer sprin
 However, inconsistent with the concept that an earlier start to growth would increase annual woody productivity, we demonstrate that warmer springs advance the end to the period of most active stem growth and have negligible effect on total annual growth for most species and locations (Fig. `r tree_rings`). 
 Our observations suggest that the cessation of rapid stem expansion, which occurs mid-summer near the time of peak leaf greenness (`r EDF_growth_curves_all`), is likely driven by cues other than carbon limitation, such as daylength<!--REF?--> or sink limitation[@zani_increased_2020].
 Rather than growing season length, the primary effect of temperature on annual growth is a negative effect of $T_{max}$ during the peak growing season, which is associated with of drought stress[@dorangeville_drought_2018].
-Warm springs may also augment summer drought stress in some times and places, effectively canceling out any positive effects of an extended growing period[@buermann_widespread_2018]; however, spring temperatures and summer Standardized Precipitation Evapotranspiration Index[@vicente-serrano_multiscalar_2010]) were uncorrelated within our dendrometer band analaysis.
-
-
+Warm springs may also augment summer drought stress in some times and places, effectively canceling out any positive effects of an extended growing period[@buermann_widespread_2018]; however, spring temperatures and summer Standardized Precipitation Evapotranspiration Index[@vicente-serrano_multiscalar_2010]) were uncorrelated within our dendrometer band analysis.
 
 <!-- it remains unclear where extra carbon goes (1 par, maybe 2)-->
 Our finding that interannual variation in woody growth is more strongly linked to conditions during the peak growing season (Fig. `r tree_rings`) than to growing season length aligns with parallel findings for NEE [@zhou_explaining_2016; @fu_maximum_2019].
@@ -244,7 +242,7 @@ We show that this extra C sequestration in years with warm springs does not subs
 There are two main possibilities, which hold contrasting implications for the response of forest C balance to rising spring temperatures.
 First, C that is fixed in late summer or fall may be used for woody growth that is not apparent from diameter measurements in the current year: either used for thickening of cell walls, a process that lags behind stem expansion[@cuny_woody_2015], or saved within trees as non-structural carbohydrates and used towards growth the following year[@trumbore_quantifying_2002;@richardson_seasonal_2013].
 In fact, [extension of our tree-ring analysis](https://github.com/EcoClimLab/growth_phenology/issues/57) showed a generally positive, although often non-significant, correlation between ring-width and previous year growing season $T_{max}$ in RP trees, indicating this may be a possibility. *very little correlation between April $T_{max}$ and growth the following year (5 of 142 RP and 3 of 66 DP species-site combinations), refuting the latter possibility*.
-We also cannot rule out the possibility that warm springs promote formation of more carbon-dense cell walls in the current of following year (**coauthors, do any of you know literature related to this?**); however, our results suggest that little of the extra C that may be fixed in these years goes into wood formation.
+We also cannot rule out the possibility that warm springs promote formation of more carbon-dense cell walls in the current of following year (**coauthors, do any of you know literature related to this?**).
 
 *There may be a shift towards greater belowground allocation[@zohner_how_2021].*
 
