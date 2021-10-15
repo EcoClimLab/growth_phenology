@@ -104,7 +104,7 @@ EDT_tree_ring_summary="Extended Data Table 3"
 EDF_map = "Extended Data Figure 1" 
 EDF_growth_curves_all = "Extended Data Figure 2"  
 EDF_climwin = "Extended Data Figure 3"
-EDF_pheno_all = "Extended Data Figures 4-6"
+EDF_pheno_all = "Extended Data Figures 4-5"
 EDF_pheno_Tmax_climwin = "Extended Data Figure 4"
 EDF_pheno_Tmax_AprilMay = "Extended Data Figure 5"
 EDF_tree_rings_TMAX_extended = "Extended Data Figure 6"
@@ -128,7 +128,7 @@ n_chronologies_HF <- 4
 
 \newpage
 
-*NOTE: In general, this needs to be condensed. The typical length of an article with 3-4 modest display items (figures and tables) is 2000-2500 words (summary paragraph plus body text). We're currently at ~2922 words (1613 intro + results, discussion 1319--too long!) and 1 modest + 2 large display items. Articles typically have 30-50 references (currently ok there)* 
+*NOTE: In general, this needs to be condensed. The typical length of an article with 3-4 modest display items (figures and tables) is 2000-2500 words (summary paragraph plus body text). We're currently at ~2562 words (1609 intro + results, discussion 953) and 1 modest + 2 large display items. Articles typically have 30-50 references (currently ok there)* 
 
 # (Summary paragraph)
 ```{r eval=FALSE, echo=FALSE}
@@ -223,7 +223,7 @@ Results were qualitatively similar to the univariate correlations (Fig. `r tree_
 
 ## Discussion {-#Discussion} 
 
-<!--1309 words before Krista's edits. Goal: 700-800-->
+<!--Currently 953. Goal: 700-800-->
 
 <!-- how our findings fill knowledge gap (1 par, maybe 2)-->
 
