@@ -226,7 +226,6 @@ Results were qualitatively similar to the univariate correlations (Fig. `r tree_
 
 <!--Currently 903. Goal: 700-800-->
 
-<!-- how our findings fill knowledge gap (1 par, maybe 2)-->
 
 Together, our results demonstrate that warmer spring temperatures in the temperate deciduous forests of eastern North America advance the phenology of tree stem growth but have little effect on annual woody productivity (Figs. `r schematic_summary`- `r tree_rings`). 
 The observed phenological advance in the start of stem growth under warmer springs parallels phenological advances observed for leaf development (Fig. `r DOY_timing`)[@keenan_net_2014;@finzi_carbon_2020] and NEE [@keenan_net_2014; @finzi_carbon_2020].
@@ -235,7 +234,6 @@ Our observations suggest that the cessation of rapid stem expansion, which occur
 Rather than growing season length, the primary effect of temperature on annual growth is a negative effect of $T_{max}$ during the peak growing season, which is associated with of drought stress[@dorangeville_drought_2018].
 Warm springs may also augment summer drought stress in some times and places, effectively canceling out any positive effects of an extended growing period[@buermann_widespread_2018]; however, spring temperatures and summer Standardized Precipitation Evapotranspiration Index[@vicente-serrano_multiscalar_2010]) were uncorrelated within our dendrometer band analysis.
 
-<!-- it remains unclear where extra carbon goes (1 par, maybe 2)-->
 Our finding that interannual variation in woody growth is more strongly linked to conditions during the peak growing season (Fig. `r tree_rings`) than to growing season length aligns with parallel findings for NEE [@zhou_explaining_2016; @fu_maximum_2019].
 However, there is also a disconnect with findings that NEE increases -- at least modestly -- with spring temperatures[@keenan_net_2014] or with the length of the carbon uptake period[@zhou_explaining_2016; @fu_maximum_2019;@finzi_carbon_2020].
 Warming advances spring phenology and may advance or delay autumn senescence depending on timing of warming and water availability[@zohner_ongoing_2019;@xie_predicting_2018; @crabbe_extreme_2016; @dragoni_evidence_2011; @jeong_phenology_2011; @ibanez_forecasting_2010; @vitasse_responses_2009;@xie_predicting_2018]<!--we can cut some of these references-->, with delays more common across eastern North America [@buermann_widespread_2018;@finzi_carbon_2020;@keenan_net_2014], implying that warming temperatures are resulting in a lengthening of the period between the slowing of stem growth and the cessation of ecosystem C uptake.
@@ -254,14 +252,12 @@ Most of this carbon would have a shorter residence time within the ecosystem tha
 Studies within or including the temperate deciduous biome that examined long-term trends in growing season length and ecosystem C uptake[@keeling_increased_1996;@dragoni_evidence_2011;@keenan_net_2014;@finzi_carbon_2020] -- as opposed to their interannual variation -- showed increasing trends in both variables, suggesting that the C not allocated to woody productivity within the current year growth has a multi-year residence time within the ecosystem.
 However, given our finding that warm springs do not significantly enhance woody productivity, this C is likely to have a relatively short residence time within the ecosystem.
 
-<!-- interannual variation ≠ directional change (1 par)-->
 Thus, a distinction between interannual variation and directional change may be critical when considering how directional climate change is likely to affect tree growth and ecosystem C dynamics. 
 As discussed above, temporal lags between C uptake and release imply that the full effects of warm spring temperatures on forest woody productivity and carbon cycling are unlikely to be apparent in analyses of interannual variation (including this analysis).
 Moreover, acclimation of trees to warming temperatures[**REFS**] <!--prevsioulsy we had these, but I'm not sure they really work: [@zhang_drought_2021; @gessler_way_2020]--> and, on longer time scales, species adaptations and shifts in forest composition[**REFS**] are
 If we look across spatial gradients where the latter have had time to play out, we see that longer growing seasons are correlated with greater tree growth[@anderson-teixeira_joint_2021], woody productivity[@banburymorgan_global_2021], and NEE [@churkina_spatial_2005].
 Thus, warming spring temperatures are expected to increase the biophysical potential for annual tree growth, but that potential is not being realized on an interannual time frame. 
 
-<!--conclusion (1 par)-->
 As climate change accelerates and spring temperatures become increasingly warmer, growing seasons will start earlier; however, barring rapid acclimation of forests to the warming conditions, this is unlikely to provide the sustained increase in carbon sequestration and ensuant negative climate change feedback that is anticipated in most models (Fig. `r schematic_summary`)[@buermann_widespread_2018; @zani_increased_2020;@keenan_net_2014].
 Rather, the dominant effect of rising temperatures on forest woody productivity will be a negative effect of high summer temperatures (Fig. `r tree_rings`), which constitutes a positive feedback to climate change.
 
