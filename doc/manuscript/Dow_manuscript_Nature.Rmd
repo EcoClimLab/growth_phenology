@@ -283,7 +283,7 @@ Under controlled conditions, spring warming increases biomass accumulation in tr
 
 # Methods {-#Methods} 
 
-*We have not yet re-written the methods for Nature. Nature guidelines: Full methods, typically not exceeding 3000 words. May be subdivided by bold headings.*
+*We have not yet re-written the methods for Nature. Nature guidelines: Full methods, typically not exceeding 3000 words (currently at 1800 words). May be subdivided by bold headings.*
 
 ## Study sites {-#Study} 
 
@@ -303,7 +303,7 @@ The climate is temperate continental with a mean annual precipitation of 1120 mm
 ## Data collection and preparation {-#Data} 
 ### Dendrometer bands {-#Dendrometer} 
 
-Metal dendrometer bands were installed on a total of `r n_dendro_trees` trees within the SCBI and Harvard Forest ForestGEO plots (`r  EDT_species`). 
+Metal dendrometer bands were installed on a total of 941 trees within the SCBI and Harvard Forest ForestGEO plots. (Changed to raw # of bands. Removed EDT reference because we use # bands after cleaning - CD) 
 Bands were placed on dominant species, including two diffuse- and two ring-porous species at SCBI and eight diffuse- and three ring-porous species at Harvard Forest.
 Bands were measured with a digital caliper approximately every 1-2 weeks within the growing season from 2011-2020 at SCBI and 1998-2003 at Harvard Forest. 
 The number of bands measured at each site fluctuated somewhat as trees were added or dropped (e.g., because of tree mortality) from the census. 
@@ -317,9 +317,9 @@ Timing of measurements at Harvard Forest were similar, with the median start dat
 
 The raw dendrometer band data were manually cleaned by visual inspection before analysis. 
 We screened for three classes of mistakes. 
-First, when a weekly measurement was drastically different from previous week and following weeks, this was assumed to be a measurement error and the record was removed.
+First, when a measurement was drastically different from previous and following measurements, this was assumed to be an error and the datapoint was removed.
 Second, when measurements remained essentially unchanged for several readings, followed by a sudden jump then return to a normal growth pattern, this was assumed to be a case where the band was stuck and then released. In these cases, the full annual record for the tree was removed.
-Third, cases where data were clearly wrong but with unknown causes were removed. If a majority of the data points fell into this class the entire year was removed from the analysis.
+Third, when data points were clearly wrong but with unknown causes they were removed. If a majority of the data points fell into this class within a tree-year the entire year was removed from the analysis.
 
 We fit the model of @mcmahon_general_2015 to define phenological dates and growth rates (Fig. `r schematic_summary`). 
 This five-parameter logistic model was fitted to dendrometer band data from each tree-year in R: 
@@ -332,23 +332,20 @@ and $\theta$ is a tuning parameter controlling the slope of the curve toward the
 *We note that the DOY on which maximum growth occurs, $DOY_{g_{max}}$ (Fig. `r schematic_summary`) occurs on $DOY_{ip}$ only when $\theta = 1$.*
 Using the optimized parameters for each tree-year, we then modeled $DBH$ throughout the year and extracted the intra-annual growth variables of interest (Fig. `r schematic_summary`). 
 
-After fitting the @mcmahon_general_2015 model, we removed poorly fit models. 
-Models were judged to be poorly fit if certain modeled growth characteristics fell outside of the acceptable range we determined. 
+After fitting the model, we removed tree-years with poor fits. 
+Models were judged to be poorly fit if certain modeled growth characteristics fell outside of the logical range. 
 Modeled fits for tree-years were removed under five conditions:
 (1) single day growth rates were higher than 2 standard deviations away from the mean for each wood-type (SCBI = 2, Harvard Forest = 34); 
 (2) $DOY_{ip}$ was $\ge 2$ standard deviations away from the mean for it's xylem architecture group, year, and site (SCBI = 62, Harvard Forest = 106); 
 (3) tree-years with small or negligible total growth ($\Delta DBH$ < 0.02 mm; SCBI = 0, Harvard Forest = 66); 
 (4) model fit predicted total yearly growth to take longer than 365 days, indicating poor model fit (SCBI = 181, Harvard Forest = 199); 
 and (5) models with unexplained sharp spikes in growth rate (SCBI = 0, Harvard Forest = 3). 
-At Harvard Forest the tag years removed through this method were proportional to the original sample size, indicating that no species or size class was disproportionately removed compared to others *(SI figure? data_cleaning_figure_hf in manuscript folder)*. 
-At SCBI a higher proportion of RP trees were removed--the majority in step 4 *(data_cleaning_figure_scbi)*. 
+At Harvard Forest the tag years removed through this method were proportional to the original sample size, indicating that no species or size class was disproportionately removed compared to others. 
+At SCBI a higher proportion of RP trees were removed--the majority falling under condition 4. 
 
 ### Leaf phenology
 
-Leaf phenology data for the years 2001-2018 were extracted for SCBI and Harvard Forest from the MCD12Q2 V6 Land Cover Dynamics product (informally called the MODIS Global Vegetation Phenology product) [@friedl_mcd12q2_2019].
-
-description here: https://developers.google.com/earth-engine/datasets/catalog/MODIS_006_MCD12Q2#description
-
+Leaf phenology data for the years 2001-2018 were extracted for SCBI and Harvard Forest from the MCD12Q2 V6 Land Cover Dynamics product (informally called the MODIS Global Vegetation Phenology product) [@friedl_mcd12q2_2019]. This dataset was used to determine timing of greenup, midgreenup, senescence, along with enhanced vegetation index values for each year. 
 
 ### Tree rings {-#Tree} 
 Dominant tree species were cored at both sites following sampling designs that covered a broad range of $DBH$.
@@ -356,25 +353,23 @@ We analyzed records for the dominant ring- and diffuse- porous species at each s
 At SCBI, cores were collected as described in @helcoski_growing_2019. 
 Briefly, cores were taken from living or recently dead trees $\ge$ 10 cm $DBH$, including a randomly sampled subset of all dominant species within the ForestGEO plot [live trees in 2010-2011; @bourg_initial_2013] and trees found newly dead in annual tree mortality in 2016 and 2017 [@helcoski_growing_2019]*(If we're citing a method from the helcoski paper, do we need to do this 'briefly' section? I would remove.)*.
 At Harvard Forest, ...(*Neil can write this easily, or KAT probably has the info*)
-In total, we analyzed `r n_cores_focal_sites` cores from eleven species at SCBI and three species at Harvard Forest (`r  EDT_species`).
+In total, we analyzed >900 cores from fourteen species at SCBI and four species at Harvard Forest (`r  EDT_species`).
 
-The tree-ring records from our focal sites were complemented with a much larger collection spanning `r n_cores_sites-2` deciduous and mixed forest sites in Eastern North America[@maxwell_sampling_2020;@dorangeville_drought_2018] (**OTHER REFS??**).
+The tree-ring records from our focal sites were complemented with a much larger collection spanning `r n_cores_sites-2` deciduous and mixed forest sites in Eastern North America[@maxwell_sampling_2020;@dorangeville_drought_2018] (Strange et al. 2019 (QUAL); Au et al. 2020 (ACSA); LeBlanc et al Accepted (LITU) ; Maxwell et al. 2020 (QUAL) ; Matheus and Maxwell 2018 ; Schmidt 2015 (Thesis), Maxwell et al. (2020); Maxwell and Harley 2017; Wilde and Maxwell 2018; Maxwell et al. 2019; Maxwell et al. 2015 --- *FIND REFS*).
 Again, species were limited to broadleaf deciduous species with clearly defined xylem porosity (i.e., excluding semi-ring porous). 
 
 
 All cores were mounted, sanded, cross-dated, and measured using standard methodology. 
-We standardized ring-width series from each core via ARSTAN using a 2/3rds $n$ spline, where $n$ is the number of years in the series [@cook_time_1985; @cook_methods_1990]. 
-*(The following italic text is self-plagarized from Helcoski and needs to be reworded:)* *The influence of outliers in all series was reduced using the adaptive power transformation, which also stabilises the variance over time [@cook_calculating_1997]. Next, each series was stabilised using either the average correlation between raw ring-width series (rbar) method or a 1/3rds spline method to adjust changes in variance as series replication decreased towards the earlier portion of each chronology [@jones_estimating_1997]. The 1/3rds spline method was chosen when replication in the inner portion of each chronology (c. the inner 30–50 yr of each record depending on full chronology length) dropped below three trees. Once that step was complete, a robust biweight mean chronology for each species was calculated from the ring-width indices [@cook_time_1985]. We chose to use residual chronologies because the autoregressive standardisation process in creating them removes much of the tree-level autocorrelation in growth and these chronologies would most likely contain the most conservative information on drivers of interannual growth [@cook_time_1985].* 
+We standardized ring-width series from each core via ARSTAN using a 2/3rds $n$ spline, where $n$ is the number of years in the series [@cook_time_1985; @cook_methods_1990]. Chronologies were built using the methods described in Helcoski et al. 2019[@helcoski_growing_2019].
 We defined chronology start year (`r  EDT_species`) as the year where subsample signal strength (SSS) passed a threshold of SSS = 0.8, or where $\ge$ 80% of the population signal was captured in the chronology.
 
 ### Climate {-#Climate} 
-For the dendrometer band analysis, we used climate data from local weather stations. 
-Daily maximum and minimum temperatures ($T_{max}$ and $T_{min}$, respectively) for SCBI were obtained from a meteorological tower adjacent to the SCBI ForestGEO plot, via the ForestGEO Climate Data Portal v1.0 [https://forestgeo.github.io/Climate/; @anderson-teixeira_forestgeo_2020]. 
+For the dendrometer band analysis we used climate data from local weather stations. 
+Daily maximum ($T_{max}$) and minimum temperatures ($T_{min}$) for SCBI were obtained from a meteorological tower adjacent to the SCBI ForestGEO plot, via the ForestGEO Climate Data Portal v1.0 [https://forestgeo.github.io/Climate/; @anderson-teixeira_forestgeo_2020]. 
 Daily temperature records for Harvard Forest were obtained from the Harvard Forest weather station (Boose & Gould, 2004; Boose, 2018).
-The R package climpact () was used to plot temperatures for visual inspection. 
+The R package climpact (no publication?) was used to plot temperatures for visual inspection. 
 Climpact also identifies readings that were greater than 3 standard deviations away from yearly means. These points were labeled as outliers and removed from the dataset. 
 Gaps in the SCBI meteorological tower data were subsequently filled using temperature readings obtained from a National Center for Environmental Information (NCEI) weather station located in Front Royal, Virginia (https://www.ncdc.noaa.gov/cdo-web/datasets/GHCND/stations/GHCND:USC00443229/detail). 
-(*how were gaps filled for Harvard? Or was the record good? --- Data came "pre-cleaned" as far as I could tell*)
 
 For the tree-ring analysis, we obtained monthly $T_{max}$ and $T_{min}$ data for 1901-2019 from CRU v.4.04 [@harris_version_2020], again via the ForestGEO Climate Data Portal v1.0 [@anderson-teixeira_forestgeo_2020].
 
