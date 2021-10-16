@@ -22,6 +22,7 @@ all_dcc_output_hf$site <- paste0("HF_", all_dcc_output_hf$Species)
 all_dcc_output_other <- read_csv("Results/other_core_corr.csv")#created in Other_quiltplot.R
 all_dcc_output_other$site <- paste0(all_dcc_output_other$Site,"_", all_dcc_output_other$Species)
 all_dcc_output_other <- all_dcc_output_other[,-1]
+all_dcc_output_other <- all_dcc_output_other[!(all_dcc_output_other$site %in% "MO_Flu_CAOV"),]
 all_dcc_output_scbi <- read_csv("Results/scbi_core_corr.csv")#Created in scbi_quiltplot.R
 all_dcc_output_scbi$site <- paste0("SCBI_", all_dcc_output_scbi$Species)
 
@@ -71,9 +72,9 @@ save.plots <- TRUE
 #Forloop to create plots. Cycles through wood types (RP, DP, SP) & clim variables (tmx, tmn)
 #Sorts by average April temp across all years of core data at each site
 #First, create numbering scheme and prepare data
-#NEED TO MANUALLY CHANGE TMX AND TMN IN LINES 76 AND 116. SORTING WILL NOT WORK CORRECTLY IF DONE AUTOMATICALLY
+#NEED TO MANUALLY CHANGE TMX AND TMN IN LINES 77 AND 117. SORTING WILL NOT WORK CORRECTLY IF DONE AUTOMATICALLY
 for(v in climate_variables) {
-  v <- "tmn"
+  v <- "tmx"
   print(v)
   TRW_coord <- TRW_coord[!(duplicated(TRW_coord$Location)),]#removes duplicate locations added by original author of TRW_coord excel sheet
   X <- all.dcc.output_all[all.dcc.output_all$variable %in% v, ]#subset core by clim variable
@@ -113,7 +114,7 @@ X <- X[X$wood_type != "SP",]
 
   X <- X %>%
     ungroup()%>%
-    arrange( desc(wood_type), tmn, site, month_new)#CHANGE THIS IF SWITCHING BETWEEN TMX/TMN
+    arrange( desc(wood_type), tmx, site, month_new)#CHANGE THIS IF SWITCHING BETWEEN TMX/TMN
 
   X$site <- as.factor(X$site)
   X$month <- as.factor(X$month)
@@ -156,6 +157,7 @@ tmx_data_table <- tmx_data_table[!duplicated(tmx_data_table$group),]
 #write.csv(tmx_data_table, "doc/manuscript/tables_figures/chronology_table.csv", row.names = FALSE)
 
 tmn_data <- read.csv("Data/tmn_quilt_plot_data.csv")
+tmn_data <- tmn_data[!(tmn_data$site %in% "MO_Flu_CAOV"), ]
 tmn_data_table <- tmn_data[,c(19,15,1,14,17,18)]
 tmn_data_table <- tmn_data_table[!(duplicated(tmn_data_table$group)),]
 tmn_data_table$Location <- ifelse(tmn_data_table$Location == "Fiddler<U+393C><U+3E32>s_Green,_VA_CAOV_CAOV", "Fiddler's_Green,_VA_CAOV",
@@ -165,16 +167,16 @@ tmn_data_table$Location <- ifelse(tmn_data_table$Location == "Fiddler<U+393C><U+
 
 tmn_data_table <- left_join(tmn_data_table, TRW_coord, by = "Location")
 tmn_data_table <- tmn_data_table[!(duplicated(tmn_data_table$group)),]
-
 #write.csv(tmn_data_table, "doc/manuscript/tables_figures/tmn_chronology_table.csv", row.names = FALSE)
 
 
 #Have to manually change V, unfortunately
 v <- "tmx"
+#WAIT. Ccheck if lines 183 and 225 are correct!!!!!!
 for(WT in wood_types){#Have to manually change WT and run through the contents of the loop. Not sure whats going wrong
-  WT <- "DP"
+  WT <- "RP"
   #all.dcc.output <- all.dcc.output_all[all.dcc.output_all$wood_type %in% WT,]#subset by wood type
-  X <- tmn_data[tmn_data$wood_type %in% WT,]#subset by wood type
+  X <- tmx_data[tmx_data$wood_type %in% WT,]#subset by wood type.CHANGE!!!!!
 
   # for(v in climate_variables) {
   #   print(v)
@@ -216,7 +218,7 @@ for(WT in wood_types){#Have to manually change WT and run through the contents o
 
     X <- X %>%
       ungroup()%>%
-      arrange(tmn, site, month_new)
+      arrange(tmx, site, month_new) #CHANGE!!!!!!!!!
 
     X$site <- as.factor(X$site)
     X$month <- as.factor(X$month)
