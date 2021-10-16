@@ -129,6 +129,4 @@ kable_styling(latex_options = c("scale_down", "hold_position"), protect_latex = 
 
 \newpage
 
-**THIS IS JUST A PLACEHOLDER! Figure needs to be made**
-
-![Extended Data Figure 7 | Sensitivity of annual growth, as derived from tree-rings, to monthly maximum temperatures of the current and past year for 208 chronologies from 114 sites across eastern North America (Extended Data Figure 1). Chronologies are grouped by xylem porosity and ordered by mean April T_max. Chronology details are given in the Supplementary Information.](tables_figures/tree_rings_tmax.png){ width=50% } 
+![Extended Data Figure 7 | **PLACEHOLDER!!!** Sensitivity of annual growth, as derived from tree-rings, to monthly maximum temperatures of the current and past year for 208 chronologies from 114 sites across eastern North America (Extended Data Figure 1). Chronologies are grouped by xylem porosity and ordered by mean April T_max. Chronology details are given in the Supplementary Information.](tables_figures/tree_rings_tmax.png){ width=50% } 
