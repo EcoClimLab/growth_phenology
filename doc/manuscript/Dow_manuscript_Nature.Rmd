@@ -19,17 +19,17 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Authors:** 
 
-Cameron Dow^1^
+Cameron Dow^1^ ( Orcid ID : 0000-0002-8365-598X)
 
 Albert Y. Kim^1,2^
 
 Loïc D’Orangeville^3,4^
 
-Erika B. Gonzalez-Akre^1^
+Erika B. Gonzalez-Akre^1^ ( Orcid ID : 0000-0001-8305-6672)
 
 Ryan Helcoski^1^
 
-Valentine Herrmann^1^
+Valentine Herrmann^1^ ( Orcid ID : 0000-0002-4519-481X)
 
 Grant L. Harley^5^
 
@@ -39,15 +39,15 @@ Ian R. McGregor^1,7^
 
 William McShea^1^
 
-Sean McMahon^8,10^
+Sean McMahon^8,10^ (Orcid ID : 0000-0001-8302-6908)
 
 David A. Orwig^3^
 
-Neil Pederson^3^
+Neil Pederson^3^ (Orcid ID : 0000-0003-3830-263X)
 
-Alan J. Tepley^1,9^
+Alan J. Tepley^1,9^ ( Orcid ID : 0000-0002-5701-9613)
 
-Kristina J. Anderson-Teixeira^1,10^*
+Kristina J. Anderson-Teixeira^1,10^* ( Orcid ID : 0000-0001-8461-9713)
 
 
 **Author Affiliations:**
