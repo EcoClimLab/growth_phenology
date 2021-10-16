@@ -129,7 +129,7 @@ n_chronologies_HF <- 4
 
 \newpage
 
-*NOTE: In general, this needs to be condensed. The typical length of an article with 3-4 modest display items (figures and tables) is 2000-2500 words (summary paragraph plus body text). We're currently at ~2562 words (1609 intro + results, discussion 953) and 1 modest + 2 large display items. Articles typically have 30-50 references (currently ok there)* 
+*NOTE: We're probably pretty close to the upper length limit. The typical length of an article with 3-4 modest display items (figures and tables) is 2000-2500 words (summary paragraph plus body text). We're currently at ~2512 words (1609 intro + results, discussion 903) and 1 modest + 2 large display items. Articles typically have 30-50 references (currently ok there)* 
 
 # (Summary paragraph)
 ```{r eval=FALSE, echo=FALSE}
@@ -224,7 +224,7 @@ Results were qualitatively similar to the univariate correlations (Fig. `r tree_
 
 ## Discussion {-#Discussion} 
 
-<!--Currently 953. Goal: 700-800-->
+<!--Currently 903. Goal: 700-800-->
 
 <!-- how our findings fill knowledge gap (1 par, maybe 2)-->
 
@@ -255,17 +255,13 @@ However, given our finding that warm springs do not significantly enhance woody 
 
 <!-- interannual variation ≠ directional change (1 par)-->
 Thus, a distinction between interannual variation and directional change may be critical when considering how directional climate change is likely to affect tree growth and ecosystem C dynamics. 
-In addition to the existence of temporal lags between C uptake and release, which introduce a lot of uncertainty[@trumbore_quantifying_2002], trees are likely to  acclimate *to some extent* to warming temperatures[@zhang_drought_2021; @gessler_way_2020], and on even longer time scales, we are likely to see changes in forest composition and adaptation.
-If we look across spatial gradients where the latter have had time to play out, we see that longer growing seasons are correlated with greater tree growth[**REF?**], woody productivity[@banburymorgan_global_2021], and NEE [@churkina_spatial_2005].
-*Future research will be important to sorting this out.*
-
-<!--"contributions beyond" (1 par)-->
-Despite remaining uncertainties, our findings contribute substantially to a broader picture of the influence of spring temperatures on forest ecosystem function. 
-Warm spring temperatures result in earlier leaf-out (Fig. `r DOY_timing`)[@jeong_phenology_2011], an earlier start to net C sequestration[@keenan_net_2014], and, as shown here, earlier initiation of stem growth (Figs. `r schematic_summary`, `r EDF_pheno_Tmax_climwin`).
-Yet, an earlier start to the growing season is not consistently associated with a longer peak growing season or increased growth (Figs. `r schematic_summary`, `r tree_rings`), presumably because stem diameter growth is curtailed by C sink limitation[@zani_increased_2020] or drought[@zhang_drought_2021;@dorangeville_drought_2018;@helcoski_growing_2019].
+As discussed above, temporal lags between C uptake and release imply that the full effects of warm spring temperatures on forest woody productivity and carbon cycling are unlikely to be apparent in analyses of interannual variation (including this analysis).
+Moreover, acclimation of trees to warming temperatures[**REFS**] <!--prevsioulsy we had these, but I'm not sure they really work: [@zhang_drought_2021; @gessler_way_2020]--> and, on longer time scales, species adaptations and shifts in forest composition[**REFS**] are
+If we look across spatial gradients where the latter have had time to play out, we see that longer growing seasons are correlated with greater tree growth[@anderson-teixeira_joint_2021], woody productivity[@banburymorgan_global_2021], and NEE [@churkina_spatial_2005].
+Thus, warming spring temperatures are expected to increase the biophysical potential for annual tree growth, but that potential is not being realized on an interannual time frame. 
 
 <!--conclusion (1 par)-->
-As climate change accelerates and spring temperatures become increasingly warmer, growing seasons will start earlier, but this is unlikely to provide the sustained increase in carbon sequestration and ensuant negative climate change feedback that is anticipated in most models (Fig. `r schematic_summary`)[@buermann_widespread_2018; @zani_increased_2020;@keenan_net_2014].
+As climate change accelerates and spring temperatures become increasingly warmer, growing seasons will start earlier; however, barring rapid acclimation of forests to the warming conditions, this is unlikely to provide the sustained increase in carbon sequestration and ensuant negative climate change feedback that is anticipated in most models (Fig. `r schematic_summary`)[@buermann_widespread_2018; @zani_increased_2020;@keenan_net_2014].
 Rather, the dominant effect of rising temperatures on forest woody productivity will be a negative effect of high summer temperatures (Fig. `r tree_rings`), which constitutes a positive feedback to climate change.
 
 
