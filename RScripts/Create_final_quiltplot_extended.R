@@ -22,11 +22,12 @@ all_dcc_output_hf$site <- paste0("HF_", all_dcc_output_hf$Species)
 all_dcc_output_other <- read_csv("Results/other_core_corr_EXTENDED.csv")#created in Other_quiltplot.R
 all_dcc_output_other$site <- paste0(all_dcc_output_other$Site,"_", all_dcc_output_other$Species)
 all_dcc_output_other <- all_dcc_output_other[,-1]
+all_dcc_output_other <- all_dcc_output_other[!(all_dcc_output_other$site %in% "MO_Flu_CAOV"),]
 all_dcc_output_scbi <- read_csv("Results/scbi_core_corr_EXTENDED.csv")#Created in scbi_quiltplot.R
 all_dcc_output_scbi$site <- paste0("SCBI_", all_dcc_output_scbi$Species)
 
 all.dcc.output_all <- rbind(all_dcc_output_other,all_dcc_output_scbi,all_dcc_output_hf)
-
+all.dcc.output_all <- all.dcc.output_all[!(all.dcc.output_all$month %in% "curr.oct"),]
 #Load in clim means
 clim_means <- read_csv("Results/clim_means_all.csv")#Created in other_quiltplot.R
 #Create porosity lists
@@ -70,7 +71,7 @@ save.plots <- TRUE
 #Sorts by average April temp across all years of core data at each site
 #First, create numbering scheme and prepare data
 for(v in climate_variables) {
-  #v <- "tmx"
+  v <- "tmn"
   print(v)
   TRW_coord <- TRW_coord[!(duplicated(TRW_coord$Location)),]#removes duplicate locations added by original author of TRW_coord excel sheet
   X <- all.dcc.output_all[all.dcc.output_all$variable %in% v, ]#subset core by clim variable
@@ -123,7 +124,7 @@ for(v in climate_variables) {
 X <- X[X$wood_type != "SP",]
   X <- X %>%
     ungroup()%>%
-    arrange( desc(wood_type), tmx, site, month_new)
+    arrange( desc(wood_type), tmn, site, month_new)
 
   X$site <- as.factor(X$site)
   X$month <- as.factor(X$month)
@@ -162,12 +163,13 @@ tmx_data_table$Location <- ifelse(tmx_data_table$Location == "Fiddler<U+393C><U+
 
 tmx_data_table <- left_join(tmx_data_table, TRW_coord, by = "Location")
 
-write.csv(tmx_data_table, "doc/manuscript/tables_figures/chronology_table_EXTENDED.csv", row.names = FALSE)
+#write.csv(tmx_data_table, "doc/manuscript/tables_figures/chronology_table_EXTENDED.csv", row.names = FALSE)
 
-tmn_data <- read.csv("Data/tmn_quilt_plot_data.csv")
+tmn_data <- read.csv("Data/tmn_quilt_plot_data_EXTENDED.csv")
 
+v <- "tmx"
 for(WT in wood_types){#Have to manually change WT and run through the contents of the loop. Not sure whats going wrong
-  WT <- "RP"
+  WT <- "DP"
   #all.dcc.output <- all.dcc.output_all[all.dcc.output_all$wood_type %in% WT,]#subset by wood type
   X <- tmx_data[tmx_data$wood_type %in% WT,]#subset by wood type
 
