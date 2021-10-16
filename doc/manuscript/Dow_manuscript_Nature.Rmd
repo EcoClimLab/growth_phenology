@@ -270,7 +270,8 @@ Rather, the dominant effect of rising temperatures on forest woody productivity 
 
 *We have not yet re-written the methods for Nature. Nature guidelines: Full methods, typically not exceeding 3000 words (currently at 1800 words). May be subdivided by bold headings.*
 
-## Study sites {-#Study} 
+## Dendrometer bands {-#Dendrometer} 
+### Study sites {-#Study} 
 
 Study sites included two temperate forests in the eastern United States, both part of the Forest Global Earth Observatory [ForestGEO; Anderson-Teixeira et al. 2015; Davies et al. 2021]. 
 
@@ -285,8 +286,7 @@ Dominate species within the 35 ha ForestGEO plot are hemlock (*Tsuga canadensis*
 The climate is temperate continental with a mean annual precipitation of 1120 mm and temperatures  averaging -12° C in January and 19° C in July [@dorangeville_peak_2021].
 <!-- Is this the right reference? Yes, I got this info from the draft they sent. -->
 
-## Data collection and preparation {-#Data} 
-### Dendrometer bands {-#Dendrometer} 
+### Data collection and preparation {-#Data} 
 
 Metal dendrometer bands were installed on a total of 941 trees within the SCBI and Harvard Forest ForestGEO plots. (Changed to raw # of bands. Removed EDT reference because we use # bands after cleaning - CD) 
 Bands were placed on dominant species, including two diffuse- and two ring-porous species at SCBI and eight diffuse- and three ring-porous species at Harvard Forest.
@@ -328,26 +328,6 @@ and (5) models with unexplained sharp spikes in growth rate (SCBI = 0, Harvard F
 At Harvard Forest the tag years removed through this method were proportional to the original sample size, indicating that no species or size class was disproportionately removed compared to others. 
 At SCBI a higher proportion of RP trees were removed--the majority falling under condition 4. 
 
-### Leaf phenology
-
-Leaf phenology data for the years 2001-2018 were extracted for SCBI and Harvard Forest from the MCD12Q2 V6 Land Cover Dynamics product (informally called the MODIS Global Vegetation Phenology product) [@friedl_mcd12q2_2019]. This dataset was used to determine timing of greenup, midgreenup, senescence, along with enhanced vegetation index values for each year. 
-
-### Tree rings {-#Tree} 
-Dominant tree species were cored at both sites following sampling designs that covered a broad range of $DBH$.
-We analyzed records for the dominant ring- and diffuse- porous species at each site (`r  EDT_species`), excluding species with other xylem architectures (*Juglans nigra* L. at SCBI, *Tsuga canadensis* (L.) Carrière at Harvard Forest)
-At SCBI, cores were collected as described in @helcoski_growing_2019. 
-Briefly, cores were taken from living or recently dead trees $\ge$ 10 cm $DBH$, including a randomly sampled subset of all dominant species within the ForestGEO plot [live trees in 2010-2011; @bourg_initial_2013] and trees found newly dead in annual tree mortality in 2016 and 2017 [@helcoski_growing_2019]*(If we're citing a method from the helcoski paper, do we need to do this 'briefly' section? I would remove.)*.
-At Harvard Forest, ...(*Neil can write this easily, or KAT probably has the info*)
-In total, we analyzed >900 cores from fourteen species at SCBI and four species at Harvard Forest (`r  EDT_species`).
-
-The tree-ring records from our focal sites were complemented with a much larger collection spanning `r n_cores_sites-2` deciduous and mixed forest sites in Eastern North America[@maxwell_sampling_2020;@dorangeville_drought_2018] (Strange et al. 2019 (QUAL); Au et al. 2020 (ACSA); LeBlanc et al Accepted (LITU) ; Maxwell et al. 2020 (QUAL) ; Matheus and Maxwell 2018 ; Schmidt 2015 (Thesis), Maxwell et al. (2020); Maxwell and Harley 2017; Wilde and Maxwell 2018; Maxwell et al. 2019; Maxwell et al. 2015 --- *FIND REFS*).
-Again, species were limited to broadleaf deciduous species with clearly defined xylem porosity (i.e., excluding semi-ring porous). 
-
-
-All cores were mounted, sanded, cross-dated, and measured using standard methodology. 
-We standardized ring-width series from each core via ARSTAN using a 2/3rds $n$ spline, where $n$ is the number of years in the series [@cook_time_1985; @cook_methods_1990]. Chronologies were built using the methods described in Helcoski et al. 2019[@helcoski_growing_2019].
-We defined chronology start year (`r  EDT_species`) as the year where subsample signal strength (SSS) passed a threshold of SSS = 0.8, or where $\ge$ 80% of the population signal was captured in the chronology.
-
 ### Climate {-#Climate} 
 For the dendrometer band analysis we used climate data from local weather stations. 
 Daily maximum ($T_{max}$) and minimum temperatures ($T_{min}$) for SCBI were obtained from a meteorological tower adjacent to the SCBI ForestGEO plot, via the ForestGEO Climate Data Portal v1.0 [https://forestgeo.github.io/Climate/; @anderson-teixeira_forestgeo_2020]. 
@@ -356,9 +336,10 @@ The R package climpact (no publication?) was used to plot temperatures for visua
 Climpact also identifies readings that were greater than 3 standard deviations away from yearly means. These points were labeled as outliers and removed from the dataset. 
 Gaps in the SCBI meteorological tower data were subsequently filled using temperature readings obtained from a National Center for Environmental Information (NCEI) weather station located in Front Royal, Virginia (https://www.ncdc.noaa.gov/cdo-web/datasets/GHCND/stations/GHCND:USC00443229/detail). 
 
-For the tree-ring analysis, we obtained monthly $T_{max}$ and $T_{min}$ data for 1901-2019 from CRU v.4.04 [@harris_version_2020], again via the ForestGEO Climate Data Portal v1.0 [@anderson-teixeira_forestgeo_2020].
+### Leaf phenology
 
-## Analyses
+Leaf phenology data for the years 2001-2018 were extracted for SCBI and Harvard Forest from the MCD12Q2 V6 Land Cover Dynamics product (informally called the MODIS Global Vegetation Phenology product) [@friedl_mcd12q2_2019]. This dataset was used to determine timing of greenup, midgreenup, senescence, along with enhanced vegetation index values for each year. 
+
 ### Determining critical temperature windows {-#Determining} 
 
 The period where the phenology milestone(s) were most affected by changes in early spring temperature was determined using the R package *climwin* [@vandepol_identifying_2016]. 
@@ -384,6 +365,28 @@ This mixed-effect model was run within a hierarchical Bayesian framework and fit
 TODO added by Bert: Whereever we specify model details, include details about prior from here:
 https://cran.r-project.org/web/packages/rstanarm/vignettes/priors.html#default-weakly-informative-prior-distributions
 -->
+
+
+
+## Tree rings {-#Tree} 
+Dominant tree species were cored at both sites following sampling designs that covered a broad range of $DBH$.
+We analyzed records for the dominant ring- and diffuse- porous species at each site (`r  EDT_species`), excluding species with other xylem architectures (*Juglans nigra* L. at SCBI, *Tsuga canadensis* (L.) Carrière at Harvard Forest)
+At SCBI, cores were collected as described in @helcoski_growing_2019. 
+Briefly, cores were taken from living or recently dead trees $\ge$ 10 cm $DBH$, including a randomly sampled subset of all dominant species within the ForestGEO plot [live trees in 2010-2011; @bourg_initial_2013] and trees found newly dead in annual tree mortality in 2016 and 2017 [@helcoski_growing_2019]*(If we're citing a method from the helcoski paper, do we need to do this 'briefly' section? I would remove.)*.
+At Harvard Forest, ...(*Neil can write this easily, or KAT probably has the info*)
+In total, we analyzed >900 cores from fourteen species at SCBI and four species at Harvard Forest (`r  EDT_species`).
+
+The tree-ring records from our focal sites were complemented with a much larger collection spanning `r n_cores_sites-2` deciduous and mixed forest sites in Eastern North America[@maxwell_sampling_2020;@dorangeville_drought_2018] (Strange et al. 2019 (QUAL); Au et al. 2020 (ACSA); LeBlanc et al Accepted (LITU) ; Maxwell et al. 2020 (QUAL) ; Matheus and Maxwell 2018 ; Schmidt 2015 (Thesis), Maxwell et al. (2020); Maxwell and Harley 2017; Wilde and Maxwell 2018; Maxwell et al. 2019; Maxwell et al. 2015 --- *FIND REFS*).
+Again, species were limited to broadleaf deciduous species with clearly defined xylem porosity (i.e., excluding semi-ring porous). 
+
+
+All cores were mounted, sanded, cross-dated, and measured using standard methodology. 
+We standardized ring-width series from each core via ARSTAN using a 2/3rds $n$ spline, where $n$ is the number of years in the series [@cook_time_1985; @cook_methods_1990]. Chronologies were built using the methods described in Helcoski et al. 2019[@helcoski_growing_2019].
+We defined chronology start year (`r  EDT_species`) as the year where subsample signal strength (SSS) passed a threshold of SSS = 0.8, or where $\ge$ 80% of the population signal was captured in the chronology.
+
+
+For the tree-ring analysis, we obtained monthly $T_{max}$ and $T_{min}$ data for 1901-2019 from CRU v.4.04 [@harris_version_2020], again via the ForestGEO Climate Data Portal v1.0 [@anderson-teixeira_forestgeo_2020].
+
 
 
 # Acknowledgements {-#Acknowledgements} 
