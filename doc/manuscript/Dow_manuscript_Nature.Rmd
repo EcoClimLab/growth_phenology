@@ -173,7 +173,7 @@ Here, we describe how early spring temperatures affect stem growth phenology, gr
 
 ## Dendrometer band analysis {-#Dendrometer} 
 
-Using dendrometer band measurements taken throughout the growing season at the Smithsonian Conservation Biology Institute (SCBI; Virginia, USA; n = **125** trees from 2011-2020) and Harvard Forest (Massachusetts, USA; n = **340** trees from 1998-2003), we fit a growth model[@mcmahon_general_2015] to determine the days of year where 25, 50, and 75% annual growth were achieved ($DOY_{25}$, $DOY_{50}$, $DOY_{75}$), peak growing season length ($L_{pgs}= DOY_{75}$-$DOY_{25}$), maximum growth rates ($g_{max}$) and the DOY on which they occurred ($DOY_{g_{max}}$), and total annual growth ($\Delta DBH$; Fig. `r schematic_summary`). 
+Using dendrometer band measurements taken throughout the growing season at the Smithsonian Conservation Biology Institute (SCBI; Virginia, USA; n = **125** trees from 2011-2020) and Harvard Forest (Massachusetts, USA; n = **340** trees from 1998-2003), we fit a growth model[@mcmahon_general_2015] to determine the days of year where 25, 50, and 75% annual growth were achieved ($DOY_{25}$, $DOY_{50}$, $DOY_{75}$), peak growing season length ($L_{pgs}= DOY_{75}$-$DOY_{25}$), maximum growth rates ($g_{max}$) and the DOY on which they occurred ($DOY_{g_{max}}$), and total annual increment in diameter at breast height ($\Delta DBH$; Fig. `r schematic_summary`). 
 This analysis was performed separately for ring- and diffuse-porous species, which differ in growth phenology[@dorangeville_peak_2021], and set in the context of leaf phenology (measured at ecosystem level via remote sensing).
 
 ![**Figure 1 | Summary of tree growth changes under warmer spring temperatures.** (a) Schematic illustrating parameters of interest and summarizing how each responds to warmer maximum temperatures during a 'critical temperature window', defined as that with the strongest control over $DOY_{25}$; (b) Variable definitions and summary responses to warmer spring temperatures at two temperate forests and for two groups of broadleaf deciduous species (RP=ring porous; DP=diffuse porous), where up and down arrows indicate increases and decreases, respectively, 'n.s.' indicates no signficant correlation, and 'mixed' indicates a mix of signficant and non-signficant correlations, often in different directions.](tables_figures/schematic_summary_with_table.png){ width=70% }
@@ -309,14 +309,14 @@ Third, when data points deviated substantially from normal growth patterns, but 
 
 We fit a five-parameter logistic growth model[@mcmahon_general_2015] to dendrometer band data from each tree-year to define phenological dates and growth rates (Fig. `r schematic_summary`): 
 $$ DBH = L + \frac{K - L} { 1 + 1/\theta \cdot exp[-r(DOY - DOY_{ip}) / \theta)] ^ \theta}$$ 
-Here, $L$ and $K$ are lower and upper asymptotes of the model, corresponding to $DBH$ at the beginning and end of the year, respectively. 
+Here, $L$ and $K$ are lower and upper asymptotes of the model, corresponding to stem diameter at breast height (DBH) at the beginning and end of the year, respectively. 
 $DOY$ are the modeled days of year (*i.e.*, julian days), 
 $DOY_{ip}$ is the day of year where the inflection point in growth rate occurs,
 $r$ *shapes the slope of the curve at the inflection point*,
 and $\theta$ is a tuning parameter controlling the slope of the curve toward the upper asymptote. 
 *We note that the DOY on which maximum growth occurs, $DOY_{g_{max}}$ (Fig. `r schematic_summary`) occurs on $DOY_{ip}$ only when $\theta = 1$.*
 The model was fit in R **v XX** using the script developed in Ref.l[@mcmahon_general_2015]. <!--Cam, please fill in details/proper citions.-->
-Using the optimized parameters for each tree-year, we then modeled $DBH$ throughout the year and extracted the intra-annual growth variables of interest (Fig. `r schematic_summary`). 
+Using the optimized parameters for each tree-year, we then modeled DBH throughout the year and extracted the intra-annual growth variables of interest (Fig. `r schematic_summary`). 
 
 After fitting the growth model, we removed tree-years with poor fits. 
 Models were judged to be poorly fit if certain modeled growth characteristics fell outside of the logical range. 
@@ -370,29 +370,26 @@ TODO added by Bert: Whereever we specify model details, include details about pr
 https://cran.r-project.org/web/packages/rstanarm/vignettes/priors.html#default-weakly-informative-prior-distributions
 -->
 
-
-<!-- KAT stopped review here. -->
-
 ## Tree rings {-#Tree} 
-Dominant tree species were cored at both sites following sampling designs that covered a broad range of $DBH$.
-We analyzed records for the dominant ring- and diffuse- porous species at each site (`r  EDT_species`), excluding species with other xylem architectures (*Juglans nigra* L. at SCBI, *Tsuga canadensis* (L.) Carrière at Harvard Forest)
-At SCBI, cores were collected as described in @helcoski_growing_2019. 
-Briefly, cores were taken from living or recently dead trees $\ge$ 10 cm $DBH$, including a randomly sampled subset of all dominant species within the ForestGEO plot [live trees in 2010-2011; @bourg_initial_2013] and trees found newly dead in annual tree mortality in 2016 and 2017 [@helcoski_growing_2019]*(If we're citing a method from the helcoski paper, do we need to do this 'briefly' section? I would remove.)*.
-At Harvard Forest, ...(*Neil can write this easily, or KAT probably has the info*)
-In total, we analyzed >900 cores from fourteen species at SCBI and four species at Harvard Forest (`r  EDT_species`).
+We analyzed tree-ring records for `r n_cores_sites`, including our focal sites.
+All cores had been previously collected, cross-dated, and measured using standard methodology[@stokes_introduction_1968]. 
 
-The tree-ring records from our focal sites were complemented with a much larger collection spanning `r n_cores_sites-2` deciduous and mixed forest sites in Eastern North America[@maxwell_sampling_2020;@dorangeville_drought_2018] (Strange et al. 2019 (QUAL); Au et al. 2020 (ACSA); LeBlanc et al Accepted (LITU) ; Maxwell et al. 2020 (QUAL) ; Matheus and Maxwell 2018 ; Schmidt 2015 (Thesis), Maxwell et al. (2020); Maxwell and Harley 2017; Wilde and Maxwell 2018; Maxwell et al. 2019; Maxwell et al. 2015 --- *FIND REFS - sent by Justin with tree cores*).
-Again, species were limited to broadleaf deciduous species with clearly defined xylem porosity (i.e., excluding semi-ring porous). 
+Dominant tree species were cored at both SCBI[@helcoski_growing_2019;@bourg_initial_2013] and Harvard Forest[@alexander_potential_2019; @dye_comparing_2016; @finzi_carbon_2020] following sampling designs that covered a broad range of DBH.
+We analyzed records for the dominant ring- and diffuse- porous species at each site (`r  EDT_species`), excluding species with other xylem architectures (*Juglans nigra* L. at SCBI, *Tsuga canadensis* (L.) Carrière at Harvard Forest).
+In total, we analyzed `r n_cores_focal_sites` cores from `r n_chronologies_SCBI` species at SCBI and `r n_chronologies_HF` species at Harvard Forest (`r  EDT_species`).
 
+The tree-ring records from our focal sites were complemented with a much larger collection spanning `r n_cores_sites-2` deciduous and mixed forest sites in Eastern North America[@maxwell_sampling_2020;@dorangeville_drought_2018; @maxwell_increased_2017] (**Strange et al. 2019 (QUAL); Au et al. 2020 (ACSA); LeBlanc et al Accepted (LITU) ; Maxwell et al. 2020 (QUAL) ; Matheus and Maxwell 2018 ; Schmidt 2015 (Thesis), Maxwell et al. (2020); Maxwell and Harley 2017; Wilde and Maxwell 2018; Maxwell et al. 2019; Maxwell et al. 2015** --- *if someone can give all the DOIs, KAT can easily add to .bib file*). 
+Again, species were limited to broadleaf deciduous species with clearly defined xylem porosity (*i.e.*, excluding semi-ring porous). 
 
-All cores were mounted, sanded, cross-dated, and measured using standard methodology. 
-We standardized ring-width series from each core via ARSTAN using a 2/3rds $n$ spline, where $n$ is the number of years in the series [@cook_time_1985; @cook_methods_1990]. Chronologies were built using the methods described in Helcoski et al. 2019[@helcoski_growing_2019].
+We standardized ring-width series from each core via ARSTAN using a 2/3rds $n$ spline, where $n$ is the number of years in the series [@cook_time_1985; @cook_methods_1990]. 
+*Chronologies were built using the methods described in Ref.[@helcoski_growing_2019].* 
 We defined chronology start year (`r  EDT_species`) as the year where subsample signal strength (SSS) passed a threshold of SSS = 0.8, or where $\ge$ 80% of the population signal was captured in the chronology.
 
+We obtained monthly $T_{max}$ and $T_{min}$ data for 1901-2019 from CRU v.4.04 [@harris_version_2020] via the ForestGEO Climate Data Portal v1.0 [@anderson-teixeira_forestgeo_2020].
 
-For the tree-ring analysis, we obtained monthly $T_{max}$ and $T_{min}$ data for 1901-2019 from CRU v.4.04 [@harris_version_2020] via the ForestGEO Climate Data Portal v1.0 [@anderson-teixeira_forestgeo_2020].
+**QUILT PLOT METHODS**
 
-
+**MULTIVARIATE ANALYSIS METHODS**
 
 # Acknowledgements {-#Acknowledgements} 
 people: (everyone who helped collect data-- see list on GitHub), Jess Shue (data)
