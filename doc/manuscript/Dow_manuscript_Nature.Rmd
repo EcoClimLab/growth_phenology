@@ -107,6 +107,7 @@ EDF_climwin = "Extended Data Figure 3"
 EDF_pheno_all = "Extended Data Figures 4-5"
 EDF_pheno_Tmax_climwin = "Extended Data Figure 4"
 EDF_pheno_Tmax_AprilMay = "Extended Data Figure 5"
+EDF_tree_ring_figs= "Extended Data Figure 6-7"
 EDF_tree_rings_TMIN = "Extended Data Figure 6"
 EDF_tree_rings_TMAX_extended = "Extended Data Figure 7"
 
@@ -352,6 +353,9 @@ This package tests the correlation between one or more climate variables and a b
 Here, we tested for correlation between temperature ($T_{max}$, $T_{min}$) and $DOY_{25}$ over the time window from January 1 to the mean $DOY_{25}$ for the species group (by xylem porosity) and site (`r  EDT_mean_growth_parameters`), selecting the critical temperature window as that with the lowest $\Delta AICc$.
 Because $T_{max}$ proved to have a generally stronger influence over $DOY_{25}$ and other growth parameters, we focused on this variable, as opposed to $T_{min}$.
 We focused on defining critical temperature windows for $DOY_{25}$, as opposed to other growth phenology parameters, because we were interested in the influence of temperature on the initiation of woody growth.
+
+To ensure that patterns were robust under an alternative definition of critical temperature window, and to parallel the monthly time windows used in our tree-ring analysis (detailed below; Fig. `r tree_rings`, `r EDF_tree_ring_figs`), we also ran analyses defining the critical temperature window as the month of April.
+This was consistent with the periods identified by *climwin* for ring- and diffuse-porous species groups at both sites, all of which included all or part of April (`r  EDT_mean_growth_parameters`).
 
 <!--Hypothesis testing -->
 
