@@ -259,8 +259,8 @@ Moreover, acclimation of trees to warming temperatures[**REFS**] <!--prevsioulsy
 If we look across spatial gradients where the latter have had time to play out, we see that longer growing seasons are correlated with greater tree growth[@anderson-teixeira_joint_2021], woody productivity[@banburymorgan_global_2021], and NEE [@churkina_spatial_2005].
 Thus, warming spring temperatures are expected to increase the biophysical potential for annual tree growth, but that potential is not being realized on an interannual time frame. 
 
-As climate change accelerates and spring temperatures become increasingly warmer, growing seasons will start earlier; however, barring rapid acclimation of forests to the warming conditions, this is unlikely to provide the sustained increase in carbon sequestration and ensuant negative climate change feedback that is anticipated in most models (Fig. `r schematic_summary`)[@buermann_widespread_2018; @zani_increased_2020;@keenan_net_2014].
-Rather, the dominant effect of rising temperatures on forest woody productivity will be a negative effect of high summer temperatures (Fig. `r tree_rings`), which constitutes a positive feedback to climate change.
+As climate change accelerates and spring temperatures become increasingly warmer, growing seasons will start earlier; however, barring rapid acclimation of forests to the warming conditions, this is unlikely to provide the sustained increase in carbon sequestration and ensuant negative climate change feedback that is anticipated in most models[@buermann_widespread_2018; @zani_increased_2020;@keenan_net_2014].
+Rather, the dominant effect of rising temperatures on forest woody productivity will be a negative effect of high summer temperatures, which constitutes a positive feedback to climate change.
 
 
 # content to incorporate or delete:
@@ -269,7 +269,8 @@ Rather, the dominant effect of rising temperatures on forest woody productivity 
 
 # Methods {-#Methods} 
 
-*We have not yet re-written the methods for Nature. Nature guidelines: Full methods, typically not exceeding 3000 words (currently at 1800 words). May be subdivided by bold headings.*
+<!--Nature guidelines: Full methods, typically not exceeding 3000 words. May be subdivided by bold headings.-->
+<!--We are currently at ~2000 words -->
 
 ## Dendrometer band analysis {-#Dendrometer} 
 <!--Study sites -->
@@ -338,8 +339,8 @@ These data were used to determine timing of greenup, midgreenup, senescence, and
  <!--Climate -->
 Climate data corresponding to the measurement periods at both sites were obtained from local weather stations. 
 For SCBI, weather data were obtained from a meteorological tower adjacent to the SCBI ForestGEO plot, via the ForestGEO Climate Data Portal v1.0 (https://forestgeo.github.io/Climate/)[@anderson-teixeira_forestgeo_2020]. 
-Daily temperature records for Harvard Forest were obtained from the Harvard Forest weather station **(Boose & Gould, 2004; Boose, 2018)** ([GitHub issue #81](https://github.com/EcoClimLab/growth_phenology/issues/81)).
-The R package *clim.pact*[@benestad_empiricalstatistical_2008] was used to plot temperatures for visual inspection and to identify readings that were >3 standard deviations away from yearly means, which were labeled as outliers and removed from the dataset. 
+Daily temperature records for Harvard Forest were obtained from the Harvard Forest weather station **(Boose & Gould, 2004; Boose, 2018)** (**CAM, we need these references. And see [GitHub issue #81](https://github.com/EcoClimLab/growth_phenology/issues/81)**).
+The R package *clim.pact*[@climpact_REF; @benestad_empiricalstatistical_2008] was used to plot temperatures for visual inspection and to identify readings that were >3 standard deviations away from yearly means, which were labeled as outliers and removed from the dataset. 
 Gaps in the SCBI meteorological tower data were subsequently filled using temperature readings obtained from a National Center for Environmental Information (NCEI) weather station located in Front Royal, Virginia (https://www.ncdc.noaa.gov/cdo-web/datasets/GHCND/stations/GHCND:USC00443229/detail). 
 For each site, we extracted daily maximum ($T_{max}$) and minimum temperatures ($T_{min}$).
 
@@ -362,7 +363,7 @@ Analyses were run for both $T_{max}$ and $T_{min}$, with qualitatively similar r
 Mixed effects models were used to test the response of growth phenology variables to fixed effects of xylem porosity and mean $T_{max}$ (or $T_{min}$) during the critical temperature window selected by *climwin*, along with random effects of species and tree. 
 We ran separate models for each species group at each site, and for the response of all growth phenology variables to $T_{max}$ (or $T_{min}$). 
 Models were run using the LME4 package in R [@bates_fitting_2015]. 
-This mixed-effect model was run within a hierarchical Bayesian framework and fit using the `rstanarm` R interface to the Stan programming language @rstanarm_2020. In all cases unless otherwise specified, all prior distributions are set to be the weakly informative defaults. 
+This mixed-effect model was run within a hierarchical Bayesian framework and fit using the `rstanarm` R interface to the Stan programming language[@gabry_rstanarm_2020]. In all cases unless otherwise specified, all prior distributions are set to be the weakly informative defaults. 
 <!--
 TODO added by Bert: Whereever we specify model details, include details about prior from here:
 https://cran.r-project.org/web/packages/rstanarm/vignettes/priors.html#default-weakly-informative-prior-distributions
@@ -383,7 +384,7 @@ We standardized ring-width series from each core via ARSTAN using a 2/3rds $n$ s
 *Chronologies were built using the methods described in Ref.[@helcoski_growing_2019].* (**(NEIL/JUSTIN, is this accurate, and do you think it's sufficient? If not, could you please provide a brief summary?**)
 We defined chronology start year (`r  EDT_species`) as the year where subsample signal strength (SSS) passed a threshold of SSS = 0.8, or where $\ge$ 80% of the population signal was captured in the chronology.
 
-We obtained monthly $T_{max}$ and $T_{min}$ data for 1901-2019 from CRU v.4.04 [@harris_version_2020] via the ForestGEO Climate Data Portal v1.0 [@anderson-teixeira_forestgeo_2020].
+We obtained monthly $T_{max}$ and $T_{min}$ data for 1901-2019 from CRU v.4.04 [@harris_version_2020].
 
 <!--QUILT PLOT METHODS-->
 Correlations between monthly climate and $RWI$ were assessed using ‘dplR’[@bunn_dendrochronology_2008] and ‘bootRes’[@zang_dendroclimatic_2013] in R v.**##** (R Core Team, **YEAR**), which correlated functions and bootstrapped confidence intervals for these relationships[@biondi_dendroclim2002_2004].
@@ -392,20 +393,21 @@ To test for potential lag effects effects of spring temperatures on the followin
 Correlations and significance levels for months April-August are given in **APPENDIX**.
 
 <!--MULTIVARIATE ANALYSIS METHODS-->
-**MULTIVARIATE ANALYSIS METHODS**
 We used a multivariate model to test for joint effects of April and summer $T_{max}$ on RWI.
 We began by testing univariate correlations of $T_{max}$ over three summer windows: June, June-July, and May-August. 
-Having determined that, among these, June-July explained the most variation, we then analyzed the joint effects of April $T_{max}$ and June-July $T_{max}$ on RWI for each chronology independently using **Function** in R. 
+Having determined that, among these, June-July explained the most variation, we then analyzed the joint effects of April $T_{max}$ and June-July $T_{max}$ on RWI for each chronology independently using **(Function)** in R. 
 Slopes and p-values for each chronology are given in **APPENDIX**.
 
 # Acknowledgements {-#Acknowledgements} 
-people: (everyone who helped collect data-- see list on GitHub), Jess Shue (data)
-Funding: ForestGEO
+- people: (everyone who helped collect data-- see list on GitHub), Jess Shue (data)
+
+- Funding: ForestGEO
+
 **COAUTHORS, PLEASE ADD.**
 
 # Author Contributions {-#Author} 
 
-**CAM, please draft this before sending around.**
+**(CAM, please draft this before sending around.)**
 
 # Additional Information {-#Additional} 
 
