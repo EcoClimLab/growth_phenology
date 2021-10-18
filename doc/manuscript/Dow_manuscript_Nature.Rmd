@@ -187,7 +187,7 @@ Growing season length was similar across sites, with $L_{PGS}$ being, on average
 
  
 Both leaf phenology and stem growth were sensitive to spring temperatures (Fig. `r DOY_timing`, `r EDF_pheno_all`). 
-While the results described below were qualitatively consistent considering both maximum and minimum temperatures ($T_{max}$ and $T_{min}$, respectively) across a range of spring time windows (Extended Data Figures 3-6), we focused our analyses on the strongest relationships: responses to $T_{max}$ over the consecutive weekly time window between Jan. 1 and $DOY_{25}$ for which the correlation between $T_{max}$ and $DOY_{25}$ was strongest (henceforth, critical temperature window; Fig. `r schematic_summary`). 
+While the results described below were qualitatively consistent considering both maximum and minimum temperatures ($T_{max}$ and $T_{min}$, respectively) across a range of spring time windows (Extended Data Figures 3-5), we focused our analyses on the strongest relationships: responses to $T_{max}$ over the consecutive weekly time window between Jan. 1 and $DOY_{25}$ for which the correlation between $T_{max}$ and $DOY_{25}$ was strongest (henceforth, critical temperature window; Fig. `r schematic_summary`). 
 The strongest relationships, including but not limited to the critical temperature window (`r  EDT_mean_growth_parameters`), occurred for time windows closing $\le$ 5 weeks prior to $DOY_{25}$ (`r EDF_climwin`). 
 
 For ring- and diffuse- porous species at both sites, warmer $T_{max}$ in the critical temperature window resulted in earlier achievement of growth milestones (Figs. `r schematic_summary`, `r EDF_pheno_Tmax_climwin`).
@@ -351,21 +351,15 @@ The critical temperature window (Fig. `r schematic_summary`), defined as the per
 This package tests the correlation between one or more climate variables and a biological variable over all consecutive time windows within a specified time-frame, reporting correlation and difference in Akaike information criterion corrected for small sample size relative to the null model, $\Delta AICc$, of each window. 
 Here, we tested for correlation between temperature ($T_{max}$, $T_{min}$) and $DOY_{25}$ over the time window from January 1 to the mean $DOY_{25}$ for the species group (by xylem porosity) and site (`r  EDT_mean_growth_parameters`), selecting the critical temperature window as that with the lowest $\Delta AICc$.
 Because $T_{max}$ proved to have a generally stronger influence over $DOY_{25}$ and other growth parameters, we focused on this variable, as opposed to $T_{min}$.
-We focused on defining critical temperature windows for $DOY_{25}$, as opposed to other growth phenology parameters, because we were interested in the influence of temperature on the initiation of woody growth, 
-
-
-<!-- KAT stopped review here. -->
+We focused on defining critical temperature windows for $DOY_{25}$, as opposed to other growth phenology parameters, because we were interested in the influence of temperature on the initiation of woody growth.
 
 <!--Hypothesis testing -->
 
-(*This section needs work/ more detail.*)
-
-Correlation between these variables and spring temperatures were assessed using a linear mixed model in a hierarchical Bayesian framework.
-
-Mixed effects models were used to test the response of growth phenology variables ($DOY_{25}$, $DOY_{50}$, $DOY_{75}$, $DOY_{g_max}$, $g_{max}$, and $\Delta DBH$) to fixed effects of xylem porosity and mean temperature ($T_{max}$, $T_{min}$) during the critical temperature window selected by *climwin*, along with random effects of species and tree. 
-We ran separate models for each species group at each site, and for the response of all growth phenology variables to $T_{max}$ and $T_{min}$. 
+Correlation between growth parameters ($DOY_{25}$,$DOY_{50}$,$DOY_{75}$,$DOY_{g_{max}}$, $L_{PGS}$, $g_{max}$, and $\Delta DBH$}, Fig. `r schematic_summary`) and spring temperatures were assessed using a linear mixed model in a hierarchical Bayesian framework.
+Analyses were run for both $T_{max}$ and $T_{min}$, with qualitatively similar results, but we present only results for $T_{max}$, which had overall stronger correlation with growth parameters. 
+Mixed effects models were used to test the response of growth phenology variables to fixed effects of xylem porosity and mean $T_{max}$ (or $T_{min}$) during the critical temperature window selected by *climwin*, along with random effects of species and tree. 
+We ran separate models for each species group at each site, and for the response of all growth phenology variables to $T_{max}$ (or $T_{min}$). 
 Models were run using the LME4 package in R [@bates_fitting_2015]. 
-
 This mixed-effect model was run within a hierarchical Bayesian framework and fit using the `rstanarm` R interface to the Stan programming language @rstanarm_2020. In all cases unless otherwise specified, all prior distributions are set to be the weakly informative defaults. 
 <!--
 TODO added by Bert: Whereever we specify model details, include details about prior from here:
@@ -373,6 +367,7 @@ https://cran.r-project.org/web/packages/rstanarm/vignettes/priors.html#default-w
 -->
 
 
+<!-- KAT stopped review here. -->
 
 ## Tree rings {-#Tree} 
 Dominant tree species were cored at both sites following sampling designs that covered a broad range of $DBH$.
