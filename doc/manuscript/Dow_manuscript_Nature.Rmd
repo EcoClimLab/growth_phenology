@@ -271,7 +271,7 @@ Rather, the dominant effect of rising temperatures on forest woody productivity 
 
 *We have not yet re-written the methods for Nature. Nature guidelines: Full methods, typically not exceeding 3000 words (currently at 1800 words). May be subdivided by bold headings.*
 
-## Dendrometer bands {-#Dendrometer} 
+## Dendrometer band analysis {-#Dendrometer} 
 <!--Study sites -->
 
 Dendrometer band were collected at SCBI[@bourg_initial_2013] and Harvard Forest[@finzi_carbon_2020;@dorangeville_peak_2021], both part of the Forest Global Earth Observatory (ForestGEO)[@anderson-teixeira_ctfsforestgeo_2015; @davies_forestgeo_2021]. 
@@ -333,15 +333,13 @@ At SCBI a higher proportion of RP trees were removed, the majority falling under
 
 Leaf phenology data for the years 2001-2018 were extracted for SCBI and Harvard Forest from the MCD12Q2 V6 Land Cover Dynamics product (a.k.a. MODIS Global Vegetation Phenology product)[@friedl_mcd12q2_2019]. 
 These data were used to determine timing of greenup, midgreenup, senescence, and enhanced vegetation index (EVI2) values for each year. 
-**Ian, I think this could use a bit more detail**
+(**IAN, I think this could use a bit more detail.**)
 
  <!--Climate -->
 Climate data corresponding to the measurement periods at both sites were obtained from local weather stations. 
 For SCBI, weather data were obtained from a meteorological tower adjacent to the SCBI ForestGEO plot, via the ForestGEO Climate Data Portal v1.0 (https://forestgeo.github.io/Climate/)[@anderson-teixeira_forestgeo_2020]. 
 Daily temperature records for Harvard Forest were obtained from the Harvard Forest weather station **(Boose & Gould, 2004; Boose, 2018)** ([GitHub issue #81](https://github.com/EcoClimLab/growth_phenology/issues/81)).
-The R package *climpact* [**REF?**]<!--(no publication?)--> was used to plot temperatures for visual inspection. 
-*Climpact* also identifies readings that were greater than 3 standard deviations away from yearly means. 
-These points were labeled as outliers and removed from the dataset. 
+The R package *clim.pact*[@benestad_empiricalstatistical_2008] was used to plot temperatures for visual inspection and to identify readings that were >3 standard deviations away from yearly means, which were labeled as outliers and removed from the dataset. 
 Gaps in the SCBI meteorological tower data were subsequently filled using temperature readings obtained from a National Center for Environmental Information (NCEI) weather station located in Front Royal, Virginia (https://www.ncdc.noaa.gov/cdo-web/datasets/GHCND/stations/GHCND:USC00443229/detail). 
 For each site, we extracted daily maximum ($T_{max}$) and minimum temperatures ($T_{min}$).
 
@@ -359,7 +357,7 @@ This was consistent with the periods identified by *climwin* for ring- and diffu
 
 <!--Hypothesis testing -->
 
-Correlation between growth parameters ($DOY_{25}$,$DOY_{50}$,$DOY_{75}$,$DOY_{g_{max}}$, $L_{PGS}$, $g_{max}$, and $\Delta DBH$}, Fig. `r schematic_summary`) and spring temperatures were assessed using a linear mixed model in a hierarchical Bayesian framework.
+Correlation between growth parameters ($DOY_{25}$, $DOY_{50}$, $DOY_{75}$, $DOY_{g_{max}}$, $L_{PGS}$, $g_{max}$, and $\Delta DBH$}, Fig. `r schematic_summary`) and spring temperatures were assessed using a linear mixed model in a hierarchical Bayesian framework.
 Analyses were run for both $T_{max}$ and $T_{min}$, with qualitatively similar results, but we present only results for $T_{max}$, which had overall stronger correlation with growth parameters. 
 Mixed effects models were used to test the response of growth phenology variables to fixed effects of xylem porosity and mean $T_{max}$ (or $T_{min}$) during the critical temperature window selected by *climwin*, along with random effects of species and tree. 
 We ran separate models for each species group at each site, and for the response of all growth phenology variables to $T_{max}$ (or $T_{min}$). 
@@ -370,7 +368,7 @@ TODO added by Bert: Whereever we specify model details, include details about pr
 https://cran.r-project.org/web/packages/rstanarm/vignettes/priors.html#default-weakly-informative-prior-distributions
 -->
 
-## Tree rings {-#Tree} 
+## Tree-ring analysis {-#Tree} 
 We analyzed tree-ring records for `r n_cores_sites`, including our focal sites.
 All cores had been previously collected, cross-dated, and measured using standard methodology[@stokes_introduction_1968]. 
 
@@ -382,13 +380,17 @@ The tree-ring records from our focal sites were complemented with a much larger 
 Again, species were limited to broadleaf deciduous species with clearly defined xylem porosity (*i.e.*, excluding semi-ring porous). 
 
 We standardized ring-width series from each core via ARSTAN using a 2/3rds $n$ spline, where $n$ is the number of years in the series [@cook_time_1985; @cook_methods_1990]. 
-*Chronologies were built using the methods described in Ref.[@helcoski_growing_2019].* 
+*Chronologies were built using the methods described in Ref.[@helcoski_growing_2019].* (**(NEIL/JUSTIN, is this accurate, and do you think it's sufficient? If not, could you please provide a brief summary?**)
 We defined chronology start year (`r  EDT_species`) as the year where subsample signal strength (SSS) passed a threshold of SSS = 0.8, or where $\ge$ 80% of the population signal was captured in the chronology.
 
 We obtained monthly $T_{max}$ and $T_{min}$ data for 1901-2019 from CRU v.4.04 [@harris_version_2020] via the ForestGEO Climate Data Portal v1.0 [@anderson-teixeira_forestgeo_2020].
 
-**QUILT PLOT METHODS**
+<!--QUILT PLOT METHODS-->
+Correlations between monthly climate and $RWI$ were assessed using ‘dplR’[@bunn_dendrochronology_2008] and ‘bootRes’[@zang_dendroclimatic_2013] in R v.**##** (R Core Team, **YEAR**), which correlated functions and bootstrapped confidence intervals for these relationships[@biondi_dendroclim2002_2004].
+We analyzed these correlations for January through September of the current year (presented in Fig. `r tree_rings`, `r EDF_tree_rings_TMIN`).
+To test for potential lag effects effects of spring temperatures on the following year's growth, we also ran a version of the analysis extending back to include climate of every month of the previous year (`r EDF_tree_rings_TMAX_extended`).
 
+<!--MULTIVARIATE ANALYSIS METHODS-->
 **MULTIVARIATE ANALYSIS METHODS**
 
 # Acknowledgements {-#Acknowledgements} 
