@@ -344,6 +344,8 @@ These points were labeled as outliers and removed from the dataset.
 Gaps in the SCBI meteorological tower data were subsequently filled using temperature readings obtained from a National Center for Environmental Information (NCEI) weather station located in Front Royal, Virginia (https://www.ncdc.noaa.gov/cdo-web/datasets/GHCND/stations/GHCND:USC00443229/detail). 
 
 
+<!-- KAT stopped review here. -->
+
 <!-- Determining critical temperature windows -->
 
 The period where the phenology milestone(s) were most affected by changes in early spring temperature was determined using the R package *climwin* [@vandepol_identifying_2016]. 
