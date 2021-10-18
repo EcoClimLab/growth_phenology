@@ -271,24 +271,22 @@ Rather, the dominant effect of rising temperatures on forest woody productivity 
 *We have not yet re-written the methods for Nature. Nature guidelines: Full methods, typically not exceeding 3000 words (currently at 1800 words). May be subdivided by bold headings.*
 
 ## Dendrometer bands {-#Dendrometer} 
-### Study sites {-#Study} 
+<!--Study sites -->
 
-Study sites included two temperate forests in the eastern United States, both part of the Forest Global Earth Observatory [ForestGEO; Anderson-Teixeira et al. 2015; Davies et al. 2021]. 
+Dendrometer band were collected at SCBI[@bourg_initial_2013] and Harvard Forest[@finzi_carbon_2020;@dorangeville_peak_2021], both part of the Forest Global Earth Observatory (ForestGEO)[@anderson-teixeira_ctfsforestgeo_2015; @davies_forestgeo_2021]. 
+SCBI (38.8935° N, 78.1454° W; elevation 273–338 m.a.s.l.) is located in the Blue Ridge Mountains at the northern end of Shenandoah National Park, 5 km South of Front Royal, Virginia. 
+The forest is secondary and mixed age, having established in the mid-19th century after conversion from agricultural fields[@bourg_initial_2013]. 
+Dominate canopy species within the 25.6 ha ForestGEO plot include tulip poplar (*Liriodendron tulipifera*), oaks (*Quercus spp.*), and hickories (*Carya spp.*)[@helcoski_growing_2019]. 
+The climate is humid temperate, with 1950-2019 mean annual precipitation of 1018 mm and temperatures averaging 1° C in January and 24° C in July[@anderson-teixeira_joint_2021].  
 
-Our first study site was the forest dynamics plot located at the Smithsonian Conservation Biology Institute 5 km South of Front Royal, Virginia within the Blue Ridge Mountains (38.8935° N, 78.1454° W; elevation 273–338 m.a.s.l.). 
-The forest here was established in the mid-19th century after conversion from agricultural fields. 
-Dominate canopy species within the 25.6 ha forest plot include tulip poplar (*Liriodendron tulipifera*), oaks (*Quercus spp.*), and hickories (*Carya spp.*). 
-The climate is humid temperate, with a mean annual precipitation of 998 mm and temperatures averaging 1° C in January and 24° C in July (Ref.[@helcoski_growing_2019]).  
-
-The second study site was Harvard Forest (42.5388° N, 72.1755° W, 340-368 m.a.s.l.), located near the central Massachusetts town of Petersham.
-Harvard forest is a secondary forest, having re-established following agricultural use *(time frame)* and significant hurricane damage in 1938. 
+Harvard Forest (42.5388° N, 72.1755° W, 340-368 m.a.s.l.) is located near the central Massachusetts town of Petersham. 
+The forest is secondary and mixed age, having re-established around the beginning of the 20th century following agricultural use and significant hurricane damage in 1938. 
 Dominate species within the 35 ha ForestGEO plot are hemlock (*Tsuga canadensis*), oak (*Quercus spp.*) and red maple (*Acer rubrum*). 
-The climate is temperate continental with a mean annual precipitation of 1120 mm and temperatures averaging -12° C in January and 19° C in July [@dorangeville_peak_2021].
-<!-- Is this the right reference? Yes, I got this info from the draft they sent. -->
+The climate is temperate continental, with 1950-2019 mean annual precipitation of 1104 mm and temperatures averaging -5° C in January and 22° C in July[@anderson-teixeira_joint_2021].
 
-### Data collection and preparation {-#Data} 
+<!--Data collection and preparation -->
 
-Metal dendrometer bands were installed on a total of 941 trees within the SCBI and Harvard Forest ForestGEO plots. (Changed to raw # of bands. Removed EDT reference because we use # bands after cleaning - CD) 
+Metal dendrometer bands were installed on a total of 941 trees within the SCBI and Harvard Forest ForestGEO plots.
 Bands were placed on dominant species, including two diffuse- and two ring-porous species at SCBI and eight diffuse- and three ring-porous species at Harvard Forest.
 Bands were measured with a digital caliper approximately every 1-2 weeks within the growing season from 2011-2020 at SCBI and 1998-2003 at Harvard Forest. 
 The number of bands measured at each site fluctuated somewhat as trees were added or dropped (e.g., because of tree mortality) from the census. 
@@ -328,7 +326,7 @@ and (5) models with unexplained sharp spikes in growth rate (SCBI = 0, Harvard F
 At Harvard Forest the tag years removed through this method were proportional to the original sample size, indicating that no species or size class was disproportionately removed compared to others. 
 At SCBI a higher proportion of RP trees were removed--the majority falling under condition 4. 
 
-### Climate {-#Climate} 
+ <!--Climate -->
 For the dendrometer band analysis we used climate data from local weather stations. 
 Daily maximum ($T_{max}$) and minimum temperatures ($T_{min}$) for SCBI were obtained from a meteorological tower adjacent to the SCBI ForestGEO plot, via the ForestGEO Climate Data Portal v1.0 [https://forestgeo.github.io/Climate/; @anderson-teixeira_forestgeo_2020]. 
 Daily temperature records for Harvard Forest were obtained from the Harvard Forest weather station (Boose & Gould, 2004; Boose, 2018).
@@ -336,11 +334,11 @@ The R package climpact <!--(no publication?)--> was used to plot temperatures fo
 Climpact also identifies readings that were greater than 3 standard deviations away from yearly means. These points were labeled as outliers and removed from the dataset. 
 Gaps in the SCBI meteorological tower data were subsequently filled using temperature readings obtained from a National Center for Environmental Information (NCEI) weather station located in Front Royal, Virginia (https://www.ncdc.noaa.gov/cdo-web/datasets/GHCND/stations/GHCND:USC00443229/detail). 
 
-### Leaf phenology
+<!-- Leaf phenology -->
 
 Leaf phenology data for the years 2001-2018 were extracted for SCBI and Harvard Forest from the MCD12Q2 V6 Land Cover Dynamics product (informally called the MODIS Global Vegetation Phenology product) [@friedl_mcd12q2_2019]. This dataset was used to determine timing of greenup, midgreenup, senescence, and enhanced vegetation index values for each year. 
 
-### Determining critical temperature windows {-#Determining} 
+<!-- Determining critical temperature windows -->
 
 The period where the phenology milestone(s) were most affected by changes in early spring temperature was determined using the R package *climwin* [@vandepol_identifying_2016]. 
 This package tests the correlation between one or more climate variables and a biological variable over all consecutive time windows within a specified time-frame, reporting correlation and $\Delta AIC$ of each window. 
@@ -350,7 +348,7 @@ Here, we focused on defining critical temperature windows for $DOY_{25}$, as opp
 We note that other growth parameters would be controlled by different critical temperature windows; for example, at SCBI $\Delta DBH$ responds most strongly to May-July climate [@helcoski_growing_2019]. Determining the climate variables that most strongly control all parameters is beyond the scope of this analysis.
 
 
-### Hypothesis testing {-#Hypothesis} 
+<!--Hypothesis testing -->
 
 (*This section needs work/ more detail.*)
 
@@ -385,7 +383,7 @@ We standardized ring-width series from each core via ARSTAN using a 2/3rds $n$ s
 We defined chronology start year (`r  EDT_species`) as the year where subsample signal strength (SSS) passed a threshold of SSS = 0.8, or where $\ge$ 80% of the population signal was captured in the chronology.
 
 
-For the tree-ring analysis, we obtained monthly $T_{max}$ and $T_{min}$ data for 1901-2019 from CRU v.4.04 [@harris_version_2020], again via the ForestGEO Climate Data Portal v1.0 [@anderson-teixeira_forestgeo_2020].
+For the tree-ring analysis, we obtained monthly $T_{max}$ and $T_{min}$ data for 1901-2019 from CRU v.4.04 [@harris_version_2020] via the ForestGEO Climate Data Portal v1.0 [@anderson-teixeira_forestgeo_2020].
 
 
 
