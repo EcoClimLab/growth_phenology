@@ -287,25 +287,26 @@ The climate is temperate continental, with 1950-2019 mean annual precipitation o
 <!--Data collection and preparation -->
 
 Metal dendrometer bands were installed on a total of 941 trees within the SCBI and Harvard Forest ForestGEO plots.
-Bands were placed on dominant species, including two diffuse- and two ring-porous species at SCBI and eight diffuse- and three ring-porous species at Harvard Forest.
+Bands were placed on dominant species, including two diffuse- and two ring-porous species at SCBI and eight diffuse- and three ring-porous species at Harvard Forest (`r EDT_species`).
 Bands were measured with a digital caliper approximately every 1-2 weeks within the growing season from 2011-2020 at SCBI and 1998-2003 at Harvard Forest. 
 The number of bands measured at each site fluctuated somewhat as trees were added or dropped (e.g., because of tree mortality) from the census. 
-Across years, the number of bands sampled averaged *~124* (range: 91-138) at SCBI and  *~717* (range: *700-755*) at Harvard Forest. 
+Across years, the number of bands sampled averaged **~124** (range: 91-138) at SCBI and  **~717** (range: **700-755**) at Harvard Forest. <!--Cam, values in bold need to be verified-->
 In total, our analysis included `r n_tree_years` tree-years (`r  EDT_species`).
 
-
 Measurements were timed to begin before the beginning of spring growth and to continue through the cessation of growth in the fall. 
-At SCBI, the median start date was 4/14, which was adjusted when early leaf-out of understory vegetation was observed, with the earliest start date being March 30, 2020. Measurements were continued through to fall leaf senescence, with the median end date being 10/17 and the latest end date November 26, 2012. 
-Timing of measurements at Harvard Forest were similar, with the median start date of 4/23 and median end date of 10/30. 1998 was an anomalous year where initial measurements were taken on 1/5, but not taken again until 4/15. The latest end date was November 11, 2002.
+At SCBI, the median start date was April 14, which was adjusted when early leaf-out of understory vegetation was observed, with the earliest start date being March 30 (in 2020). 
+Measurements were continued through to fall leaf senescence, with the median end date being October 17 and the latest end date November 26 (2012). 
+Timing of measurements at Harvard Forest were similar, with the median start date of April 23 and median end date of October 30. 
+1998 was an anomalous year where initial measurements were taken on January 5, but not taken again until April 15. 
+The latest end date was November 11, 2002.
 
 The raw dendrometer band data were manually cleaned by visual inspection before analysis. 
 We screened for three classes of mistakes. 
 First, when a measurement was drastically different from previous and following measurements, this was assumed to be an error and the datapoint was removed.
 Second, when measurements remained essentially unchanged for several readings, followed by a sudden jump then return to a normal growth pattern, this was assumed to be a case where the band was stuck and then released. In these cases, the full annual record for the tree was removed.
-Third, when data points were clearly wrong but with unknown causes they were removed. If a majority of the data points fell into this class within a tree-year the entire year was removed from the analysis.
+Third, when data points deviated substantially from normal growth patterns, but with unknown causes, they were removed. If a majority of the data points fell into this class within a tree-year, the entire year was removed from the analysis.
 
-We fit the model of @mcmahon_general_2015 to define phenological dates and growth rates (Fig. `r schematic_summary`). 
-This five-parameter logistic model was fitted to dendrometer band data from each tree-year in R: 
+We fit a five-parameter logistic growth model[@mcmahon_general_2015] to dendrometer band data from each tree-year to define phenological dates and growth rates (Fig. `r schematic_summary`): 
 $$ DBH = L + \frac{K - L} { 1 + 1/\theta \cdot exp[-r(DOY - DOY_{ip}) / \theta)] ^ \theta}$$ 
 Here, $L$ and $K$ are lower and upper asymptotes of the model, corresponding to $DBH$ at the beginning and end of the year, respectively. 
 $DOY$ are the modeled days of year (*i.e.*, julian days), 
@@ -313,9 +314,10 @@ $DOY_{ip}$ is the day of year where the inflection point in growth rate occurs,
 $r$ *shapes the slope of the curve at the inflection point*,
 and $\theta$ is a tuning parameter controlling the slope of the curve toward the upper asymptote. 
 *We note that the DOY on which maximum growth occurs, $DOY_{g_{max}}$ (Fig. `r schematic_summary`) occurs on $DOY_{ip}$ only when $\theta = 1$.*
+The model was fit in R **v XX** using the script developed in Ref.l[@mcmahon_general_2015]. <!--Cam, please fill in details/proper citions.-->
 Using the optimized parameters for each tree-year, we then modeled $DBH$ throughout the year and extracted the intra-annual growth variables of interest (Fig. `r schematic_summary`). 
 
-After fitting the model, we removed tree-years with poor fits. 
+After fitting the growth model, we removed tree-years with poor fits. 
 Models were judged to be poorly fit if certain modeled growth characteristics fell outside of the logical range. 
 Modeled fits for tree-years were removed under five conditions:
 (1) single day growth rates were $\ge 2$ 2 standard deviations away from the mean for each wood-type (SCBI = 2, Harvard Forest = 34); 
@@ -324,19 +326,23 @@ Modeled fits for tree-years were removed under five conditions:
 (4) model fit predicted total yearly growth to take longer than 365 days, indicating poor model fit (SCBI = 181, Harvard Forest = 199); 
 and (5) models with unexplained sharp spikes in growth rate (SCBI = 0, Harvard Forest = 3). 
 At Harvard Forest the tag years removed through this method were proportional to the original sample size, indicating that no species or size class was disproportionately removed compared to others. 
-At SCBI a higher proportion of RP trees were removed--the majority falling under condition 4. 
-
- <!--Climate -->
-For the dendrometer band analysis we used climate data from local weather stations. 
-Daily maximum ($T_{max}$) and minimum temperatures ($T_{min}$) for SCBI were obtained from a meteorological tower adjacent to the SCBI ForestGEO plot, via the ForestGEO Climate Data Portal v1.0 [https://forestgeo.github.io/Climate/; @anderson-teixeira_forestgeo_2020]. 
-Daily temperature records for Harvard Forest were obtained from the Harvard Forest weather station (Boose & Gould, 2004; Boose, 2018).
-The R package climpact <!--(no publication?)--> was used to plot temperatures for visual inspection. 
-Climpact also identifies readings that were greater than 3 standard deviations away from yearly means. These points were labeled as outliers and removed from the dataset. 
-Gaps in the SCBI meteorological tower data were subsequently filled using temperature readings obtained from a National Center for Environmental Information (NCEI) weather station located in Front Royal, Virginia (https://www.ncdc.noaa.gov/cdo-web/datasets/GHCND/stations/GHCND:USC00443229/detail). 
+At SCBI a higher proportion of RP trees were removed, the majority falling under condition 4. 
 
 <!-- Leaf phenology -->
 
-Leaf phenology data for the years 2001-2018 were extracted for SCBI and Harvard Forest from the MCD12Q2 V6 Land Cover Dynamics product (informally called the MODIS Global Vegetation Phenology product) [@friedl_mcd12q2_2019]. This dataset was used to determine timing of greenup, midgreenup, senescence, and enhanced vegetation index values for each year. 
+Leaf phenology data for the years 2001-2018 were extracted for SCBI and Harvard Forest from the MCD12Q2 V6 Land Cover Dynamics product (a.k.a. MODIS Global Vegetation Phenology product)[@friedl_mcd12q2_2019]. 
+These data were used to determine timing of greenup, midgreenup, senescence, and enhanced vegetation index (EVI2) values for each year. 
+**Ian, I think this could use a bit more detail**
+
+ <!--Climate -->
+Climate data corresponding to the measurement periods at both sites were obtained from local weather stations. 
+Daily maximum ($T_{max}$) and minimum temperatures ($T_{min}$) for SCBI were obtained from a meteorological tower adjacent to the SCBI ForestGEO plot, via the ForestGEO Climate Data Portal v1.0 (https://forestgeo.github.io/Climate/)[@anderson-teixeira_forestgeo_2020]. 
+Daily temperature records for Harvard Forest were obtained from the Harvard Forest weather station **(Boose & Gould, 2004; Boose, 2018)** ([GitHub issue #81](https://github.com/EcoClimLab/growth_phenology/issues/81)).
+The R package *climpact* [**REF?**]<!--(no publication?)--> was used to plot temperatures for visual inspection. 
+*Climpact* also identifies readings that were greater than 3 standard deviations away from yearly means. 
+These points were labeled as outliers and removed from the dataset. 
+Gaps in the SCBI meteorological tower data were subsequently filled using temperature readings obtained from a National Center for Environmental Information (NCEI) weather station located in Front Royal, Virginia (https://www.ncdc.noaa.gov/cdo-web/datasets/GHCND/stations/GHCND:USC00443229/detail). 
+
 
 <!-- Determining critical temperature windows -->
 
