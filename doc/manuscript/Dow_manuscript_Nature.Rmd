@@ -336,25 +336,25 @@ These data were used to determine timing of greenup, midgreenup, senescence, and
 
  <!--Climate -->
 Climate data corresponding to the measurement periods at both sites were obtained from local weather stations. 
-Daily maximum ($T_{max}$) and minimum temperatures ($T_{min}$) for SCBI were obtained from a meteorological tower adjacent to the SCBI ForestGEO plot, via the ForestGEO Climate Data Portal v1.0 (https://forestgeo.github.io/Climate/)[@anderson-teixeira_forestgeo_2020]. 
+For SCBI, weather data were obtained from a meteorological tower adjacent to the SCBI ForestGEO plot, via the ForestGEO Climate Data Portal v1.0 (https://forestgeo.github.io/Climate/)[@anderson-teixeira_forestgeo_2020]. 
 Daily temperature records for Harvard Forest were obtained from the Harvard Forest weather station **(Boose & Gould, 2004; Boose, 2018)** ([GitHub issue #81](https://github.com/EcoClimLab/growth_phenology/issues/81)).
 The R package *climpact* [**REF?**]<!--(no publication?)--> was used to plot temperatures for visual inspection. 
 *Climpact* also identifies readings that were greater than 3 standard deviations away from yearly means. 
 These points were labeled as outliers and removed from the dataset. 
 Gaps in the SCBI meteorological tower data were subsequently filled using temperature readings obtained from a National Center for Environmental Information (NCEI) weather station located in Front Royal, Virginia (https://www.ncdc.noaa.gov/cdo-web/datasets/GHCND/stations/GHCND:USC00443229/detail). 
+For each site, we extracted daily maximum ($T_{max}$) and minimum temperatures ($T_{min}$).
 
-
-<!-- KAT stopped review here. -->
 
 <!-- Determining critical temperature windows -->
 
-The period where the phenology milestone(s) were most affected by changes in early spring temperature was determined using the R package *climwin* [@vandepol_identifying_2016]. 
-This package tests the correlation between one or more climate variables and a biological variable over all consecutive time windows within a specified time-frame, reporting correlation and $\Delta AIC$ of each window. 
-Here, we tested for correlation between temperature ($T_{max}$, $T_{min}$) and $DOY_{25}$ over the time window from January 1 to the mean $DOY_{25}$ for the species group and site (`r  EDT_mean_growth_parameters`).
-*The critical time window is determined based on the subset of models that fall within the 95% confidence set.*
-Here, we focused on defining critical temperature windows for $DOY_{25}$, as opposed to other growth phenology parameters (Figure `r schematic_summary`), because we were interested in the influence of temperature on the initiation of woody growth. 
-We note that other growth parameters would be controlled by different critical temperature windows; for example, at SCBI $\Delta DBH$ responds most strongly to May-July climate [@helcoski_growing_2019]. Determining the climate variables that most strongly control all parameters is beyond the scope of this analysis.
+The critical temperature window (Fig. `r schematic_summary`), defined as the period over which $DOY_{25}$ was most strongly affected by early spring $T_{max}$, was determined using the R package *climwin*[@vandepol_identifying_2016]. 
+This package tests the correlation between one or more climate variables and a biological variable over all consecutive time windows within a specified time-frame, reporting correlation and difference in Akaike information criterion corrected for small sample size relative to the null model, $\Delta AICc$, of each window. 
+Here, we tested for correlation between temperature ($T_{max}$, $T_{min}$) and $DOY_{25}$ over the time window from January 1 to the mean $DOY_{25}$ for the species group (by xylem porosity) and site (`r  EDT_mean_growth_parameters`), selecting the critical temperature window as that with the lowest $\Delta AICc$.
+Because $T_{max}$ proved to have a generally stronger influence over $DOY_{25}$ and other growth parameters, we focused on this variable, as opposed to $T_{min}$.
+We focused on defining critical temperature windows for $DOY_{25}$, as opposed to other growth phenology parameters, because we were interested in the influence of temperature on the initiation of woody growth, 
 
+
+<!-- KAT stopped review here. -->
 
 <!--Hypothesis testing -->
 
