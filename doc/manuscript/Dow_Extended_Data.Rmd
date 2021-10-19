@@ -122,7 +122,7 @@ kable_styling(latex_options = c("scale_down", "hold_position"), protect_latex = 
 
 \newpage
 
-![**Extended Data Figure 5 | Relationship between growth parameters and mean maximum temperature in April (SCBI) or May (HF). Relationships between critical temperature window (CTW) $T_max$ and 25%, 50%, and 75% total stem growth (first row), the length of the peak growing season ($L_pgs$; second row), maximum growth rate ($g_max$; third row), and total seasonal radial stem growth ($\Delta DBH$; fourth row) are shown. Posterior predictions of each variable that did not include zero are represented with solid lines, while those that do include zero use dotted lines. 95% credible intervals are represented by bands.](tables_figures/pheno_Tsensitivity_combo_patchwork_april_may.png){ width=90% }
+![**Extended Data Figure 5 | Relationship between growth parameters and mean maximum temperature in April (SCBI) or May (HF). Relationships between critical temperature window (CTW) $T_max$ and 25%, 50%, and 75% total stem growth (first row), the length of the peak growing season ($L_pgs$; second row), maximum growth rate ($g_max$; third row), and total seasonal radial stem growth ($\Delta DBH$; fourth row) are shown. Posterior predictions of each variable that did not include zero are represented with solid lines, while those that do include zero use dotted lines. 95% credible intervals are represented by bands.](tables_figures/pheno_Tsensitivity_combo_patchwork_april_april.png){ width=90% }
 
 \newpage
 
