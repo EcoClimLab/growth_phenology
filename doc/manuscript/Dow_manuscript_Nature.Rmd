@@ -245,7 +245,7 @@ First, extra C production in years with warm springs may be allocated to woody g
 It is possible that extra carbon is allocated to cell wall thickening, a process that lags behind stem expansion[@cuny_woody_2015], resulting in formation of more carbon-dense cell walls in years with warm springs (**coauthors, do any of you know studies that have looked at this?**).
 Extra carbon could also be saved within trees as non-structural carbohydrates and used towards growth the following year[@trumbore_quantifying_2002;@richardson_seasonal_2013]. 
 Extension of our tree-ring analysis revealed little correlation between April $T_{max}$ and growth the following year (sig. pos. correlations for 5/142 RP and 3/66 DP species-site combinations, Fig. `r EDF_tree_rings_TMAX_extended`), although predominantly positive (non-significant) correlations in RP species suggests that this dynamic may weakly influence their annual growth.
-Finally, extra C may be allocated to growth of coarse roots[@zohner_how_2021] or branches<!-- REF?--> and therefore be unapparent in the basal portions of trunks.
+Finally, extra C may be allocated to growth of coarse roots[@zohner_how_2021] or branches[**REF?**]<!-- REF?--> and therefore be unapparent in the basal portions of trunks.
 Warm springs could increase woody productivity through any of these mechanisms, yet none are likely to provide substantial, sustained C sinks under warming spring temperatures. 
 
 A second possibility is that any additional C fixed during years with warm springs may be allocated, potentially in the following growing season, to plant functions other than stem growth, including respiration, reproduction, and production of foliage, fine roots[@zohner_how_2021], or root exudates. 
