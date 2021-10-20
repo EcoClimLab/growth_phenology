@@ -249,13 +249,13 @@ Finally, extra C may be allocated to growth of coarse roots[@zohner_how_2021] or
 Warm springs could increase woody productivity through any of these mechanisms, yet none are likely to provide substantial, sustained C sinks under warming spring temperatures. 
 
 A second possibility is that any additional C fixed during years with warm springs may be allocated, potentially in the following growing season, to plant functions other than stem growth, including respiration, reproduction, and production of foliage, fine roots[@zohner_how_2021], or root exudates. 
-Most of this carbon would have a shorter residence time within the ecosystem than C allocated to woody productivity[**REF**], <!-- [@trumbore_quantifying_2002].?-->but would likely remain in the ecosystem for more than a year<!--ref-->, such that the long-term effect of warm springs on the forest C balance would not be captured in analyses of interannual variation[@zhou_explaining_2016; @fu_maximum_2019;@keenan_net_2014].
+Most of this carbon would have a shorter residence time within the ecosystem than C allocated to woody productivity but may remain in the ecosystem for more than a year[@trumbore_quantifying_2002], such that the long-term effect of warm springs on the forest C balance would not be captured in analyses of interannual variation[@zhou_explaining_2016; @fu_maximum_2019;@keenan_net_2014].
 Studies within or including the temperate deciduous biome that examined long-term trends in growing season length and ecosystem C uptake[@keeling_increased_1996;@dragoni_evidence_2011;@keenan_net_2014;@finzi_carbon_2020] -- as opposed to their interannual variation -- showed increasing trends in both variables, suggesting that the C not allocated to woody productivity within the current year growth has a multi-year residence time within the ecosystem.
 However, given our finding that warm springs do not significantly enhance woody productivity, this C is likely to have a relatively short residence time within the ecosystem.
 
 Thus, a distinction between interannual variation and directional change may be critical when considering how directional climate change is likely to affect tree growth and ecosystem C dynamics. 
 As discussed above, temporal lags between C uptake and release imply that the full effects of warm spring temperatures on forest woody productivity and carbon cycling are unlikely to be apparent in analyses of interannual variation (including this analysis).
-Moreover, acclimation of trees to warming temperatures[**REFS**] <!--prevsioulsy we had these, but I'm not sure they really work: [@zhang_drought_2021; @gessler_way_2020]...I'm not sure i've seen much describing trees acclimating to warming temps, only the gessler paper about drought.--> and, on longer time scales, species adaptations and shifts are likely to alter forest composition[**REFS**].
+Moreover, acclimation of trees to warming temperatures[**REFS**] <!--prevsioulsy we had these, but I'm not sure they really work: [@zhang_drought_2021; @gessler_way_2020]--> and, on longer time scales, species adaptations and shifts in community composition[**REFS**] are likely to alter the phenology of forest C cycling.
 If we look across spatial gradients where the latter have had time to play out, we see that longer growing seasons are correlated with greater tree growth[@anderson-teixeira_joint_2021], woody productivity[@banburymorgan_global_2021], and NEE [@churkina_spatial_2005].
 Thus, warming spring temperatures are expected to increase the biophysical potential for annual tree growth, but that potential is not being realized on an interannual time frame. 
 
@@ -339,11 +339,11 @@ These data were used to determine timing of greenup, midgreenup, senescence, and
  <!--Climate -->
 Climate data corresponding to the measurement periods at both sites were obtained from local weather stations. 
 For SCBI, weather data were obtained from a meteorological tower adjacent to the SCBI ForestGEO plot, via the ForestGEO Climate Data Portal v1.0 (https://forestgeo.github.io/Climate/)[@anderson-teixeira_forestgeo_2020]. 
-Daily temperature records for Harvard Forest were obtained from the Harvard Forest weather station[@boose_shaler_2021-1; @boose_fisher_2021-2]. Climate data for Harvard Forest were complete and used as is. 
 The R package *clim.pact*[@climpact_REF; @benestad_empiricalstatistical_2008] was used to plot temperatures for visual inspection and to identify readings that were >3 standard deviations away from yearly means, which were labeled as outliers and removed from the dataset. 
 Gaps in the SCBI meteorological tower data were subsequently filled using temperature readings obtained from a National Center for Environmental Information (NCEI) weather station located in Front Royal, Virginia (https://www.ncdc.noaa.gov/cdo-web/datasets/GHCND/stations/GHCND:USC00443229/detail). 
 For each site, we extracted daily maximum ($T_{max}$) and minimum temperatures ($T_{min}$).
-
+Daily temperature records for Harvard Forest were obtained from the Harvard Forest weather station[@boose_shaler_2021-1; @boose_fisher_2021-2]. **(Cam, please be sure to sync these in Zotero.)**
+Climate data for Harvard Forest were complete and used as is. 
 
 <!-- Determining critical temperature windows -->
 
