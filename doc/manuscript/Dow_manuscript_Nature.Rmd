@@ -237,7 +237,7 @@ Warm springs may also augment summer drought stress in some times and places, ef
 
 Our finding that interannual variation in woody growth is more strongly linked to conditions during the peak growing season (Fig. `r tree_rings`) than to growing season length aligns with parallel findings for NEE [@zhou_explaining_2016; @fu_maximum_2019].
 However, there is also a disconnect with findings that NEE increases -- at least modestly -- with spring temperatures[@keenan_net_2014] or with the length of the carbon uptake period[@zhou_explaining_2016; @fu_maximum_2019;@finzi_carbon_2020].
-Warming advances spring phenology and may advance or delay autumn senescence depending on timing of warming and water availability[@zohner_ongoing_2019;@xie_predicting_2018; @crabbe_extreme_2016; @dragoni_evidence_2011; @jeong_phenology_2011; @ibanez_forecasting_2010; @vitasse_responses_2009;@xie_predicting_2018]<!--we can cut some of these references-->, with delays more common across eastern North America [@buermann_widespread_2018;@finzi_carbon_2020;@keenan_net_2014], implying that warming temperatures are resulting in a lengthening of the period between the slowing of stem growth and the cessation of ecosystem C uptake.
+Warming advances spring phenology and may advance or delay autumn senescence depending on timing of warming and water availability[@zohner_ongoing_2019;@xie_predicting_2018; @crabbe_extreme_2016], with delays more common across eastern North America [@buermann_widespread_2018;@finzi_carbon_2020;@keenan_net_2014], implying that warming temperatures are resulting in a lengthening of the period between the slowing of stem growth and the cessation of ecosystem C uptake.
 As the extra C sequestration in years with warm springs does not substantially augment woody growth, it remains unclear how it is allocated within the ecosystem.
 There are two main possibilities, which hold contrasting implications for the response of forest C balance to rising spring temperatures.
 
@@ -255,7 +255,7 @@ However, given our finding that warm springs do not significantly enhance woody 
 
 Thus, a distinction between interannual variation and directional change may be critical when considering how directional climate change is likely to affect tree growth and ecosystem C dynamics. 
 As discussed above, temporal lags between C uptake and release imply that the full effects of warm spring temperatures on forest woody productivity and carbon cycling are unlikely to be apparent in analyses of interannual variation (including this analysis).
-Moreover, acclimation of trees to warming temperatures[**REFS**] <!--prevsioulsy we had these, but I'm not sure they really work: [@zhang_drought_2021; @gessler_way_2020]--> and, on longer time scales, species adaptations and shifts are likely to alter forest composition[**REFS**].
+Moreover, acclimation of trees to warming temperatures[**REFS**] <!--prevsioulsy we had these, but I'm not sure they really work: [@zhang_drought_2021; @gessler_way_2020]...I'm not sure i've seen much describing trees acclimating to warming temps, only the gessler paper about drought.--> and, on longer time scales, species adaptations and shifts are likely to alter forest composition[**REFS**].
 If we look across spatial gradients where the latter have had time to play out, we see that longer growing seasons are correlated with greater tree growth[@anderson-teixeira_joint_2021], woody productivity[@banburymorgan_global_2021], and NEE [@churkina_spatial_2005].
 Thus, warming spring temperatures are expected to increase the biophysical potential for annual tree growth, but that potential is not being realized on an interannual time frame. 
 
@@ -292,7 +292,7 @@ Metal dendrometer bands were installed on a total of 941 trees within the SCBI a
 Bands were placed on dominant species, including two diffuse- and two ring-porous species at SCBI and eight diffuse- and three ring-porous species at Harvard Forest (`r EDT_species`).
 Bands were measured with a digital caliper approximately every 1-2 weeks within the growing season from 2011-2020 at SCBI and 1998-2003 at Harvard Forest. 
 The number of bands measured at each site fluctuated somewhat as trees were added or dropped (e.g., because of tree mortality) from the census. 
-Across years, the number of bands sampled averaged **~124** (range: 91-138) at SCBI and  **~717** (range: **700-755**) at Harvard Forest. <!--Cam, values in bold need to be verified-->
+Across years, the number of bands sampled averaged 129 (range: 91-138) at SCBI and 717 (range: 700-755) at Harvard Forest. <!--verified - these are the pre-cleaning numbers-->
 In total, our analysis included `r n_tree_years` tree-years (`r  EDT_species`).
 
 Measurements were timed to begin before the beginning of spring growth and to continue through the cessation of growth in the fall. 
@@ -315,9 +315,9 @@ $DOY$ are the modeled days of year (*i.e.*, julian days),
 $DOY_{ip}$ is the day of year where the inflection point in growth rate occurs,
 $r$ *shapes the slope of the curve at the inflection point*,
 and $\theta$ is a tuning parameter controlling the slope of the curve toward the upper asymptote. 
-*We note that the DOY on which maximum growth occurs, $DOY_{g_{max}}$ (Fig. `r schematic_summary`) occurs on $DOY_{ip}$ only when $\theta = 1$.*
-The model was fit in R **v XX** using the script developed in Ref.l[@mcmahon_general_2015]. <!--Cam, please fill in details/proper citions.-->
-Using the optimized parameters for each tree-year, we then modeled DBH throughout the year and extracted the intra-annual growth variables of interest (Fig. `r schematic_summary`). 
+*We note that the DOY on which maximum growth occurs, $DOY_{g_{max}}$ (Fig. `r schematic_summary`), occurs on $DOY_{ip}$ only when $\theta = 1$.*
+The model was fit in R v 1.3.1093 using the functions developed in [@mcmahon_general_2015]. These functions take the timeseries of manual dendrometer band measurements and return the optimized parameters to predict DBH throughout the year. 
+We then modeled DBH throughout the year and extracted the intra-annual growth variables of interest (Fig. `r schematic_summary`). 
 
 After fitting the growth model, we removed tree-years with poor fits. 
 Models were judged to be poorly fit if certain modeled growth characteristics fell outside of the logical range. 
@@ -429,7 +429,7 @@ Ian R. McGregor - Assisted with the acquisition and processing of leaf phenology
 
 William McShea - 
 
-Sean McMahon - 
+Sean McMahon - Provided R functions for dealing with dendroband data (RDendrom)
 
 David A. Orwig - 
 
