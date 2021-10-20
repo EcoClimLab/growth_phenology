@@ -1223,7 +1223,7 @@ timer$toc - timer$tic
 
 ## Create single figure using patchwork ----------
 png(
-  filename = "doc/manuscript/tables_figures/pheno_Tsensitivity_combo_patchwork_april_april.png", width = 24, height = 20,
+  filename = "doc/manuscript/tables_figures/pheno_Tsensitivity_combo_patchwork_april.png", width = 24, height = 20,
   pointsize = 20, bg = "transparent", units = "in", res = 600
   #restoreConsole = FALSE
 )
