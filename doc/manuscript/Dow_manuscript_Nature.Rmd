@@ -407,37 +407,11 @@ Slopes and p-values for each chronology are given in **APPENDIX**.
 
 # Author Contributions {-#Author} 
 
-All authors gave suggestions on improvements to manuscript during development. 
-
-Cameron Dow^1^ ( Orcid ID : 0000-0002-8365-598X)
-
-Albert Y. Kim - Developed and assisted in coding the statistical framework for analyses used. 
-
-Loïc D’Orangeville - Provided tree core chronologies for additional sites, gave feedback on draft of manuscript.
-
-Erika B. Gonzalez-Akre - Oversees and manages data collection at SCBI. 
-
-Ryan Helcoski - Collected and measured cores at SCBI.
-
-Valentine Herrmann - Assisted with coding and interpretation of statistical results. 
-
-Grant L. Harley - Provided tree core chronologies for additional sites and assisted with interpretation of results.
-
-Justin T. Maxwell - Provided tree core chronologies for additional sites, detrended crns, and assisted with interpretation of results. 
-
-Ian R. McGregor - Assisted with the acquisition and processing of leaf phenology data. 
-
-William McShea - 
-
-Sean McMahon - Provided R functions for dealing with dendroband data (RDendrom)
-
-David A. Orwig - 
-
-Neil Pederson - Provided tree core chronologies for additional sites and gave feedback on tree core analysis
-
-Alan J. Tepley - 
-
-Kristina J. Anderson-Teixeira - Oversaw all aspects of research and manuscript development. 
+Cameron Dow and Kristina J. Anderson-Teixeira conceived the ideas and designed the study; 
+Cameron Dow, Loïc D’Orangeville, Erika B. Gonzalez-Akre, Ryan Helcoski, Grant L. Harley, Justin T. Maxwell, Ian R. McGregor, William McShea, David A. Orwig, Neil Pederson, Alan J. Tepley, and Kristina J. Anderson-Teixeira collected or oversaw collection of data; 
+Cameron Dow, Albert Y. Kim, Valentine Herrmann, Justin T. Maxwell, Ian R. McGregor, Sean McMahon analyzed the data or provided analytical tools; 
+Cameron Dow and Kristina J. Anderson-Teixeira led the writing of the manuscript. 
+All authors contributed critically to the drafts and gave final approval for publication.
 
 # Additional Information {-#Additional} 
 
