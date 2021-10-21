@@ -97,7 +97,7 @@ tree_rings = 3
 # EXTENDED DATA  (this chunk must be repeated in Dow_Extended_Data.Rmd)
 ##tables
 EDT_species="Extended Data Table 1"  
-EDT_mean_growth_parameters="Extended Data Table 2" 
+EDT_phenology_parameters="Extended Data Table 2" 
 EDT_tree_ring_summary="Extended Data Table 3" 
 
 ##figures
@@ -183,16 +183,16 @@ This analysis was performed separately for ring- and diffuse-porous species, whi
 
 
 
-Both leaf phenology and stem growth milestones occurred earlier at SCBI than at Harvard Forest, with stem growth milestones achieved on average 6-10 days earlier at SCBI (Fig. `r DOY_timing`, `r  EDT_mean_growth_parameters`).
-Consistent with the results of Ref[@dorangeville_peak_2021], ring-porous species began growing earlier, reaching the $DOY_{25}$ benchmark earlier (by `r 154-123` days at SCBI and `r 164-132` at Harvard Forest), and their growth was spread out over a longer growing season (average $L_{PGS}$ 21 and 19 days longer at SCBI and Harvard Forest, respectively; Fig. `r DOY_timing`, `r  EDF_growth_curves_all`, `r  EDT_mean_growth_parameters`). 
-Growing season length was similar across sites, with $L_{PGS}$ being, on average, only two days longer at SCBI for ring-porous species and less than one day longer for diffuse-porous species (`r  EDT_mean_growth_parameters`). 
+Both leaf phenology and stem growth milestones occurred earlier at SCBI than at Harvard Forest, with stem growth milestones achieved on average 6-10 days earlier at SCBI (Fig. `r DOY_timing`, `r  EDT_phenology_parameters`).
+Consistent with the results of Ref[@dorangeville_peak_2021], ring-porous species began growing earlier, reaching the $DOY_{25}$ benchmark earlier (by `r 154-123` days at SCBI and `r 164-132` at Harvard Forest), and their growth was spread out over a longer growing season (average $L_{PGS}$ 21 and 19 days longer at SCBI and Harvard Forest, respectively; Fig. `r DOY_timing`, `r  EDF_growth_curves_all`, `r  EDT_phenology_parameters`). 
+Growing season length was similar across sites, with $L_{PGS}$ being, on average, only two days longer at SCBI for ring-porous species and less than one day longer for diffuse-porous species (`r  EDT_phenology_parameters`). 
 
 ![**Figure 2 | Leaf (a,b) and stem growth (c,d) phenology at the Smithsonian Conservation Biology Institute (a,c) and Harvard Forest (b,d).** Panels (a-b) show ecosystem-level leaf phenology, obtained from the MODIS Global Vegetation Phenology product (2001-2018), where G = Greenup, M=Mid-greenup, P=peak, and S=Senescence (i.e., beginning of green-down). Panels (c-d) show the dates at which stem growth milestones were acheived, on average, for sampled populations of ring-porous and diffuse-porous trees at SCBI (2011-2020) and Harvard Forest (1998-2003). Mean temperature was calculated for each wood-type/site combination over the respective critical $T_{max}$ window, then turned into a ratio and assigned a color on a gradient where the coldest year in the sample is blue and the warmest is red.](tables_figures/DOYtiming_allyears.png){ width=25% }
 
  
 Both leaf phenology and stem growth were sensitive to spring temperatures (Fig. `r DOY_timing`, `r EDF_pheno_all`). 
 While the results described below were qualitatively consistent considering both maximum and minimum temperatures ($T_{max}$ and $T_{min}$, respectively) across a range of spring time windows (Extended Data Figures 3-5), we focused our analyses on the strongest relationships: responses to $T_{max}$ over the consecutive weekly time window between Jan. 1 and $DOY_{25}$ for which the correlation between $T_{max}$ and $DOY_{25}$ was strongest (henceforth, critical temperature window; Fig. `r schematic_summary`). 
-The strongest relationships, including but not limited to the critical temperature window (`r  EDT_mean_growth_parameters`), occurred for time windows closing $\le$ 5 weeks prior to $DOY_{25}$ (`r EDF_climwin`). 
+The strongest relationships, including but not limited to the critical temperature window (`r  EDT_phenology_parameters`), occurred for time windows closing $\le$ 5 weeks prior to $DOY_{25}$ (`r EDF_climwin`). 
 
 For ring- and diffuse- porous species at both sites, warmer $T_{max}$ in the critical temperature window resulted in earlier achievement of growth milestones (Figs. `r schematic_summary`, `r EDF_pheno_Tmax_climwin`).
 Consistent with findings from previous studies[@parmesan_globally_2003, @ibanez_forecasting_2010,@friedl_tale_2014], the DOY of leaf greenup advanced with increasing $T_{max}$ during the critical temperature window (p= 0.001 at SCBI; p= 0.1 at HF). 
@@ -205,7 +205,7 @@ Whereas the length of time between leaf greenup and senescence (*i.e.,* the day 
 Specifically, because both $DOY_{25}$ and $DOY_{75}$ advanced in years with warm springs, $L_{PGS}$ displayed mixed responses to spring temperatures (Fig. `r schematic_summary`, `r EDF_pheno_all`).
 
 In contrast to the pronounced effects of $T_{max}$ on the timing of growth, its effects on $g_{max}$ and $\Delta DBH$ were weak and inconsistent (Figs. `r schematic_summary`, `r EDF_pheno_all`). 
-Specifically, $g_{max}$, which occurred very close to $DOY_{50}$ (on $DOY_{g.max}$; `r EDT_mean_growth_parameters`), displayed either no relationship to mean $T_{max}$ during the critical temperature window (SCBI), or extremely small changes in opposite directions for ring- and diffuse- porous species (Harvard Forest).
+Specifically, $g_{max}$, which occurred very close to $DOY_{50}$ (on $DOY_{g.max}$; `r EDT_phenology_parameters`), displayed either no relationship to mean $T_{max}$ during the critical temperature window (SCBI), or extremely small changes in opposite directions for ring- and diffuse- porous species (Harvard Forest).
 $\Delta DBH$ displayed no relationship with mean $T_{max}$ during the critical temperature window (`r EDF_pheno_Tmax_climwin`). 
 Given the subtlety of these responses, a much longer record was needed to clarify what, if any, effect spring temperatures have on stem growth.
 
@@ -352,12 +352,12 @@ Climate data for Harvard Forest were complete and used as is.
 
 The critical temperature window (Fig. `r schematic_summary`), defined as the period over which $DOY_{25}$ was most strongly affected by early spring $T_{max}$, was determined using the R package *climwin*[@vandepol_identifying_2016]. 
 This package tests the correlation between one or more climate variables and a biological variable over all consecutive time windows within a specified time-frame, reporting correlation and difference in Akaike information criterion corrected for small sample size relative to the null model, $\Delta AICc$, of each window. 
-Here, we tested for correlation between temperature ($T_{max}$, $T_{min}$) and $DOY_{25}$ over the time window from January 1 to the mean $DOY_{25}$ for the species group (by xylem porosity) and site (`r  EDT_mean_growth_parameters`), selecting the critical temperature window as that with the lowest $\Delta AICc$.
+Here, we tested for correlation between temperature ($T_{max}$, $T_{min}$) and $DOY_{25}$ over the time window from January 1 to the mean $DOY_{25}$ for the species group (by xylem porosity) and site (`r  EDT_phenology_parameters`), selecting the critical temperature window as that with the lowest $\Delta AICc$.
 Because $T_{max}$ proved to have a generally stronger influence over $DOY_{25}$ and other growth parameters, we focused on this variable, as opposed to $T_{min}$.
 We focused on defining critical temperature windows for $DOY_{25}$, as opposed to other growth phenology parameters, because we were interested in the influence of temperature on the initiation of woody growth.
 
 To ensure that patterns were robust under an alternative definition of critical temperature window, and to parallel the monthly time windows used in our tree-ring analysis (detailed below; Fig. `r tree_rings`, `r EDF_tree_ring_figs`), we also ran analyses defining the critical temperature window as the month of April.
-This was consistent with the periods identified by *climwin* for ring- and diffuse-porous species groups at both sites, all of which included all or part of April (`r  EDT_mean_growth_parameters`).
+This was consistent with the periods identified by *climwin* for ring- and diffuse-porous species groups at both sites, all of which included all or part of April (`r  EDT_phenology_parameters`).
 
 <!--Hypothesis testing -->
 

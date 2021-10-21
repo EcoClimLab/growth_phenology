@@ -22,7 +22,7 @@ path_to_results <- paste0(dirname(dirname(getwd())), "/results/") #I was trying 
 # EXTENDED DATA 
 ##tables
 EDT_species="Extended Data Table 1"  
-EDT_mean_growth_parameters="Extended Data Table 2" 
+EDT_phenology_parameters="Extended Data Table 2" 
 EDT_tree_ring_summary="Extended Data Table 3" 
 
 sample_size_by_year= "XX"
@@ -71,13 +71,15 @@ kable_styling(latex_options = c("scale_down", "hold_position"), protect_latex = 
 ```{r mean_growth_parameters_table,  eval=TRUE, echo=FALSE, warning=FALSE}
 library(knitr)
 library(kableExtra)
-mean_growth_parameters <- read.csv("tables_figures/mean_growth_parameters.csv",  col.names = c("", "ring","diffuse","ring", "diffuse"), stringsAsFactors = FALSE, check.names = FALSE)
+mean_growth_parameters <- read.csv("tables_figures/phenology_parameters.csv",  col.names = c("", "ring","diffuse","ring", "diffuse"), stringsAsFactors = FALSE, check.names = FALSE)
 kable(mean_growth_parameters, caption = mean_growth_parameters_caption ,  format = "latex", booktabs = TRUE,  escape = F) %>%
 add_header_above(c(" ",  "SCBI" = 2, "Harvard Forest"=2 )) %>%
     column_spec(1, width = "4cm") %>%
-     pack_rows("Stem Growth", 1, 8, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
-    pack_rows("Leaf Phenology (ecosystem level)", 9, 12, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
-    #add_indent(9:12)
+    pack_rows("Stem Growth", 1, 8, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
+    pack_rows("Canopy Foliage (ecosystem level)", 9, 12, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
+    pack_rows("Phenological sensitivity to mean max. T in critical T window (days/°C)", 13, 22, latex_gap_space = "1em", colnum = 5, hline_before = FALSE) %>%
+    add_indent(14:17)%>%
+    add_indent(19:22)%>%
 kable_styling(latex_options = c("scale_down", "hold_position"), protect_latex = T) 
 ```
 
