@@ -39,6 +39,9 @@ EDF_tree_ring_figs= "Extended Data Figure 6-7"
 EDF_tree_rings_TMIN = "Extended Data Figure 6"
 EDF_tree_rings_TMAX_extended = "Extended Data Figure 7"
 
+# Supplementary info
+chron_table= "SI Table 1"
+
 ## table captions
 species_table_caption <-"Extended Data Table 1 | Dominant ring- and diffuse-porous species at the Smithsonian Conservation Biology Institute (SCBI) and Harvard Forest, along with sample sizes included in this analysis."
 mean_growth_parameters_caption = "Extended Data Table 2 | Summary of parameters describing the phenology and rate of growth for ring- and diffuse- porous species at SCBI and Harvard Forest."
@@ -126,8 +129,8 @@ kable_styling(latex_options = c("scale_down", "hold_position"), protect_latex = 
 
 \newpage
 
-![Extended Data Figure 6 | Sensitivity of annual growth, as derived from tree-rings, to monthly minimum temperatures of the current year for 208 chronologies from 114 sites across eastern North America (Extended Data Figure 1). Chronologies are grouped by xylem porosity and ordered by mean April T_max. Chronology details are given in the Supplementary Information.](tables_figures/tree_rings_tmin.png){ width=90% } 
+![Extended Data Figure 6 | Sensitivity of annual growth, as derived from tree-rings, to monthly minimum temperatures of the current year for 208 chronologies from 114 sites across eastern North America (Extended Data Figure 1). Chronologies are grouped by xylem porosity and ordered by mean April T_max. Chronology details are given in `r chron_table`.](tables_figures/tree_rings_tmin.png){ width=90% } 
 
 \newpage
 
-![Extended Data Figure 7 | Sensitivity of annual growth, as derived from tree-rings, to monthly maximum temperatures of the current and past year for 208 chronologies from 114 sites across eastern North America (Extended Data Figure 1). Chronologies are grouped by xylem porosity and ordered by mean April T_max. Chronology details are given in the Supplementary Information.](tables_figures/tree_rings_tmax_extended.png){ width=90% } 
+![Extended Data Figure 7 | Sensitivity of annual growth, as derived from tree-rings, to monthly maximum temperatures of the current and past year for 208 chronologies from 114 sites across eastern North America (Extended Data Figure 1). Chronologies are grouped by xylem porosity and ordered by mean April T_max. Chronology details are given in `r chron_table`.](tables_figures/tree_rings_tmax_extended.png){ width=90% } 

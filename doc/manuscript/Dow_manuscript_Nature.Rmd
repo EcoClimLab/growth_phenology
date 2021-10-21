@@ -111,6 +111,9 @@ EDF_tree_ring_figs= "Extended Data Figure 6-7"
 EDF_tree_rings_TMIN = "Extended Data Figure 6"
 EDF_tree_rings_TMAX_extended = "Extended Data Figure 7"
 
+# Supplementary info
+chron_table= "SI Table 1"
+
 
 ###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ## some stats/ 
@@ -219,7 +222,7 @@ $T_{min}$ generally exerted less influence over annual growth than $T_{max}$, wi
 To test whether a positive effect of spring temperatures might be offset by a negative effect of summer temperatures, we tested for the joint effects of April and June-July $T_{max}$ on RWI.
 Results were qualitatively similar to the univariate correlations (Fig. `r tree_rings`), with significant (at p = 0.05) positive correlations to April $T_{max}$ for only 7% of chronologies and significant negative correlations with June-July $T_{max}$ for 77% of chronologies (`r EDT_tree_ring_summary`).
 
-![**Figure 3 | Sensitivity of annual growth, as derived from tree-rings, to monthly maximum temperatures, for `r n_chronologies` chronologies from `r n_cores_sites` sites across eastern North America** (`r EDF_map `). Chronologies are grouped by xylem porosity and ordered by mean maximum April temperature. Chronology details are given in the Supplementary Information.](tables_figures/tree_rings_tmax.png){ width=100% }
+![**Figure 3 | Sensitivity of annual growth, as derived from tree-rings, to monthly maximum temperatures, for `r n_chronologies` chronologies from `r n_cores_sites` sites across eastern North America** (`r EDF_map `). Chronologies are grouped by xylem porosity and ordered by mean maximum April temperature. Chronology details are given in `r chron_table`.](tables_figures/tree_rings_tmax.png){ width=100% }
 
 
 
@@ -390,13 +393,13 @@ We obtained monthly $T_{max}$ and $T_{min}$ data for 1901-2019 from CRU v.4.04 [
 Correlations between monthly climate and $RWI$ were assessed using ‘dplR’[@bunn_dendrochronology_2008] and ‘bootRes’[@zang_dendroclimatic_2013] in R v.1.3.1093 (R Core Team, 2020), which correlated functions and bootstrapped confidence intervals for these relationships[@biondi_dendroclim2002_2004].
 We analyzed these correlations for January through September of the current year (presented in Fig. `r tree_rings`, `r EDF_tree_rings_TMIN`).
 To test for potential lag effects effects of spring temperatures on the following year's growth, we also ran a version of the analysis extending back to include climate of every month of the previous year (`r EDF_tree_rings_TMAX_extended`).
-Correlations and significance levels for months April-August are given in **APPENDIX**.
+Correlations and significance levels for months April-August are given in `r chron_table`.
 
 <!--MULTIVARIATE ANALYSIS METHODS-->
 We used a multivariate model to test for joint effects of April and summer $T_{max}$ on RWI.
 We began by testing univariate correlations of $T_{max}$ over three summer windows: June, June-July, and May-August. 
 Having determined that, among these, June-July explained the most variation, we then analyzed the joint effects of April $T_{max}$ and June-July $T_{max}$ on RWI for each chronology independently using the base lm() function in R. 
-Slopes and p-values for each chronology are given in **APPENDIX**.
+Slopes and p-values for each chronology are given in `r chron_table`.
 
 # Acknowledgements {-#Acknowledgements} 
 - people: (everyone who helped collect data-- see list on GitHub), Jess Shue (data)
