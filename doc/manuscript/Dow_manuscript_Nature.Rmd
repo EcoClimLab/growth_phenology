@@ -341,7 +341,7 @@ For SCBI, weather data were obtained from a meteorological tower adjacent to the
 The R package *clim.pact*[@climpact_REF; @benestad_empiricalstatistical_2008] was used to plot temperatures for visual inspection and to identify readings that were >3 standard deviations away from yearly means, which were labeled as outliers and removed from the dataset. 
 Gaps in the SCBI meteorological tower data were subsequently filled using temperature readings obtained from a National Center for Environmental Information (NCEI) weather station located in Front Royal, Virginia (https://www.ncdc.noaa.gov/cdo-web/datasets/GHCND/stations/GHCND:USC00443229/detail). 
 For each site, we extracted daily maximum ($T_{max}$) and minimum temperatures ($T_{min}$).
-Daily temperature records for Harvard Forest were obtained from the Harvard Forest weather station[@boose_shaler_2021-1; @boose_fisher_2021-2]. **(Cam, please be sure to sync these in Zotero.)**
+Daily temperature records for Harvard Forest were obtained from the Harvard Forest weather station[@boose_shaler_2021; @boose_fisher_2021]. 
 Climate data for Harvard Forest were complete and used as is. 
 
 <!-- Determining critical temperature windows -->
