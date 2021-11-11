@@ -3,7 +3,7 @@ $DOY_{25}$,day of year at which 25\% of growth is achieved,$\downarrow$,$\downar
 $DOY_{50}$,day of year at which 50\% of growth is achieved,$\downarrow$,$\downarrow$,$\downarrow$,$\downarrow$
 $DOY_{75}$,day of year at which 75\% of growth is achieved,$\downarrow$,$\downarrow$,$\downarrow$,$\downarrow$
 $DOY_{g_{max}}$,day of year of max growth rate ,$\downarrow$,$\downarrow$,$\downarrow$,$\downarrow$
-$L_{PGS}$,peak growing season length ($DOY_{75} -DOY_{25}$) ,$\uparrow$,n.s.,$\downarrow$,$\uparrow$
-$g_{max}$,maximum daily growth rate ,n.s.,n.s.,$\uparrow$,$\downarrow$
-$\Delta DBH$,annual growth ,n.s.,n.s.,n.s.,n.s.
-$RWI$,ring width index from tree-ring chronologies,mixed,mixed,n.s.,mixed
+$L_{PGS}$,peak growing season length ($DOY_{75} -DOY_{25}$) ,$\uparrow$,-,$\downarrow$,$\uparrow$
+$g_{max}$,maximum daily growth rate ,-,-,$\uparrow$,$\downarrow$
+$\Delta DBH$,annual growth ,-,-,-,-
+$RWI$,ring width index from tree-ring chronologies,mixed,mixed,-,mixed
