@@ -237,11 +237,11 @@ Warm springs may also augment summer drought stress in some times and places, ef
 
 Our finding that interannual variation in woody growth is more strongly linked to conditions during the peak growing season (Fig. `r tree_rings`) than to growing season length aligns with parallel findings for NEE [@zhou_explaining_2016; @fu_maximum_2019].
 However, there is also a disconnect with findings that NEE increases -- at least modestly -- with spring temperatures[@keenan_net_2014] or with the length of the carbon uptake period[@zhou_explaining_2016; @fu_maximum_2019;@finzi_carbon_2020].
-Warming advances spring phenology and may advance or delay autumn senescence depending on timing of warming and water availability[@zohner_ongoing_2019;@xie_predicting_2018; @crabbe_extreme_2016], with delays more common across eastern North America [@buermann_widespread_2018;@finzi_carbon_2020;@keenan_net_2014], implying that warming temperatures are resulting in a lengthening of the period between the slowing of stem growth and the cessation of ecosystem C uptake.
+Warming advances spring phenology and may advance or delay autumn senescence depending on timing of warming and water availability[@zohner_ongoing_2019;@xie_predicting_2018; @crabbe_extreme_2016], with delays more common across eastern North America [@buermann_widespread_2018;@finzi_carbon_2020;@keenan_net_2014], implying that warming temperatures are leading to a lengthening of the period from peak stem growth to the cessation of ecosystem C uptake.
 As the extra C sequestration in years with warm springs does not substantially augment woody growth, it remains unclear how it is allocated within the ecosystem.
 There are two main possibilities, which hold contrasting implications for the response of forest C balance to rising spring temperatures.
 
-First, extra C production in years with warm springs may be allocated to woody growth without affecting diameter growth in the current year. 
+One possibility is that extra C production in years with warm springs may be allocated to woody growth without affecting diameter growth in the current year. 
 It is theoretically possible that extra carbon is allocated to cell wall thickening, a process that lags behind stem expansion[@cuny_woody_2015], or to a thicker layer of higher-density latewood, resulting in formation of more carbon-dense wood in years with warm springs.
 However, existing evidence indicates that warm springs have a neutral or negative effect on latewood width[@tardif_influence_2006; @roibu_climatic_2020; @kern_multiple_2013], which is more strongly controlled by summer drought stress[@tardif_influence_2006; @roibu_climatic_2020], suggesting that a positive effect of warm springs on the total C content of annual rings is unlikely. 
 Extra carbon could also be saved within trees as non-structural carbohydrates and used towards growth the following year[@trumbore_quantifying_2002;@richardson_seasonal_2013], potentially including an earlier start to growth[@fu_variation_2014]. 
@@ -249,18 +249,18 @@ Extension of our tree-ring analysis revealed little correlation between April $T
 Thus, warm springs are unlikely to provide substantial, sustained C sinks under warming spring temperatures. 
 
 A second possibility is that any additional C fixed during years with warm springs may be allocated to plant functions other than stem growth, including respiration, reproduction, and production of foliage, roots[@zohner_how_2021], or root exudates. 
-Much of this carbon would have a relatively short residence time within the ecosystem, and C loss though fall or winter respiration may offset gains from an earlier spring [@oishi_warmer_2018; @buermann_widespread_2018].
+Much of this carbon would have a relatively short residence time within the ecosystem, and C loss through fall or winter respiration may offset gains from an earlier spring [@oishi_warmer_2018; @buermann_widespread_2018].
 However, C allocated to nonstructural carbohydrates or relatively short-lived plant tissues would typically remain in the ecosystem beyond the end of the year[@trumbore_quantifying_2002], such that the long-term effect of warm springs on the forest C balance would not be captured in analyses of interannual variation[@zhou_explaining_2016; @fu_maximum_2019;@keenan_net_2014].
-Studies within or including the temperate deciduous biome that examined long-term trends in growing season length and ecosystem C uptake[@keeling_increased_1996;@dragoni_evidence_2011;@keenan_net_2014;@finzi_carbon_2020] -- as opposed to their interannual variation -- showed increasing trends in both variables, suggesting that the C not allocated to woody productivity within the current year growth has a multi-year residence time within the ecosystem.
+Studies within or including the temperate deciduous biome that examined long-term trends in growing season length and ecosystem C uptake[@keeling_increased_1996;@dragoni_evidence_2011;@keenan_net_2014;@finzi_carbon_2020] -- as opposed to their interannual variation -- showed increasing trends in both variables, suggesting that the C not allocated to woody productivity within the current year has a multi-year residence time within the ecosystem.
 However, given our finding that warm springs do not significantly enhance woody productivity, this C is likely to have a relatively short residence time within the ecosystem.
 
 Thus, a distinction between interannual variation and directional change may be critical when considering how directional climate change is likely to affect tree growth and ecosystem C dynamics. 
-As discussed above, temporal lags between C uptake and release imply that the full effects of warm spring temperatures on forest woody productivity and carbon cycling are unlikely to be apparent in analyses of interannual variation (including this analysis).
-Moreover, acclimation of trees to warming temperatures[**REFS**] <!--prevsioulsy we had these, but I'm not sure they really work: [@zhang_drought_2021; @gessler_way_2020]--> and, on longer time scales, species adaptations and shifts in community composition[**REFS**] are likely to alter the phenology of forest C cycling.
+As discussed above, temporal lags between C uptake and release imply that the full effects of warm spring temperatures on forest woody productivity and carbon cycling are unlikely to be apparent in analyses of interannual variation (including this analysis)[@kannenberg_linking_2019].
+Moreover, acclimation of trees to warming temperatures[@gessler_way_2020] and, on longer time scales, species adaptations and shifts in community composition[**REFS**] are likely to alter the phenology of forest C cycling.
 If we look across spatial gradients where the latter have had time to play out, we see that warmer spring temperatures are associated with earlier leaf-out[@delgado_differences_2020] and longer growing seasons, which in turn are are correlated with greater tree growth[@anderson-teixeira_joint_2021], woody productivity[@banburymorgan_global_2021], and NEE [@churkina_spatial_2005].
 Thus, warming spring temperatures are expected to increase the biophysical potential for annual tree growth, but that potential is not being realized on an interannual time frame. 
 
-As climate change accelerates and spring temperatures become increasingly warmer, growing seasons will start earlier; however, barring rapid acclimation of forests to the warming conditions, this is unlikely to provide the sustained increase in carbon sequestration and ensuant negative climate change feedback that is anticipated in most models[@buermann_widespread_2018; @zani_increased_2020;@keenan_net_2014;@ahlstrom_robustness_2012].
+As climate change accelerates and spring temperatures become increasingly warmer, growing seasons will start earlier; however, barring rapid acclimation of forests to the warming conditions, an earlier onset of growth in the spring is unlikely to provide the sustained increase in carbon sequestration and ensuant negative climate change feedback that is anticipated in most climate forecasting  models[@buermann_widespread_2018; @zani_increased_2020;@keenan_net_2014;@ahlstrom_robustness_2012].
 Rather, the dominant effect of rising temperatures on forest woody productivity will be a negative effect of high summer temperatures, which constitutes a positive feedback to climate change.
 
 
@@ -272,7 +272,7 @@ Rather, the dominant effect of rising temperatures on forest woody productivity 
 ## Dendrometer band analysis {-#Dendrometer} 
 <!--Study sites -->
 
-Dendrometer bands were collected at SCBI[@bourg_initial_2013] and Harvard Forest[@finzi_carbon_2020;@dorangeville_peak_2021], both part of the Forest Global Earth Observatory (ForestGEO)[@anderson-teixeira_ctfsforestgeo_2015; @davies_forestgeo_2021]. 
+Dendrometer band measurements were collected at SCBI[@bourg_initial_2013] and Harvard Forest[@finzi_carbon_2020;@dorangeville_peak_2021], both part of the Forest Global Earth Observatory (ForestGEO)[@anderson-teixeira_ctfsforestgeo_2015; @davies_forestgeo_2021]. 
 SCBI (38.8935° N, 78.1454° W; elevation 273–338 m.a.s.l.) is located in the Blue Ridge Mountains at the northern end of Shenandoah National Park, 5 km South of Front Royal, Virginia. 
 The forest is secondary and mixed age, having established in the mid-19th century after conversion from agricultural fields[@bourg_initial_2013]. 
 Dominant canopy species within the 25.6 ha ForestGEO plot include tulip poplar (*Liriodendron tulipifera*), oaks (*Quercus spp.*), and hickories (*Carya spp.*)[@helcoski_growing_2019]. 
@@ -285,10 +285,10 @@ The climate is temperate continental, with 1950-2019 mean annual precipitation o
 
 <!--Data collection and preparation -->
 
-Metal dendrometer bands were installed on a total of 941 trees within the SCBI and Harvard Forest ForestGEO plots.
+Metal dendrometer bands were installed on 941 trees within the SCBI and Harvard Forest ForestGEO plots.
 Bands were placed on dominant species, including two diffuse- and two ring-porous species at SCBI and eight diffuse- and three ring-porous species at Harvard Forest (`r EDT_species`).
 Bands were measured with a digital caliper approximately every 1-2 weeks within the growing season from 2011-2020 at SCBI and 1998-2003 at Harvard Forest. 
-The number of bands measured at each site fluctuated somewhat as trees were added or dropped (e.g., because of tree mortality) from the census. 
+The number of bands measured at each site fluctuated slightly as trees were added or dropped (e.g., because of tree mortality) from the census. 
 Across years, the number of bands sampled averaged 129 (range: 91-138) at SCBI and 717 (range: 700-755) at Harvard Forest. <!--verified - these are the pre-cleaning numbers-->
 In total, our analysis included `r n_tree_years` tree-years (`r  EDT_species`).
 
@@ -299,42 +299,42 @@ Timing of measurements at Harvard Forest were similar, with the median start dat
 1998 was an anomalous year where initial measurements were taken on January 5, but not taken again until April 15. 
 The latest end date was November 11, 2002.
 
-The raw dendrometer band data were manually cleaned by visual inspection before analysis. 
-We screened for three classes of mistakes. 
-First, when a measurement was drastically different from previous and following measurements, this was assumed to be an error and the datapoint was removed.
-Second, when measurements remained essentially unchanged for several readings, followed by a sudden jump then return to a normal growth pattern, this was assumed to be a case where the band was stuck and then released. In these cases, the full annual record for the tree was removed.
-Third, when data points deviated substantially from normal growth patterns, but with unknown causes, they were removed. If a majority of the data points fell into this class within a tree-year, the entire year was removed from the analysis.
+The raw dendrometer band data were manually inspected before analysis. 
+We screened the data for three classes of erros. 
+First, when a measurement was drastically different from previous and following measurements, it was assumed to be a human error and the datapoint was removed.
+Second, when measurements remained essentially unchanged for several readings, followed by a sudden jump then return to a normal growth pattern, this was assumed to be a case where the band was stuck on the tree bark and then released. In these cases, the full annual record for the tree was removed.
+Third, data points that deviated substantially from normal growth patterns, but had unknown causes, were removed. If a majority of the data points fell into this class within a tree-year, the entire year was removed from the analysis.
 
-We fit a five-parameter logistic growth model[@mcmahon_general_2015] to dendrometer band data from each tree-year to define phenological dates and growth rates (Fig. `r schematic_summary`): 
+We fit a five-parameter logistic growth model[@mcmahon_general_2015] to dendrometer band data from each tree-year to define phenological dates and growth rates (Fig. `r schematic_summary`). In particular, we model the observed diameter at breast height (DBH) on a given day of the year (DOY; i.e. julian days) as: 
 $$ DBH = L + \frac{K - L} { 1 + 1/\theta \cdot exp[-r(DOY - DOY_{ip}) / \theta)] ^ \theta}$$ 
-Here, $L$ and $K$ are lower and upper asymptotes of the model, corresponding to stem diameter at breast height (DBH) at the beginning and end of the year, respectively. 
-$DOY$ are the modeled days of year (*i.e.*, julian days), 
+Here, $L$ and $K$ are lower and upper asymptotes of the model, corresponding to DBH at the beginning and end of the year, respectively. 
 $DOY_{ip}$ is the day of year where the inflection point in growth rate occurs,
 $r$ *shapes the slope of the curve at the inflection point*,
 and $\theta$ is a tuning parameter controlling the slope of the curve toward the upper asymptote. 
 *We note that the DOY on which maximum growth occurs, $DOY_{g_{max}}$ (Fig. `r schematic_summary`), occurs on $DOY_{ip}$ only when $\theta = 1$.*
-The model was fit in R v 1.3.1093 using the functions developed in [@mcmahon_general_2015]. These functions take the time-series of manual dendrometer band measurements and return the optimized parameters to predict DBH throughout the year. 
-We then modeled DBH throughout the year and extracted the intra-annual growth variables of interest (Fig. `r schematic_summary`). 
+The model was fit in R v 4.0 using the functions developed in the Rdendrom package[@mcmahon_general_2015]. These functions take the time-series of manual dendrometer band measurements and return maximum-likelihood optimized values of the above five parameters that best predict DBH for each day of year. 
+We then modeled DBH using these optimal parameter values in our logistic growth model and extracted the intra-annual growth variables of interest detailed in Fig. 1. 
 
 After fitting the growth model, we removed tree-years with poor fits. 
 Models were judged to be poorly fit if certain modeled growth characteristics fell outside of the logical range. 
 Modeled fits for tree-years were removed under five conditions:
-(1) single day growth rates were $\ge 2$ 2 standard deviations away from the mean for each wood-type (SCBI = 2, Harvard Forest = 34); 
-(2) $DOY_{ip}$ was $\ge 2$ standard deviations away from the mean for it's xylem architecture group, year, and site (SCBI = 62, Harvard Forest = 106); 
+(1) single day growth rates were $\ge 2$ standard deviations away from the mean for each wood-type (SCBI = 2, Harvard Forest = 34); 
+(2) $DOY_{ip}$ was $\ge 2$ standard deviations away from the mean for its xylem architecture group, year, and site (SCBI = 62, Harvard Forest = 106); 
 (3) tree-years with small or negligible total growth ($\Delta DBH$ $\le 0.02$ mm; SCBI = 0, Harvard Forest = 66); 
 (4) model fit predicted total yearly growth to take longer than 365 days, indicating poor model fit (SCBI = 181, Harvard Forest = 199); 
 and (5) models with unexplained sharp spikes in growth rate (SCBI = 0, Harvard Forest = 3). 
 At Harvard Forest the tag years removed through this method were proportional to the original sample size, indicating that no species or size class was disproportionately removed compared to others. 
-At SCBI a higher proportion of RP trees were removed, the majority falling under condition 4. 
+At SCBI a higher proportion of ring-porous trees were removed, the majority falling under condition 4. 
 
 <!-- Leaf phenology -->
 
-Canopy foliage phenology data for the years 2001-2018 were extracted for SCBI and Harvard Forest from the MCD12Q2 V6 Land Cover Dynamics product (a.k.a. MODIS Global Vegetation Phenology product)[@friedl_mcd12q2_2019]. 
-These data were used to determine timing of greenup, midgreenup, senescence, and enhanced vegetation index (EVI2) values for each year. 
-(**IAN, I think this could use a bit more detail.**)
+Canopy foliage phenology data for the years 2001-2018 were extracted for SCBI and Harvard Forest from the MCD12Q2 V6 Land Cover Dynamics product (a.k.a. MODIS Global Vegetation Phenology product)[@friedl_mcd12q2_2019]  via Google Earth Engine. Using daily MODIS 2-band Enhanced Vegetation Index data (EVI2) at a spatial resolution of 500m, the product yields the timing of phenometrics (vegetation phenology) over each year, including timing of greenup, midgreenup, and senescence as used in this study.
 
  <!--Climate -->
-Climate data corresponding to the measurement periods at both sites were obtained from local weather stations. 
+ 
+*ADD SOMETHING ON HOW STANDARD PRECIPITAITON EVAPOTRANSPIRATIN INDEX WAS FOUND*!!!!
+
+For the dendrometer band analysis, climate data corresponding to the measurement periods at both sites were obtained from local weather stations. 
 For SCBI, weather data were obtained from a meteorological tower adjacent to the SCBI ForestGEO plot, via the ForestGEO Climate Data Portal v1.0 (https://forestgeo.github.io/Climate/)[@anderson-teixeira_forestgeo_2020]. 
 The R package *clim.pact*[@climpact_REF; @benestad_empiricalstatistical_2008] was used to plot temperatures for visual inspection and to identify readings that were >3 standard deviations away from yearly means, which were labeled as outliers and removed from the dataset. 
 Gaps in the SCBI meteorological tower data were subsequently filled using temperature readings obtained from a National Center for Environmental Information (NCEI) weather station located in Front Royal, Virginia (https://www.ncdc.noaa.gov/cdo-web/datasets/GHCND/stations/GHCND:USC00443229/detail). 
@@ -342,24 +342,25 @@ For each site, we extracted daily maximum ($T_{max}$) and minimum temperatures (
 Daily temperature records for Harvard Forest were obtained from the Harvard Forest weather station[@boose_shaler_2021; @boose_fisher_2021]. 
 Climate data for Harvard Forest were complete and used as is. 
 
+For the tree core analysis, we obtained monthly $T_{max}$ and $T_{min}$ data for 1901-2019 from CRU v.4.04 [@harris_version_2020].
+
 <!-- Determining critical temperature windows -->
 
-The critical temperature window (Fig. `r schematic_summary`), defined as the period over which $DOY_{25}$ was most strongly affected by early spring $T_{max}$, was determined using the R package *climwin*[@vandepol_identifying_2016]. 
-This package tests the correlation between one or more climate variables and a biological variable over all consecutive time windows within a specified time-frame, reporting correlation and difference in Akaike information criterion corrected for small sample size relative to the null model, $\Delta AICc$, of each window. 
-Here, we tested for correlation between temperature ($T_{max}$, $T_{min}$) and $DOY_{25}$ over the time window from January 1 to the mean $DOY_{25}$ for the species group (by xylem porosity) and site (`r  EDT_phenology_parameters`), selecting the critical temperature window as that with the lowest $\Delta AICc$.
-Because $T_{max}$ proved to have a generally stronger influence over $DOY_{25}$ and other growth parameters, we focused on this variable, as opposed to $T_{min}$.
+The critical temperature window (Fig. `r schematic_summary`), defined as the period over which $T_{max}$ was most strongly correlated with $DOY_{25}$, was determined using the R package *climwin*[@vandepol_identifying_2016]. 
+This package tests the correlation between one or more predictor climate variable and a biological outcome variable over all consecutive time windows within a specified time-frame. It does so by reporting the correlation and $\Delta AICc$, the difference in Akaike Information Criterion corrected for small sample size relative to a null model for each window. 
+The variable and time window yielding the biggest $\Delta AICc$ are selected for our critical temperature window. Here, we tested for correlation between temperature predictor variables ($T_{max}$, $T_{min}$) and biological outcome variable $DOY_{25}$ over the time-frame from January 1 to the mean $DOY_{25}$ for the species group (by xylem porosity) and site (`r  EDT_phenology_parameters`). We selected the critical temperature window that had the lowest $\Delta AICc$.
+Because $T_{max}$ proved to have a generally stronger influence over $DOY_{25}$ and other growth parameters, we focused on this variable in our ultimate model, as opposed to $T_{min}$.
 We focused on defining critical temperature windows for $DOY_{25}$, as opposed to other growth phenology parameters, because we were interested in the influence of temperature on the initiation of woody growth.
 
-To ensure that patterns were robust under an alternative definition of critical temperature window, and to parallel the monthly time windows used in our tree-ring analysis (detailed below; Fig. `r tree_rings`, `r EDF_tree_ring_figs`), we also ran analyses defining the critical temperature window as the month of April.
+To ensure that patterns were robust under an alternative definition of critical temperature window, and to parallel the monthly time windows used in our tree-ring analysis (detailed below; Fig. `r tree_rings`, `r EDF_tree_ring_figs`), we also ran analyses where we fixed the critical temperature window to be the month of April.
 This was consistent with the periods identified by *climwin* for ring- and diffuse-porous species groups at both sites, all of which included all or part of April (`r  EDT_phenology_parameters`).
 
 <!--Hypothesis testing -->
 
-Correlation between growth parameters ($DOY_{25}$, $DOY_{50}$, $DOY_{75}$, $DOY_{g_{max}}$, $L_{PGS}$, $g_{max}$, and $\Delta DBH$}, Fig. `r schematic_summary`) and spring temperatures were assessed using a linear mixed model in a hierarchical Bayesian framework.
+Correlation between the dendroband-derived growth parameters ($DOY_{25}$, $DOY_{50}$, $DOY_{75}$, $DOY_{g_{max}}$, $L_{PGS}$, $g_{max}$, and $\Delta DBH$}, Fig. `r schematic_summary`) and spring temperatures were assessed using a linear mixed model in a hierarchical Bayesian framework.
 Analyses were run for both $T_{max}$ and $T_{min}$, with qualitatively similar results, but we present only results for $T_{max}$, which had overall stronger correlation with growth parameters. 
-Mixed effects models were used to test the response of growth phenology variables to fixed effects of xylem porosity and mean $T_{max}$ (or $T_{min}$) during the critical temperature window selected by *climwin*, along with random effects of species and tree. 
+Mixed effects models were used to test the response of growth phenology variables to fixed effects of xylem porosity and mean $T_{max}$ (or $T_{min}$) during the critical temperature window selected by *climwin*, along with random effects of species and of individual tree. 
 We ran separate models for each species group at each site, and for the response of all growth phenology variables to $T_{max}$ (or $T_{min}$). 
-Models were run using the LME4 package in R [@bates_fitting_2015]. 
 This mixed-effect model was run within a hierarchical Bayesian framework and fit using the `rstanarm` R interface to the Stan programming language[@gabry_rstanarm_2020]. In all cases unless otherwise specified, all prior distributions are set to be the weakly informative defaults. 
 <!--
 TODO added by Bert: Whereever we specify model details, include details about prior from here:
@@ -371,23 +372,22 @@ We analyzed tree-ring records for `r n_cores_sites` sites, including our focal s
 All cores had been previously collected, cross-dated, and measured using standard collection and processing methodologies[@stokes_introduction_1968]. 
 
 Dominant tree species were cored at both SCBI[@helcoski_growing_2019;@bourg_initial_2013] and Harvard Forest[@alexander_potential_2019; @dye_comparing_2016; @finzi_carbon_2020] following sampling designs that covered a broad range of DBH.
-We analyzed records for the dominant ring- and diffuse- porous species at each site (`r  EDT_species`), excluding species with other xylem architectures (*Juglans nigra* L. at SCBI, *Tsuga canadensis* (L.) Carrière at Harvard Forest).
-In total, we analyzed `r n_cores_focal_sites` cores from `r n_chronologies_SCBI` species at SCBI and `r n_chronologies_HF` species at Harvard Forest (`r  EDT_species`).
+We analyzed records for the ring- and diffuse- porous species at each site (`r  EDT_species`), but excluded species with other xylem architectures (*Juglans nigra* L. at SCBI, *Tsuga canadensis* (L.) Carrière at Harvard Forest).
+We studied a total of `r n_cores_focal_sites` cores which included `r n_chronologies_SCBI` species at SCBI and `r n_chronologies_HF` species at Harvard Forest (`r  EDT_species`).
 
-The tree-ring records from our focal sites were complemented with a much larger collection spanning `r n_cores_sites-2` deciduous and mixed forest sites in Eastern North America[@maxwell_sampling_2020;@dorangeville_drought_2018; @maxwell_increased_2017; @wilde_comparing_2018;@strange_comparing_2019;@au_demographic_2020;@matheus_placing_2018;@leblanc_radial_2020;@maxwell_higher_2019;@maxwell_dendroclimatic_2015;@schmidt_325year_2015] (**JUSTIN, please confirm that we got all the appropriate references here.**). 
-Again, species were limited to broadleaf deciduous species with clearly defined xylem porosity (*i.e.*, excluding semi-ring porous). 
+The tree-ring records from our focal sites were complemented with a much larger collection spanning `r n_cores_sites-2` deciduous and mixed forest sites in Eastern North America[@maxwell_sampling_2020;@dorangeville_drought_2018].
+Again, records were limited to broadleaf deciduous species with clearly defined xylem porosity (*i.e.*, excluding semi-ring porous). 
 
+~*Add this comment somewhere in here: "What about mentioning "we converted the trw into a dimensionless growth index (thereafter simply referred to as RWI; see Methods) to emphasize interannual variability associated with climate  (Cook & Kairiukstis, 1990)" or something along those lines?"*
 
-~Add this comment somewhere in here: "What about mentioning "we converted the trw into a dimensionless growth index (thereafter simply referred to as RWI; see Methods) to emphasize interannual variability associated with climate  (Cook & Kairiukstis, 1990)" or something along those lines?"~
+*KRISTA can you confirm if the following sentence is describing the transformation from trw into RWI? If it is, we can define RWI here* 
 
 We standardized ring-width series from each core via ARSTAN using a 2/3rds $n$ spline, where $n$ is the number of years in the series [@cook_time_1985; @cook_methods_1990]. 
-*Chronologies were built using the methods described in Ref.[@helcoski_growing_2019].* (**(NEIL/JUSTIN, is this accurate, and do you think it's sufficient? If not, could you please provide a brief summary?**)
+Chronologies were built using the methods described in Helcoski et al. (2019)[@helcoski_growing_2019].
 We defined chronology start year (`r  EDT_species`) as the year where subsample signal strength (SSS) passed a threshold of SSS = 0.8, or where $\ge$ 80% of the population signal was captured in the chronology.
 
-We obtained monthly $T_{max}$ and $T_{min}$ data for 1901-2019 from CRU v.4.04 [@harris_version_2020].
-
 <!--QUILT PLOT METHODS-->
-Correlations between monthly climate and $RWI$ were assessed using ‘dplR’[@bunn_dendrochronology_2008] and ‘bootRes’[@zang_dendroclimatic_2013] in R v.1.3.1093 (R Core Team, 2020), which correlated functions and bootstrapped confidence intervals for these relationships[@biondi_dendroclim2002_2004].
+Correlations between monthly climate and $RWI$ were assessed using ‘dplR’[@bunn_dendrochronology_2008] and ‘bootRes’[@zang_dendroclimatic_2013] in R v 4.0 (R Core Team, 2020), which correlated functions and bootstrapped confidence intervals for these relationships[@biondi_dendroclim2002_2004].
 We analyzed these correlations for January through September of the current year (presented in Fig. `r tree_rings`, `r EDF_tree_rings_TMIN`).
 To test for potential lag effects of spring temperatures on the following year's growth, we also ran a version of the analysis extending back to include climate of every month of the previous year (`r EDF_tree_rings_TMAX_extended`).
 Correlations and significance levels for months April-August are given in `r chron_table`.
