@@ -59,10 +59,10 @@ library(kableExtra)
 species_table <- read.csv(file = "tables_figures/species_table.csv", col.names = c("site", "xylem porosity","species", "species code", "n trees", "n tree-years", "n cores", "date range"),  stringsAsFactors = FALSE, check.names = FALSE)
 kable(species_table, caption = species_table_caption ,  format = "latex", booktabs = TRUE,  escape = F) %>%
 add_header_above(c(" ", " ", " ", " ", "dendrometer bands" = 2, "tree cores"=2 )) %>%
-  pack_rows("", 1, 9, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
-  pack_rows("", 10, 11, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
-  pack_rows("", 12, 14, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
-  pack_rows("", 15, 22, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
+  pack_rows("", 1, 10, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
+  pack_rows("", 11, 12, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
+  pack_rows("", 13, 15, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
+  pack_rows("", 16, 23, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
 kable_styling(latex_options = c("scale_down", "hold_position"), protect_latex = T) 
 ```
 
