@@ -60,6 +60,8 @@ percent_growth <- Wood_pheno_table_scbi %>%
     dbh_growth_percent_cummulative = cumsum(dbh_growth_percent)
   )
 
+LG5_parameter_values_scbi$tag_year <- paste0(LG5_parameter_values_scbi$tag,LG5_parameter_values_scbi$year)
+
 Wood_pheno_table_scbi <- Wood_pheno_table_scbi %>%
   separate(tag, into = c("tag", "stem"), sep = "_") %>%
   mutate(
@@ -71,7 +73,7 @@ Wood_pheno_table_scbi <- Wood_pheno_table_scbi %>%
 # Break into RP and DP
 percent_growth_RP <- subset(percent_growth, wood_type == "ring-porous")
 
-# Remove models with single days > 2% growth (this is abnormal for RP trees in our study)
+# Remove models with single day growth greater than 2 SD away from mean
 maxgrowthrate <- aggregate(percent_growth_RP$dbh_growth_percent, by = list(percent_growth_RP$tag_year), FUN = max)
 names(maxgrowthrate) <- c("tag_year", "rate") # Maximum growth rate of each tree
 # high_growthday <- subset(maxgrowthrate, rate >= 0.02) #Remove trees where one day had higher than 2% of total growth
@@ -86,7 +88,6 @@ count(wood_pheno_removed, sp)
 hist(wood_pheno_removed$dbh)
 # subset main DF
 percent_growth_RP <- percent_growth_RP[!(percent_growth_RP$tag_year %in% unique(high_growthday$tag_year)), ]
-
 
 # Remove models with peak growth outside of expected season. IE, winter growth peaks
 ratedoy <- percent_growth_RP[percent_growth_RP$dbh_growth_percent %in% maxgrowthrate$rate, ] # DOY where max growth occured
@@ -119,10 +120,10 @@ percent_growth_RP <- percent_growth_RP[percent_growth_RP$tag_year %in% keeptags,
 #DIffuse porous - Same method
 percent_growth_DP <- subset(percent_growth, wood_type == "diffuse-porous")
 
-# Remove models with single days > 4% growth (this is abnormal for DP trees in our study)
+# Remove models with single day growth rate >2 SD away from mean
 maxgrowthrate <- aggregate(percent_growth_DP$dbh_growth_percent, by = list(percent_growth_DP$tag_year), FUN = max)
 names(maxgrowthrate) <- c("tag_year", "rate")#Maximum growth rate of each tree
-high_growthday <- subset(maxgrowthrate, rate >= (mean(maxgrowthrate$rate)+(sd(maxgrowthrate$rate)*sd)) & rate <= 0) #Remove trees where one day had higher than 4% of total growth
+high_growthday <- subset(maxgrowthrate, rate >= (mean(maxgrowthrate$rate)+(sd(maxgrowthrate$rate)*sd)) & rate <= 0)
 #ENTRIES REMOVED IN THIS STEP
 percent_growth_high <- percent_growth_DP[percent_growth_DP$tag_year %in% high_growthday$tag_year,]
 SCBI_highgrowth_DP <- unique(percent_growth_high$tag_year)
@@ -171,7 +172,7 @@ percent_growth <- rbind(percent_growth_DP, percent_growth_RP)
 percent_growth_gone <- subset(percent_growth, dbh_total_growth <= 0.02) # remove small growth trees
 SCBI_smallgrowth <- unique(percent_growth_gone$tag_year)
 percent_growth <- subset(percent_growth, dbh_total_growth >= 0.02) # remove small growth trees
-# Remove models that failed to model at least 99% of total growth using LG5.pred
+# Remove models that failed to model at least 97.5% of total growth using LG5.pred. Indicates that model fit poorly
 percent_growth_one <- subset(percent_growth, dbh_growth_percent_cummulative >= .975) # Find tags that reach ~100% growth
 unique(percent_growth_one$tag_year) # Check how many tags meet this req
 # ENTRIES REMOVED IN THIS STEP
@@ -188,10 +189,10 @@ ggplot(Wood_pheno_table_scbi, aes(x = dbh, group = sp, fill = sp)) +
 hist(wood_pheno_removed$year)
 LG5_parameter_values_removed_99_scbi <- LG5_parameter_values_scbi[LG5_parameter_values_scbi$tag_year %in% SCBI_below99, ]
 hist(LG5_parameter_values_scbi$ML_value)
-hist(LG5_parameter_values_removed$ML_value)
+hist(LG5_parameter_values_removed_99_scbi$ML_value)
 
 # Subset main DF
-percent_growth <- percent_growth[(percent_growth$tag_year %in% unique(percent_growth_one$tag_year)), ] # Remove tags with <99% growth
+percent_growth <- percent_growth[(percent_growth$tag_year %in% unique(percent_growth_one$tag_year)), ] # Remove tags with <97.5% growth
 
 #Strange spikes
 percent_growth_na <- percent_growth[(is.na(percent_growth$b)),]
@@ -207,7 +208,7 @@ count(removed_trees, sp)
 
 Wood_pheno_table_scbi_25 <- subset(Wood_pheno_table_scbi, perc == .25)
 library(gridExtra)
-png(filename = "doc/manuscript/tables_figures/data_cleaning_figure_scbi.png", width=15, height=10,
+png(filename = "doc/manuscript/tables_figures/not_in_manuscript_or_SI/data_cleaning_figure_scbi.png", width=15, height=10,
     pointsize=12, bg="transparent", units="in", res=600,
     restoreConsole=FALSE)
 
@@ -237,15 +238,16 @@ grid.arrange(
 
 dev.off()
 
-weirdtag <- subset(percent_growth, doy == 190)
+#There are two tags that were missed from the previous sections that are visually identified as poor fits/outliers. We remove these
+weirdtag <- subset(percent_growth, doy == 205)
 weirdtag <- subset(weirdtag, dbh_growth_percent == max(weirdtag$dbh_growth_percent))
 
-percent_growth <- percent_growth[!(percent_growth$tag_year %in% unique(weirdtag$tag_year)), ] # Remove tags with <99% growth
+percent_growth <- percent_growth[!(percent_growth$tag_year %in% unique(weirdtag$tag_year)), ]
 
 weirdtag <- subset(percent_growth, doy == 353:365)
 weirdtag <- subset(weirdtag, dbh_growth_percent == max(weirdtag$dbh_growth_percent))
 
-percent_growth <- percent_growth[!(percent_growth$tag_year %in% unique(weirdtag$tag_year)), ] # Remove tags with <99% growth
+percent_growth <- percent_growth[!(percent_growth$tag_year %in% unique(weirdtag$tag_year)), ]
 
 ## Remove bad models from wood_pheno_table and LG5_param DF's ----
 # Wood_pheno_table_scbi <-  Wood_pheno_table_scbi %>%
@@ -258,10 +260,9 @@ percent_growth <- percent_growth[!(percent_growth$tag_year %in% unique(weirdtag$
 
 wood_gone <- Wood_pheno_table_scbi[!(Wood_pheno_table_scbi$tag_year %in% unique(percent_growth$tag_year)),]
 wood_gone<- subset(wood_gone, perc == .25)
-247/(3348/3)#1116
 
 Wood_pheno_table_scbi <- Wood_pheno_table_scbi[Wood_pheno_table_scbi$tag_year %in% unique(percent_growth$tag_year), ]
-tot_growth <- distinct(percent_growth[, c(3, 16)], .keep_all = TRUE)
+tot_growth <- distinct(percent_growth[, c(3, 17)], .keep_all = TRUE)
 Wood_pheno_table_scbi <- left_join(Wood_pheno_table_scbi, tot_growth, by = "tag_year")
 # unitag <- unique(Wood_pheno_table_scbi)
 
@@ -343,11 +344,13 @@ percent_growth <- Wood_pheno_table_hf %>%
   )
 Wood_pheno_table_hf$tag_year <- paste0(Wood_pheno_table_hf$tag, Wood_pheno_table_hf$year)
 
+LG5_parameter_values_hf$tag_year <- paste0(LG5_parameter_values_hf$tag, LG5_parameter_values_hf$year)
+
 ## Clean the data ----
 # Break into RP and DP
 percent_growth_RP <- subset(percent_growth, wood_type == "ring-porous")
 
-# Remove models with single days > 2% growth (this is abnormal for RP trees in our study)
+# Remove models with single days growth >2 SD away from mean (this is abnormal for RP trees in our study)
 maxgrowthrate <- aggregate(percent_growth_RP$dbh_growth_percent, by = list(percent_growth_RP$tag_year), FUN = max)
 names(maxgrowthrate) <- c("tag_year", "rate") # Maximum growth rate of each tree
 # high_growthday <- subset(maxgrowthrate, rate >= 0.02) #Remove trees where one day had higher than 2% of total growth
@@ -534,9 +537,7 @@ dev.off()
 #Remove bad models from wood_pheno_table and LG5_param DF's ----
 Wood_pheno_table_hf$tag_year <- paste0(Wood_pheno_table_hf$tag, Wood_pheno_table_hf$year)
 Wood_gone <- Wood_pheno_table_hf[!(Wood_pheno_table_hf$tag_year %in% unique(percent_growth$tag_year)), ]
-1224 / 3
-5994 / 3
-408 / 1998
+
 Wood_pheno_table_hf <- Wood_pheno_table_hf[Wood_pheno_table_hf$tag_year %in% unique(percent_growth$tag_year), ]
 tot_growth <- distinct(percent_growth[, c(3, 19)], .keep_all = TRUE)
 Wood_pheno_table_hf <- left_join(Wood_pheno_table_hf, tot_growth, by = "tag_year")

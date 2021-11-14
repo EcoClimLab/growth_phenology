@@ -30,7 +30,6 @@ source("RScripts/dendroband_functions.R")
 
 
 # Format dendroband data ----------------------------------------------------
-# files <- dir("data", pattern="_201[0-9]*.csv")
 files <- dir("data", pattern = "_20[1-2][0-9]*.csv")
 dates <- c(2011:2020)
 
@@ -79,11 +78,6 @@ make_growth_list(files, dates)
 # Loop to create timeseries of dbh measurements manually -----
 # Taken from Ian's growth_over_time.R
 
-# before we knew Sean was working on a package (RDendrom), Valentine and I tried
-# to create the same functionality manually (#5 and #6 in this script). Since we
-# do have RDendrom, this manual work is deprecated, but I've decided to leave it
-# here in case it's needed later. To run this section, you need to run section
-# #1 above first.
 
 # description of loop
 ## 1. First, assigns the first dbh of the growth column as the first dbh.
@@ -205,12 +199,11 @@ for (e in 1:length(all_stems_intra)) { # Loop to merge all dendroband surveys in
   all_stems <- rbind(all_stems, Stem)
 }
 all_stems <- all_stems[complete.cases(all_stems$dbh2), ]
-all_stems <- all_stems[, c(1:31, 34, 35)]
-
+#all_stems <- all_stems[, c(1:31, 34, 35)]#####ISSUE
 # Added by bert: write all_stems observed data to csv
 write.csv(all_stems, file = "Data/all_stems.csv", row.names = FALSE)
 all_stems <- read.csv("Data/all_stems.csv")
-all_stems <- read_csv("~/GitHub/Dendrobands/data/scbi.dendroAll_2020.csv")
+#all_stems <- read_csv("~/GitHub/Dendrobands/data/scbi.dendroAll_2020.csv")
 
 
 ## Manual check of data ##
@@ -235,8 +228,10 @@ all_stems <- read_csv("~/GitHub/Dendrobands/data/scbi.dendroAll_2020.csv")
 # Loop to create a final "master dataframe" -------
 # The following loop will cycle through years, species, and tags to create a final "master dataframe"
 # It includes two of Sean's functions wrapped with some of my code
-all_stems <- read_csv("data/all_stems.csv")
-all_stems$dbh2 <- all_stems$dbh2/10
+all_stems <- read.csv("data/all_stems.csv")
+
+all_stems$dbh2 <- all_stems$dbh2/10 #?
+
 # Objects needed for the following loop
 data <- data.frame(NULL)
 # throwaways <- data.frame(NULL)
@@ -256,7 +251,9 @@ names(LG5_parameters) <- tag_years
 growth <- NULL
 all_stems$tag_stem <- paste0(all_stems$tag, "_", all_stems$stemtag)
 
-for (q in 2020) {
+all_stems <- all_stems[!(is.na(all_stems$month)),]
+
+for (q in 2011:2020) {
   skip_to_next <- FALSE
   Stem2 <- subset(all_stems, year == q)
   for (w in unique(Stem2$sp)) { # removes trees with less than 10 measurements in each year
@@ -267,7 +264,8 @@ for (q in 2020) {
     # original_list <- unique(Stem3$tag)
     for (m in unique(Stem3$tag_stem)) { # remove trees with very small or negative total growth
       growthcheck <- subset(Stem3, tag_stem == m)
-      check_list <- append(check_list, (ifelse(growthcheck[nrow(growthcheck), 32] - growthcheck[1, 32] <= 0, unique(growthcheck$tag), ifelse(growthcheck[nrow(growthcheck), 32] - growthcheck[1, 32] >= 12.5, unique(growthcheck$tag), NA)))) # 1.25 is arbitrarily chosen. I'm considering decreasing it
+      check_list <- append(check_list, (ifelse(growthcheck[nrow(growthcheck), 32] - growthcheck[1, 32] <= 0, unique(growthcheck$tag),
+                                               ifelse(growthcheck[nrow(growthcheck), 32] - growthcheck[1, 32] >= 12.5, unique(growthcheck$tag), NA)))) # 1.25 is arbitrarily chosen. I'm considering decreasing it
       growth <- append(growth, growthcheck[nrow(growthcheck), 32] - growthcheck[1, 32])
       if (growthcheck[nrow(growthcheck), 32] - growthcheck[1, 32] <= 0){
         plot(growthcheck$dbh2 ~ growthcheck$DOY, main = growthcheck$year)
@@ -365,7 +363,7 @@ for (q in 2020) {
         ##  THESE ARE THE CALLS TO OPTIM  ##
         # weigted values have false ML estimates, so the estimate is re-assessed based on the optimized parameters in an unweighted call
 
-
+        pred.dbh <- lg5.pred(params, doy)
         #  tryCatch(
         lg5.output.LB <- optim(par = params, doy = doy, dbh = dbh, resid.sd = resid.sd, fn = lg5.ML, method = "L-BFGS-B", lower = optim.min, upper = optim.max, hessian = TRUE, control = list(trace = 0))
         #  , error = function(e) { skip_to_next <<- TRUE})
