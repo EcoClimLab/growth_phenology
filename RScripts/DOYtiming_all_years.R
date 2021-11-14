@@ -22,16 +22,17 @@ weatherdata <-
 #%>%
 # Rename RP flag set by Cam
 #rename(flagrp = flag)
-climwindows <-
-  read.csv("results/Climwin_results/Weekly/SCBI/weekly_climwin_results_SCBI_TMAX.csv") %>%
-  filter(wood_type != "other") %>%
-  mutate(
-    winopen = as.Date(paste(refwoy-winopenwoy, 1, sep="-"), "%U-%u"),
-    winclose = as.Date(paste(refwoy-winclosewoy, 1, sep="-"), "%U-%u"),
-    opendoy = yday(winopen),
-    closedoy = yday(winclose)
-  )
+# climwindows <-
+#   read.csv("results/Climwin_results/Weekly/SCBI/weekly_climwin_results_SCBI_TMAX.csv") %>%
+#   filter(wood_type != "other") %>%
+#   mutate(
+#     winopen = as.Date(paste(refwoy-winopenwoy, 1, sep="-"), "%U-%u"),
+#     winclose = as.Date(paste(refwoy-winclosewoy, 1, sep="-"), "%U-%u"),
+#     opendoy = yday(winopen),
+#     closedoy = yday(winclose)
+#   )
 
+#Method for identifying correct windows is in Pheno_tsensitivity_figure_tmax.R
 climwinmeans_rp <- weatherdata %>%
   filter(doy %in% c(92:98)) %>% #April 2 - April 8
   group_by(year) %>%
@@ -191,26 +192,26 @@ scbi_leaf
 #  scale_colour_gradient(low = "blue", high = "red")
 
 #precip analysis ----
-SCBI_CMI <- read_csv("climate data/SCBI_CMI.csv")
-SCBI_CMI <- SCBI_CMI[SCBI_CMI$month %in% c("03", "04"),]
-pre_ag_scbi <- aggregate(SCBI_CMI$PRE, by = list(SCBI_CMI$year), FUN = mean)
-names(pre_ag_scbi) <- c("year","PRE")
-aggregates_scbi <- left_join(aggregates_scbi, pre_ag_scbi, by = "year")
-
-pre_ag_previousyear <- pre_ag_scbi
-pre_ag_previousyear[,1] <- c(2012,2013,2014,2015,2016,2017,2018,2019,NA)
-pre_ag_previousyear <- pre_ag_previousyear[-9,]
-
-#aggregates_scbi$PRE_level <- ifelse(aggregates_scbi$CMI > mean(aggregates_scbi$CMI), "Above Average", "Below Average")
-aggregates_scbi <- left_join(aggregates_scbi, pre_ag_previousyear, by = "year")
-
-ggplot(aggregates_scbi, aes(x=x, y = as.character(Group.2), group = interaction(Group.1, year), color = PRE.x.x.x, linetype = Group.1))+
-  geom_point(size = 3)+
-  geom_line(size = 1)+
-  labs(x = "Day of Year", y = "Percent of Total Annual Growth", title = "Harvard Forest Intraannual Growth Timing", color = "CMI", linetype = "Wood Type")+
-  scale_colour_gradient(low = "blue", high = "red")
-
-
+# SCBI_CMI <- read_csv("climate data/SCBI_CMI.csv")
+# SCBI_CMI <- SCBI_CMI[SCBI_CMI$month %in% c("03", "04"),]
+# pre_ag_scbi <- aggregate(SCBI_CMI$PRE, by = list(SCBI_CMI$year), FUN = mean)
+# names(pre_ag_scbi) <- c("year","PRE")
+# aggregates_scbi <- left_join(aggregates_scbi, pre_ag_scbi, by = "year")
+#
+# pre_ag_previousyear <- pre_ag_scbi
+# pre_ag_previousyear[,1] <- c(2012,2013,2014,2015,2016,2017,2018,2019,NA)
+# pre_ag_previousyear <- pre_ag_previousyear[-9,]
+#
+# #aggregates_scbi$PRE_level <- ifelse(aggregates_scbi$CMI > mean(aggregates_scbi$CMI), "Above Average", "Below Average")
+# aggregates_scbi <- left_join(aggregates_scbi, pre_ag_previousyear, by = "year")
+#
+# ggplot(aggregates_scbi, aes(x=x, y = as.character(Group.2), group = interaction(Group.1, year), color = PRE.x.x.x, linetype = Group.1))+
+#   geom_point(size = 3)+
+#   geom_line(size = 1)+
+#   labs(x = "Day of Year", y = "Percent of Total Annual Growth", title = "Harvard Forest Intraannual Growth Timing", color = "CMI", linetype = "Wood Type")+
+#   scale_colour_gradient(low = "blue", high = "red")
+#
+#
 #Harvard Forest
 # Get growth data ----------------------------------
 Wood_pheno_table <- read_csv("Data/Wood_pheno_table_HarvardForest_CLEAN.csv") %>%

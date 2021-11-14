@@ -31,7 +31,7 @@ trace("plotbetas", edit = TRUE)
 climate <- read_csv("climate data/met_tower_data_sensor2_ncdc_supplemented.csv", col_names = TRUE) # only goes to October 2019, fix?
 
 colnames(climate) <- c("date", "year", "month", "day", "doy", "TMAX")
-climate[climate$TMAX == -99.9, ] <- NA
+#climate[climate$TMAX == -99.9, ] <- NA
 
 climate <- climate[complete.cases(climate$TMAX), ]
 

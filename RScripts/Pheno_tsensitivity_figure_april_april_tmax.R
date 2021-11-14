@@ -71,18 +71,6 @@ twosevenfive <- twosevenfive[, c(3, 7, 16)]
 # 0. Get all weather data
 #TMAX
 
-#################################################################
-##Order of operations:
-#1. Read in weatherdata (line 78)
-#2. Find old climwin windows (line 89)
-#3. Run climwin to determine mean temperatures of each year in correct window
-#4. Change DP + DP2 to contain a bulk of dates around the old climwinwindows to maximize search area
-#5. Run Forloop (line 116)
-#6. Find line in 'correct' dataframe where min and max match the values found by climwin
-#7. Find the DOY's which created the correct means
-#8. Change windowopen and windowclose values in rp & dp subsets (lines 149 & 167)
-################################################################
-
 weatherdata <-
   read_csv("climate data/met_tower_data_sensor2_ncdc_supplemented.csv") %>%
   filter(!is.na(cleantmax)) %>%
@@ -93,60 +81,6 @@ weatherdata <-
 #  filter(!is.na(TMIN))
 
 # 2. Get climwin data
-#TMAX
-climwindows <-
-  read.csv("results/Climwin_results/Weekly/SCBI/weekly_climwin_results_SCBI_TMAX.csv") %>%
-  filter(wood_type != "other") %>%
-  mutate(
-    #median_windowopendate = as.Date(median_windowopendate),
-    #median_windowclosedate = as.Date(median_windowclosedate),
-    #opendoy = yday(median_windowopendate),
-    #closedoy = yday(median_windowclosedate)
-    #winopen = as.Date(refwoy * 7 - winopenwoy * 7, origin = paste0("2011-01-01")),
-    #winclose = as.Date(refwoy * 7 - winclosewoy * 7, origin = paste0("2011-01-01")),
-    winopen = as.Date(paste(refwoy-winopenwoy, 1, sep="-"), "%U-%u"),
-    winclose = as.Date(paste(refwoy-winclosewoy, 1, sep="-"), "%U-%u"),
-    opendoy = yday(winopen),
-    closedoy = yday(winclose)
-  )
-
-#correct <- data.frame(1,1)
-#names(correct) <- c("min","max")
-
-#dp <- seq(50,100,1)
-#dp2 <- seq(100,150,1)
-#dp3 <- data.frame(dp,dp2)
-#dpcross <- crossing(dp3$dp,dp3$dp2)
-
-#for (i in c(1:nrow(dpcross))) {
-# winopen <- dpcross[i,1]
-# winclose <- dpcross[i,2]
-
-
-#climwinmeans_dp <- weatherdata %>%
-#  filter(doy %in% c(as.numeric(winopen[1,1]):as.numeric(winclose[1,1]))) %>% # 68:135
-#  group_by(year) %>%
-#  summarize(climwinmean = mean(cleantmax)) %>%
-#  mutate(wood_type = "diffuse-porous")
-#min <- min(climwinmeans_dp$climwinmean)
-#max <- max(climwinmeans_dp$climwinmean)
-#df <- data.frame(min,max)
-#correct <- rbind(correct,df)
-
-#}
-
-#climwindows$winopen <- as.Date(climwindows$refwoy * 7 - climwindows$winopenwoy * 7, origin = paste0("2011-01-01"))
-#climwindows$winclose <- as.Date(climwindows$refwoy * 7 - climwindows$winclosewoy * 7, origin = paste0("2011-01-01"))
-#TMIN
-#climwindows <-
-#  read.csv("results/Climwin_results/Weekly/SCBI/TMIN/weekly_climwin_results_SCBI_TMIN.csv") %>%
-#  filter(wood_type != "other") %>%
-#  mutate(
-#    median_windowopendate = as.Date(median_windowopendate),
-#    median_windowclosedate = as.Date(median_windowclosedate),
-#    opendoy = yday(median_windowopendate),
-#    closedoy = yday(median_windowclosedate)
-#  )
 #TMAX
 climwinmeans_rp <- weatherdata %>%
   filter(month %in% c(4)) %>%
@@ -674,6 +608,7 @@ twosevenfive_hf <- twosevenfive_hf[, c(3, 6, 17)]
 
 
 ## Create temperature variables -------------------------------------------------
+
 # 0. Get all weather data
 #TMAX
 weatherdata_hf <-

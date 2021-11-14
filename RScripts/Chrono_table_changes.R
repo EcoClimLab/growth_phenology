@@ -1,3 +1,5 @@
+#Script to clean up chronology table after creation in Create_final_quiltplot.r
+
 library(readr)
 chronology_table <- read_csv("doc/manuscript/tables_figures/chronology_table.csv")
 #RP <- c("CAGL","CAOV","CATO","CACO","QURU", "QUST", "QUAL","QUPR","QUMO", "FRAM", "QUVE", "FRNI","QUMA", "QUPA")

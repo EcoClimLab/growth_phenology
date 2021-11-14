@@ -73,14 +73,14 @@ twosevenfive <- twosevenfive[, c(3, 7, 16)]
 
 #################################################################
 ##Order of operations:
-#1. Read in weatherdata (line 78)
-#2. Find old climwin windows (line 89)
+#1. Read in weatherdata (line 86)
+#2. Find old climwin windows (line 97)
 #3. Run climwin to determine mean temperatures of each year in correct window
 #4. Change DP + DP2 to contain a bulk of dates around the old climwinwindows to maximize search area
-#5. Run Forloop (line 116)
+#5. Run Forloop (line 121)
 #6. Find line in 'correct' dataframe where min and max match the values found by climwin
 #7. Find the DOY's which created the correct means
-#8. Change windowopen and windowclose values in rp & dp subsets (lines 149 & 167)
+#8. Change windowopen and windowclose values in rp & dp subsets (lines 152 & 170)
 ################################################################
 
 weatherdata <-
@@ -109,7 +109,7 @@ weatherdata <-
 #     opendoy = yday(winopen),
 #     closedoy = yday(winclose)
 #   )
-
+#
 #correct <- data.frame(1,1)
 #names(correct) <- c("min","max")
 
@@ -183,26 +183,26 @@ climwinmeans_dp <- weatherdata %>%
 climwinmeans <- bind_rows(climwinmeans_rp, climwinmeans_dp)
 
 
-SCBI_CMI <- read_csv("climate data/SCBI_CMI.csv")
-#Summer precipitation totals ----
-summer_precip <- SCBI_CMI[SCBI_CMI$month %in% c(6,7,8),]
-summer_precip <- summer_precip[!(is.na(summer_precip$PRE)),]
-summer_pre <- aggregate(as.numeric(summer_precip$PRE), by = list(summer_precip$year), FUN = sum)
-names(summer_pre) <- c("year", "summer_precip")
-summer_pre <- summer_pre[c(2:11),]
-
-#Previous Autumn precipitation totals ----
-fall_precip <- SCBI_CMI[SCBI_CMI$month %in% c(9,10,11),]
-fall_precip <- fall_precip[!(is.na(fall_precip$PRE)),]
-fall_pre <- aggregate(as.numeric(fall_precip$PRE), by = list(fall_precip$year), FUN = sum)
-names(fall_pre) <- c("year", "fall_precip")
-fall_pre$year <- fall_pre$year+1
-fall_pre <- fall_pre[c(1:10),]
-
-
-climwinmeans <- left_join(climwinmeans, summer_pre, by = "year")
-climwinmeans <- left_join(climwinmeans, fall_pre, by = "year")
-
+# SCBI_CMI <- read_csv("climate data/SCBI_CMI.csv")
+# #Summer precipitation totals ----
+# summer_precip <- SCBI_CMI[SCBI_CMI$month %in% c(6,7,8),]
+# summer_precip <- summer_precip[!(is.na(summer_precip$PRE)),]
+# summer_pre <- aggregate(as.numeric(summer_precip$PRE), by = list(summer_precip$year), FUN = sum)
+# names(summer_pre) <- c("year", "summer_precip")
+# summer_pre <- summer_pre[c(2:11),]
+#
+# #Previous Autumn precipitation totals ----
+# fall_precip <- SCBI_CMI[SCBI_CMI$month %in% c(9,10,11),]
+# fall_precip <- fall_precip[!(is.na(fall_precip$PRE)),]
+# fall_pre <- aggregate(as.numeric(fall_precip$PRE), by = list(fall_precip$year), FUN = sum)
+# names(fall_pre) <- c("year", "fall_precip")
+# fall_pre$year <- fall_pre$year+1
+# fall_pre <- fall_pre[c(1:10),]
+#
+#
+# climwinmeans <- left_join(climwinmeans, summer_pre, by = "year")
+# climwinmeans <- left_join(climwinmeans, fall_pre, by = "year")
+#
 
 
 #TMAX-April Means
@@ -693,11 +693,67 @@ twosevenfive_hf <- twosevenfive_hf[, c(3, 6, 17)]
 
 
 ## Create temperature variables -------------------------------------------------
+#################################################################
+##Order of operations:
+#1. Read in weatherdata (line 710)
+#2. Find old climwin windows (line 715)
+#3. Run climwin to determine mean temperatures of each year in correct window
+#4. Change DP + DP2 to contain a bulk of dates around the old climwinwindows to maximize search area
+#5. Run Forloop (line 738)
+#6. Find line in 'correct' dataframe where min and max match the temp values found by climwin
+#7. Find the DOY's which created the correct means
+#8. Change windowopen and windowclose values in rp & dp subsets (lines 826 & 840)
+################################################################
+
 # 0. Get all weather data
-#TMAX
+# #TMAX
 weatherdata_hf <-
   read_csv("climate data/HF_weatherdata.csv") %>%
   filter(!is.na(airtmax))
+#
+# #TMAX
+#  climwindows <-
+#    weekly_climwin_results_HF_TMAX <- read_csv("results/Climwin_results/Weekly/Harvard Forest/weekly_climwin_results_HF_TMAX.csv") %>%
+#    filter(wood_type != "other") %>%
+#    mutate(
+#      #median_windowopendate = as.Date(median_windowopendate),
+#      #median_windowclosedate = as.Date(median_windowclosedate),
+#      #opendoy = yday(median_windowopendate),
+#      #closedoy = yday(median_windowclosedate)
+#      #winopen = as.Date(refwoy * 7 - winopenwoy * 7, origin = paste0("2011-01-01")),
+#      #winclose = as.Date(refwoy * 7 - winclosewoy * 7, origin = paste0("2011-01-01")),
+#      winopen = as.Date(paste(refwoy-winopenwoy, 1, sep="-"), "%U-%u"),
+#      winclose = as.Date(paste(refwoy-winclosewoy, 1, sep="-"), "%U-%u"),
+#      opendoy = yday(winopen),
+#      closedoy = yday(winclose)
+#    )
+#
+# correct <- data.frame(1,1)
+# names(correct) <- c("min","max")
+# dp <- seq(50,100,1)
+# dp2 <- seq(100,150,1)
+# dp3 <- data.frame(dp,dp2)
+# dpcross <- crossing(dp3$dp,dp3$dp2)
+#
+# for (i in c(1:nrow(dpcross))) {
+#  winopen <- dpcross[i,1]
+#  winclose <- dpcross[i,2]
+#
+#
+# climwinmeans_dp <- weatherdata_hf %>%
+#   filter(DOY %in% c(as.numeric(winopen[1,1]):as.numeric(winclose[1,1]))) %>% # 68:135
+#   group_by(year) %>%
+#   summarize(climwinmean = mean(airtmax)) %>%
+#   mutate(wood_type = "diffuse-porous")
+# min <- min(climwinmeans_dp$climwinmean)
+# max <- max(climwinmeans_dp$climwinmean)
+# df <- data.frame(min,max)
+# correct <- rbind(correct,df)
+#
+# }
+#
+# climwindows$winopen <- as.Date(climwindows$refwoy * 7 - climwindows$winopenwoy * 7, origin = paste0("2011-01-01"))
+# climwindows$winclose <- as.Date(climwindows$refwoy * 7 - climwindows$winclosewoy * 7, origin = paste0("2011-01-01"))
 
 #TMIN
 #weatherdata_hf <-

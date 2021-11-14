@@ -1,3 +1,5 @@
+#Script to create chronology_map.png
+
 library(ggplot2)
 theme_set(theme_bw())
 library(sf)
@@ -17,9 +19,9 @@ library(raster)
 chronology_table <- read.csv("doc/manuscript/tables_figures/chronology_table.csv")
 chronology_table$uni <- paste0(chronology_table$Location, chronology_table$wood_type)
 unichrono <- chronology_table[!duplicated(chronology_table$uni),]
-both_wood_type <- unichrono[duplicated(unichrono$Location),]
+both_wood_type <- chronology_table[duplicated(chronology_table$uni),]
 
-chronology_table$wood_type <- ifelse(chronology_table$Location %in% both_wood_type$Location, "Both", chronology_table$wood_type)
+chronology_table$Wood.Type <- ifelse(chronology_table$Location %in% both_wood_type$Location, "Both", chronology_table$Wood.Type)
 coordinates(chronology_table) = ~Longitude + Latitude
 
 # Define the map projection
@@ -30,14 +32,14 @@ sfdat <- st_as_sf(chronology_table)
 
 us <- map_data("state")
 
-sfdat$wood_type <- as.factor(sfdat$wood_type)
+sfdat$Wood.Type <- as.factor(sfdat$Wood.Type)
 
-levels(sfdat$wood_type) <- c("DP", "RP", "Both")
+levels(sfdat$Wood.Type) <- c("DP", "RP", "Both")
 
 chronology_map <- ggplot(data = sfdat) +
   scale_colour_viridis_d("Wood Type")+
   geom_map(data = us, map = us,aes(x=long, y=lat, map_id=region), fill = "grey")+
-  geom_sf( aes(color = wood_type), size = 4)+
+  geom_sf( aes(color = Wood.Type), size = 4)+
   #geom_sf_text(aes(label = group), nudge_x = -1, nudge_y = 0, size = 3, color = "white")+
   coord_sf(xlim = c(-95, -65), ylim = c(34, 50), expand = FALSE)+
   theme(text = element_text(size = 20),
