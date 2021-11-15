@@ -169,11 +169,12 @@ with some hints that warmer springs may have a modest positive effect on growth[
 Thus, tree-ring evidence does not necessarily align with the finding that warming spring temperatures increase annual forest CO~2~ uptake[@keenan_net_2014].
 Characterizing phenological responses of stem growth to warming spring temperatures is critical to bridging this conceptual disconnect and understanding how forest biomass growth is likely to change as the climate warms.
 
-<!-- KAT paused here.-->
 
 Here, we evaluate how early spring temperatures affect stem growth phenology, growth rates, and annual growth of temperate deciduous trees in two forests and annual growth across forests spanning eastern North America. 
-To test the assumption that warmer springs extend the period of stem growth, we used measurements from 465 dendrometer bands across two deciduous forests. 
-To test whether spring temperatures were consistently positively correlated with annual ring-width Index (RWI; tree-ring width which has been standardized for age) we used `r n_chronologies` tree-ring chronologies from `r n_cores_sites` forests across eastern North America.     
+To test whether warmer springs extend the period of stem growth, we used dendrometer band measurements on r n_dendro_trees` trees across two deciduous forests. 
+To test whether spring temperatures consistently increased annual growth, we used `r n_chronologies` tree-ring chronologies from `r n_cores_sites` forests across eastern North America.     
+
+<!-- KAT paused here.-->
 
 ## Dendrometer band analysis {-#Dendrometer} 
 
@@ -410,7 +411,7 @@ Collection of tree-ring samples was funded by a USDA Agriculture and Food Resear
 # Author Contributions {-#Author} 
 
 Cameron Dow and Kristina J. Anderson-Teixeira conceived the ideas and designed the study; 
-Cameron Dow, Loïc D’Orangeville, Erika B. Gonzalez-Akre, Ryan Helcoski, Grant L. Harley, Justin T. Maxwell, Ian R. McGregor, William McShea, David A. Orwig, Neil Pederson, Alan J. Tepley, and Kristina J. Anderson-Teixeira collected or oversaw collection of data; 
+Cameron Dow, Loïc D’Orangeville, Erika B. Gonzalez-Akre, Ryan Helcoski, Grant L. Harley, Justin T. Maxwell, Ian R. McGregor, William McShea, Neil Pederson, Alan J. Tepley, and Kristina J. Anderson-Teixeira collected or oversaw collection of data; 
 Cameron Dow, Albert Y. Kim, Valentine Herrmann, Justin T. Maxwell, Ian R. McGregor, Sean McMahon analyzed the data or provided analytical tools; 
 Cameron Dow and Kristina J. Anderson-Teixeira led the writing of the manuscript. 
 All authors contributed critically to the drafts and gave final approval for publication.
