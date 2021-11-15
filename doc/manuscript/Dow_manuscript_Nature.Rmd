@@ -327,9 +327,8 @@ At SCBI a higher proportion of ring-porous trees were removed, the majority fall
 <!-- Leaf phenology -->
 
 Canopy foliage phenology data for the years 2001-2018 were extracted for SCBI and Harvard Forest from the MCD12Q2 V6 Land Cover Dynamics product (a.k.a. MODIS Global Vegetation Phenology product)[@friedl_mcd12q2_2019] via Google Earth Engine. Data were extracted for the pixel containing the NEON tower at each site. Using daily MODIS 2-band Enhanced Vegetation Index data (EVI2) at a spatial resolution of 500m, the product yields the timing of phenometrics (vegetation phenology) over each year, including timing of greenup, midgreenup, and senescence as used in this study. 
- <!--Climate -->
  
-*ADD SOMETHING ON HOW STANDARD PRECIPITAITON EVAPOTRANSPIRATIN INDEX WAS FOUND*!!!!
+ <!--Climate -->
 
 For the dendrometer band analysis, climate data corresponding to the measurement periods at both sites were obtained from local weather stations. 
 For SCBI, weather data were obtained from a meteorological tower adjacent to the SCBI ForestGEO plot, via the ForestGEO Climate Data Portal v1.0 (https://forestgeo.github.io/Climate/)[@anderson-teixeira_forestgeo_2020]. 
@@ -338,6 +337,9 @@ Gaps in the SCBI meteorological tower data were subsequently filled using temper
 For each site, we extracted daily maximum ($T_{max}$) and minimum temperatures ($T_{min}$).
 Daily temperature records for Harvard Forest were obtained from the Harvard Forest weather station[@boose_shaler_2021; @boose_fisher_2021]. 
 Climate data for Harvard Forest were complete and used as is. 
+
+
+*ADD SOMETHING ON HOW STANDARD PRECIPITAITON EVAPOTRANSPIRATIN INDEX WAS FOUND*!!!!
 
 For the tree core analysis, we obtained monthly $T_{max}$ and $T_{min}$ data for 1901-2019 from CRU v.4.04 [@harris_version_2020].
 
