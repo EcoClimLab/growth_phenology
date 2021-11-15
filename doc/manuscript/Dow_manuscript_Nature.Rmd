@@ -41,7 +41,7 @@ William J. McShea^1^
 
 Sean McMahon^8,10^ (Orcid ID : 0000-0001-8302-6908)
 
-David A. Orwig^3^
+David A. Orwig^3^ ***
 
 Neil Pederson^3^ (Orcid ID : 0000-0003-3830-263X)
 
@@ -143,7 +143,7 @@ n_chronologies_HF <- 4
 ```
 
 
-As the climate changes, warmer spring temperatures are causing earlier leaf-out[@jeong_phenology_2011;@keenan_net_2014; @buermann_widespread_2018;@finzi_carbon_2020;@stuble_plant_2021;@delgado_differences_2020] and commencement of net carbon dioxide (CO~2~) sequestration[@keenan_net_2014;@finzi_carbon_2020] in temperate deciduous forests, resulting in a tendency towards increased growing season length[@menzel_growing_1999;@menzel_european_2006;@ibanez_forecasting_2010;@jeong_phenology_2011;@finzi_carbon_2020;@stuble_plant_2021] and annual CO~2~ sequestration[@keeling_increased_1996;@dragoni_evidence_2011;@keenan_net_2014; @crabbe_extreme_2016; @zhou_explaining_2016; @fu_maximum_2019;@finzi_carbon_2020].
+As the climate changes, warmer spring temperatures are causing earlier leaf-out[@jeong_phenology_2011;@keenan_net_2014; @buermann_widespread_2018;@finzi_carbon_2020;@stuble_plant_2021;@delgado_differences_2020] and commencement of net carbon dioxide (CO~2~) sequestration[@keenan_net_2014;@finzi_carbon_2020] in temperate deciduous forests, resulting in a tendency towards increased growing season length[@menzel_growing_1999;@menzel_european_2006;@ibanez_forecasting_2010;@jeong_phenology_2011;@finzi_carbon_2020;@stuble_plant_2021] and annual CO~2~ uptake[@keeling_increased_1996;@dragoni_evidence_2011;@keenan_net_2014; @crabbe_extreme_2016; @zhou_explaining_2016; @fu_maximum_2019;@finzi_carbon_2020].
 However, less is known about how spring temperatures affect  tree stem growth, which sequesters carbon in wood that has a long residence time in the ecosystem [@xue_global_2017;@russell_residence_2014].
 Using dendrometer band measurements from *465* trees across two deciduous mid-Atlantic forests, we show that warmer spring temperatures consistently shifted the woody growth of deciduous trees earlier but had no consistent effect on peak growing season length, maximum daily growth rates, or annual growth.
 The latter finding was confirmed on the centennial scale by `r n_chronologies` tree-ring chronologies from `r n_cores_sites` forests across eastern North America, where annual growth was far more sensitive to temperatures during the peak growing season than in the spring.
@@ -154,16 +154,16 @@ Such empirical results contradict current projections from global carbon cycle m
 # (Body)
 
 In recent decades, Earth's forests have sequestered ~20% of anthropogenic CO~2~ emissions, thereby slowing the pace of atmospheric CO~2~ accumulation and climate change[@pan_large_2011].
-A large portion of this CO~2~ sink occurs in temperate deciduous forests, with uptake of >100 Tg C yr^-1^ (>10% of the total forest C sink) attributable to environmental (as opposed to demographic) changes[@pugh_role_2019] <!-- Coauthors suggest removing this but i'm unsure. I find this distinction relevant, but if more experienced people disagree I'm fine removing - would like your opinion*! -->. 
+A large portion of this CO~2~ sink occurs in temperate deciduous forests, with uptake of >300 Tg C yr^-1^ (>30% of the total forest C sink)[@pugh_role_2019]. <!-- The temperate deciduous sink is >300 Tg C yr-1, but Pugh et al. 2019 estimate that ~200 Tg C yr-1 is attributable to demography (forest regrowth), while >100 Tg C yr-1 is controlled by environmental drivers. The latter portion seems more likely to be sensitive to spring temperatures, and I originally cited this number, but upon further thought it's probably complex enough that that's a false distinction. --> 
 The future behavior of this CO~2~ sink will play an important yet uncertain role in influencing atmospheric CO~2~ and climate change[@arora_carbon_2020; @friedlingstein_global_2020]. 
 
 In temperate deciduous forests, spring warming generally lengthens the growing season, measured as the period over which trees have photosynthetically active leaves[@jeong_phenology_2011;@ibanez_forecasting_2010;@menzel_european_2006;@menzel_growing_1999], and extends the period where the ecosystem is a net CO~2~ sink[@keenan_net_2014].
-Current models assume that longer growing seasons lead to increasing net annual carbon sequestration (i.e., net ecosystem exchange, _NEE_)[@buermann_widespread_2018; @zani_increased_2020;@keenan_net_2014].
+Current models assume that longer growing seasons lead to increasing net annual carbon uptake (i.e., net ecosystem exchange, _NEE_)[@buermann_widespread_2018; @zani_increased_2020;@keenan_net_2014].
 However, recent experimental and observational findings that sink factors can limit annual growth[@keenan_timing_2015; @zani_increased_2020; @zohner_how_2021], and that positive effects of warm springs are compensated by negative effects of accumulation of seasonal water deficits[@buermann_widespread_2018], suggest that warmer spring temperatures may not have the expected positive effect on C sequestration in trees.
 
 While the responses of leaf phenology and seasonal *ecosystem (?)* CO~2~ sequestration to warming spring temperatures have been relatively well-studied[@jeong_phenology_2011; @keenan_net_2014; @buermann_widespread_2018; @ibanez_forecasting_2010; @menzel_european_2006; @menzel_growing_1999], we know very little about how the longest-lived component of fixed carbon in trees, the woody growth, is responding to warming spring temperatures. 
 In fact, we know little about the stem-growth phenology of temperate deciduous species, with multi-year records of growth phenology having been published for only one site *(to our knowledge)*[@dorangeville_peak_2021]. <!-- I'm not aware of any others, but we do want to make sure we're not missing anything. klesse_integrating_2016 and martin_hydrometeorology_2017 both do this, but for conifers.-->
-The climate sensitivity of woody growth phenology in deciduous trees and its link to annual growth has never been studied *in-situ* (but see Ref.[@zohner_how_2021] for a controlled sapling experiment).
+The climate sensitivity of woody growth phenology in temperate deciduous trees and its link to annual growth has never been studied *in-situ* (but see Ref.[@zohner_how_2021] for a controlled sapling experiment).
 
 Tree-ring records, which can be used to examine correlations of annual growth to temperature but not to understand growth phenology, reveal that growth of temperate deciduous trees tends to be most sensitive to temperature or potential evapotranspiration between late spring and early summer[@dorangeville_drought_2018;@helcoski_growing_2019],
 <!-- dorangeville_drought_2018 looks at PET.-->
@@ -183,7 +183,7 @@ This analysis was performed separately for ring- and diffuse-porous species, whi
 
 
 
-Both canopy foliage phenology and stem growth milestones occurred earlier at SCBI than at Harvard Forest, with stem growth milestones achieved on average 6-10 days earlier at SCBI (Fig. `r DOY_timing`, `r  EDT_phenology_parameters`).
+Growth milestones for both canopy foliage phenology and stem growth occurred 6-10 days earlier, on average, at SCBI than at Harvard Forest (Fig. `r DOY_timing`, `r  EDT_phenology_parameters`).
 Consistent with the results of Ref[@dorangeville_peak_2021], ring-porous species began growing earlier, reaching the $DOY_{25}$ benchmark earlier (by `r 154-123` days at SCBI and `r 164-132` at Harvard Forest), and their growth was spread over a longer growing season (average $L_{PGS}$ 21 and 19 days longer at SCBI and Harvard Forest, respectively; Fig. `r DOY_timing`, `r  EDF_growth_curves_all`, `r  EDT_phenology_parameters`). 
 Peak growing season length was similar across sites, with $L_{PGS}$ being, on average, only two days longer at SCBI for ring-porous species and < one day longer for diffuse-porous species (`r  EDT_phenology_parameters`). 
 
