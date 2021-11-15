@@ -375,16 +375,13 @@ We studied a total of `r n_cores_focal_sites` cores which included `r n_chronolo
 The tree-ring records from our focal sites were complemented with a much larger collection spanning `r n_cores_sites-2` deciduous and mixed forest sites in Eastern North America[@maxwell_sampling_2020;@dorangeville_drought_2018].
 Again, records were limited to broadleaf deciduous species with clearly defined xylem porosity (*i.e.*, excluding semi-ring porous). 
 
-~*Add this comment somewhere in here: "What about mentioning "we converted the trw into a dimensionless growth index (thereafter simply referred to as RWI; see Methods) to emphasize interannual variability associated with climate  (Cook & Kairiukstis, 1990)" or something along those lines?"*
-
-*KRISTA can you confirm if the following sentence is describing the transformation from trw into RWI? If it is, we can define RWI here* 
-
+For each species-site combination, we converted tree ring records into a dimensionless ring width index (RWI) to emphasize interannual variability associated with climate [@cook_methods_1990].
 A 2/3rds _n_ spline was applied to each core using ARSTAN to produce standardized ring-width series; _n_ is the number of years in each series[@cook_time_1985; @cook_methods_1990].
 An adaptive power transformation, a process that also stabilises the variance over time[@cook_calculating_1997], was used to minimize the influence of outliers in all series. 
 Low series replication, often in the earliest portions of a chronology collection, can also inflate the variance of tree-ring records [@jones_estimating_1997].
 The 1/3rds spline method was chosen when replication in the inner portion of each chronology (ca. inner 30–50 yr of each record depending on full chronology length) was less than three trees. 
 When replication was greater than that, we used the average correlation between raw ring-width series (rbar) method.
-The robust biweight mean chronology for each species was calculated from the ring-width indices following variance stabilisation[@cook_time_1985].
+The robust biweight mean chronology (RWI) for each species-site combination was calculated from the ring-width indices following variance stabilisation[@cook_time_1985].
 We defined chronology start year (Extended Data Table 1) as the year where subsample signal strength (SSS) passed a threshold of SSS = 0.8, or where $\ge$ 80% of the population signal was captured in the chronology.
 
 <!--QUILT PLOT METHODS-->
