@@ -131,25 +131,22 @@ n_chronologies_HF <- 4
 
 \newpage
 
-*NOTE: We're probably pretty close to the upper length limit. The typical length of an article with 3-4 modest display items (figures and tables) is 2000-2500 words (summary paragraph plus body text). We're currently at ~2678 words (1609 intro + results, discussion 1069) and 1 modest + 2 large display items. Articles typically have 30-50 references (currently ok there)* 
-
-# (Summary paragraph)
-```{r eval=FALSE, echo=FALSE}
-## For Nature:
-# Articles start with a fully referenced summary paragraph, ideally of no more than 200 words, which is separate from the main text and avoids numbers, abbreviations, acronyms or measurements unless essential. It is aimed at readers outside the discipline. This summary paragraph should be structured as follows: 2-3 sentences of basic-level introduction to the field; a brief account of the background and rationale of the work; a statement of the main conclusions (introduced by the phrase 'Here we show' or its equivalent); and finally, 2-3 sentences putting the main findings into general context so it is clear how the results described in the paper have moved the field forwards. Please refer to our annotated example  to see how the summary paragraph should be constructed.
-
-```
+<!--NOTE: We're probably pretty close to the upper length limit. The typical length of an article with 3-4 modest display items (figures and tables) is 2000-2500 words (summary paragraph plus body text). We're currently at ~2652 words and 1 modest + 2 large display items. Articles typically have 30-50 references (currently ok there)-->
 
 
-As the climate changes, warmer spring temperatures are causing earlier leaf-out[@jeong_phenology_2011;@keenan_net_2014; @buermann_widespread_2018;@finzi_carbon_2020;@stuble_plant_2021;@delgado_differences_2020] and commencement of net carbon dioxide (CO~2~) sequestration[@keenan_net_2014;@finzi_carbon_2020] in temperate deciduous forests, resulting in a tendency towards increased growing season length[@menzel_growing_1999;@menzel_european_2006;@ibanez_forecasting_2010;@jeong_phenology_2011;@finzi_carbon_2020;@stuble_plant_2021] and annual CO~2~ uptake[@keeling_increased_1996;@dragoni_evidence_2011;@keenan_net_2014; @crabbe_extreme_2016; @zhou_explaining_2016; @fu_maximum_2019;@finzi_carbon_2020].
-However, less is known about how spring temperatures affect  tree stem growth, which sequesters carbon in wood that has a long residence time in the ecosystem [@xue_global_2017;@russell_residence_2014].
-Using dendrometer band measurements from *465* trees across two deciduous mid-Atlantic forests, we show that warmer spring temperatures consistently shifted the woody growth of deciduous trees earlier but had no consistent effect on peak growing season length, maximum daily growth rates, or annual growth.
-The latter finding was confirmed on the centennial scale by `r n_chronologies` tree-ring chronologies from `r n_cores_sites` forests across eastern North America, where annual growth was far more sensitive to temperatures during the peak growing season than in the spring.
-These findings imply that any extra CO~2~ sequestered in years with warmer springs[@keeling_increased_1996;@dragoni_evidence_2011;@crabbe_extreme_2016] is not allocated to long-lived woody biomass, where it could have a substantial and lasting impact on the forest C balance. 
-Such empirical results contradict current projections from global carbon cycle models[@buermann_widespread_2018; @zani_increased_2020;@keenan_net_2014;@ahlstrom_robustness_2012], and imply that warming spring temperatures are unlikely to increase the woody productivity or strengthen the carbon sink of temperate deciduous forests.
+<!-- Articles start with a fully referenced summary paragraph, ideally of no more than 200 words, which is separate from the main text and avoids numbers, abbreviations, acronyms or measurements unless essential. It is aimed at readers outside the discipline. This summary paragraph should be structured as follows: 2-3 sentences of basic-level introduction to the field; a brief account of the background and rationale of the work; a statement of the main conclusions (introduced by the phrase 'Here we show' or its equivalent); and finally, 2-3 sentences putting the main findings into general context so it is clear how the results described in the paper have moved the field forwards. Please refer to our annotated example  to see how the summary paragraph should be constructed.-->
+
+<!--SUMMARY PARAGRAPH-->
+
+**As the climate changes, warmer spring temperatures are causing earlier leaf-out[@jeong_phenology_2011;@keenan_net_2014; @buermann_widespread_2018;@finzi_carbon_2020;@stuble_plant_2021;@delgado_differences_2020] and commencement of net carbon dioxide (CO~2~) sequestration[@keenan_net_2014;@finzi_carbon_2020] in temperate deciduous forests, resulting in a tendency towards increased growing season length[@menzel_growing_1999;@menzel_european_2006;@ibanez_forecasting_2010;@jeong_phenology_2011;@finzi_carbon_2020;@stuble_plant_2021] and annual CO~2~ uptake[@keeling_increased_1996;@dragoni_evidence_2011;@keenan_net_2014; @crabbe_extreme_2016; @zhou_explaining_2016; @fu_maximum_2019;@finzi_carbon_2020].**
+**However, less is known about how spring temperatures affect  tree stem growth, which sequesters carbon in wood that has a long residence time in the ecosystem [@xue_global_2017;@russell_residence_2014].**
+**Using dendrometer band measurements from `r n_dendro_trees` trees across two deciduous mid-Atlantic forests, we show that warmer spring temperatures consistently shifted the woody growth of deciduous trees earlier but had no consistent effect on peak growing season length, maximum daily growth rates, or annual growth.**
+**The latter finding was confirmed on the centennial scale by `r n_chronologies` tree-ring chronologies from `r n_cores_sites` forests across eastern North America, where annual growth was far more sensitive to temperatures during the peak growing season than in the spring.**
+**These findings imply that any extra CO~2~ sequestered in years with warmer springs[@keeling_increased_1996;@dragoni_evidence_2011;@crabbe_extreme_2016] is not allocated to long-lived woody biomass, where it could have a substantial and lasting impact on the forest C balance. **
+**Such empirical results contradict current projections from global carbon cycle models[@buermann_widespread_2018; @zani_increased_2020;@keenan_net_2014;@ahlstrom_robustness_2012], and imply that warming spring temperatures are unlikely to increase the woody productivity or strengthen the carbon sink of temperate deciduous forests.**
 
 
-# (Body)
+<!--BODY-->
 
 In recent decades, Earth's forests have sequestered ~20% of anthropogenic CO~2~ emissions, thereby slowing the pace of atmospheric CO~2~ accumulation and climate change[@pan_large_2011].
 A large portion of this CO~2~ sink occurs in temperate deciduous forests, with uptake of >300 Tg C yr^-1^ (>30% of the total forest C sink)[@pugh_role_2019]. <!-- The temperate deciduous sink is >300 Tg C yr-1, but Pugh et al. 2019 estimate that ~200 Tg C yr-1 is attributable to demography (forest regrowth), while >100 Tg C yr-1 is controlled by environmental drivers. The latter portion seems more likely to be sensitive to spring temperatures, and I originally cited this number, but upon further thought it's probably complex enough that that's a false distinction. --> 
