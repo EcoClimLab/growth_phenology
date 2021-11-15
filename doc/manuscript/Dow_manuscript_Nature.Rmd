@@ -41,8 +41,6 @@ William J. McShea^1^
 
 Sean McMahon^8,10^ (Orcid ID : 0000-0001-8302-6908)
 
-David A. Orwig^3^ ***
-
 Neil Pederson^3^ (Orcid ID : 0000-0003-3830-263X)
 
 Alan J. Tepley^1,9^ ( Orcid ID : 0000-0002-5701-9613)
@@ -398,13 +396,11 @@ Having determined that, among these, June-July explained the most variation, we 
 Slopes and p-values for each chronology are given in `r chron_table`.
 
 # Acknowledgements {-#Acknowledgements} 
-- people: (everyone who helped collect data-- see list on GitHub), Jess Shue (data), We would like to thank Tsun Fung Au, Joshua Bregy, James Dickens, Karen Heeter, Anna Hennage, Daniel King, James McGee, Benjamin Lockwood, Josh Oliver, Karly Schmidt-Simard, Brandon Strange, Brynn Taylor, Michael Thornton, Senna Robeson, Matt Wenzel, and Luke Wylie
-for assistance in the field and laboratory.
+We gratefully acknowledge all researchers who assisted with data collection in the field and laboratory, particularly (**ADD SCBI RESEACHERS TO THIS LIST-- see list on GitHub**) Tsun Fung Au, Joshua Bregy, James Dickens, Karen Heeter, Anna Hennage, Daniel King, James McGee, Benjamin Lockwood, Josh Oliver, Jessica Shue, Karly Schmidt-Simard, Brandon Strange, Brynn Taylor, Michael Thornton, Senna Robeson, Matt Wenzel, and Luke Wylie. 
+Thanks to David A. Orwig and members of the ForestGEO Ecosystesms & Climate Lab at SCBI for helpful feedback.
+The research was funded by ForestGEO (Smithsonian). 
+Collection of tree-ring samples was funded by a USDA Agriculture and Food Research Initiative grant 2017-67013-26191 and from the Indiana University Vice Provost for Research Faculty Research Program.
 
-- Funding: ForestGEO, the collection of tree-ring samples was  funded by a USDA Agriculture and Food Research Initiative grant 2017-67013-26191 and from the Indiana University Vice Provost for Research Faculty Research Program.
-
--David Orwig
-**COAUTHORS, PLEASE ADD.**
 
 # Author Contributions {-#Author} 
 
