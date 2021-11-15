@@ -117,6 +117,8 @@ chron_table= "SI Table 1"
 ## some stats/ 
 species_table <- read.csv(file = "tables_figures/species_table.csv")
 n_dendro_trees <- sum(na.omit(species_table[, "n.trees"]))
+n_dendro_trees_SCBI <- 123 #doing this the lazy way. summed from species_table rather than coded. 
+n_dendro_trees_HF <- 340 #doing this the lazy way. summed from species_table rather than coded. 
 n_tree_years <- sum(na.omit(species_table[, "n.tree.years"]))
 n_cores_focal_sites <- sum(na.omit(species_table[, "n.cores"]))
 chronology_table <- read.csv(file = "tables_figures/chronology_table.csv")
@@ -157,7 +159,7 @@ Current models assume that longer growing seasons lead to increasing annual net 
 However, recent experimental and observational findings that sink factors can limit annual growth[@keenan_timing_2015; @zani_increased_2020; @zohner_how_2021], and that positive effects of warm springs are compensated by negative effects of accumulation of seasonal water deficits[@buermann_widespread_2018], suggest that warmer spring temperatures may not have the expected positive effect on C sequestration in trees.
 
 While the responses of leaf phenology and seasonal _NEE_ to warming spring temperatures have been relatively well-studied[@jeong_phenology_2011; @keenan_net_2014; @buermann_widespread_2018; @ibanez_forecasting_2010; @menzel_european_2006; @menzel_growing_1999], we know very little about how the longest-lived component of fixed carbon in trees, the woody growth, is responding to warming spring temperatures. 
-In fact, we know little about the stem-growth phenology of temperate deciduous species, with multi-year records of growth phenology having been published for only one site *(to our knowledge)*[@dorangeville_peak_2021]. <!-- I'm not aware of any others, but we do want to make sure we're not missing anything. klesse_integrating_2016 and martin_hydrometeorology_2017 both do this, but for conifers.-->
+In fact, we know little about the stem-growth phenology of temperate deciduous species, with multi-year records of growth phenology having been published for only one site to our knowledge[@dorangeville_peak_2021]. <!-- I'm not aware of any others, but we do want to make sure we're not missing anything. klesse_integrating_2016 and martin_hydrometeorology_2017 both do this, but for conifers.-->
 The climate sensitivity of woody growth phenology in temperate deciduous trees and its link to annual growth has never been studied *in-situ* (but see Ref.[@zohner_how_2021] for a controlled sapling experiment).
 
 Tree-ring records, which can be used to examine correlations of annual growth to temperature but not to understand growth phenology, reveal that growth of temperate deciduous trees tends to be most sensitive to temperature or potential evapotranspiration between late spring and early summer[@dorangeville_drought_2018;@helcoski_growing_2019],
@@ -171,7 +173,7 @@ Here, we evaluate how early spring temperatures affect stem growth phenology, gr
 
 ## Dendrometer band analysis {-#Dendrometer} 
 
-Using dendrometer band measurements taken throughout multiple growing seasons at the Smithsonian Conservation Biology Institute (SCBI; Virginia, USA; n = **125** trees from 2011-2020) and Harvard Forest (Massachusetts, USA; n = **340** trees from 1998-2003), we fit a logistic growth model[@mcmahon_general_2015] to determine the days of year when 25, 50, and 75% annual growth were achieved ($DOY_{25}$, $DOY_{50}$, $DOY_{75}$), peak growing season length ($L_{pgs}= DOY_{75}$-$DOY_{25}$), the maximum daily growth rates ($g_{max}$) and the DOY on which it occurred ($DOY_{g_{max}}$), and total annual increment in diameter at breast height ($\Delta DBH$; Fig. `r schematic_summary`). 
+Using dendrometer band measurements taken throughout multiple growing seasons at the Smithsonian Conservation Biology Institute (SCBI; Virginia, USA; n = `r n_dendro_trees_SCBI` trees from 2011-2020) and Harvard Forest (Massachusetts, USA; n = `r n_dendro_trees_HF` trees from 1998-2003), we fit a logistic growth model[@mcmahon_general_2015] to determine the days of year when 25, 50, and 75% annual growth were achieved ($DOY_{25}$, $DOY_{50}$, $DOY_{75}$), peak growing season length ($L_{pgs}= DOY_{75}$-$DOY_{25}$), the maximum daily growth rates ($g_{max}$) and the DOY on which it occurred ($DOY_{g_{max}}$), and total annual increment in diameter at breast height ($\Delta DBH$; Fig. `r schematic_summary`). 
 This analysis was performed separately for ring- and diffuse-porous species, which differ in growth phenology[@dorangeville_peak_2021]. These stem-growth milestones were compared to canopy foliage phenology (measured at ecosystem level via remote sensing).
 
 ![**Figure 1 | Summary of tree growth changes under warmer spring temperatures.** (a) Schematic illustrating parameters of interest and summarizing how each responds to warmer maximum temperatures during a 'critical temperature window', defined as the period with the strongest control over $DOY_{25}$; (b) Variable definitions and summary responses to warmer spring temperatures at two temperate forests and for two groups of broadleaf deciduous species (RP=ring porous; DP=diffuse porous), where up and down arrows indicate significant (determined by whether the posterior credible interval included 0 or not) increases and decreases, respectively, '-' indicates no significant correlation, and 'mixed' indicates a mix of significant and non-significant correlations, often in different directions.](tables_figures/schematic_summary_with_table.png){ width=70% }
@@ -322,8 +324,7 @@ At SCBI a higher proportion of ring-porous trees were removed, the majority fall
 
 <!-- Leaf phenology -->
 
-Canopy foliage phenology data for the years 2001-2018 were extracted for SCBI and Harvard Forest from the MCD12Q2 V6 Land Cover Dynamics product (a.k.a. MODIS Global Vegetation Phenology product)[@friedl_mcd12q2_2019]  via Google Earth Engine. Using daily MODIS 2-band Enhanced Vegetation Index data (EVI2) at a spatial resolution of 500m, the product yields the timing of phenometrics (vegetation phenology) over each year, including timing of greenup, midgreenup, and senescence as used in this study.
-
+Canopy foliage phenology data for the years 2001-2018 were extracted for SCBI and Harvard Forest from the MCD12Q2 V6 Land Cover Dynamics product (a.k.a. MODIS Global Vegetation Phenology product)[@friedl_mcd12q2_2019] via Google Earth Engine. Data were extracted for the pixel containing the NEON tower at each site. Using daily MODIS 2-band Enhanced Vegetation Index data (EVI2) at a spatial resolution of 500m, the product yields the timing of phenometrics (vegetation phenology) over each year, including timing of greenup, midgreenup, and senescence as used in this study. 
  <!--Climate -->
  
 *ADD SOMETHING ON HOW STANDARD PRECIPITAITON EVAPOTRANSPIRATIN INDEX WAS FOUND*!!!!
