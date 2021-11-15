@@ -379,10 +379,13 @@ Again, records were limited to broadleaf deciduous species with clearly defined 
 
 *KRISTA can you confirm if the following sentence is describing the transformation from trw into RWI? If it is, we can define RWI here* 
 
-We standardized ring-width series from each core via ARSTAN using a 2/3rds $n$ spline, where $n$ is the number of years in the series [@cook_time_1985; @cook_methods_1990]. 
-~~Chronologies were built using the methods described in Helcoski et al. (2019)[@helcoski_growing_2019].~~
-~~*The influence of outliers in all series was reduced using the adaptive power transformation, which also stabilises the variance over time (Cook & Peters, 1997). Next, each series was stabilised using either the average correlation between raw ring-width series (rbar) method or a 1/ 3rds spline method to adjust changes in variance as series replica- tion decreased towards the earlier portion of each chronology (Jones et al., 1997). The 1/3rds spline method was chosen when replication in the inner portion of each chronology (c. the inner 30–50 yr of each record depending on full chronology length) dropped below three trees. Once that step was complete, a robust biweight mean chronology for each species was calculated from the ring-width indices (Cook, 1985).*~~ 
-We defined chronology start year (`r  EDT_species`) as the year where subsample signal strength (SSS) passed a threshold of SSS = 0.8, or where $\ge$ 80% of the population signal was captured in the chronology.
+A 2/3rds _n_ spline was applied to each core using ARSTAN to produce standardized ring-width series; _n_ is the number of years in each series[@cook_time_1985; @cook_methods_1990].
+An adaptive power transformation, a process that also stabilises the variance over time[@cook_calculating_1997], was used to minimize the influence of outliers in all series. 
+Low series replication, often in the earliest portions of a chronology collection, can also inflate the variance of tree-ring records [@jones_estimating_1997].
+The 1/3rds spline method was chosen when replication in the inner portion of each chronology (ca. inner 30–50 yr of each record depending on full chronology length) was less than three trees. 
+When replication was greater than that, we used the average correlation between raw ring-width series (rbar) method.
+The robust biweight mean chronology for each species was calculated from the ring-width indices following variance stabilisation[@cook_time_1985].
+We defined chronology start year (Extended Data Table 1) as the year where subsample signal strength (SSS) passed a threshold of SSS = 0.8, or where $\ge$ 80% of the population signal was captured in the chronology.
 
 <!--QUILT PLOT METHODS-->
 Correlations between monthly climate and $RWI$ were assessed using ‘dplR’[@bunn_dendrochronology_2008] and ‘bootRes’[@zang_dendroclimatic_2013] in R v 4.0 (R Core Team, 2020), which correlated functions and bootstrapped confidence intervals for these relationships[@biondi_dendroclim2002_2004].
