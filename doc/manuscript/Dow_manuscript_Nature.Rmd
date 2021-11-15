@@ -162,16 +162,18 @@ While the responses of leaf phenology and seasonal _NEE_ to warming spring tempe
 In fact, only one study has documented stem-growth phenology of temperate deciduous species over multiple years[@dorangeville_peak_2021]. <!-- I'm not aware of any others, but we do want to make sure we're not missing anything. klesse_integrating_2016 and martin_hydrometeorology_2017 both do this, but for conifers.-->
 The climate sensitivity of woody growth phenology in temperate deciduous trees and its link to annual growth has never been studied *in-situ* (but see Ref.[@zohner_how_2021] for a controlled sapling experiment).
 
-<!-- KAT paused here.-->
-
 Tree-ring records, which can be used to examine correlations of annual growth to temperature but not to understand growth phenology, reveal that growth of temperate deciduous trees tends to be most sensitive to temperature or potential evapotranspiration between late spring and early summer[@dorangeville_drought_2018;@helcoski_growing_2019],
 <!-- dorangeville_drought_2018 looks at PET.-->
 with some hints that warmer springs may have a modest positive effect on growth[@helcoski_growing_2019].
 <!-- add more refs here, but only if already cited elsewhere (to keep n references down-->
-Thus, tree-ring evidence does not necessarily align with the finding that warming spring temperatures increase annual forest CO~2~ uptake[@keenan_net_2014]. 
+Thus, tree-ring evidence does not necessarily align with the finding that warming spring temperatures increase annual forest CO~2~ uptake[@keenan_net_2014].
 Characterizing phenological responses of stem growth to warming spring temperatures is critical to bridging this conceptual disconnect and understanding how forest biomass growth is likely to change as the climate warms.
 
-Here, we evaluate how early spring temperatures affect stem growth phenology, growth rates, and annual growth of temperate deciduous trees in two forests and annual growth across forests spanning eastern North America. To test the assumption that warmer springs lead to an extension of the growing season we used measurements from 465 dendrometer bands across two deciduous mid-atlantic forests. To test whether spring temperatures were consistently positively correlated with annual ring-width Index (RWI; tree-ring width which has been standardized for age) we used `r n_chronologies` tree-ring chronologies from `r n_cores_sites` forests across eastern North America.     
+<!-- KAT paused here.-->
+
+Here, we evaluate how early spring temperatures affect stem growth phenology, growth rates, and annual growth of temperate deciduous trees in two forests and annual growth across forests spanning eastern North America. 
+To test the assumption that warmer springs extend the period of stem growth, we used measurements from 465 dendrometer bands across two deciduous forests. 
+To test whether spring temperatures were consistently positively correlated with annual ring-width Index (RWI; tree-ring width which has been standardized for age) we used `r n_chronologies` tree-ring chronologies from `r n_cores_sites` forests across eastern North America.     
 
 ## Dendrometer band analysis {-#Dendrometer} 
 
