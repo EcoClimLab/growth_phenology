@@ -418,6 +418,3 @@ Correspondence and requests for materials should be addressed to Kristina Anders
 
 
 # References {-#References} 
-
-*I can't figure out how to get this into zotero yet :(*
-Stan Development Team. 2019. Stan Modeling Language Users Guide and Reference Manual, 2.28. https://mc-stan.org
