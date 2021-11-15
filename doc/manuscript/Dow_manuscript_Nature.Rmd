@@ -331,7 +331,7 @@ Canopy foliage phenology data for the years 2001-2018 were extracted for SCBI an
 
 For the dendrometer band analysis, climate data corresponding to the measurement periods at both sites were obtained from local weather stations. 
 For SCBI, weather data were obtained from a meteorological tower adjacent to the SCBI ForestGEO plot, via the ForestGEO Climate Data Portal v1.0 (https://forestgeo.github.io/Climate/)[@anderson-teixeira_forestgeo_2020]. 
-The R package *clim.pact*[@climpact_REF; @benestad_empiricalstatistical_2008] was used to plot temperatures for visual inspection and to identify readings that were >3 standard deviations away from yearly means, which were labeled as outliers and removed from the dataset. 
+The R package *climpact* (see www.climpact-sci.org)[@benestad_empiricalstatistical_2008] was used to plot temperatures for visual inspection and to identify readings that were >3 standard deviations away from yearly means, which were labeled as outliers and removed from the dataset. 
 Gaps in the SCBI meteorological tower data were subsequently filled using temperature readings obtained from a National Center for Environmental Information (NCEI) weather station located in Front Royal, Virginia (https://www.ncdc.noaa.gov/cdo-web/datasets/GHCND/stations/GHCND:USC00443229/detail). 
 For each site, we extracted daily maximum ($T_{max}$) and minimum temperatures ($T_{min}$).
 Daily temperature records for Harvard Forest were obtained from the Harvard Forest weather station[@boose_shaler_2021; @boose_fisher_2021]. 
@@ -356,7 +356,7 @@ Correlation between the dendroband-derived growth parameters ($DOY_{25}$, $DOY_{
 Analyses were run for both $T_{max}$ and $T_{min}$, with qualitatively similar results, but we present only results for $T_{max}$, which had overall stronger correlation with growth parameters. 
 Mixed effects models were used to test the response of growth phenology variables to fixed effects of xylem porosity and mean $T_{max}$ (or $T_{min}$) during the critical temperature window selected by *climwin*, along with random effects of species and of individual tree. 
 We ran separate models for each species group at each site, and for the response of all growth phenology variables to $T_{max}$ (or $T_{min}$). 
-This mixed-effect model was run within a hierarchical Bayesian framework and fit using the `rstanarm` R interface to the Stan programming language[@gabry_rstanarm_2020]. In all cases unless otherwise specified, all prior distributions are set to be the weakly informative defaults. 
+This mixed-effect model was run within a hierarchical Bayesian framework and fit using the `rstanarm` R interface to the Stan programming language[@gabry_rstanarm_2020; @stan_development_team_stan_2019]. In all cases unless otherwise specified, all prior distributions are set to be the weakly informative defaults. 
 <!--
 TODO added by Bert: Whereever we specify model details, include details about prior from here:
 https://cran.r-project.org/web/packages/rstanarm/vignettes/priors.html#default-weakly-informative-prior-distributions
@@ -378,7 +378,8 @@ Again, records were limited to broadleaf deciduous species with clearly defined 
 *KRISTA can you confirm if the following sentence is describing the transformation from trw into RWI? If it is, we can define RWI here* 
 
 We standardized ring-width series from each core via ARSTAN using a 2/3rds $n$ spline, where $n$ is the number of years in the series [@cook_time_1985; @cook_methods_1990]. 
-Chronologies were built using the methods described in Helcoski et al. (2019)[@helcoski_growing_2019].
+~~Chronologies were built using the methods described in Helcoski et al. (2019)[@helcoski_growing_2019].~~
+~~*The influence of outliers in all series was reduced using the adaptive power transformation, which also stabilises the variance over time (Cook & Peters, 1997). Next, each series was stabilised using either the average correlation between raw ring-width series (rbar) method or a 1/ 3rds spline method to adjust changes in variance as series replica- tion decreased towards the earlier portion of each chronology (Jones et al., 1997). The 1/3rds spline method was chosen when replication in the inner portion of each chronology (c. the inner 30–50 yr of each record depending on full chronology length) dropped below three trees. Once that step was complete, a robust biweight mean chronology for each species was calculated from the ring-width indices (Cook, 1985).*~~ 
 We defined chronology start year (`r  EDT_species`) as the year where subsample signal strength (SSS) passed a threshold of SSS = 0.8, or where $\ge$ 80% of the population signal was captured in the chronology.
 
 <!--QUILT PLOT METHODS-->
