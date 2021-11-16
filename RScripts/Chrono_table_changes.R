@@ -48,10 +48,10 @@ tmx_quilt_plot_data <- tmx_quilt_plot_data[,c(19,12,2,20)]
 tmx_quilt_plot_data <- tmx_quilt_plot_data %>%
   pivot_wider(id_cols = group,
               names_from = month,
-              values_from = c(coef, sig)) %>%
-  rename(Number = group)
+              values_from = c(coef, sig)) #%>%
+ # rename(Number = group)
 
-chronology_table <- left_join(chronology_table, tmx_quilt_plot_data, by = "Number")
+chronology_table <- left_join(chronology_table, tmx_quilt_plot_data, by = "group")
 
 chronology_table <- chronology_table %>%
   rename(January = coef_curr.jan,
@@ -70,5 +70,5 @@ chronology_table <- chronology_table %>%
          "June Sig" = sig_curr.jun,
          "July Sig" = sig_curr.jul,
          "August Sig" = sig_curr.aug)
-chronology_table <- chronology_table[, c(1:14, 15, 23, 16, 24, 17, 25, 18, 26, 19, 27, 20, 28, 21, 29, 22, 30)]
+chronology_table <- chronology_table[, c(1:8, 9,17,10,18,11,19,12,20,13,21,14,22,15,23,16,24)]
 write.csv(chronology_table, file = "Doc/manuscript/tables_figures/chronology_table.csv", row.names = FALSE)
