@@ -8,13 +8,8 @@ output:
     #toc_depth: 2  
 header-includes:  \usepackage{float}
                   \usepackage{caption}
-                  \captionsetup[table]{font=footnotesize}
-                  \captionsetup[figure]{font=footnotesize}
                   \captionsetup[figure]{labelformat=empty}
                   \captionsetup[table]{labelformat=empty}
-                  \usepackage{pdflscape}
-                  \newcommand{\blandscape}{\begin{landscape}}
-                  \newcommand{\elandscape}{\end{landscape}}
 ---
 ```{r eval = TRUE, echo=FALSE, warning=FALSE, results='hide'}
 path_to_results <- paste0(dirname(dirname(getwd())), "/results/") #I was trying to read directly from results folder, but couldn't get it working.
@@ -126,16 +121,16 @@ kable_styling(latex_options = c("scale_down", "hold_position"), protect_latex = 
 
 \newpage
 
-![**Extended Data Figure 4 | Response of the timing of stem growth phenology to spring temperatures.** Relationships between critical temperature window (CTW) $T_max$ and 25%, 50%, and 75% total stem growth (first row), the length of the peak growing season ($L_pgs$; second row), maximum growth rate ($g_max$; third row), and total seasonal radial stem growth ($\Delta DBH$; fourth row) are shown. Posterior predictions of each variable that did not include zero are represented with solid lines, while those that do include zero use dotted lines. 95% credible intervals are represented by bands. The days of year on which 25%, 50% and 75% of annual growth were acheived ($DOY_{25}$, $DOY_{50}$, and $DOY_{75}$, respectively) declined significantly with mean $T_{max}$ during their respective CTW. For each CTW $T_{max}$. Modeled values from dendrometer band measurements are represented by dots.](tables_figures/pheno_Tsensitivity_combo_patchwork_AIC.png){ width=90% }
+![**Extended Data Figure 4 | Response of the timing of stem growth phenology to mean maximum temperatures during the critial temperature window (CTW).** Relationships between critical temperature window (CTW) $T_max$ and 25%, 50%, and 75% total stem growth (first row), the length of the peak growing season ($L_pgs$; second row), maximum growth rate ($g_max$; third row), and total seasonal radial stem growth ($\Delta DBH$; fourth row) are shown. Posterior predictions of each variable that did not include zero are represented with solid lines, while those that do include zero use dotted lines. 95% credible intervals are represented by bands. The days of year on which 25%, 50% and 75% of annual growth were acheived ($DOY_{25}$, $DOY_{50}$, and $DOY_{75}$, respectively) declined significantly with mean $T_{max}$ during their respective CTW. For each CTW $T_{max}$. Modeled values from dendrometer band measurements are represented by dots.](tables_figures/pheno_Tsensitivity_combo_patchwork_AIC.png){ width=90% }
 
 \newpage
 
-![**Extended Data Figure 5 | Relationship between growth parameters and mean maximum temperature in April (SCBI) or May (HF). Relationships between critical temperature window (CTW) $T_max$ and 25%, 50%, and 75% total stem growth (first row), the length of the peak growing season ($L_pgs$; second row), maximum growth rate ($g_max$; third row), and total seasonal radial stem growth ($\Delta DBH$; fourth row) are shown. Posterior predictions of each variable that did not include zero are represented with solid lines, while those that do include zero use dotted lines. 95% credible intervals are represented by bands.](tables_figures/pheno_Tsensitivity_combo_patchwork_april.png){ width=90% }
+![**Extended Data Figure 5 | Relationship between growth parameters and mean maximum temperatures in April.** Relationships between critical temperature window (CTW) $T_max$ and 25%, 50%, and 75% total stem growth (first row), the length of the peak growing season ($L_pgs$; second row), maximum growth rate ($g_max$; third row), and total seasonal radial stem growth ($\Delta DBH$; fourth row) are shown. Posterior predictions of each variable that did not include zero are represented with solid lines, while those that do include zero use dotted lines. 95% credible intervals are represented by bands.](tables_figures/pheno_Tsensitivity_combo_patchwork_april.png){ width=90% }
 
 \newpage
 
-![Extended Data Figure 6 | Sensitivity of annual growth, as derived from tree-rings, to monthly minimum temperatures of the current year for 208 chronologies from 114 sites across eastern North America (Extended Data Figure 1). Chronologies are grouped by xylem porosity and ordered by mean April T_max. Chronology details are given in `r chron_table`.](tables_figures/tree_rings_tmin.png){ width=90% } 
+![**Extended Data Figure 6 | Sensitivity of annual growth, as derived from tree-rings, to monthly minimum temperatures of the current year for 208 chronologies from 114 sites across eastern North America** (Extended Data Figure 1). Chronologies are grouped by xylem porosity and ordered by mean April T_max. Chronology details are given in `r chron_table`.](tables_figures/tree_rings_tmin.png){ width=90% } 
 
 \newpage
 
-![Extended Data Figure 7 | Sensitivity of annual growth, as derived from tree-rings, to monthly maximum temperatures of the current and past year for 208 chronologies from 114 sites across eastern North America (Extended Data Figure 1). Chronologies are grouped by xylem porosity and ordered by mean April T_max. Chronology details are given in `r chron_table`.](tables_figures/tree_rings_tmax_extended.png){ width=90% } 
+![**Extended Data Figure 7 | Sensitivity of annual growth, as derived from tree-rings, to monthly maximum temperatures of the current and past year for 208 chronologies from 114 sites across eastern North America** (Extended Data Figure 1). Chronologies are grouped by xylem porosity and ordered by mean April T_max. Chronology details are given in `r chron_table`.](tables_figures/tree_rings_tmax_extended.png){ width=90% } 
