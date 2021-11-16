@@ -169,10 +169,9 @@ with some hints that warmer springs may have a modest positive effect on growth[
 Thus, tree-ring evidence does not necessarily align with the finding that warming spring temperatures increase annual forest CO~2~ uptake[@keenan_net_2014].
 Characterizing phenological responses of stem growth to warming spring temperatures is critical to bridging this conceptual disconnect and understanding how forest biomass growth is likely to change as the climate warms.
 
-
 Here, we evaluate how early spring temperatures affect stem growth phenology, growth rates, and annual growth of temperate deciduous trees across eastern North America. 
 To test whether warmer springs extend the period of stem growth, we used dendrometer band measurements on `r n_dendro_trees` trees across two mid-latitude forests. 
-To test whether spring temperatures consistently increased annual growth, we used `r n_chronologies` tree-ring chronologies from `r n_cores_sites` forests. 
+To test whether spring temperatures consistently increased annual growth, we analyzed `r n_chronologies` tree-ring chronologies from `r n_cores_sites` forests. 
 
 <!-- KAT paused here.-->
 
