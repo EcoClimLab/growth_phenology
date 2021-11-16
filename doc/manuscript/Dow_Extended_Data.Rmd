@@ -56,12 +56,14 @@ tree_ring_summary_caption =  "Extended Data Table 3 | Summary of tree-ring chron
 ```{r species_table, eval=TRUE, echo=FALSE, warning=FALSE}
 library(knitr)
 library(kableExtra)
-species_table <- read.csv(file = "tables_figures/species_table.csv", col.names = c("site", "xylem porosity","species", "species code", "n trees", "n tree-years", "n cores", "date range"),  stringsAsFactors = FALSE, check.names = FALSE)
+species_table <- read.csv(file = "tables_figures/species_table.csv", col.names = c("site", " ","species", "species code", "n trees", "n tree-years", "n cores", "date range"),  stringsAsFactors = FALSE, check.names = FALSE) 
+species_table <- species_table[c(2:3, 5:8)] #subset(species_table, select = -c(Species code) )#remove columns that shouldn't be included
+
 kable(species_table, caption = species_table_caption ,  format = "latex", booktabs = TRUE,  escape = F) %>%
-add_header_above(c(" ", " ", " ", " ", "dendrometer bands" = 2, "tree cores"=2 )) %>%
-  pack_rows("", 1, 10, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
+add_header_above(c( " ", " ", "dendrometer bands" = 2, "tree cores"=2 )) %>%
+  pack_rows("SCBI", 1, 10, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
   pack_rows("", 11, 12, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
-  pack_rows("", 13, 15, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
+  pack_rows("Harvard Forest", 13, 15, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
   pack_rows("", 16, 23, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
 kable_styling(latex_options = c("scale_down", "hold_position"), protect_latex = T) 
 ```
