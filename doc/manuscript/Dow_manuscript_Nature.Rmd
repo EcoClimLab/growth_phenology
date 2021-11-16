@@ -133,7 +133,7 @@ n_chronologies_HF <- 4
 
 \newpage
 
-<!--NOTE: We're probably pretty close to the upper length limit. The typical length of an article with 3-4 modest display items (figures and tables) is 2000-2500 words (summary paragraph plus body text). We're currently at ~2652 words and 1 modest + 2 large display items. Articles typically have 30-50 references (currently ok there)-->
+<!--NOTE: We're probably pretty close to the upper length limit. The typical length of an article with 3-4 modest display items (figures and tables) is 2000-2500 words (summary paragraph plus body text). We're currently at ~2652 words and 1 modest + 2 large display items. Articles typically have 30-50 references (currently ok there-- n= 48)-->
 
 
 <!-- Articles start with a fully referenced summary paragraph, ideally of no more than 200 words, which is separate from the main text and avoids numbers, abbreviations, acronyms or measurements unless essential. It is aimed at readers outside the discipline. This summary paragraph should be structured as follows: 2-3 sentences of basic-level introduction to the field; a brief account of the background and rationale of the work; a statement of the main conclusions (introduced by the phrase 'Here we show' or its equivalent); and finally, 2-3 sentences putting the main findings into general context so it is clear how the results described in the paper have moved the field forwards. Please refer to our annotated example  to see how the summary paragraph should be constructed.-->
@@ -289,12 +289,12 @@ The climate is temperate continental, with 1950-2019 mean annual precipitation o
 Metal dendrometer bands were installed on 941 trees within the SCBI and Harvard Forest ForestGEO plots.
 Bands were placed on dominant species, including two diffuse- and two ring-porous species at SCBI and eight diffuse- and three ring-porous species at Harvard Forest (`r EDT_species`).
 Bands were measured with a digital caliper approximately every 1-2 weeks within the growing season from 2011-2020 at SCBI and 1998-2003 at Harvard Forest. 
-The number of bands measured at each site fluctuated slightly as trees were added or dropped (e.g., because of tree mortality) from the census. 
+The number of bands measured at each site fluctuated slightly as trees were added or dropped from the census (e.g., because of tree mortality). 
 Across years, the number of bands sampled averaged 129 (range: 91-138) at SCBI and 717 (range: 700-755) at Harvard Forest. <!--verified - these are the pre-cleaning numbers-->
 In total, our analysis included `r n_tree_years` tree-years (`r  EDT_species`).
 
 Measurements were timed to begin before the beginning of spring growth and to continue through the cessation of growth in the fall. 
-At SCBI, the median start date was April 14, which was adjusted when early leaf-out of understory vegetation was observed, with the earliest start date being March 30 (in 2020). 
+At SCBI, the median start date was April 14, which was adjusted forward when early leaf-out of understory vegetation was observed, with the earliest start date being March 30 (in 2020). 
 Measurements were continued through to fall leaf senescence, with the median end date being October 17 and the latest end date November 26 (2012). 
 Timing of measurements at Harvard Forest were similar, with the median start date of April 23 and median end date of October 30. 
 1998 was an anomalous year where initial measurements were taken on January 5, but not taken again until April 15. 
@@ -304,17 +304,18 @@ The raw dendrometer band data were manually inspected before analysis.
 We screened the data for three classes of errors. 
 First, when a measurement was drastically different from previous and following measurements, it was assumed to be a human error and the datapoint was removed.
 Second, when measurements remained essentially unchanged for several readings, followed by a sudden jump then return to a normal growth pattern, this was assumed to be a case where the band was stuck on the tree bark and then released. In these cases, the full annual record for the tree was removed.
-Third, data points that deviated substantially from normal growth patterns, but had unknown causes, were removed. If a majority of the data points fell into this class within a tree-year, the entire year was removed from the analysis.
+Third, data points that deviated substantially from normal growth patterns, but for unknown causes, were removed. 
+If a majority of the data points fell into this class within a tree-year, the entire year was removed from the analysis.
 
-We fit a five-parameter logistic growth model[@mcmahon_general_2015] to dendrometer band data from each tree-year to define phenological dates and growth rates (Fig. `r schematic_summary`). In particular, we model the observed diameter at breast height (DBH) on a given day of the year (DOY; i.e. julian days) as: 
+We fit a five-parameter logistic growth model[@mcmahon_general_2015] to dendrometer band data from each tree-year to define phenological dates and growth rates (Fig. `r schematic_summary`). In particular, we model the observed diameter at breast height (DBH) on a given day of the year (DOY; *i.e.*, julian days) as: 
 $$ DBH = L + \frac{K - L} { 1 + 1/\theta \cdot exp[-r(DOY - DOY_{ip}) / \theta)] ^ \theta}$$ 
 Here, $L$ and $K$ are lower and upper asymptotes of the model, corresponding to DBH at the beginning and end of the year, respectively. 
 $DOY_{ip}$ is the day of year where the inflection point in growth rate occurs,
-$r$ *shapes the slope of the curve at the inflection point*,
+$r$ shapes the slope of the curve at the inflection point,
 and $\theta$ is a tuning parameter controlling the slope of the curve toward the upper asymptote. 
-*We note that the DOY on which maximum growth occurs, $DOY_{g_{max}}$ (Fig. `r schematic_summary`), occurs on $DOY_{ip}$ only when $\theta = 1$.*
-The model was fit in R v 4.0 using the functions developed in the Rdendrom package[@mcmahon_general_2015]. These functions take the time-series of manual dendrometer band measurements and return maximum-likelihood optimized values of the above five parameters that best predict DBH for each day of year. 
-We then modeled DBH using these optimal parameter values in our logistic growth model and extracted the intra-annual growth variables of interest detailed in Fig. 1. 
+The DOY on which maximum growth occurs, $DOY_{g_{max}}$ (Fig. `r schematic_summary`), occurs on $DOY_{ip}$ when $\theta = 1$.
+The model was fit in R v4.0 using the functions developed in the *Rdendrom* package[@mcmahon_general_2015]. These functions take the time-series of manual dendrometer band measurements and return maximum-likelihood optimized values of the above five parameters that best predict DBH for each day of year. 
+We then modeled DBH using these optimal parameter values in our logistic growth model and extracted the intra-annual growth variables of interest (Fig. `r schematic_summary`). 
 
 After fitting the growth model, we removed tree-years with poor fits. 
 Models were judged to be poorly fit if certain modeled growth characteristics fell outside of the logical range. 
@@ -325,7 +326,7 @@ Modeled fits for tree-years were removed under five conditions:
 (4) model fit predicted total yearly growth to take longer than 365 days, indicating poor model fit (SCBI = 150, Harvard Forest = 199); 
 and (5) models with unexplained sharp spikes in growth rate (SCBI = 0, Harvard Forest = 3). 
 At Harvard Forest the tag years removed through this method were proportional to the original sample size, indicating that no species or size class was disproportionately removed compared to others. 
-An additional two tree-years were removed from SCBI because they were poor fits missed using the previous cleaning criteria. 
+*An additional two tree-years were removed from SCBI because they were poor fits missed using the previous cleaning criteria.* 
 At SCBI a higher proportion of ring-porous trees were removed, the majority falling under condition 4. 
 
 <!-- Leaf phenology -->
