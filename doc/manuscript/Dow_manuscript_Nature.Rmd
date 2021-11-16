@@ -365,7 +365,7 @@ Mixed effects models were used to test the response of growth phenology variable
 We ran separate models for each species group at each site, and for the response of all growth phenology variables to $T_{max}$ (or $T_{min}$). 
 This mixed-effect model was run within a hierarchical Bayesian framework and fit using the `rstanarm` R interface to the Stan programming language[@gabry_rstanarm_2020; @stan_development_team_stan_2019]. In all cases unless otherwise specified, all prior distributions are set to be the weakly informative defaults. 
 <!--
-TODO added by Bert: Whereever we specify model details, include details about prior from here:
+More information on rstanarm's default weakly informative priors:
 https://cran.r-project.org/web/packages/rstanarm/vignettes/priors.html#default-weakly-informative-prior-distributions
 -->
 
