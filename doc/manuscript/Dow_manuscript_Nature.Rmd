@@ -333,9 +333,9 @@ At SCBI, a higher proportion of ring-porous trees were removed, the majority fal
 
 Canopy foliage phenology data for the years 2001-2018 were extracted for SCBI and Harvard Forest from the MCD12Q2 V6 Land Cover Dynamics product (a.k.a. MODIS Global Vegetation Phenology product)[@friedl_mcd12q2_2019] via Google Earth Engine. 
 Extracted pixels were those containing the NEON tower at each site. 
-Using daily MODIS 2-band Enhanced Vegetation Index data (EVI2) at a spatial resolution of 500m, the product yields the timing of phenometrics (vegetation phenology) over each year, including timing of greenup, midgreenup, and senescence as used in this study. 
- 
- <!--Climate -->
+Using daily MODIS 2-band Enhanced Vegetation Index data (EVI2) at a spatial resolution of 500m, the product yields the timing of phenometrics (vegetation phenology) over each year, including timing of greenup, midgreenup, and senescence as used in this study.
+
+<!--Climate -->
 For the dendrometer band and leaf phenology analyses, climate data corresponding to the measurement periods were obtained from local weather stations at each focal site. 
 For SCBI, weather data were obtained from a meteorological tower adjacent to the ForestGEO plot, via the ForestGEO Climate Data Portal v1.0 (https://forestgeo.github.io/Climate/)[@anderson-teixeira_forestgeo_2020]. 
 The R package *climpact* (see www.climpact-sci.org)[@benestad_empiricalstatistical_2008] was used to plot temperatures for visual inspection and to identify readings that were >3 standard deviations away from yearly means, which were labeled as outliers and removed from the dataset. 
@@ -343,14 +343,8 @@ Gaps in the SCBI meteorological tower data were subsequently filled using temper
 Daily temperature records for Harvard Forest, which had already been gap-filled based on other local records, were obtained from the Harvard Forest weather station[@boose_shaler_2021; @boose_fisher_2021]. 
 For each site, we used records of daily maximum ($T_{max}$) and minimum temperatures ($T_{min}$).
 
-To rule out the possibility that observed patterns were strongly influenced by summer drought, we examined the relationship between spring tempreatures and summer Standardized Precipitation Evapotranspiration Index[@vicente-serrano_multiscalar_2010].
-The latter was obtained from the ForestGEO Climate Data Portal v1.0 (https://forestgeo.github.io/Climate/)[@anderson-teixeira_forestgeo_2020]. 
-*ADD SOMETHING ON HOW STANDARD PRECIPITAITON EVAPOTRANSPIRATIN INDEX WAS FOUND*!!!!
-
-For the tree core analysis, we obtained monthly $T_{max}$ and $T_{min}$ data for 1901-2019 from CRU v.4.04 [@harris_version_2020].
 
 <!-- Determining critical temperature windows -->
-
 The critical temperature window (Fig. `r schematic_summary`), defined as the period over which $T_{max}$ was most strongly correlated with $DOY_{25}$, was determined using the R package *climwin*[@vandepol_identifying_2016]. 
 This package tests the correlation between one or more predictor climate variable and a biological outcome variable over all consecutive time windows within a specified time-frame. It does so by reporting the correlation and $\Delta AICc$, the difference in Akaike Information Criterion corrected for small sample size relative to a null model for each window. 
 The variable and time window yielding the biggest $\Delta AICc$ are selected for our critical temperature window. Here, we tested for correlation between temperature predictor variables ($T_{max}$, $T_{min}$) and biological outcome variable $DOY_{25}$ over the time-frame from January 1 to the mean $DOY_{25}$ for the species group (by xylem porosity) and site (`r  EDT_phenology_parameters`). We selected the critical temperature window that had the lowest $\Delta AICc$.
@@ -361,7 +355,6 @@ To ensure that patterns were robust under an alternative definition of critical 
 This was consistent with the periods identified by *climwin* for ring- and diffuse-porous species groups at both sites, all of which included all or part of April (`r  EDT_phenology_parameters`).
 
 <!--Hypothesis testing -->
-
 Correlation between the dendroband-derived growth parameters ($DOY_{25}$, $DOY_{50}$, $DOY_{75}$, $DOY_{g_{max}}$, $L_{PGS}$, $g_{max}$, and $\Delta DBH$}, Fig. `r schematic_summary`) and spring temperatures were assessed using a linear mixed model in a hierarchical Bayesian framework.
 Analyses were run for both $T_{max}$ and $T_{min}$, with qualitatively similar results, but we present only results for $T_{max}$, which had overall stronger correlation with growth parameters. 
 Mixed effects models were used to test the response of growth phenology variables to fixed effects of xylem porosity and mean $T_{max}$ (or $T_{min}$) during the critical temperature window selected by *climwin*, along with random effects of species and of individual tree. 
@@ -371,6 +364,10 @@ This mixed-effect model was run within a hierarchical Bayesian framework and fit
 More information on rstanarm's default weakly informative priors:
 https://cran.r-project.org/web/packages/rstanarm/vignettes/priors.html#default-weakly-informative-prior-distributions
 -->
+
+To rule out the possibility that observed patterns were strongly influenced by summer drought, we examined the relationship between spring tempreatures and summer Standardized Precipitation Evapotranspiration Index[@vicente-serrano_multiscalar_2010].
+The latter was obtained from the ForestGEO Climate Data Portal v1.0 (https://forestgeo.github.io/Climate/)[@anderson-teixeira_forestgeo_2020]. 
+*ADD SOMETHING ON HOW STANDARD PRECIPITAITON EVAPOTRANSPIRATIN INDEX WAS FOUND*!!!!
 
 ## Tree-ring analysis {-#Tree} 
 We analyzed tree-ring records for `r n_cores_sites` sites, including our focal sites.
@@ -393,6 +390,7 @@ The robust biweight mean chronology (RWI) for each species-site combination was 
 We defined chronology start year (Extended Data Table 1) as the year where subsample signal strength (SSS) passed a threshold of SSS = 0.8, or where $\ge$ 80% of the population signal was captured in the chronology.
 
 <!--QUILT PLOT METHODS-->
+For the analysis of correlation between RWI and climate variables, we obtained monthly $T_{max}$ and $T_{min}$ data for 1901-2019 from CRU v.4.04 [@harris_version_2020].
 Correlations between monthly climate and $RWI$ were assessed using ‘dplR’[@bunn_dendrochronology_2008] and ‘bootRes’[@zang_dendroclimatic_2013] in R v 4.0 (R Core Team, 2020), which correlated functions and bootstrapped confidence intervals for these relationships[@biondi_dendroclim2002_2004].
 We analyzed these correlations for January through September of the current year (presented in Fig. `r tree_rings`, `r EDF_tree_rings_TMIN`).
 To test for potential lag effects of spring temperatures on the following year's growth, we also ran a version of the analysis extending back to include climate of every month of the previous year (`r EDF_tree_rings_TMAX_extended`).
