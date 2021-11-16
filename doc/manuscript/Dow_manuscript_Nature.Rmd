@@ -173,7 +173,6 @@ Here, we evaluate how early spring temperatures affect stem growth phenology, gr
 To test whether warmer springs extend the period of stem growth, we used dendrometer band measurements on `r n_dendro_trees` trees across two mid-latitude forests. 
 To test whether spring temperatures consistently increased annual growth, we analyzed `r n_chronologies` tree-ring chronologies from `r n_cores_sites` forests. 
 
-<!-- KAT paused here.-->
 
 ## Dendrometer band analysis {-#Dendrometer} 
 
@@ -276,12 +275,12 @@ Rather, the dominant effect of rising temperatures on forest woody productivity 
 Dendrometer band measurements were collected at SCBI[@bourg_initial_2013] and Harvard Forest[@finzi_carbon_2020;@dorangeville_peak_2021], both part of the Forest Global Earth Observatory (ForestGEO)[@anderson-teixeira_ctfsforestgeo_2015; @davies_forestgeo_2021]. 
 SCBI (38.8935° N, 78.1454° W; elevation 273–338 m.a.s.l.) is located in the Blue Ridge Mountains at the northern end of Shenandoah National Park, 5 km South of Front Royal, Virginia. 
 The forest is secondary and mixed age, having established in the mid-19th century after conversion from agricultural fields[@bourg_initial_2013]. 
-Dominant canopy species within the 25.6 ha ForestGEO plot include tulip poplar (*Liriodendron tulipifera*), oaks (*Quercus spp.*), and hickories (*Carya spp.*)[@helcoski_growing_2019]. 
+Dominant canopy species within the 25.6 ha ForestGEO plot include tulip poplar (*Liriodendron tulipifera* L.), oaks (*Quercus spp.*), and hickories (*Carya spp.*)[@helcoski_growing_2019]. 
 The climate is humid temperate, with 1950-2019 mean annual precipitation of 1018 mm and temperatures averaging 1° C in January and 24° C in July[@anderson-teixeira_joint_2021].  
 
 Harvard Forest (42.5388° N, 72.1755° W, 340-368 m.a.s.l.) is located near the central Massachusetts town of Petersham. 
 The forest is secondary and mixed age, having re-established around the beginning of the 20th century following agricultural use and significant hurricane damage in 1938. 
-Dominant species within the 35 ha ForestGEO plot are hemlock (*Tsuga canadensis*), oak (*Quercus spp.*) and red maple (*Acer rubrum*). 
+Dominant species within the 35 ha ForestGEO plot are hemlock (*Tsuga canadensis* (L.) Carrière), oak (*Quercus spp.*) and red maple (*Acer rubrum* L.). 
 The climate is temperate continental, with 1950-2019 mean annual precipitation of 1104 mm and temperatures averaging -5° C in January and 22° C in July[@anderson-teixeira_joint_2021].
 
 <!--Data collection and preparation -->
@@ -345,19 +344,20 @@ For each site, we used records of daily maximum ($T_{max}$) and minimum temperat
 
 
 <!-- Determining critical temperature windows -->
-The critical temperature window (Fig. `r schematic_summary`), defined as the period over which $T_{max}$ was most strongly correlated with $DOY_{25}$, was determined using the R package *climwin*[@vandepol_identifying_2016]. 
+The critical temperature window (CTW, Fig. `r schematic_summary`), defined as the period over which $T_{max}$ was most strongly correlated with $DOY_{25}$, was determined using the R package *climwin*[@vandepol_identifying_2016]. 
 This package tests the correlation between one or more predictor climate variable and a biological outcome variable over all consecutive time windows within a specified time-frame. It does so by reporting the correlation and $\Delta AICc$, the difference in Akaike Information Criterion corrected for small sample size relative to a null model for each window. 
-The variable and time window yielding the biggest $\Delta AICc$ are selected for our critical temperature window. Here, we tested for correlation between temperature predictor variables ($T_{max}$, $T_{min}$) and biological outcome variable $DOY_{25}$ over the time-frame from January 1 to the mean $DOY_{25}$ for the species group (by xylem porosity) and site (`r  EDT_phenology_parameters`). We selected the critical temperature window that had the lowest $\Delta AICc$.
+Here, we tested for correlation between temperature predictor variables ($T_{max}$, $T_{min}$) and biological outcome variable $DOY_{25}$ over the time-frame from January 1 to the mean $DOY_{25}$ for the species group (by xylem porosity) and site (`r  EDT_phenology_parameters`). 
+The time period yielding the lowest $\Delta AICc$ was selected as the CTW.
 Because $T_{max}$ proved to have a generally stronger influence over $DOY_{25}$ and other growth parameters, we focused on this variable in our ultimate model, as opposed to $T_{min}$.
-We focused on defining critical temperature windows for $DOY_{25}$, as opposed to other growth phenology parameters, because we were interested in the influence of temperature on the initiation of woody growth.
+We defined CTW for $DOY_{25}$, as opposed to other growth phenology parameters, because spring temperatures should have the most direct influence on this variable.
 
-To ensure that patterns were robust under an alternative definition of critical temperature window, and to parallel the monthly time windows used in our tree-ring analysis (detailed below; Fig. `r tree_rings`, `r EDF_tree_ring_figs`), we also ran analyses where we fixed the critical temperature window to be the month of April.
+To ensure that patterns were robust under an alternative definition of CTW, and to parallel the monthly time windows used in our tree-ring analysis (detailed below; Fig. `r tree_rings`, `r EDF_tree_ring_figs`), we also ran analyses where we fixed the CTW to be the month of April.
 This was consistent with the periods identified by *climwin* for ring- and diffuse-porous species groups at both sites, all of which included all or part of April (`r  EDT_phenology_parameters`).
 
 <!--Hypothesis testing -->
-Correlation between the dendroband-derived growth parameters ($DOY_{25}$, $DOY_{50}$, $DOY_{75}$, $DOY_{g_{max}}$, $L_{PGS}$, $g_{max}$, and $\Delta DBH$}, Fig. `r schematic_summary`) and spring temperatures were assessed using a linear mixed model in a hierarchical Bayesian framework.
+Correlation between the dendrometer band-derived growth parameters ($DOY_{25}$, $DOY_{50}$, $DOY_{75}$, $DOY_{g_{max}}$, $L_{PGS}$, $g_{max}$, and $\Delta DBH$}, Fig. `r schematic_summary`) and spring temperatures were assessed using a linear mixed model in a hierarchical Bayesian framework.
 Analyses were run for both $T_{max}$ and $T_{min}$, with qualitatively similar results, but we present only results for $T_{max}$, which had overall stronger correlation with growth parameters. 
-Mixed effects models were used to test the response of growth phenology variables to fixed effects of xylem porosity and mean $T_{max}$ (or $T_{min}$) during the critical temperature window selected by *climwin*, along with random effects of species and of individual tree. 
+Mixed effects models were used to test the response of growth phenology variables to fixed effects of xylem porosity and mean $T_{max}$ (or $T_{min}$) during the CTW, along with random effects of species and of individual tree. 
 We ran separate models for each species group at each site, and for the response of all growth phenology variables to $T_{max}$ (or $T_{min}$). 
 This mixed-effect model was run within a hierarchical Bayesian framework and fit using the `rstanarm` R interface to the Stan programming language[@gabry_rstanarm_2020; @stan_development_team_stan_2019]. In all cases unless otherwise specified, all prior distributions are set to be the weakly informative defaults. 
 <!--
@@ -374,7 +374,7 @@ We analyzed tree-ring records for `r n_cores_sites` sites, including our focal s
 All cores had been previously collected, cross-dated, and measured using standard collection and processing methodologies[@stokes_introduction_1968]. 
 
 Dominant tree species were cored at both SCBI[@helcoski_growing_2019;@bourg_initial_2013] and Harvard Forest[@alexander_potential_2019; @dye_comparing_2016; @finzi_carbon_2020] following sampling designs that covered a broad range of DBH.
-We analyzed records for the ring- and diffuse- porous species at each site (`r  EDT_species`), but excluded species with other xylem architectures (*Juglans nigra* L. at SCBI, *Tsuga canadensis* (L.) Carrière at Harvard Forest).
+We analyzed records for the ring- and diffuse- porous species at each site (`r  EDT_species`), but excluded species with other xylem architectures (*Juglans nigra* L. at SCBI, *Tsuga canadensis* at Harvard Forest).
 We studied a total of `r n_cores_focal_sites` cores which included `r n_chronologies_SCBI` species at SCBI and `r n_chronologies_HF` species at Harvard Forest (`r  EDT_species`).
 
 The tree-ring records from our focal sites were complemented with a much larger collection spanning `r n_cores_sites-2` deciduous and mixed forest sites in Eastern North America[@maxwell_sampling_2020;@dorangeville_drought_2018].
@@ -383,7 +383,7 @@ Again, records were limited to broadleaf deciduous species with clearly defined 
 For each species-site combination, we converted tree ring records into a dimensionless ring width index (RWI) to emphasize interannual variability associated with climate [@cook_methods_1990].
 A 2/3rds _n_ spline was applied to each core using ARSTAN to produce standardized ring-width series; _n_ is the number of years in each series[@cook_time_1985; @cook_methods_1990].
 An adaptive power transformation, a process that also stabilises the variance over time[@cook_calculating_1997], was used to minimize the influence of outliers in all series. 
-Low series replication, often in the earliest portions of a chronology collection, can also inflate the variance of tree-ring records [@jones_estimating_1997].
+Low series replication, often in the earliest portions of a chronology collection, can also inflate the variance of tree-ring records[@jones_estimating_1997].
 The 1/3rds spline method was chosen when replication in the inner portion of each chronology (ca. inner 30–50 yr of each record depending on full chronology length) was less than three trees. 
 When replication was greater than that, we used the average correlation between raw ring-width series (rbar) method.
 The robust biweight mean chronology (RWI) for each species-site combination was calculated from the ring-width indices following variance stabilisation[@cook_time_1985].
