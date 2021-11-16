@@ -324,26 +324,27 @@ Modeled fits for tree-years were removed under five conditions:
 (2) $DOY_{ip}$ was $\ge 2$ standard deviations away from the mean for its xylem architecture group, year, and site (SCBI = 53, Harvard Forest = 106); 
 (3) tree-years with small or negligible total growth ($\Delta DBH$ $\le 0.02$ mm; SCBI = 0, Harvard Forest = 66); 
 (4) model fit predicted total yearly growth to take longer than 365 days, indicating poor model fit (SCBI = 150, Harvard Forest = 199); 
-and (5) models with unexplained sharp spikes in growth rate (SCBI = 0, Harvard Forest = 3). 
+(5) models with unexplained sharp spikes in growth rate (SCBI = 0, Harvard Forest = 3); 
+and (6) poorly fit models that did not meet any of the above criteria (SCBI = 2, Harvard Forest = 0).
 At Harvard Forest the tag years removed through this method were proportional to the original sample size, indicating that no species or size class was disproportionately removed compared to others. 
-*An additional two tree-years were removed from SCBI because they were poor fits missed using the previous cleaning criteria.* 
-At SCBI a higher proportion of ring-porous trees were removed, the majority falling under condition 4. 
+At SCBI, a higher proportion of ring-porous trees were removed, the majority falling under condition 4. 
 
 <!-- Leaf phenology -->
 
-Canopy foliage phenology data for the years 2001-2018 were extracted for SCBI and Harvard Forest from the MCD12Q2 V6 Land Cover Dynamics product (a.k.a. MODIS Global Vegetation Phenology product)[@friedl_mcd12q2_2019] via Google Earth Engine. Data were extracted for the pixel containing the NEON tower at each site. Using daily MODIS 2-band Enhanced Vegetation Index data (EVI2) at a spatial resolution of 500m, the product yields the timing of phenometrics (vegetation phenology) over each year, including timing of greenup, midgreenup, and senescence as used in this study. 
+Canopy foliage phenology data for the years 2001-2018 were extracted for SCBI and Harvard Forest from the MCD12Q2 V6 Land Cover Dynamics product (a.k.a. MODIS Global Vegetation Phenology product)[@friedl_mcd12q2_2019] via Google Earth Engine. 
+Extracted pixels were those containing the NEON tower at each site. 
+Using daily MODIS 2-band Enhanced Vegetation Index data (EVI2) at a spatial resolution of 500m, the product yields the timing of phenometrics (vegetation phenology) over each year, including timing of greenup, midgreenup, and senescence as used in this study. 
  
  <!--Climate -->
-
-For the dendrometer band analysis, climate data corresponding to the measurement periods at both sites were obtained from local weather stations. 
-For SCBI, weather data were obtained from a meteorological tower adjacent to the SCBI ForestGEO plot, via the ForestGEO Climate Data Portal v1.0 (https://forestgeo.github.io/Climate/)[@anderson-teixeira_forestgeo_2020]. 
+For the dendrometer band and leaf phenology analyses, climate data corresponding to the measurement periods were obtained from local weather stations at each focal site. 
+For SCBI, weather data were obtained from a meteorological tower adjacent to the ForestGEO plot, via the ForestGEO Climate Data Portal v1.0 (https://forestgeo.github.io/Climate/)[@anderson-teixeira_forestgeo_2020]. 
 The R package *climpact* (see www.climpact-sci.org)[@benestad_empiricalstatistical_2008] was used to plot temperatures for visual inspection and to identify readings that were >3 standard deviations away from yearly means, which were labeled as outliers and removed from the dataset. 
 Gaps in the SCBI meteorological tower data were subsequently filled using temperature readings obtained from a National Center for Environmental Information (NCEI) weather station located in Front Royal, Virginia (https://www.ncdc.noaa.gov/cdo-web/datasets/GHCND/stations/GHCND:USC00443229/detail). 
-For each site, we extracted daily maximum ($T_{max}$) and minimum temperatures ($T_{min}$).
-Daily temperature records for Harvard Forest were obtained from the Harvard Forest weather station[@boose_shaler_2021; @boose_fisher_2021]. 
-Climate data for Harvard Forest were complete and used as is. 
+Daily temperature records for Harvard Forest, which had already been gap-filled based on other local records, were obtained from the Harvard Forest weather station[@boose_shaler_2021; @boose_fisher_2021]. 
+For each site, we used records of daily maximum ($T_{max}$) and minimum temperatures ($T_{min}$).
 
-
+To rule out the possibility that observed patterns were strongly influenced by summer drought, we examined the relationship between spring tempreatures and summer Standardized Precipitation Evapotranspiration Index[@vicente-serrano_multiscalar_2010].
+The latter was obtained from the ForestGEO Climate Data Portal v1.0 (https://forestgeo.github.io/Climate/)[@anderson-teixeira_forestgeo_2020]. 
 *ADD SOMETHING ON HOW STANDARD PRECIPITAITON EVAPOTRANSPIRATIN INDEX WAS FOUND*!!!!
 
 For the tree core analysis, we obtained monthly $T_{max}$ and $T_{min}$ data for 1901-2019 from CRU v.4.04 [@harris_version_2020].
