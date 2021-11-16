@@ -5,6 +5,7 @@ rm(list = ls())
 
 #tightly condensed plot by latitude.
 #Two panels, rp/dp
+set.seed(42)
 
 # load libraries ####
 library(bootRes)
@@ -30,7 +31,7 @@ crns <- read.csv("Data/tree_rings/Other/all_crns_res_1901.csv")
 # Bert approach
 crns <- read_csv("Data/tree_rings/Other/all_crns_res_1901.csv") %>%
   # clean up
-  select(-c(BearIs, OH_Gol_QUAL_1)) %>%
+  select(-c(BearIs, OH_Gol_QUAL_1,`Greenbrook_Sanctuary,_NJ_LITU_LITU`)) %>%
   rename(IL_Fer_LITU = IL_Fer_LTU)
 
 crns_long <- crns %>%

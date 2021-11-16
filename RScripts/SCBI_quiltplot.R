@@ -7,8 +7,7 @@
 # Clean environment ####
 rm(list = ls())
 
-# Set working directory ####
-setwd(".")
+set.seed(42)
 
 # Load libraries ####
 library(dplR)
@@ -27,7 +26,7 @@ save.plots <- TRUE
 save.result.table <- TRUE
 
 ## Define order of the species in the  plots, based on ANPP contribution####
-ANPP_contribution <- read.csv(text=getURL("https://raw.githubusercontent.com/SCBI-ForestGEO/SCBI-ForestGEO-Data/master/summary_data/ANPP_total_and_by_species.csv"), header=T)
+#ANPP_contribution <- read.csv(text=getURL("https://raw.githubusercontent.com/SCBI-ForestGEO/SCBI-ForestGEO-Data/master/summary_data/ANPP_total_and_by_species.csv"), header=T)
 
 #SPECIES_IN_ORDER <- toupper(ANPP_contribution$species[ ANPP_contribution$species %in% c("litu", "qual", "quru", "quve", "qupr", "fram", "cagl", "caco", "cato", "juni", "fagr", "caovl", "pist", "frni")])
 #SPECIES_IN_ORDER <- gsub("CAOVL", "CAOV", SPECIES_IN_ORDER)
@@ -315,5 +314,5 @@ for(v in climate_variables) {
 
   if(save.plots) dev.off()
 }
-write.csv(all.dcc.output, file = "scbi_core_corr.csv", row.names = FALSE)
+write.csv(all.dcc.output, file = "Results/scbi_core_corr.csv", row.names = FALSE)
 ##################################################################################################

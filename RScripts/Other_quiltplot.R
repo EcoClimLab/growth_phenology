@@ -4,6 +4,7 @@ rm(list = ls())
 
 #tightly condensed plot by latitude.
 #Two panels, rp/dp
+set.seed(42)
 
 # load libraries ####
 library(bootRes)

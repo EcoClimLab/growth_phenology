@@ -1,5 +1,8 @@
 #Script to create qulit plot for growth phenology project#
 ##########################################################
+rm(list = ls())
+
+set.seed(42)
 
 library(readr)
 library(readxl)
@@ -19,7 +22,7 @@ TRW_coord <- rbind(TRW_coord, originals)
 #Merge dcc outputs to plot on the same quilt plot
 all_dcc_output_hf <- read_csv("Results/all.dcc.output_hf.csv")#created in HF_quiltplot.R
 all_dcc_output_hf$site <- paste0("HF_", all_dcc_output_hf$Species)
-all_dcc_output_other <- read_csv("Results/other_core_corr.csv")#created in Other_quiltplot.R
+all_dcc_output_other <- read_csv("Results/all.dcc.output_other.csv")#created in Other_quiltplot.R
 all_dcc_output_other$site <- paste0(all_dcc_output_other$Site,"_", all_dcc_output_other$Species)
 all_dcc_output_other <- all_dcc_output_other[,-1]
 all_dcc_output_other <- all_dcc_output_other[!(all_dcc_output_other$site %in% "MO_Flu_CAOV"),]
@@ -72,12 +75,14 @@ save.plots <- TRUE
 #Forloop to create plots. Cycles through wood types (RP, DP, SP) & clim variables (tmx, tmn)
 #Sorts by average April temp across all years of core data at each site
 #First, create numbering scheme and prepare data
-#NEED TO MANUALLY CHANGE TMX AND TMN IN LINES 77 AND 117. SORTING WILL NOT WORK CORRECTLY IF DONE AUTOMATICALLY
+
+
+#TMIN LOOP
 for(v in climate_variables) {
-  v <- "tmx"
+  v <- "tmn"
   print(v)
   TRW_coord <- TRW_coord[!(duplicated(TRW_coord$Location)),]#removes duplicate locations added by original author of TRW_coord excel sheet
-  X <- all.dcc.output_all[all.dcc.output_all$variable %in% v, ]#subset core by clim variable
+  X <- all.dcc.output_all[all.dcc.output_all$variable %in% "tmn", ]#subset core by clim variable
   X$Location <- ifelse(X$site =="SCBI", "SCBI",#assigns value of location
                        ifelse(X$site == "HF", "HF",
                               substr(X$site, 1, nchar(X$site)-5)))
@@ -114,7 +119,7 @@ X <- X[X$wood_type != "SP",]
 
   X <- X %>%
     ungroup()%>%
-    arrange( desc(wood_type), tmx, site, month_new)#CHANGE THIS IF SWITCHING BETWEEN TMX/TMN
+    arrange( desc(wood_type), tmn, site, month_new)
 
   X$site <- as.factor(X$site)
   X$month <- as.factor(X$month)
@@ -134,6 +139,70 @@ X <- X[X$wood_type != "SP",]
   #
   write.csv(X, file = paste0("Data/", v, "_quilt_plot_data.csv"), row.names = FALSE)
 }
+
+#TMAX LOOP
+for(v in climate_variables) {
+  v <- "tmx"
+  print(v)
+  TRW_coord <- TRW_coord[!(duplicated(TRW_coord$Location)),]#removes duplicate locations added by original author of TRW_coord excel sheet
+  X <- all.dcc.output_all[all.dcc.output_all$variable %in% "tmx", ]#subset core by clim variable
+  X$Location <- ifelse(X$site =="SCBI", "SCBI",#assigns value of location
+                       ifelse(X$site == "HF", "HF",
+                              substr(X$site, 1, nchar(X$site)-5)))
+
+  X <- X %>% #number each month for sorting
+    mutate(
+      month_new = case_when(
+        month == "curr.jan" ~ 1,
+        month == "curr.feb" ~ 2,
+        month == "curr.mar" ~ 3,
+        month == "curr.apr" ~ 4,
+        month == "curr.may" ~ 5,
+        month == "curr.jun" ~ 6,
+        month == "curr.jul" ~ 7,
+        month == "curr.aug" ~ 8,
+        TRUE ~ 0
+      )
+    )
+  X <- X[X$month_new != 0,]#remove months outside of desired Jan-Aug range. SCBI dcc extended to september, so need to remove the september rows
+
+  #SORT BY LATITUDE
+  # X <- X %>%
+  #   left_join(TRW_coord, by = "Location")
+  #
+  # X <- X %>%
+  #   arrange(desc(Latitude), Species, numid)
+  #
+
+  #SORT BY APRIL TEMP
+  X <- X %>%
+    left_join(clim_means, by = "Location") %>%
+    group_by(site)
+  X <- X[X$wood_type != "SP",]
+
+  X <- X %>%
+    ungroup()%>%
+    arrange( desc(wood_type), tmx, site, month_new)
+
+  X$site <- as.factor(X$site)
+  X$month <- as.factor(X$month)
+
+  X <- X[!(is.na(X$wood_type)),]
+
+  #levels(X$site)
+  X <- X %>%
+    #group_by(site) %>%
+    #mutate(id = as.integer(site) )
+    #mutate(site = as.character(site))%>%
+    mutate(site = as.character(site)) %>%
+    mutate(group = match(site, unique(site)))
+  # SI_table <- X[,c(19,1,14,15,17,18)]
+  # write.csv(SI_table, file = paste0("doc/manuscript/tables_figures/", "chronology_table.csv"), row.names = FALSE)
+  # X$entry_number <- seq(1, nrow(X)/8, 1)
+  #
+  write.csv(X, file = paste0("Data/", v, "_quilt_plot_data.csv"), row.names = FALSE)
+}
+#}
 
 TRW_coord <- read_excel("Data/tree_rings/Other/TRW_coord2.xlsx")
 TRW_coord <- TRW_coord[,c(1,2,3)]
@@ -170,10 +239,10 @@ tmn_data_table <- tmn_data_table[!(duplicated(tmn_data_table$group)),]
 #write.csv(tmn_data_table, "doc/manuscript/tables_figures/tmn_chronology_table.csv", row.names = FALSE)
 
 
-#Have to manually change V, unfortunately
-v <- "tmx"
-#WAIT. Ccheck if lines 183 and 225 are correct!!!!!!
-for(WT in wood_types){#Have to manually change WT and run through the contents of the loop. Not sure whats going wrong
+#RP TMAXc----
+#for(WT in wood_types){#Have to manually change WT and run through the contents of the loop. Not sure whats going wrong
+  v <- "tmx"
+
   WT <- "RP"
   #all.dcc.output <- all.dcc.output_all[all.dcc.output_all$wood_type %in% WT,]#subset by wood type
   X <- tmx_data[tmx_data$wood_type %in% WT,]#subset by wood type.CHANGE!!!!!
@@ -278,5 +347,188 @@ for(WT in wood_types){#Have to manually change WT and run through the contents o
     my.dccplot(x = as.data.frame(t(x)), sig = as.data.frame(t(x.sig)), sig2 = as.data.frame(t(x.sig2)),  main = ifelse(v %in% "PETminusPRE", "PET-PRE", v), method = "correlation")
 
     if(save.plots) dev.off()
-  }
+#  }
 
+#DP TMAX ----
+v <- "tmx"
+WT <- "DP"
+#all.dcc.output <- all.dcc.output_all[all.dcc.output_all$wood_type %in% WT,]#subset by wood type
+X <- tmx_data[tmx_data$wood_type %in% WT,]#subset by wood type.CHANGE!!!!!
+
+TRW_coord <- TRW_coord[!(duplicated(TRW_coord$Location)),]#removes duplicate locations added by original author of TRW_coord excel sheet
+
+X <- X[X$month_new != 0,]#remove months outside of desired Jan-Aug range. SCBI dcc extended to september, so need to remove the september rows
+
+X <- X %>%
+  ungroup()%>%
+  arrange(tmx, site, month_new) #CHANGE!!!!!!!!!
+
+X$site <- as.factor(X$site)
+X$month <- as.factor(X$month)
+
+
+#COnvert from long to wide
+x <- X[, c("month", "group", "coef")]
+x <- x %>%
+  pivot_wider(names_from = group,
+              id_cols = month,
+              values_from = coef)%>%
+  as.data.frame()
+
+rownames(x) <- ifelse(grepl("curr",  x$month), toupper(x$month), tolower( x$month))
+rownames(x) <- gsub(".*curr.|.*prev.", "",   rownames(x), ignore.case = T)
+
+x.sig <- X[, c("month", "group", "significant")]
+x.sig <- x.sig %>%
+  pivot_wider(names_from = group,
+              id_cols = month,
+              values_from = significant)%>%
+  as.data.frame()   #reshape(X[, c("month", "site", "significant")], idvar = "month", timevar = "site", direction = "wide")
+
+x.sig2 <- X[, c("month", "group", "significant2")]
+x.sig2 <- x.sig2 %>%
+  pivot_wider(names_from = group,
+              id_cols = month,
+              values_from = significant2)%>%
+  as.data.frame()#reshape(X[, c("month", "site", "significant2")], idvar = "month", timevar = "site", direction = "wide")
+
+colnames(x) <- gsub("coef.", "", colnames(x))
+colnames(x.sig) <- gsub("significant.", "", colnames(x.sig))
+colnames(x.sig2) <- gsub("significant2.", "", colnames(x.sig2))
+
+x <- x[, -1] #Remove column since only looking at curr yr
+x.sig <- x.sig[, -1]
+x.sig2 <- x.sig2[, -1]
+
+v <-  toupper(v)
+v <- gsub("PDSI_PREWHITEN" , "PDSI", v)
+
+png(paste0("results/", "monthly_", "correlation", "other", v,WT, ".png"), res = 150, width = 169, height = 2*169, units = "mm", pointsize = 10)
+
+my.dccplot(x = as.data.frame(t(x)), sig = as.data.frame(t(x.sig)), sig2 = as.data.frame(t(x.sig2)),  main = ifelse(v %in% "PETminusPRE", "PET-PRE", v), method = "correlation")
+
+if(save.plots) dev.off()
+
+#RP TMIN ----
+v <- "tmn"
+WT <- "RP"
+#all.dcc.output <- all.dcc.output_all[all.dcc.output_all$wood_type %in% WT,]#subset by wood type
+X <- tmn_data[tmn_data$wood_type %in% WT,]#subset by wood type.CHANGE!!!!!
+
+# for(v in climate_variables) {
+#   print(v)
+
+TRW_coord <- TRW_coord[!(duplicated(TRW_coord$Location)),]#removes duplicate locations added by original author of TRW_coord excel sheet
+
+X <- X[X$month_new != 0,]#remove months outside of desired Jan-Aug range. SCBI dcc extended to september, so need to remove the september rows
+
+X <- X %>%
+  ungroup()%>%
+  arrange(tmn, site, month_new) #CHANGE!!!!!!!!!
+
+X$site <- as.factor(X$site)
+X$month <- as.factor(X$month)
+
+
+#COnvert from long to wide
+x <- X[, c("month", "group", "coef")]
+x <- x %>%
+  pivot_wider(names_from = group,
+              id_cols = month,
+              values_from = coef)%>%
+  as.data.frame()
+
+rownames(x) <- ifelse(grepl("curr",  x$month), toupper(x$month), tolower( x$month))
+rownames(x) <- gsub(".*curr.|.*prev.", "",   rownames(x), ignore.case = T)
+
+x.sig <- X[, c("month", "group", "significant")]
+x.sig <- x.sig %>%
+  pivot_wider(names_from = group,
+              id_cols = month,
+              values_from = significant)%>%
+  as.data.frame()   #reshape(X[, c("month", "site", "significant")], idvar = "month", timevar = "site", direction = "wide")
+
+x.sig2 <- X[, c("month", "group", "significant2")]
+x.sig2 <- x.sig2 %>%
+  pivot_wider(names_from = group,
+              id_cols = month,
+              values_from = significant2)%>%
+  as.data.frame()#reshape(X[, c("month", "site", "significant2")], idvar = "month", timevar = "site", direction = "wide")
+
+colnames(x) <- gsub("coef.", "", colnames(x))
+colnames(x.sig) <- gsub("significant.", "", colnames(x.sig))
+colnames(x.sig2) <- gsub("significant2.", "", colnames(x.sig2))
+
+x <- x[, -1] #Remove column since only looking at curr yr
+x.sig <- x.sig[, -1]
+x.sig2 <- x.sig2[, -1]
+
+v <-  toupper(v)
+v <- gsub("PDSI_PREWHITEN" , "PDSI", v)
+
+png(paste0("results/", "monthly_", "correlation", "other", v,WT, ".png"), res = 150, width = 169, height = 2*169, units = "mm", pointsize = 10)
+
+my.dccplot(x = as.data.frame(t(x)), sig = as.data.frame(t(x.sig)), sig2 = as.data.frame(t(x.sig2)),  main = ifelse(v %in% "PETminusPRE", "PET-PRE", v), method = "correlation")
+
+if(save.plots) dev.off()
+
+#DP TMIN ----
+v <- "tmn"
+WT <- "DP"
+#all.dcc.output <- all.dcc.output_all[all.dcc.output_all$wood_type %in% WT,]#subset by wood type
+X <- tmn_data[tmn_data$wood_type %in% WT,]#subset by wood type.CHANGE!!!!!
+
+TRW_coord <- TRW_coord[!(duplicated(TRW_coord$Location)),]#removes duplicate locations added by original author of TRW_coord excel sheet
+
+X <- X[X$month_new != 0,]#remove months outside of desired Jan-Aug range. SCBI dcc extended to september, so need to remove the september rows
+
+X <- X %>%
+  ungroup()%>%
+  arrange(tmn, site, month_new)
+
+X$site <- as.factor(X$site)
+X$month <- as.factor(X$month)
+
+
+#COnvert from long to wide
+x <- X[, c("month", "group", "coef")]
+x <- x %>%
+  pivot_wider(names_from = group,
+              id_cols = month,
+              values_from = coef)%>%
+  as.data.frame()
+#x <- data.frame(reshape(data = X[, c("month","site", "coef")], idvar = "month", timevar = "site",v.names = "coef", direction = "wide"))
+
+rownames(x) <- ifelse(grepl("curr",  x$month), toupper(x$month), tolower( x$month))
+rownames(x) <- gsub(".*curr.|.*prev.", "",   rownames(x), ignore.case = T)
+
+x.sig <- X[, c("month", "group", "significant")]
+x.sig <- x.sig %>%
+  pivot_wider(names_from = group,
+              id_cols = month,
+              values_from = significant)%>%
+  as.data.frame()   #reshape(X[, c("month", "site", "significant")], idvar = "month", timevar = "site", direction = "wide")
+
+x.sig2 <- X[, c("month", "group", "significant2")]
+x.sig2 <- x.sig2 %>%
+  pivot_wider(names_from = group,
+              id_cols = month,
+              values_from = significant2)%>%
+  as.data.frame()#reshape(X[, c("month", "site", "significant2")], idvar = "month", timevar = "site", direction = "wide")
+
+colnames(x) <- gsub("coef.", "", colnames(x))
+colnames(x.sig) <- gsub("significant.", "", colnames(x.sig))
+colnames(x.sig2) <- gsub("significant2.", "", colnames(x.sig2))
+
+x <- x[, -1] #Remove column since only looking at curr yr
+x.sig <- x.sig[, -1]
+x.sig2 <- x.sig2[, -1]
+v <-  toupper(v)
+v <- gsub("PDSI_PREWHITEN" , "PDSI", v)
+
+png(paste0("results/", "monthly_", "correlation", "other", v,WT, ".png"), res = 150, width = 169, height = 2*169, units = "mm", pointsize = 10)
+
+my.dccplot(x = as.data.frame(t(x)), sig = as.data.frame(t(x.sig)), sig2 = as.data.frame(t(x.sig2)),  main = ifelse(v %in% "PETminusPRE", "PET-PRE", v), method = "correlation")
+
+if(save.plots) dev.off()
+#----

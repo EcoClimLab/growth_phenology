@@ -1,5 +1,7 @@
-#Script to create qulit plot for growth phenology project#
+#Script to create extended quilt plot for growth phenology project#
 ##########################################################
+
+set.seed(42)
 
 library(readr)
 library(readxl)

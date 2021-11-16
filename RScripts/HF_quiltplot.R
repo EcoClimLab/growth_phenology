@@ -1,5 +1,8 @@
+#Script to make the Harvard FOrest Quiltplot and to capture HF quiltplot data for use in final quiltplot
 # clear environment ####
 rm(list = ls())
+
+set.seed(42)
 
 # load libraries ####
 library(bootRes)
@@ -11,11 +14,11 @@ library(climwin)
 #Manually rearrange x to put in desired plotting order right before plotting
 #source("https://raw.githubusercontent.com/SCBI-ForestGEO/climate_sensitivity_cores/master/scripts/0-My_dplR_functions.R")
 source("Rscripts/0-My_dplR_functions.R")
-path_to_sp_res_chrons <- "C:/Users/world/Documents/GitHub/growth_phenology/Data/tree_rings/Harvard/" # replace to the path where Neil's chronlogies are
+path_to_sp_res_chrons <- "Data/tree_rings/Harvard/" # replace to the path where Neil's chronlogies are
 
 
 #species <-  c("vector_species_you_have", "as they are names in Neils files")
-species <-  c("ACRU", "BEAL", "QURU", "TSCA")
+species <-  c("ACRU", "BEAL","FRAM", "QURU", "TSCA")
 
 climate_variables <- c("tmx", "tmn")
 
@@ -26,6 +29,7 @@ climate_variables <- c("tmx", "tmn")
 
 start.years.sss <-c(ACRU = 1930,#
                     BEAL = 1952,
+                    FRAM = 1901,
                     QURU = 1898,
                     TSCA = 1930) # enter the name in species and the corresponding year the analysis should start at # these dates may have been given by email by Neil Pederson when he created the psecies chrionologies, it is a date at which sss passes a certain threshold sss (know what the threshold is .75, or .8?)
 
@@ -33,6 +37,7 @@ start.years.sss <-c(ACRU = 1930,#
 #                               Species2 = 2010) # enter the name in species and the corresponding year the analysis should stop at
 full.time.frame.end.years <- c(ACRU = 2013,#
                                BEAL = 2012,
+                               FRAM = 2008,
                                QURU = 2013,
                                TSCA = 2013) # enter the name in species and the corresponding year the analysis should stop at
 
@@ -154,7 +159,7 @@ for(f in species) {
 all.dcc.output$variable <- substr(paste(row.names(all.dcc.output)), 1, 3)#get variable from row name
 all.dcc.output$month <- substr(paste(row.names(all.dcc.output)), 5, 12)#get month from row name
 
-write.csv(all.dcc.output, file = "all.dcc.output_hf.csv", row.names = FALSE)
+write.csv(all.dcc.output, file = "Results/all.dcc.output_hf.csv", row.names = FALSE)
 #} # for(f in species)
 
 #############################################

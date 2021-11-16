@@ -1,6 +1,8 @@
 # clear environment ####
 rm(list = ls())
 
+set.seed(42)
+
 # load libraries ####
 library(bootRes)
 library(dplR) # for read.rwl
@@ -160,7 +162,7 @@ all.dcc.output$variable <- substr(paste(row.names(all.dcc.output)), 1, 3)#get va
 all.dcc.output$month <- substr(paste(row.names(all.dcc.output)), 5, 12)#get month from row name
 
 
-write.csv(all.dcc.output, file = "all.dcc.output_hf_EXTENDED.csv", row.names = FALSE)
+write.csv(all.dcc.output, file = "Results/all.dcc.output_hf_EXTENDED.csv", row.names = FALSE)
 
 
 #} # for(f in species)
