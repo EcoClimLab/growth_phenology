@@ -365,8 +365,8 @@ my.dccplot <- function (x, sig, sig2, rescale = TRUE, main, method = c('correlat
   n <- dim(x)[2]
 
   if (rescale & method == "correlation")  {
-    pos.max <-  0.660970142832834#abs(min(x))#.340875640731788max(x)
-    neg.max <-  0.660970142832834#abs(min(x))#
+    pos.max <-  0.6617472 #max(x)
+    neg.max <-  0.6617472 # abs(min(x))
   }
 
   if (rescale & method == "response")  {
@@ -402,7 +402,8 @@ my.dccplot <- function (x, sig, sig2, rescale = TRUE, main, method = c('correlat
 
   #hm <- reds(abs(xs[xs <= 0])/ neg.max)
   #hmm <- hm[is.na(hm)]
-  #xs <- ifelse(xs > pos.max, pos.max, xs)
+  #xs <- ifelse(xs > pos.max | xs < pos.max, pos.max, xs)
+
   color <- xs
   color[xs <= 0] <- rgb(reds(abs(xs[xs <= 0])/ neg.max), maxColorValue = 255)
   color[xs > 0] <- rgb(blues(xs[xs > 0]/ pos.max), maxColorValue = 255)
