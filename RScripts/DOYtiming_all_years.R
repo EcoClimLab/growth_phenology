@@ -1,3 +1,5 @@
+#Script to create DOY_timing_allyears.png fig
+
 library(ggplot2)
 library(readr)
 library(tidyverse)
@@ -89,6 +91,29 @@ for(i in 2011:2020){
   aggregates_scbi_dp <- rbind(aggregates_scbi_dp,year_ag)
 }
 
+# #MAX RATE DOY ----
+# aggregates_scbi_rp <- data.frame(1,1,1,1,1)
+# names(aggregates_scbi_rp) <- c("Group.1", "Group.2", "x","year", "window_temp")
+# for(i in 2011:2020){
+#   year <- subset(Wood_pheno_table_scbi, year == i & wood_type == "ring-porous")
+#   year_ag <- aggregate(year$max_rate_DOY, by = list(year$wood_type, year$perc), FUN = mean)
+#   year_ag$Group.2 <- ifelse(year_ag$Group.2 == .25, 25, ifelse(year_ag$Group.2 == .50, 50, ifelse(year_ag$Group.2 == .75, 75, 0)))
+#   year_ag$year <- i
+#   year_ag$window_temp <- unique(year$climwinmean)
+#   aggregates_scbi_rp <- rbind(aggregates_scbi_rp,year_ag)
+# }
+#
+# aggregates_scbi_dp <- data.frame(1,1,1,1,1)
+# names(aggregates_scbi_dp) <- c("Group.1", "Group.2", "x","year","window_temp")
+# for(i in 2011:2020){
+#   year <- subset(Wood_pheno_table_scbi, year == i & wood_type == "diffuse-porous")
+#   year_ag <- aggregate(year$max_rate_DOY, by = list(year$wood_type, year$perc), FUN = mean)
+#   year_ag$Group.2 <- ifelse(year_ag$Group.2 == .25, 25, ifelse(year_ag$Group.2 == .50, 50, ifelse(year_ag$Group.2 == .75, 75, 0)))
+#   year_ag$year <- i
+#   year_ag$window_temp <- unique(year$climwinmean)
+#   aggregates_scbi_dp <- rbind(aggregates_scbi_dp,year_ag)
+# }
+#----
 aggregates_scbi_rp <- aggregates_scbi_rp[-1,]
 
 aggregates_scbi_rp$Temp <- ifelse(aggregates_scbi_rp$window_temp > median(aggregates_scbi_rp$window_temp), "Above Average",
@@ -103,6 +128,18 @@ aggregates_scbi_dp$stanT <- (aggregates_scbi_dp$window_temp-min(aggregates_scbi_
 
 aggregates_scbi <- rbind(aggregates_scbi_dp,aggregates_scbi_rp)
 
+# #Add slopes of lines for each representing max_rate_DOY change/degree C ----
+# doy25_rp <- subset(aggregates_scbi_rp, aggregates_scbi_rp$Group.2 == "25")
+# plot(doy25_rp$x~doy25_rp$window_temp)
+# abline(lm(doy25_rp$x~doy25_rp$window_temp))
+# summary(lm(doy25_rp$x~doy25_rp$window_temp))
+#
+# #Add slopes of lines for each representing max_rate_DOY change/degree C ----
+# doy25_dp <- subset(aggregates_scbi_dp, aggregates_scbi_dp$Group.2 == "25")
+# plot(doy25_dp$x~doy25_dp$window_temp)
+# abline(lm(doy25_dp$x~doy25_dp$window_temp))
+# summary(lm(doy25_dp$x~doy25_dp$window_temp))
+#
 #Add slopes of lines for each representing DOY change/degree C ----
 doy25_rp <- subset(aggregates_scbi_rp, aggregates_scbi_rp$Group.2 == "25")
 plot(doy25_rp$x~doy25_rp$window_temp)
@@ -162,6 +199,7 @@ leaf_phenology_melt <- melt(leaf_phenology, id.vars = c("site","year","tmp","los
 leaf_phenology_melt$value <- yday(leaf_phenology_melt$value)
 aggregate(leaf_phenology_melt$value, by = list(leaf_phenology_melt$variable), FUN = mean)
 
+
 #Get speed of greenup change / degree C ----
 leaf_phenology_melt_GU <- subset(leaf_phenology_melt, leaf_phenology_melt$variable == "Greenup")
 
@@ -169,6 +207,27 @@ plot(leaf_phenology_melt_GU$value~leaf_phenology_melt_GU$tmp)
 abline(lm(leaf_phenology_melt_GU$value~leaf_phenology_melt_GU$tmp))
 summary(lm(leaf_phenology_melt_GU$value~leaf_phenology_melt_GU$tmp))
 #SCBI speed is -4.535 days/degree C
+
+#Get speed of mid-greenup change / degree C ----
+leaf_phenology_melt_MG <- subset(leaf_phenology_melt, leaf_phenology_melt$variable == "Mid-greenup")
+
+plot(leaf_phenology_melt_MG$value~leaf_phenology_melt_MG$tmp)
+abline(lm(leaf_phenology_melt_MG$value~leaf_phenology_melt_MG$tmp))
+summary(lm(leaf_phenology_melt_MG$value~leaf_phenology_melt_MG$tmp))
+
+#Get speed of peak change / degree C ----
+leaf_phenology_melt_PK <- subset(leaf_phenology_melt, leaf_phenology_melt$variable == "Peak")
+
+plot(leaf_phenology_melt_PK$value~leaf_phenology_melt_PK$tmp)
+abline(lm(leaf_phenology_melt_PK$value~leaf_phenology_melt_PK$tmp))
+summary(lm(leaf_phenology_melt_PK$value~leaf_phenology_melt_PK$tmp))
+
+#Get speed of senescence change / degree C ----
+leaf_phenology_melt_SC <- subset(leaf_phenology_melt, leaf_phenology_melt$variable == "Senescence")
+
+plot(leaf_phenology_melt_SC$value~leaf_phenology_melt_SC$tmp)
+abline(lm(leaf_phenology_melt_SC$value~leaf_phenology_melt_SC$tmp))
+summary(lm(leaf_phenology_melt_SC$value~leaf_phenology_melt_SC$tmp))
 
 #Plot leaf variables ----
 #leaf_phenology_melt <- leaf_phenology_melt[leaf_phenology_melt$year %in% c(2018,2010),]
@@ -302,6 +361,31 @@ for(i in 1998:2003){
   aggregates_hf_dp <- rbind(aggregates_hf_dp,year_ag)
 }
 
+# #DOY GMAX ----
+# aggregates_hf_rp <- data.frame(1,1,1,1,1)
+# names(aggregates_hf_rp) <- c("Group.1", "Group.2", "x","year", "window_temp")
+# for(i in 1998:2003){
+#   year <- subset(Wood_pheno_table_hf, year == i & wood_type == "ring-porous")
+#   year_ag <- aggregate(year$max_rate_DOY, by = list(year$wood_type, year$perc), FUN = mean)
+#   year_ag$Group.2 <- ifelse(year_ag$Group.2 == .25, 25, ifelse(year_ag$Group.2 == .50, 50, ifelse(year_ag$Group.2 == .75, 75, 0)))
+#   year_ag$year <- i
+#   year_ag$window_temp <- unique(year$climwinmean)
+#   aggregates_hf_rp <- rbind(aggregates_hf_rp,year_ag)
+# }
+#
+# aggregates_hf_dp <- data.frame(1,1,1,1,1)
+# names(aggregates_hf_dp) <- c("Group.1", "Group.2", "x","year","window_temp")
+# for(i in 1998:2003){
+#   year <- subset(Wood_pheno_table_hf, year == i & wood_type == "diffuse-porous")
+#   year_ag <- aggregate(year$max_rate_DOY, by = list(year$wood_type, year$perc), FUN = mean)
+#   year_ag$Group.2 <- ifelse(year_ag$Group.2 == .25, 25, ifelse(year_ag$Group.2 == .50, 50, ifelse(year_ag$Group.2 == .75, 75, 0)))
+#   year_ag$year <- i
+#   year_ag$window_temp <- unique(year$climwinmean)
+#   aggregates_hf_dp <- rbind(aggregates_hf_dp,year_ag)
+# }
+#
+#
+#----
 aggregates_hf_rp <- aggregates_hf_rp[-1,]
 #aggregates_hf_rp$Temp <- ifelse(aggregates_hf_rp$window_temp > median(aggregates_hf_rp$window_temp), "Above Average", "Below Average")
 #aggregates_hf_rp[1:3,6] <- "Median"
@@ -313,6 +397,18 @@ aggregates_hf_rp$stanT <- (aggregates_hf_rp$window_temp-min(aggregates_hf_rp$win
 aggregates_hf_dp$stanT <- (aggregates_hf_dp$window_temp-min(aggregates_hf_dp$window_temp))/(max(aggregates_hf_dp$window_temp)-min(aggregates_hf_dp$window_temp))
 
 aggregates_hf <- rbind(aggregates_hf_dp,aggregates_hf_rp)
+
+# #Add slopes of lines for each representing max_rate_DOY change/degree C ----
+# doy25_rp <- subset(aggregates_hf_rp, aggregates_hf_rp$Group.2 == "25")
+# plot(doy25_rp$x~doy25_rp$window_temp)
+# abline(lm(doy25_rp$x~doy25_rp$window_temp))
+# summary(lm(doy25_rp$x~doy25_rp$window_temp))
+#
+# #Add slopes of lines for each representing max_rate_DOY change/degree C ----
+# doy25_dp <- subset(aggregates_hf_dp, aggregates_hf_dp$Group.2 == "25")
+# plot(doy25_dp$x~doy25_dp$window_temp)
+# abline(lm(doy25_dp$x~doy25_dp$window_temp))
+# summary(lm(doy25_dp$x~doy25_dp$window_temp))
 
 #Add slopes of lines for each representing DOY change/degree C ----
 doy25_rp <- subset(aggregates_hf_rp, aggregates_hf_rp$Group.2 == "25")
@@ -390,6 +486,27 @@ plot(hf_leaf_phenology_melt_GU$value~hf_leaf_phenology_melt_GU$tmp)
 abline(lm(hf_leaf_phenology_melt_GU$value~hf_leaf_phenology_melt_GU$tmp))
 summary(lm(hf_leaf_phenology_melt_GU$value~hf_leaf_phenology_melt_GU$tmp))
 #HF speed is  -2.437 days/degree C (nonsig)
+
+#Get speed of mid-greenup change / degree C ----
+hf_leaf_phenology_melt_MG <- subset(hf_leaf_phenology_melt, hf_leaf_phenology_melt$variable == "Mid-greenup")
+
+plot(hf_leaf_phenology_melt_MG$value~hf_leaf_phenology_melt_MG$tmp)
+abline(lm(hf_leaf_phenology_melt_MG$value~hf_leaf_phenology_melt_MG$tmp))
+summary(lm(hf_leaf_phenology_melt_MG$value~hf_leaf_phenology_melt_MG$tmp))
+
+#Get speed of peak change / degree C ----
+hf_leaf_phenology_melt_PK <- subset(hf_leaf_phenology_melt, hf_leaf_phenology_melt$variable == "Peak")
+
+plot(hf_leaf_phenology_melt_PK$value~hf_leaf_phenology_melt_PK$tmp)
+abline(lm(hf_leaf_phenology_melt_PK$value~hf_leaf_phenology_melt_PK$tmp))
+summary(lm(hf_leaf_phenology_melt_PK$value~hf_leaf_phenology_melt_PK$tmp))
+
+#Get speed of senescence change / degree C ----
+hf_leaf_phenology_melt_SC <- subset(hf_leaf_phenology_melt, hf_leaf_phenology_melt$variable == "Senescence")
+
+plot(hf_leaf_phenology_melt_SC$value~hf_leaf_phenology_melt_SC$tmp)
+abline(lm(hf_leaf_phenology_melt_SC$value~hf_leaf_phenology_melt_SC$tmp))
+summary(lm(hf_leaf_phenology_melt_SC$value~hf_leaf_phenology_melt_SC$tmp))
 
 # scale_colour_manual(values = c("red", "blue", "purple"))
 

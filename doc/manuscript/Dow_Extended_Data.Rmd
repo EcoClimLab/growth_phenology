@@ -87,7 +87,7 @@ add_header_above(c(" ",  "SCBI" = 2, "Harvard Forest"=2 )) %>%
     add_indent(19:22)%>%
 kable_styling(latex_options = c("scale_down", "hold_position"), protect_latex = T) 
 ```
-*Phenological temperature sensitivity refers to the sensitivity of a parameter to the mean maximum temperature ($T_{max}$) during the critical temperature window (Fig. 1).
+*Phenological temperature sensitivity refers to the sensitivity of a parameter to the mean maximum temperature ($T_{max}$) during the critical temperature window (Fig. 1). Because leaf phenology measurements were derived from satellite imagery and included both ring- and diffuse-porous trees, the selection of a critical window was less straight forward. We used the critical window identified for diffuse-porous trees as the critical window for leaf phenology calculations because they included a wider range of spring dates.
 
 \newpage
 

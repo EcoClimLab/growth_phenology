@@ -12,12 +12,12 @@ Mid-greenup,120 (April 30),,137 (May 17),
 Peak,173 (June 22),,182 (July 1),
 Senescence,215 (Aug. 3),,218 (Aug. 6),
 Stem growth:,,,,
-$DOY_{25}$,1.9,3.5,2.8,7.9
-$DOY_{50}$,1.5,3.5,5.0,7.3
-$DOY_{75}$,1.1,3.6,7.2,6.6
-$DOY_{g_{max}}$,,,,
+$DOY_{25}$,1.9 $\pm$ 0.68,3.5 $\pm$ 0.81,2.8 $\pm$ 1.05,7.9 $\pm$ 1.3
+$DOY_{50}$,1.5 $\pm$ 0.90,3.5 $\pm$ 1.0,5 $\pm$ 1.7,7.3 $\pm$ 1.5
+$DOY_{75}$,1.1 $\pm$ 1.6,3.6 $\pm$ 1.5,7.2 $\pm$ 2.7,6.6 $\pm$ 3.1
+$DOY_{g_{max}}$,1.6 $\pm$ 0.89,3.5 $\pm$ 1.0,3.3 $\pm$ 1.8,6.7 $\pm$ 1.7
 Canopy foliage:,,,,
-Greenup,4.5,,2.4,
-Mid-greenup,,,,
-Peak,,,,
-Senescence,,,,
+Greenup,4.5 $\pm$ 1.15,,2.4 $\pm$ 1.6,
+Mid-greenup,4.07 $\pm$ 0.74,,3.0 $\pm$ 0.92,
+Peak,3.67 $\pm$ 1.87,,0.81 $\pm$ 1.1,
+Senescence,2.76 $\pm$ 2.34,,1.1 $\pm$ 1.5,
