@@ -366,7 +366,9 @@ https://cran.r-project.org/web/packages/rstanarm/vignettes/priors.html#default-w
 -->
 
 To rule out the possibility that observed patterns were strongly influenced by summer drought, we examined the relationship between spring tempreatures and summer Standardized Precipitation Evapotranspiration Index[@vicente-serrano_multiscalar_2010].
-The latter was obtained from the ForestGEO Climate Data Portal v1.0 (https://forestgeo.github.io/Climate/)[@anderson-teixeira_forestgeo_2020; @begueria_standardized_2017]. Linear models were run with 4-, 6-, and 12-month SPEI values of June, July, and August vs April $T_{max}$ to determine if warm spring temperatures lead to greater summer drought stress. 
+The latter was obtained from the ForestGEO Climate Data Portal v1.0 (https://forestgeo.github.io/Climate/)[@anderson-teixeira_forestgeo_2020; @begueria_standardized_2014;@vicente-serrano_multiscalar_2010a]. 
+Linear models were run with 4-, 6-, and 12-month SPEI values of June, July, and August vs April $T_{max}$ to determine if warm spring temperatures lead to greater summer drought stress. 
+No significant correlations were found (all p>0.05).
 
 ## Tree-ring analysis {-#Tree} 
 We analyzed tree-ring records for `r n_cores_sites` sites, including our focal sites.
