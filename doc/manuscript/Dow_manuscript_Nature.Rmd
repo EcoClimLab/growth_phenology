@@ -192,7 +192,7 @@ Peak growing season length was similar across sites, with $L_{PGS}$ being, on av
  
 Both MODIS-derived canopy foliage phenology and dendrometer band measurements of stem growth phenology generally shifted backwards as spring temperatures increased (Fig. `r DOY_timing`, `r EDF_pheno_all`). 
 We found a consistent effect of temperature ($T_{max}$ or $T_{min}$) throughout the spring, but the strongest effects on stem-growth phenology were found using $T_{max}$ during a critical temperatrue window (CTW). 
-CTW was identified by measuring the correlation between all combinations of weekly $T_{max}$ and $DOY_{25}$ from January 1 and $DOY_{25}$ (`r EDF_climwin`).
+CTW was identified by measuring the correlation between all combinations of weekly $T_{max}$ and $DOY_{25}$ from January 1 to mean $DOY_{25}$ for each xylem porosity-site combination (`r EDF_climwin`).
 The CTW was defined as the week(s) which had the strongest correlation with $DOY_{25}$.   
 
 For ring- and diffuse- porous species at both sites, warmer $T_{max}$ in the CTW resulted in earlier achievement of phenological milestones.
