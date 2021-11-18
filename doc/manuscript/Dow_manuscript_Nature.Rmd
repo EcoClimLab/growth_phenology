@@ -19,7 +19,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Authors:** 
 
-Cameron Dow^1^ ( Orcid ID : 0000-0002-8365-598X)
+Cameron Dow^1,11^ ( Orcid ID : 0000-0002-8365-598X)
 
 Albert Y. Kim^1,2^ ( Orcid ID : 0000-0001-7824-306X)
 
@@ -70,7 +70,7 @@ Kristina J. Anderson-Teixeira^1,10^* ( Orcid ID : 0000-0001-8461-9713)
 
 10. Forest Global Earth Observatory; Smithsonian Tropical Research Institute; Panama, Republic of Panama
 
-
+11. Department of Forestry and Natural Resources, Purdue University, West Lafayette, Indiana, USA
 
 
 *corresponding author: teixeirak@si.edu; +1 540 635 6546
