@@ -19,11 +19,11 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Authors:** 
 
-Cameron Dow^1,11^ ( Orcid ID : 0000-0002-8365-598X)
+Cameron Dow^1,2^ ( Orcid ID : 0000-0002-8365-598X)
 
-Albert Y. Kim^1,2^ ( Orcid ID : 0000-0001-7824-306X)
+Albert Y. Kim^1,3^ ( Orcid ID : 0000-0001-7824-306X)
 
-Loïc D’Orangeville^3,4^ ( Orcid ID : 0000-0001-7841-7082)
+Loïc D’Orangeville^4,5^ ( Orcid ID : 0000-0001-7841-7082)
 
 Erika B. Gonzalez-Akre^1^ ( Orcid ID : 0000-0001-8305-6672)
 
@@ -31,46 +31,48 @@ Ryan Helcoski^1^
 
 Valentine Herrmann^1^ ( Orcid ID : 0000-0002-4519-481X)
 
-Grant L. Harley^5^ ( Orcid ID : 0000-0003-1557-8465)
+Grant L. Harley^6^ ( Orcid ID : 0000-0003-1557-8465)
 
-Justin T. Maxwell^6^ (Orcid ID: 0000-0001-9195-3146)
+Justin T. Maxwell^7^ (Orcid ID: 0000-0001-9195-3146)
 
-Ian R. McGregor^1,7^ (Orcid ID: 0000-0002-5763-021X)
+Ian R. McGregor^1,8^ (Orcid ID: 0000-0002-5763-021X)
 
 William J. McShea^1^
 
-Sean McMahon^8,10^ (Orcid ID : 0000-0001-8302-6908)
+Sean McMahon^9,11^ (Orcid ID : 0000-0001-8302-6908)
 
-Neil Pederson^3^ (Orcid ID : 0000-0003-3830-263X)
+Neil Pederson^4^ (Orcid ID : 0000-0003-3830-263X)
 
-Alan J. Tepley^1,9^ ( Orcid ID : 0000-0002-5701-9613)
+Alan J. Tepley^1,10^ ( Orcid ID : 0000-0002-5701-9613)
 
-Kristina J. Anderson-Teixeira^1,10^* ( Orcid ID : 0000-0001-8461-9713)
+Kristina J. Anderson-Teixeira^1,11^* ( Orcid ID : 0000-0001-8461-9713)
 
 
 **Author Affiliations:**
 
 1. Conservation Ecology Center; Smithsonian Conservation Biology Institute; Front Royal, VA 22630, USA
 
-2. Statistical & Data Sciences; Smith College; Northampton, MA 01063, USA
+2. Department of Forestry and Natural Resources, Purdue University, West Lafayette, Indiana, USA
 
-3. Harvard Forest, Petersham, MA 01366, USA
+3. Statistical & Data Sciences; Smith College; Northampton, MA 01063, USA
 
-4. Faculty of Forestry and Environmental Management, University of New Brunswick, Fredericton, NB, E3B 5A3, Canada.
+4. Harvard Forest, Petersham, MA 01366, USA
 
-5. Department of Earth and Spatial Sciences, University of Idaho, ID 83844, USA
+5. Faculty of Forestry and Environmental Management, University of New Brunswick, Fredericton, NB, E3B 5A3, Canada.
 
-6. Department of Geography, Indiana University, Bloomington, IN 47405, USA
+6. Department of Earth and Spatial Sciences, University of Idaho, ID 83844, USA
 
-7. Center for Geospatial Analytics; North Carolina State University; Raleigh, NC 27607, USA
+7. Department of Geography, Indiana University, Bloomington, IN 47405, USA
 
-8. Smithsonian Environmental Research Center, Edgewater, MD, USA
+8. Center for Geospatial Analytics; North Carolina State University; Raleigh, NC 27607, USA
 
-9. Canadian Forest Service, Northern Forestry Centre, Edmonton, Alberta, Canada
+9. Smithsonian Environmental Research Center, Edgewater, MD, USA
 
-10. Forest Global Earth Observatory; Smithsonian Tropical Research Institute; Panama, Republic of Panama
+10. Canadian Forest Service, Northern Forestry Centre, Edmonton, Alberta, Canada
 
-11. Department of Forestry and Natural Resources, Purdue University, West Lafayette, Indiana, USA
+11. Forest Global Earth Observatory; Smithsonian Tropical Research Institute; Panama, Republic of Panama
+
+
 
 
 *corresponding author: teixeirak@si.edu; +1 540 635 6546
