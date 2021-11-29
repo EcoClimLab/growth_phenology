@@ -152,8 +152,8 @@ n_chronologies_HF <- 4
 
 <!--BODY-->
 
-In recent decades, Earth's forests have sequestered ~20% of anthropogenic CO~2~ emissions, thereby slowing the pace of atmospheric CO~2~ accumulation and climate change[@pan_large_2011; @friedlingstein_global_2020].
-A large portion of this CO~2~ sink occurs in temperate deciduous forests, which sequester >300 Tg C yr^-1^ (>30% of the total forest C sink)[@pugh_role_2019]. <!-- The temperate deciduous sink is >300 Tg C yr-1, but Pugh et al. 2019 estimate that ~200 Tg C yr-1 is attributable to demography (forest regrowth), while >100 Tg C yr-1 is controlled by environmental drivers. The latter portion seems more likely to be sensitive to spring temperatures, and I originally cited this number, but upon further thought it's probably complex enough that that's a false distinction. --> 
+In recent decades, Earth's forests have sequestered ~20% of anthropogenic CO~2~ emissions, thereby slowing the pace of atmospheric CO~2~ accumulation and climate change[@friedlingstein_global_2021; @harris_global_2021].
+A substantive portion of this CO~2~ sink occurs in temperate deciduous forests, which sequester >300 Tg C yr^-1^ [@pugh_role_2019]. <!-- See issue # 92: https://github.com/EcoClimLab/growth_phenology/issues/92. ALSO: The temperate deciduous sink is >300 Tg C yr-1, but Pugh et al. 2019 estimate that ~200 Tg C yr-1 is attributable to demography (forest regrowth), while >100 Tg C yr-1 is controlled by environmental drivers. The latter portion seems more likely to be sensitive to spring temperatures, and I originally cited this number, but upon further thought it's probably complex enough that that's a false distinction. --> 
 The future behavior of this CO~2~ sink will play an important yet uncertain role in influencing atmospheric CO~2~ and climate change[@arora_carbon_2020; @friedlingstein_global_2020]. 
 
 In temperate deciduous forests, spring warming generally lengthens the period over which trees have photosynthetically active leaves[@jeong_phenology_2011;@ibanez_forecasting_2010;@menzel_european_2006;@menzel_growing_1999] and that over which the ecosystem is a net CO~2~ sink[@keenan_net_2014].
