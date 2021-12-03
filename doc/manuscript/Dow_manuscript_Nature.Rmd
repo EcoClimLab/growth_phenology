@@ -421,11 +421,13 @@ Cameron Dow and Kristina J. Anderson-Teixeira led the writing of the manuscript.
 All authors contributed critically to the drafts and gave final approval for publication.
 
 # Data Availability Statement {-#Data} 
+The datasets generated and analysed during the current study are available via GitHub in the *growth_phenology* repository of the ForestGEO Ecosystems & Climate Lab @ SCBI, (https://github.com/EcoClimLab/growth_phenology) and archived in Zenodo (DOI *[TBD]*).
+Master versions of the dendrometer band data are available for SCBI via GitHub in the *Dendrobands* repository of the Smithsonian Conservation Biology Institute ForestGEO plot (https://github.com/SCBI-ForestGEO/Dendrobands), which is archived in Zenodo (DOI 10.5281/zenodo.5551143), and for Harvard Forest via the Harvard Forest Data Archive (https://harvardforest1.fas.harvard.edu/exist/apps/datasets/showData.html?id=HF149). 
 Weather data for SCBI were obtained from the ForestGEO Climate Data Portal v1.0 (https://github.com/forestgeo/Climate/tree/master/Climate_Data/Met_Stations/SCBI), which is archived in Zenodo (DOI: 10.5281/zenodo.3958215), and the National Center for Environmental Information (NCEI) weather station located in Front Royal, Virginia (https://www.ncdc.noaa.gov/cdo-web/datasets/GHCND/stations/GHCND:USC00443229/detail), downloaded on [DATE].
-Weather data for Harvard Forest are available through the Harvard Forest Data Archive (https://harvardforest.fas.harvard.edu/harvard-forest-data-archive) (https://harvardforest1.fas.harvard.edu/exist/apps/datasets/showData.html?id=HF001 AND https://harvardforest1.fas.harvard.edu/exist/apps/datasets/showData.html?id=HF000).
+Weather data for Harvard Forest are available through the Harvard Forest Data Archive (https://harvardforest1.fas.harvard.edu/exist/apps/datasets/showData.html?id=HF001 AND https://harvardforest1.fas.harvard.edu/exist/apps/datasets/showData.html?id=HF000).
 Climate data were obtained from CRU v.4.04 via the ForestGEO Climate Data Portal v1.0 (https://github.com/forestgeo/Climate/tree/master/Climate_Data/CRU), which is archived in Zenodo (DOI: 10.5281/zenodo.3958215).
 The Standardised Precipitation-Evapotranspiration Index was obtained from the ForestGEO Climate Data Portal v1.0 (https://github.com/forestgeo/Climate/tree/master/Climate_Data/SPEI), which is archived in Zenodo (DOI: 10.5281/zenodo.3958215).
-Canopy foliage phenology data were extracted from the MCD12Q2 V6 Land Cover Dynamics product (a.k.a. MODIS Global Vegetation Phenology product) via Google Earth Engine (https://developers.google.com/earth-engine/datasets/catalog/MODIS_006_MCD12Q2#bands). 
+Canopy foliage phenology data were extracted from the MCD12Q2 V6 Land Cover Dynamics product (a.k.a. MODIS Global Vegetation Phenology product) via Google Earth Engine (https://developers.google.com/earth-engine/datasets/catalog/MODIS_006_MCD12Q2#description). 
 Original tree cores are archived at the institutions of various members of the author team and will be made available upon reasonable request. 
 <!-- do we need to add ITRDB??-->
 
