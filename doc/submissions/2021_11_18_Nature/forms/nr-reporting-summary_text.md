@@ -26,20 +26,23 @@ The data used here were dendrometer band measurements from the Smithsonian Conse
 
 Dendrometer bands:
 
-At SCBI, dendrometer bands were placed on a subsample of trees, weighted towards the species and size classes contributing most to woody productivity, which were randomly located throughout the 25.6 ha ForestGEO plot. In addition, in two circular plots of 15 m radius, dendrometer bands were installed on all trees >5cm. Details on sample sizes by species and DBH are available in the SCBI-ForestGEO dendrobands repository (https://github.com/SCBI-ForestGEO/Dendrobands).
+At SCBI, dendrometer bands were installed on indiviuals of the two most dominant (in terms of contributions to woody productivity) ring-porous species (*Quercus alba* and *Quercus rubra*) and the two most dominant diffuse-porous species (*Liriodendron tulipifera* and *Fagus grandifolia*). Sampling was weighted towards large individuals. Banded trees were randomly located throughout the 25.6 ha ForestGEO plot, with some additional individuals within two 15 m radius plots in which all trees were banded. Details are available in Extended Data Table 1 and the SCBI-ForestGEO dendrobands repository (https://github.com/SCBI-ForestGEO/Dendrobands). 
 
-At Harvard Forest, trees were measured in 36 circular, 10-m radius plots located randomly along eight 500-m transects that extended from the EMS eddy-flux tower (detailed in D’Orangeville et al., 2021; https://doi.org/10.1093/treephys/tpab101).
+At Harvard Forest, dendrometer bands were placed on trees in 36 circular, 10-m radius plots located randomly along eight 500-m transects that extended from the EMS eddy-flux tower (detailed in D’Orangeville et al., 2021; https://doi.org/10.1093/treephys/tpab101). We analyzed data for eight diffuse- and three ring-porous species (see Extended Data Table 1). 
 
 Tree cores:
 
+At SCBI, we sampled the 12 species contributing most to woody productivity, sampling live and dead individuals randomly located throughout the plot (detailed in Helcoski et al. 2019; https://doi.org/10.1111/nph.15906). At Harvard Forest, all trees were cored within size-stratefied circular plots (detailed in Dye et al. 2016; https://doi.org/10.1002/ecs2.1454).
 
+The tree-ring records from our focal sites were complemented with a much larger collection of tree-ring chronologies spanning 106 deciduous and mixed forest sites in Eastern North America (see Maxwell et al. 2020; https://doi.org/10.5194/cp-16-1901-2020).
 
 
 ## Data collection
 
 Dendrometer band measurements were made by interns and volunteers. Dendrometer bands are placed 1.3m above the base of the tree and measurements of window size were made with a digital micrometer. Tree cores and climate data were provided by external sources. 
 
-Metal dendrometer bands were installed on 941 trees within the SCBI and Harvard Forest ForestGEO plots. Bands were placed on dominant species, including two diffuse- and two ring-porous species at SCBI and eight diffuse- and three ring-porous species at Harvard Forest (Extended Data Table 1). Bands were measured with a digital caliper approximately every 1-2 weeks within the growing season from 2011-2020 at SCBI and 1998-2003 at Harvard Forest. The number of bands measured at each site fluctuated slightly as trees were added or dropped from the census (e.g., because of tree mortality). Across years, the number of bands sampled averaged 129 (range: 91-138) at SCBI and 717 (range: 700-755) at Harvard Forest.  In total, our analysis included 2459 tree-years (Extended Data Table 1).
+
+Metal dendrometer bands were installed on a total of 941 trees within the SCBI and Harvard Forest ForestGEO plots. Bands were measured with a digital caliper approximately every 1-2 weeks within the growing season from 2011-2020 at SCBI and 1998-2003 at Harvard Forest. The number of bands measured at each site fluctuated slightly as trees were added or dropped from the census (e.g., because of tree mortality). Across years, the number of bands sampled averaged 129 (range: 91-138) at SCBI and 717 (range: 700-755) at Harvard Forest.  In total, our analysis included 2459 tree-years (Extended Data Table 1).
 
 Measurements were timed to begin before the beginning of spring growth and to continue through the cessation of growth in the fall. At SCBI, the median start date was April 14, which was adjusted forward when early leaf-out of understory vegetation was observed, with the earliest start date being March 30 (in 2020). Measurements were continued through to fall leaf senescence, with the median end date being October 17 and the latest end date November 26 (2012). Timing of measurements at Harvard Forest were similar, with the median start date of April 23 and median end date of October 30. 1998 was an anomalous year where initial measurements were taken on January 5, but not taken again until April 15. The latest end date was November 11, 2002.
 
