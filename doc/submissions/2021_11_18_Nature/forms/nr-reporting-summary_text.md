@@ -39,19 +39,25 @@ The tree-ring records from our focal sites were complemented with a much larger 
 
 ## Data collection
 
-Dendrometer band measurements were made by interns and volunteers. Dendrometer bands are placed 1.3m above the base of the tree and measurements of window size were made with a digital micrometer. Tree cores and climate data were provided by external sources. 
+Dendrometer bands:
 
 
-Metal dendrometer bands were installed on a total of 941 trees within the SCBI and Harvard Forest ForestGEO plots. Bands were measured with a digital caliper approximately every 1-2 weeks within the growing season from 2011-2020 at SCBI and 1998-2003 at Harvard Forest. The number of bands measured at each site fluctuated slightly as trees were added or dropped from the census (e.g., because of tree mortality). Across years, the number of bands sampled averaged 129 (range: 91-138) at SCBI and 717 (range: 700-755) at Harvard Forest.  In total, our analysis included 2459 tree-years (Extended Data Table 1).
+Metal dendrometer bands were installed on a total of 941 trees within the SCBI and Harvard Forest ForestGEO plots. They were placed at ~1.4m above the base of the tree. Bands were measured with a digital caliper approximately every 1-2 weeks within the growing season from 2011-2020 at SCBI and 1998-2003 at Harvard Forest. The number of bands measured at each site fluctuated slightly as trees were added or dropped from the census (e.g., because of tree mortality). Across years, the number of bands sampled averaged 129 (range: 91-138) at SCBI and 717 (range: 700-755) at Harvard Forest.  In total, our analysis included 2459 tree-years (Extended Data Table 1).
 
 Measurements were timed to begin before the beginning of spring growth and to continue through the cessation of growth in the fall. At SCBI, the median start date was April 14, which was adjusted forward when early leaf-out of understory vegetation was observed, with the earliest start date being March 30 (in 2020). Measurements were continued through to fall leaf senescence, with the median end date being October 17 and the latest end date November 26 (2012). Timing of measurements at Harvard Forest were similar, with the median start date of April 23 and median end date of October 30. 1998 was an anomalous year where initial measurements were taken on January 5, but not taken again until April 15. The latest end date was November 11, 2002.
 
+Leaf phenology:
+
 Canopy foliage phenology data for the years 2001-2018 were extracted for SCBI and Harvard Forest from the MCD12Q2 V6 Land Cover Dynamics product (a.k.a. MODIS Global Vegetation Phenology product) via Google Earth Engine. Extracted pixels were those containing the NEON tower at each site.
+
+Weather data: 
 
 Climate data corresponding to the measurement periods were obtained from local weather stations at each focal site. For SCBI, weather data were obtained from a meteorological tower adjacent to the ForestGEO plot, via the ForestGEO Climate Data Portal v1.0 (https://forestgeo.github.io/Climate/). The R package climpact (see www.climpact-sci.org) was used to plot temperatures for visual inspection and to identify readings that were >3 standard deviations away from yearly means, which were labeled as outliers and removed from the dataset. Gaps in the SCBI meteorological tower data were subsequently filled using temperature readings obtained from a National Center for Environmental Information (NCEI) weather station located in Front Royal, Virginia (https://www.ncdc.noaa.gov/cdo-web/datasets/GHCND/stations/GHCND:USC00443229/detail). Daily temperature records for Harvard Forest, which had already been gap-filled based on other local records, were obtained from the Harvard Forest weather station. For each site, we used records of daily maximum (T_max) and minimum temperatures (T_min).
 
-All cores had been previously collected, cross-dated, and measured using standard collection and processing methodologies (see "An Introduction to Tree-Ring Dating" by Stokes & Smiley). Dominant tree species were cored at both SCBI and Harvard Forest following sampling designs that covered a broad range of DBH.
+Tree cores: 
+
+All tree cores had been previously collected, cross-dated, and measured using standard collection and processing methodologies. Details are provided in the original publications cited in the manuscript.
 
 ## Timing and spatial scale
 
-Dendrometer band measurements were taken in the nearby forestGEO plots with no interruption in collection from 2011-2020 at SCBI and from 1998-2003 at Harvard Forest. Tree cores were taken opportunistically at 108 sites across the eastern North America, with chronologies spanning from 1901-2016.
+Dendrometer band measurements were taken in the nearby forestGEO plots with no interruption in collection from 2011-2020 at SCBI and from 1998-2003 at Harvard Forest. Tree cores were taken at 108 sites across the eastern North America, with chronologies spanning from 1901-2016.
