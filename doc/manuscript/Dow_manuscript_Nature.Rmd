@@ -425,7 +425,7 @@ All authors contributed critically to the drafts and gave final approval for pub
 # Code Availability Statement {-#Code}
 Data were analysed in the open source statistical software R (version 4.0).
 We used packages *Rdendrom* (https://github.com/seanmcm/RDendrom/), *climwin* v.1.2.3 (https://cran.r-project.org/web/packages/climwin/index.html), *climpact* (see www.climpact-sci.org)[@benestad_empiricalstatistical_2008], *dplR* **version###**, and *bootRes* **version###**. 
-All custom code is available through the EcoClimlab GitHub repository (https://github.com/EcoClimLab/growth_phenology) and archived in Zenodo (DOI: TBD).
+All custom code is available through the EcoClimlab GitHub repository (https://github.com/EcoClimLab/growth_phenology) and archived in Zenodo (DOI: [TBD]).
 
 
 # Additional Information {-#Additional} 
