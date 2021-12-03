@@ -369,7 +369,7 @@ https://cran.r-project.org/web/packages/rstanarm/vignettes/priors.html#default-w
 
 To rule out the possibility that observed patterns were strongly influenced by summer drought, we examined the relationship between spring tempreatures and summer Standardized Precipitation Evapotranspiration Index[@vicente-serrano_multiscalar_2010].
 The latter was obtained from the ForestGEO Climate Data Portal v1.0 (https://forestgeo.github.io/Climate/)[@anderson-teixeira_forestgeo_2020; @begueria_standardized_2014;@vicente-serrano_multiscalar_2010a]. 
-Linear models were run with 4-, 6-, and 12-month SPEI values of June, July, and August vs April $T_{max}$ to determine if warm spring temperatures lead to greater summer drought stress. 
+Linear models were run with 4-, 6-, and 12-month SPEI values of June, July, and August vs April $T_{max}$ to determine if warm spring temperatures were associated with greater summer drought stress in our data set. 
 No significant correlations were found (all p>0.05).
 
 ## Tree-ring analysis {-#Tree} 
@@ -403,7 +403,8 @@ Correlations and significance levels for months April-August are given in `r chr
 We used a multivariate model to test for joint effects of April and summer $T_{max}$ on RWI.
 We began by testing univariate correlations of $T_{max}$ over three summer windows: June, June-July, and May-August. 
 Having determined that, among these, June-July explained the most variation, we then analyzed the joint effects of April $T_{max}$ and June-July $T_{max}$ on RWI for each chronology independently using the base lm() function in R. 
-Slopes and p-values for each chronology are given in `r chron_table`. Although some models may have benefited from data transformations, we determined that assumptions of normality and homoscedasticity were sufficiently met for the purposes of this analysis.  
+Slopes and p-values for each chronology are given in `r chron_table`. 
+Although some models may have benefited from data transformations, we determined that assumptions of normality and homoscedasticity were sufficiently met for the purposes of this analysis.  
 
 # Acknowledgements {-#Acknowledgements} 
 We gratefully acknowledge all researchers who assisted with data collection in the field and laboratory, particularly Tsun Fung Au, Joshua Bregy, James Dickens, Karen Heeter, Anna Hennage, Daniel King, James McGee, Benjamin Lockwood, Jennifer McGarvey, Victoria Meakem, Josh Oliver, Jessica Shue, Karly Schmidt-Simard, Brandon Strange, Alyssa Terrell, Brynn Taylor, Michael Thornton, Senna Robeson, Matt Wenzel, and Luke Wylie. 
