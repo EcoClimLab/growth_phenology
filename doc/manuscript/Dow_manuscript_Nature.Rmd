@@ -427,7 +427,8 @@ Climate data were obtained from CRU v.4.04 via the ForestGEO Climate Data Portal
 
 # Code Availability Statement {-#Code}
 Data were analysed in the open source statistical software R (version 4.0).
-We used packages *Rdendrom* (https://github.com/seanmcm/RDendrom/), *climwin* v.1.2.3 (https://cran.r-project.org/web/packages/climwin/index.html), *climpact* (see www.climpact-sci.org)[@benestad_empiricalstatistical_2008], *dplR* v.1.0.2, and *bootRes* v1.2.4. 
+We used packages *climwin* v.1.2.3 (https://cran.r-project.org/web/packages/climwin/index.html),  *dplR* v.1.0.2, and *bootRes* v1.2.4, and functions from *Rdendrom* (https://github.com/seanmcm/RDendrom/).
+We used *climpact* software (see www.climpact-sci.org) <!--specify version-->.
 All custom code is available through the EcoClimlab GitHub repository (https://github.com/EcoClimLab/growth_phenology) and archived in Zenodo (DOI: *[TBD]*).
 
 
