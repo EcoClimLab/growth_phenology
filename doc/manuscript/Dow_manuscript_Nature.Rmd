@@ -422,13 +422,15 @@ All authors contributed critically to the drafts and gave final approval for pub
 
 # Data Availability Statement {-#Data} 
 Weather data for SCBI were obtained from the ForestGEO Climate Data Portal v1.0 (https://github.com/forestgeo/Climate/tree/master/Climate_Data/Met_Stations/SCBI), which is archived in Zenodo (DOI: 10.5281/zenodo.3958215), and the National Center for Environmental Information (NCEI) weather station located in Front Royal, Virginia (https://www.ncdc.noaa.gov/cdo-web/datasets/GHCND/stations/GHCND:USC00443229/detail), downloaded on [DATE].
-Weather data for Harvard Forest are available through the Harvard Forest Data Archive (https://harvardforest.fas.harvard.edu/harvard-forest-data-archive) <!--specify link, version-->.
+Weather data for Harvard Forest are available through the Harvard Forest Data Archive (https://harvardforest.fas.harvard.edu/harvard-forest-data-archive) (https://harvardforest1.fas.harvard.edu/exist/apps/datasets/showData.html?id=HF001 AND https://harvardforest1.fas.harvard.edu/exist/apps/datasets/showData.html?id=HF000).
 Climate data were obtained from CRU v.4.04 via the ForestGEO Climate Data Portal v1.0 (https://github.com/forestgeo/Climate/tree/master/Climate_Data/CRU), which is archived in Zenodo (DOI: 10.5281/zenodo.3958215).
+The Standardised Precipitation-Evapotranspiration Index was obtained from the ForestGEO Climate Data Portal v1.0 (https://github.com/forestgeo/Climate/tree/master/Climate_Data/CRU), which is archived in Zenodo (DOI: 10.5281/zenodo.3958215).
+Canopy foliage phenology data were extracted from the MCD12Q2 V6 Land Cover Dynamics product (a.k.a. MODIS Global Vegetation Phenology product) via Google Earth Engine (link). 
 
 # Code Availability Statement {-#Code}
 Data were analysed in the open source statistical software R (version 4.0).
 We used packages *climwin* v.1.2.3 (https://cran.r-project.org/web/packages/climwin/index.html),  *dplR* v.1.0.2, and *bootRes* v1.2.4, and functions from *Rdendrom* (https://github.com/seanmcm/RDendrom/).
-We used *climpact* software (see www.climpact-sci.org) <!--specify version-->.
+We used *climpact* software v.1.2.8 (see www.climpact-sci.org).
 All custom code is available through the EcoClimlab GitHub repository (https://github.com/EcoClimLab/growth_phenology) and archived in Zenodo (DOI: *[TBD]*).
 
 
