@@ -60,4 +60,4 @@ All tree cores had been previously collected, cross-dated, and measured using st
 
 ## Timing and spatial scale
 
-Dendrometer band measurements were taken in the nearby forestGEO plots with no interruption in collection from 2011-2020 at SCBI and from 1998-2003 at Harvard Forest. Tree cores were taken opportunistically at 108 sites across the eastern North America, with chronologies spanning from 1901-2016.
+Dendrometer band measurements were taken in the nearby forestGEO plots with no interruption in collection from 2011-2020 at SCBI and from 1998-2003 at Harvard Forest. Tree cores were taken at 108 sites across the eastern North America, with chronologies spanning from 1901-2016.
