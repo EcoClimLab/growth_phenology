@@ -429,7 +429,7 @@ Canopy foliage phenology data were extracted from the MCD12Q2 V6 Land Cover Dyna
 
 # Code Availability Statement {-#Code}
 Data were analysed in the open source statistical software R (version 4.0).
-We used packages *climwin* v.1.2.3 (https://cran.r-project.org/web/packages/climwin/index.html),  *dplR* v.1.0.2, and *bootRes* v1.2.4, and functions from *Rdendrom* (https://github.com/seanmcm/RDendrom/).
+We used packages *climwin* v.1.2.3 (https://cran.r-project.org/web/packages/climwin/index.html),  *dplR* v.1.0.2, and *bootRes* v1.2.4, *rstanarm* v.2.21.1, and functions from *Rdendrom* (https://github.com/seanmcm/RDendrom/).
 We used *climpact* software v.1.2.8 (see www.climpact-sci.org).
 All custom code is available through the EcoClimlab GitHub repository (https://github.com/EcoClimLab/growth_phenology) and archived in Zenodo (DOI: *[TBD]*).
 
