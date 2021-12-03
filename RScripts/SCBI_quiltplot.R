@@ -74,7 +74,7 @@ for(f in filenames) {
   core <- read.table(paste0("data/tree_rings/SCBI/cores/", f,"/ARSTANfiles/", tolower(f), "_drop.rwl_tabs.txt"), sep = "\t", h = T)
   core <- data.frame(res = core$res,  samp.depth = core$num, row.names = core$year)
 
-  # output the SD of the detrended chronologies (see issue # 63 on GitHub)
+  # output the SD of the detrended chronologies
   sd_coreres <- rbind(sd_coreres, data.frame(Species = f, SD = round(sd(core$res), 2)))
 
   # get the Subsample Signal Strength (sss as function of the number of trees in sample, the last one appearing in the "xxx_drop.rxl_out.txt files)
@@ -115,11 +115,11 @@ for(f in filenames) {
 write.csv(all_sss, file = "results/tree_cores/SCBI_SSS_as_a_function_of_the_number_of_trees_in_sample.csv", row.names = F)
 
 # save sd_coreres for all species
-write.csv(sd_coreres, file = "results/tree_cores/SCBI_SD_of_each_detrended_chornologies.csv", row.names = F)
+#write.csv(sd_coreres, file = "results/tree_cores/SCBI_SD_of_each_detrended_chornologies.csv", row.names = F)
 
 # save mean radius increment
 ## see: https://github.com/SCBI-ForestGEO/climate_sensitivity_cores/issues/62
-write.csv(data.frame(Species = filenames, mean_rad_inc = mean_core_raw_per_species), file = "results/tree_cores/SCBI_mean_radius_increment.csv", row.names = F)
+#write.csv(data.frame(Species = filenames, mean_rad_inc = mean_core_raw_per_species), file = "results/tree_cores/SCBI_mean_radius_increment.csv", row.names = F)
 
 
 ## Define start and end year for analysis, common to all species and one for each species ####

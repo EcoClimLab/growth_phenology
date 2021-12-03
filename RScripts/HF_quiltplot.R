@@ -101,7 +101,7 @@ for(ssp in species) {
 }
 
 # save sd_coreres for all species
-write.csv(sd_cores, file = paste0("results/SD_of_each_detrended_chornologies.csv"), row.names = F)
+#write.csv(sd_cores, file = paste0("results/SD_of_each_detrended_chornologies.csv"), row.names = F)
 
 
 
