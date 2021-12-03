@@ -336,7 +336,7 @@ Canopy foliage phenology data for the years 2001-2018 were extracted for SCBI an
 Extracted pixels were those containing the NEON tower at each site. 
 Using daily MODIS 2-band Enhanced Vegetation Index data (EVI2) at a spatial resolution of 500m, the product yields the timing of phenometrics (vegetation phenology) over each year, including timing of greenup, midgreenup, and senescence as used in this study.
 
-<!--Climate -->
+<!--Weather data -->
 For the dendrometer band and leaf phenology analyses, climate data corresponding to the measurement periods were obtained from local weather stations at each focal site. 
 For SCBI, weather data were obtained from a meteorological tower adjacent to the ForestGEO plot, via the ForestGEO Climate Data Portal v1.0 (https://forestgeo.github.io/Climate/)[@anderson-teixeira_forestgeo_2020]. 
 The R package *climpact* (see www.climpact-sci.org)[@benestad_empiricalstatistical_2008] was used to plot temperatures for visual inspection and to identify readings that were >3 standard deviations away from yearly means, which were labeled as outliers and removed from the dataset. 
@@ -407,7 +407,7 @@ Slopes and p-values for each chronology are given in `r chron_table`. Although s
 
 # Acknowledgements {-#Acknowledgements} 
 We gratefully acknowledge all researchers who assisted with data collection in the field and laboratory, particularly Tsun Fung Au, Joshua Bregy, James Dickens, Karen Heeter, Anna Hennage, Daniel King, James McGee, Benjamin Lockwood, Jennifer McGarvey, Victoria Meakem, Josh Oliver, Jessica Shue, Karly Schmidt-Simard, Brandon Strange, Alyssa Terrell, Brynn Taylor, Michael Thornton, Senna Robeson, Matt Wenzel, and Luke Wylie. 
-Thanks to David A. Orwig and members of the ForestGEO Ecosystesms & Climate Lab at SCBI for helpful feedback.
+Thanks to David A. Orwig and members of the ForestGEO Ecosystems & Climate Lab at SCBI for helpful feedback.
 The research was funded by ForestGEO (Smithsonian). 
 Collection of tree-ring samples was funded by a USDA Agriculture and Food Research Initiative grant 2017-67013-26191 and from the Indiana University Vice Provost for Research Faculty Research Program.
 
@@ -421,11 +421,14 @@ Cameron Dow and Kristina J. Anderson-Teixeira led the writing of the manuscript.
 All authors contributed critically to the drafts and gave final approval for publication.
 
 # Data Availability Statement {-#Data} 
+Weather data for SCBI were obtained from the ForestGEO Climate Data Portal v1.0 (https://github.com/forestgeo/Climate/tree/master/Climate_Data/Met_Stations/SCBI), which is archived in Zenodo (DOI: 10.5281/zenodo.3958215), and the National Center for Environmental Information (NCEI) weather station located in Front Royal, Virginia (https://www.ncdc.noaa.gov/cdo-web/datasets/GHCND/stations/GHCND:USC00443229/detail), downloaded on [DATE].
+Weather data for Harvard Forest are available through the Harvard Forest Data Archive (https://harvardforest.fas.harvard.edu/harvard-forest-data-archive) <!--specify link, version-->.
+Climate data were obtained from CRU v.4.04 via the ForestGEO Climate Data Portal v1.0 (https://github.com/forestgeo/Climate/tree/master/Climate_Data/CRU), which is archived in Zenodo (DOI: 10.5281/zenodo.3958215).
 
 # Code Availability Statement {-#Code}
 Data were analysed in the open source statistical software R (version 4.0).
 We used packages *Rdendrom* (https://github.com/seanmcm/RDendrom/), *climwin* v.1.2.3 (https://cran.r-project.org/web/packages/climwin/index.html), *climpact* (see www.climpact-sci.org)[@benestad_empiricalstatistical_2008], *dplR* v.1.0.2, and *bootRes* v1.2.4. 
-All custom code is available through the EcoClimlab GitHub repository (https://github.com/EcoClimLab/growth_phenology) and archived in Zenodo (DOI: [TBD]).
+All custom code is available through the EcoClimlab GitHub repository (https://github.com/EcoClimLab/growth_phenology) and archived in Zenodo (DOI: *[TBD]*).
 
 
 # Additional Information {-#Additional} 
