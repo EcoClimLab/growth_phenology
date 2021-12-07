@@ -159,7 +159,7 @@ for(f in species) {
 all.dcc.output$variable <- substr(paste(row.names(all.dcc.output)), 1, 3)#get variable from row name
 all.dcc.output$month <- substr(paste(row.names(all.dcc.output)), 5, 12)#get month from row name
 
-write.csv(all.dcc.output, file = "Results/all.dcc.output_hf.csv", row.names = FALSE)
+write.csv(all.dcc.output, file = "Results/tree_cores/quiltplots/plot_data/HF/all.dcc.output_hf.csv", row.names = FALSE)
 #} # for(f in species)
 
 #############################################
@@ -201,7 +201,7 @@ for(v in climate_variables) {
   x <- x[,c(2,1,3)]
   x.sig <- x.sig[,c(2,1,3)]
   x.sig2 <- x.sig2[,c(2,1,3)]
-  png(paste0("results/", "monthly_", "correlation", "Harvard", v, ".png"), res = 150, width = 169, height = 169, units = "mm", pointsize = 10)
+  png(paste0("results/tree_cores/quiltplots/plot_images/", "monthly_", "correlation", "Harvard", v, ".png"), res = 150, width = 169, height = 169, units = "mm", pointsize = 10)
 
   my.dccplot(x = as.data.frame(t(x)), sig = as.data.frame(t(x.sig)), sig2 = as.data.frame(t(x.sig2)),  main = ifelse(v %in% "PETminusPRE", "PET-PRE", v), method = "correlation")
 

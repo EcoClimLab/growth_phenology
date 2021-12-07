@@ -20,19 +20,19 @@ names(originals) <- c("Latitude", "Location")
 TRW_coord <- rbind(TRW_coord, originals)
 
 #Merge dcc outputs to plot on the same quilt plot
-all_dcc_output_hf <- read_csv("Results/all.dcc.output_hf.csv")#created in HF_quiltplot.R
+all_dcc_output_hf <- read_csv("Results/tree_cores/quiltplots/plot_data/HF/all.dcc.output_hf.csv")#created in HF_quiltplot.R
 all_dcc_output_hf$site <- paste0("HF_", all_dcc_output_hf$Species)
-all_dcc_output_other <- read_csv("Results/all.dcc.output_other.csv")#created in Other_quiltplot.R
+all_dcc_output_other <- read_csv("Results/tree_cores/quiltplots/plot_data/Other/all.dcc.output_other.csv")#created in Other_quiltplot.R
 all_dcc_output_other$site <- paste0(all_dcc_output_other$Site,"_", all_dcc_output_other$Species)
 all_dcc_output_other <- all_dcc_output_other[,-1]
 all_dcc_output_other <- all_dcc_output_other[!(all_dcc_output_other$site %in% "MO_Flu_CAOV"),]
-all_dcc_output_scbi <- read_csv("Results/scbi_core_corr.csv")#Created in scbi_quiltplot.R
+all_dcc_output_scbi <- read_csv("Results/tree_cores/quiltplots/plot_data/SCBI/scbi_core_corr.csv")#Created in scbi_quiltplot.R
 all_dcc_output_scbi$site <- paste0("SCBI_", all_dcc_output_scbi$Species)
 
 all.dcc.output_all <- rbind(all_dcc_output_other,all_dcc_output_scbi,all_dcc_output_hf)
 
 #Load in clim means
-clim_means <- read_csv("Results/clim_means_all.csv")#Created in other_quiltplot.R
+clim_means <- read_csv("Results/tree_cores/quiltplots/clim_means_all.csv")#Created in other_quiltplot.R
 clim_means$tmx <- ifelse(clim_means$Location == "HF_LyfordPlots", clim_means$tmx+0.01, clim_means$tmx)#added to allow HF_lyford plots to be plotted separately from HF, even though spring means were the same. Does not affect analyses
 #Create porosity lists
 RP <- c("CAGL","CAOV","CATO","CACO","QURU", "QUST", "QUAL","QUPR","QUMO", "FRAM", "QUVE", "FRNI","QUMA", "QUPA")
@@ -342,7 +342,7 @@ tmn_data_table <- tmn_data_table[!(duplicated(tmn_data_table$group)),]
     #x <- x[,c(2,1,3)]
     #x.sig <- x.sig[,c(2,1,3)]
     #x.sig2 <- x.sig2[,c(2,1,3)]
-    png(paste0("results/", "monthly_", "correlation", "other", v,WT, ".png"), res = 150, width = 169, height = 2*169, units = "mm", pointsize = 10)
+    png(paste0("results/tree_cores/quiltplots/plot_images/", "monthly_", "correlation", "other", v,WT, ".png"), res = 150, width = 169, height = 2*169, units = "mm", pointsize = 10)
 
     my.dccplot(x = as.data.frame(t(x)), sig = as.data.frame(t(x.sig)), sig2 = as.data.frame(t(x.sig2)),  main = ifelse(v %in% "PETminusPRE", "PET-PRE", v), method = "correlation")
 
@@ -403,7 +403,7 @@ x.sig2 <- x.sig2[, -1]
 v <-  toupper(v)
 v <- gsub("PDSI_PREWHITEN" , "PDSI", v)
 
-png(paste0("results/", "monthly_", "correlation", "other", v,WT, ".png"), res = 150, width = 169, height = 2*169, units = "mm", pointsize = 10)
+png(paste0("results/tree_cores/quiltplots/plot_images/", "monthly_", "correlation", "other", v,WT, ".png"), res = 150, width = 169, height = 2*169, units = "mm", pointsize = 10)
 
 my.dccplot(x = as.data.frame(t(x)), sig = as.data.frame(t(x.sig)), sig2 = as.data.frame(t(x.sig2)),  main = ifelse(v %in% "PETminusPRE", "PET-PRE", v), method = "correlation")
 
@@ -466,7 +466,7 @@ x.sig2 <- x.sig2[, -1]
 v <-  toupper(v)
 v <- gsub("PDSI_PREWHITEN" , "PDSI", v)
 
-png(paste0("results/", "monthly_", "correlation", "other", v,WT, ".png"), res = 150, width = 169, height = 2*169, units = "mm", pointsize = 10)
+png(paste0("results/tree_cores/quiltplots/plot_images/", "monthly_", "correlation", "other", v,WT, ".png"), res = 150, width = 169, height = 2*169, units = "mm", pointsize = 10)
 
 my.dccplot(x = as.data.frame(t(x)), sig = as.data.frame(t(x.sig)), sig2 = as.data.frame(t(x.sig2)),  main = ifelse(v %in% "PETminusPRE", "PET-PRE", v), method = "correlation")
 
@@ -526,7 +526,7 @@ x.sig2 <- x.sig2[, -1]
 v <-  toupper(v)
 v <- gsub("PDSI_PREWHITEN" , "PDSI", v)
 
-png(paste0("results/", "monthly_", "correlation", "other", v,WT, ".png"), res = 150, width = 169, height = 2*169, units = "mm", pointsize = 10)
+png(paste0("results/tree_cores/quiltplots/plot_images/", "monthly_", "correlation", "other", v,WT, ".png"), res = 150, width = 169, height = 2*169, units = "mm", pointsize = 10)
 
 my.dccplot(x = as.data.frame(t(x)), sig = as.data.frame(t(x.sig)), sig2 = as.data.frame(t(x.sig2)),  main = ifelse(v %in% "PETminusPRE", "PET-PRE", v), method = "correlation")
 

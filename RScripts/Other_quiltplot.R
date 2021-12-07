@@ -226,7 +226,7 @@ clim <- clim[!duplicated(clim$Date),]
 all.dcc.output$variable <- substr(paste(row.names(all.dcc.output)), 1, 3)#get variable from row name
 all.dcc.output$month <- substr(paste(row.names(all.dcc.output)), 5, 12)#get month from row name
 
-write.csv(all.dcc.output, file = "Results/all.dcc.output_other.csv", row.names = FALSE)
+write.csv(all.dcc.output, file = "Results/tree_cores/quiltplots/plot_data/Other/all.dcc.output_other.csv", row.names = FALSE)
 
 #all.dcc.output <- all.dcc.output %>%
 #  mutate(Species = str_c(Site, Species, sep = "_")) %>%
