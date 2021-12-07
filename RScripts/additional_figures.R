@@ -35,7 +35,7 @@ lg5.pred <- function(params, doy) {
 
 ## 1. Get LG5 parameter values ----
 # Identify cold and hot aprils
-read_csv("climate data/HF/HF_weatherdata.csv") %>%
+read_csv("Data/climate data/HF/HF_weatherdata.csv") %>%
   dplyr::filter(month == 4) %>%
   group_by(year) %>%
   summarize(TMAX = mean(airtmax, na.rm = TRUE)) %>%

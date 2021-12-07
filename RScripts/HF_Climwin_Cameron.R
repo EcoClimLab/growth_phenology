@@ -55,7 +55,7 @@ trace("plotbetas", edit = TRUE)
 #
 #write.csv(HF_weatherdata, file = "HF_weatherdata_TMIN.csv", row.names = FALSE)
 # Read in climate and biological data for climwin analysis ----
-climate <- read_csv("climate data/HF/HF_weatherdata.csv", col_names = TRUE)
+climate <- read_csv("Data/climate data/HF/HF_weatherdata.csv", col_names = TRUE)
 
 colnames(climate) <- c("date", "TMAX", "doy", "year", "month", "day")
 
@@ -159,7 +159,7 @@ write.csv(dffinal, file = "results/Climwin_results/Weekly/Harvard Forest/weekly_
 
 
 ## TMIN: Percentage DOY climwin all wood types, all percs WEEKLY ----
-climate <- read_csv("climate data/HF/HF_weatherdata_TMIN.csv", col_names = TRUE)
+climate <- read_csv("Data/climate data/HF/HF_weatherdata_TMIN.csv", col_names = TRUE)
 
 colnames(climate) <- c("date", "TMIN", "doy", "year", "month", "day")
 

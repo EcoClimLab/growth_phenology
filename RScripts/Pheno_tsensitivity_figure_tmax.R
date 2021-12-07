@@ -84,7 +84,7 @@ twosevenfive <- twosevenfive[, c(3, 7, 16)]
 ################################################################
 
 weatherdata <-
-  read_csv("climate data/SCBI/met_tower_data_sensor2_ncdc_supplemented.csv") %>%
+  read_csv("Data/climate data/SCBI/met_tower_data_sensor2_ncdc_supplemented.csv") %>%
   filter(!is.na(cleantmax)) %>%
   mutate(year = year.x)
 #TMIN
@@ -708,7 +708,7 @@ twosevenfive_hf <- twosevenfive_hf[, c(3, 6, 17)]
 # 0. Get all weather data
 # #TMAX
 weatherdata_hf <-
-  read_csv("climate data/HF/HF_weatherdata.csv") %>%
+  read_csv("Data/climate data/HF/HF_weatherdata.csv") %>%
   filter(!is.na(airtmax))
 #
 # #TMAX

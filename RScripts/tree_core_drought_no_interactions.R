@@ -63,7 +63,7 @@ clim_v <- NULL
 # something like this should do
 for(clim_v in climate_variables) {
   print(clim_v)
-  x <- read.csv(paste0("climate data/CRU/", clim_v,  ".1901.2019-all_sites-3-11.csv"))
+  x <- read.csv(paste0("Data/climate data/CRU/", clim_v,  ".1901.2019-all_sites-3-11.csv"))
 
 
   ### subset for the sites we care about

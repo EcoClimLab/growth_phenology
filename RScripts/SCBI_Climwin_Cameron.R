@@ -28,7 +28,7 @@ trace("plotbetas", edit = TRUE)
 
 # Read in climate and biological data for climwin analysis ----
 # SCBI met tower
-climate <- read_csv("climate data/SCBI/met_tower_data_sensor2_ncdc_supplemented.csv", col_names = TRUE) # only goes to October 2019, fix?
+climate <- read_csv("Data/climate data/SCBI/met_tower_data_sensor2_ncdc_supplemented.csv", col_names = TRUE) # only goes to October 2019, fix?
 
 colnames(climate) <- c("date", "year", "month", "day", "doy", "TMAX")
 #climate[climate$TMAX == -99.9, ] <- NA
@@ -155,7 +155,7 @@ write.csv(dffinal, file = "results/Climwin_results/Weekly/SCBI/weekly_climwin_re
 #write.csv(climate, file = "SCBI_tmin.csv", row.names = FALSE)
 
 
-climate <- read_csv("climate data/SCBI/SCBI_tmin.csv")
+climate <- read_csv("Data/climate data/SCBI/SCBI_tmin.csv")
 
 dffinal <- data.frame(1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
 for (w in unique(Wood_pheno_table$wood_type)) {

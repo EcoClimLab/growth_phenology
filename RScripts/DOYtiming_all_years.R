@@ -12,7 +12,7 @@ Wood_pheno_table_scbi <- read_csv("Data/dendrobands/SCBI/modeled/Wood_pheno_tabl
   mutate(wood_type = ifelse(wood_type == "ring porous", "ring-porous", wood_type))
 
 weatherdata <-
-  read_csv("climate data/SCBI/met_tower_data_sensor2_ncdc_supplemented.csv") %>%
+  read_csv("Data/climate data/SCBI/met_tower_data_sensor2_ncdc_supplemented.csv") %>%
   filter(!is.na(cleantmax)) %>%
   mutate(year = year.x)
 
@@ -283,7 +283,7 @@ Wood_pheno_table <- read_csv("Data/dendrobands/HF/modeled/Wood_pheno_table_Harva
 #Wood_pheno_table$tag <- substr(Wood_pheno_table$tag,1, nchar(as.character(Wood_pheno_table$tag))-4)
 
 weatherdata <-
-  read_csv("climate data/HF/HF_weatherdata.csv") %>%
+  read_csv("Data/climate data/HF/HF_weatherdata.csv") %>%
   filter(!is.na(airtmax))
 
 #mutate(
@@ -710,7 +710,7 @@ Wood_pheno_table_scbi <- read_csv("Data/Wood_pheno_table_SCBI_CLEAN.csv") %>%
   mutate(wood_type = ifelse(wood_type == "ring porous", "ring-porous", wood_type))
 
 weatherdata <-
-  read_csv("climate data/SCBI/met_tower_data_sensor2_ncdc_supplemented.csv") %>%
+  read_csv("Data/climate data/SCBI/met_tower_data_sensor2_ncdc_supplemented.csv") %>%
   filter(!is.na(cleantmax)) %>%
   mutate(year = year.x)
 
@@ -769,7 +769,7 @@ wood_pheno_doy <- aggregate(Wood_pheno_table_scbi$DOY, by = list(Wood_pheno_tabl
 names(wood_pheno_doy) <- c("perc", "year", "wood_type","climwin_mean",  "doy")
 
 weatherdata <-
-  read_csv("climate data/SCBI/met_tower_data_sensor2_ncdc_supplemented.csv") %>%
+  read_csv("Data/climate data/SCBI/met_tower_data_sensor2_ncdc_supplemented.csv") %>%
   filter(!is.na(cleantmax)) %>%
   mutate(year = year.x)
 
@@ -808,7 +808,7 @@ names(leaf_phenology) <- c("site","year","Greenup", "Mid-greenup", "Peak","Senes
 leaf_phenology_melt <- melt(leaf_phenology, id.vars = c("site","year","tmp","los"))
 leaf_phenology_melt$value <- yday(leaf_phenology_melt$value)
 
-scbi <- read_csv("climate data/SCBI/scbi_2001to2018.csv")
+scbi <- read_csv("Data/climate data/SCBI/scbi_2001to2018.csv")
 scbi <- scbi[,c(3,4)]
 scbi <- scbi[complete.cases(scbi$TMAX),]
 scbi$month <- month(scbi$DATE)

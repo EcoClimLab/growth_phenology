@@ -234,7 +234,7 @@ for(f in species) {
   core <- get(f)
 
   # load climate data for corresponding site (not necessary since you have only one site, but renaming to clim so that the rest works)  ####
-  clim <- read.csv(paste0("climate data/CRU/Formated_CRU_SCBI_1901_2016.csv"))
+  clim <- read.csv(paste0("Data/climate data/CRU/Formated_CRU_SCBI_1901_2016.csv"))
   clim <- clim[,c(1,2,9,11)]
   ### crop last year to full.time.frame.end.year
   clim <- clim[clim$year <= end.year, ]

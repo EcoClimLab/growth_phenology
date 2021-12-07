@@ -67,7 +67,7 @@ clim_v <- NULL
 # something like this should do
 for(clim_v in climate_variables) {
   print(clim_v)
-  x <- read.csv(paste0("climate data/CRU/", clim_v,  ".1901.2019-Other_sites-3-11.csv"))
+  x <- read.csv(paste0("Data/climate data/CRU/", clim_v,  ".1901.2019-Other_sites-3-11.csv"))
 
 
   ### subset for the sites we care about
@@ -104,7 +104,7 @@ clim_means <- all_Clim %>%
   rename(Location = sites.sitename)
 
 #SCBI clim_means
-scbi_clim <- read.csv(paste0("climate data/SCBI/Formated_CRU_SCBI_1901_2016.csv"))
+scbi_clim <- read.csv(paste0("Data/climate data/SCBI/Formated_CRU_SCBI_1901_2016.csv"))
 scbi_clim <- scbi_clim[,c(1,2,9,11)]
 scbi_clim$Location <- "SCBI"
 
