@@ -3,7 +3,7 @@ Number,The chronology number as seen on Figure 3. Each number corresponds to a u
 Location,The geographical location that the cores were collected from to create the chronology.,-
 Species,The species used to create the chronology,-
 Wood Type,The porosity of the species used to generate the chronology. Either ring-porous (RP) or diffuse-porous (DP).,-
-Archive Location,Database in which data are archived,-
+Archive Location,Database in which data are archived. (DEN= The DendroEcological Network; ITRDB= International Tree-Ring Data Bank ),-
 Accession Code,Accession code ,-
 Archive URL,URL of archived data,-
 Latitude,The latitude of the location where the cores used to generate the chronology were collected.,°
