@@ -13,7 +13,7 @@ library(reshape2)
 library(readxl)
 
 #Create crns_long ----
-crns <- read_csv("Data/tree_rings/Other/all_crns_res_1901.csv") %>%
+crns <- read_csv("Data/tree_rings/raw_data/Other/all_crns_res_1901.csv") %>%
   # clean up
   select(-c(BearIs, OH_Gol_QUAL_1, PineMt_QUMO)) %>%
   rename(IL_Fer_LITU = IL_Fer_LTU,
@@ -28,7 +28,7 @@ crns_long <- crns %>%
 crns_long$Location <- substr(crns_long$site_sp, 1,nchar(crns_long$site_sp)-5)
 
 #Add lat / lon
-TRW_coord <- read_excel("Data/tree_rings/Other/TRW_coord2.xlsx")
+TRW_coord <- read_excel("Data/tree_rings/raw_data/Other/TRW_coord2.xlsx")
 TRW_coord <- TRW_coord[,c(1,2,3)]
 #Add original two locations to include in final quilt plot
 originals <- data.frame(42.5388, -72.18, "HF") #Lat for HF = 42.5388
@@ -51,11 +51,11 @@ crns_long_try[crns_long_try$Location %in% "Fiddler<U+393C><U+3E32>s_Green,_VA_LI
 crns_long_try[crns_long_try$Location %in% "Fiddler<U+393C><U+3E32>s_Green,_VA_MAAC", "Latitude"] <- "37.7686833"
 crns_long_try[crns_long_try$Location %in% "Fiddler<U+393C><U+3E32>s_Green,_VA_MAAC", "Longitude"] <- "-79.2423833"
 
-write.csv(crns_long_try, file = "data/crns_long.csv", row.names = FALSE)
+write.csv(crns_long_try, file = "data/tree_rings/raw_data/crns_long.csv", row.names = FALSE)
 # crns_long_try$Latitude <- ifelse(is.na(crns_long_try$Latitude), "37.7", crns_long_try$Latitude)
 # is.na(crns_long_try$Latitude) <- "37.7"
 # Create tree_core_drought data ####
-crns_long <- read.csv("data/crns_long.csv")
+crns_long <- read.csv("data/tree_rings/raw_data/crns_long.csv")
 
 ## needs to be in different format: column for Date, year and then one column per climate variable
 climate_variables <- c("tmn", "tmx")
@@ -129,41 +129,22 @@ crns_long <- crns_long[!is.na(crns_long$april),]
 species_all <- unique(crns_long$site_sp)
 p_vals <- data.frame(NULL)
 rs <- data.frame(NULL)
-#names(p_vals) <- c("cur_sp", "variable", "p-value", "est")
-#p_vals <- p_vals[-1,]
+
 #For loop runs through LM's for each clim variable and captures p-vals in one DF
 for(i in 1:length(species_all)){
 cur_sp <- species_all[i]
 crns_sub <- crns_long[crns_long$site_sp %in% cur_sp,]
 
-# aa <- summary(lm(ring_width ~ april, data = crns_sub))
-# apr <- aa[["coefficients"]][2,4]
-# apr_est <- aa[["coefficients"]][2,1]
-# apr_r <- aa[["adj.r.squared"]]
+a <- summary(lm(ring_width ~ april + june + april:june, data = crns_sub))#create model summary
+apr_jun_apr <- a[["coefficients"]][2,4] #extract p-val for april
+apr_jun_apr_est <- a[["coefficients"]][2,1] #extract lm slope for april
+apr_jun <- a[["coefficients"]][4,4] #extract p-val for apr:jun
+apr_jun_est <- a[["coefficients"]][4,1] #extract lm slope for apr:jun
+jun_apr_jun <- a[["coefficients"]][3,4] #extract p-val for june
+jun_apr_jun_est <- a[["coefficients"]][3,1] #extract lm slope for june
+apr_jun_r <- a[["adj.r.squared"]] #extract r-squared value for whole model
 
-a <- summary(lm(ring_width ~ april + june + april:june, data = crns_sub))
-apr_jun_apr <- a[["coefficients"]][2,4]
-apr_jun_apr_est <- a[["coefficients"]][2,1]
-apr_jun <- a[["coefficients"]][4,4]
-apr_jun_est <- a[["coefficients"]][4,1]
-jun_apr_jun <- a[["coefficients"]][3,4]
-jun_apr_jun_est <- a[["coefficients"]][3,1]
-apr_jun_r <- a[["adj.r.squared"]]
-
-# #Estaban's way!
-# a <- lm(ring_width ~ april + june + april:june, data = crns_sub)
-# coefficients (a) #provides the coefficients of the model (these are conditional coefficients: focus on one variable holding the others constant)
-# summary(a) #provides the F, df, and P value for the whole model (check the last line of the output)
-# Anova(a, type =3) #provides the F, df, and P value for each independent factor
-# anova_stats(a, digits =3) #provides the effect size (we are reporting partial Omega squared)
-
-# ab <- summary(lm(ring_width ~ june, data = crns_sub))
-# jun <- ab[["coefficients"]][2,4]
-# jun_est <- ab[["coefficients"]][2,1]
-# jun_r <- ab[["adj.r.squared"]]
-#
-# jun_r <- ifelse(jun <= 0.05, apr_r, NA)
-
+#pattern of extraction continues for each model below
 b <- summary(lm(ring_width ~ april + june_july + april:june_july, data = crns_sub))
 apr_jun_jul_apr <- b[["coefficients"]][2,4]
 apr_jun_jul_apr_est <- b[["coefficients"]][2,1]
@@ -173,18 +154,6 @@ apr_jun_jul <- b[["coefficients"]][4,4]
 apr_jun_jul_est <- b[["coefficients"]][4,1]
 apr_jun_jul_r <- b[["adj.r.squared"]]
 
-#Estaban's way!
-# b <- lm(ring_width ~ april + june_july + april:june_july, data = crns_sub)
-# coefficients (b) #provides the coefficients of the model (these are conditional coefficients: focus on one variable holding the others constant)
-# summary(b) #provides the F, df, and P value for the whole model (check the last line of the output)
-# Anova(b, type =3) #provides the F, df, and P value for each independent factor
-# anova_stats(b, digits =3) #provides the effect size (we are reporting partial Omega squared)
-
-# bb <- summary(lm(ring_width ~ june_july, data = crns_sub))
-# jun_jul <- bb[["coefficients"]][2,4]
-# jun_jul_est <- bb[["coefficients"]][2,1]
-# jun_jul_r <- bb[["adj.r.squared"]]
-
 c <- summary(lm(ring_width ~ april + may_aug + april:may_aug, data = crns_sub))
 apr_summer_apr <- c[["coefficients"]][2,4]
 apr_summer_apr_est <- c[["coefficients"]][2,1]
@@ -193,11 +162,6 @@ sum_apr_summer_est <- c[["coefficients"]][3,1]
 apr_summer <- c[["coefficients"]][4,4]
 apr_summer_est <- c[["coefficients"]][4,1]
 apr_summer_r <- c[["adj.r.squared"]]
-
-# cb <- summary(lm(ring_width ~ may_aug, data = crns_sub))
-# may_aug <- cb[["coefficients"]][2,4]
-# may_aug_est <- cb[["coefficients"]][2,1]
-# may_aug_r <- cb[["adj.r.squared"]]
 
 est <- c(apr_jun_apr_est, apr_jun_est, jun_apr_jun_est, apr_jun_jul_apr_est, apr_jun_jul_est,jj_apr_jun_jul_est, apr_summer_apr_est, apr_summer_est, sum_apr_summer)
 
@@ -212,15 +176,15 @@ lat <- crns_sub[c(1),c(5)]
 lon <- crns_sub[c(1),c(6)]
 
 melt_cur <- cbind(melt_cur, est, lat,lon)
-p_vals <- rbind(p_vals, melt_cur)
+p_vals <- rbind(p_vals, melt_cur) #append current model values to master dataframe
 }
 
-
-write.csv(p_vals, file = "Data/Tree_core_drought.csv", row.names = FALSE)
+#save master dataframe
+write.csv(p_vals, file = "Data/tree_rings/processed_data/Tree_core_drought.csv", row.names = FALSE)
 
 #only sig models -
 sig_only <- p_vals[p_vals$`p-value` >= 0.05,]
-write.csv(sig_only, file = "Data/Significant_Tree_core_drought.csv", row.names = FALSE)
+write.csv(sig_only, file = "Data/tree_rings/processed_data/Significant_Tree_core_drought.csv", row.names = FALSE)
 
 #messing around with r-squared ----
 rs$sp <- substr(rs$cur_sp, nchar(rs$cur_sp)-3, nchar(rs$cur_sp))
@@ -248,7 +212,7 @@ boxplot(ring_melt$value~ring_melt$variable)
 rm(list = ls())
 
 #Read in Tree core drought data created in last step. Fiddler's green and some HF have their lat/lon manually changed to match the values in the chronology table
-toadd <- read_csv("Data/Tree_core_drought.csv") %>%
+toadd <- read_csv("Data/tree_rings/processed_data/Tree_core_drought.csv") %>%
   rename(Latitude = lat,
          Longitude = lon)
 
@@ -356,7 +320,7 @@ write.csv(attempt_4, file = "doc/manuscript/tables_figures/chronology_table.csv"
 rm(list = ls())
 
 #Read in Tree core drought data created in last step. Fiddler's green and some HF have their lat/lon manually changed to match the values in the chronology table
-toadd_sig <- read_csv("Data/Significant_Tree_core_drought.csv") %>%
+toadd_sig <- read_csv("Data/tree_rings/processed_data/Significant_Tree_core_drought.csv") %>%
   rename(Latitude = lat,
          Longitude = lon)
 

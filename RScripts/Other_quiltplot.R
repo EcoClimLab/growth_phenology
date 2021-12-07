@@ -16,7 +16,7 @@ library(readxl)
 source("Rscripts/0-My_dplR_functions.R")
 
 #Load in lat lon for plotting sort
-TRW_coord <- read_excel("Data/tree_rings/Other/TRW_coord2.xlsx")
+TRW_coord <- read_excel("Data/tree_rings/raw_data/TRW_coord2.xlsx")
 TRW_coord <- TRW_coord[,c(1,3)]
 #Add original two locations to include in final quilt plot
 originals <- data.frame(42.5388, "HF")
@@ -24,11 +24,11 @@ originals <- rbind(originals, c(38.8935, "SCBI"))
 names(originals) <- c("Latitude", "Location")
 TRW_coord <- rbind(TRW_coord, originals)
 #Prepare csv's
-crns <- read.csv("Data/tree_rings/Other/all_crns_res_1901.csv")
+crns <- read.csv("Data/tree_rings/raw_data/Other/all_crns_res_1901.csv")
 #TRW_coord <- read_excel("Data/tree_rings/Other/TRW_coord.xlsx")
 
 # Bert approach
-crns <- read_csv("Data/tree_rings/Other/all_crns_res_1901.csv") %>%
+crns <- read_csv("Data/tree_rings/raw_data/Other/all_crns_res_1901.csv") %>%
   # clean up
   select(-c(BearIs, OH_Gol_QUAL_1, `Greenbrook_Sanctuary,_NJ_LITU_LITU`)) %>%
   rename(IL_Fer_LITU = IL_Fer_LTU)
@@ -103,7 +103,7 @@ clim_means <- all_Clim %>%
   rename(Location = sites.sitename)
 
 #SCBI clim_means
-scbi_clim <- read.csv(paste0("climate data/Formated_CRU_SCBI_1901_2016.csv"))
+scbi_clim <- read.csv(paste0("climate data/SCBI/Formated_CRU_SCBI_1901_2016.csv"))
 scbi_clim <- scbi_clim[,c(1,2,9,11)]
 scbi_clim$Location <- "SCBI"
 
@@ -118,7 +118,7 @@ scbi_clim_means <- scbi_clim %>%
 hf_clim <- subset(clim_means, clim_means$Location == "HF_LyfordPlots")
 hf_clim$Location <- "HF"
 
-# hf_clim <- read_csv("climate data/Harvard_forest_cru.csv")
+# hf_clim <- read_csv("climate data/HF/Harvard_forest_cru.csv")
 # hf_clim$year <- as.numeric(format(as.Date(hf_clim$Date, format = "%Y-%m-%d"), "%Y"))
 # ### add month column
 # hf_clim$month <- as.numeric(format(as.Date(hf_clim$Date, format = "%Y-%m-%d"), "%m"))

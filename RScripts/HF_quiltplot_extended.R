@@ -13,7 +13,7 @@ library(climwin)
 #Manually rearrange x to put in desired plotting order right before plotting
 #source("https://raw.githubusercontent.com/SCBI-ForestGEO/climate_sensitivity_cores/master/scripts/0-My_dplR_functions.R")
 source("Rscripts/0-My_dplR_functions.R")
-path_to_sp_res_chrons <- "C:/Users/world/Documents/GitHub/growth_phenology/Data/tree_rings/Harvard/" # replace to the path where Neil's chronlogies are
+path_to_sp_res_chrons <- "C:/Users/world/Documents/GitHub/growth_phenology/Data/tree_rings/raw_data/Harvard/" # replace to the path where Neil's chronlogies are
 
 
 #species <-  c("vector_species_you_have", "as they are names in Neils files")

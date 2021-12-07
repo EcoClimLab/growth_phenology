@@ -25,7 +25,7 @@ source("RScripts/dendroband_functions.R")
 
 # SCBI -------------------------------------------------------------------------
 ## Load up percent growth DF ----
-Wood_pheno_table_scbi <- read_csv("Data/Wood_pheno_table_SCBI_RAW.csv") %>%
+Wood_pheno_table_scbi <- read_csv("Data/dendrobands/SCBI/modeled/Wood_pheno_table_SCBI_RAW.csv") %>%
   # Keep only RP and DP for now
   filter(wood_type != "other") %>%
   # Rename ring porous to not have a space
@@ -34,7 +34,7 @@ Wood_pheno_table_scbi$tag_year_perc <- paste0(Wood_pheno_table_scbi$tag, Wood_ph
 unitag <- unique(Wood_pheno_table_scbi)
 
 
-LG5_parameter_values_scbi <- read_csv("Data/LG5_parameter_values_SCBI_RAW.csv")
+LG5_parameter_values_scbi <- read_csv("Data/dendrobands/SCBI/modeled/LG5_parameter_values_SCBI_RAW.csv")
 
 percent_growth <- Wood_pheno_table_scbi %>%
   separate(tag, into = c("tag", "stem"), sep = "_") %>%
@@ -271,8 +271,8 @@ LG5_parameter_values_scbi$tag_year <- paste0(LG5_parameter_values_scbi$tag, LG5_
 LG5_parameter_values_scbi <- LG5_parameter_values_scbi[LG5_parameter_values_scbi$tag_year %in% unique(percent_growth$tag_year), ]
 
 # V11 = 99%, V12 = 95%, V13 = 97.5%
-write.csv(Wood_pheno_table_scbi, file = "data/Wood_pheno_table_SCBI_CLEAN.csv", row.names = FALSE)
-write.csv(LG5_parameter_values_scbi, file = "data/LG5_parameter_values_SCBI_CLEAN.csv", row.names = FALSE)
+write.csv(Wood_pheno_table_scbi, file = "data/dendrobands/SCBI/modeled/Wood_pheno_table_SCBI_CLEAN.csv", row.names = FALSE)
+write.csv(LG5_parameter_values_scbi, file = "data/dendrobands/SCBI/modeled/LG5_parameter_values_SCBI_CLEAN.csv", row.names = FALSE)
 
 ## SCBI Plots ----
 rel_growth_scbi <- ggplot(percent_growth, aes(x = doy, y = dbh_growth_percent, group = tag_year)) +
@@ -306,7 +306,7 @@ fig3_scbi
 # Harvard Forest ---------------------------------------------------------------
 ## Load up percent growth DF ----
 sd <- 2
-Wood_pheno_table_hf <- read_csv("Data/Wood_pheno_table_HarvardForest_RAW.csv") %>%
+Wood_pheno_table_hf <- read_csv("Data/dendrobands/HF/modeled/Wood_pheno_table_HarvardForest_RAW.csv") %>%
   # Keep only RP and DP for now
   filter(wood_type != "other") %>%
   # Rename ring porous to not have a space
@@ -316,7 +316,7 @@ Wood_pheno_table_hf$site_tag <- Wood_pheno_table_hf$tag
 Wood_pheno_table_hf$site <- substr(Wood_pheno_table_hf$tag, 1, 2)
 Wood_pheno_table_hf$realtag <- substr(Wood_pheno_table_hf$site_tag, 3, nchar(as.character(Wood_pheno_table_hf$site_tag)))
 
-LG5_parameter_values_hf <- read_csv("Data/LG5_parameter_values_HarvardForest_RAW.csv")
+LG5_parameter_values_hf <- read_csv("Data/dendrobands/HF/modeled/LG5_parameter_values_HarvardForest_RAW.csv")
 LG5_parameter_values_hf$site_tag <- paste0(LG5_parameter_values_hf$plot, LG5_parameter_values_hf$tag)
 
 percent_growth <- Wood_pheno_table_hf %>%
@@ -545,8 +545,8 @@ Wood_pheno_table_hf <- left_join(Wood_pheno_table_hf, tot_growth, by = "tag_year
 LG5_parameter_values_hf$tag_year <- paste0(LG5_parameter_values_hf$site_tag, LG5_parameter_values_hf$year)
 LG5_parameter_values_hf <- LG5_parameter_values_hf[LG5_parameter_values_hf$tag_year %in% unique(percent_growth$tag_year), ]
 # V6 - 99% V7 95% V8 put % check last V9 97.5%
-write.csv(Wood_pheno_table_hf, file = "data/Wood_pheno_table_HarvardForest_CLEAN.csv", row.names = FALSE)
-write.csv(LG5_parameter_values_hf, file = "data/LG5_parameter_values_HarvardForest_CLEAN.csv", row.names = FALSE)
+write.csv(Wood_pheno_table_hf, file = "data/dendrobands/HF/modeled/Wood_pheno_table_HarvardForest_CLEAN.csv", row.names = FALSE)
+write.csv(LG5_parameter_values_hf, file = "data/dendrobands/HF/modeled/LG5_parameter_values_HarvardForest_CLEAN.csv", row.names = FALSE)
 
 ## Harvard Forest plots ----
 rel_growth_hf <- ggplot(percent_growth, aes(x = doy, y = dbh_growth_percent, group = tag_year)) +

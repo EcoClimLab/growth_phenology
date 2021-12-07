@@ -42,7 +42,7 @@ tic()
 
 # 1. Run analysis on SCBI ---------------------------------------------------------
 ## Get growth data --------------------------------------------------------------
-Wood_pheno_table <- read_csv("Data/Wood_pheno_table_SCBI_CLEAN.csv") %>%
+Wood_pheno_table <- read_csv("Data/dendrobands/SCBI/modeled/Wood_pheno_table_SCBI_CLEAN.csv") %>%
   # Keep only RP and DP for now
   filter(wood_type != "other") %>%
   # filter(tot >= 1) %>%
@@ -84,12 +84,12 @@ twosevenfive <- twosevenfive[, c(3, 7, 16)]
 ################################################################
 
 weatherdata <-
-  read_csv("climate data/met_tower_data_sensor2_ncdc_supplemented.csv") %>%
+  read_csv("climate data/SCBI/met_tower_data_sensor2_ncdc_supplemented.csv") %>%
   filter(!is.na(cleantmax)) %>%
   mutate(year = year.x)
 #TMIN
 #weatherdata <-
-#  read_csv("climate data/SCBI_tmin.csv") %>%
+#  read_csv("climate data/SCBI/SCBI_tmin.csv") %>%
 #  filter(!is.na(TMIN))
 
 # 2. Get climwin data
@@ -183,7 +183,7 @@ climwinmeans_dp <- weatherdata %>%
 climwinmeans <- bind_rows(climwinmeans_rp, climwinmeans_dp)
 
 
-# SCBI_CMI <- read_csv("climate data/SCBI_CMI.csv")
+# SCBI_CMI <- read_csv("climate data/SCBI/SCBI_CMI.csv")
 # #Summer precipitation totals ----
 # summer_precip <- SCBI_CMI[SCBI_CMI$month %in% c(6,7,8),]
 # summer_precip <- summer_precip[!(is.na(summer_precip$PRE)),]
@@ -666,7 +666,7 @@ rm(list = setdiff(ls(), objects_to_keep))
 
 # 2. Run analysis on Harvard Forest -----------------------------------------------
 ## Get growth data --------------------------------------------------------------
-Wood_pheno_table_hf <- read_csv("Data/Wood_pheno_table_HarvardForest_CLEAN.csv") %>%
+Wood_pheno_table_hf <- read_csv("Data/dendrobands/HF/modeled/Wood_pheno_table_HarvardForest_CLEAN.csv") %>%
   # Keep only RP and DP for now
   filter(wood_type != "other") %>%
   # filter(tot >= 1) %>%
@@ -708,7 +708,7 @@ twosevenfive_hf <- twosevenfive_hf[, c(3, 6, 17)]
 # 0. Get all weather data
 # #TMAX
 weatherdata_hf <-
-  read_csv("climate data/HF_weatherdata.csv") %>%
+  read_csv("climate data/HF/HF_weatherdata.csv") %>%
   filter(!is.na(airtmax))
 #
 # #TMAX
@@ -757,7 +757,7 @@ weatherdata_hf <-
 
 #TMIN
 #weatherdata_hf <-
-#  read_csv("climate data/HF_weatherdata_TMIN.csv") %>%
+#  read_csv("climate data/HF/HF_weatherdata_TMIN.csv") %>%
 #  filter(!is.na(airtmin))
 
 # 1. Get mean march daily maximum temperatures

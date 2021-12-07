@@ -30,7 +30,7 @@ source("RScripts/dendroband_functions.R")
 
 
 # Format dendroband data ----------------------------------------------------
-files <- dir("data", pattern = "_20[1-2][0-9]*.csv")
+files <- dir("data/dendrobands/SCBI/raw_data/", pattern = "_20[1-2][0-9]*.csv")
 dates <- c(2011:2020)
 
 # 1a. this loop breaks up each year's dendroband trees into separate dataframes by stemID
@@ -40,7 +40,7 @@ make_growth_list <- function(dirs, years) {
   all_years_intra <- list()
   for (k in seq(along = dirs)) {
     file <- dirs[[k]]
-    yr <- read.csv(paste0("data/", file), stringsAsFactors = FALSE)
+    yr <- read.csv(paste0("Data/dendrobands/SCBI/raw_data/", file), stringsAsFactors = FALSE)
     yr_intra <- yr[yr$intraannual == 1, ]
     yr_intra$dbh <- as.numeric(yr_intra$dbh)
 
@@ -201,8 +201,8 @@ for (e in 1:length(all_stems_intra)) { # Loop to merge all dendroband surveys in
 all_stems <- all_stems[complete.cases(all_stems$dbh2), ]
 #all_stems <- all_stems[, c(1:31, 34, 35)]#####ISSUE
 # Added by bert: write all_stems observed data to csv
-write.csv(all_stems, file = "Data/all_stems.csv", row.names = FALSE)
-all_stems <- read.csv("Data/all_stems.csv")
+write.csv(all_stems, file = "Data/dendrobands/SCBI/raw_data/all_stems.csv", row.names = FALSE)
+all_stems <- read.csv("Data/dendrobands/SCBI/raw_data/all_stems.csv")
 #all_stems <- read_csv("~/GitHub/Dendrobands/data/scbi.dendroAll_2020.csv")
 
 
@@ -228,7 +228,7 @@ all_stems <- read.csv("Data/all_stems.csv")
 # Loop to create a final "master dataframe" -------
 # The following loop will cycle through years, species, and tags to create a final "master dataframe"
 # It includes two of Sean's functions wrapped with some of my code
-all_stems <- read.csv("data/all_stems.csv")
+all_stems <- read.csv("data/dendrobands/SCBI/raw_data/all_stems.csv")
 
 all_stems$dbh2 <- all_stems$dbh2/10 #?
 
@@ -677,14 +677,14 @@ for (q in 2011:2020) {
 warnings()
 masterDF <- masterDF[-1, ]
 masterDF$wood_type <- ifelse(masterDF$sp == "quru" | masterDF$sp == "qual", "ring porous", ifelse(masterDF$sp == "litu" | masterDF$sp == "fagr", "diffuse-porous", "other"))
-write.csv(masterDF, file = "Data/Wood_pheno_table_SCBI_RAW.csv", row.names = FALSE)
+write.csv(masterDF, file = "Data/dendrobands/SCBI/modeled/Wood_pheno_table_SCBI_RAW.csv", row.names = FALSE)
 masterDF$DOY <- as.numeric(masterDF$DOY)
 
 ## Fitted parameter data ----
 # Added by bert: save parameter values
 LG5_parameters %>%
   bind_rows() %>%
-  write_csv(file = "Data/LG5_parameter_values_SCBI_RAW.csv")
+  write_csv(file = "Data/dendrobands/SCBI/modeled/LG5_parameter_values_SCBI_RAW.csv")
 
 #LG5_try <- bind_rows(LG5_parameters)
 #write.csv(bind_rows(LG5_parameters), file = "Data/LG5_parameter_values_SCBI_RAW.csv")

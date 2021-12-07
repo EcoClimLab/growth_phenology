@@ -38,7 +38,7 @@ library(readxl)
 library(dplyr)
 library(tidyverse)
 chronology_table <- read_csv("doc/manuscript/tables_figures/chronology_table.csv")
-tmx_quilt_plot_data <- read_csv("Data/tmx_quilt_plot_data.csv")
+tmx_quilt_plot_data <- read_csv("Data/quiltplot_data/tmx_quilt_plot_data.csv")
 tmx_quilt_plot_data$sig <- ifelse(tmx_quilt_plot_data$significant == "FALSE", "NS",
                                   ifelse(tmx_quilt_plot_data$significant == "TRUE" & tmx_quilt_plot_data$significant2 == "FALSE", "<0.05",
                                          ifelse(tmx_quilt_plot_data$significant2 == "TRUE", "<0.002", NA)))

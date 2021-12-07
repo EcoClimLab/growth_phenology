@@ -13,7 +13,7 @@ library(reshape2)
 library(readxl)
 
 #Create crns_long ----
-crns <- read_csv("Data/tree_rings/Other/all_crns_res_1901.csv") %>%
+crns <- read_csv("Data/tree_rings/raw_data/Other/all_crns_res_1901.csv") %>%
   # clean up
   select(-c(BearIs, OH_Gol_QUAL_1, PineMt_QUMO)) %>%
   rename(IL_Fer_LITU = IL_Fer_LTU,
@@ -28,7 +28,7 @@ crns_long <- crns %>%
 crns_long$Location <- substr(crns_long$site_sp, 1,nchar(crns_long$site_sp)-5)
 
 #Add lat / lon
-TRW_coord <- read_excel("Data/tree_rings/Other/TRW_coord2.xlsx")
+TRW_coord <- read_excel("Data/tree_rings/raw_data/TRW_coord2.xlsx")
 TRW_coord <- TRW_coord[,c(1,2,3)]
 #Add original two locations to include in final quilt plot
 originals <- data.frame(42.5388, -72.18, "HF") #Lat for HF = 42.5388
@@ -51,11 +51,11 @@ crns_long_try[crns_long_try$Location %in% "Fiddler<U+393C><U+3E32>s_Green,_VA_LI
 crns_long_try[crns_long_try$Location %in% "Fiddler<U+393C><U+3E32>s_Green,_VA_MAAC", "Latitude"] <- "37.7686833"
 crns_long_try[crns_long_try$Location %in% "Fiddler<U+393C><U+3E32>s_Green,_VA_MAAC", "Longitude"] <- "-79.2423833"
 
-write.csv(crns_long_try, file = "data/crns_long.csv", row.names = FALSE)
+write.csv(crns_long_try, file = "data/tree_rings/raw_data/crns_long.csv", row.names = FALSE)
 # crns_long_try$Latitude <- ifelse(is.na(crns_long_try$Latitude), "37.7", crns_long_try$Latitude)
 # is.na(crns_long_try$Latitude) <- "37.7"
 # Create tree_core_drought data ####
-crns_long <- read.csv("data/crns_long.csv")
+crns_long <- read.csv("data/tree_rings/raw_data/crns_long.csv")
 
 ## needs to be in different format: column for Date, year and then one column per climate variable
 climate_variables <- c("tmn", "tmx")
@@ -216,7 +216,7 @@ for(i in 1:length(species_all)){
 }
 
 
-write.csv(p_vals, file = "Data/Tree_core_drought_nointeraction.csv", row.names = FALSE)
+write.csv(p_vals, file = "Data/tree_rings/processed_data/Tree_core_drought_nointeraction.csv", row.names = FALSE)
 
 #only sig models -
 #sig_only <- p_vals[p_vals$`p-value` >= 0.05,]
@@ -248,7 +248,7 @@ boxplot(ring_melt$value~ring_melt$variable)
 rm(list = ls())
 
 #Read in Tree core drought data created in last step. Fiddler's green and some HF have their lat/lon manually changed to match the values in the chronology table
-toadd <- read_csv("Data/Tree_core_drought_nointeraction.csv") %>%
+toadd <- read_csv("Data/tree_rings/processed_data/Tree_core_drought_nointeraction.csv") %>%
   rename(Latitude = lat,
          Longitude = lon)
 
@@ -344,7 +344,7 @@ write.csv(attempt_4, file = "doc/manuscript/tables_figures/chronology_table.csv"
 rm(list = ls())
 
 #Read in Tree core drought data created in last step. Fiddler's green and some HF have their lat/lon manually changed to match the values in the chronology table
-toadd_sig <- read_csv("Data/Significant_Tree_core_drought.csv") %>%
+toadd_sig <- read_csv("Data/tree_rings/processed_data/Significant_Tree_core_drought.csv") %>%
   rename(Latitude = lat,
          Longitude = lon)
 

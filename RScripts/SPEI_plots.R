@@ -4,9 +4,9 @@ library(ggplot2)
 library(reshape2)
 library(patchwork)
 #SCBI ----
-SCBI_weather <- read.csv("climate data/met_tower_data_sensor2_ncdc_supplemented.csv")
+SCBI_weather <- read.csv("climate data/SCBI/met_tower_data_sensor2_ncdc_supplemented.csv")
 #spei <- read.csv("~/GitHub/Climate/Climate_Data/SPEI/data_downloaded/SCBI/spei_-78.25_38.75.csv")
-spei_all_months <- read.csv("~/GitHub/Climate/Climate_Data/SPEI/data_calculated_with_script/spei_all_months.csv")
+spei_all_months <- read.csv("climate data/CRU/spei_all_months.csv")
 
 spei <- spei_all_months[spei_all_months$sites.sitename %in% "Smithsonian_Conservation_Biology_Institute",]
 spei$Date <- as.Date(spei$Date, "%m/%d/%Y")
@@ -265,7 +265,7 @@ summary(lm(as.numeric(month_12_aug$value)~month_12_aug$tmax)) #p = 0.9067
 
 #Harvard Forest----
 weatherdata_hf <-
-  read_csv("climate data/HF_weatherdata.csv") %>%
+  read_csv("climate data/HF/HF_weatherdata.csv") %>%
   filter(!is.na(airtmax))#spei <- read.csv("~/GitHub/Climate/Climate_Data/SPEI/data_downloaded/SCBI/spei_-78.25_38.75.csv")
 
 #spei_all_months <- read.csv("~/GitHub/Climate/Climate_Data/SPEI/data_calculated_with_script/spei_all_months.csv")

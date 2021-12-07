@@ -32,8 +32,8 @@ trace("plotbetas", edit = TRUE)
 
 
 # Merge two weather DF's into one ----
-#HF_1964to2002 <- read_csv("climate data/HF_1964to2002.csv")
-#HF_2001toPresent <- read_csv("climate data/HF_2001toPresent.csv")
+#HF_1964to2002 <- read_csv("climate data/HF/HF_1964to2002.csv")
+#HF_2001toPresent <- read_csv("climate data/HF/HF_2001toPresent.csv")
 
 #HF_1964to2002$DOY <- yday(HF_1964to2002$date) # format = "%y-%m-%d")
 #
@@ -55,7 +55,7 @@ trace("plotbetas", edit = TRUE)
 #
 #write.csv(HF_weatherdata, file = "HF_weatherdata_TMIN.csv", row.names = FALSE)
 # Read in climate and biological data for climwin analysis ----
-climate <- read_csv("climate data/HF_weatherdata.csv", col_names = TRUE)
+climate <- read_csv("climate data/HF/HF_weatherdata.csv", col_names = TRUE)
 
 colnames(climate) <- c("date", "TMAX", "doy", "year", "month", "day")
 
@@ -66,7 +66,7 @@ climate$DATE <- strptime(as.character(climate$DATE), format = "%d/%m/%Y")
 climate$DATE <- format(climate$DATE, "%d/%m/%Y")
 
 # The data containing the biological responses for testing
-Wood_pheno_table <- read_csv("Data/Wood_pheno_table_HarvardForest_CLEAN.csv") # Master datafrmae containing 20%, 50%, and 75% growth milestones
+Wood_pheno_table <- read_csv("Data/dendrobands/HF/modeled/Wood_pheno_table_HarvardForest_CLEAN.csv") # Master datafrmae containing 20%, 50%, and 75% growth milestones
 ## TMAX: Percentage DOY climwin all wood types, all percs WEEKLY ----
 dffinal <- data.frame(1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
 for (w in unique(Wood_pheno_table$wood_type)) {
@@ -159,7 +159,7 @@ write.csv(dffinal, file = "results/Climwin_results/Weekly/Harvard Forest/weekly_
 
 
 ## TMIN: Percentage DOY climwin all wood types, all percs WEEKLY ----
-climate <- read_csv("climate data/HF_weatherdata_TMIN.csv", col_names = TRUE)
+climate <- read_csv("climate data/HF/HF_weatherdata_TMIN.csv", col_names = TRUE)
 
 colnames(climate) <- c("date", "TMIN", "doy", "year", "month", "day")
 

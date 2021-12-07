@@ -28,7 +28,7 @@ trace("plotbetas", edit = TRUE)
 
 # Read in climate and biological data for climwin analysis ----
 # SCBI met tower
-climate <- read_csv("climate data/met_tower_data_sensor2_ncdc_supplemented.csv", col_names = TRUE) # only goes to October 2019, fix?
+climate <- read_csv("climate data/SCBI/met_tower_data_sensor2_ncdc_supplemented.csv", col_names = TRUE) # only goes to October 2019, fix?
 
 colnames(climate) <- c("date", "year", "month", "day", "doy", "TMAX")
 #climate[climate$TMAX == -99.9, ] <- NA
@@ -40,7 +40,7 @@ climate$DATE <- strptime(as.character(climate$DATE), format = "%d/%m/%Y")
 climate$DATE <- format(climate$DATE, "%d/%m/%Y")
 climate <- distinct(climate, DATE, .keep_all = TRUE)
 # The data containing the biological responses for testing
-Wood_pheno_table <- read_csv("Data/Wood_pheno_table_SCBI_CLEAN.csv") # Master datafrmae containing 20%, 50%, and 75% growth milestones
+Wood_pheno_table <- read_csv("Data/dendrobands/SCBI/modeled/Wood_pheno_table_SCBI_CLEAN.csv") # Master datafrmae containing 20%, 50%, and 75% growth milestones
 
 ## Percentage DOY climwin all wood types, all percs WEEKLY ----
 ## TMAX: Percentage DOY climwin all wood types, all percs WEEKLY ----
@@ -138,7 +138,7 @@ write.csv(dffinal, file = "results/Climwin_results/Weekly/SCBI/weekly_climwin_re
 ## TMIN: Percentage DOY climwin all wood types, all percs WEEKLY ----
 
 #Set up TMIN dataframe
-#climate <- read_csv("climate data/SCBI_mettower_data_sensor2.csv", col_names = FALSE)
+#climate <- read_csv("climate data/SCBI/SCBI_mettower_data_sensor2.csv", col_names = FALSE)
 #climate <- climate[,c(1,2,3,6)]
 #names(climate) <- c("year", "month", "day", "TMIN")
 #climate[climate$TMIN == -99.9,] <- NA
@@ -155,7 +155,7 @@ write.csv(dffinal, file = "results/Climwin_results/Weekly/SCBI/weekly_climwin_re
 #write.csv(climate, file = "SCBI_tmin.csv", row.names = FALSE)
 
 
-climate <- read_csv("climate data/SCBI_tmin.csv")
+climate <- read_csv("climate data/SCBI/SCBI_tmin.csv")
 
 dffinal <- data.frame(1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
 for (w in unique(Wood_pheno_table$wood_type)) {

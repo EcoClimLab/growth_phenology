@@ -30,7 +30,7 @@ source("RScripts/dendroband_functions.R")
 
 
 # Format dendroband data ----------------------------------------------------
-all_stems <- read_csv("data/HarvardDendroband_cleaned.csv")
+all_stems <- read_csv("data/dendrobands/HF/modeled/HarvardDendroband_cleaned.csv")
 names(all_stems) <- c("plot", "tag", "sp", "date","dbh2")
 all_stems$DOY <- yday(strptime(all_stems$date, format = "%m/%d/%y"))
 
@@ -514,14 +514,14 @@ warnings()
 masterDF <- masterDF[-1, ]
 unique(masterDF$sp)
 masterDF$wood_type <- ifelse(masterDF$sp == "betual"| masterDF$sp == "acerru" | masterDF$sp == "fagugr" | masterDF$sp == "betule" | masterDF$sp == "betupa" | masterDF$sp == "acerpe" | masterDF$sp == "betupo" | masterDF$sp == "prunse", "diffuse-porous", ifelse(masterDF$sp == "querru" | masterDF$sp == "querve" | masterDF$sp == "fraxam", "ring-porous", "other"))
-write.csv(masterDF, file = "Data/Wood_pheno_table_HarvardForest_RAW.csv", row.names = FALSE)
+write.csv(masterDF, file = "Data/dendrobands/HF/modeled/Wood_pheno_table_HarvardForest_RAW.csv", row.names = FALSE)
 masterDF$DOY <- as.numeric(masterDF$DOY)
 
 ## Fitted parameter data ----
 # Added by bert: save parameter values
 LG5_parameters %>%
   bind_rows() %>%
-  write_csv(file = "Data/LG5_parameter_values_HarvardForest_RAW.csv")
+  write_csv(file = "Data/dendrobands/HF/modeled/LG5_parameter_values_HarvardForest_RAW.csv")
 
 #write.csv(bind_rows(LG5_parameters), file = "Data/LG5_parameter_values_HarvardForest_RAW.csv")
 #lg5 <- bind_rows(LG5_parameters)

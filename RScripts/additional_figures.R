@@ -35,14 +35,14 @@ lg5.pred <- function(params, doy) {
 
 ## 1. Get LG5 parameter values ----
 # Identify cold and hot aprils
-read_csv("climate data/HF_weatherdata.csv") %>%
+read_csv("climate data/HF/HF_weatherdata.csv") %>%
   dplyr::filter(month == 4) %>%
   group_by(year) %>%
   summarize(TMAX = mean(airtmax, na.rm = TRUE)) %>%
   arrange(desc(TMAX))
 
 # Real red/hot curve values:
-HF_hot_LG5_values <- read_csv("Data/LG5_parameter_values_HarvardForest_CLEAN.csv") %>%
+HF_hot_LG5_values <- read_csv("Data/dendrobands/HF/modeled/LG5_parameter_values_HarvardForest_CLEAN.csv") %>%
   dplyr::filter(year == 2002) %>%
   group_by(tag_year) %>%
   summarize(L = mean(L), K = mean(K), doy_ip = mean(doy_ip), r = mean(r), theta = mean(theta)) %>%
@@ -57,7 +57,7 @@ HF_params_hot <- c(HF_L_hot, HF_K_hot, HF_doy.ip_hot, HF_r_hot, HF_theta_hot)
 HF_total_growth_hot <- HF_K_hot - HF_L_hot
 
 # Real blue/cold curve values:
-HF_cold_LG5_values <- read_csv("Data/LG5_parameter_values_HarvardForest_CLEAN.csv") %>%
+HF_cold_LG5_values <- read_csv("Data/dendrobands/HF/modeled/LG5_parameter_values_HarvardForest_CLEAN.csv") %>%
   dplyr::filter(year == 2003) %>%
   group_by(tag_year) %>%
   summarize(L = mean(L), K = mean(K), doy_ip = mean(doy_ip), r = mean(r), theta = mean(theta)) %>%
@@ -379,13 +379,13 @@ ggsave(
 
 
 # Growth_Cruves_all: Percent modeled growth and cummulative percent modeled growth ----
-Wood_pheno_table_scbi <- read_csv("Data/Wood_pheno_table_SCBI_CLEAN.csv") %>%
+Wood_pheno_table_scbi <- read_csv("Data/dendrobands/SCBI/modeled/Wood_pheno_table_SCBI_CLEAN.csv") %>%
   # Keep only RP and DP for now
   dplyr::filter(wood_type != "other") %>%
   # Rename ring porous to not have a space
   mutate(wood_type = ifelse(wood_type == "ring porous", "ring-porous", wood_type))
 
-Wood_pheno_table_hf <- read_csv("Data/Wood_pheno_table_HarvardForest_CLEAN.csv") %>%
+Wood_pheno_table_hf <- read_csv("Data/dendrobands/HF/modeled/Wood_pheno_table_HarvardForest_CLEAN.csv") %>%
   # Keep only RP and DP for now
   dplyr::filter(wood_type != "other") %>%
   # Rename ring porous to not have a space
@@ -393,8 +393,8 @@ Wood_pheno_table_hf <- read_csv("Data/Wood_pheno_table_HarvardForest_CLEAN.csv")
 
 
 # As generated in Rscripts/SCBI_wood_phenology.R
-LG5_parameter_values_scbi <- read_csv("Data/LG5_parameter_values_SCBI_CLEAN.csv")
-LG5_parameter_values_hf <- read_csv("Data/LG5_parameter_values_HarvardForest_CLEAN.csv")
+LG5_parameter_values_scbi <- read_csv("Data/dendrobands/SCBI/modeled/LG5_parameter_values_SCBI_CLEAN.csv")
+LG5_parameter_values_hf <- read_csv("Data/dendrobands/HF/modeled/LG5_parameter_values_HarvardForest_CLEAN.csv")
 
 # Generalized 5-parameter logistic function (modified version of Sean's function)
 lg5 <- function(L, K, doy_ip, r, theta, doy) {
@@ -529,13 +529,13 @@ grid.arrange(
 
 dev.off()
 # DOY timing figure (Replace with figure created in DOYtiming_all_years.R)----
-Wood_pheno_table_scbi <- read_csv("Data/Wood_pheno_table_SCBI_CLEAN.csv") %>%
+Wood_pheno_table_scbi <- read_csv("Data/dendrobands/SCBI/modeled/Wood_pheno_table_SCBI_CLEAN.csv") %>%
   # Keep only RP and DP for now
   dplyr::filter(wood_type != "other") %>%
   # Rename ring porous to not have a space
   mutate(wood_type = ifelse(wood_type == "ring porous", "ring-porous", wood_type))
 
-Wood_pheno_table_hf <- read_csv("Data/Wood_pheno_table_HarvardForest_CLEAN.csv") %>%
+Wood_pheno_table_hf <- read_csv("Data/dendrobands/HF/modeled/Wood_pheno_table_HarvardForest_CLEAN.csv") %>%
   # Keep only RP and DP for now
   dplyr::filter(wood_type != "other") %>%
   # Rename ring porous to not have a space

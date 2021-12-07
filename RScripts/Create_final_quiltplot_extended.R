@@ -10,7 +10,7 @@ library(tidyverse)
 source("Rscripts/0-My_dplR_functions.R")
 
 #Load in lat lon for plotting sort
-TRW_coord <- read_excel("Data/tree_rings/Other/TRW_coord2.xlsx")
+TRW_coord <- read_excel("Data/tree_rings/raw_data/TRW_coord2.xlsx")
 TRW_coord <- TRW_coord[,c(1,3)]
 #Add original two locations to include in final quilt plot
 originals <- data.frame(42.5388, "HF") #Lat for HF = 42.5388
@@ -144,10 +144,10 @@ X <- X[X$wood_type != "SP",]
 # write.csv(SI_table, file = paste0("doc/manuscript/tables_figures/", "chronology_table.csv"), row.names = FALSE)
   # X$entry_number <- seq(1, nrow(X)/8, 1)
   #
-  write.csv(X, file = paste0("Data/", v, "_quilt_plot_data_EXTENDED.csv"), row.names = FALSE)
+  write.csv(X, file = paste0("Data/quiltplot_data/", v, "_quilt_plot_data_EXTENDED.csv"), row.names = FALSE)
 }
 
-TRW_coord <- read_excel("Data/tree_rings/Other/TRW_coord2.xlsx")
+TRW_coord <- read_excel("Data/tree_rings/raw_data/TRW_coord2.xlsx")
 TRW_coord <- TRW_coord[,c(1,2,3)]
 #Add original two locations to include in final quilt plot
 originals <- data.frame(42.5388,-72.17550, "HF") #Lat for HF = 42.5388
@@ -155,7 +155,7 @@ originals <- rbind(originals, c(38.8935,-78.14540, "SCBI")) #Lat for scbi = 38.8
 names(originals) <- c("Latitude","Longitude", "Location")
 TRW_coord <- rbind(TRW_coord, originals)
 
-tmx_data <- read.csv("Data/tmx_quilt_plot_data_EXTENDED.csv")
+tmx_data <- read.csv("Data/quiltplot_data/tmx_quilt_plot_data_EXTENDED.csv")
 tmx_data_table <- tmx_data[,c(19,15,1,14,17,18)]
 tmx_data_table <- tmx_data_table[!(duplicated(tmx_data_table$group)),]
 tmx_data_table$Location <- ifelse(tmx_data_table$Location == "Fiddler<U+393C><U+3E32>s_Green,_VA_CAOV_CAOV", "Fiddler’s_Green,_VA_CAOV",
@@ -167,7 +167,7 @@ tmx_data_table <- left_join(tmx_data_table, TRW_coord, by = "Location")
 
 #write.csv(tmx_data_table, "doc/manuscript/tables_figures/chronology_table_EXTENDED.csv", row.names = FALSE)
 
-tmn_data <- read.csv("Data/tmn_quilt_plot_data_EXTENDED.csv")
+tmn_data <- read.csv("Data/quiltplot_data/tmn_quilt_plot_data_EXTENDED.csv")
 
 v <- "tmx"
 for(WT in wood_types){#Have to manually change WT and run through the contents of the loop. Not sure whats going wrong
