@@ -1,8 +1,8 @@
 # Growth Phenology
 
-Cameron Dow's growth phenology project
+This repository contains data and code for an analysis by Cameron Dow, currently in review at *Nature*. **Contents of this repository may not be used without written permission from lab PI Kristina Anderson-Teixeira (teixeirak@si.edu).**
 
-![](doc/manuscript/tables_figures/DOYtiming_allyears.png)
+![](doc/manuscript/tables_figures/schematic_summary.png)
 
 
 
