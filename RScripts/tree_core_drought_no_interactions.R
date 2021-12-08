@@ -216,7 +216,7 @@ for(i in 1:length(species_all)){
 }
 
 
-write.csv(p_vals, file = "Data/tree_rings/processed_data/Tree_core_drought_nointeraction.csv", row.names = FALSE)
+write.csv(p_vals, file = "results/tree_cores/processed_data/Tree_core_drought_nointeraction.csv", row.names = FALSE)
 
 #only sig models -
 #sig_only <- p_vals[p_vals$`p-value` >= 0.05,]
@@ -248,7 +248,7 @@ boxplot(ring_melt$value~ring_melt$variable)
 rm(list = ls())
 
 #Read in Tree core drought data created in last step. Fiddler's green and some HF have their lat/lon manually changed to match the values in the chronology table
-toadd <- read_csv("Data/tree_rings/processed_data/Tree_core_drought_nointeraction.csv") %>%
+toadd <- read_csv("results/tree_cores/processed_data/Tree_core_drought_nointeraction.csv") %>%
   rename(Latitude = lat,
          Longitude = lon)
 
@@ -344,7 +344,7 @@ write.csv(attempt_4, file = "doc/manuscript/tables_figures/chronology_table.csv"
 rm(list = ls())
 
 #Read in Tree core drought data created in last step. Fiddler's green and some HF have their lat/lon manually changed to match the values in the chronology table
-toadd_sig <- read_csv("Data/tree_rings/processed_data/Significant_Tree_core_drought.csv") %>%
+toadd_sig <- read_csv("results/tree_cores/processed_data/Significant_Tree_core_drought.csv") %>%
   rename(Latitude = lat,
          Longitude = lon)
 
