@@ -1,6 +1,8 @@
 # Growth Phenology
 
-This repository contains data and code for an analysis by Cameron Dow, currently in review at *Nature*. **Contents of this repository may not be used without written permission from lab PI Kristina Anderson-Teixeira (teixeirak@si.edu).**
+This repository contains data and code for an analysis by Cameron Dow, currently in review at *Nature* and available as a pre-print here: https://www.researchsquare.com/article/rs-1093360/v1. 
+
+**Contents of this repository may not be used without written permission from lab PI Kristina Anderson-Teixeira (teixeirak@si.edu).**
 
 ![](doc/manuscript/tables_figures/schematic_summary.png)
 
