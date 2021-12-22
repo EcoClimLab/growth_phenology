@@ -11,7 +11,7 @@ library(tidyverse)
 source("Rscripts/0-My_dplR_functions.R")
 
 #Load in lat lon for plotting sort
-TRW_coord <- read_excel("Data/tree_rings/raw_data/TRW_coord2.xlsx")
+TRW_coord <- read_excel("data/tree_rings/TRW_coord2.xlsx")
 TRW_coord <- TRW_coord[,c(1,3)]
 #Add original two locations to include in final quilt plot
 originals <- data.frame(42.5388, "HF") #Lat for HF = 42.5388
@@ -204,7 +204,7 @@ for(v in climate_variables) {
 }
 #}
 
-TRW_coord <- read_excel("Data/tree_rings/raw_data/TRW_coord2.xlsx")
+TRW_coord <- read_excel("data/tree_rings/TRW_coord2.xlsx")
 TRW_coord <- TRW_coord[,c(1,2,3)]
 #Add original two locations to include in final quilt plot
 originals <- data.frame(42.5388,-72.17550, "HF") #Lat for HF = 42.5388

@@ -16,7 +16,7 @@ library(readxl)
 source("Rscripts/0-My_dplR_functions.R")
 
 #Load in lat lon for plotting sort
-TRW_coord <- read_excel("Data/tree_rings/raw_data/TRW_coord2.xlsx")
+TRW_coord <- read_excel("data/tree_rings/TRW_coord2.xlsx")
 TRW_coord <- TRW_coord[,c(1,3)]
 #Add original two locations to include in final quilt plot
 originals <- data.frame(42.5388, "HF")
@@ -24,11 +24,11 @@ originals <- rbind(originals, c(38.8935, "SCBI"))
 names(originals) <- c("Latitude", "Location")
 TRW_coord <- rbind(TRW_coord, originals)
 #Prepare csv's
-crns <- read.csv("Data/tree_rings/raw_data/Other/all_crns_res_1901.csv")
+crns <- read.csv("data/tree_rings/Other/all_crns_res_1901.csv")
 #TRW_coord <- read_excel("Data/tree_rings/Other/TRW_coord.xlsx")
 
 # Bert approach
-crns <- read_csv("Data/tree_rings/raw_data/Other/all_crns_res_1901.csv") %>%
+crns <- read_csv("data/tree_rings/Other/all_crns_res_1901.csv") %>%
   # clean up
   select(-c(BearIs, OH_Gol_QUAL_1, `Greenbrook_Sanctuary,_NJ_LITU_LITU`)) %>%
   rename(IL_Fer_LITU = IL_Fer_LTU)
