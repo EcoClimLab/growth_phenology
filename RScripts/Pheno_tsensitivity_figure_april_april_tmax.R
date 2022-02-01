@@ -176,7 +176,7 @@ joint_model_climwinmeans <- stan_mvmer(
 bayesian_regression_table <- joint_model_climwinmeans %>%
   summary() %>%
   as_tibble(rownames = "coefficient") %>%
-  # Keep only relevant columns:
+  # Keep only relevant columns: Note for Bert: does this need to be changed to reflect 2.5SD?
   select(coefficient, mean, sd, `2.5%`, `97.5%`) %>%
   # Keep only relevant rows:
   filter(!str_detect(coefficient, "Sigma")) %>%
