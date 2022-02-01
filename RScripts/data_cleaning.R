@@ -17,7 +17,7 @@ library(scales)
 library(tidybayes)
 
 # Number of standard deviations used to identify "outliers"
-sd <- 2
+sd <- 3
 
 # Load Sean McMahon's Dendroband functions
 source("RScripts/dendroband_functions.R")
