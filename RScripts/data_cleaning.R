@@ -568,8 +568,8 @@ rel_growth_hf
 
 
 
-fig3_hf <- ggplot(percent_growth_SL, aes(x = doy, y = dbh_growth_percent_cummulative, group = tag_year, col = wood_type)) +
-  geom_line(alpha = 0.2) +
-  scale_y_continuous(labels = percent) +
-  labs(x = "DOY", y = "Cummulative percent of total growth", title = "Cummulative percent of total (modeled) growth in diameter")
-fig3_hf
+# fig3_hf <- ggplot(percent_growth_SL, aes(x = doy, y = dbh_growth_percent_cummulative, group = tag_year, col = wood_type)) +
+#   geom_line(alpha = 0.2) +
+#   scale_y_continuous(labels = percent) +
+#   labs(x = "DOY", y = "Cummulative percent of total growth", title = "Cummulative percent of total (modeled) growth in diameter")
+# fig3_hf
