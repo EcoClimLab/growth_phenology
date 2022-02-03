@@ -297,10 +297,11 @@ Measurements were continued through to fall leaf senescence, with the median end
 Timing of measurements at Harvard Forest were similar, with the median start date of April 23 and median end date of October 30. 
 1998 was an anomalous year where initial measurements were taken on January 5, but not taken again until April 15. 
 The latest end date was November 11, 2002.
+In our analysis, each band-year was treated independently, with no data overlap from one year to the next.
 
 The raw dendrometer band data were manually inspected before analysis. 
 We screened the data for three classes of errors. 
-First, when a measurement was drastically different from previous and following measurements, it was assumed to be a human error and the datapoint was removed.
+First, when a measurement was drastically different from previous and following measurements, it was assumed to be a human error and removed.
 Second, when measurements remained essentially unchanged for several readings, followed by a sudden jump then return to a normal growth pattern, this was assumed to be a case where the band was stuck on the tree bark and then released. In these cases, the full annual record for the tree was removed.
 Third, data points that deviated substantially from normal growth patterns, but for unknown causes, were removed. 
 If a majority of the data points fell into this class within a tree-year, the entire year was removed from the analysis.
@@ -314,7 +315,9 @@ and $\theta$ is a tuning parameter controlling the slope of the curve toward the
 This allows an asymetric fit to the data, where the onset of growth can be estimated independent of the cessation of growth.
 The DOY on which maximum growth occurs, $DOY_{g_{max}}$ (Fig. `r schematic_summary`), occurs on $DOY_{ip}$ when $\theta = 1$.
 The model was fit in R v4.0 using the functions developed in the *Rdendrom* package[@mcmahon_general_2015]. These functions take the time-series of manual dendrometer band measurements and return maximum-likelihood optimized values of the above five parameters that best predict DBH for each day of year. 
-We then modeled DBH using these optimal parameter values in our logistic growth model and extracted the intra-annual growth variables of interest (Fig. `r schematic_summary`). 
+An advantage of this approach is that short-term shrinkage and swelling associated with rain events [@mcmahon_general_2015; @herrmann_tree_2016] and measurement errors show up as residual variation and do not unduly influence the parameters of interest. 
+Having fit the model for each band-year of data, we then modeled DBH using these optimal parameter values in our logistic growth model and extracted the intra-annual growth variables of interest (Fig. `r schematic_summary`). 
+
 
 After fitting the growth model, we removed tree-years with poor fits. 
 Models were judged to be poorly fit if certain modeled growth characteristics fell outside of the logical range. 
