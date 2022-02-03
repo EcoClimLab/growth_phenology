@@ -377,7 +377,7 @@ We analyzed tree-ring records for `r n_cores_sites` sites, including our focal s
 All cores had been previously collected, cross-dated, and measured using standard collection and processing methodologies[@stokes_introduction_1968]. 
 
 Dominant tree species were cored at both SCBI[@helcoski_growing_2019;@bourg_initial_2013] and Harvard Forest[@alexander_potential_2019; @dye_comparing_2016; @finzi_carbon_2020] following sampling designs that covered a broad range of DBH.
-We analyzed records for the ring- and diffuse- porous species at each site (`r  EDT_species`), but excluded species with other xylem architectures (*Juglans nigra* L. at SCBI, *Tsuga canadensis* at Harvard Forest).
+We analyzed records for the ring- and diffuse- porous species at each site (`r  EDT_species`), but excluded semi-ring porous species (e.g., *Juglans nigra* L. at SCBI) and conifers (e.g., *Tsuga canadensis* at Harvard Forest).
 We studied a total of `r n_cores_focal_sites` cores which included `r n_chronologies_SCBI` species at SCBI and `r n_chronologies_HF` species at Harvard Forest (`r  EDT_species`).
 
 The tree-ring records from our focal sites were complemented with a much larger collection spanning `r n_cores_sites-2` deciduous and mixed forest sites in Eastern North America[@maxwell_sampling_2020;@dorangeville_drought_2018].
