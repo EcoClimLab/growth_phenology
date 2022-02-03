@@ -146,7 +146,7 @@ n_chronologies_HF <- 4
 **However, less is known about how spring temperatures affect tree stem growth, which sequesters carbon (C) in wood that has a long residence time in the ecosystem[@xue_global_2017;@russell_residence_2014].**
 **Using dendrometer band measurements from `r n_dendro_trees` trees across two forests, we show that warmer spring temperatures shifted the peak stem growth of deciduous trees earlier but had no consistent effect on peak growing season length, maximum daily growth rates, or annual growth.**
 **The latter finding was confirmed on the centennial scale by `r n_chronologies` tree-ring chronologies from `r n_cores_sites` forests across eastern North America, where annual growth was far more sensitive to temperatures during the peak growing season than in the spring.**
-**These findings imply that extra CO~2~ uptake in years with warmer springs[@keeling_increased_1996;@dragoni_evidence_2011;@crabbe_extreme_2016] is not allocated to long-lived woody biomass, where it could have a substantial and lasting impact on the forest C balance.**
+**These findings imply that any extra CO~2~ uptake in years with warmer springs[@keeling_increased_1996;@dragoni_evidence_2011;@crabbe_extreme_2016] does not significantly contribute to increased sequestration in long-lived woody stem biomass.**
 **Rather, contradicting current projections from global C cycle models[@buermann_widespread_2018; @zani_increased_2020;@keenan_net_2014;@ahlstrom_robustness_2012], our empirical results imply that warming spring temperatures are unlikely to increase stem growth or strengthen the CO~2~ sink of temperate deciduous forests.**
 
 
