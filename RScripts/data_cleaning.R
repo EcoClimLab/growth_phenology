@@ -305,7 +305,7 @@ fig3_scbi
 
 # Harvard Forest ---------------------------------------------------------------
 ## Load up percent growth DF ----
-sd <- 2
+sd <- 2.5
 Wood_pheno_table_hf <- read_csv("Data/dendrobands/HF/modeled/Wood_pheno_table_HarvardForest_RAW.csv") %>%
   # Keep only RP and DP for now
   filter(wood_type != "other") %>%
