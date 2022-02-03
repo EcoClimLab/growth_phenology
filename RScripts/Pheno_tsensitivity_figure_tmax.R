@@ -243,7 +243,7 @@ Wood_pheno_table <- distinct(Wood_pheno_table, tag_year_perc, .keep_all = TRUE)
 ### Model Fit 1 (multivariate): (DOY_25, DOY_50, DOY_75) using climwinmeans ----
 # Convert to wide format for use in rstanarm::stan_mvmer()
 Wood_pheno_table_wide <- Wood_pheno_table %>%
-  select(perc, tag, year, wood_type, sp, climwinmean, summer_precip,fall_precip, starts_with("DOY")) %>%
+  select(perc, tag, year, wood_type, sp, climwinmean, starts_with("DOY")) %>%
   pivot_wider(names_from = perc, values_from = DOY)
 
 # Fit multivariate model
