@@ -330,7 +330,8 @@ Modeled fits for tree-years were removed under five conditions:
 (5) models with unexplained sharp spikes in growth rate (SCBI = 0, Harvard Forest = 3); 
 and (6) poorly fit models that did not meet any of the above criteria (SCBI = 2, Harvard Forest = 0).
 At Harvard Forest the tag years removed through this method were proportional to the original sample size, indicating that no species or size class was disproportionately removed compared to others. 
-At SCBI, a higher proportion of ring-porous trees were removed, the majority falling under condition 4. 
+At SCBI, a higher proportion of ring-porous trees were removed, the majority falling under condition 4.
+This process was repeated using 2.5 and 3 standard deviations and the results of analyses were not qualitatively different. 
 
 <!-- Leaf phenology -->
 
