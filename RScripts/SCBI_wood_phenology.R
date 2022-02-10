@@ -252,15 +252,16 @@ growth <- NULL
 all_stems$tag_stem <- paste0(all_stems$tag, "_", all_stems$stemtag)
 
 all_stems <- all_stems[!(is.na(all_stems$month)),]
-
+#q<- 2011 ############
+#w <- "qual"
 for (q in 2011:2020) {
   skip_to_next <- FALSE
   Stem2 <- subset(all_stems, year == q)
   for (w in unique(Stem2$sp)) { # removes trees with less than 10 measurements in each year
     Stem3 <- subset(Stem2, sp == w)
-    count_df <- count(Stem3, tag_stem)
-    count_df <- subset(count_df, n >= 10)
-    Stem3 <- Stem3[Stem3$tag_stem %in% count_df$tag_stem, ]
+    count_df <- count(Stem3$tag_stem)
+    count_df <- subset(count_df, freq >= 10)
+    Stem3 <- Stem3[Stem3$tag_stem %in% count_df$x, ]
     # original_list <- unique(Stem3$tag)
     for (m in unique(Stem3$tag_stem)) { # remove trees with very small or negative total growth
       growthcheck <- subset(Stem3, tag_stem == m)
