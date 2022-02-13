@@ -3,12 +3,15 @@
 //      Step 1 = prepare metadata                                      //
 //      Step 2 = get the phenometrics from mcd12q2                     //
 //      Step 3 = get continuous EVI2 values for the same               //
-//               timeframe as step 2                                   //
+//               timeframe and sites as step 2 via mcd43A4             //
 //                                                                     //
-//      Before running: upload csv of neon towers with lat and lon     //
-//                        as an asset labeled "table"                  //
-//                      ALSO - update your google folder for exporting //
-//                        in Steps 2 and 3                             //
+//      Before running: upload csv of neon towers with lat, lon, and   //
+//        site name labeled as centroid_lat, centroid_lon, and         //
+//        field_site_id. Target sites should be identified in a column //
+//        labeled "target" having a value of 1.                        //
+//                                                                     //
+//      This csv should be uploaded as an asset labeled "table".       //
+//      ALSO - update the google folder for exporting in Steps 2 and 3 //                      //
 //                                                                     //
 //      Output: This script outputs two csv files,                     //  
 //              - one with the phenometrics for desired NEON tower     //
@@ -17,7 +20,8 @@
 //                locations for the same timeframe as the phenometrics //
 //                                                                     //
 // Created by: Ian McGregor, imcgreg@ncsu.edu                          //
-// Dec. 2020, last updated Oct 2021                                    //
+// Corresponding author: Kristina Anderson-Teixeira; teixeirak@si.edu  //
+// Dec. 2020, last updated Feb 2022                                    //
 /////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////
@@ -29,8 +33,8 @@ print('original csv', table);
 var points = ee.FeatureCollection(table)
    .filterMetadata('target', "equals", 1)
    .map(function(feature) {
-      var lon = feature.get('field_longitude');
-      var lat = feature.get('field_latitude');
+      var lon = feature.get('centroid_lon');
+      var lat = feature.get('centroid_lat');
       return ee.Feature(ee.Geometry.Point([lon, lat]), {
         'featureID': ee.String(feature.get('field_site_id'))
     });
@@ -76,7 +80,7 @@ var loop = index.map(function(ind){
         .reduceRegion(ee.Reducer.first(), thispoint);
       
       var output = ee.Feature(ee.Geometry.Point(coords.get(ind)), 
-        {date: date, lat: spec.get(0), lon: spec.get(1), pointid: ids.get(ind)})
+        {date: date, lat: spec.get(0), lon: spec.get(1), site: ids.get(ind)})
           .set(value);
       return output;
     };
@@ -96,7 +100,7 @@ var mcd12q2bands = ['NumCycles', 'Greenup_1','Greenup_2','MidGreenup_1','MidGree
 'EVI_Minimum_2','EVI_Amplitude_1','EVI_Amplitude_2','EVI_Area_1','EVI_Area_2',
 'QA_Overall_1','QA_Overall_2','QA_Detailed_1','QA_Detailed_2'
 ];
-var allBands = ['date', 'lat', 'lon', 'pointid'] + ',' + mcd12q2bands;
+var allBands = ['date', 'lat', 'lon', 'site'] + ',' + mcd12q2bands;
 
 // export to csv
 Export.table.toDrive(
@@ -115,6 +119,9 @@ Export.table.toDrive(
 
 /// For a description of the data, see 
 /// https://developers.google.com/earth-engine/datasets/catalog/MODIS_006_MCD43A4#bands
+
+/// Note the full QA flag descriptions are in a separate product:
+/// https://developers.google.com/earth-engine/datasets/catalog/MODIS_006_MCD43A2
 
 // MODIS B1=Red; B2=NIR; B3=Blue; B4=Green
 // EVI2 equation: 2.5 * ( NIR - RED) / ( NIR + 2.4 * RED + 1.0 )
@@ -151,7 +158,7 @@ var loop = index.map(function(ind){
         .reduceRegion(ee.Reducer.first(), thispoint);
       
       var output = ee.Feature(ee.Geometry.Point(coords.get(ind)), 
-        {date: date, lat: spec.get(0), lon: spec.get(1), pointid: ids.get(ind)})
+        {date: date, lat: spec.get(0), lon: spec.get(1), site: ids.get(ind)})
           .set(value);
       return output;
     };
@@ -171,7 +178,7 @@ var mcd43a4bands = ['Nadir_Reflectance_Band1', 'Nadir_Reflectance_Band2',
 'BRDF_Albedo_Band_Mandatory_Quality_Band2',
 'EVI2'
 ];
-var allBands = ['date', 'lat', 'lon', 'pointid'] + ',' + mcd43a4bands;
+var allBands = ['date', 'lat', 'lon', 'site'] + ',' + mcd43a4bands;
 
 // export to csv
 Export.table.toDrive(
