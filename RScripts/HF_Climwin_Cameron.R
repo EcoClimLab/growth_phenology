@@ -67,6 +67,7 @@ climate$DATE <- format(climate$DATE, "%d/%m/%Y")
 
 # The data containing the biological responses for testing
 Wood_pheno_table <- read_csv("Data/dendrobands/HF/modeled/Wood_pheno_table_HarvardForest_CLEAN.csv") # Master datafrmae containing 20%, 50%, and 75% growth milestones
+Wood_pheno_table$DOY <- Wood_pheno_table$doy
 ## TMAX: Percentage DOY climwin all wood types, all percs WEEKLY ----
 dffinal <- data.frame(1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
 for (w in unique(Wood_pheno_table$wood_type)) {
@@ -125,9 +126,10 @@ for (w in unique(Wood_pheno_table$wood_type)) {
     tryCatch(
       winmedians <- medwin(MassOutput, cw = 0.95),
       error = function(hi) {
-        winmedians <<- medwin(MassOutput, cw = .99999)
+        winmedians <<- medwin(MassOutput, cw = 0.99)
       }
     )
+
     medianwindowopen <- as.Date(refdateround * 7 - winmedians[["Median Window Open"]] * 7, origin = paste0("2011-01-01"))
     medianwindowclose <- as.Date(refdateround * 7 - winmedians[["Median Window Close"]] * 7, origin = paste0("2011-01-01"))
 
@@ -135,7 +137,7 @@ for (w in unique(Wood_pheno_table$wood_type)) {
     names(dffinal) <- names(df)
     dffinal <- rbind(dffinal, df)
 
-    png(filename = paste("doc/manuscript/tables_figures/","HF", w, j, ".png", sep = "_"), width = 10, height = 8, units = "in", res = 300) # add w
+    png(filename = paste("Results/Climwin_results/Weekly/Harvard Forest/","HF", w, j, ".png", sep = "_"), width = 10, height = 8, units = "in", res = 300) # add w
     plotalloutput <- plotall(
       dataset = MassOutput,
       datasetrand = MassRand,
@@ -147,7 +149,7 @@ for (w in unique(Wood_pheno_table$wood_type)) {
 
 
     plotbetas(MassOutput, arrow = TRUE)
-    ggsave(filename = paste("doc/manuscript/tables_figures/","HF","Plotbetas", w, j, ".png", sep = "_"), width = 10, height = 8, units = "in") # add w
+    ggsave(filename = paste("Results/Climwin_results/Weekly/Harvard Forest/","HF","Plotbetas", w, j, ".png", sep = "_"), width = 10, height = 8, units = "in") # add w
 
 
   }
@@ -203,7 +205,7 @@ for (w in unique(Wood_pheno_table$wood_type)) {
     )
 
     MassRand <- randwin(
-      repeats = 50,
+      repeats = 500,
       xvar = list(Temp = climate$TMIN),
       cdate = climate$DATE,
       bdate = biodata$date,
@@ -234,7 +236,7 @@ for (w in unique(Wood_pheno_table$wood_type)) {
     df <- data.frame(w, j, round(mean(biodata$DOY) / 7), refdate$Month, refdate$Day, MassWin[[1]][["Dataset"]][[1, 2]], MassWin[[1]][["Dataset"]][[1, 3]], MassOutput[1, 4], as.character(medianwindowopen), as.character(medianwindowclose)) # add w, #add/7
     names(dffinal) <- names(df)
     dffinal <- rbind(dffinal, df)
-    png(filename = paste("doc/manuscript/tables_figures/","HF", w, j, ".png", sep = "_"), width = 10, height = 8, units = "in", res = 300) # add w
+    png(filename = paste("Results/Climwin_results/Weekly/Harvard Forest/TMIN/","HF", w, j, ".png", sep = "_"), width = 10, height = 8, units = "in", res = 300) # add w
     plotalloutput <- plotall(
       dataset = MassOutput,
       datasetrand = MassRand,
@@ -244,7 +246,7 @@ for (w in unique(Wood_pheno_table$wood_type)) {
     )
     dev.off()
     plotbetas(MassOutput, arrow = TRUE)
-    ggsave(filename = paste("doc/manuscript/tables_figures/","HF","Plotbetas", w, j, ".png", sep = "_"), width = 10, height = 8, units = "in") # add w
+    ggsave(filename = paste("Results/Climwin_results/Weekly/Harvard Forest/TMIN/","HF","Plotbetas", w, j, ".png", sep = "_"), width = 10, height = 8, units = "in") # add w
 
 
   }

@@ -40,8 +40,8 @@ climate$DATE <- strptime(as.character(climate$DATE), format = "%d/%m/%Y")
 climate$DATE <- format(climate$DATE, "%d/%m/%Y")
 climate <- distinct(climate, DATE, .keep_all = TRUE)
 # The data containing the biological responses for testing
-Wood_pheno_table <- read_csv("Data/dendrobands/SCBI/modeled/Wood_pheno_table_SCBI_CLEAN.csv") # Master datafrmae containing 20%, 50%, and 75% growth milestones
-
+Wood_pheno_table <- read_csv("Data/dendrobands/SCBI/modeled/Wood_pheno_table_SCBI_CLEAN.csv") # Master datafrmae containing 25%, 50%, and 75% growth milestones
+Wood_pheno_table$DOY <- Wood_pheno_table$doy
 ## Percentage DOY climwin all wood types, all percs WEEKLY ----
 ## TMAX: Percentage DOY climwin all wood types, all percs WEEKLY ----
 
@@ -111,7 +111,7 @@ for (w in unique(Wood_pheno_table$wood_type)) {
     df <- data.frame(w, j, round(mean(biodata$DOY) / 7), refdate$Month, refdate$Day, MassWin[[1]][["Dataset"]][[1, 2]], MassWin[[1]][["Dataset"]][[1, 3]], MassOutput[1, 4], as.character(medianwindowopen), as.character(medianwindowclose)) # add w, #add/7
     names(dffinal) <- names(df)
     dffinal <- rbind(dffinal, df)
-    png(filename = paste("doc/manuscript/tables_figures/" ,"SCBI", w, j, ".png", sep = "_"), width = 10, height = 8, units = "in", res = 300) # add w
+    png(filename = paste("Results/Climwin_results/Weekly/SCBI/" ,"SCBI", w, j, ".png", sep = "_"), width = 10, height = 8, units = "in", res = 300) # add w
     plotalloutput <- plotall(
       dataset = MassOutput,
       datasetrand = MassRand,
@@ -123,7 +123,7 @@ for (w in unique(Wood_pheno_table$wood_type)) {
     dev.off()
 
     plotbetas(MassOutput, arrow = TRUE)
-    ggsave(filename = paste("doc/manuscript/tables_figures/","SCBI","Plotbetas", w, j, ".png", sep = "_"), width = 10, height = 8, units = "in") # add w
+    ggsave(filename = paste("Results/Climwin_results/Weekly/SCBI/","SCBI","Plotbetas", w, j, ".png", sep = "_"), width = 10, height = 8, units = "in") # add w
 
 
 
@@ -192,7 +192,7 @@ for (w in unique(Wood_pheno_table$wood_type)) {
     )
 
     MassRand <- randwin(
-      repeats = 50,
+      repeats = 500,
       xvar = list(Temp = climate$TMIN),
       cdate = climate$DATE,
       bdate = biodata$date,
