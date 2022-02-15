@@ -300,7 +300,7 @@ Measurements were timed to begin before the beginning of spring growth and to co
 At SCBI, the median start date was April 14, which was adjusted forward when early leaf-out of understory vegetation was observed, with the earliest start date being March 30 (in 2020). 
 Measurements were continued through to fall leaf senescence, with the median end date being October 17 and the latest end date November 26 (2012). 
 Timing of measurements at Harvard Forest were similar, with the median start date of April 23 and median end date of October 30. 
-1998 was an anomalous year where initial measurements were taken on January 5, but not taken again until April 15. 
+1999 was an anomalous year where initial measurements were taken on January 5, but not taken again until April 15. 
 The latest end date was November 11, 2002.
 In our analysis, each band-year was treated independently, with no data overlap from one year to the next.
 
