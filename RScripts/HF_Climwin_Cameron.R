@@ -70,19 +70,20 @@ Wood_pheno_table <- read_csv("Data/dendrobands/HF/modeled/Wood_pheno_table_Harva
 Wood_pheno_table$DOY <- Wood_pheno_table$doy
 ## TMAX: Percentage DOY climwin all wood types, all percs WEEKLY ----
 dffinal <- data.frame(1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+
 for (w in unique(Wood_pheno_table$wood_type)) {
   for (j in unique(Wood_pheno_table$perc)) {
     twentyfive <- subset(Wood_pheno_table, wood_type == w & perc == j) #
 
     biodata <- data.frame(NULL)
-    for (i in c(1998:2003)) { # Assigns dates in the proper format for Climwin analysis, using DOY (already in dataframe)
+    for (i in c(1999:2003)) { # Assigns dates in the proper format for Climwin analysis, using DOY (already in dataframe)
       df <- subset(twentyfive, year == i) # using twentyfive dataset
       df$date <- as.Date(df$DOY, origin = paste0(i, "-01-01"))
       df$date <- strftime(df$date, format = "%d/%m/%Y")
       biodata <- rbind(biodata, df)
     }
 
-    refdateround <- round(mean(biodata$DOY) / 7) # /7 for week
+        refdateround <- round(mean(biodata$DOY) / 7) # /7 for week
 
     # for (k in rangedates$doy) {
 
@@ -96,7 +97,7 @@ for (w in unique(Wood_pheno_table$wood_type)) {
       bdate = biodata$date,
       baseline = lm(DOY ~ 1, data = biodata),
       cinterval = "week",
-      range = c((refdateround - (30 / 7)), 0),
+      range = c((refdateround-(30/7)), 0),
       type = "absolute", refday = c(refdate$Day, refdate$Month),
       stat = "mean",
       func = "lin",
@@ -119,14 +120,14 @@ for (w in unique(Wood_pheno_table$wood_type)) {
     # pvalue(dataset = MassWin[[1]]$Dataset, datasetrand = MassRand[[1]], metric = "AIC")
 
     MassOutput <- MassWin[[1]][["Dataset"]]
-    write.csv(MassOutput, file = paste0("MassOutput_", j,"_", w, ".csv"), row.names = FALSE)
+    write.csv(MassOutput, file = paste0("results/Climwin_results/Weekly/Harvard Forest/MassOutput_", j,"_", w, ".csv"), row.names = FALSE)
     MassRand <- MassRand[[1]]
     # windowopen <- as.Date((refdateround*7)- (MassWin[[1]][["Dataset"]][[1,2]]*7) , origin = paste0("2011-01-01"))
     # windowclose <- as.Date((refdateround*7) - (MassWin[[1]][["Dataset"]][[1,3]]*7) , origin = paste0("2011-01-01"))
     tryCatch(
       winmedians <- medwin(MassOutput, cw = 0.95),
       error = function(hi) {
-        winmedians <<- medwin(MassOutput, cw = 0.99)
+        winmedians <<- medwin(MassOutput, cw = 1)
       }
     )
 
@@ -177,7 +178,7 @@ for (w in unique(Wood_pheno_table$wood_type)) {
     twentyfive <- subset(Wood_pheno_table, wood_type == w & perc == j) #
 
     biodata <- data.frame(NULL)
-    for (i in c(1998:2003)) { # Assigns dates in the proper format for Climwin analysis, using DOY (already in dataframe)
+    for (i in c(1999:2003)) { # Assigns dates in the proper format for Climwin analysis, using DOY (already in dataframe)
       df <- subset(twentyfive, year == i) # using twentyfive dataset
       df$date <- as.Date(df$DOY, origin = paste0(i, "-01-01"))
       df$date <- strftime(df$date, format = "%d/%m/%Y")
