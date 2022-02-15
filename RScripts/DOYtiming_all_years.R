@@ -24,25 +24,25 @@ weatherdata <-
 #%>%
 # Rename RP flag set by Cam
 #rename(flagrp = flag)
-# climwindows <-
-#   read.csv("results/Climwin_results/Weekly/SCBI/weekly_climwin_results_SCBI_TMAX.csv") %>%
-#   filter(wood_type != "other") %>%
-#   mutate(
-#     winopen = as.Date(paste(refwoy-winopenwoy, 1, sep="-"), "%U-%u"),
-#     winclose = as.Date(paste(refwoy-winclosewoy, 1, sep="-"), "%U-%u"),
-#     opendoy = yday(winopen),
-#     closedoy = yday(winclose)
-#   )
+climwindows <-
+  read.csv("results/Climwin_results/Weekly/SCBI/weekly_climwin_results_SCBI_TMAX.csv") %>%
+  filter(wood_type != "other") %>%
+  mutate(
+    winopen = as.Date(paste(refwoy-winopenwoy, 1, sep="-"), "%U-%u"),
+    winclose = as.Date(paste(refwoy-winclosewoy, 1, sep="-"), "%U-%u"),
+    opendoy = yday(winopen),
+    closedoy = yday(winclose)
+  )
 
 #Method for identifying correct windows is in Pheno_tsensitivity_figure_tmax.R
 climwinmeans_rp <- weatherdata %>%
-  filter(doy %in% c(92:98)) %>% #April 2 - April 8
+  filter(doy %in% c(71:78)) %>% #April 2 - April 8
   group_by(year) %>%
   summarize(climwinmean = mean(cleantmax)) %>%
   mutate(wood_type = "ring-porous")
 
 climwinmeans_dp <- weatherdata %>%
-  filter(doy %in% c(78:140)) %>% # March 19 - May 20
+  filter(doy %in% c(77:147)) %>% # March 19 - May 20
   group_by(year) %>%
   summarize(climwinmean = mean(cleantmax)) %>%
   mutate(wood_type = "diffuse-porous")
@@ -68,7 +68,7 @@ Wood_pheno_table_scbi <- Wood_pheno_table_scbi %>%
   #) %>%
   arrange(tag, year)
 #View(Wood_pheno_table)
-
+Wood_pheno_table_scbi$DOY <- Wood_pheno_table_scbi$doy
 aggregates_scbi_rp <- data.frame(1,1,1,1,1)
 names(aggregates_scbi_rp) <- c("Group.1", "Group.2", "x","year", "window_temp")
 for(i in 2011:2020){
@@ -272,7 +272,7 @@ scbi_leaf
 #
 #
 #Harvard Forest
-# Get growth data ----------------------------------
+# HF Get growth data ----------------------------------
 Wood_pheno_table <- read_csv("Data/dendrobands/HF/modeled/Wood_pheno_table_HarvardForest_CLEAN.csv") %>%
   # Keep only RP and DP for now
   filter(wood_type != "other") %>%
@@ -281,7 +281,7 @@ Wood_pheno_table <- read_csv("Data/dendrobands/HF/modeled/Wood_pheno_table_Harva
   # Rename ring porous to not have a space
   mutate(wood_type = ifelse(wood_type == "ring porous", "ring-porous", wood_type))
 #Wood_pheno_table$tag <- substr(Wood_pheno_table$tag,1, nchar(as.character(Wood_pheno_table$tag))-4)
-
+#Wood_pheno_table <- Wood_pheno_table[!(Wood_pheno_table$year %in% 1998),]
 weatherdata <-
   read_csv("Data/climate data/HF/HF_weatherdata.csv") %>%
   filter(!is.na(airtmax))
@@ -294,24 +294,35 @@ weatherdata <-
 #%>%
 # Rename RP flag set by Cam
 #rename(flagrp = flag)
-# climwindows <-
-#   read.csv("results/Climwin_results/Weekly/Harvard Forest/weekly_climwin_results_HF_TMAX.csv") %>%
-#   filter(wood_type != "other") %>%
-#   mutate(
-#     median_windowopendate = as.Date(median_windowopendate, format = "%Y-%m-%d"),
-#     median_windowclosedate = as.Date(median_windowclosedate, format = "%Y-%m-%d"),
-#     opendoy = yday(median_windowopendate),
-#     closedoy = yday(median_windowclosedate)
-#   )
+climwindows <-
+  read.csv("results/Climwin_results/Weekly/Harvard Forest/weekly_climwin_results_HF_TMAX.csv") %>%
+  filter(wood_type != "other") %>%
+  mutate(
+    median_windowopendate = as.Date(median_windowopendate),
+    median_windowclosedate = as.Date(median_windowclosedate),
+    # opendoy = yday(median_windowopendate),
+    # closedoy = yday(median_windowclosedate),
+    # winopen = as.Date(refwoy * 7 - winopenwoy * 7, origin = paste0("2011-01-01")),
+    # winclose = as.Date(refwoy * 7 - winclosewoy * 7, origin = paste0("2011-01-01"))
+    winopen = as.Date(paste(refwoy-winopenwoy, 1, sep="-"), "%U-%u"),
+    winclose = as.Date(paste(refwoy-winclosewoy, 1, sep="-"), "%U-%u"),
+    opendoy = yday(winopen),
+    closedoy = yday(winclose)
+  )
+    #median_windowopendate = as.Date(median_windowopendate, format = "%Y-%m-%d"),
+    #median_windowclosedate = as.Date(median_windowclosedate, format = "%Y-%m-%d"),
+    #opendoy = yday(median_windowopendate),
+    #closedoy = yday(median_windowclosedate)
+  #)
 
 climwinmeans_rp_hf <- weatherdata %>%
-  filter(DOY %in% c(85:133)) %>% # March 26 - May 13
+  filter(DOY %in% c(70:140)) %>% # March 26 - May 13
   group_by(year) %>%
   summarize(climwinmean = mean(airtmax)) %>%
   mutate(wood_type = "ring-porous")
 
 climwinmeans_dp_hf <- weatherdata %>%
-  filter(DOY %in% c(78:133)) %>% # March 19 - May 13
+  filter(DOY %in% c(126:161)) %>% # March 19 - May 13
   group_by(year) %>%
   summarize(climwinmean = mean(airtmax)) %>%
   mutate(wood_type = "diffuse-porous")
@@ -338,10 +349,10 @@ Wood_pheno_table_hf <- Wood_pheno_table %>%
   #) %>%
   arrange(tag, year)
 
-
+Wood_pheno_table_hf$DOY <- Wood_pheno_table_hf$doy
 aggregates_hf_rp <- data.frame(1,1,1,1,1)
 names(aggregates_hf_rp) <- c("Group.1", "Group.2", "x","year", "window_temp")
-for(i in 1998:2003){
+for(i in 1999:2003){
   year <- subset(Wood_pheno_table_hf, year == i & wood_type == "ring-porous")
   year_ag <- aggregate(year$DOY, by = list(year$wood_type, year$perc), FUN = mean)
   year_ag$Group.2 <- ifelse(year_ag$Group.2 == .25, 25, ifelse(year_ag$Group.2 == .50, 50, ifelse(year_ag$Group.2 == .75, 75, 0)))
@@ -352,7 +363,7 @@ for(i in 1998:2003){
 
 aggregates_hf_dp <- data.frame(1,1,1,1,1)
 names(aggregates_hf_dp) <- c("Group.1", "Group.2", "x","year","window_temp")
-for(i in 1998:2003){
+for(i in 1999:2003){
   year <- subset(Wood_pheno_table_hf, year == i & wood_type == "diffuse-porous")
   year_ag <- aggregate(year$DOY, by = list(year$wood_type, year$perc), FUN = mean)
   year_ag$Group.2 <- ifelse(year_ag$Group.2 == .25, 25, ifelse(year_ag$Group.2 == .50, 50, ifelse(year_ag$Group.2 == .75, 75, 0)))
