@@ -30,7 +30,7 @@ source("RScripts/dendroband_functions.R")
 
 
 # Format dendroband data ----------------------------------------------------
-all_stems <- read_csv("data/dendrobands/HF/modeled/HarvardDendroband_cleaned.csv")
+all_stems <- read_csv("data/dendrobands/HF/raw_data/HarvardDendroband_cleaned.csv")
 names(all_stems) <- c("plot", "tag", "sp", "date","dbh2")
 all_stems$DOY <- yday(strptime(all_stems$date, format = "%m/%d/%y"))
 
@@ -76,13 +76,15 @@ all_stems <- all_stems[complete.cases(all_stems$dbh2),]
 #all_stems <- all_stems_clean
 #all_stems <- all_stems[all_stems$plot_tag %in% tagsubset,]
 for (q in 1998:2003) {
+  q = 1998
   skip_to_next <- FALSE
   Stem2 <- subset(all_stems, year == q)
   for (w in unique(Stem2$sp)) { # removes trees with less than 10 measurements in each year
+    w = "betual"
     Stem3 <- subset(Stem2, sp == w)
-    count_df <- count(Stem3,tag_stem)
-    count_df <- subset(count_df, n >= 10)
-    Stem3 <- Stem3[Stem3$tag_stem %in% count_df$tag_stem, ]
+    count_df <- count(Stem3$tag_stem)
+    count_df <- subset(count_df, freq >= 10)
+    Stem3 <- Stem3[Stem3$tag_stem %in% count_df$x, ]
     # original_list <- unique(Stem3$tag)
     for (m in unique(Stem3$tag_stem)) { # remove trees with very small or negative total growth
       growthcheck <- subset(Stem3, tag_stem == m)
@@ -345,7 +347,7 @@ for (q in 1998:2003) {
         a <- c(start.d[y, 1], end.d[y, 1])
 
         # If you want to see the ploted model, remove the '#' in the following two lines:
-        plot(doy, dbh, xlab = "Day of the year", ylab = "DBH (cm)", pch = 19, col = "gray15", main = ?sprintf("Annual Growth for tree %y", y), cex = 1)
+        plot(doy, dbh, xlab = "Day of the year", ylab = "DBH (cm)", pch = 19, col = "gray15", main = sprintf("Annual Growth for tree %y", y), cex = 1)
         lines(days, lg5.pred.a(a, params = params.tmp, doy = days, asymptote = "both"), col = "darkred", lty = 1, lwd = 1)
         Param.df[y, 6:7] <- a
 
