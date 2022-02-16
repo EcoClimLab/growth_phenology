@@ -330,12 +330,11 @@ Having fit the model for each band-year of data, we then modeled DBH using these
 After fitting the growth model, we removed tree-years with poor fits. 
 Models were judged to be poorly fit if certain modeled growth characteristics fell outside of the logical range. 
 Modeled fits for tree-years were removed under five conditions:
-(1) single day growth rates were $\ge 2$ standard deviations away from the mean for each xylem architecture (SCBI = 2, Harvard Forest = 34); 
-(2) $DOY_{ip}$ was $\ge 2$ standard deviations away from the mean for its xylem architecture group, year, and site (SCBI = 53, Harvard Forest = 106); 
-(3) tree-years with small or negligible total growth ($\Delta DBH$ $\le 0.05$ mm; SCBI = 0, Harvard Forest = 66); 
-(4) models with unexplained sharp spikes in growth rate (SCBI = 0, Harvard Forest = 3); 
-and (5) poorly fit models that did not meet any of the above criteria (SCBI = 2, Harvard Forest = 0).
-At *both sites* the tag years removed through this method were proportional to the original sample size, indicating that no species or size class was disproportionately removed compared to others. 
+(1) single day growth rates were $\ge 2$ standard deviations away from the mean for each xylem architecture (SCBI = 26, Harvard Forest = 24); 
+(2) timing variables ($DOY_{ip}$, $DOY_{25}$, $DOY_{50}$, $DOY_{75}$) were $\ge 3$ standard deviations away from the means for their xylem architecture group, year, and site (SCBI = 71, Harvard Forest = 226); 
+(3) tree-years with small or negligible total growth ($\Delta DBH$ $\le 0.05$ mm; SCBI = 8, Harvard Forest = 137); 
+(4) tree years where first intraannual measurement was later than the first spring survey (trees that were missed in the initial census; SCBI = 20, HF = 6).
+At both sites the tag years removed through this method were proportional to the original sample size, indicating that no species or size class was disproportionately removed compared to others.
 This process was repeated using 2.5 and 3 standard deviations and the results of analyses were not qualitatively different. 
 
 <!-- Leaf phenology -->
