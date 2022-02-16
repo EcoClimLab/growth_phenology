@@ -1,4 +1,4 @@
-# Setup ------------------------------------------------------------------------
+#Setup ------------------------------------------------------------------------
 #
 # This script takes as inputs the SCBI and Harvard Forest RAW
 #
@@ -53,59 +53,63 @@ percent_growth <- Wood_pheno_table_scbi %>%
     #dbh_other = lg5.pred(L, K, doy_ip, r, theta, doy),
     dbh_growth = dbh - lag(dbh),
     dbh_total_growth = b - a,
-    dbh_min = a,
-    dbh_max = b,
     dbh_growth_percent = dbh_growth / (max(dbh) - min(dbh))
   ) %>%
   filter(!is.na(dbh_growth)) %>%
   mutate(
     dbh_growth_percent_cummulative = cumsum(dbh_growth_percent)
   )
-
-p = 0.25
-percs_new <- data.frame(NULL)
-for(i in 1:length(unique(percent_growth$tag_year))){
-  try_df <-percent_growth[percent_growth$tag_year %in%
-                            2022152012,]#unique(percent_growth$tag_year)[i],]
-  try_df$perc <- seq(0,365,1)
-
-for (p in c(.25, .50, .75)) {
-  try <- try_df$doy[which(abs(try_df$dbh - (try_df$a + try_df$dbh_total_growth*p)) == min(abs(try_df$dbh - (try_df$a + try_df$dbh_total_growth*p))))]
-  try_df$perc[try] <- p # assign the number to the value found above
-percs_new <- rbind(percs_new, try_df)
-  }
-}
-
-percs_new_sub <- percs_new[percs_new$perc %in% c(0.25,0.50,0.75),]
-percs_new_sub$tag_year_perc <- paste0(percs_new_sub$tag,"_1",percs_new_sub$year, percs_new_sub$perc)
-percs_new_sub <- percs_new_sub[!(duplicated(percs_new_sub$tag_year_perc)),]
-percs_new_sub <- percs_new_sub[,c(22,13)]
-
-Wood_pheno_table_scbi <- left_join(Wood_pheno_table_scbi, percs_new_sub, by = "tag_year_perc")
-
-
-# percent_growth$min_check <- ifelse(percent_growth$a == percent_growth$dbh_min, 1 , 0)
-# percent_growth$max_check <- ifelse(percent_growth$b == percent_growth$dbh_max, 1 , 0)
 #
-# percent_growth$min_check <- ifelse(percent_growth$L == percent_growth$dbh_min, 1 , 0)
-# percent_growth$max_check <- ifelse(percent_growth$K == percent_growth$dbh_max, 1 , 0)
+# percs_new <- data.frame(NULL)
+# for(i in 1:length(unique(percent_growth$tag_year))){
+#   try_df <-percent_growth[percent_growth$tag_year %in%
+#                           unique(percent_growth$tag_year)[i],]
+#   try_df$perc <- seq(0,365,1)
 #
-# yes_min <- percent_growth[percent_growth$min_check %in% 1,]
-# unique(yes_min$tag_year)
+# for (p in c(.25, .50, .75)) {
+#   try <- try_df$doy[which(abs(try_df$dbh - (try_df$a + try_df$dbh_total_growth*p)) == min(abs(try_df$dbh - (try_df$a + try_df$dbh_total_growth*p))))]
+#   try_df$perc[try] <- p # assign the number to the value found above
+# percs_new <- rbind(percs_new, try_df)
+#   }
+# }
 #
-# yes_max <- percent_growth[percent_growth$max_check %in% 1,]
-# unique(yes_max$tag_year)
+# percs_new_sub <- percs_new[percs_new$perc %in% c(0.25,0.50,0.75),]
+# percs_new_sub$tag_year_perc <- paste0(percs_new_sub$tag,"_1",percs_new_sub$year, percs_new_sub$perc)
+# percs_new_sub <- percs_new_sub[!(duplicated(percs_new_sub$tag_year_perc)),]
+# percs_new_sub <- percs_new_sub[,c(22,13)]
+#
+# Wood_pheno_table_scbi <- left_join(Wood_pheno_table_scbi, percs_new_sub, by = "tag_year_perc")
+#
+#
+# # percent_growth$min_check <- ifelse(percent_growth$a == percent_growth$dbh_min, 1 , 0)
+# # percent_growth$max_check <- ifelse(percent_growth$b == percent_growth$dbh_max, 1 , 0)
+# #
+# # percent_growth$min_check <- ifelse(percent_growth$L == percent_growth$dbh_min, 1 , 0)
+# # percent_growth$max_check <- ifelse(percent_growth$K == percent_growth$dbh_max, 1 , 0)
+# #
+# # yes_min <- percent_growth[percent_growth$min_check %in% 1,]
+# # unique(yes_min$tag_year)
+# #
+# # yes_max <- percent_growth[percent_growth$max_check %in% 1,]
+# # unique(yes_max$tag_year)
+#
+#
+#
+# Wood_pheno_table_scbi <- Wood_pheno_table_scbi %>%
+#   separate(tag, into = c("tag", "stem"), sep = "_") %>%
+#   mutate(
+#     tag = as.numeric(tag),
+#     tag_year = str_c(tag, year)
+#   )
+#
+# Wood_pheno_table_scbi <- Wood_pheno_table_scbi[!is.na(Wood_pheno_table_scbi$doy),]
+# write.csv(Wood_pheno_table_scbi, file = "Data/dendrobands/SCBI/modeled/wood_table_scbi_updated.csv")
 
+# # #Remove tag years where doy% variable is > 3 SD away from mean
 
-Wood_pheno_table_scbi <- Wood_pheno_table_scbi %>%
-  separate(tag, into = c("tag", "stem"), sep = "_") %>%
-  mutate(
-    tag = as.numeric(tag),
-    tag_year = str_c(tag, year)
-  )
+Wood_pheno_table_scbi <- read_csv("Data/dendrobands/SCBI/modeled/wood_table_scbi_updated.csv")
+Wood_pheno_table_scbi <- Wood_pheno_table_scbi[,-1]
 
-Wood_pheno_table_scbi <- Wood_pheno_table_scbi[!is.na(Wood_pheno_table_scbi$doy),]
-#Remove tag years where doy% variable is > 3 SD away from mean
 means <- aggregate(Wood_pheno_table_scbi$doy, by = list(Wood_pheno_table_scbi$perc, Wood_pheno_table_scbi$wood_type), FUN = mean)
 SD <- aggregate(Wood_pheno_table_scbi$doy, by = list(Wood_pheno_table_scbi$perc, Wood_pheno_table_scbi$wood_type), FUN = sd)
 names(SD) <- c("Group.1", "Group.2", "sd")
@@ -114,44 +118,44 @@ names(means) <- c("perc", "wood_type", "mean", "SD")
 
 Wood_pheno_table_scbi <- left_join(Wood_pheno_table_scbi, means, by = c("perc","wood_type"))
 
-Wood_pheno_table_scbi$rm <- ifelse(Wood_pheno_table_scbi$doy > Wood_pheno_table_scbi$mean+(2.5*Wood_pheno_table_scbi$SD) | Wood_pheno_table_scbi$doy < Wood_pheno_table_scbi$mean-(2.5*Wood_pheno_table_scbi$SD), "rm", "keep")
+Wood_pheno_table_scbi$rm <- ifelse(Wood_pheno_table_scbi$doy > Wood_pheno_table_scbi$mean+(sd*Wood_pheno_table_scbi$SD) | Wood_pheno_table_scbi$doy < Wood_pheno_table_scbi$mean-(sd*Wood_pheno_table_scbi$SD), "rm", "keep")
 Wood_pheno_table_scbi <- Wood_pheno_table_scbi[Wood_pheno_table_scbi$rm %in% "keep",]
 perc_check <- aggregate(Wood_pheno_table_scbi$perc, by = list(Wood_pheno_table_scbi$tag_year), FUN = sum)
 perc_check <- perc_check[perc_check$x == 1.5,]
-Wood_pheno_table_scbi <- Wood_pheno_table_scbi[Wood_pheno_table_scbi$tag_year %in% perc_check$Group.1,] #rm ~106
+Wood_pheno_table_scbi <- Wood_pheno_table_scbi[Wood_pheno_table_scbi$tag_year %in% perc_check$Group.1,] #2970 -> 2871
 
 percent_growth <- percent_growth[percent_growth$tag_year %in% Wood_pheno_table_scbi$tag_year,]
 Wood_pheno_table_scbi <- Wood_pheno_table_scbi[Wood_pheno_table_scbi$tag_year %in% Wood_pheno_table_scbi$tag_year,]
 
-#Remove years where raw measures past doy 250 were >20% of total growth
-all_stems <- read_csv("Data/dendrobands/SCBI/raw_data/all_stems.csv")
-all_stems$tag_year <- paste0(all_stems$tag, all_stems$year)
-min <- aggregate(all_stems$dbh2, by = list(all_stems$tag_year), FUN = min)
-names(min) <- c("tag_year","min")
-max <- aggregate(all_stems$dbh2, by = list(all_stems$tag_year), FUN = max)
-names(max) <- c("tag_year","max")
-raw_total <- left_join(min, max)
-raw_total$tot <- raw_total$max-raw_total$min
-raw_total <- raw_total[,c(-2,-3)]
-all_stems <- left_join(all_stems, raw_total, by = "tag_year")
-
-new_stems <- data.frame(NULL)
-
-tag_years <- unique(all_stems$tag_year)
-
-for(i in 1:length(tag_years)){
-
-sub_stems <- all_stems[all_stems$tag_year %in% tag_years[i],]
-sub_stems$growth <-  sub_stems$dbh2 - lag(sub_stems$dbh2)
-new_stems <- rbind(new_stems, sub_stems)
-
-}
-late_growth <- new_stems[new_stems$DOY >= 250,]
-late_growth$perc_growth <- late_growth$growth/late_growth$tot
-late_growth_rm <- late_growth[late_growth$perc_growth > 0.20,]
-
-percent_growth <- percent_growth[!(percent_growth$tag_year %in% late_growth_rm$tag_year),]
-Wood_pheno_table_scbi <- Wood_pheno_table_scbi[!(Wood_pheno_table_scbi$tag_year %in% late_growth_rm$tag_year),] #rm 216
+# #Remove years where raw measures past doy 250 were >20% of total growth
+# all_stems <- read_csv("Data/dendrobands/SCBI/raw_data/all_stems.csv")
+# all_stems$tag_year <- paste0(all_stems$tag, all_stems$year)
+# min <- aggregate(all_stems$dbh2, by = list(all_stems$tag_year), FUN = min)
+# names(min) <- c("tag_year","min")
+# max <- aggregate(all_stems$dbh2, by = list(all_stems$tag_year), FUN = max)
+# names(max) <- c("tag_year","max")
+# raw_total <- left_join(min, max)
+# raw_total$tot <- raw_total$max-raw_total$min
+# raw_total <- raw_total[,c(-2,-3)]
+# all_stems <- left_join(all_stems, raw_total, by = "tag_year")
+#
+# new_stems <- data.frame(NULL)
+#
+# tag_years <- unique(all_stems$tag_year)
+#
+# for(i in 1:length(tag_years)){
+#
+# sub_stems <- all_stems[all_stems$tag_year %in% tag_years[i],]
+# sub_stems$growth <-  sub_stems$dbh2 - lag(sub_stems$dbh2)
+# new_stems <- rbind(new_stems, sub_stems)
+#
+# }
+# late_growth <- new_stems[new_stems$DOY >= 250,]
+# late_growth$perc_growth <- late_growth$growth/late_growth$tot
+# late_growth_rm <- late_growth[late_growth$perc_growth > 0.30,]
+#
+# percent_growth <- percent_growth[!(percent_growth$tag_year %in% late_growth_rm$tag_year),]
+# Wood_pheno_table_scbi <- Wood_pheno_table_scbi[!(Wood_pheno_table_scbi$tag_year %in% late_growth_rm$tag_year),] #2871 -> 2706
 ######################################################
 
 #Remove years where first measurement occured after latest spring survey - 4/18
@@ -174,12 +178,47 @@ late_starts <- all_stems[all_stems$tag_year %in% start_days$Group.1,]
 
 #remove from percent growth and wood_pheno
 percent_growth <- percent_growth[!(percent_growth$tag_year %in% late_starts$tag_year),]
-Wood_pheno_table_scbi <- Wood_pheno_table_scbi[!(Wood_pheno_table_scbi$tag_year %in% late_starts$tag_year),] # rm 48
+Wood_pheno_table_scbi <- Wood_pheno_table_scbi[!(Wood_pheno_table_scbi$tag_year %in% late_starts$tag_year),] # 2706 -> 2655
+
+#Subset percent growth to only contain modeled growth in b-a
+percent_growth <- subset(percent_growth, percent_growth$dbh > percent_growth$a & percent_growth$dbh < percent_growth$b)
+
 ## Clean the data ----
 # Break into RP and DP
 percent_growth_RP <- subset(percent_growth, wood_type == "ring-porous")
 
+# first_days <- aggregate(percent_growth_RP$doy, by = list(percent_growth_RP$tag_year), FUN= min)
+# names(first_days) <- c("tag_year", "start")
+# first_days$tag_year <- as.character(first_days$tag_year)
+# mean(first_days$start) + (2*sd(first_days$start))
+# plot(first_days$start)
+#
+# twentyfive <- Wood_pheno_table_scbi[Wood_pheno_table_scbi$perc %in% 0.25,]
+# twentyfive <- twentyfive[,c(14,13)]
+# names(twentyfive) <- c("tag_year", "25")
+# twentyfive$tag_year <- as.character(twentyfive$tag_year)
+#
+# fifty <- Wood_pheno_table_scbi[Wood_pheno_table_scbi$perc %in% 0.50,]
+# fifty <- fifty[,c(14,13)]
+# names(fifty) <- c("tag_year", "50")
+# fifty$tag_year <- as.character(fifty$tag_year)
+#
+# seventyfive <- Wood_pheno_table_scbi[Wood_pheno_table_scbi$perc %in% 0.75,]
+# seventyfive <- seventyfive[,c(14,13)]
+# names(seventyfive) <- c("tag_year", "75")
+# seventyfive$tag_year <- as.character(seventyfive$tag_year)
+#
+# first_days <- left_join(first_days, twentyfive, by = "tag_year")
+# first_days <- left_join(first_days, fifty, by = "tag_year")
+# first_days <- left_join(first_days, seventyfive, by = "tag_year")
+#
+# library(reshape2)
+# first_days <- melt(first_days, id.vars = "tag_year")
+# SCBI_RP <- ggplot(first_days, aes( x = tag_year, y = value, color = variable)) +
+#   geom_point()
+
 # Remove models with single day growth greater than 2 SD away from mean
+
 maxgrowthrate <- aggregate(percent_growth_RP$dbh_growth_percent, by = list(percent_growth_RP$tag_year), FUN = max)
 names(maxgrowthrate) <- c("tag_year", "rate") # Maximum growth rate of each tree
 # high_growthday <- subset(maxgrowthrate, rate >= 0.02) #Remove trees where one day had higher than 2% of total growth
@@ -187,7 +226,7 @@ high_growthday <- subset(maxgrowthrate, rate >= (mean(maxgrowthrate$rate + (sd(m
 
 # ENTRIES REMOVED IN THIS STEP
 percent_growth_high <- percent_growth_RP[percent_growth_RP$tag_year %in% high_growthday$tag_year, ]
-SCBI_highgrowth_RP <- unique(percent_growth_high$tag_year)# rm 3
+SCBI_highgrowth_RP <- unique(percent_growth_high$tag_year)# rm 19
 wood_pheno_removed <- Wood_pheno_table_scbi[Wood_pheno_table_scbi$tag_year %in% SCBI_highgrowth_RP, ]
 wood_pheno_removed <- subset(wood_pheno_removed, perc == .25)
 count(wood_pheno_removed, sp)
@@ -209,7 +248,7 @@ for (i in 2011:2020) {
 }
 
 percent_growth_RP_gone <- percent_growth_RP[!(percent_growth_RP$tag_year %in% keeptags),]
-SCBI_badpeak_RP <- unique(percent_growth_RP_gone$tag_year) # rm 34
+SCBI_badpeak_RP <- unique(percent_growth_RP_gone$tag_year) # rm 12
 
 percent_growth_RP <- percent_growth_RP[percent_growth_RP$tag_year %in% keeptags,]
 #ENTRIES REMOVED IN THIS STEP
@@ -225,6 +264,36 @@ percent_growth_RP <- percent_growth_RP[percent_growth_RP$tag_year %in% keeptags,
 
 #DIffuse porous - Same method
 percent_growth_DP <- subset(percent_growth, wood_type == "diffuse-porous")
+#
+# first_days <- aggregate(percent_growth_DP$doy, by = list(percent_growth_DP$tag_year), FUN= min)
+# names(first_days) <- c("tag_year", "start")
+# first_days$tag_year <- as.character(first_days$tag_year)
+# mean(first_days$start) + (2*sd(first_days$start))
+# plot(first_days$start)
+#
+# twentyfive <- Wood_pheno_table_scbi[Wood_pheno_table_scbi$perc %in% 0.25,]
+# twentyfive <- twentyfive[,c(14,13)]
+# names(twentyfive) <- c("tag_year", "25")
+# twentyfive$tag_year <- as.character(twentyfive$tag_year)
+#
+# fifty <- Wood_pheno_table_scbi[Wood_pheno_table_scbi$perc %in% 0.50,]
+# fifty <- fifty[,c(14,13)]
+# names(fifty) <- c("tag_year", "50")
+# fifty$tag_year <- as.character(fifty$tag_year)
+#
+# seventyfive <- Wood_pheno_table_scbi[Wood_pheno_table_scbi$perc %in% 0.75,]
+# seventyfive <- seventyfive[,c(14,13)]
+# names(seventyfive) <- c("tag_year", "75")
+# seventyfive$tag_year <- as.character(seventyfive$tag_year)
+#
+# first_days <- left_join(first_days, twentyfive, by = "tag_year")
+# first_days <- left_join(first_days, fifty, by = "tag_year")
+# first_days <- left_join(first_days, seventyfive, by = "tag_year")
+#
+# library(reshape2)
+# first_days <- melt(first_days, id.vars = "tag_year")
+# SCBI_DP <- ggplot(first_days, aes( x = tag_year, y = value, color = variable)) +
+#   geom_point()
 
 # Remove models with single day growth rate >2 SD away from mean
 maxgrowthrate <- aggregate(percent_growth_DP$dbh_growth_percent, by = list(percent_growth_DP$tag_year), FUN = max)
@@ -256,7 +325,7 @@ for (i in 2011:2020) {
 }
 
 percent_growth_DP_gone <- percent_growth_DP[!(percent_growth_DP$tag_year %in% keeptags),]
-SCBI_badpeak_DP <- unique(percent_growth_DP_gone$tag_year) # rm 16
+SCBI_badpeak_DP <- unique(percent_growth_DP_gone$tag_year) # rm 6
 
 percent_growth_DP <- percent_growth_DP[percent_growth_DP$tag_year %in% keeptags,]
 #ENTRIES REMOVED IN THIS STEP
@@ -279,24 +348,24 @@ percent_growth_gone <- subset(percent_growth, dbh_total_growth <= 0.05) # remove
 SCBI_smallgrowth <- unique(percent_growth_gone$tag_year) # rm 5
 percent_growth <- subset(percent_growth, dbh_total_growth >= 0.05) # remove small growth trees
 # Remove models that failed to model at least 97.5% of total growth using LG5.pred. Indicates that model fit poorly
-percent_growth_one <- subset(percent_growth, dbh_growth_percent_cummulative >= .975) # Find tags that reach ~100% growth
-unique(percent_growth_one$tag_year) # Check how many tags meet this req
+#percent_growth_one <- subset(percent_growth, dbh_growth_percent_cummulative >= .975) # Find tags that reach ~100% growth
+#unique(percent_growth_one$tag_year) # Check how many tags meet this req
 # ENTRIES REMOVED IN THIS STEP
-percent_growth_low <- percent_growth[!(percent_growth$tag_year %in% unique(percent_growth_one$tag_year)), ]
-SCBI_below99 <- unique(percent_growth_low$tag_year)
-wood_pheno_removed <- Wood_pheno_table_scbi[Wood_pheno_table_scbi$tag_year %in% SCBI_below99, ]
-wood_pheno_removed <- subset(wood_pheno_removed, perc == .25)
-count(wood_pheno_removed, sp)
-ggplot(wood_pheno_removed, aes(x = dbh, group = sp, fill = sp)) +
-  geom_histogram(position = "dodge")
-ggplot(Wood_pheno_table_scbi, aes(x = dbh, group = sp, fill = sp)) +
-  geom_histogram(position = "dodge")
-
-hist(wood_pheno_removed$year)
-LG5_parameter_values_removed_99_scbi <- LG5_parameter_values_scbi[LG5_parameter_values_scbi$tag_year %in% SCBI_below99, ]
-hist(LG5_parameter_values_scbi$ML_value)
-hist(LG5_parameter_values_removed_99_scbi$ML_value)
-
+# percent_growth_low <- percent_growth[!(percent_growth$tag_year %in% unique(percent_growth_one$tag_year)), ]
+# SCBI_below99 <- unique(percent_growth_low$tag_year)
+# wood_pheno_removed <- Wood_pheno_table_scbi[Wood_pheno_table_scbi$tag_year %in% SCBI_below99, ]
+# wood_pheno_removed <- subset(wood_pheno_removed, perc == .25)
+# count(wood_pheno_removed, sp)
+# ggplot(wood_pheno_removed, aes(x = dbh, group = sp, fill = sp)) +
+#   geom_histogram(position = "dodge")
+# ggplot(Wood_pheno_table_scbi, aes(x = dbh, group = sp, fill = sp)) +
+#   geom_histogram(position = "dodge")
+#
+# hist(wood_pheno_removed$year)
+# LG5_parameter_values_removed_99_scbi <- LG5_parameter_values_scbi[LG5_parameter_values_scbi$tag_year %in% SCBI_below99, ]
+# hist(LG5_parameter_values_scbi$ML_value)
+# hist(LG5_parameter_values_removed_99_scbi$ML_value)
+#
 # Subset main DF
 percent_growth <- percent_growth[(percent_growth$tag_year %in% unique(percent_growth_one$tag_year)), ] # Remove tags with <97.5% growth
 
@@ -306,7 +375,7 @@ SCBI_na <- unique(percent_growth_na$tag_year)
 percent_growth <- percent_growth[!(is.na(percent_growth$b)),]
 
 ## Check for patterns in removed trees ----
-removed_tagyears <- c(SCBI_badpeak_DP, SCBI_badpeak_RP, SCBI_below99, SCBI_highgrowth_DP, SCBI_highgrowth_RP, SCBI_smallgrowth)
+removed_tagyears <- c(SCBI_badpeak_DP, SCBI_badpeak_RP, SCBI_highgrowth_DP, SCBI_highgrowth_RP, SCBI_smallgrowth)
 removed_trees <- Wood_pheno_table_scbi[Wood_pheno_table_scbi$tag_year %in% removed_tagyears, ]
 removed_trees <- subset(removed_trees, perc == .25)
 hist(removed_trees$dbh)
@@ -369,6 +438,7 @@ wood_gone<- subset(wood_gone, perc == .25)
 
 Wood_pheno_table_scbi <- Wood_pheno_table_scbi[Wood_pheno_table_scbi$tag_year %in% unique(percent_growth$tag_year), ]
 tot_growth <- distinct(percent_growth[, c(3, 16)], .keep_all = TRUE)
+Wood_pheno_table_scbi$tag_year <- as.character(Wood_pheno_table_scbi$tag_year)
 Wood_pheno_table_scbi <- left_join(Wood_pheno_table_scbi, tot_growth, by = "tag_year")
 # unitag <- unique(Wood_pheno_table_scbi)
 
@@ -399,7 +469,7 @@ rel_growth_scbi
 #       width = fig_width, height = fig_width / 2)
 
 
-
+#Instead of removing rows prior to a, can you make them NA, then change NA's to 0 here?
 fig3_scbi <- ggplot(percent_growth, aes(x = doy, y = dbh_growth_percent_cummulative, group = tag_year, col = wood_type)) +
   geom_line(alpha = 0.2) +
   scale_y_continuous(labels = percent) +
@@ -411,10 +481,11 @@ fig3_scbi
 
 # Harvard Forest ---------------------------------------------------------------
 ## Load up percent growth DF ----
-sd <- 2
+
 Wood_pheno_table_hf <- read_csv("Data/dendrobands/HF/modeled/Wood_pheno_table_HarvardForest_RAW.csv") %>%
   # Keep only RP and DP for now
-  filter(wood_type != "other") %>%
+  filter(wood_type != "other",
+         year != 1998) %>%
   # Rename ring porous to not have a space
   mutate(wood_type = ifelse(wood_type == "ring porous", "ring-porous", wood_type))
 
@@ -435,7 +506,7 @@ percent_growth <- Wood_pheno_table_hf %>%
   distinct() %>%
   left_join(LG5_parameter_values_hf, by = c("site_tag", "year")) %>%
   group_by(site_tag, year) %>%
-  mutate(doy = list(seq(from = 1, to = 365, by = 1))) %>%
+  mutate(doy = list(seq(from = 0, to = 365, by = 1))) %>%
   unnest_longer(doy) %>%
   group_by(tag_year) %>%
   mutate(
@@ -452,60 +523,125 @@ Wood_pheno_table_hf$tag_year <- paste0(Wood_pheno_table_hf$tag, Wood_pheno_table
 
 LG5_parameter_values_hf$tag_year <- paste0(LG5_parameter_values_hf$tag, LG5_parameter_values_hf$year)
 
-#Remove tag years where DOY% variable is >SD away from mean
-means <- aggregate(Wood_pheno_table_hf$DOY, by = list(Wood_pheno_table_hf$perc, Wood_pheno_table_hf$wood_type), FUN = mean)
-SD <- aggregate(Wood_pheno_table_hf$DOY, by = list(Wood_pheno_table_hf$perc, Wood_pheno_table_hf$wood_type), FUN = sd)
+#New DOY variables
+
+# percs_new <- data.frame(NULL)
+# for(i in 1:length(unique(percent_growth$tag_year))){
+#   try_df <-percent_growth[percent_growth$tag_year %in% unique(percent_growth$tag_year)[i],]
+#   try_df$perc <- seq(1,365,1)
+#
+#   for (p in c(.25, .50, .75)) {
+#     try <- try_df$doy[which(abs(try_df$dbh - (try_df$a + try_df$dbh_total_growth*p)) == min(abs(try_df$dbh - (try_df$a + try_df$dbh_total_growth*p))))]
+#     try_df$perc[try] <- p # assign the number to the value found above
+#     percs_new <- rbind(percs_new, try_df)
+#   }
+# }
+#
+# percs_new_sub <- percs_new[percs_new$perc %in% c(0.05, 0.25,0.50,0.75),]
+# percs_new_sub$tag_year_perc <- paste0(percs_new_sub$tag_year, percs_new_sub$perc)
+# percs_new_sub <- percs_new_sub[!(duplicated(percs_new_sub$tag_year_perc)),]
+# percs_new_sub <- percs_new_sub[,c(23,16)]
+#
+# Wood_pheno_table_hf$tag_year_perc <- paste0(Wood_pheno_table_hf$tag_year, Wood_pheno_table_hf$perc)
+# Wood_pheno_table_hf <- left_join(Wood_pheno_table_hf, percs_new_sub, by = "tag_year_perc")
+#
+# write.csv(Wood_pheno_table_hf, file = "data/dendrobands/HF/modeled/Wood_table_hf_updated.csv")
+
+#Add start of growth (5%)
+# percs_new <- data.frame(NULL)
+# for(i in 1:length(unique(percent_growth$tag_year))){
+#   try_df <-percent_growth[percent_growth$tag_year %in% unique(percent_growth$tag_year)[i],]
+#   try_df$perc <- seq(1,365,1)
+#
+#   for (p in c(.05)) {
+#     try <- try_df$doy[which(abs(try_df$dbh - (try_df$a + try_df$dbh_total_growth*p)) == min(abs(try_df$dbh - (try_df$a + try_df$dbh_total_growth*p))))]
+#     try_df$perc[try] <- p # assign the number to the value found above
+#     percs_new <- rbind(percs_new, try_df)
+#     percs_new <- percs_new[percs_new$perc %in% 0.05,]
+#
+#       }
+# }
+#
+# percs_new_sub <- percs_new[percs_new$perc %in% 0.05,]
+# percs_new_sub$tag_year_perc <- paste0(percs_new_sub$tag_year, percs_new_sub$perc)
+# percs_new_sub <- percs_new_sub[!(duplicated(percs_new_sub$tag_year_perc)),]
+# percs_new_sub <- percs_new_sub[,c(3,23,16)]
+#
+# Wood_pheno_table_hf <- read_csv("Data/dendrobands/HF/modeled/Wood_table_hf_updated.csv")
+# Wood_pheno_table_hf <- Wood_pheno_table_hf[,-1]
+#
+# new_wood_table <- data.frame(NULL)
+# for(i in 1:nrow(percs_new_sub)){
+# wood_sub <- Wood_pheno_table_hf[Wood_pheno_table_hf$tag_year %in% percs_new_sub$tag_year[i],]
+# new_row <- wood_sub[1,]
+# new_row$perc <- 0.05
+# new_row$doy <- percs_new_sub[i,]$doy
+# wood_sub <- rbind(wood_sub, new_row)
+# new_wood_table <- rbind(new_wood_table,wood_sub)
+# }
+#
+# write.csv(new_wood_table, file = "data/dendrobands/HF/modeled/Wood_table_hf_updated.csv")
+#
+##############
+#5994 -> 4254 =
+Wood_pheno_table_hf <- read_csv("Data/dendrobands/HF/modeled/Wood_table_hf_updated.csv")
+Wood_pheno_table_hf <- Wood_pheno_table_hf[,-1]
+Wood_pheno_table_hf <- Wood_pheno_table_hf[!(Wood_pheno_table_hf$perc %in% 0.05),]
+#Remove tag years where doy% variable is >SD away from mean - HERE -===---==--+++__
+Wood_pheno_table_hf <- Wood_pheno_table_hf[!(is.na(Wood_pheno_table_hf$doy)),]
+means <- aggregate(Wood_pheno_table_hf$doy, by = list(Wood_pheno_table_hf$perc, Wood_pheno_table_hf$wood_type), FUN = mean)
+SD <- aggregate(Wood_pheno_table_hf$doy, by = list(Wood_pheno_table_hf$perc, Wood_pheno_table_hf$wood_type), FUN = sd)
 names(SD) <- c("Group.1", "Group.2", "sd")
 means <- left_join(means,SD)
 names(means) <- c("perc", "wood_type", "mean", "SD")
 
 Wood_pheno_table_hf <- left_join(Wood_pheno_table_hf, means, by = c("perc","wood_type"))
 
-Wood_pheno_table_hf$rm <- ifelse(Wood_pheno_table_hf$DOY > Wood_pheno_table_hf$mean+sd*Wood_pheno_table_hf$SD | Wood_pheno_table_hf$DOY < Wood_pheno_table_hf$mean-sd*Wood_pheno_table_hf$SD, "rm", "keep")
+Wood_pheno_table_hf$rm <- ifelse(Wood_pheno_table_hf$doy > Wood_pheno_table_hf$mean+sd*Wood_pheno_table_hf$SD | Wood_pheno_table_hf$doy < Wood_pheno_table_hf$mean-sd*Wood_pheno_table_hf$SD, "rm", "keep")
 Wood_pheno_table_hf <- Wood_pheno_table_hf[Wood_pheno_table_hf$rm %in% "keep",]
 perc_check <- aggregate(Wood_pheno_table_hf$perc, by = list(Wood_pheno_table_hf$tag_year), FUN = sum)
-perc_check <- perc_check[perc_check$x == 1.5,]
+perc_check <- perc_check[perc_check$x == 1.50,]
 Wood_pheno_table_hf <- Wood_pheno_table_hf[Wood_pheno_table_hf$tag_year %in% perc_check$Group.1,]
 
 percent_growth <- percent_growth[percent_growth$tag_year %in% Wood_pheno_table_hf$tag_year,]
-
-#Remove years where raw measures past DOY 250 were >20% of total growth
-#all_stems <- read_csv("Data/dendrobands/SCBI/raw_data/all_stems.csv")
-all_stems <- read_csv("Data/dendrobands/HF/raw_data/HarvardDendroband_cleaned.csv")
-library(lubridate)
-all_stems$date <- as.Date(all_stems$date, format = "%m/%d/%Y")
-all_stems$year <- year(all_stems$date)
-
-all_stems$tag_year <- paste0(all_stems$plot,all_stems$tag, all_stems$year)
-min <- aggregate(all_stems$`Diameter (cm)`, by = list(all_stems$tag_year), FUN = min)
-names(min) <- c("tag_year","min")
-max <- aggregate(all_stems$`Diameter (cm)`, by = list(all_stems$tag_year), FUN = max)
-names(max) <- c("tag_year","max")
-raw_total <- left_join(min, max)
-raw_total$tot <- raw_total$max-raw_total$min
-raw_total <- raw_total[,c(-2,-3)]
-all_stems <- left_join(all_stems, raw_total, by = "tag_year")
-
-new_stems <- data.frame(NULL)
-
-tag_years <- unique(all_stems$tag_year)
-
-for(i in 1:length(tag_years)){
-
-  sub_stems <- all_stems[all_stems$tag_year %in% tag_years[i],]
-  sub_stems$growth <-  sub_stems$`Diameter (cm)` - lag(sub_stems$`Diameter (cm)`)
-  new_stems <- rbind(new_stems, sub_stems)
-
-}
-new_stems$doy <- yday(new_stems$date)
-late_growth <- new_stems[new_stems$doy >= 250,]
-late_growth$perc_growth <- late_growth$growth/late_growth$tot
-late_growth_rm <- late_growth[late_growth$perc_growth > 0.20,]
-
-percent_growth <- percent_growth[!(percent_growth$tag_year %in% late_growth_rm$tag_year),]
-Wood_pheno_table_hf <-Wood_pheno_table_hf[!(Wood_pheno_table_hf$tag_year %in% late_growth_rm$tag_year),]
-
-#Remove years where first measurement occured after DOY 146 ~May (start date in 1998)
+#
+#Remove years where raw measures past doy 250 were >20% of total growth
+# #all_stems <- read_csv("Data/dendrobands/SCBI/raw_data/all_stems.csv")
+# all_stems <- read_csv("Data/dendrobands/HF/raw_data/HarvardDendroband_cleaned.csv")
+# library(lubridate)
+# all_stems$date <- as.Date(all_stems$date, format = "%m/%d/%Y")
+# all_stems$year <- year(all_stems$date)
+#
+# all_stems$tag_year <- paste0(all_stems$plot,all_stems$tag, all_stems$year)
+# min <- aggregate(all_stems$`Diameter (cm)`, by = list(all_stems$tag_year), FUN = min)
+# names(min) <- c("tag_year","min")
+# max <- aggregate(all_stems$`Diameter (cm)`, by = list(all_stems$tag_year), FUN = max)
+# names(max) <- c("tag_year","max")
+# raw_total <- left_join(min, max)
+# raw_total$tot <- raw_total$max-raw_total$min
+# raw_total <- raw_total[,c(-2,-3)]
+# all_stems <- left_join(all_stems, raw_total, by = "tag_year")
+#
+# new_stems <- data.frame(NULL)
+#
+# tag_years <- unique(all_stems$tag_year)
+#
+# for(i in 1:length(tag_years)){
+#
+#   sub_stems <- all_stems[all_stems$tag_year %in% tag_years[i],]
+#   sub_stems$growth <-  sub_stems$`Diameter (cm)` - lag(sub_stems$`Diameter (cm)`)
+#   new_stems <- rbind(new_stems, sub_stems)
+#
+# }
+# new_stems$doy <- yday(new_stems$date)
+# late_growth <- new_stems[new_stems$doy >= 250,]
+# late_growth$perc_growth <- late_growth$growth/late_growth$tot
+# late_growth_rm <- late_growth[late_growth$perc_growth > 0.30,]
+#
+# percent_growth <- percent_growth[!(percent_growth$tag_year %in% late_growth_rm$tag_year),]
+# Wood_pheno_table_hf <-Wood_pheno_table_hf[!(Wood_pheno_table_hf$tag_year %in% late_growth_rm$tag_year),]
+#
+# #Remove years where first measurement occured after doy 126 ~May (start date in 2001)
 all_stems <- read_csv("Data/dendrobands/HF/raw_data/HarvardDendroband_cleaned.csv")
 library(lubridate)
 all_stems$date <- as.Date(all_stems$date, format = "%m/%d/%Y")
@@ -513,8 +649,12 @@ all_stems$year <- year(all_stems$date)
 all_stems$doy <- yday(all_stems$date)
 all_stems$tag_year <- paste0(all_stems$plot,all_stems$tag, all_stems$year)
 
+#firsts <- aggregate(all_stems$doy, by = list(all_stems$tag_year), FUN = min)
 #ID where latest spring survey occured
-latest_day <- 146
+latest_day <- 126
+
+# Wood_pheno_table_hf <- Wood_pheno_table_hf[!(Wood_pheno_table_hf$year %in% 1998),]
+# aggregate(Wood_pheno_table_hf$doy, by = list(Wood_pheno_table_hf$perc), FUN = mean)#25 = 159.4, 50 = 178.5, 75 = 199
 
 #remove stem years where first survey was missed
 library(lubridate)
@@ -529,12 +669,45 @@ late_starts <- all_stems[all_stems$tag_year %in% start_days$Group.1,]
 percent_growth <- percent_growth[!(percent_growth$tag_year %in% late_starts$tag_year),]
 Wood_pheno_table_hf <- Wood_pheno_table_hf[!(Wood_pheno_table_hf$tag_year %in% late_starts$tag_year),]
 
-######################################################
+#Subset percent growth to only contain modeled growth in b-a
+percent_growth <- subset(percent_growth, percent_growth$dbh > percent_growth$a & percent_growth$dbh < percent_growth$b)
 
+######################################################
+#percent_growth <- percent_growth[!(percent_growth$year %in% 1999),]
 ## Clean the data ----
 # Break into RP and DP
 percent_growth_RP <- subset(percent_growth, wood_type == "ring-porous")
 
+# first_days <- aggregate(percent_growth_RP$doy, by = list(percent_growth_RP$tag_year), FUN= min)
+# names(first_days) <- c("tag_year", "start")
+# mean(first_days$start) + (2*sd(first_days$start))
+# plot(first_days$start)
+#
+# #Wood_pheno_table_hf_rp <- Wood_pheno_table_hf[Wood_pheno_table_hf$wood_type %in% "ring-porous",]
+# # start <- Wood_pheno_table_hf_rp[Wood_pheno_table_hf_rp$perc %in% 0.05,]
+# # start <- start[,c(14,16)]
+# # names(start) <- c("tag_year", "05")
+#
+# twentyfive <- Wood_pheno_table_hf[Wood_pheno_table_hf$perc %in% 0.25,]
+# twentyfive <- twentyfive[,c(14,16)]
+# names(twentyfive) <- c("tag_year", "25")
+#
+# fifty <- Wood_pheno_table_hf[Wood_pheno_table_hf$perc %in% 0.50,]
+# fifty <- fifty[,c(14,16)]
+# names(fifty) <- c("tag_year", "50")
+#
+# seventyfive <- Wood_pheno_table_hf[Wood_pheno_table_hf$perc %in% 0.75,]
+# seventyfive <- seventyfive[,c(14,16)]
+# names(seventyfive) <- c("tag_year", "75")
+#
+# first_days <- left_join(start, twentyfive, by = "tag_year")
+# first_days <- left_join(first_days, fifty, by = "tag_year")
+# first_days <- left_join(first_days, seventyfive, by = "tag_year")
+#
+# library(reshape2)
+# first_days <- melt(first_days, id.vars = "tag_year")
+# HF_RP <- ggplot(first_days, aes( x = tag_year, y = value, color = variable)) +
+#   geom_point()
 # Remove models with single days growth >2 SD away from mean (this is abnormal for RP trees in our study)
 maxgrowthrate <- aggregate(percent_growth_RP$dbh_growth_percent, by = list(percent_growth_RP$tag_year), FUN = max)
 names(maxgrowthrate) <- c("tag_year", "rate") # Maximum growth rate of each tree
@@ -555,9 +728,9 @@ hist(maxgrowthrate_removed$rate)
 percent_growth_RP <- percent_growth_RP[!(percent_growth_RP$tag_year %in% unique(high_growthday$tag_year)), ]
 
 # Remove models with peak growth outside of expected season. IE, winter growth peaks
-ratedoy <- percent_growth_RP[percent_growth_RP$dbh_growth_percent %in% maxgrowthrate$rate, ] # DOY where max growth occured
+ratedoy <- percent_growth_RP[percent_growth_RP$dbh_growth_percent %in% maxgrowthrate$rate, ] # doy where max growth occured
 keeptags <- NULL
-for (i in 1998:2003) {
+for (i in 1999:2003) {
   year <- subset(ratedoy, year == i)
   upper <- (mean(year$doy) + (sd * sd(year$doy)))
   lower <- (mean(year$doy) - (sd * sd(year$doy)))
@@ -584,6 +757,36 @@ percent_growth_RP <- percent_growth_RP[percent_growth_RP$tag_year %in% keeptags,
 #Diffuse-porous - Same deal
 percent_growth_DP <- subset(percent_growth, wood_type == "diffuse-porous")
 
+# first_days <- aggregate(percent_growth_DP$doy, by = list(percent_growth_DP$tag_year), FUN= min)
+# names(first_days) <- c("tag_year", "start")
+# mean(first_days$start) + (2*sd(first_days$start))
+# plot(first_days$start)
+
+# Wood_pheno_table_hf_dp <- Wood_pheno_table_hf[Wood_pheno_table_hf$wood_type %in% "diffuse-porous",]
+# start <- Wood_pheno_table_hf_dp[Wood_pheno_table_hf_dp$perc %in% 0.05,]
+# start <- start[,c(14,16)]
+# names(start) <- c("tag_year", "05")
+#
+# twentyfive <- Wood_pheno_table_hf[Wood_pheno_table_hf$perc %in% 0.25,]
+# twentyfive <- twentyfive[,c(14,16)]
+# names(twentyfive) <- c("tag_year", "25")
+#
+# fifty <- Wood_pheno_table_hf[Wood_pheno_table_hf$perc %in% 0.50,]
+# fifty <- fifty[,c(14,16)]
+# names(fifty) <- c("tag_year", "50")
+#
+# seventyfive <- Wood_pheno_table_hf[Wood_pheno_table_hf$perc %in% 0.75,]
+# seventyfive <- seventyfive[,c(14,16)]
+# names(seventyfive) <- c("tag_year", "75")
+#
+# first_days <- left_join(start, twentyfive, by = "tag_year")
+# first_days <- left_join(first_days, fifty, by = "tag_year")
+# first_days <- left_join(first_days, seventyfive, by = "tag_year")
+#
+# library(reshape2)
+# first_days <- melt(first_days, id.vars = "tag_year")
+# HF_DP <- ggplot(first_days, aes( x = tag_year, y = value, color = variable)) +
+#   geom_point()
 # Remove models with single days > 2% growth (this is abnormal for RP trees in our study)
 maxgrowthrate <- aggregate(percent_growth_DP$dbh_growth_percent, by = list(percent_growth_DP$tag_year), FUN = max)
 names(maxgrowthrate) <- c("tag_year", "rate") # Maximum growth rate of each tree
@@ -602,9 +805,9 @@ hist(wood_pheno_removed$dbh)
 percent_growth_DP <- percent_growth_DP[!(percent_growth_DP$tag_year %in% unique(high_growthday$tag_year)), ]
 
 # Remove models with peak growth outside of expected season. IE, winter growth peaks
-ratedoy <- percent_growth_DP[percent_growth_DP$dbh_growth_percent %in% maxgrowthrate$rate, ] # DOY where max growth occured
+ratedoy <- percent_growth_DP[percent_growth_DP$dbh_growth_percent %in% maxgrowthrate$rate, ] # doy where max growth occured
 keeptags <- NULL
-for (i in 1998:2003) {
+for (i in 1999:2003) {
   year <- subset(ratedoy, year == i)
   upper <- (mean(year$doy) + (sd * sd(year$doy)))
   lower <- (mean(year$doy) - (sd * sd(year$doy)))
@@ -644,20 +847,20 @@ hist(wood_pheno_removed$dbh)
 percent_growth <- subset(percent_growth, dbh_total_growth >= 0.05) # remove small growth trees
 
 
-# Remove models that failed to model at least 99% of total growth using LG5.pre
-percent_growth_one <- subset(percent_growth, dbh_growth_percent_cummulative >= .975) # Find tags that reach ~100% growth
-unique(percent_growth_one$tag_year) # Check how many we have
-# ENTRIES REMOVED IN THIS STEP
-percent_growth_low <- percent_growth[!(percent_growth$tag_year %in% unique(percent_growth_one$tag_year)), ]
-HF_below99 <- unique(percent_growth_low$tag_year)
-wood_pheno_removed <- Wood_pheno_table_hf[Wood_pheno_table_hf$tag_year %in% HF_below99, ]
-wood_pheno_removed <- subset(wood_pheno_removed, perc == .25)
-count(wood_pheno_removed, sp)
-hist(wood_pheno_removed$dbh)
-LG5_parameter_values_removed_99_hf <- LG5_parameter_values_hf[LG5_parameter_values_hf$tag_year %in% HF_below99, ]
-
-# Subset main DF
-percent_growth <- percent_growth[(percent_growth$tag_year %in% unique(percent_growth_one$tag_year)), ] # Remove tags with <99% growth
+# # Remove models that failed to model at least 99% of total growth using LG5.pre
+# percent_growth_one <- subset(percent_growth, dbh_growth_percent_cummulative >= .975) # Find tags that reach ~100% growth
+# unique(percent_growth_one$tag_year) # Check how many we have
+# # ENTRIES REMOVED IN THIS STEP
+# percent_growth_low <- percent_growth[!(percent_growth$tag_year %in% unique(percent_growth_one$tag_year)), ]
+# HF_below99 <- unique(percent_growth_low$tag_year)
+# wood_pheno_removed <- Wood_pheno_table_hf[Wood_pheno_table_hf$tag_year %in% HF_below99, ]
+# wood_pheno_removed <- subset(wood_pheno_removed, perc == .25)
+# count(wood_pheno_removed, sp)
+# hist(wood_pheno_removed$dbh)
+# LG5_parameter_values_removed_99_hf <- LG5_parameter_values_hf[LG5_parameter_values_hf$tag_year %in% HF_below99, ]
+#
+# # Subset main DF
+# percent_growth <- percent_growth[(percent_growth$tag_year %in% unique(percent_growth_one$tag_year)), ] # Remove tags with <99% growth
 
 ### Messing around ###
 # percent_growth$check <- 1
@@ -758,3 +961,6 @@ fig3_hf <- ggplot(percent_growth, aes(x = doy, y = dbh_growth_percent_cummulativ
   scale_y_continuous(labels = percent) +
   labs(x = "DOY", y = "Cummulative percent of total growth", title = "Cummulative percent of total (modeled) growth in diameter")
 fig3_hf
+
+library(patchwork)
+(SCBI_RP + SCBI_DP) / (HF_RP + HF_DP)
