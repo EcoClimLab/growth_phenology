@@ -105,7 +105,7 @@ for (w in unique(Wood_pheno_table$wood_type)) {
     )
 
     MassRand <- randwin(
-      repeats = 500,
+      repeats = 250,
       xvar = list(Temp = climate$TMAX),
       cdate = climate$DATE,
       bdate = biodata$date,
@@ -138,7 +138,7 @@ for (w in unique(Wood_pheno_table$wood_type)) {
     names(dffinal) <- names(df)
     dffinal <- rbind(dffinal, df)
 
-    png(filename = paste("Results/Climwin_results/Weekly/Harvard Forest/","HF", w, j, ".png", sep = "_"), width = 10, height = 8, units = "in", res = 300) # add w
+    png(filename = paste("results/Climwin_results/Weekly/Harvard Forest/","HF", w, j, ".png", sep = "_"), width = 10, height = 8, units = "in", res = 300) # add w
     plotalloutput <- plotall(
       dataset = MassOutput,
       datasetrand = MassRand,
