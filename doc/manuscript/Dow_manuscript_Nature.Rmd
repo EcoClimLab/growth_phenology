@@ -313,15 +313,18 @@ If a majority of the data points fell into this class within a tree-year, the en
 
 We fit a five-parameter logistic growth model[@mcmahon_general_2015] to dendrometer band data from each tree-year to define stem growth milestones and growth rates (Fig. `r schematic_summary`). In particular, we model the observed diameter at breast height (DBH) on a given day of the year (DOY; *i.e.*, julian days) as: 
 $$ DBH = L + \frac{K - L} { 1 + 1/\theta \cdot exp[-r(DOY - DOY_{ip}) / \theta)] ^ \theta}$$ 
-Here, $L$ and $K$ are lower and upper asymptotes of the model, corresponding to DBH at the beginning and end of the year, respectively. 
+Here, $L$ and $K$ are lower and upper asymptotes of the model. 
 $DOY_{ip}$ is the day of year where the inflection point in growth rate occurs,
 $r$ shapes the slope of the curve at the inflection point,
 and $\theta$ is a tuning parameter controlling the slope of the curve toward the upper asymptote.
 This allows an asymetric fit to the data, where the onset of growth can be estimated independent of the cessation of growth.
 The DOY on which maximum growth occurs, $DOY_{g_{max}}$ (Fig. `r schematic_summary`), occurs on $DOY_{ip}$ when $\theta = 1$.
+The model outputs two additional variables, $a$ and $b$, which represent the beginning and end DBH in each model year. We used the first and last manual dendrometer band measurements as starting points to calculate these two variables. With this method, initial measurements too late in the growing season which miss the start of the growing season can cause incorrect estimations of $a$ and $b$. The 1998 survey at Harvard Forest recorded first measurements on May 26, which is less than 2 weeks away from the average DOY25 at this site. This late start made the calculation of timing and total growth variables unreliable, so we removed tree years in 1998 from our analysis. 
 The model was fit in R v4.0 using the functions developed in the *Rdendrom* package[@mcmahon_general_2015]. These functions take the time-series of manual dendrometer band measurements and return maximum-likelihood optimized values of the above five parameters that best predict DBH for each day of year. 
 An advantage of this approach is that short-term shrinkage and swelling associated with rain events [@mcmahon_general_2015; @herrmann_tree_2016] and measurement errors show up as residual variation and do not unduly influence the parameters of interest. 
 Having fit the model for each band-year of data, we then modeled DBH using these optimal parameter values in our logistic growth model and extracted the intra-annual growth variables of interest (Fig. `r schematic_summary`). 
+
+
 
 
 After fitting the growth model, we removed tree-years with poor fits. 
@@ -329,12 +332,10 @@ Models were judged to be poorly fit if certain modeled growth characteristics fe
 Modeled fits for tree-years were removed under five conditions:
 (1) single day growth rates were $\ge 2$ standard deviations away from the mean for each xylem architecture (SCBI = 2, Harvard Forest = 34); 
 (2) $DOY_{ip}$ was $\ge 2$ standard deviations away from the mean for its xylem architecture group, year, and site (SCBI = 53, Harvard Forest = 106); 
-(3) tree-years with small or negligible total growth ($\Delta DBH$ $\le 0.02$ mm; SCBI = 0, Harvard Forest = 66); 
-(4) model fit predicted total yearly growth to take longer than 365 days, indicating poor model fit (SCBI = 150, Harvard Forest = 199); 
-(5) models with unexplained sharp spikes in growth rate (SCBI = 0, Harvard Forest = 3); 
-and (6) poorly fit models that did not meet any of the above criteria (SCBI = 2, Harvard Forest = 0).
-At Harvard Forest the tag years removed through this method were proportional to the original sample size, indicating that no species or size class was disproportionately removed compared to others. 
-At SCBI, a higher proportion of ring-porous trees were removed, the majority falling under condition 4.
+(3) tree-years with small or negligible total growth ($\Delta DBH$ $\le 0.05$ mm; SCBI = 0, Harvard Forest = 66); 
+(4) models with unexplained sharp spikes in growth rate (SCBI = 0, Harvard Forest = 3); 
+and (5) poorly fit models that did not meet any of the above criteria (SCBI = 2, Harvard Forest = 0).
+At *both sites* the tag years removed through this method were proportional to the original sample size, indicating that no species or size class was disproportionately removed compared to others. 
 This process was repeated using 2.5 and 3 standard deviations and the results of analyses were not qualitatively different. 
 
 <!-- Leaf phenology -->
