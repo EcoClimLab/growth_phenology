@@ -32,7 +32,7 @@ objects_to_keep <- c(
   "fig6_RP_mr", "fig6_DP_mr", "fig6_RP_mr_hf", "fig6_DP_mr_hf",
   "fig6_RP_tot", "fig6_DP_tot", "fig6_RP_tot_hf", "fig6_DP_tot_hf",
   "woodtable","Wood_pheno_table_RP","Wood_pheno_table_DP","Wood_pheno_table_RP_hf","Wood_pheno_table_DP_hf", "woodtable_hf",
-  "predictions_RP", "predictions_DP"
+  "predictions_RP", "predictions_DP", "climwindows"
 )
 
 # Start timer
