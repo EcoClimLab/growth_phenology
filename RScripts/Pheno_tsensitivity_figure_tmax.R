@@ -737,7 +737,7 @@ weatherdata_hf <-
 #
 # #TMAX
 climwindows <-
-  weekly_climwin_results_HF_TMAX <- read_csv("results/Climwin_results/Weekly/Harvard Forest/weekly_climwin_results_HF_TMAX.csv") %>%
+  weekly_climwin_results_HF_TMAX <- read.csv("results/Climwin_results/Weekly/Harvard Forest/weekly_climwin_results_HF_TMAX.csv") %>%
   filter(wood_type != "other") %>%
   mutate(
     median_windowopendate = as.Date(median_windowopendate),
@@ -859,7 +859,7 @@ climwindows$date <- paste0(climwindows$monthopen, "/", climwindows$dayopen, "-",
 
 #TMAX
 climwinmeans_rp_hf <- weatherdata_hf %>%
-  filter(DOY %in% c(70:140)) %>% # March 26 - May 13
+  filter(DOY %in% c(climwindows[4,13]:climwindows[4,14])) %>% # March 26 - May 13
   group_by(year) %>%
   summarize(climwinmean = mean(airtmax)) %>%
   mutate(wood_type = "ring-porous")
@@ -873,7 +873,7 @@ climwinmeans_rp_hf <- weatherdata_hf %>%
 
 #TMAX
 climwinmeans_dp_hf <- weatherdata_hf %>%
-  filter(DOY %in% c(126:161)) %>% # March 19 - May 13
+  filter(DOY %in% c(climwindows[1,13]:climwindows[1,14])) %>% # March 19 - May 13
   group_by(year) %>%
   summarize(climwinmean = mean(airtmax)) %>%
   mutate(wood_type = "diffuse-porous")
