@@ -8,7 +8,7 @@ $g_{max}$  (mm/day),0.046,0.061,0.03,0.025
 $L_{pgs}$,56.5,35.8,54.5,35.1
 $\Delta DBH$ (mm/yr),4.7,3.6,3.1,1.4
 Greenup,101 (April 11),,115 (April 25),
-Mid-greenup,120 (April 30),,137 (May 17),
+Mid-greenup,121 (May 1),,137 (May 17),
 Peak,173 (June 22),,182 (July 1),
 Senescence,215 (Aug. 3),,218 (Aug. 6),
 Stem growth:,,,,
@@ -17,7 +17,7 @@ $DOY_{50}$,1.5 $\pm$ 0.90,3.5 $\pm$ 1.0,5 $\pm$ 1.7,7.3 $\pm$ 1.5
 $DOY_{75}$,1.1 $\pm$ 1.6,3.6 $\pm$ 1.5,7.2 $\pm$ 2.7,6.6 $\pm$ 3.1
 $DOY_{g_{max}}$,1.6 $\pm$ 0.89,3.5 $\pm$ 1.0,3.3 $\pm$ 1.8,6.7 $\pm$ 1.7
 Canopy foliage:,,,,
-Greenup,4.5 $\pm$ 1.15,,2.4 $\pm$ 1.6,
-Mid-greenup,4.07 $\pm$ 0.74,,3.0 $\pm$ 0.92,
-Peak,3.67 $\pm$ 1.87,,0.81 $\pm$ 1.1,
-Senescence,2.76 $\pm$ 2.34,,1.1 $\pm$ 1.5,
+Greenup,3.41 $\pm$ 1.29,,2.4 $\pm$ 1.51,
+Mid-greenup,3.39 $\pm$ 0.86,,3.16 $\pm$ 0.84,
+Peak,4.21 $\pm$ 1.70,,1.47 $\pm$ 1.02,
+Senescence,3.85 $\pm$ 2.13,,0.17 $\pm$ 1.53,

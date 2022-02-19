@@ -36,7 +36,7 @@ climwindows <-
 
 #Method for identifying correct windows is in Pheno_tsensitivity_figure_tmax.R
 climwinmeans_rp <- weatherdata %>%
-  filter(doy %in% c(71:78)) %>% #April 2 - April 8
+  filter(doy %in% c(70:77)) %>% #April 2 - April 8
   group_by(year) %>%
   summarize(climwinmean = mean(cleantmax)) %>%
   mutate(wood_type = "ring-porous")
@@ -175,11 +175,6 @@ summary(lm(doy75_dp$x~doy75_dp$window_temp))
 #DOY75 -3.563 days/degree C (p = 0.04)
 
 #Add leaf Phenology----
-leaf_phenology <- read_csv("Data/Leaf phenology/leaf_phenology.csv") %>%
-  filter(site == "SCBI")
-aggregates_scbi <- left_join(aggregates_scbi, leaf_phenology, by = "year")
-aggregates_scbi <- aggregates_scbi[complete.cases(aggregates_scbi$los),]
-aggregates_scbi$stanlos <- (aggregates_scbi$los-min(aggregates_scbi$los))/(max(aggregates_scbi$los)-min(aggregates_scbi$los))
 
 g <-  ggplot(aggregates_scbi, aes(x=x, y = as.character(Group.2), group = interaction(Group.1, year), color = stanT, linetype = Group.1))+
   geom_point(size = 3)+
@@ -192,9 +187,10 @@ g
 
 #Leaf phenology
 leaf_phenology <- read_csv("Data/Leaf phenology/leaf_phenology.csv") %>%
-  filter(site == "SCBI")
+  filter(pointid == "SCBI")
 library(reshape2)
-names(leaf_phenology) <- c("site","year","Greenup", "Mid-greenup", "Peak","Senescence","los","tmp")
+names(leaf_phenology) <- c("site","year","Greenup", "Mid-greenup", "Peak","maturity", "Senescence","midgreendown", "tmp","los")
+leaf_phenology <- leaf_phenology[,c(-6,-8)]
 leaf_phenology_melt <- melt(leaf_phenology, id.vars = c("site","year","tmp","los"))
 leaf_phenology_melt$value <- yday(leaf_phenology_melt$value)
 aggregate(leaf_phenology_melt$value, by = list(leaf_phenology_melt$variable), FUN = mean)
@@ -471,13 +467,16 @@ h
 #Leaf phenology plot----
 library(reshape2)
 leaf_phenology <- read_csv("Data/Leaf phenology/leaf_phenology.csv") %>%
-  filter(site == "HF")
+  filter(pointid == "HARV",
+         !(is.na(Greenup)))
 
-leaf_phenology <- leaf_phenology[-3,]
-names(leaf_phenology) <- c("site","year","Greenup", "Mid-greenup", "Peak","Senescence","los","tmp")
+names(leaf_phenology) <- c("site","year","Greenup", "Mid-greenup", "Peak","maturity", "Senescence","midgreendown", "tmp","los")
+leaf_phenology <- leaf_phenology[,c(-6,-8)]
+
 hf_leaf_phenology_melt <- melt(leaf_phenology, id.vars = c("site","year","tmp","los"))
 hf_leaf_phenology_melt$value <- yday(hf_leaf_phenology_melt$value)
 aggregate(hf_leaf_phenology_melt$value, by = list(hf_leaf_phenology_melt$variable), FUN = mean)
+
 #hf_leaf_phenology_melt <- hf_leaf_phenology_melt[hf_leaf_phenology_melt$year %in% c(2018,2010),]
 hf_leaf <- ggplot(hf_leaf_phenology_melt, aes(x=value, y = as.character(variable), group = year, color = tmp))+
   geom_point(size = 3)+
