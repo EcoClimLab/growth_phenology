@@ -457,15 +457,15 @@ percent_growth_hf <- Wood_pheno_table_hf %>%
   )
 
 #EVI2 plots
-scbiEVI2 <- read_csv("Data/Leaf phenology/scbiEVI2.csv")
+scbiEVI2 <- read_csv("Data/Leaf phenology/scbiEVI2Filtered.csv")
 scbiEVI2$year <- year(scbiEVI2$date)
 scbiEVI2$doy <- yday(scbiEVI2$date)
 #SCBI plot
 scbiEVI <- scbiEVI2[scbiEVI2$pointid %in% "SCBI",]
-scbiEVI <- scbiEVI[scbiEVI$BRDF_Albedo_Band_Mandatory_Quality_Band1 %in% 0,]
+#scbiEVI <- scbiEVI[scbiEVI$BRDF_Albedo_Band_Mandatory_Quality_Band1 %in% 0,]
 #HF plot
 hfEVI <- scbiEVI2[scbiEVI2$pointid %in% "HARV",]
-hfEVI <- hfEVI[hfEVI$BRDF_Albedo_Band_Mandatory_Quality_Band1 %in% 0,]
+#hfEVI <- hfEVI[hfEVI$BRDF_Albedo_Band_Mandatory_Quality_Band1 %in% 0,]
 
 png(filename = "doc/manuscript/tables_figures/growth_curves_all.png", width=10, height=10,
     pointsize=12, bg="transparent", units="in", res=600,
