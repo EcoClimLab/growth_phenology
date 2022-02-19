@@ -18,16 +18,16 @@
 # for details). Note that the full QA flag descriptions are included in a separate
 # product, MCD43A2 (https://developers.google.com/earth-engine/datasets/catalog/MODIS_006_MCD43A2).
 #
-# Finally, the tables (scbiPhen and scbiEVI2) used were generated from GEE directly. 
+# Finally, the tables (scbiPhen and scbiEVI2) used were generated from GEE directly.
 # Please see this link for the code: https://code.earthengine.google.com/0b14ff8145db942d54f4ceb1f2bcddc0
 # and this link for the asset: https://code.earthengine.google.com/?asset=users/imcgreg/forestGEOsites
 ## -----------------------------------------------------------------------------
-source("scbi/scbiPhenQA_functions.R")
+source("RScripts/scbiPhenQA_functions.R")
 
-phenFile <- "scbi/scbiPhen.csv"
-phenFileSave <- "scbi/scbiPhenFiltered.csv"
-evi2File <- "scbi/scbiEVI2.csv"
-evi2FileSave <- "scbi/scbiEVI2Filtered.csv"
+phenFile <- "Data/Leaf phenology/scbiPhen.csv"
+phenFileSave <- "Data/Leaf phenology/scbiPhenFiltered.csv"
+evi2File <- "Data/Leaf phenology/scbiEVI2.csv"
+evi2FileSave <- "Data/Leaf phenology/scbiEVI2Filtered.csv"
 
 # 1. Filter phenology data from MCD12Q2
 phen <- filterPhenology(filePath=phenFile, saveFile=TRUE, savePath=phenFileSave)
