@@ -737,7 +737,7 @@ weatherdata_hf <-
 #
 # #TMAX
 climwindows <-
-  weekly_climwin_results_HF_TMAX <- read_csv("results/Climwin_results/Weekly/Harvard Forest/weekly_climwin_results_HF_TMAX.csv") %>%
+  weekly_climwin_results_HF_TMAX <- read.csv("results/Climwin_results/Weekly/Harvard Forest/weekly_climwin_results_HF_TMAX.csv") %>%
   filter(wood_type != "other") %>%
   mutate(
     median_windowopendate = as.Date(median_windowopendate),
