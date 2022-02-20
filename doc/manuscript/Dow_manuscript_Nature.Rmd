@@ -317,7 +317,7 @@ Here, $L$ and $K$ are lower and upper asymptotes of the model.
 $DOY_{ip}$ is the day of year where the inflection point in growth rate occurs,
 $r$ shapes the slope of the curve at the inflection point,
 and $\theta$ is a tuning parameter controlling the slope of the curve toward the upper asymptote.
-This allows an asymetric fit to the data, where the onset of growth can be estimated independent of the cessation of growth.
+This allows an asymmetric fit to the data, where the onset of growth can be estimated independent of the cessation of growth.
 The DOY on which maximum growth occurs, $DOY_{g_{max}}$ (Fig. `r schematic_summary`), occurs on $DOY_{ip}$ when $\theta = 1$.
 The model outputs two additional variables, $a$ and $b$, which represent the beginning and end DBH in each model year. We used the first and last manual dendrometer band measurements as starting points to calculate these two variables. With this method, initial measurements too late in the growing season which miss the start of the growing season can cause incorrect estimations of $a$ and $b$. The 1998 survey at Harvard Forest recorded first measurements on May 26, which is less than 2 weeks away from the average DOY25 at this site. This late start made the calculation of timing and total growth variables unreliable, so we removed tree years in 1998 from our analysis. 
 The model was fit in R v4.0 using the functions developed in the *Rdendrom* package[@mcmahon_general_2015]. These functions take the time-series of manual dendrometer band measurements and return maximum-likelihood optimized values of the above five parameters that best predict DBH for each day of year. 
