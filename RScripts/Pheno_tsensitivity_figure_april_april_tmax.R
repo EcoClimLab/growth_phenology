@@ -338,7 +338,7 @@ fig6_RP_tot <-  ggplot() +
   # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
   stat_lineribbon(data = predictions_tot_RP, aes(x = climwinmean, y = predictions_rstanarm, col = "blue"), .width = .95, alpha = .10,linetype = "solid") +
   stat_lineribbon(data = predictions_tot_RP, aes(x = climwinmean, y = predictions_rstanarm, col = "blue"), .width = 0, alpha = .75 ,linetype = "solid") +
-  geom_point(data = Wood_pheno_table_RP_tot, aes(x = climwinmean, y = tot, col = "blue")) +
+  geom_point(data = Wood_pheno_table_RP_tot, aes(x = climwinmean, y = dbh_total_growth, col = "blue")) +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   scale_color_manual(values = c("blue","blue"))+
   scale_fill_manual(values = c("blue","blue"))+
@@ -356,7 +356,7 @@ fig6_DP_tot <-  ggplot() +
   # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
   stat_lineribbon(data = predictions_tot_DP, aes(x = climwinmean, y = predictions_rstanarm, col = "blue"), .width = .95, alpha = .10, linetype = "solid") +
   stat_lineribbon(data = predictions_tot_DP, aes(x = climwinmean, y = predictions_rstanarm, col = "blue"), .width = 0, alpha = .75, linetype = "solid") +
-  geom_point(data = Wood_pheno_table_DP_tot, aes(x = climwinmean, y = tot, col = "blue")) +
+  geom_point(data = Wood_pheno_table_DP_tot, aes(x = climwinmean, y = dbh_total_growth, col = "blue")) +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   #scale_fill_brewer("purple", "purple") +
   scale_color_manual(values = c("blue","blue"))+
@@ -919,7 +919,7 @@ fig6_RP_tot_hf <-   ggplot() +
   # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
   stat_lineribbon(data = predictions_tot_RP_hf, aes(x = climwinmean, y = predictions_rstanarm, col = "blue"), .width = .95,alpha = .10, linetype = "solid") +
   stat_lineribbon(data = predictions_tot_RP_hf, aes(x = climwinmean, y = predictions_rstanarm, col = "blue"), .width = 0,alpha = .75, linetype = "solid") +
-  geom_point(data = Wood_pheno_table_RP_tot_hf, aes(x = climwinmean, y = tot, col = "blue")) +
+  geom_point(data = Wood_pheno_table_RP_tot_hf, aes(x = climwinmean, y = dbh_total_growth, col = "blue")) +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   #scale_fill_brewer() +
   scale_color_manual(values = c("blue","blue"))+
@@ -937,7 +937,7 @@ fig6_DP_tot_hf <- ggplot() +
   # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
   stat_lineribbon(data = predictions_tot_DP_hf, aes(x = climwinmean, y = predictions_rstanarm, col = "blue"), .width = .95,alpha = .10, linetype = "dashed") +
   stat_lineribbon(data = predictions_tot_DP_hf, aes(x = climwinmean, y = predictions_rstanarm, col = "blue"), .width = 0,alpha = .75, linetype = "dashed") +
-  geom_point(data = Wood_pheno_table_DP_tot_hf, aes(x = climwinmean, y = tot, col = "blue")) +
+  geom_point(data = Wood_pheno_table_DP_tot_hf, aes(x = climwinmean, y = dbh_total_growth, col = "blue")) +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   #scale_fill_brewer() +
   scale_color_manual(values = c("blue","blue"))+
