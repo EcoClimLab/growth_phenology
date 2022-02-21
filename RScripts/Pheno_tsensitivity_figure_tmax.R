@@ -873,7 +873,7 @@ climwinmeans_rp_hf <- weatherdata_hf %>%
 
 #TMAX
 climwinmeans_dp_hf <- weatherdata_hf %>%
-  filter(DOY %in% c(climwindows[1,13]:climwindows[1,13])) %>% # March 19 - May 13
+  filter(DOY %in% c(climwindows[1,13]:climwindows[1,14])) %>% # March 19 - May 13
   group_by(year) %>%
   summarize(climwinmean = mean(airtmax)) %>%
   mutate(wood_type = "diffuse-porous")
