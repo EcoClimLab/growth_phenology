@@ -177,7 +177,8 @@ To test whether spring temperatures consistently increased annual growth, we ana
 ## Dendrometer band analysis {-#Dendrometer} 
 
 Using dendrometer band measurements taken throughout multiple growing seasons at the Smithsonian Conservation Biology Institute (SCBI; Virginia, USA; n = `r n_dendro_trees_SCBI` trees from 2011-2020) and Harvard Forest (Massachusetts, USA; n = `r n_dendro_trees_HF` trees from 1998-2003), we fit a logistic growth model[@mcmahon_general_2015] to determine the days of year (DOY) when 25, 50, and 75% annual growth were achieved ($DOY_{25}$, $DOY_{50}$, $DOY_{75}$), peak growing season length ($L_{pgs}= DOY_{75}$-$DOY_{25}$), the maximum daily growth rates ($g_{max}$) and the DOY on which it occurred ($DOY_{g_{max}}$), and total annual increment in diameter at breast height ($\Delta DBH$; Fig. `r schematic_summary`). 
-This analysis was performed separately for ring- (69 trees at SCBI and 138 trees at Harvard Forest) and diffuse-porous (54 trees at SCBI and 202 trees at Harvard Forest) species, which differ in growth phenology[@dorangeville_peak_2021; @tumajer_limitation_2022]. These stem-growth milestones were compared to canopy foliage phenology (measured at ecosystem level via remote sensing).
+This analysis was performed separately for ring- (69 trees at SCBI and 138 trees at Harvard Forest) and diffuse-porous (54 trees at SCBI and 202 trees at Harvard Forest) species, which differ in growth phenology[@dorangeville_peak_2021; @tumajer_limitation_2022]. 
+These stem-growth milestones were compared to canopy foliage phenology (measured at ecosystem level via remote sensing).
 
 ![**Figure 1 | Summary of temperate deciduous tree growth responses to warmer spring temperatures.** (a) Schematic illustrating parameters of interest and summarizing how each responds to warmer maximum temperatures during a 'critical temperature window', defined as the period with the strongest control over $DOY_{25}$; (b) Variable definitions and summary of responses to warmer spring temperatures at two temperate forests -- Smithsonian Conservation Biology Institute (SCBI) and Harvard Forest -- and for two groups of broadleaf deciduous species (RP=ring porous; DP=diffuse porous), where up and down arrows indicate significant increases and decreases, respectively, '-' indicates no significant correlation, and 'mixed' indicates a mix of significant and non-significant correlations, often in different directions.](tables_figures/schematic_summary_with_table.png){ width=70% }
 
@@ -240,7 +241,7 @@ However, we did not find evidence that higher spring temperatures were correlate
 Our finding that interannual variation in stem growth is more strongly linked to conditions during the peak growing season than to growing season length aligns with recent studies on annual stem growth[@etzold_number_2022; @tumajer_limitation_2022;@delpierre_wood_2016] and with parallel findings for _NEE_[@zhou_explaining_2016; @fu_maximum_2019].
 However, there is also a disconnect with findings that _NEE_ is at least modestly greater in years with warm springs[@keenan_net_2014] or long growing seasons[@zhou_explaining_2016; @fu_maximum_2019;@finzi_carbon_2020].
 Warming advances spring phenology and may advance or delay autumn senescence depending on timing of warming and water availability[@zohner_ongoing_2019;@xie_predicting_2018; @crabbe_extreme_2016], with delays more common across eastern North America [@buermann_widespread_2018;@finzi_carbon_2020;@keenan_net_2014], implying that warming temperatures are lengthening the period from peak stem growth to the cessation of CO~2~ uptake by the ecosystem.
-Cite delpierre 2016 around here. Delpierre et al. 2016 found that stem growth was not correlated with carbon inputs, agreeing with the results here. However, the authors 
+**(Cite delpierre 2016 around here.) Delpierre et al. 2016 found that stem growth was not correlated with carbon inputs, agreeing with the results here. However, the authors ...**
 We show that the extra C fixation in years with warm springs does not substantially augment stem growth, but it remains unclear how it is allocated within the ecosystem.
 There are two main possibilities, which hold contrasting implications for the response of forest C balance to rising spring temperatures.
 
@@ -307,11 +308,13 @@ In our analysis, each band-year was treated independently, with no data overlap 
 The raw dendrometer band data were manually inspected before analysis. 
 We screened the data for three classes of errors. 
 First, when a measurement was drastically different from previous and following measurements, it was assumed to be a human error and removed.
-Second, when measurements remained essentially unchanged for several readings, followed by a sudden jump then return to a normal growth pattern, this was assumed to be a case where the band was stuck on the tree bark and then released. In these cases, the full annual record for the tree was removed.
+Second, when measurements remained essentially unchanged for several readings, followed by a sudden jump then return to a normal growth pattern, this was assumed to be a case where the band was stuck on the tree bark and then released. 
+In these cases, the full annual record for the tree was removed.
 Third, data points that deviated substantially from normal growth patterns, but for unknown causes, were removed. 
 If a majority of the data points fell into this class within a tree-year, the entire year was removed from the analysis.
 
-We fit a five-parameter logistic growth model[@mcmahon_general_2015] to dendrometer band data from each tree-year to define stem growth milestones and growth rates (Fig. `r schematic_summary`). In particular, we model the observed diameter at breast height (DBH) on a given day of the year (DOY; *i.e.*, julian days) as: 
+We fit a five-parameter logistic growth model[@mcmahon_general_2015] to dendrometer band data from each tree-year to define stem growth milestones and growth rates (Fig. `r schematic_summary`). 
+In particular, we model the observed diameter at breast height (DBH) on a given day of the year (DOY; *i.e.*, julian days) as: 
 $$ DBH = L + \frac{K - L} { 1 + 1/\theta \cdot exp[-r(DOY - DOY_{ip}) / \theta)] ^ \theta}$$ 
 Here, $L$ and $K$ are lower and upper asymptotes of the model. 
 $DOY_{ip}$ is the day of year where the inflection point in growth rate occurs,
@@ -319,8 +322,13 @@ $r$ shapes the slope of the curve at the inflection point,
 and $\theta$ is a tuning parameter controlling the slope of the curve toward the upper asymptote.
 This allows an asymmetric fit to the data, where the onset of growth can be estimated independent of the cessation of growth.
 The DOY on which maximum growth occurs, $DOY_{g_{max}}$ (Fig. `r schematic_summary`), occurs on $DOY_{ip}$ when $\theta = 1$.
-The model outputs two additional variables, $a$ and $b$, which represent the beginning and end DBH in each model year. We used the first and last manual dendrometer band measurements as starting points to calculate these two variables. With this method, initial measurements too late in the growing season which miss the start of the growing season can cause incorrect estimations of $a$ and $b$. The 1998 survey at Harvard Forest recorded first measurements on May 26, which is less than 2 weeks away from the average DOY25 at this site. This late start made the calculation of timing and total growth variables unreliable, so we removed tree years in 1998 from our analysis. 
-The model was fit in R v4.0 using the functions developed in the *Rdendrom* package[@mcmahon_general_2015]. These functions take the time-series of manual dendrometer band measurements and return maximum-likelihood optimized values of the above five parameters that best predict DBH for each day of year. 
+The model outputs two additional variables, $a$ and $b$, which represent the beginning and end DBH in each model year. 
+We used the first and last manual dendrometer band measurements as starting points to calculate these two variables. 
+With this method, initial measurements too late in the growing season which miss the start of the growing season can cause incorrect estimations of $a$ and $b$. 
+The 1998 survey at Harvard Forest recorded first measurements on May 26, which is less than 2 weeks away from the average DOY25 at this site. 
+This late start made the calculation of timing and total growth variables unreliable, so we removed tree years in 1998 from our analysis. 
+The model was fit in R v4.0 using the functions developed in the *Rdendrom* package[@mcmahon_general_2015]. 
+These functions take the time-series of manual dendrometer band measurements and return maximum-likelihood optimized values of the above five parameters that best predict DBH for each day of year. 
 An advantage of this approach is that short-term shrinkage and swelling associated with rain events [@mcmahon_general_2015; @herrmann_tree_2016] and measurement errors show up as residual variation and do not unduly influence the parameters of interest. 
 Having fit the model for each band-year of data, we then modeled DBH using these optimal parameter values in our logistic growth model and extracted the intra-annual growth variables of interest (Fig. `r schematic_summary`). 
 
@@ -339,7 +347,10 @@ This process was repeated using 2.5 and 3 standard deviations and the results of
 
 <!-- Leaf phenology -->
 
-Canopy foliage phenology data for the years 2001-2018 were extracted for SCBI and Harvard Forest from the MCD12Q2 V6 Land Cover Dynamics product (a.k.a. MODIS Global Vegetation Phenology product)[@friedl_mcd12q2_2019] via Google Earth Engine. For each year at each site, we extracted data from the pixel containing the center of each forest plot (resolution of 500m). Using the daily MODIS 2-band Enhanced Vegetation Index data (EVI2) , the product yields the timing of phenometrics (vegetation phenology) over each year, including timing of greenup, midgreenup, and senescence as used in this study. Data points were kept if they were flagged as "good" or "best" quality.
+Canopy foliage phenology data for the years 2001-2018 were extracted for SCBI and Harvard Forest from the MCD12Q2 V6 Land Cover Dynamics product (a.k.a. MODIS Global Vegetation Phenology product)[@friedl_mcd12q2_2019] via Google Earth Engine. 
+For each year at each site, we extracted data from the pixel containing the center of each forest plot (resolution of 500m). 
+Using the daily MODIS 2-band Enhanced Vegetation Index data (EVI2), the product yields the timing of phenometrics (vegetation phenology) over each year, including timing of greenup, midgreenup, and senescence as used in this study. 
+Data points were kept if they were flagged as "good" or "best" quality.
 
 <!--Weather data -->
 For the dendrometer band and leaf phenology analyses, climate data corresponding to the measurement periods were obtained from local weather stations at each focal site. 
@@ -352,7 +363,8 @@ For each site, we used records of daily maximum ($T_{max}$) and minimum temperat
 
 <!-- Determining critical temperature windows -->
 The critical temperature window (CTW, Fig. `r schematic_summary`), defined as the period over which $T_{max}$ was most strongly correlated with $DOY_{25}$, was determined using the R package *climwin*[@vandepol_identifying_2016]. 
-This package tests the correlation between one or more predictor climate variable and a biological outcome variable over all consecutive time windows within a specified time-frame. It does so by reporting the correlation and $\Delta AICc$, the difference in Akaike Information Criterion corrected for small sample size relative to a null model for each window. 
+This package tests the correlation between one or more predictor climate variable and a biological outcome variable over all consecutive time windows within a specified time-frame. 
+It does so by reporting the correlation and $\Delta AICc$, the difference in Akaike Information Criterion corrected for small sample size relative to a null model for each window. 
 Here, we tested for correlation between temperature predictor variables ($T_{max}$, $T_{min}$) and biological outcome variable $DOY_{25}$ over the time-frame from January 1 to the mean $DOY_{25}$ for the species group (by xylem porosity) and site (`r  EDT_phenology_parameters`). 
 The time period yielding the lowest $\Delta AICc$ was selected as the CTW.
 Because $T_{max}$ proved to have a generally stronger influence over $DOY_{25}$ and other growth parameters, we focused on this variable in our ultimate model, as opposed to $T_{min}$.
@@ -366,7 +378,8 @@ Correlation between the dendrometer band-derived growth parameters ($DOY_{25}$, 
 Analyses were run for both $T_{max}$ and $T_{min}$, with qualitatively similar results, but we present only results for $T_{max}$, which had overall stronger correlation with growth parameters. 
 Mixed effects models were used to test the response of growth phenology variables to fixed effects of xylem porosity and mean $T_{max}$ (or $T_{min}$) during the CTW, along with random effects of species and of individual tree. 
 We ran separate models for each species group at each site, and for the response of all growth phenology variables to $T_{max}$ (or $T_{min}$). 
-This mixed-effect model was run within a hierarchical Bayesian framework and fit using the `rstanarm` R interface to the Stan programming language[@gabry_rstanarm_2020; @stan_development_team_stan_2019]. In all cases unless otherwise specified, all prior distributions are set to be the weakly informative defaults. 
+This mixed-effect model was run within a hierarchical Bayesian framework and fit using the `rstanarm` R interface to the Stan programming language[@gabry_rstanarm_2020; @stan_development_team_stan_2019]. 
+In all cases unless otherwise specified, all prior distributions are set to be the weakly informative defaults. 
 <!--
 More information on rstanarm's default weakly informative priors:
 https://cran.r-project.org/web/packages/rstanarm/vignettes/priors.html#default-weakly-informative-prior-distributions
