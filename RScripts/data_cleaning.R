@@ -147,7 +147,7 @@ names(means) <- c("perc","year", "wood_type", "mean", "SD")
 
 Wood_pheno_table_scbi <- left_join(Wood_pheno_table_scbi, means, by = c("perc","year", "wood_type"))
 
-Wood_pheno_table_scbi$rm <- ifelse(Wood_pheno_table_scbi$doy > Wood_pheno_table_scbi$mean+(3*Wood_pheno_table_scbi$SD) | Wood_pheno_table_scbi$doy < Wood_pheno_table_scbi$mean-(3*Wood_pheno_table_scbi$SD), "rm", "keep")
+Wood_pheno_table_scbi$rm <- ifelse(Wood_pheno_table_scbi$doy > Wood_pheno_table_scbi$mean+(2*Wood_pheno_table_scbi$SD) | Wood_pheno_table_scbi$doy < Wood_pheno_table_scbi$mean-(2*Wood_pheno_table_scbi$SD), "rm", "keep")
 bad_doys <- as.character(unique(Wood_pheno_table_scbi[Wood_pheno_table_scbi$rm %in% "rm",]$tag_year)) #27
 bad_doy_tags <- Wood_pheno_table_scbi[Wood_pheno_table_scbi$tag_year %in% bad_doys,]
 bad_doy_percs <- percent_growth[percent_growth$tag_year %in% bad_doys,]
@@ -689,7 +689,7 @@ names(means) <- c("perc","year", "wood_type", "mean", "SD")
 
 Wood_pheno_table_hf <- left_join(Wood_pheno_table_hf, means, by = c("perc","year", "wood_type"))
 
-Wood_pheno_table_hf$rm <- ifelse(Wood_pheno_table_hf$doy > Wood_pheno_table_hf$mean+(3*Wood_pheno_table_hf$SD) | Wood_pheno_table_hf$doy < Wood_pheno_table_hf$mean-(3*Wood_pheno_table_hf$SD), "rm", "keep")
+Wood_pheno_table_hf$rm <- ifelse(Wood_pheno_table_hf$doy > Wood_pheno_table_hf$mean+(2*Wood_pheno_table_hf$SD) | Wood_pheno_table_hf$doy < Wood_pheno_table_hf$mean-(2*Wood_pheno_table_hf$SD), "rm", "keep")
 bad_doys <- as.character(unique(Wood_pheno_table_hf[Wood_pheno_table_hf$rm %in% "rm",]$tag_year)) #27
 bad_doy_tags <- Wood_pheno_table_hf[Wood_pheno_table_hf$tag_year %in% bad_doys,]
 bad_doy_percs <- percent_growth[percent_growth$tag_year %in% bad_doys,]
