@@ -184,7 +184,7 @@ These stem-growth milestones were compared to canopy foliage phenology (measured
 
 
 
-Seaonal milestones for both canopy foliage phenology and stem growth occurred 6-10 days earlier, on average, at SCBI than at Harvard Forest (Fig. `r DOY_timing`, `r  EDT_phenology_parameters`).
+Seasonal milestones for both canopy foliage phenology and stem growth occurred 6-10 days earlier, on average, at SCBI than at Harvard Forest (Fig. `r DOY_timing`, `r  EDT_phenology_parameters`).
 Consistent with the results of Ref[@dorangeville_peak_2021], ring-porous species began growing earlier, reaching the $DOY_{25}$ benchmark earlier (by `r 154-123` days at SCBI and `r 164-132` at Harvard Forest), and their growth was spread over a longer growing season (average $L_{PGS}$ 21 and 19 days longer at SCBI and Harvard Forest, respectively; Fig. `r DOY_timing`, `r  EDF_growth_curves_all`, `r  EDT_phenology_parameters`). 
 Peak growing season length was similar across sites, with $L_{PGS}$ being, on average, only two days longer at SCBI for ring-porous species and less than one day longer for diffuse-porous species (`r  EDT_phenology_parameters`). 
 
