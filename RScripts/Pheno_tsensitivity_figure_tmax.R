@@ -459,8 +459,8 @@ xlab <- bquote(.(dp_date) ~ T[max] ~ " (°C)")
 
 fig6_DP_tot <-  ggplot() +
   # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
-  stat_lineribbon(data = predictions_tot_DP, aes(x = climwinmean, y = predictions_rstanarm, col = "purple"), .width = .95, linetype = "dashed", alpha = 0.10) +
-  stat_lineribbon(data = predictions_tot_DP, aes(x = climwinmean, y = predictions_rstanarm, col = "purple"), .width = 0, linetype = "dashed", alpha = 0.95) +
+  stat_lineribbon(data = predictions_tot_DP, aes(x = climwinmean, y = predictions_rstanarm, col = "purple"), .width = .95, linetype = "solid", alpha = 0.10) +
+  stat_lineribbon(data = predictions_tot_DP, aes(x = climwinmean, y = predictions_rstanarm, col = "purple"), .width = 0, linetype = "solid", alpha = 0.95) +
   geom_point(data = Wood_pheno_table_DP_tot, aes(x = climwinmean, y = dbh_total_growth, col = "purple")) +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   #scale_fill_brewer() +
@@ -580,8 +580,8 @@ Wood_pheno_table_DP_mr <- filter(woodtable, wood_type == "diffuse-porous")
 
 fig6_RP_mr <-  ggplot() +
   # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
-  stat_lineribbon(data = predictions_mr_RP, aes(x = climwinmean, y = predictions_rstanarm, col = "purple"), .width = .95, linetype = "solid", alpha = .10) +
-  stat_lineribbon(data = predictions_mr_RP, aes(x = climwinmean, y = predictions_rstanarm, col = "purple"), .width = 0, linetype = "solid", alpha = .95) +
+  stat_lineribbon(data = predictions_mr_RP, aes(x = climwinmean, y = predictions_rstanarm, col = "purple"), .width = .95, linetype = "dashed", alpha = .10) +
+  stat_lineribbon(data = predictions_mr_RP, aes(x = climwinmean, y = predictions_rstanarm, col = "purple"), .width = 0, linetype = "dashed", alpha = .95) +
   geom_point(data = Wood_pheno_table_RP_mr, aes(x = climwinmean, y = max_rate, col = "purple")) +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   #scale_fill_brewer() +
@@ -1182,8 +1182,8 @@ fig6_RP_sl_hf <- ggplot() +
 
 fig6_DP_sl_hf <- ggplot() +
   # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
-  stat_lineribbon(data = predictions_sl_DP_hf, aes(x = climwinmean, y = predictions_rstanarm, col = "purple"), .width = .95, linetype = "dashed", alpha = .10) +
-  stat_lineribbon(data = predictions_sl_DP_hf, aes(x = climwinmean, y = predictions_rstanarm, col = "purple"), .width = 0, linetype = "dashed", alpha = .95) +
+  stat_lineribbon(data = predictions_sl_DP_hf, aes(x = climwinmean, y = predictions_rstanarm, col = "purple"), .width = .95, linetype = "solid", alpha = .10) +
+  stat_lineribbon(data = predictions_sl_DP_hf, aes(x = climwinmean, y = predictions_rstanarm, col = "purple"), .width = 0, linetype = "solid", alpha = .95) +
   geom_point(data = Wood_pheno_table_DP_sl_hf, aes(x = climwinmean, y = seasonlength, col = "purple")) +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   #scale_fill_brewer() +
@@ -1250,8 +1250,8 @@ fig6_RP_mr_hf <- ggplot() +
 
 fig6_DP_mr_hf <-   ggplot() +
   # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
-  stat_lineribbon(data = predictions_mr_DP_hf, aes(x = climwinmean, y = predictions_rstanarm, col = "purple"), .width = .95, linetype = "dashed", alpha = .10) +
-  stat_lineribbon(data = predictions_mr_DP_hf, aes(x = climwinmean, y = predictions_rstanarm, col = "purple"), .width = 0, linetype = "dashed", alpha = .95) +
+  stat_lineribbon(data = predictions_mr_DP_hf, aes(x = climwinmean, y = predictions_rstanarm, col = "purple"), .width = .95, linetype = "solid", alpha = .10) +
+  stat_lineribbon(data = predictions_mr_DP_hf, aes(x = climwinmean, y = predictions_rstanarm, col = "purple"), .width = 0, linetype = "solid", alpha = .95) +
   geom_point(data = Wood_pheno_table_DP_mr_hf, aes(x = climwinmean, y = max_rate, col = "purple")) +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   #scale_fill_brewer() +
