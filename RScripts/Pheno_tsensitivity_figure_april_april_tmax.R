@@ -350,7 +350,7 @@ fig6_RP_tot <-  ggplot() +
         text = element_text(size = 35),
         axis.text.x = element_text(size = 25),
         axis.title.x = element_text(size = 25)) +
-  labs(x =expression(paste("April ", T[max], " (°C)")) , y = expression(paste(Delta * "DBH", " (cm)")))
+  labs(x =expression(paste("May ", T[max], " (°C)")) , y = expression(paste(Delta * "DBH", " (cm)")))
 
 fig6_DP_tot <-  ggplot() +
   # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
@@ -368,7 +368,7 @@ fig6_DP_tot <-  ggplot() +
         text = element_text(size = 35),
         axis.text.x = element_text(size = 25),
         axis.title.x = element_text(size = 25)) +
-  labs(x = expression(paste("April ", T[max], " (°C)")), y = "")
+  labs(x = expression(paste("May ", T[max], " (°C)")), y = "")
 
 # Clean-up
 rm(list = setdiff(ls(), objects_to_keep))
@@ -931,7 +931,7 @@ fig6_RP_tot_hf <-   ggplot() +
         text = element_text(size = 35),
         axis.text.x = element_text(size = 25),
         axis.title.x = element_text(size = 25)) +
-  labs(x = expression(paste("April ", T[max], " (°C)")), y = "")
+  labs(x = expression(paste("May ", T[max], " (°C)")), y = "")
 
 fig6_DP_tot_hf <- ggplot() +
   # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
@@ -949,7 +949,7 @@ fig6_DP_tot_hf <- ggplot() +
         text = element_text(size = 35),
         axis.text.x = element_text(size = 25),
         axis.title.x = element_text(size = 25)) +
-  labs(x = expression(paste("April ", T[max], " (°C)")), y = "")
+  labs(x = expression(paste("May ", T[max], " (°C)")), y = "")
 
 # Clean-up
 rm(list = setdiff(ls(), objects_to_keep))
