@@ -377,7 +377,7 @@ This was consistent with the periods identified by *climwin* for ring- and diffu
 Correlation between the dendrometer band-derived growth parameters ($DOY_{25}$, $DOY_{50}$, $DOY_{75}$, $DOY_{g_{max}}$, $L_{PGS}$, $g_{max}$, and $\Delta DBH$}, Fig. `r schematic_summary`) and spring temperatures were assessed using a linear mixed model in a hierarchical Bayesian framework.
 Analyses were run for both $T_{max}$ and $T_{min}$, with qualitatively similar results, but we present only results for $T_{max}$, which had overall stronger correlation with growth parameters. 
 Mixed effects models were used to test the response of growth parameters to fixed effects of xylem porosity and mean $T_{max}$ (or $T_{min}$) during the CTW, along with random effects of species and of individual tree. 
-We ran separate models for each species group at each site, and for the response of all growth parameters to $T_{max}$ (or $T_{min}$). 
+We ran separate models for each site, and for the response of all growth parameters to $T_{max}$ (or $T_{min}$). 
 This mixed-effect model was run within a hierarchical Bayesian framework and fit using the `rstanarm` R interface to the Stan programming language[@gabry_rstanarm_2020; @stan_development_team_stan_2019]. 
 In all cases unless otherwise specified, all prior distributions are set to be the weakly informative defaults. 
 <!--
