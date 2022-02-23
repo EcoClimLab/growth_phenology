@@ -1004,8 +1004,8 @@ fig6_RP_sl_hf <- ggplot() +
 
 fig6_DP_sl_hf <- ggplot() +
   # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
-  stat_lineribbon(data = predictions_sl_DP_hf, aes(x = climwinmean, y = predictions_rstanarm, col = "blue"), .width = .95,alpha = .10, linetype = "dashed") +
-  stat_lineribbon(data = predictions_sl_DP_hf, aes(x = climwinmean, y = predictions_rstanarm, col = "blue"), .width = 0,alpha = .75, linetype = "dashed") +
+  stat_lineribbon(data = predictions_sl_DP_hf, aes(x = climwinmean, y = predictions_rstanarm, col = "blue"), .width = .95,alpha = .10, linetype = "solid") +
+  stat_lineribbon(data = predictions_sl_DP_hf, aes(x = climwinmean, y = predictions_rstanarm, col = "blue"), .width = 0,alpha = .75, linetype = "solid") +
   geom_point(data = Wood_pheno_table_DP_sl_hf, aes(x = climwinmean, y = seasonlength, col = "blue")) +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   #scale_fill_brewer() +
@@ -1072,8 +1072,8 @@ fig6_RP_mr_hf <- ggplot() +
 
 fig6_DP_mr_hf <-   ggplot() +
   # geom_vline(xintercept = 0, linetype = "dashed", col = "grey") +
-  stat_lineribbon(data = predictions_mr_DP_hf, aes(x = climwinmean, y = predictions_rstanarm, col = "blue"), .width = .95,alpha = .10, linetype = "dashed") +
-  stat_lineribbon(data = predictions_mr_DP_hf, aes(x = climwinmean, y = predictions_rstanarm, col = "blue"), .width = 0,alpha = .75, linetype = "dashed") +
+  stat_lineribbon(data = predictions_mr_DP_hf, aes(x = climwinmean, y = predictions_rstanarm, col = "blue"), .width = .95,alpha = .10, linetype = "solid") +
+  stat_lineribbon(data = predictions_mr_DP_hf, aes(x = climwinmean, y = predictions_rstanarm, col = "blue"), .width = 0,alpha = .75, linetype = "solid") +
   geom_point(data = Wood_pheno_table_DP_mr_hf, aes(x = climwinmean, y = max_rate, col = "blue")) +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
   #scale_fill_brewer() +
