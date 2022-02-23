@@ -210,7 +210,7 @@ We found a consistent effect of temperature ($T_{max}$ or $T_{min}$) throughout 
 CTW was identified by measuring the correlation between all combinations of weekly $T_{max}$ and $DOY_{25}$ from January 1 to mean $DOY_{25}$ for each xylem architecture-site combination (`r EDF_climwin`).
 The CTW was defined as the week(s) which had the strongest correlation with $DOY_{25}$.   
 
-For ring- and diffuse- porous species at both sites, warmer $T_{max}$ in the CTW resulted in earlier achievement of phenological milestones.
+For ring- and diffuse- porous species at both sites, warmer $T_{max}$ in the CTW resulted in earlier achievement of seasonal milestones.
 Consistent with findings from previous studies[@parmesan_globally_2003;@ibanez_forecasting_2010;@friedl_tale_2014], leaf phenological milestones advanced at both sites (Fig. `r DOY_timing`a-b, `r EDT_phenology_parameters`), with greenup (DOY when EVI2 first crossed 15% of the segment EVI2 amplitude) advancing 3.45 days/$^\circ$C at SCBI (p=0.016) and 2.4 days/ $^\circ$C at Harvard Forest (p=0.1).
 Similarly, at both sites, the stem growth milestones $DOY_{25}$, $DOY_{50}$, and $DOY_{g_{max}}$ all decreased with mean $T_{max}$ during the critical temperature window (Figs. `r schematic_summary`, `r DOY_timing`c-d; `r EDF_pheno_all`).
 Specifically, $DOY_{25}$, $DOY_{50}$, and $DOY_{75}$ advanced 1.1-1.9 days/ $^\circ$C for ring-porous species and 3.5-3.6 days/ $^\circ$C for diffuse-porous species at SCBI, and 2.8-7.2 days/ $^\circ$C for ring-porous species and 6.6-7.9 days/ $^\circ$C for diffuse-porous species at Harvard Forest (`r EDT_phenology_parameters`).
@@ -278,8 +278,8 @@ Moreover, acclimation of trees to warming temperatures[@gessler_way_2020] and, o
 If we look across spatial gradients where the latter have had time to play out, we see that warmer spring temperatures are associated with earlier leaf-out[@delgado_differences_2020] and longer growing seasons, which in turn are correlated with greater tree growth[@anderson-teixeira_joint_2021], woody productivity[@banburymorgan_global_2021], and _NEE_[@churkina_spatial_2005].
 Thus, warming spring temperatures are expected to increase the biophysical potential for annual tree growth, but that potential is not being realized on an interannual time frame. 
 
-As climate change accelerates and spring temperatures become increasingly warmer, growing seasons will start earlier; however, barring rapid acclimation of forests to the warming conditions, an earlier onset of growth in the spring is unlikely to provide the sustained increase in CO~2~ sequestration in woody biomass and ensuant negative climate change feedback that is anticipated in most climate forecasting models[@buermann_widespread_2018;@zani_increased_2020;@keenan_net_2014;@ahlstrom_robustness_2012].
-Rather, the dominant effect of rising temperatures on forest woody productivity will be a negative effect of high summer temperatures, which constitutes a positive feedback to climate change.
+As climate change accelerates and spring temperatures become increasingly warmer, growing seasons will start earlier; however, barring rapid acclimation of forests to the warming conditions, advancement in the timing of stem growth (Fig. 1) is unlikely to provide the sustained increase in CO~2~ sequestration in woody biomass and ensuant negative climate change feedback that is anticipated in most climate forecasting models[@buermann_widespread_2018;@zani_increased_2020;@keenan_net_2014;@ahlstrom_robustness_2012].
+Rather, the dominant effect of rising temperatures on forest woody productivity will be a negative effect of high summer temperatures (Fig. 3), which constitutes a positive feedback to climate change.
 
 
 # Methods {-#Methods} 
