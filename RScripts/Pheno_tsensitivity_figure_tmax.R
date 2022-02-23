@@ -363,7 +363,7 @@ fig6_RP <- ggplot() +
   stat_lineribbon(data = predictions_RP, aes(x = climwinmean, y = predictions_rstanarm, col = perc, fill = perc, linetype = perc), .width = 0, alpha = 0.75) +
   geom_point(data = Wood_pheno_table_RP, aes(x = climwinmean, y = DOY, col = perc)) +
   # geom_abline(data = posterior_lines, aes(intercept = `(Intercept)`, slope = marchmean, col = perc), size = 1) +
-  scale_linetype_manual(values = c("solid","solid", "solid")) +
+  scale_linetype_manual(values = c("solid","solid", "dashed")) +
   scale_color_manual(values = c("orange","red","purple", "orange", "red", "purple"))+
   scale_fill_manual(values = c("orange","red","purple", "orange", "red", "purple"))+
   #scale_fill_brewer() +
