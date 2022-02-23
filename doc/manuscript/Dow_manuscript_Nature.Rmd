@@ -173,7 +173,8 @@ The timing of stem growth and its climate sensitivity is linked to annual growth
 
 - stem growth is routinely used to estimate woody productivity (but wood density partially decouples them) [@delpierre_wood_2016 and refs therein]
 - stem growth and woody productivity are decoupled from GPP[@delpierre_wood_2016 and refs therein]
-- close coordination of budburst and xylogenesis[@delpierre_temperate_2016]
+- close coordination of budburst and initiation of xylogenesis[@delpierre_temperate_2016]
+- start of xylogenesis makes growth possible, but actual growth depends on climate conditions during the growth period
 
 ~~~~ (rework ending here)
 
