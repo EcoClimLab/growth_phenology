@@ -1,9 +1,9 @@
 Variable,Definition,SCBI.RP,SCBI.DP,Harvard.RP,Harvard.DP
 $DOY_{25}$,day of year at which 25\% of growth is achieved,$\downarrow$,$\downarrow$,$\downarrow$,$\downarrow$
 $DOY_{50}$,day of year at which 50\% of growth is achieved,$\downarrow$,$\downarrow$,$\downarrow$,$\downarrow$
-$DOY_{75}$,day of year at which 75\% of growth is achieved,$\downarrow$,$\downarrow$,$\downarrow$,$\downarrow$
-$DOY_{g_{max}}$,day of year of max growth rate ,$\downarrow$,$\downarrow$,$\downarrow$,$\downarrow$
-$L_{PGS}$,peak growing season length ($DOY_{75} -DOY_{25}$) ,$\uparrow$,-,$\downarrow$,$\uparrow$
-$g_{max}$,maximum daily growth rate ,-,-,$\uparrow$,$\downarrow$
-$\Delta DBH$,annual growth ,-,-,-,-
+$DOY_{75}$,day of year at which 75\% of growth is achieved,-,$\downarrow$,$\downarrow$,$\downarrow$
+$DOY_{g_{max}}$,day of year of max growth rate ,$\downarrow$,$\downarrow$,$\uparrow$,$\downarrow$
+$L_{PGS}$,peak growing season length ($DOY_{75} -DOY_{25}$) ,$\uparrow$,-,-,$\uparrow$
+$g_{max}$,maximum daily growth rate ,$\downarrow$,$\uparrow$,$\downarrow$,$\downarrow$
+$\Delta DBH$,annual growth ,$\uparrow$,$\uparrow$,$\downarrow$,$\downarrow$
 $RWI$,ring width index from tree-ring chronologies,mixed,mixed,-,mixed
