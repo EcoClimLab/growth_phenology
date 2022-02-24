@@ -82,9 +82,9 @@ add_header_above(c(" ",  "SCBI" = 2, "Harvard Forest"=2 )) %>%
     column_spec(1, width = "4cm") %>%
     pack_rows("Stem Growth", 2, 7, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
     pack_rows("Canopy Foliage (ecosystem level)", 8, 11, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
-    pack_rows("Phenological temperature sensitivity* (days/°C)", 12, 21, latex_gap_space = "1em", colnum = 5, hline_before = FALSE) %>%
-    add_indent(13:16)%>%
-    add_indent(18:21)%>%
+    pack_rows("Phenological temperature sensitivity* (days/°C)", 12, 20, latex_gap_space = "1em", colnum = 5, hline_before = FALSE) %>%
+    add_indent(13:15)%>%
+    add_indent(17:20)%>%
 kable_styling(latex_options = c("scale_down", "hold_position"), protect_latex = T) 
 ```
 *Phenological temperature sensitivity refers to the sensitivity of a parameter to the mean maximum temperature ($T_{max}$) during the critical temperature window (Fig. 1). Because leaf phenology measurements were derived from satellite imagery and included both ring- and diffuse-porous trees, the selection of a critical window was less straightforward. We used the critical window which had the greatest correlation with leaf greenup timing as the critical window for leaf phenology calculations.
