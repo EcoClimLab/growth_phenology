@@ -17,7 +17,7 @@ end_doy <- 365
 
 # Critical temperature window:
 window_open <- 91
-window_close <- 135
+window_close <- 120
 
 # Function for logistic growth model written by Sean. Supposed to be in RDendrom
 # package https://github.com/seanmcm/RDendrom, but function does not seem to be included
@@ -219,10 +219,10 @@ schematic_v2_HF <-
     axis.text.x.top = element_text(color = hot_color),
     axis.ticks.x.top = element_line(color = hot_color),
     axis.ticks.x.bottom = element_line(
-      color = c(rep(cold_color, 4), rep("black", 2), "white")
+      color = c(rep(cold_color, 3), rep("black", 2), "white")
     ),
     axis.text.x.bottom = element_text(
-      color = c(rep(cold_color, 4), rep("black", 3))
+      color = c(rep(cold_color, 3), rep("black", 3))
     )
   ) +
   scale_x_continuous(
