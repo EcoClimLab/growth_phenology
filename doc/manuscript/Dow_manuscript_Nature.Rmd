@@ -299,7 +299,7 @@ The climate is humid temperate, with 1950-2019 mean annual precipitation of 1018
 Harvard Forest (42.5388° N, 72.1755° W, 340-368 m.a.s.l.) is located near the central Massachusetts town of Petersham. 
 The forest is secondary and mixed age, having re-established around the beginning of the 20th century following agricultural use and significant hurricane damage in 1938. 
 Dominant species within the 35 ha ForestGEO plot are hemlock (*Tsuga canadensis* (L.) Carrière), oak (*Quercus spp.*) and red maple (*Acer rubrum* L.). 
-The climate is temperate continental, with 1950-2019 mean annual precipitation of 1104 mm and temperatures averaging -5° C in January and 22° C in July[@anderson-teixeira_joint_2021].
+The climate is temperate continental, with 1950-2019 mean annual precipitation of 1104 mm and temperatures averaging -5° C in January and 22° C in July[@anderson-teixeira_joint_2021]. The summer of 1999 was abnormally dry. Records indicate that in 1999 only 52mm of precipitation fell per month June-August compared to average monthly precipitation values of 100mm+ [@dorangeville_peak_2021].
 
 <!--Data collection and preparation -->
 
@@ -352,12 +352,12 @@ Having fit the model for each band-year of data, we then modeled DBH using these
 After fitting the growth model, we removed tree-years with poor fits. 
 Models were judged to be poorly fit if certain modeled growth characteristics fell outside of the logical range. 
 Modeled fits for tree-years were removed under five conditions:
-(1) single day growth rates were $\ge 2$ standard deviations away from the mean for each xylem architecture (SCBI = 26, Harvard Forest = 24); 
-(2) timing variables ($DOY_{ip}$, $DOY_{25}$, $DOY_{50}$, $DOY_{75}$) were $\ge 3$ standard deviations away from the means for their xylem architecture group, year, and site (SCBI = 71, Harvard Forest = 226); 
-(3) tree-years with small or negligible total growth ($\Delta DBH$ $\le 0.05$ mm; SCBI = 8, Harvard Forest = 137); 
-(4) tree years where first intraannual measurement was later than the first spring survey (trees that were missed in the initial census; SCBI = 20, HF = 6).
+(1) single day growth rates were $\ge 2.5$ standard deviations away from the mean for each xylem architecture (SCBI = 3, Harvard Forest = 11); 
+(2) timing variables ($DOY_{ip}$, $DOY_{25}$, $DOY_{50}$, $DOY_{75}$) were $\ge 2.5$ standard deviations away from the means for their xylem architecture group, year, and site (SCBI = 74, Harvard Forest = 101); 
+(3) tree-years with small or negligible total growth ($\Delta DBH$ $\le 0.05$ mm; SCBI = 26, Harvard Forest = 253); 
+(4) tree years where first intraannual measurement was later than the first spring survey (trees that were missed in the initial census; SCBI = 22, HF = 8).
 At both sites the tag years removed through this method were proportional to the original sample size, indicating that no species or size class was disproportionately removed compared to others.
-This process was repeated using 2.5 and 3 standard deviations and the results of analyses were not qualitatively different. 
+This process was repeated using 2 and 3 standard deviations and the results of analyses were not qualitatively different. 
 
 <!-- Leaf phenology -->
 
