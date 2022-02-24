@@ -141,17 +141,17 @@ HF_doy_diameter_quartile <- bind_rows(
   mutate(year = as.factor(year))
 
 # Semi-synthetic DOY_g_max dates
-HF_doy_max_rate_offset <- 2
-HF_doy_max_rate <- HF_doy_diameter_quartile %>%
-  filter(perc == 0.5) %>%
-  mutate(doy = doy + HF_doy_max_rate_offset) %>%
-  mutate(year = as.factor(year))
-
-HF_doy_max_rate <- bind_rows(
-  HF_true_values_cold %>% mutate(diff = abs(perc-0.53)) %>% arrange(diff) %>% slice(1) %>% mutate(year = "Cold"),
-  HF_true_values_hot %>% mutate(diff = abs(perc-0.53)) %>% arrange(diff) %>% slice(1) %>% mutate(year = "Hot")
-) %>%
-  mutate(year = as.factor(year))
+# HF_doy_max_rate_offset <- 2
+# HF_doy_max_rate <- HF_doy_diameter_quartile %>%
+#   filter(perc == 0.5) %>%
+#   mutate(doy = doy + HF_doy_max_rate_offset) %>%
+#   mutate(year = as.factor(year))
+#
+# HF_doy_max_rate <- bind_rows(
+#   HF_true_values_cold %>% mutate(diff = abs(perc-0.53)) %>% arrange(diff) %>% slice(1) %>% mutate(year = "Cold"),
+#   HF_true_values_hot %>% mutate(diff = abs(perc-0.53)) %>% arrange(diff) %>% slice(1) %>% mutate(year = "Hot")
+# ) %>%
+#   mutate(year = as.factor(year))
 
 
 
@@ -173,16 +173,16 @@ HF_significant_perc <-
     significant = c(TRUE, TRUE, TRUE)
   )
 
-# Add g_max
-HF_significant_perc <- bind_rows(
-  HF_significant_perc,
-  tibble(
-    doy_hot = HF_doy_max_rate$doy[HF_doy_max_rate$year == "Hot"],
-    perc = 0.53,
-    doy_cold = HF_doy_max_rate$doy[HF_doy_max_rate$year == "Cold"],
-    significant = TRUE
-  )
-)
+# # Add g_max
+# HF_significant_perc <- bind_rows(
+#   HF_significant_perc,
+#   tibble(
+#     doy_hot = HF_doy_max_rate$doy[HF_doy_max_rate$year == "Hot"],
+#     perc = 0.53,
+#     doy_cold = HF_doy_max_rate$doy[HF_doy_max_rate$year == "Cold"],
+#     significant = TRUE
+#   )
+# )
 
 
 
@@ -230,16 +230,14 @@ schematic_v2_HF <-
     # Bottom cold
     breaks = c(
       HF_doy_diameter_quartile_cold %>% filter(perc %in% c(0.25, 0.5, 0.75)) %>% pull(doy),
-      HF_doy_max_rate %>% filter(year == "Cold") %>% pull(doy),
       window_open,
       window_close,
       mean(c(window_close, window_open))
     ),
     labels = c(
       expression(DOY[25]),
-      expression(paste("     ", DOY[50], " ", DOY[g[max]])),
+      expression(DOY[50]),
       expression(DOY[75]),
-      expression(paste("")),
       NA,
       NA,
       "Critical Temperature Window"
@@ -247,8 +245,8 @@ schematic_v2_HF <-
     # Top hot
     sec.axis = sec_axis(
       ~ . * 1,
-      breaks = c(HF_doy_diameter_quartile_hot$doy, HF_doy_max_rate %>% filter(year == "Hot") %>% pull(doy)),
-      labels = c(1, expression(DOY[25]), expression(paste("     ", DOY[50], " ", DOY[g[max]])), expression(DOY[75]), 365, expression(paste("")))
+      breaks = c(HF_doy_diameter_quartile_hot$doy),
+      labels = c(1, expression(DOY[25]), expression(DOY[50]), expression(DOY[75]), 365)
     )
   ) +
   scale_y_continuous(
@@ -270,16 +268,16 @@ schematic_v2_HF <-
     aes(x = doy, xend = doy, y = perc, yend = -0.25, col = year),
     linetype = "dashed", show.legend = FALSE, alpha = 0.5
   ) +
-  geom_segment(
-    data = HF_doy_max_rate %>% filter(year == "Hot"),
-    aes(x = doy, xend = doy, y = 1.25, yend = perc, col = year),
-    linetype = "dashed", show.legend = FALSE, alpha = 0.5
-  ) +
-  geom_segment(
-    data = HF_doy_max_rate %>% filter(year == "Cold"),
-    aes(x = doy, xend = doy, y = perc, yend = -0.25, col = year),
-    linetype = "dashed", show.legend = FALSE, alpha = 0.5
-  ) +
+  # geom_segment(
+  #   data = HF_doy_max_rate %>% filter(year == "Hot"),
+  #   aes(x = doy, xend = doy, y = 1.25, yend = perc, col = year),
+  #   linetype = "dashed", show.legend = FALSE, alpha = 0.5
+  # ) +
+  # geom_segment(
+  #   data = HF_doy_max_rate %>% filter(year == "Cold"),
+  #   aes(x = doy, xend = doy, y = perc, yend = -0.25, col = year),
+  #   linetype = "dashed", show.legend = FALSE, alpha = 0.5
+  # ) +
   # Cold/blue Primary Growing Season:
   geom_segment(
     aes(
