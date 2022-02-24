@@ -41,9 +41,9 @@ kable(summary_table, col.names = c("Variable", "Definition", "RP", "DP","RP", "D
   add_header_above(c(" ", " " , "SCBI" = 2, "Harvard Forest"=2)) %>%
   add_header_above(c(" ", " " , "Response to warmer spring T"=4), bold= TRUE) %>%
   column_spec(3:6, width = "1cm") %>%
-  pack_rows("Timing of growth", 1, 5, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
-  pack_rows("Daily growth rate", 6, 6, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
-  pack_rows("Annual growth", 7, 8, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
+  pack_rows("Timing of growth", 1, 4, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
+  pack_rows("Daily growth rate", 5, 5, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
+  pack_rows("Annual growth", 6, 7, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
   kable_styling(latex_options = c("scale_down", "hold_position"), protect_latex = T) 
 
 #add footnote: 
