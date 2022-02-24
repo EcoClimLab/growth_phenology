@@ -17,7 +17,7 @@ library(scales)
 library(tidybayes)
 
 # Number of standard deviations used to identify "outliers"
-sd <- 2
+sd <- 2.5
 
 # Load Sean McMahon's Dendroband functions
 source("RScripts/dendroband_functions.R")
@@ -134,10 +134,11 @@ late_starts <- all_stems[all_stems$tag_year %in% start_days$Group.1,]
 #remove from percent growth and wood_pheno
 percent_growth <- percent_growth[!(percent_growth$tag_year %in% late_starts$tag_year),]
 late_survey <- Wood_pheno_table_scbi[(Wood_pheno_table_scbi$tag_year %in% late_starts$tag_year),]
+late_tags <- unique(late_survey$tag_year)
 
 Wood_pheno_table_scbi <- Wood_pheno_table_scbi[!(Wood_pheno_table_scbi$tag_year %in% late_starts$tag_year),] # 3054 -> 2994
 
-# # #Remove tag years where doy% variable is > 3 SD away from mean----
+# # #Remove tag years where doy% variable is > 2.5 SD away from mean----
 
 means <- aggregate(Wood_pheno_table_scbi$doy, by = list(Wood_pheno_table_scbi$perc,Wood_pheno_table_scbi$year, Wood_pheno_table_scbi$wood_type), FUN = mean)
 SD <- aggregate(Wood_pheno_table_scbi$doy, by = list(Wood_pheno_table_scbi$perc,Wood_pheno_table_scbi$year, Wood_pheno_table_scbi$wood_type), FUN = sd)
@@ -392,9 +393,9 @@ percent_growth <- rbind(percent_growth_DP, percent_growth_RP)
 
 ## Clean both at once now ----
 # Remove small/negligable growth models...Seem to be more of a problem with Harvard Forest but remove here for consistency
-percent_growth_gone <- subset(percent_growth, dbh_total_growth <= 0.05) # remove small growth trees
-SCBI_smallgrowth <- unique(percent_growth_gone$tag_year) # rm 8
-percent_growth <- subset(percent_growth, dbh_total_growth >= 0.05) # remove small growth trees
+# percent_growth_gone <- subset(percent_growth, dbh_total_growth <= 0.05) # remove small growth trees
+# SCBI_smallgrowth <- unique(percent_growth_gone$tag_year) # rm 8
+# percent_growth <- subset(percent_growth, dbh_total_growth >= 0.05) # remove small growth trees
 # Remove models that failed to model at least 97.5% of total growth using LG5.pred. Indicates that model fit poorly
 #percent_growth_one <- subset(percent_growth, dbh_growth_percent_cummulative >= .975) # Find tags that reach ~100% growth
 #unique(percent_growth_one$tag_year) # Check how many tags meet this req
@@ -676,6 +677,7 @@ late_starts <- all_stems[all_stems$tag_year %in% start_days$Group.1,]
 #remove from percent growth and wood_pheno
 percent_growth <- percent_growth[!(percent_growth$tag_year %in% late_starts$tag_year),]
 late_survey <- Wood_pheno_table_hf[(Wood_pheno_table_hf$tag_year %in% late_starts$tag_year),]
+unique(late_survey$tag_year)
 
 Wood_pheno_table_hf <- Wood_pheno_table_hf[!(Wood_pheno_table_hf$tag_year %in% late_starts$tag_year),]
 
