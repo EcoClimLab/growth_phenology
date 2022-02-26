@@ -428,6 +428,100 @@ percent_growth_scbi <-Wood_pheno_table_scbi %>%
     dbh_growth_percent_cummulative = cumsum(dbh_growth_percent)
   )
 
+#percent_try <- subset(percent_growth_scbi,percent_growth_scbi$dbh >= percent_growth_scbi$a & percent_growth_scbi$dbh <= percent_growth_scbi$b)
+# percent_try <- percent_growth_scbi[!(percent_growth_scbi$dbh > percent_growth_scbi$b),]
+# percent_try <- percent_try[!(percent_try$dbh < percent_try$a),]
+
+#PLOT TYPE 2, dotted lines outside of a and b
+percent_growth_scbi$dotted <- ifelse(percent_growth_scbi$dbh < percent_growth_scbi$a | percent_growth_scbi$dbh > percent_growth_scbi$b, "yes", "no")
+
+good_scbi <- ggplot() +
+  coord_cartesian(ylim = c(0, 0.05)) +
+  scale_y_continuous(labels = percent) +
+  labs( x="",y = "Percent of total growth",
+        title = "") +
+  theme_bw() +
+  theme(legend.position = c(.75,.75))+
+  geom_line(data = percent_growth_scbi[percent_growth_scbi$dbh < percent_growth_scbi$a,], aes(x = doy, y = dbh_growth_percent,col = wood_type, group = tag_year), linetype = "dotted", alpha = 0.2) +
+  geom_line(data = percent_growth_scbi[percent_growth_scbi$dbh > percent_growth_scbi$b,], aes(x = doy, y = dbh_growth_percent,col = wood_type, group = tag_year), linetype = "dotted",alpha = 0.2) +
+  geom_line(data = percent_growth_scbi[percent_growth_scbi$dotted %in% "no",], aes(x = doy, y = dbh_growth_percent,col = wood_type, group = tag_year), linetype = "solid",alpha = 0.2) +
+  scale_colour_viridis_d("", end = 2/3)
+
+#Try to get dashed lines by year
+year_ags_scbi <- aggregate(percent_growth_scbi$dbh_growth_percent, by = list(percent_growth_scbi$year,percent_growth_scbi$wood_type, percent_growth_scbi$doy), FUN = mean)
+
+dotted_markers <- data.frame(NULL)
+for (j in c("ring-porous", "diffuse-porous")) {
+
+  for (i in c(2011:2020)) {
+    try_sub <- subset(percent_growth_scbi, percent_growth_scbi$year == i & percent_growth_scbi$wood_type == j)
+    bad_doys <- try_sub[try_sub$dotted %in% "yes",]
+    temp <- data.frame(i,j,unique(bad_doys$doy))
+    #assign(paste0("dotted_",i,"_",j),temp)
+    dotted_markers <- rbind(dotted_markers, temp)
+  }
+}
+dotted_markers$dot <- "yes"
+names(dotted_markers) <- c("year","wood_type","doy","dot")
+
+
+names(year_ags_scbi) <- c("year","wood_type","doy","perc")
+year_ags_scbi <- left_join(year_ags_scbi,dotted_markers, by = c("year","wood_type","doy"))
+year_ags_scbi[is.na(year_ags_scbi)] <- "no"
+
+# plot2_scbi <- ggplot() +
+#   coord_cartesian(ylim = c(0, 0.02)) +
+#   scale_y_continuous(labels = percent) +
+#   labs( x="",y = "Percent of total growth",
+#         title = "") +
+#   theme_bw() +
+#   theme(legend.position = c(.75,.75))+
+#   #geom_line(data =year_ags_scbi[year_ags_scbi$dot %in% "yes" & year_ags_scbi$doy < 150,], aes(x = doy, y =perc,col = wood_type, group = interaction(year,wood_type)), linetype = "dotted") +
+#   geom_line(data =year_ags_scbi, aes(x = doy, y =perc,col = wood_type, group = interaction(year,wood_type)), linetype = "dashed") +
+#   geom_line(data =year_ags_scbi[year_ags_scbi$dot %in% "no",], aes(x = doy, y =perc,col = wood_type, group = interaction(year,wood_type)), linetype = "solid", size = 1.2) +
+#   scale_colour_viridis_d("", end = 2/3)
+
+#Find median marker days by year
+pre_sub <- dotted_markers[dotted_markers$doy < 150,]
+preseason <- aggregate(pre_sub$doy, by = list(pre_sub$year,pre_sub$wood_type), FUN = median)
+names(preseason) <- c("year","wood_type","min")
+year_ags_scbi <- left_join(year_ags_scbi,preseason, by = c("year","wood_type"))
+
+post_sub <- dotted_markers[dotted_markers$doy > 150,]
+postseason <- aggregate(post_sub$doy, by = list(post_sub$year,post_sub$wood_type), FUN = median)
+names(postseason) <- c("year","wood_type","max")
+year_ags_scbi <- left_join(year_ags_scbi,postseason, by = c("year","wood_type"))
+
+# plot2_scbi <- ggplot() +
+#   coord_cartesian(ylim = c(0, 0.025)) +
+#   scale_y_continuous(labels = percent) +
+#   labs( x="",y = "Percent of total growth",
+#         title = "") +
+#   theme_bw() +
+#   theme(legend.position = c(.75,.75))+
+#   geom_line(data =year_ags_scbi[year_ags_scbi$doy < year_ags_scbi$min,], aes(x = doy, y =perc,col = wood_type, group = interaction(year,wood_type)), linetype = "dashed") +
+#   geom_line(data =year_ags_scbi[year_ags_scbi$doy > year_ags_scbi$max,], aes(x = doy, y =perc,col = wood_type, group = interaction(year,wood_type)), linetype = "dashed") +
+#   geom_line(data =year_ags_scbi[year_ags_scbi$doy > year_ags_scbi$min & year_ags_scbi$doy < year_ags_scbi$max,], aes(x = doy, y =perc,col = wood_type, group = interaction(year,wood_type)), linetype = "solid", size = 1.2) +
+#   scale_colour_viridis_d("", end = 2/3)
+#----
+
+
+
+
+#----
+# percent_try <- percent_try %>%
+#   group_by(tag_year) %>%
+#   mutate(
+#    # dbh_growth = dbh - lag(dbh),
+#     dbh_total_growth = b - a,
+#     dbh_growth_percent = dbh_growth/dbh_total_growth
+#   ) %>%
+#   dplyr::filter(!is.na(dbh_growth)) %>%
+#   mutate(
+#     dbh_growth_percent_cummulative = cumsum(dbh_growth_percent)
+#   )
+
+
 Wood_pheno_table_hf <- Wood_pheno_table_hf[,-14]
 LG5_parameter_values_hf <- LG5_parameter_values_hf[,-14]
 percent_growth_hf <- Wood_pheno_table_hf %>%
@@ -454,6 +548,78 @@ percent_growth_hf <- Wood_pheno_table_hf %>%
     dbh_growth_percent_cummulative = cumsum(dbh_growth_percent)
   )
 
+#PLOT TYPE 2, dotted lines outside of a and b
+percent_growth_hf$dotted <- ifelse(percent_growth_hf$dbh < percent_growth_hf$a | percent_growth_hf$dbh > percent_growth_hf$b, "yes", "no")
+
+# good <- ggplot() +
+#   coord_cartesian(ylim = c(0, 0.05)) +
+#   scale_y_continuous(labels = percent) +
+#   labs( x="",y = "Percent of total growth",
+#         title = "") +
+#   theme_bw() +
+#   theme(legend.position = c(.75,.75))+
+#   geom_line(data = percent_growth_hf[percent_growth_hf$dbh < percent_growth_hf$a,], aes(x = doy, y = dbh_growth_percent,col = wood_type, group = tag_year), linetype = "dashed", alpha = 0.2) +
+#   geom_line(data = percent_growth_hf[percent_growth_hf$dbh > percent_growth_hf$b,], aes(x = doy, y = dbh_growth_percent,col = wood_type, group = tag_year), linetype = "dashed",alpha = 0.2) +
+#   geom_line(data = percent_growth_hf[percent_growth_hf$dotted %in% "no",], aes(x = doy, y = dbh_growth_percent,col = wood_type, group = tag_year), linetype = "solid",alpha = 0.2) +
+#   scale_colour_viridis_d("", end = 2/3)
+
+#Try to get dashed lines by year
+year_ags_hf <- aggregate(percent_growth_hf$dbh_growth_percent, by = list(percent_growth_hf$year,percent_growth_hf$wood_type, percent_growth_hf$doy), FUN = mean)
+
+dotted_markers <- data.frame(NULL)
+#for loop to identify which DOY's are marked as outside of a:b
+for (j in c("ring-porous", "diffuse-porous")) {
+
+for (i in c(1999:2003)) {
+  try_sub <- subset(percent_growth_hf, percent_growth_hf$year == i & percent_growth_hf$wood_type == j)
+  bad_doys <- try_sub[try_sub$dotted %in% "yes",]
+  temp <- data.frame(i,j,unique(bad_doys$doy))
+  #assign(paste0("dotted_",i,"_",j),temp)
+  dotted_markers <- rbind(dotted_markers, temp)
+}
+}
+dotted_markers$dot <- "yes"
+names(dotted_markers) <- c("year","wood_type","doy","dot")
+names(year_ags_hf) <- c("year","wood_type","doy","perc")
+year_ags_hf <- left_join(year_ags_hf,dotted_markers, by = c("year","wood_type","doy"))
+year_ags_hf[is.na(year_ags_hf)] <- "no"
+
+# plot2_hf <- ggplot() +
+#   coord_cartesian(ylim = c(0, 0.02)) +
+#   scale_y_continuous(labels = percent) +
+#   labs( x="",y = "Percent of total growth",
+#         title = "") +
+#   theme_bw() +
+#   theme(legend.position = c(.75,.75))+
+#   #geom_line(data =year_ags_hf[year_ags_hf$dot %in% "yes" & year_ags_hf$doy < 150,], aes(x = doy, y =perc,col = wood_type, group = interaction(year,wood_type)), linetype = "dotted") +
+#   geom_line(data =year_ags_hf, aes(x = doy, y =perc,col = wood_type, group = interaction(year,wood_type)), linetype = "dashed") +
+#   geom_line(data =year_ags_hf[year_ags_hf$dot %in% "no",], aes(x = doy, y =perc,col = wood_type, group = interaction(year,wood_type)), linetype = "solid", size = 1.2) +
+#   scale_colour_viridis_d("", end = 2/3)
+
+#Find median marker days by year
+pre_sub <- dotted_markers[dotted_markers$doy < 150,]
+preseason <- aggregate(pre_sub$doy, by = list(pre_sub$year,pre_sub$wood_type), FUN = median)
+names(preseason) <- c("year","wood_type","min")
+year_ags_hf <- left_join(year_ags_hf,preseason, by = c("year","wood_type"))
+
+post_sub <- dotted_markers[dotted_markers$doy > 150,]
+postseason <- aggregate(post_sub$doy, by = list(post_sub$year,post_sub$wood_type), FUN = median)
+names(postseason) <- c("year","wood_type","max")
+year_ags_hf <- left_join(year_ags_hf,postseason, by = c("year","wood_type"))
+
+# plot2_hf <- ggplot() +
+#   coord_cartesian(ylim = c(0, 0.02)) +
+#   scale_y_continuous(labels = percent) +
+#   labs( x="",y = "Percent of total growth",
+#         title = "") +
+#   theme_bw() +
+#   theme(legend.position = c(.75,.75))+
+#   geom_line(data =year_ags_hf[year_ags_hf$doy < year_ags_hf$min,], aes(x = doy, y =perc,col = wood_type, group = interaction(year,wood_type)), linetype = "dashed") +
+#   geom_line(data =year_ags_hf[year_ags_hf$doy > year_ags_hf$max,], aes(x = doy, y =perc,col = wood_type, group = interaction(year,wood_type)), linetype = "dashed") +
+#   geom_line(data =year_ags_hf[year_ags_hf$doy > year_ags_hf$min & year_ags_hf$doy < year_ags_hf$max,], aes(x = doy, y =perc,col = wood_type, group = interaction(year,wood_type)), linetype = "solid", size = 1.2) +
+#   scale_colour_viridis_d("", end = 2/3)
+
+# #----
 #EVI2 plots
 scbiEVI2 <- read_csv("Data/Leaf phenology/scbiEVI2Filtered.csv")
 scbiEVI2$year <- year(scbiEVI2$date)
@@ -464,6 +630,77 @@ scbiEVI <- scbiEVI2[scbiEVI2$pointid %in% "SCBI",]
 #HF plot
 hfEVI <- scbiEVI2[scbiEVI2$pointid %in% "HARV",]
 #hfEVI <- hfEVI[hfEVI$BRDF_Albedo_Band_Mandatory_Quality_Band1 %in% 0,]
+
+#cumulative plots
+#SCBI
+#Calc averages SCBI ----
+percent_try <- percent_growth_scbi
+percent_try$dbh <- ifelse(percent_try$dbh < percent_try$a,percent_try$a ,percent_try$dbh)
+percent_try$dbh <- ifelse(percent_try$dbh > percent_try$b, percent_try$b,percent_try$dbh)
+
+
+percent_try$dbh_growth <- ifelse(percent_try$dbh < percent_try$a, 0,percent_try$dbh_growth)
+percent_try$dbh_growth <- ifelse(percent_try$dbh > percent_try$b, 0,percent_try$dbh_growth)
+
+final <- data.frame(NULL)
+for (i in 1:length(unique(percent_try$tag_year))) {
+  try <- percent_try[percent_try$tag_year %in% unique(percent_try$tag_year)[i],]
+  #try[1,14] <- unique(try$a)
+  #try[nrow(try),14] <- unique(try$b)
+
+  try$dbh_total_growth <- try$b-try$a
+  try$dbh_growth <- try$dbh - lag(try$dbh)
+  try[is.na(try)] <- 0
+  try$dbh_growth_percent <- try$dbh_growth/try$dbh_total_growth
+  try$dbh_growth_percent_cummulative <- cumsum(try$dbh_growth_percent)
+
+  final <- rbind(final,try)
+}
+percent_growth_scbi <- final
+
+growth_percs <- aggregate(percent_growth_scbi$dbh_growth_percent, by = list(percent_growth_scbi$wood_type, percent_growth_scbi$doy,percent_growth_scbi$year), FUN = mean)
+names(growth_percs) <- c("wood_type", "doy","year", "growth_percentage")
+growth_percs <- growth_percs[!(growth_percs$growth_percentage < 0),]
+
+perc_growth <- aggregate(percent_growth_scbi$dbh_growth_percent_cummulative, by = list(percent_growth_scbi$wood_type, percent_growth_scbi$doy,percent_growth_scbi$year), FUN = mean)
+names(perc_growth) <- c("wood_type", "doy","year", "perc")
+perc_growth <- perc_growth[!(perc_growth$perc < 0),]
+
+#HF
+#calc averages HF ----
+percent_try_hf <- percent_growth_hf
+percent_try_hf$dbh <- ifelse(percent_try_hf$dbh < percent_try_hf$a,percent_try_hf$a ,percent_try_hf$dbh)
+percent_try_hf$dbh <- ifelse(percent_try_hf$dbh > percent_try_hf$b, percent_try_hf$b,percent_try_hf$dbh)
+
+
+percent_try_hf$dbh_growth <- ifelse(percent_try_hf$dbh < percent_try_hf$a, 0,percent_try_hf$dbh_growth)
+percent_try_hf$dbh_growth <- ifelse(percent_try_hf$dbh > percent_try_hf$b, 0,percent_try_hf$dbh_growth)
+
+final <- data.frame(NULL)
+for (i in 1:length(unique(percent_try_hf$tag_year))) {
+  try <- percent_try_hf[percent_try_hf$tag_year %in% unique(percent_try_hf$tag_year)[i],]
+  #try[1,14] <- unique(try$a)
+  #try[nrow(try),14] <- unique(try$b)
+
+  try$dbh_total_growth <- try$b-try$a
+  try$dbh_growth <- try$dbh - lag(try$dbh)
+  try[is.na(try)] <- 0
+  try$dbh_growth_percent <- try$dbh_growth/try$dbh_total_growth
+  try$dbh_growth_percent_cummulative <- cumsum(try$dbh_growth_percent)
+
+  final <- rbind(final,try)
+}
+
+percent_growth_hf <- final
+
+growth_percs_hf <- aggregate(percent_growth_hf$dbh_growth_percent, by = list(percent_growth_hf$wood_type, percent_growth_hf$doy,percent_growth_hf$year), FUN = mean)
+names(growth_percs_hf) <- c("wood_type", "doy","growth_percentage")
+growth_percs_hf <- growth_percs_hf[!(growth_percs_hf$growth_percentage < 0),]
+
+perc_growth_hf <- aggregate(percent_growth_hf$dbh_growth_percent_cummulative, by = list(percent_growth_hf$wood_type, percent_growth_hf$doy,percent_growth_hf$year), FUN = mean)
+names(perc_growth_hf) <- c("wood_type", "doy","year", "perc")
+perc_growth_hf <- perc_growth_hf[!(perc_growth_hf$perc < 0),]
+
 
 png(filename = "doc/manuscript/tables_figures/growth_curves_all.png", width=10, height=10,
     pointsize=12, bg="transparent", units="in", res=600,
@@ -486,28 +723,32 @@ grid.arrange(
     labs(x = "",y = "", title = "Harvard Forest") +
     ylim(0,0.8),
 
-  ggplot(percent_growth_scbi, aes(x = doy, y = dbh_growth_percent, group = tag_year)) +
-    coord_cartesian(ylim = c(0, 0.05)) +
+  ggplot() +
+    coord_cartesian(ylim = c(0, 0.025)) +
     scale_y_continuous(labels = percent) +
     labs( x="",y = "Percent of total growth",
           title = "") +
     theme_bw() +
     theme(legend.position = c(.75,.75))+
-    geom_line(alpha = 0.2, aes(col = wood_type)) +
+    geom_line(data =year_ags_scbi[year_ags_scbi$doy < year_ags_scbi$min,], aes(x = doy, y =perc,col = wood_type, group = interaction(year,wood_type)), linetype = "dashed") +
+    geom_line(data =year_ags_scbi[year_ags_scbi$doy > year_ags_scbi$max,], aes(x = doy, y =perc,col = wood_type, group = interaction(year,wood_type)), linetype = "dashed") +
+    geom_line(data =year_ags_scbi[year_ags_scbi$doy > year_ags_scbi$min & year_ags_scbi$doy < year_ags_scbi$max,], aes(x = doy, y =perc,col = wood_type, group = interaction(year,wood_type)), linetype = "solid", size = 1.2) +
     scale_colour_viridis_d("", end = 2/3),
 
-  ggplot(percent_growth_hf, aes(x = doy, y = dbh_growth_percent, group = tag_year)) +
-    coord_cartesian(ylim = c(0, 0.05)) +
+  ggplot() +
+    coord_cartesian(ylim = c(0, 0.02)) +
     scale_y_continuous(labels = percent) +
-    labs(x="", y = "",
-         title = "") +
+    labs( x="",y = "Percent of total growth",
+          title = "") +
     theme_bw() +
-    theme(legend.position = "none")+
-    geom_line(alpha = 0.2, aes(col = wood_type)) +
-    scale_colour_viridis_d("Wood Type", end = 2/3),
+    theme(legend.position = c(.75,.75))+
+    geom_line(data =year_ags_hf[year_ags_hf$doy < year_ags_hf$min,], aes(x = doy, y =perc,col = wood_type, group = interaction(year,wood_type)), linetype = "dashed") +
+    geom_line(data =year_ags_hf[year_ags_hf$doy > year_ags_hf$max,], aes(x = doy, y =perc,col = wood_type, group = interaction(year,wood_type)), linetype = "dashed") +
+    geom_line(data =year_ags_hf[year_ags_hf$doy > year_ags_hf$min & year_ags_hf$doy < year_ags_hf$max,], aes(x = doy, y =perc,col = wood_type, group = interaction(year,wood_type)), linetype = "solid", size = 1.2) +
+    scale_colour_viridis_d("", end = 2/3),
 
-  ggplot(percent_growth_scbi, aes(x = doy, y = dbh_growth_percent_cummulative, group = tag_year, col = wood_type)) +
-    geom_line(alpha = 0.2) +
+  ggplot(perc_growth, aes(x = doy, y = perc, group = interaction(year,wood_type), col = wood_type)) +
+    geom_line(size = 1.2) +
     scale_y_continuous(labels = percent) +
     theme_bw()+
     theme(legend.position = "none")+
@@ -515,12 +756,12 @@ grid.arrange(
     scale_colour_viridis_d("Wood Type", end = 2/3),
 
 
-  ggplot(percent_growth_hf, aes(x = doy, y = dbh_growth_percent_cummulative, group = tag_year, col = wood_type)) +
-    geom_line(alpha = 0.2) +
+  ggplot(perc_growth_hf, aes(x = doy, y = perc, group = interaction(year,wood_type), col = wood_type)) +
+    geom_line(size = 1.2) +
     scale_y_continuous(labels = percent) +
     theme_bw()+
     theme(legend.position = "none")+
-    labs(x = "DOY", y = "")+
+    labs(x = "DOY", y = "Cummulative percent of total growth")+
     scale_colour_viridis_d("Wood Type", end = 2/3),
 
   as.table = TRUE, nrow=3, ncol=2) ###as.table specifies order if multiple rows
