@@ -202,7 +202,7 @@ Seasonal milestones for both canopy foliage phenology and stem growth occurred 3
 Consistent with the results of Ref[@dorangeville_peak_2021], ring porous species began growing earlier, reaching the $DOY_{25}$ benchmark earlier (by `r 155-128` days at SCBI and `r 166-144` at Harvard Forest), and their growth was spread over a longer growing season (average $L_{PGS}$ 22 and 17 days longer at SCBI and Harvard Forest, respectively; Fig. `r DOY_timing`, `r  EDF_growth_curves_all`, `r  EDT_phenology_parameters`). 
 Peak growing season length was similar across sites, with $L_{PGS}$ being, on average, only six days longer at SCBI for ring porous species and less than one day longer for diffuse porous species (`r  EDT_phenology_parameters`). 
 
-![**Figure 2 | Responses of foliage phenology (a,b) and stem growth timing (c,d) to spring temperatures at the Smithsonian Conservation Biology Institute (a,c) and Harvard Forest (b,d).** Panels (a-b) show ecosystem-level canopy foliage phenology from 2001-2018, obtained from the MODIS Global Vegetation Phenology product (MCD12Q2.006) for a single pixel at the center of each forest plot, where G = Greenup, M=Mid-greenup, P=peak, and S=Senescence (i.e., beginning of green-down). Panels (c-d) show the dates at which stem growth milestones were achieved, on average, for sampled populations of ring porous and diffuse porous trees at SCBI (2011-2020) and Harvard Forest (1999-2003). Mean $DOY_{25}$, $DOY_{50}$, and $DOY_{75}$ were estimated using the Bayesian model visualized, with confidence intervals, in `r EDF_pheno_Tmax_climwin`. Mean temperature was calculated for each xylem architecture/site combination over the respective critical $T_{max}$ window, then turned into a ratio and assigned a color on a gradient where the coldest year in the sample is blue and the warmest is red. Leaf phenology years are colored according to temperature in the critical $T_{max}$ window which had the best correlation with timing of greenup (ring porous window at HF and diffuse porous at SCBI).](tables_figures/DOYtiming_allyears.png){ width=25% }
+![**Figure 2 | Responses of foliage phenology (a,b) and stem growth timing (c,d) to spring temperatures at the Smithsonian Conservation Biology Institute (a,c) and Harvard Forest (b,d).** Panels (a-b) show ecosystem-level canopy foliage phenology from 2001-2018, obtained from the MODIS Global Vegetation Phenology product (MCD12Q2.006) for a single pixel at the center of each ForestGEO plot, where G = Greenup, M=Mid-greenup, P=peak, and S=Senescence (i.e., beginning of green-down). Panels (c-d) show the dates at which stem growth milestones were achieved, on average, for sampled populations of ring porous and diffuse porous trees at SCBI (2011-2020) and Harvard Forest (1999-2003). Mean $DOY_{25}$, $DOY_{50}$, and $DOY_{75}$ were estimated using the Bayesian model visualized, with confidence intervals, in `r EDF_pheno_Tmax_climwin`. Mean temperature was calculated for each xylem architecture/site combination over the respective critical $T_{max}$ window, then turned into a ratio and assigned a color on a gradient where the coldest year in the sample is blue and the warmest is red. Leaf phenology years are colored according to temperature in the critical $T_{max}$ window which had the best correlation with timing of greenup (ring porous window at HF and diffuse porous at SCBI).](tables_figures/DOYtiming_allyears.png){ width=25% }
 
  
 Both MODIS-derived canopy foliage phenology and dendrometer band measurements of stem growth timing generally shifted backwards as spring temperatures increased (Fig. `r DOY_timing`, `r EDF_pheno_all`). 
@@ -360,15 +360,14 @@ An advantage of this approach is that short-term shrinkage and swelling associat
 Having fit the model for each band-year of data, we then modeled DBH using these optimal parameter values in our logistic growth model and extracted the intra-annual growth variables of interest (Fig. `r schematic_summary`). 
 
 
-
-
 After fitting the growth model, we removed tree-years with poor fits. 
 Models were judged to be poorly fit if certain modeled growth characteristics fell outside of the logical range. 
 Modeled fits for tree-years were removed under five conditions:
-(1) single day growth rates were $\ge 2.5$ standard deviations away from the mean for each xylem architecture (SCBI = 3, Harvard Forest = 11); 
+<!--rearrange these in order of how data were removed (3 & 4 come first)-->
+(1) ~~single day growth rates were~~ $g_{max}$ was <!--confirm this change--> $\ge 2.5$ standard deviations away from the mean for each xylem architecture (SCBI = 3, Harvard Forest = 11); 
 (2) timing variables ($DOY_{ip}$, $DOY_{25}$, $DOY_{50}$, $DOY_{75}$) were $\ge 2.5$ standard deviations away from the means for their xylem architecture group, year, and site (SCBI = 74, Harvard Forest = 101); 
 (3) tree-years with small or negligible total growth ($\Delta DBH$ $\le 0.05$ mm; SCBI = 26, Harvard Forest = 253); 
-(4) tree years where first intraannual measurement was later than the first spring survey (trees that were missed in the initial census; SCBI = 22, HF = 8).
+(4) tree-years where first intraannual measurement was later than the first spring survey (trees that were missed in the initial census; SCBI = 22, HF = 8).
 At both sites the tag years removed through this method were proportional to the original sample size, indicating that no species or size class was disproportionately removed compared to others.
 This process was repeated using 2 and 3 standard deviations and the results of analyses were not qualitatively different. 
 
@@ -376,8 +375,8 @@ This process was repeated using 2 and 3 standard deviations and the results of a
 
 Canopy foliage phenology data for the years 2001-2018 were extracted for SCBI and Harvard Forest from the MCD12Q2 V6 Land Cover Dynamics product (a.k.a. MODIS Global Vegetation Phenology product)[@friedl_mcd12q2_2019] via Google Earth Engine. 
 For each year at each site, we extracted data from the pixel containing the center of each forest plot (resolution of 500m). 
-Using the daily MODIS 2-band Enhanced Vegetation Index data (EVI2), the product yields the timing of phenometrics (vegetation phenology) over each year, including timing of greenup, midgreenup, and senescence as used in this study. 
-Data points were kept if they were flagged as "good" or "best" quality.
+Using the daily MODIS 2-band Enhanced Vegetation Index data (EVI2), the product yields the timing of phenometrics (vegetation phenology) over each year, including timing of greenup, midgreenup, peak, and senescence as used in this study. 
+Data points were included in the analysis if they were flagged as "good" or "best" quality.
 
 <!--Weather data -->
 For the dendrometer band and leaf phenology analyses, climate data corresponding to the measurement periods were obtained from local weather stations at each focal site. 
