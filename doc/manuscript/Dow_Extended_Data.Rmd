@@ -120,7 +120,7 @@ kable_styling(latex_options = c("scale_down", "hold_position"), protect_latex = 
 
 \newpage
 
-![**Extended Data Figure 2 | Phenological patterns of forest canopy greenness (top row) and stem growth of ring- and diffuse-porous trees, represented as both relative and cumulative fractions of total annual growth (middle and bottom rows, respectively), at the Smithsonian Conservation Biology Institute (SCBI) and Harvard Forest.** In the top row, canopy greenness is characterized using the two band Enhanced Vegetation Index (EVI2), with each line representing a year between 2000 and 2018. For stem growth, each line represents the growth of one tree over one year, as modeled based on a five-parameter logistic growth model to dendrometer band data.](tables_figures/growth_curves_all.png){ width=100% }
+![**Extended Data Figure 2 | Phenological patterns of forest canopy greenness (top row) and stem growth of ring- and diffuse-porous trees, represented as both relative and cumulative fractions of total annual growth (middle and bottom rows, respectively), at the Smithsonian Conservation Biology Institute (SCBI) and Harvard Forest.** In the top row, canopy greenness is characterized using the two band Enhanced Vegetation Index (EVI2), with each line representing a year between 2000 and 2018. For stem growth, each line represents the average growth over one year, as modeled based on a five-parameter logistic growth model to dendrometer band data. Dashed lines represent modeled DBH change which fell outside of the median DOY where predicted starting DBH (a) and predicted ending DBH (b) were reached. Solid lines represent DBH change attributable to stem growth.](tables_figures/growth_curves_all.png){ width=100% }
 
 \newpage
 
