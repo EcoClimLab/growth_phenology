@@ -339,6 +339,8 @@ Second, when measurements remained essentially unchanged for several readings, f
 In these cases, the full annual record for the tree was removed.
 Third, data points that deviated substantially from normal growth patterns, but for unknown causes, were removed. 
 If a majority of the data points fell into this class within a tree-year, the entire year was removed from the analysis.
+We also removed tree-years with small or negligible total growth ($\Delta DBH$ $\le 0.05$ mm; SCBI = 26, Harvard Forest = 253), and tree-years where first intraannual measurement was later than the first spring survey (trees that were missed in the initial census; SCBI = 22, HF = 8).
+These were removed because they reduce the reliability of predicted growth in the modeled curves. 
 
 We fit a five-parameter logistic growth model[@mcmahon_general_2015] to dendrometer band data from each tree-year to define stem growth milestones and growth rates (Fig. `r schematic_summary`). 
 In particular, we model the observed diameter at breast height (DBH) on a given day of the year (DOY; *i.e.*, julian days) as: 
@@ -365,9 +367,7 @@ Models were judged to be poorly fit if certain modeled growth characteristics fe
 Modeled fits for tree-years were removed under five conditions:
 <!--rearrange these in order of how data were removed (3 & 4 come first)-->
 (1) ~~single day growth rates were~~ $g_{max}$ was <!--confirm this change--> $\ge 2.5$ standard deviations away from the mean for each xylem architecture (SCBI = 3, Harvard Forest = 11); 
-(2) timing variables ($DOY_{ip}$, $DOY_{25}$, $DOY_{50}$, $DOY_{75}$) were $\ge 2.5$ standard deviations away from the means for their xylem architecture group, year, and site (SCBI = 74, Harvard Forest = 101); 
-(3) tree-years with small or negligible total growth ($\Delta DBH$ $\le 0.05$ mm; SCBI = 26, Harvard Forest = 253); 
-(4) tree-years where first intraannual measurement was later than the first spring survey (trees that were missed in the initial census; SCBI = 22, HF = 8).
+(2) timing variables ($DOY_{ip}$, $DOY_{25}$, $DOY_{50}$, $DOY_{75}$) were $\ge 2.5$ standard deviations away from the means for their xylem architecture group, year, and site (SCBI = 74, Harvard Forest = 101).
 At both sites the tag years removed through this method were proportional to the original sample size, indicating that no species or size class was disproportionately removed compared to others.
 This process was repeated using 2 and 3 standard deviations and the results of analyses were not qualitatively different. 
 
