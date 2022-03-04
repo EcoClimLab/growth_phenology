@@ -49,4 +49,4 @@ kable(summary_table, col.names = c("Variable", "Definition", "RP", "DP","RP", "D
 #add footnote: 
 #kableExtra::footnote(number = c("'RP' and 'DP' refer to ring- and diffuse- porous species, respectively", "'-' and '+' = significant negative or positive response, respectively; 'n.s.'= no significant correlation"), footnote_as_chunk = FALSE, threeparttable=TRUE, escape = FALSE)
 ```
-*While this result was statistically significant, effect size was small (estimated change $\le 3$%/$^\circ$C) and considered not biologically significant
+*statistically significant, but effect size small ($\le$ 3% $^\circ$C$^{-1}$) and unlikely to be of biological significance
