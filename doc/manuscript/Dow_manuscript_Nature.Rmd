@@ -176,6 +176,7 @@ The timing of stem growth and its climate sensitivity is linked to annual growth
 - close coordination of budburst and initiation of xylogenesis[@delpierre_temperate_2016]
 - start of xylogenesis makes growth possible, but actual growth depends on climate conditions during the growth period
 - probably include some mention of conifers (for whcih more work has been done)
+- cite @gao_earlier_2022, noting that their result may be driven by conifers
 
 ~~~~ (rework ending here)
 
@@ -291,7 +292,8 @@ Moreover, acclimation of trees to warming temperatures[@gessler_way_2020] and, o
 If we look across spatial gradients where the latter have had time to play out, we see that warmer spring temperatures are associated with earlier leaf-out[@delgado_differences_2020] and longer growing seasons, which in turn are correlated with greater tree growth[@anderson-teixeira_joint_2021], woody productivity[@banburymorgan_global_2021], and _NEE_[@churkina_spatial_2005].
 Thus, warming spring temperatures are expected to increase the biophysical potential for annual tree growth, but that potential is not being realized on an interannual time frame. 
 
-As climate change accelerates and spring temperatures become increasingly warmer, growing seasons will start earlier; however, barring rapid acclimation of forests to the warming conditions, advancement in the timing of stem growth (Fig. 1) is unlikely to provide the sustained increase in CO~2~ sequestration in woody biomass and ensuant negative climate change feedback that is anticipated in most climate forecasting models[@buermann_widespread_2018;@zani_increased_2020;@keenan_net_2014;@ahlstrom_robustness_2012].
+As climate change accelerates and spring temperatures become increasingly warmer, growing seasons will start earlier; however, barring rapid acclimation of temperate deciduous forests to the warming conditions, advancement in the timing of stem growth (Fig. 1) is unlikely to provide the sustained increase in CO~2~ sequestration in woody biomass and ensuant negative climate change feedback that is anticipated in most climate forecasting models[@buermann_widespread_2018;@zani_increased_2020;@keenan_net_2014;@ahlstrom_robustness_2012].
+<!--gao_earlier_2022 demonstrates the same for some other regions.-->
 Rather, the dominant effect of rising temperatures on forest woody productivity will be a negative effect of high summer temperatures (Fig. 3), which constitutes a positive feedback to climate change.
 
 
