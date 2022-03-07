@@ -174,13 +174,13 @@ The timing of stem growth and its climate sensitivity is linked to annual growth
 - stem growth is routinely used to estimate woody productivity (but wood density partially decouples them) [@delpierre_wood_2016 and refs therein]
 - stem growth and woody productivity are decoupled from GPP[@delpierre_wood_2016 and refs therein]
 - close coordination of budburst and initiation of xylogenesis[@delpierre_temperate_2016]
-- start of xylogenesis makes growth possible, but actual growth depends on climate conditions during the growth period
+- start of xylogenesis makes growth possible, but actual growth depends on climate conditions during the growth period [@etzold_number_2022]
 - probably include some mention of conifers (for whcih more work has been done)
 - cite @gao_earlier_2022, noting that their result may be driven by conifers
 
 ~~~~ (rework ending here)
 
-Tree-ring records, which can be used to examine relationships of annual growth to temperature but not to understand growth seasonality, reveal that growth of temperate deciduous trees tends to be most sensitive to temperature or potential evapotranspiration between late spring and early summer[@dorangeville_drought_2018;@helcoski_growing_2019]<!-- dorangeville_drought_2018 looks at PET.-->, with some hints that warmer springs may have a modest positive effect on growth[@helcoski_growing_2019].<!-- add more refs here, but only if already cited elsewhere (to keep n references down-->
+Tree-ring records, which can be used to examine relationships of annual growth to temperature[@gao_earlier_2022] but not to understand growth seasonality, reveal that growth of temperate deciduous trees tends to be most sensitive to temperature or potential evapotranspiration between late spring and early summer[@dorangeville_drought_2018;@helcoski_growing_2019]<!-- dorangeville_drought_2018 looks at PET.-->, with some hints that warmer springs may have a modest positive effect on growth[@helcoski_growing_2019].<!-- add more refs here, but only if already cited elsewhere (to keep n references down-->
 Thus, tree-ring evidence does not necessarily align with the finding that warming spring temperatures increase annual forest CO~2~ uptake[@keenan_net_2014].
 Characterizing responses of stem growth to warming spring temperatures is critical to bridging this conceptual disconnect and understanding how forest biomass growth is likely to change as the climate warms.
 
@@ -195,7 +195,7 @@ Using dendrometer band measurements taken throughout multiple growing seasons at
 This analysis was performed separately for ring- (67 trees at SCBI and 138 trees at Harvard Forest) and diffuse porous (52 trees at SCBI and 183 trees at Harvard Forest) species, which differ in the seasonal timing of growth[@dorangeville_peak_2021;@tumajer_limitation_2022]. 
 These stem-growth milestones were compared to canopy foliage phenology (measured at ecosystem level via remote sensing).
 
-![**Figure 1 | Summary of temperate deciduous tree growth responses to warmer spring temperatures.** (a) Schematic illustrating parameters of interest and summarizing predominant responses of each to warmer maximum temperatures during a 'critical temperature window', defined as the period with the strongest control over $DOY_{25}$; (b) Variable definitions and summary of responses to warmer spring temperatures at two temperate forests -- Smithsonian Conservation Biology Institute (SCBI) and Harvard Forest -- and for two groups of broadleaf deciduous species (RP=ring porous; DP=diffuse porous), where up and down arrows indicate increases and decreases that are significant both statistically (p<0.05) and biologically (effect size >3%/$^\circ$C), '-' indicates no significant correlation, and 'mixed' indicates a mix of significant and non-significant correlations, often in different directions.](tables_figures/schematic_summary_with_table.png){ width=70% }
+![**Figure 1 | Summary of temperate deciduous tree growth responses to warmer spring temperatures.** (a) Schematic illustrating parameters of interest and summarizing predominant responses of each to warmer maximum temperatures during a 'critical temperature window', defined as the period with the strongest control over $DOY_{25}$; (b) Variable definitions and summary of responses to warmer spring temperatures at two temperate forests -- Smithsonian Conservation Biology Institute (SCBI) and Harvard Forest -- and for two groups of broadleaf deciduous species (RP=ring porous; DP=diffuse porous), where up and down arrows indicate increases and decreases that are significant both statistically (p<0.05) and biologically (effect size >3%$^\circ$C^-1^), '-' indicates no significant correlation, and 'mixed' indicates a mix of significant and non-significant correlations, often in different directions.](tables_figures/schematic_summary_with_table.png){ width=70% }
 
 
 
