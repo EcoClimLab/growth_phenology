@@ -294,12 +294,15 @@ Dendrometer band measurements were collected at SCBI[@bourg_initial_2013] and Ha
 SCBI (38.8935° N, 78.1454° W; elevation 273–338 m.a.s.l.) is located in the Blue Ridge Mountains at the northern end of Shenandoah National Park, 5 km south of Front Royal, Virginia. 
 The forest is secondary and mixed age, having established in the mid-19th century after conversion from agricultural fields[@bourg_initial_2013]. 
 Dominant canopy species within the 25.6 ha ForestGEO plot include tulip poplar (*Liriodendron tulipifera* L.), oaks (*Quercus spp.*), and hickories (*Carya spp.*)[@helcoski_growing_2019]. 
-The climate is humid temperate, with 1950-2019 mean annual precipitation of 1018 mm and temperatures averaging 1° C in January and 24° C in July[@anderson-teixeira_joint_2021].  
+The climate is humid temperate, with 1950-2019 mean annual precipitation of 1018 mm and temperatures averaging 1°C in January and 24°C in July[@anderson-teixeira_joint_2021].
+Within the study period for the dendrometer band analysis (2011-2020), ...*[some stats on climate]*
 
 Harvard Forest (42.5388° N, 72.1755° W, 340-368 m.a.s.l.) is located near the central Massachusetts town of Petersham. 
 The forest is secondary and mixed age, having re-established around the beginning of the 20th century following agricultural use and significant hurricane damage in 1938. 
 Dominant species within the 35 ha ForestGEO plot are hemlock (*Tsuga canadensis* (L.) Carrière), oak (*Quercus spp.*) and red maple (*Acer rubrum* L.). 
-The climate is temperate continental, with 1950-2019 mean annual precipitation of 1104 mm and temperatures averaging -5° C in January and 22° C in July[@anderson-teixeira_joint_2021]. The summer of 1999 was abnormally dry. Records indicate that in 1999 only 52mm of precipitation fell per month June-August compared to average monthly precipitation values of 100mm+ [@dorangeville_peak_2021].
+The climate is temperate continental, with 1950-2019 mean annual precipitation of 1104 mm and temperatures averaging -5° C in January and 22° C in July[@anderson-teixeira_joint_2021]. 
+Within the study period for the dendrometer band analysis (1999-2003), ...*[some stats on climate]*
+The summer of 1999 was abnormally dry, with precipitation of only 52 mm mo^-1^ in June-August compared to average monthly precipitation of 100+ mm[@dorangeville_peak_2021].
 
 <!--Data collection and preparation -->
 
@@ -314,8 +317,9 @@ In total, our analysis included `r n_tree_years` tree-years (`r  EDT_species`).
 Measurements were timed to begin before the beginning of spring growth and to continue through the cessation of growth in the fall. 
 At SCBI, the median start date was April 14, which was adjusted forward when early leaf-out of understory vegetation was observed, with the earliest start date being March 30 (in 2020). 
 Measurements were continued through to fall leaf senescence, with the median end date being October 17 and the latest end date November 26 (2012). 
-Timing of measurements at Harvard Forest were similar, with the median start date of April 23 and median end date of October 30. 
-1999 was an anomalous year where initial measurements were taken on January 5, but not taken again until April 15. 
+*Timing of measurements at Harvard Forest were similar, with the median start date of April 23 and median end date of October 30.* <!--Does this change?-->
+All measurements from 1998 were dropped because of a late start date (**DATE**).
+*1999 was an anomalous year where initial measurements were taken on January 5, but not taken again until April 15.* <!--I think we dropped this.Correct?-->
 The latest end date was November 11, 2002.
 In our analysis, each band-year was treated independently, with no data overlap from one year to the next.
 
