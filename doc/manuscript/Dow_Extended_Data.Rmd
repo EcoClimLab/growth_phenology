@@ -12,7 +12,7 @@ header-includes:  \usepackage{float}
                   \captionsetup[table]{labelformat=empty}
 ---
 ```{r eval = TRUE, echo=FALSE, warning=FALSE, results='hide'}
-path_to_results <- paste0(dirname(dirname(getwd())), "/results/") #I was trying to read directly from results folder, but couldn't get it working.
+path_to_results <- paste0(dirname(dirname(getwd())), "/results/") 
 
 # EXTENDED DATA 
 ##tables
@@ -20,8 +20,6 @@ EDT_species="Extended Data Table 1"
 EDT_phenology_parameters="Extended Data Table 2" 
 EDT_tree_ring_summary="Extended Data Table 3" 
 
-sample_size_by_year= "XX"
-#chronologies_table="S4" #!!! Hand-numbered in tree-ring figure captions
 
 ##figures
 EDF_map = "Extended Data Figure 1" 
