@@ -396,7 +396,7 @@ More information on rstanarm's default weakly informative priors:
 https://cran.r-project.org/web/packages/rstanarm/vignettes/priors.html#default-weakly-informative-prior-distributions
 -->
 
-To rule out the possibility that observed patterns were strongly influenced by summer drought, we examined the relationship between spring temperatures and summer Standardized Precipitation Evapotranspiration Index[@vicente-serrano_multiscalar_2010].
+To rule out the possibility that observed patterns were strongly influenced by summer drought, we examined the relationship between spring temperatures and summer Standardized Precipitation Evapotranspiration Index (SPEI)[@vicente-serrano_multiscalar_2010].
 The latter was obtained from the ForestGEO Climate Data Portal v1.0 (https://forestgeo.github.io/Climate/)[@anderson-teixeira_forestgeo_2020;@begueria_standardized_2014;@vicente-serrano_multiscalar_2010a]. 
 Linear models were run with 4-, 6-, and 12-month SPEI values of June, July, and August vs April $T_{max}$ to determine if warm spring temperatures were associated with greater summer drought stress in our data set. 
 No significant correlations were found (all p>0.05).
@@ -412,7 +412,7 @@ We studied a total of `r n_cores_focal_sites` cores which included `r n_chronolo
 The tree-ring records from our focal sites were complemented with a much larger collection spanning `r n_cores_sites-2` deciduous and mixed forest sites in Eastern North America[@maxwell_sampling_2020;@dorangeville_drought_2018].
 Again, records were limited to broadleaf deciduous species with clearly defined xylem porosity (*i.e.*, excluding semi-ring porous). 
 
-For each species-site combination, we converted tree-ring records into the dimensionless RWI to emphasize interannual variability associated with climate [@cook_methods_1990].
+For each species-site combination, we converted tree-ring records into the dimensionless RWI to emphasize interannual variability associated with climate[@cook_methods_1990].
 A 2/3rds _n_ spline was applied to each core using ARSTAN to produce standardized ring-width series; _n_ is the number of years in each series[@cook_time_1985;@cook_methods_1990].
 An adaptive power transformation, a process that also stabilises the variance over time[@cook_calculating_1997], was used to minimize the influence of outliers in all series. 
 Low series replication, often in the earliest portions of a chronology collection, can also inflate the variance of tree-ring records[@jones_estimating_1997].
