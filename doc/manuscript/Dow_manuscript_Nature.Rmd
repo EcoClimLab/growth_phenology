@@ -106,7 +106,7 @@ EDF_growth_curves_all = "Extended Data Figure 2"
 EDF_climwin = "Extended Data Figure 3"
 EDF_pheno_all = "Extended Data Figures 4-5"
 EDF_pheno_Tmax_climwin = "Extended Data Figure 4"
-EDF_pheno_Tmax_AprilMay = "Extended Data Figure 5"
+EDF_pheno_Tmax_month = "Extended Data Figure 5"
 EDF_tree_ring_figs= "Extended Data Figure 6-7"
 EDF_tree_rings_TMIN = "Extended Data Figure 6"
 EDF_tree_rings_TMAX_extended = "Extended Data Figure 7"
@@ -386,8 +386,8 @@ The time period yielding the lowest $\Delta AICc$ was selected as the CTW.
 Because $T_{max}$ proved to have a generally stronger influence over $DOY_{25}$ and other growth parameters, we focused on this variable in our ultimate model, as opposed to $T_{min}$.
 We defined CTW for $DOY_{25}$, as opposed to other parameters describing the timing of growth, because spring temperatures should have the most direct influence on this variable.
 
-To ensure that patterns were robust under an alternative definition of CTW, and to parallel the monthly time windows used in our tree-ring analysis (detailed below; Fig. `r tree_rings`, `r EDF_tree_ring_figs`), we also ran analyses where we fixed the CTW to be the month of April.
-This was consistent with the periods identified by *climwin* for ring- and diffuse porous species groups at both sites, all of which included all or part of April (`r  EDT_phenology_parameters`).
+To ensure that patterns were robust under an alternative definition of CTW, and to parallel the monthly time windows used in our tree-ring analysis (detailed below; Fig. `r tree_rings`, `r EDF_tree_ring_figs`), we also ran analyses where we fixed the CTW identified by *climwin* to be the month with the most days in the CTW (`r  EDT_phenology_parameters`) each critical window. 
+The months identified were March and April for ring- and diffuse-porous species at SCBI, respectively, and April and May for ring- and diffuse-porous species at Harvard Forest, respectively.
 
 <!--Hypothesis testing -->
 Correlation between the dendrometer band-derived growth parameters ($DOY_{25}$, $DOY_{50}$, $DOY_{75}$, $L_{PGS}$, $g_{max}$, and $\Delta DBH$}, Fig. `r schematic_summary`) and spring temperatures were assessed using a linear mixed model in a hierarchical Bayesian framework.
