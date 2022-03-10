@@ -253,7 +253,7 @@ There are two main possibilities, which hold contrasting implications for the re
 ~~~*points to make*:
 
 - stem growth is routinely used to estimate woody productivity (but wood density partially decouples them) [@delpierre_wood_2016 and refs therein]
-- positive effects of warm springs can be compensated by negative effects of accumulation of seasonal water deficits[@buermann_widespread_2018]
+- positive effects of warm springs can be compensated by negative effects of accumulation of seasonal water deficits[@buermann_widespread_2018;@lian_summer_2022]
 - our study provides further evidence of sink limitation to growth
 - we do not know where the extra C is going. If we look at instances where growth is more strongly limited than GPP, we see that NSCs can build up[@refs], and this build up can feed back to reduce photosynthesis[@refs]. We can also look to studies documenting enhanced GPP with no enhancement of growth. In a mature eucalypt forest exposed to elevated CO2, enhanced GPP did not result in higher growth, but rather was released back to the atmosphere on relatively short time scales through enchanced respiration[@jiang_fate_2020]
 ~~~
@@ -262,7 +262,7 @@ One possibility is that extra photosynthate in years with warm springs may be al
 It is theoretically possible that extra C is allocated to enhanced cell wall thickening, a process that lags behind stem expansion[@cuny_woody_2015], or to a thicker layer of higher-density latewood, resulting in formation of more C-dense wood in years with warm springs.
 However, existing evidence indicates that warm springs have a neutral or negative effect on latewood width[@tardif_influence_2006;@roibu_climatic_2020;@kern_multiple_2013], which is more strongly controlled by summer drought stress[@tardif_influence_2006;@roibu_climatic_2020], suggesting that a positive effect of warm springs on the total C content of annual rings is unlikely. 
 Extra C could also be saved within trees as non-structural carbohydrates (NSC) and used towards growth the following year[@trumbore_quantifying_2002;@richardson_seasonal_2013], potentially including an earlier start to growth[@fu_variation_2014]. 
-Extension of our tree-ring analysis revealed weak correlation between April $T_{max}$ and growth the following year (sig. pos. correlations for 5/142 RP and 3/66 DP species-site combinations, Fig. `r EDF_tree_rings_TMAX_extended`), although predominantly positive (non-significant) correlations in RP species suggests that this dynamic may weakly influence their annual growth.
+Extension of our tree-ring analysis revealed weak correlation between April $T_{max}$ and growth the following year (sig. pos. correlations for 5/142 RP and 3/66 DP species-site combinations, `r EDF_tree_rings_TMAX_extended`), although predominantly positive (non-significant) correlations in RP species suggests that this dynamic may weakly influence their annual growth.
 Thus, warm springs are unlikely to provide substantial, sustained C sinks under warming spring temperatures.  
 
 A second possibility is that any additional C fixed during years with warm springs may be allocated to plant functions other than stem growth, including respiration, NSC storage, reproduction, and production of foliage, roots[@zohner_how_2021], or root exudates. 
