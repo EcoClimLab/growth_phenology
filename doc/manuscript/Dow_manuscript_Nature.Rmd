@@ -216,7 +216,8 @@ $\Delta DBH$ displayed a weak positive relationship (+0.029-0.08 mm/ $^\circ$C) 
 
 To understand how annual growth increments have responded to spring temperatures at the centennial scale, we analyzed tree-ring chronologies of `r n_chronologies_SCBI` species at SCBI[@helcoski_growing_2019] and `r n_chronologies_HF` species at Harvard Forest (`r EDT_species`), along with an additional `r n_chronologies-n_chronologies_SCBI-n_chronologies_HF` chronologies from `r n_cores_sites-2` sites (Fig. `r tree_rings`; `r EDF_map`; `r EDT_tree_ring_summary`)[@dorangeville_drought_2018].
 In total, our analysis included `r n_chronologies` chronologies representing `r n_cores_species` broadleaf species at `r n_cores_sites` sites distributed from Alabama (Lat = 34.35) to Michigan (Lat = 45.56) and spanning a 15 $^\circ$C range in April $T_{max}$.
-Across all chronologies, the standardized ring-width index (RWI) was significantly (at p $\le$ 0.05) positively correlated with April $T_{max}$ for only 2% of chronologies: 1 of 142 ring porous and 4 of 66 diffuse porous species-site combinations (`r EDT_tree_ring_summary`).
+Across all chronologies, the standardized ring-width index (RWI) was significantly (at p $\le$ 0.05) positively correlated with April $T_{max}$ for only 2% of chronologies: 1 of 142 ring porous and 4 of 66 diffuse porous species-site combinations (`r EDT_tree_ring_summary`). 
+There were even fewer significant positive correlations with March and May $T_{max}$: 0% and `r round(2/(142+66),2)*100`%, respectively (`r EDT_tree_ring_summary`).
 In contrast, RWI was frequently negatively correlated with $T_{max}$ during peak growing season months (May-August), with significant correlations for 52% (May: 45/141, Jun: 107/141, Jul: 91/141, Aug: 53/141) and 46% (May: 10/66, Jun: 52/66, Jul: 36/66, Aug: 23/66) of species-site-month combinations for ring porous and diffuse porous species, respectively.
 $T_{min}$ generally exibited weaker relationships to annual growth than $T_{max}$, with few significant correlations between spring $T_{min}$ and RWI (`r EDF_tree_rings_TMIN`).
 
@@ -424,17 +425,18 @@ Low series replication, often in the earliest portions of a chronology collectio
 The 1/3rds spline method was chosen when replication in the inner portion of each chronology (ca. inner 30–50 yr of each record depending on full chronology length) was less than three trees. 
 When replication was greater than n = 3 trees, we used the average correlation between raw ring-width series (rbar) method.
 The robust biweight mean chronology (RWI) for each species-site combination was calculated from the ring-width indices following variance stabilisation[@cook_time_1985].
-We defined chronology start year (Extended Data Table 1) as the year where subsample signal strength (SSS) passed a threshold of SSS = 0.8, or where $\ge$ 80% of the population signal was captured in the chronology.
+We defined chronology start year (`r EDT_species`) as the year where subsample signal strength (SSS) passed a threshold of SSS = 0.8, or where $\ge$ 80% of the population signal was captured in the chronology.
 
 <!--QUILT PLOT METHODS-->
 For the analysis of correlation between RWI and climate variables, we obtained monthly $T_{max}$ and $T_{min}$ data for 1901-2019 from CRU v.4.04 [@harris_version_2020].
-Correlations between monthly climate and $RWI$ were assessed using *dplR*[@bunn_dendrochronology_2008] and *bootRes*[@zang_dendroclimatic_2013] in R v 4.0 (R Core Team, 2020), which correlated functions and bootstrapped confidence intervals for these relationships[@biondi_dendroclim2002_2004].
+Correlations between monthly climate and RWI were assessed using *dplR*[@bunn_dendrochronology_2008] and *bootRes*[@zang_dendroclimatic_2013] in R v 4.0 (R Core Team, 2020), which correlated functions and bootstrapped confidence intervals for these relationships[@biondi_dendroclim2002_2004].
 We analyzed these correlations for January through September of the current year (presented in Fig. `r tree_rings`, `r EDF_tree_rings_TMIN`).
 To test for potential lag effects of spring temperatures on growth the following year, we also ran a version of the analysis extending back to include climate of every month of the previous year (`r EDF_tree_rings_TMAX_extended`).
-Correlations and significance levels for months April-August are given in `r chron_table`.
+Correlations and significance levels for months March-August are given in `r chron_table`.
 
 <!--MULTIVARIATE ANALYSIS METHODS-->
 We used a multivariate model to test for joint effects of April and summer $T_{max}$ on RWI.
+We focused on April to represent spring temperatures because it was the month with greatest overall alignment with the CTW's identified in the dendrometer band analysis and had the highest rate of positive correlations with RWI (`r EDT_tree_ring_summary`).
 We began by testing univariate correlations of $T_{max}$ over three summer windows: June, June-July, and May-August. 
 Having determined that, among these, June-July explained the most variation, we then analyzed the joint effects of April $T_{max}$ and June-July $T_{max}$ on RWI for each chronology independently using the base lm() function in R. 
 Slopes and p-values for each chronology are given in `r chron_table`. 
