@@ -244,7 +244,7 @@ However, there is also a disconnect with findings that NEE is at least modestly 
 Warming advances spring phenology and may advance or delay autumn senescence depending on timing of warming and water availability[@zohner_ongoing_2019;@xie_predicting_2018;@crabbe_extreme_2016], with delays more common across eastern North America [@buermann_widespread_2018;@finzi_carbon_2020;@keenan_net_2014], implying that warming temperatures are lengthening the period from peak stem growth to the cessation of CO~2~ uptake by the ecosystem.
 We show that the extra C fixation in years with warm springs does not substantially augment stem diameter growth in the current or following year (`r EDF_tree_rings_TMAX_extended`).
 
-Although stem diameter increments are routinely used to calculate $ANPP_{woody}$[@refs], stem volume growth does not directly translate into C content, but rather can be partially decoupled through differences in wood density or C content[@delpierre_wood_2016 and refs therein].  
+Although stem diameter increments are routinely used to calculate $ANPP_{woody}$[@refs], stem volume growth does not directly translate into C content, but rather can be partially decoupled through differences in wood density or C content[@delpierre_wood_2016; @and_refs_therein].  
 Thus, it is theoretically possible that extra C is allocated to enhanced cell wall thickening, a process that lags behind stem expansion[@cuny_woody_2015], or to a higher ratio of high-density latewood to lower-density earlywood, resulting in formation of more C-dense wood in years with warm springs.
 However, existing evidence indicates that warm springs have a neutral or negative effect on latewood width[@tardif_influence_2006;@roibu_climatic_2020;@kern_multiple_2013], which is more strongly controlled by summer drought stress[@tardif_influence_2006;@roibu_climatic_2020], suggesting that a positive effect of warm springs on the total C content of annual rings is unlikely. 
 *Rather, the most likely explanation of the observed lack of correlation between spring temperatures and stem growth is that $ANPP_{woody}$ is limited by sink factors, such that the expected increase photosynthate availability[@refs] (observed at Harvard Forest[@finzi_carbon_2020_but_verify]) does not enhance growth.*
@@ -268,16 +268,12 @@ Therefore, understanding how warming spring temperatures are influencing C alloc
 <!--the dominant effect of temperature on ANPP_woody is a negative effect of gs temperature-->
 Irregardless of the influence of spring temperatures on C cycling within the ecosystem, our results make clear that the dominant effect of temperatures on tree growth occur not in the spring, but during the peak growing season. 
 Indeed, the timing of peak growth in June and July (`r EDT_phenology_parameters`, `r EDF_growth_curves_all`) coincides with the timing of the greatest sensitivity of annual growth to $T_{max}$ (Fig. `r tree_rings`, `r EDT_tree_ring_summary`).
-This finding is consistent with numerous tree-ring studies demonstrating strong sensitivity of growth to drought stress[@refs] or high temperatures[@refs] during the peak growing season. 
-
-- Warm springs may also amplify summer drought stress in some times and places, effectively canceling out any positive effects of an extended growing period[@buermann_widespread_2018;@zhang_drought_2021;@lian_summer_2022]. 
-- positive effects of warm springs can be compensated by negative effects of accumulation of seasonal water deficits[@buermann_widespread_2018;@lian_summer_2022]
-- our analysis isn't set up for detecting interaction. But, sites are fairly mesic. Mechanisms remain to be understood, but the net result is the same. 
-
+This finding is consistent with numerous tree-ring studies demonstrating strong sensitivity of growth to drought stress[@refs] or high temperatures[@refs] during the peak growing season.
+<!--*It is also worth noting that growth is often influenced by temperature of the preceding year(s) through its influence on production and storage of NSCs[@refs;@helcoski], and indeed we observe many significant effects of $T_{max}$ in the preceding growing season, albeit very few in the preceding spring (`r EDF_tree_rings_TMAX_extended`).*--><!--this sentence feels tangential, but discussion of these lag effects was requested by one reviewer.-->
+Warm springs may also amplify summer drought stress in some times and places, effectively canceling out any positive effects of an extended growing period[@buermann_widespread_2018;@zhang_drought_2021;@lian_summer_2022].
+While such an interaction was unlikely to have played a major role within the scope of our dendrometer band study, given relatively mesic conditions and lack of significant correlation between spring temperatures and summer drought stress (see Methods), there is potential for warm springs to have a net negative effect on growth through such mechanisms at other times or places[@refs].
 
 <!--conclusions-->
-
-*old content:*
 As climate change accelerates and spring temperatures become increasingly warmer, growing seasons will start earlier; however, barring rapid acclimation of temperate deciduous forests to the warming conditions, advancement in the timing of stem growth (Fig. 1) is unlikely to provide the sustained increase in CO~2~ sequestration in woody biomass and ensuant negative climate change feedback that is anticipated in most climate forecasting models[@buermann_widespread_2018;@zani_increased_2020;@keenan_net_2014;@ahlstrom_robustness_2012].
 <!--gao_earlier_2022 demonstrates the same for some other regions.-->
 <!-- cite @gao_earlier_2022, noting that their result may be driven by conifers-->
