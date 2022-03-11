@@ -265,9 +265,10 @@ Thus, warming spring temperatures are likely to increase the biophysical potenti
 If extra photosynthate made available through a growing difference between GPP and $ANPP_{woody}$ is allocated to functions that relieve limitations on woody growth -- for example, by enhancing nutrient and water acquisition through enhanced allocation to roots[@zohner_how_2021] -- it is possible that warming spring temperatures could ultimately increase $ANPP_{woody}$ through indirect mechanisms.
 Therefore, understanding how warming spring temperatures are influencing C allocation within temperate deciduous forest ecosystems remains an important outstanding question.
 
-
-
 <!--the dominant effect of temperature on ANPP_woody is a negative effect of gs temperature-->
+Irregardless of the influence of spring temperatures on C cycling within the ecosystem, our results make clear that the dominant effect of temperatures on tree growth occur not in the spring, but during the peak growing season. 
+Indeed, the timing of peak growth in June and July (`r EDT_phenology_parameters`, `r EDF_growth_curves_all`) coincides with the timing of the greatest sensitivity of annual growth to $T_{max}$ (Fig. `r tree_rings`, `r EDT_tree_ring_summary`).
+This finding is consistent with numerous tree-ring studies demonstrating strong sensitivity of growth to drought stress[@refs] or high temperatures[@refs] during the peak growing season. 
 
 - Warm springs may also amplify summer drought stress in some times and places, effectively canceling out any positive effects of an extended growing period[@buermann_widespread_2018;@zhang_drought_2021;@lian_summer_2022]. 
 - positive effects of warm springs can be compensated by negative effects of accumulation of seasonal water deficits[@buermann_widespread_2018;@lian_summer_2022]
