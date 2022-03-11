@@ -119,8 +119,8 @@ chron_table= "SI Table 1"
 ## some stats/ 
 species_table <- read.csv(file = "tables_figures/species_table.csv")
 n_dendro_trees <- sum(na.omit(species_table[, "n.trees"]))
-n_dendro_trees_SCBI <- 123 #doing this the lazy way. summed from species_table rather than coded. 
-n_dendro_trees_HF <- 340 #doing this the lazy way. summed from species_table rather than coded. 
+n_dendro_trees_SCBI <- 119 #doing this the lazy way. summed from species_table rather than coded. 
+n_dendro_trees_HF <- 321 #doing this the lazy way. summed from species_table rather than coded. 
 n_tree_years <- sum(na.omit(species_table[, "n.tree.years"]))
 n_cores_focal_sites <- sum(na.omit(species_table[, "n.cores"]))
 chronology_table <- read.csv(file = "tables_figures/chronology_table.csv")
