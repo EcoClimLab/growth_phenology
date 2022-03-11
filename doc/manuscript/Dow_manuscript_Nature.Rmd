@@ -256,27 +256,16 @@ The fate of any additional C fixed during years with warm springs remains unreso
 Indeed, in a situation where GPP was enhanced (through experimental elevation of CO~2~) but $ANPP_{woody}$ was constrained *(presumably by sink factors)*, additional C was released back to the atmosphere on relatively short time scales through enhanced respiration[@jiang_fate_2020].
 Indeed, it has been observed that C loss through fall or winter respiration can offset gains from an earlier spring[@oishi_warmer_2018;@buermann_widespread_2018].
 It is also possible that a buildup of NSCs that are not required for growth or other functions would feed back to reduce the rate of photosynthesis[@refs], such that sink limitation of $ANPP_{woody}$ reduces GPP relative to its potential in years with warm springs.
-Either way, our results demonstrate that warm springs do not increase $ANPP_{woody}$ on an interannual time scale.
-
+Either way, our results demonstrate that warm springs do not increase $ANPP_{woody}$ on an interannual time scale, contrasting with their tendency to augment _NEE_[@zhou_explaining_2016;@fu_maximum_2019;@keenan_net_2014].
 
 <!--.short vs long-term effects-->
-It is possible that 
+It is possible that, as spring warming continues, forests will adjust to directional changes in growing season length with an enhancement of $ANPP_{woody}$.
+Across spatial gradients in spring temperature, warmer spring temperatures are associated with earlier leaf-out[@delgado_differences_2020] and longer growing seasons, which in turn are correlated with greater tree growth[@anderson-teixeira_joint_2021], woody productivity[@banburymorgan_global_2021], and NEE[@churkina_spatial_2005].
+Thus, warming spring temperatures are likely to increase the biophysical potential for annual tree growth, but that potential is not currently being realized on an interannual time frame.
+If extra photosynthate made available through a growing difference between GPP and $ANPP_{woody}$ is allocated to functions that relieve limitations on woody growth -- for example, by enhancing nutrient and water acquisition through enhanced allocation to roots[@zohner_how_2021] -- it is possible that warming spring temperatures could ultimately increase $ANPP_{woody}$ through indirect mechanisms.
+Therefore, understanding how warming spring temperatures are influencing C allocation within temperate deciduous forest ecosystems remains an important outstanding question.
 
-*notes:*
 
-- we show lack of effect on interannual scale 
-- feedbacks such as greater nutrient acquisition could change this.
-
-*old content:*
-
-However, C allocated to nonstructural carbohydrates or relatively short-lived plant tissues would typically remain in the ecosystem beyond the end of the year[@trumbore_quantifying_2002], such that the long-term effect of warm springs on the forest C balance would not be captured in analyses of interannual variation[@zhou_explaining_2016;@fu_maximum_2019;@keenan_net_2014].
-Studies within or including the temperate deciduous biome that examined long-term trends in growing season length and ecosystem C uptake[@keeling_increased_1996;@dragoni_evidence_2011;@keenan_net_2014;@finzi_carbon_2020] -- as opposed to their interannual variation -- showed increasing trends in both variables, suggesting that the C not allocated to woody productivity within the current year has a multi-year residence time within the ecosystem.
-
-Thus, a distinction between interannual variation and directional change may be critical when considering how directional climate change is likely to affect tree growth and ecosystem C dynamics. 
-As discussed above, temporal lags between C uptake and release imply that the full effects of warm spring temperatures on forest woody productivity and C cycling are unlikely to be apparent in analyses of interannual variation (including this analysis)[@kannenberg_linking_2019].
-Moreover, acclimation of trees to warming temperatures[@gessler_way_2020] and, on longer time scales, species adaptations and shifts in community composition[@fisichelli_temperate_2014] are likely to alter the seasonality of forest C cycling.
-If we look across spatial gradients where the latter have had time to play out, we see that warmer spring temperatures are associated with earlier leaf-out[@delgado_differences_2020] and longer growing seasons, which in turn are correlated with greater tree growth[@anderson-teixeira_joint_2021], woody productivity[@banburymorgan_global_2021], and NEE[@churkina_spatial_2005].
-Thus, warming spring temperatures are expected to increase the biophysical potential for annual tree growth, but that potential is not being realized on an interannual time frame. 
 
 <!--the dominant effect of temperature on ANPP_woody is a negative effect of gs temperature-->
 
