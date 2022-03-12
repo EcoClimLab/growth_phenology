@@ -76,11 +76,11 @@ all_stems <- all_stems[complete.cases(all_stems$dbh2),]
 #all_stems <- all_stems_clean
 #all_stems <- all_stems[all_stems$plot_tag %in% tagsubset,]
 for (q in 1998:2003) {
-  q = 1998
+
   skip_to_next <- FALSE
   Stem2 <- subset(all_stems, year == q)
   for (w in unique(Stem2$sp)) { # removes trees with less than 10 measurements in each year
-    w = "betual"
+
     Stem3 <- subset(Stem2, sp == w)
     count_df <- count(Stem3$tag_stem)
     count_df <- subset(count_df, freq >= 10)
