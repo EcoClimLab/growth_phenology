@@ -85,7 +85,7 @@ add_header_above(c(" ",  "SCBI" = 2, "Harvard Forest"=2 )) %>%
     add_indent(18:21)%>%
 kable_styling(latex_options = c("scale_down", "hold_position"), protect_latex = T) 
 ```
-$^\ast$Temperature sensitivity refers to the sensitivity of a parameter to the mean maximum temperature ($T_{max}$) during the critical temperature window (Fig. 1). Because leaf phenology measurements were derived from satellite imagery and included both ring- and diffuse-porous trees, the selection of a critical window was less straightforward. We used the critical window which had the greatest correlation with leaf greenup timing as the critical window for leaf phenology calculations. This resulted in the selection of the diffuse-porous critical window at SCBI and the ring-porous critical window at HF, corresponding to the grouping of the species with greatest woody productivity at each site (diffuse-porous *Liriodendron tulipifera* at SCBI, ring-porious *Quercus rubra* at HF).
+$^\ast$Temperature sensitivity refers to the sensitivity of a parameter to the mean maximum temperature ($T_{max}$) during the critical temperature window (CTW, Fig. 1). Because leaf phenology measurements were derived from satellite imagery and included both ring- and diffuse-porous trees, the selection of a critical window was less straightforward. We used the CTW of the porosity group containing the dominant canopy species at each site: *Liriodendron tulipifera* (diffuse porous) at SCBI and *Quercus rubra* (ring porous) at Harvard Forest. 
 
 \newpage
 
