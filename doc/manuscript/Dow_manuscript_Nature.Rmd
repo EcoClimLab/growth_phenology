@@ -189,7 +189,7 @@ These stem-growth milestones were compared to canopy foliage phenology (measured
 <!--Consistent with the results of Ref[@dorangeville_peak_2021], ring porous species began growing earlier, reaching the $DOY_{25}$ benchmark earlier (by `r 155-128` days at SCBI and `r 166-144` at Harvard Forest), and their growth was spread over a longer growing season (average $L_{PGS}$ 22 and 17 days longer at SCBI and Harvard Forest, respectively; Fig. `r DOY_timing`, `r  EDF_growth_curves_all`, `r  EDT_phenology_parameters`).--> 
 <!--Peak growing season length was similar across sites, with $L_{PGS}$ being, on average, only six days longer at SCBI for ring porous species and less than one day longer for diffuse porous species (`r  EDT_phenology_parameters`).--> 
  
-Both canopy foliage phenology and stem growth timing shifted earlier as spring temperatures increased (Fig. `r DOY_timing`, `r EDF_pheno_all`). 
+Both canopy foliage phenology and the timing of stem growth shifted earlier as spring temperatures increased (Fig. `r DOY_timing`, `r EDF_pheno_all`). 
 We found a consistent effect of temperature ($T_{max}$ or $T_{min}$) throughout the spring, but the strongest effects on stem growth timing were found using $T_{max}$ during a critical temperature window (CTW). 
 CTW was identified by measuring the correlation between weekly $T_{max}$ and $DOY_{25}$ for all combinations of consecutive weeks from January 1 to mean $DOY_{25}$ for each xylem architecture-site combination (`r EDF_climwin`).
 The CTW was defined as the weeks for which this correlation was strongest, and mean $T_{max}$ during this period (CTW $T_{max}$) used as the independet variable.   
