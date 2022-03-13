@@ -205,8 +205,8 @@ Specifically, $DOY_{25}$, $DOY_{50}$, and $DOY_{75}$ advanced 0-1.7 days/ $^\cir
 Whereas the length of time between canopy greenup and senescence (*i.e.,* the day when greenness dropped below 90% of its peak) increased with the CTW $T_{max}$ of the porosity group containing the dominant canopy species at each site (diffuse porous at SCBI, ring porous at Harvard Forest; Fig. `r DOY_timing`a-b), there was no consistent lengthening of $L_{PGS}$ (Fig. `r schematic_summary`, `r EDF_pheno_all`).<!--Note to Cam: double check this-->
 
 In contrast to the pronounced effects of CTW $T_{max}$ on the timing of growth, its effects on $g_{max}$ and $\Delta DBH$ were weak and inconsistent (Figs. `r schematic_summary`, `r EDF_pheno_all`). 
-Specifically, $g_{max}$, which occurred very close to $DOY_{50}$, displayed extremely small negative changes (HF) or changes in opposite directions (SCBI) in relationship to CTW $T_{max}$ for ring- and diffuse- porous species.
-$\Delta DBH$ displayed a weak positive relationship (+0.029-0.08 mm/ $^\circ$C) with CTW $T_{max}$ at SCBI and a weak negative relationship (-0.2-0.03mm/ $^\circ$C) at HF (`r EDF_pheno_Tmax_climwin`). 
+Specifically, $g_{max}$, which occurred very close to $DOY_{50}$, displayed extremely small negative changes (Harvard Forest) or changes in opposite directions (SCBI) in relationship to CTW $T_{max}$ for ring- and diffuse- porous species.
+$\Delta DBH$ displayed a weak positive relationship (+0.029-0.08 mm/ $^\circ$C) with CTW $T_{max}$ at SCBI and a weak negative relationship (-0.2-0.03 mm/ $^\circ$C) at Harvard Forest (`r EDF_pheno_Tmax_climwin`). 
 
 ## Tree-ring analysis {-#Tree} 
 
@@ -317,7 +317,7 @@ Second, when measurements remained essentially unchanged for several readings, f
 In these cases, the full annual record for the tree was removed.
 Third, data points that deviated substantially from normal growth patterns, but for unknown causes, were removed. 
 If a majority of the data points fell into this class within a tree-year, the entire year was removed from the analysis.
-We also removed tree-years with small or negligible total growth ($\Delta DBH$ $\le 0.05$ mm; SCBI = 26, Harvard Forest = 253), and tree-years where first intraannual measurement was later than the first spring survey (trees that were missed in the initial census; SCBI = 22, HF = 8).
+We also removed tree-years with small or negligible total growth ($\Delta DBH$ $\le 0.05$ mm; SCBI = 26, Harvard Forest = 253), and tree-years where first intraannual measurement was later than the first spring survey (trees that were missed in the initial census; SCBI = 22, Harvard Forest = 8).
 These were removed because they reduce the reliability of predicted growth in the modeled curves. 
 
 We fit a five-parameter logistic growth model[@mcmahon_general_2015] to dendrometer band data from each tree-year to define stem growth milestones and growth rates (Fig. `r schematic_summary`). 
