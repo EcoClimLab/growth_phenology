@@ -152,7 +152,10 @@ n_chronologies_HF <- 4
 <!--BODY-->
 
 In recent decades, tree growth in Earth's forests has more than offset losses from deforestation and other disturbances, such that a net forest CO~2~ sink of ~`r round(5.8*12/44,1)` Gt C yr^-1^<!--net forest estimate in Harris et al. Table 2--> offsets ~`r round(5.8/32,1)*100`%<!--net forest estimate / fossil fuel & cement, (Harris et al. Table 2)--> of anthropogenic emissions[@harris_global_2021], dramatically slowing the pace of atmospheric CO~2~ accumulation and climate change.
-Of this important C sink, ~`r round(3.6/7.6,2)*100`%<!-- temperate net / global net, (Harris et al. Table 1)--> occurs in temperate forests[@harris_global_2021], with temperate deciduous forests sequestering >0.3 Gt C yr^-1^ [@pugh_role_2019]. <!-- Pugh et al. 2019 estimate that the temperate deciduous sink is >300 Tg C yr-1, with ~200 Tg C yr-1  attributable to demography (forest regrowth) and >100 Tg C yr-1  controlled by environmental drivers.--> 
+<!--@xu_changes_2021 provides an alternate estimate, which is about half of Harris. The main difference being that Xu includes savannas and woodlands, which have experienced a lot of loss from fires. Given focus on forests here, Harris seems more appropriate. -->
+Of this important C sink, ~ `r round(3.6/7.6,2)*100`%<!-- temperate net / global net, (Harris et al. Table 1)--> occurs in temperate forests[@harris_global_2021],
+<!-- alternate estimate: `r round(.31/.88,2)*100`% (temperate net / global net, (@xu_changes_2021. Table 2))--> 
+with temperate deciduous forests sequestering >0.3 Gt C yr^-1^ [@pugh_role_2019]. <!-- Pugh et al. 2019 estimate that the temperate deciduous sink is >300 Tg C yr-1, with ~200 Tg C yr-1  attributable to demography (forest regrowth) and >100 Tg C yr-1  controlled by environmental drivers.--> 
 The future behavior of this C sink will play an important yet uncertain role in influencing atmospheric CO~2~ and climate change[@arora_carbon_2020;@friedlingstein_global_2020;@fatichi_moving_2014]. 
 
 In temperate deciduous forests, spring warming generally lengthens the period over which trees have photosynthetically active leaves[@jeong_phenology_2011;<!--@ibanez_forecasting_2010;-->@menzel_european_2006;<!--@menzel_growing_1999;-->@lu_no_2022] and that over which the ecosystem is a net CO~2~ sink[@keenan_net_2014;@lu_no_2022].
