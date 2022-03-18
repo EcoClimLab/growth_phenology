@@ -248,7 +248,7 @@ However, existing evidence indicates that warm springs have a neutral or negativ
 Rather, the most likely explanation of the observed lack of correlation between spring temperatures and stem growth is that growth is sink-limited[@delpierre_wood_2016;@refs].
 
 <!--on the fate of extra C-->
-Our results add to a growing body of evidence for a sink limitation of stem growth[@delpierre_wood_2016;@refs], wherein global change factors known to enhance photosynthesis, such as longer growing seasons or elevated CO~2~, not cause a corresponding increase in $ANPP_{woody}$[@jiang_fate_2020;@refs].
+Our results add to a growing body of evidence for a sink limitation of stem growth[@delpierre_wood_2016;@refs], wherein global change factors known to enhance photosynthesis, such as longer growing seasons or elevated CO~2~, do not cause a corresponding increase in $ANPP_{woody}$[@jiang_fate_2020;@refs].
 The fate of any additional C fixed during years with warm springs remains unresolved, but possible destinations -- including respiration, NSC storage, and production of foliage, reproductive structures, roots[@zohner_how_2021], or root exudates -- generally have shorter residence times than woody growth.
 Indeed, when GPP of a mature forest was increased through experimental CO~2~ enrichment, $ANPP_{woody}$ remained unchanged, while additional C was released back to the atmosphere on relatively short time scales through enhanced respiration[@jiang_fate_2020].
 Consistent with this, it has been observed that C gains from an earlier spring can be offset through fall or winter respiration[@oishi_warmer_2018;@buermann_widespread_2018].
@@ -268,7 +268,7 @@ This finding is consistent with numerous tree-ring studies demonstrating strong 
 <!--*It is also worth noting that growth is often influenced by temperature of the preceding year(s) through its influence on production and storage of NSCs[@refs;@helcoski], and indeed we observe many significant effects of $T_{max}$ in the preceding growing season, albeit very few in the preceding spring (`r EDF_tree_rings_TMAX_extended`).*--><!--this sentence feels tangential, but discussion of these lag effects was requested by one reviewer.-->
 Warm springs may also amplify summer drought stress in some times and places, effectively canceling out any positive effects of an extended growing period[@buermann_widespread_2018;@zhang_drought_2021;@lian_summer_2022].
 While such an interaction was unlikely to have played a major role within the scope of our dendrometer band study, given relatively mesic conditions and lack of significant correlation between spring temperatures and summer drought stress (see Methods), our tree-ring analysis does reveal a higher frequency of negative than positive correlations of annual growth to spring temperatures, particularly for ring porous species in cooler climates (Fig. `r tree_rings`, `r EDT_tree_ring_summary`).
-Thus, warm springs can have a net negative effect on growth at some times or places[@gao_earlier_2022].
+Thus, warm springs can have a net negative effect on growth, particularly when water is limiting[@gao_earlier_2022].
 
 
 <!--conclusions-->
