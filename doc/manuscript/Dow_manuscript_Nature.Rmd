@@ -134,7 +134,7 @@ n_chronologies_HF <- 4
 
 \newpage
 
-<!--LENGTH: The typical length of an article with 3-4 modest display items (figures and tables) is 2000-2500 words (summary paragraph plus body text). We're currently at 2644 words and 1 modest + 2 large display items. Articles typically have 30-50 references (currently at 53)-->
+<!--LENGTH: The typical length of an article with 3-4 modest display items (figures and tables) is 2000-2500 words (summary paragraph plus body text). We're currently at 2635 words and 1 modest + 2 large display items. Articles typically have 30-50 references (currently at 54)-->
 
 
 <!-- Articles start with a fully referenced summary paragraph, ideally of no more than 200 words, which is separate from the main text and avoids numbers, abbreviations, acronyms or measurements unless essential. It is aimed at readers outside the discipline. This summary paragraph should be structured as follows: 2-3 sentences of basic-level introduction to the field; a brief account of the background and rationale of the work; a statement of the main conclusions (introduced by the phrase 'Here we show' or its equivalent); and finally, 2-3 sentences putting the main findings into general context so it is clear how the results described in the paper have moved the field forwards. Please refer to our annotated example  to see how the summary paragraph should be constructed.-->
@@ -244,7 +244,7 @@ Combined with widespread observations that warming springs tend to lengthen the 
 It remains theoretically possible that warm springs could augment $ANPP_{woody}$, which, although routinely calculated based on stem growth, can be partially decoupled from it through differences in wood density or C content[@delpierre_wood_2016].
 Extra C fixed in years with warm springs could potentially be allocated to formation of more C-dense wood, either through enhanced cell wall thickening (a process that lags behind stem expansion[@cuny_woody_2015]) or to a higher ratio of high-density latewood to lower-density earlywood.
 However, existing evidence indicates that vessel features are most strongly controlled by summer drought stress in the previous (earlywood) or current (latewood) year, while warm springs have a neutral or negative effect on latewood width[@tardif_influence_2006;@roibu_climatic_2020;@kern_multiple_2013]<!--tardif is essential here-->.
-Thus, a positive effect of warm springs on the total C content of annual rings is unlikely, suggesting that warm springs do not augment $ANPP_{woody}$. 
+Thus, it is unlikely that warm springs have a positive effect on total C content of annual rings or $ANPP_{woody}$. 
 The fate of any additional C fixed during years with warm springs remains unresolved, but possible destinations -- including respiration, NSC storage, and production of foliage, reproductive structures, roots[@zohner_how_2021], or root exudates -- generally have shorter residence times than woody growth.
 Indeed, when GPP of a mature forest was increased through experimental CO~2~ enrichment, $ANPP_{woody}$ remained unchanged, while additional C was released back to the atmosphere on relatively short time scales through enhanced respiration[@jiang_fate_2020].
 Consistent with this, it has been observed that C gains from an earlier spring can be offset through fall or winter respiration[@oishi_warmer_2018;@buermann_widespread_2018].
@@ -268,7 +268,7 @@ Thus, warm springs can have a net negative effect on growth, particularly when w
 
 
 <!--conclusions-->
-As climate change accelerates and spring temperatures become increasingly warmer, growing seasons will start earlier. 
+As spring temperatures become increasingly warmer, growing seasons will start earlier. 
 However, barring rapid acclimation of temperate deciduous forests to the warming conditions, advancement in the timing of stem growth (Fig. 1) is unlikely to provide the sustained increase in CO~2~ sequestration in woody biomass and ensuant negative climate change feedback that is anticipated in most climate forecasting models[@buermann_widespread_2018;@zani_increased_2020;@keenan_net_2014;@ahlstrom_robustness_2012].
 Rather, the dominant effect of rising temperatures on forest woody productivity will be a negative effect of high summer temperatures (Fig. `r tree_rings`), which constitutes a positive feedback to climate change.
 
