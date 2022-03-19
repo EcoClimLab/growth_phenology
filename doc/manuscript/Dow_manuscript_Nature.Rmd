@@ -284,13 +284,13 @@ SCBI (38.8935° N, 78.1454° W; elevation 273–338 m.a.s.l.) is located in the 
 The forest is secondary and mixed age, having established in the mid-19th century after conversion from agricultural fields[@bourg_initial_2013]. 
 Dominant canopy species within the 25.6 ha ForestGEO plot include tulip poplar (*Liriodendron tulipifera* L.), oaks (*Quercus spp.*), and hickories (*Carya spp.*)[@helcoski_growing_2019]. 
 The climate is humid temperate, with 1950-2019 mean annual precipitation of 1018 mm and temperatures averaging 1°C in January and 24°C in July[@anderson-teixeira_joint_2021].
-Within the study period for the dendrometer band analysis (2011-2020), ...*[some stats on climate]*
+Within the study period for the dendrometer band analysis (2011-2020), Spring temperatures (March + April $T_{max}$) and summer SPEI values (4-month value of August) were similar to the average prior to the study period (1970-2010). Prior to the study period, the average spring $T_{max}$ was 16.9 $degreeC$ and summer SPEI was -0.06. In the study period, average spring $T_{max}$ was 17.6 $degreeC$ and summer SPEI was 0.51.
 
 Harvard Forest (42.5388° N, 72.1755° W, 340-368 m.a.s.l.) is located near the central Massachusetts town of Petersham. 
 The forest is secondary and mixed age, having re-established around the beginning of the 20th century following agricultural use and significant hurricane damage in 1938. 
 Dominant species within the 35 ha ForestGEO plot are hemlock (*Tsuga canadensis* (L.) Carrière), oak (*Quercus spp.*) and red maple (*Acer rubrum* L.). 
 The climate is temperate continental, with 1950-2019 mean annual precipitation of 1104 mm and temperatures averaging -5° C in January and 22° C in July[@anderson-teixeira_joint_2021]. 
-Within the study period for the dendrometer band analysis (1999-2003), ...*[some stats on climate]*
+Within the study period for the dendrometer band analysis (1999-2003), Spring temperatures (March + April $T_{max}$) and summer SPEI values (4-month value of August) were similar to the average prior to the study period (1970-1998). Prior to the study period, the average spring $T_{max}$ was 10.9 $degreeC$ and summer SPEI was 0.13. In the study period, average spring $T_{max}$ was 11.2 $degreeC$ and summer SPEI was 0.20.
 The summer of 1999 was abnormally dry, with precipitation of only 52 mm mo^-1^ in June-August compared to average monthly precipitation of 100+ mm[@dorangeville_peak_2021].
 
 <!--Data collection and preparation -->
