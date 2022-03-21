@@ -433,7 +433,7 @@ Although some models may have benefited from data transformations, we determined
 
 # Acknowledgements {-#Acknowledgements} 
 We gratefully acknowledge all researchers who assisted with data collection in the field and laboratory, particularly Tsun Fung Au, Joshua Bregy, James Dickens, Karen Heeter, Anna Hennage, Daniel King, James McGee, Benjamin Lockwood, Jennifer McGarvey, Victoria Meakem, Josh Oliver, Jessica Shue, Karly Schmidt-Simard, Brandon Strange, Alyssa Terrell, Brynn Taylor, Michael Thornton, Senna Robeson, Matt Wenzel, and Luke Wylie. 
-Thanks to David A. Orwig and members of the ForestGEO Ecosystems & Climate Lab at SCBI for helpful feedback.
+Thanks to David A. Orwig, members of the ForestGEO Ecosystems & Climate Lab at SCBI, and four anonymous reviewers for helpful feedback.
 The research was funded by ForestGEO (Smithsonian). 
 Collection of tree-ring samples was funded by a USDA Agriculture and Food Research Initiative grant 2017-67013-26191 and from the Indiana University Vice Provost for Research Faculty Research Program.
 
