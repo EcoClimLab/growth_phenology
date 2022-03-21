@@ -347,7 +347,7 @@ Having fit the model for each band-year of data, we then modeled DBH using these
 After fitting the growth model, we removed tree-years with poor fits.
 Models were judged to be poorly fit if modeled growth parameters were outliers, which were commonly indicative of unrealistic fits (e.g., growth occurring outside the growing season or over a very short period) and underlain by very slow tree growth or poor data records that passed the initial screening (described above).
 Modeled fits for tree-years were removed under two conditions:
-(1) $g_{max}$ was $\ge 2.5$ standard deviations away from the mean for each site-xylem architecture group combination (SCBI = 3, Harvard Forest = 11);  
+(1) $g_{max}$ was $\ge 2.5$ standard deviations away from the mean for each site-xylem architecture group combination (SCBI = 3, Harvard Forest = 11);
 (2) timing variables ($DOY_{ip}$, $DOY_{25}$, $DOY_{50}$, $DOY_{75}$) were $\ge 2.5$ standard deviations away from the means for their site, xylem architecture group, and year (SCBI = 74, Harvard Forest = 101).
 At both sites the tree-years removed through this method were proportional to the original sample size, indicating that no species or size class was disproportionately removed compared to others.
 This process was repeated using 2 and 3 standard deviations as the cutoff for defining outliers, yielding qualitatively similar results. 
