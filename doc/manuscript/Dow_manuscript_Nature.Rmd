@@ -284,13 +284,15 @@ SCBI (38.8935° N, 78.1454° W; elevation 273–338 m.a.s.l.) is located in the 
 The forest is secondary and mixed age, having established in the mid-19th century after conversion from agricultural fields[@bourg_initial_2013]. 
 Dominant canopy species within the 25.6 ha ForestGEO plot include tulip poplar (*Liriodendron tulipifera* L.), oaks (*Quercus spp.*), and hickories (*Carya spp.*)[@helcoski_growing_2019]. 
 The climate is humid temperate, with 1950-2019 mean annual precipitation of 1018 mm and temperatures averaging 1°C in January and 24°C in July[@anderson-teixeira_joint_2022].
-Within the study period for the dendrometer band analysis (2011-2020), spring temperatures (March + April $T_{max}$) and summer SPEI values (4-month value of August) were similar to the average prior to the study period (1970-2010). Prior to the study period, the average spring $T_{max}$ was 16.9 $degreeC$ and summer SPEI was -0.06. In the study period, average spring $T_{max}$ was 17.6 $degreeC$ and summer SPEI was 0.51.
+Within the study period for the dendrometer band analysis (2011-2020), spring temperatures (March and April $T_{max}$; source: **local weather stations or CRU**, as described below) and summer Standardized Precipitation Evapotranspiration Index (SPEI)[@vicente-serrano_multiscalar_2010] values (4-month value of August) were similar to the average prior to the study period (1970-2010).
+Prior to the study period, the average spring $T_{max}$ was 16.9 $degreeC$ and summer SPEI was -0.06. In the study period, average spring $T_{max}$ was 17.6 $degreeC$ and summer SPEI was 0.51.
 
 Harvard Forest (42.5388° N, 72.1755° W, 340-368 m.a.s.l.) is located near the central Massachusetts town of Petersham. 
 The forest is secondary and mixed age, having re-established around the beginning of the 20th century following agricultural use and significant hurricane damage in 1938. 
 Dominant species within the 35 ha ForestGEO plot are hemlock (*Tsuga canadensis* (L.) Carrière), oak (*Quercus spp.*) and red maple (*Acer rubrum* L.). 
 The climate is temperate continental, with 1950-2019 mean annual precipitation of 1104 mm and temperatures averaging -5° C in January and 22° C in July[@anderson-teixeira_joint_2022]. 
-Within the study period for the dendrometer band analysis (1999-2003), spring temperatures (March + April $T_{max}$) and summer SPEI values (4-month value of August) were similar to the average prior to the study period (1970-1998). Prior to the study period, the average spring $T_{max}$ was 10.9 $degreeC$ and summer SPEI was 0.13. In the study period, average spring $T_{max}$ was 11.2 $degreeC$ and summer SPEI was 0.20.
+Within the study period for the dendrometer band analysis (1999-2003), spring temperatures (March and April $T_{max}$; source: **local weather stations or CRU**, as described below) and summer SPEI values (4-month value of August) were similar to the average prior to the study period (1970-1998).
+Prior to the study period, the average spring $T_{max}$ was 10.9 °C and summer SPEI was 0.13. In the study period, average spring $T_{max}$ was 11.2 °C and summer SPEI was 0.20.
 The summer of 1999 was abnormally dry, with precipitation of only 52 mm mo^-1^ in June-August compared to average monthly precipitation of 100+ mm[@dorangeville_peak_2022].
 
 <!--Data collection and preparation -->
@@ -306,9 +308,9 @@ In total, our analysis included `r n_tree_years` tree-years (`r  EDT_species`).
 Measurements were timed to begin before the beginning of spring growth and to continue through the cessation of growth in the fall. 
 At SCBI, the median start date was April 14, which was adjusted forward when early leaf-out of understory vegetation was observed, with the earliest start date being March 30 (in 2020). 
 Measurements were continued through to fall leaf senescence, with the median end date being October 17 and the latest end date November 26 (2012). 
-*Timing of measurements at Harvard Forest were similar, with the median start date of April 23 and median end date of October 30.* <!--Changes depending on when we calculate median. I think we can calculate it before removal of 1998 since we technically incude 1998 in our raw data, just remove it during our data cleaning. If you don't like that, it cahges to: start: april 21, end: October 27-->
-All measurements from 1998 were dropped because of a late start date (May 26).
-*1999 was an anomalous year where initial measurements were taken on January 5, but not taken again until April 15.* <!--I think we dropped this.Correct? CD: No, left in. This could influence growth in 1999 if "a" was selected based on pre-hydration, winter DBH, but I have faith that Sean's process to find "a" can handle this. That being said, it is unfortunate that 1999 is the only year with early measurements and very weird timing. Justification for my faith: If "a" uses prehydration, winter dbh, then we would expect the "a" in 1999 to be proportionally smaller than in other years. This smaller "a" coupled with an unchanged "b" (last measurement was about the same in 1999 as other years) would result in greater total growth (b-a). But we actually see that 1999 total growth is the smallest, indicating to me that the hot summer is driving the weirdness. -->
+At Harvard Forest, all measurements from 1998 were dropped because of a late start date (May 26).
+Among the remaining years,the median start date was April 21 and median end date of October 27.
+1999 was an anomalous year where initial measurements were taken on January 5, but not taken again until April 15.
 The latest end date was November 11, 2002.
 In our analysis, each band-year was treated independently, with no data overlap from one year to the next.
 
@@ -364,6 +366,7 @@ The R package *climpact* (see www.climpact-sci.org)[@benestad_empiricalstatistic
 Gaps in the SCBI meteorological tower data were subsequently filled using temperature readings obtained from a National Center for Environmental Information (NCEI) weather station located in Front Royal, Virginia (https://www.ncdc.noaa.gov/cdo-web/datasets/GHCND/stations/GHCND:USC00443229/detail). 
 Daily temperature records for Harvard Forest, which had already been gap-filled based on other local records, were obtained from the Harvard Forest weather station[@boose_shaler_2021;@boose_fisher_2021]. 
 For each site, we used records of daily maximum ($T_{max}$) and minimum temperatures ($T_{min}$).
+Standardized Precipitation Evapotranspiration Index (SPEI)[@vicente-serrano_multiscalar_2010] values were obtained from the ForestGEO Climate Data Portal v1.0 (https://forestgeo.github.io/Climate/)[@anderson-teixeira_forestgeo_2020;@begueria_standardized_2014;@vicente-serrano_multiscalar_2010a]. 
 
 
 <!-- Determining critical temperature windows -->
@@ -391,8 +394,7 @@ More information on rstanarm's default weakly informative priors:
 https://cran.r-project.org/web/packages/rstanarm/vignettes/priors.html#default-weakly-informative-prior-distributions
 -->
 
-To rule out the possibility that observed patterns were strongly influenced by summer drought, we examined the relationship between spring temperatures and summer Standardized Precipitation Evapotranspiration Index (SPEI)[@vicente-serrano_multiscalar_2010].
-The latter was obtained from the ForestGEO Climate Data Portal v1.0 (https://forestgeo.github.io/Climate/)[@anderson-teixeira_forestgeo_2020;@begueria_standardized_2014;@vicente-serrano_multiscalar_2010a]. 
+To rule out the possibility that observed patterns were strongly influenced by summer drought, we examined the relationship between spring temperatures and summer SPEI indeces. 
 Linear models were run with 4-, 6-, and 12-month SPEI values of June, July, and August vs April $T_{max}$ to determine if warm spring temperatures were associated with greater summer drought stress in our data set. 
 No significant correlations were found (all p>0.05).
 
