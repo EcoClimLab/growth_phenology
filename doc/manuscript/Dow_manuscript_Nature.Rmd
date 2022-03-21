@@ -247,8 +247,8 @@ However, existing evidence indicates that vessel features are most strongly cont
 Thus, it is unlikely that warm springs have a positive effect on total C content of annual rings or $ANPP_{woody}$. 
 The fate of any additional C fixed during years with warm springs remains unresolved, but possible destinations -- including respiration, NSC storage, and production of foliage, reproductive structures, roots[@zohner_how_2021], or root exudates -- generally have shorter residence times than woody growth.
 Indeed, when GPP of a mature forest was increased through experimental CO~2~ enrichment, $ANPP_{woody}$ remained unchanged, while additional C was released back to the atmosphere on relatively short time scales through enhanced respiration[@jiang_fate_2020].
-Consistent with this, it has been observed that C gains from an earlier spring can be offset through fall or winter respiration[@oishi_warmer_2018;@buermann_widespread_2018].
-Thus, observed augmentation of NEE by warm springs[@zhou_explaining_2016;@fu_maximum_2019;@keenan_net_2014] is likely to be short lived.
+Consistent with this, it has been observed that C gains from an earlier spring can be offset through fall or winter respiration[@oishi_warmer_2018;@buermann_widespread_2018], although even the C in shorter-lived pools would often be carried over into the following year[@trumbore_quantifying_2002].
+Thus, observed augmentation of NEE by warm springs[@zhou_explaining_2016;@fu_maximum_2019;@keenan_net_2014] is likely to be compensated by increased respiration in subsequent years.
 
 <!--.short vs long-term effects-->
 It is possible that as spring warming continues, forests will adjust to directional changes in growing season length with an enhancement of $ANPP_{woody}$.
@@ -312,8 +312,8 @@ All measurements from 1998 were dropped because of a late start date (May 26).
 The latest end date was November 11, 2002.
 In our analysis, each band-year was treated independently, with no data overlap from one year to the next.
 
-The raw dendrometer band data were manually inspected before analysis. 
-We screened the data for three classes of errors. 
+The raw dendrometer band data were screened before analysis to remove records or entire tree-years that were either unreliable or inappropriate for our analysis. 
+First, we manually screened the data for three classes of errors. 
 First, when a measurement was drastically different from previous and following measurements, it was assumed to be a human error and removed.
 Second, when measurements remained essentially unchanged for several readings, followed by a sudden jump then return to a normal growth pattern, this was assumed to be a case where the band was stuck on the tree bark and then released. 
 In these cases, the full annual record for the tree was removed.
@@ -343,7 +343,7 @@ Having fit the model for each band-year of data, we then modeled DBH using these
 
 
 After fitting the growth model, we removed tree-years with poor fits.
-Models were judged to be poorly fit if modeled growth parameters were outliers, which were commonly indicative of unrealistic fits (e.g., growth occurring outside the growing season or over a very short period) and underlain by very slow tree growth or poor data records.
+Models were judged to be poorly fit if modeled growth parameters were outliers, which were commonly indicative of unrealistic fits (e.g., growth occurring outside the growing season or over a very short period) and underlain by very slow tree growth or poor data records that passed the initial screening (described above).
 Modeled fits for tree-years were removed under two conditions:
 (1) $g_{max}$ was $\ge 2.5$ standard deviations away from the mean for each site-xylem architecture group combination (SCBI = 3, Harvard Forest = 11);  
 (2) timing variables ($DOY_{ip}$, $DOY_{25}$, $DOY_{50}$, $DOY_{75}$) were $\ge 2.5$ standard deviations away from the means for their site, xylem architecture group, and year (SCBI = 74, Harvard Forest = 101).
