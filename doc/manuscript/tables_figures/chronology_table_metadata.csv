@@ -4,7 +4,7 @@ Location,The geographical location that the cores were collected from to create 
 Species,The species used to create the chronology,-
 Wood Type,The porosity of the species used to generate the chronology. Either ring-porous (RP) or diffuse-porous (DP).,-
 Archive Location,Database in which data are archived. (DEN= The DendroEcological Network; ITRDB= International Tree-Ring Data Bank ),-
-Accession Code,Accession code ,-
+Accession Code,"Accession code. For DEN database, this is the project ID.",-
 Archive URL,URL of archived data,-
 Latitude,The latitude of the location where the cores used to generate the chronology were collected.,°
 Longitude,The longitude of the location where the cores used to generate the chronology were collected.,°
