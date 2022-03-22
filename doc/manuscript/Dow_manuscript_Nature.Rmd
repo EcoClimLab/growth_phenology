@@ -134,7 +134,7 @@ n_chronologies_HF <- 4
 
 \newpage
 
-<!--LENGTH: The typical length of an article with 3-4 modest display items (figures and tables) is 2000-2500 words (summary paragraph plus body text). We're currently at 2635 words and 1 modest + 2 large display items. Articles typically have 30-50 references (currently at 53)-->
+<!--LENGTH: The typical length of an article with 3-4 modest display items (figures and tables) is 2000-2500 words (summary paragraph plus body text). We're currently at 2672 words and 1 modest + 2 large display items. Articles typically have 30-50 references (currently at 50)-->
 
 
 <!-- Articles start with a fully referenced summary paragraph, ideally of no more than 200 words, which is separate from the main text and avoids numbers, abbreviations, acronyms or measurements unless essential. It is aimed at readers outside the discipline. This summary paragraph should be structured as follows: 2-3 sentences of basic-level introduction to the field; a brief account of the background and rationale of the work; a statement of the main conclusions (introduced by the phrase 'Here we show' or its equivalent); and finally, 2-3 sentences putting the main findings into general context so it is clear how the results described in the paper have moved the field forwards. Please refer to our annotated example  to see how the summary paragraph should be constructed.-->
