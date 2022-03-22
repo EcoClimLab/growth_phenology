@@ -37,7 +37,7 @@ Justin T. Maxwell^7^ (Orcid ID: 0000-0001-9195-3146)
 
 Ian R. McGregor^1,8^ (Orcid ID: 0000-0002-5763-021X)
 
-William J. McShea^1^
+William J. McShea^1^ (Orchid ID: 0000-0002-8102-02000)
 
 Sean McMahon^9,11^ (Orcid ID : 0000-0001-8302-6908)
 
@@ -284,16 +284,16 @@ SCBI (38.8935° N, 78.1454° W; elevation 273–338 m.a.s.l.) is located in the 
 The forest is secondary and mixed age, having established in the mid-19th century after conversion from agricultural fields[@bourg_initial_2013]. 
 Dominant canopy species within the 25.6 ha ForestGEO plot include tulip poplar (*Liriodendron tulipifera* L.), oaks (*Quercus spp.*), and hickories (*Carya spp.*)[@helcoski_growing_2019]. 
 The climate is humid temperate, with 1950-2019 mean annual precipitation of 1018 mm and temperatures averaging 1°C in January and 24°C in July[@anderson-teixeira_joint_2022].
-Within the study period for the dendrometer band analysis (2011-2019), spring temperatures (March and April $T_{max}$; source: CRU, as described below) and summer Standardized Precipitation Evapotranspiration Index (SPEI)[@vicente-serrano_multiscalar_2010] values (4-month value of August) were similar to the average climate prior to the study period (1970-2010).
-Specifically, average spring $T_{max}$ was 16.9$\pm$ 1.4°C (mean $\pm$ 1SD) prior to the study period (range: 14.1-19.9) and 17.6$\pm$ 1.7°C (range: 15.6-20) during the study period, while summer SPEI was -0.06$\pm$ 1.02 (range: -1.7-2.4 ) prior to the study period and 0.5$\pm$ 0.8 (range: -0.8-1.6) during.
+Within the study period for the dendrometer band analysis (2011-2019), spring temperatures (March and April $T_{max}$; source: CRU v.4.04[@harris_version_2020]) and summer Standardized Precipitation Evapotranspiration Index (SPEI)[@vicente-serrano_multiscalar_2010] values (4-month value of August) were similar to the average climate prior to the study period (1970-2010).
+Specifically, average spring $T_{max}$ was 16.9$\pm$ 1.4°C (mean $\pm$ 1SD) prior to the study period (range: 14.1-19.9) and 17.6$\pm$ 1.7°C (range: 15.6-20) during the study period, while summer SPEI was -0.06$\pm$ 1.02 (range: -1.7-2.4) prior to the study period and 0.5$\pm$ 0.8 (range: -0.8-1.6) during.
 
 Harvard Forest (42.5388° N, 72.1755° W, 340-368 m.a.s.l.) is located near the central Massachusetts town of Petersham. 
 The forest is secondary and mixed age, having re-established around the beginning of the 20th century following agricultural use and significant hurricane damage in 1938. 
 Dominant species within the 35 ha ForestGEO plot are hemlock (*Tsuga canadensis* (L.) Carrière), oak (*Quercus spp.*) and red maple (*Acer rubrum* L.). 
 The climate is temperate continental, with 1950-2019 mean annual precipitation of 1104 mm and temperatures averaging -5°C in January and 22°C in July[@anderson-teixeira_joint_2022]. 
-Within the study period for the dendrometer band analysis (1999-2003), spring temperatures (March and April $T_{max}$; source: CRU, as described below) and summer SPEI values (4-month value of August) were similar to the average climate prior to the study period (1970-1998).
+Within the study period for the dendrometer band analysis (1999-2003), spring temperatures (March and April $T_{max}$; source: CRU v.4.04[@harris_version_2020]) and summer SPEI values (4-month value of August) were similar to the average climate prior to the study period (1970-1998).
 Specifically, average spring $T_{max}$ was 10.9$\pm$ 1.5°C prior to the study period (range: 8.0-13.2) and 11.2$\pm$ 1.0°C (range: 10.1-12.2) during the study period, while summer SPEI was 0.1$\pm$ 0.9 (range: -1.8-1.7) prior to the study period and 0.2$\pm$ 0.9 (range: -1.0-1.1) during.
-The summer of 1999 was abnormally dry, with precipitation of only 52 mm mo^-1^ in June-August compared to average monthly precipitation of 100+ mm[@dorangeville_peak_2022] and a SPEI value of -1.0, which is the 5th lowest in the period 1970-2003. <!--this still needs to be put in context-->
+The driest summer during the study period (1999) had the 5th lowest SPEI value (-1.0) in the period 1970-2003, with precipitation of 52 mm mo^-1^ in June-August compared to average monthly precipitation of 100+ mm[@dorangeville_peak_2022]. 
 
 <!--Data collection and preparation -->
 
