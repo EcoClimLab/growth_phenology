@@ -146,7 +146,7 @@ n_chronologies_HF <- 4
 **Using dendrometer band measurements from `r n_dendro_trees` trees across two forests, we show that warmer spring temperatures shifted stem growth of deciduous trees earlier but had no consistent effect on peak growing season length, maximum growth rates, or annual growth.**
 **The latter finding was confirmed on the centennial scale by `r n_chronologies` tree-ring chronologies from `r n_cores_sites` forests across eastern North America, where annual growth was far more sensitive to temperatures during the peak growing season than in the spring.**
 **These findings imply that any extra CO~2~ uptake in years with warmer springs[@keeling_increased_1996;@dragoni_evidence_2011;@crabbe_extreme_2016] does not significantly contribute to increased sequestration in long-lived woody stem biomass.**
-**Rather, contradicting current projections from global C cycle models[@buermann_widespread_2018;@zani_increased_2020;@keenan_net_2014;@ahlstrom_robustness_2012], our empirical results imply that warming spring temperatures are unlikely to increase woody productivity enough to strengthen the long-term CO~2~ sink of temperate deciduous forests.**
+**Rather, contradicting projections from global C cycle models[@richardson_terrestrial_2012;@keenan_net_2014], our empirical results imply that warming spring temperatures are unlikely to increase woody productivity enough to strengthen the long-term CO~2~ sink of temperate deciduous forests.**
 
 
 <!--BODY-->
@@ -169,7 +169,7 @@ Most studies on tree growth responses to warmer spring temperatures have focused
 In contrast, we have little evidence as to how stem growth and ANPP~woody~ respond to warmer spring temperatures in deciduous forests[@savage_coordination_2021;@delpierre_temperate_2016].
 Close coordination of budburst and initiation of xylogenesis[@delpierre_temperate_2016] suggests that warm springs should shift the onset of growth earlier alongside observed advances in leaf phenology[@jeong_phenology_2011;@keenan_net_2014;@buermann_widespread_2018;@finzi_carbon_2020<!--;@stuble_plant_2021;@delgado_differences_2020-->].<!--Most of htese citations are important in other spots, but do we need all of them here?-->
 However, earlier initiation of growth would not necessarily translate to earlier, faster, or greater stem growth; rather, stem growth is dependent upon environmental conditions on hourly to daily time scales[@zweifel_why_2021;@tumajer_limitation_2022], and annual growth is more closely linked to conditions within the growing season than to growing season length[@etzold_number_2022], GPP[@delpierre_wood_2016], or NEE[@delpierre_wood_2016]. 
-Furthermore, growth of broadleaf deciduous trees may be sink-saturated[@fatichi_moving_2014], such that longer growing seasons with more C fixation do not necessarily augment growth[@delpierre_wood_2016;@zani_increased_2020;@zohner_how_2021].
+Furthermore, growth of broadleaf deciduous trees may be sink-saturated[@fatichi_moving_2014;@zani_increased_2020], such that longer growing seasons with more C fixation do not necessarily augment growth[@delpierre_wood_2016;@zohner_how_2021].
 Tree-ring records, which can be used to examine annual growth but not growth seasonality, reveal that growth of temperate deciduous trees tends to be most sensitive to temperature or potential evapotranspiration between late spring and early summer[@dorangeville_drought_2018;@helcoski_growing_2019], with some evidence that warmer springs may have a modest positive effect on growth[@helcoski_growing_2019;@gao_earlier_2022].
 These observations do not necessarily align with the finding that warming spring temperatures increase annual forest CO~2~ uptake in temperate deciduous forests[@keenan_net_2014;@lu_no_2022].
 Characterizing responses of stem growth to warming spring temperatures is critical to bridging this conceptual disconnect and understanding how forest biomass growth is likely to change as the climate warms.
@@ -268,11 +268,10 @@ Warm springs may also amplify summer drought stress in some times and places, ef
 While such an interaction was unlikely to have played a major role within the scope of our dendrometer band study, given relatively mesic conditions and lack of significant correlation between spring temperatures and summer drought stress (see Methods), our tree-ring analysis does reveal a higher frequency of negative than positive correlations of annual growth to spring temperatures, particularly for ring porous species in cooler climates (Fig. `r tree_rings`, `r EDT_tree_ring_summary`).
 Thus, warm springs can have a net negative effect on growth, particularly when water is limiting[@gao_earlier_2022].
 
-
 <!--conclusions-->
 As spring temperatures become increasingly warmer, growing seasons will start earlier. 
-However, barring rapid acclimation of temperate deciduous forests to the warming conditions, advancement in the timing of stem growth (Fig. `r schematic_summary`) is unlikely to provide a sustained augmentation of CO~2~ sequestration in woody biomass and ensuant negative climate change feedback *that is anticipated in most climate forecasting models*[@buermann_widespread_2018;@zani_increased_2020;@keenan_net_2014;@ahlstrom_robustness_2012].
-Rather, the dominant effect of rising temperatures on forest woody productivity will be a negative effect of high summer temperatures (Fig. `r tree_rings`)[@ahlstrom_robustness_2012], which constitutes a positive feedback to climate change.
+However, barring rapid acclimation of temperate deciduous forests to the warming conditions, advancement in the timing of stem growth (Fig. `r schematic_summary`) is unlikely to provide a sustained augmentation of CO~2~ sequestration in woody biomass and ensuant negative climate change feedback that is anticipated in most climate forecasting models[@richardson_terrestrial_2012;@keenan_net_2014;@buermann_widespread_2018].
+Rather, the dominant effect of rising temperatures on temperate deciduous forest woody productivity will be a negative effect of high summer temperatures (Fig. `r tree_rings`)[@ahlstrom_robustness_2012], which constitutes a positive feedback to climate change.
 
 
 # Methods {-#Methods} 
