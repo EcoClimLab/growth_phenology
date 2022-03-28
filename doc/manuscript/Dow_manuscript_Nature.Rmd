@@ -422,7 +422,7 @@ We defined chronology start year (`r EDT_species`) as the year where subsample s
 
 <!--QUILT PLOT METHODS-->
 For the analysis of correlation between RWI and climate variables, we obtained monthly *T~max~* and *T~min~* data for 1901-2019 from CRU v.4.04 [@harris_version_2020].
-Correlations between monthly climate and RWI were assessed in R v 4.0[@rcoreteam_language_2020] using the packages *dplR*[@bunn_dendrochronology_2008] and *bootRes*[@zang_dendroclimatic_2013] to assess correlations and create summary figures (Fig. `r tree_rings`, Extended Data Figures 6-7). 
+Correlations between monthly climate and RWI were assessed in R v 4.0[@rcoreteam_language_2020] using the packages *dplR*[@bunn_dendrochronology_2008] and *bootRes*[@zang_dendroclimatic_2013] to assess correlations, provide bootstrapped confidence intervals for these relationships, and create summary figures (Fig. `r tree_rings`, Extended Data Figures 6-7). 
 Our analysis focused on assessing correlations of RWI to months spanning January through September of the current year (presented in Fig. `r tree_rings`, `r EDF_tree_rings_TMIN`).
 To test for potential lag effects of spring temperatures on growth the following year, we also ran a version of the analysis extending back to include climate of every month of the previous year (`r EDF_tree_rings_TMAX_extended`).
 Correlations and significance levels for months March-August are given in `r chron_table`.
