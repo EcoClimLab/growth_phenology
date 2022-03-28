@@ -214,7 +214,7 @@ $\Delta DBH$ displayed a weak positive relationship (+0.0029-0.008 cm/ $^\circ$C
 
 ## Tree-ring analysis {-#Tree} 
 
-To understand how annual growth increments have responded to spring temperatures at the centennial scale, we analyzed tree-ring chronologies of `r n_chronologies_SCBI` species at SCBI[@helcoski_growing_2019] and `r n_chronologies_HF` species at Harvard Forest (`r EDT_species`), plus an additional `r n_chronologies-n_chronologies_SCBI-n_chronologies_HF` chronologies from `r n_cores_sites-2` sites (Fig. `r tree_rings`; `r EDF_map`; `r EDT_tree_ring_summary`)[@dorangeville_drought_2018].
+To understand how annual growth increments have responded to spring temperatures at the centennial scale, we analyzed tree-ring chronologies of `r n_chronologies_SCBI` species at SCBI[@helcoski_growing_2019] and `r n_chronologies_HF` species at Harvard Forest (`r EDT_species`), plus an additional `r n_chronologies-n_chronologies_SCBI-n_chronologies_HF` chronologies from `r n_cores_sites-2` sites (Fig. `r tree_rings`; `r EDF_map`; `r EDT_tree_ring_summary`).
 In total, our analysis included `r n_chronologies` chronologies representing `r n_cores_species` broadleaf species at `r n_cores_sites` sites distributed from Alabama (34.35$^\circ$N latitude) to Michigan (45.56$^\circ$N latitude) and spanning a 15 $^\circ$C range in April *T~max~*.
 Across all chronologies, the standardized ring-width index (RWI) was significantly (p $\le$ 0.05) positively correlated with April *T~max~* for only 2% of chronologies: 1 of 142 ring porous and 4 of 66 diffuse porous species-site combinations (`r EDT_tree_ring_summary`). 
 There were even fewer significant positive correlations with March and May *T~max~*: 0% and `r round(2/(142+66),2)*100`%, respectively (`r EDT_tree_ring_summary`).
@@ -408,7 +408,7 @@ Dominant tree species were cored at both SCBI[@helcoski_growing_2019;@bourg_init
 We analyzed records for the ring- and diffuse- porous species at each site (`r  EDT_species`), but excluded semi-ring porous species (e.g., *Juglans nigra* L. at SCBI) and conifers (e.g., *Tsuga canadensis* at Harvard Forest).
 We studied a total of `r n_cores_focal_sites` cores which included `r n_chronologies_SCBI` species at SCBI and `r n_chronologies_HF` species at Harvard Forest (`r  EDT_species`).
 
-The tree-ring records from our focal sites were complemented with a much larger collection spanning `r n_cores_sites-2` deciduous and mixed forest sites in eastern North America[@maxwell_sampling_2020;@dorangeville_drought_2018].
+The tree-ring records from our focal sites were complemented with a much larger collection spanning `r n_cores_sites-2` deciduous and mixed forest sites in eastern North America[@pederson_climatic_2005; @maxwell_sampling_2020;@dorangeville_drought_2018].
 Again, records were limited to broadleaf deciduous species with clearly defined xylem porosity (*i.e.*, excluding semi-ring porous). 
 
 For each species-site combination, we converted tree-ring records into the dimensionless RWI to emphasize interannual variability associated with climate[@cook_methods_1990].
