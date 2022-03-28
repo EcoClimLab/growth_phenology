@@ -19,19 +19,19 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Authors:** 
 
-Cameron Dow^1,2^ ( Orcid ID : 0000-0002-8365-598X)
+Cameron Dow^1,2^ (Orcid ID : 0000-0002-8365-598X)
 
-Albert Y. Kim^1,3^ ( Orcid ID : 0000-0001-7824-306X)
+Albert Y. Kim^1,3^ (Orcid ID : 0000-0001-7824-306X)
 
-Loïc D’Orangeville^4,5^ ( Orcid ID : 0000-0001-7841-7082)
+Loïc D’Orangeville^4,5^ (Orcid ID : 0000-0001-7841-7082)
 
-Erika B. Gonzalez-Akre^1^ ( Orcid ID : 0000-0001-8305-6672)
+Erika B. Gonzalez-Akre^1^ (Orcid ID : 0000-0001-8305-6672)
 
-Ryan Helcoski^1^
+Ryan Helcoski^1^ (Orcid ID: 0000-0003-3579-0121)
 
-Valentine Herrmann^1^ ( Orcid ID : 0000-0002-4519-481X)
+Valentine Herrmann^1^ (Orcid ID : 0000-0002-4519-481X)
 
-Grant L. Harley^6^ ( Orcid ID : 0000-0003-1557-8465)
+Grant L. Harley^6^ (Orcid ID : 0000-0003-1557-8465)
 
 Justin T. Maxwell^7^ (Orcid ID: 0000-0001-9195-3146)
 
@@ -43,7 +43,7 @@ Sean McMahon^9,11^ (Orcid ID : 0000-0001-8302-6908)
 
 Neil Pederson^4^ (Orcid ID : 0000-0003-3830-263X)
 
-Alan J. Tepley^1,10^ ( Orcid ID : 0000-0002-5701-9613)
+Alan J. Tepley^1,10^ (Orcid ID : 0000-0002-5701-9613)
 
 Kristina J. Anderson-Teixeira^1,11^* ( Orcid ID : 0000-0001-8461-9713)
 
@@ -182,7 +182,7 @@ To test whether spring temperatures consistently increased annual growth, we ana
 ## Dendrometer band analysis {-#Dendrometer} 
 
 Using dendrometer band measurements taken throughout multiple growing seasons at the Smithsonian Conservation Biology Institute (SCBI; Virginia, USA; n = `r n_dendro_trees_SCBI` trees from 2011-2020) and Harvard Forest (Massachusetts, USA; n = `r n_dendro_trees_HF` trees from 1998-2003), we fit a logistic growth model[@mcmahon_general_2015] to determine the days of year (DOY) when 25, 50, and 75% annual growth were achieved (*DOY~25~*, *DOY~50~*, *DOY~75~*), peak growing season length (*L~pgs~ = DOY~75~ - DOY~25~*), the maximum growth rate (*g~max~*), and total annual increment in diameter at breast height ($\Delta DBH$; Fig. `r schematic_summary`). 
-This analysis was performed separately for ring- <!--(67 trees at SCBI and 138 trees at Harvard Forest)-->and diffuse porous <!--(52 trees at SCBI and 183 trees at Harvard Forest)-->species (`r EDT_species`), which differ in the seasonal timing of growth(`r  EDT_phenology_parameters`)[@dorangeville_peak_2022;@tumajer_limitation_2022]. 
+This analysis was performed separately for ring- <!--(67 trees at SCBI and 138 trees at Harvard Forest)-->and diffuse porous <!--(52 trees at SCBI and 183 trees at Harvard Forest)-->species (`r EDT_species`), which differ in the seasonal timing of growth (`r  EDT_phenology_parameters`)[@dorangeville_peak_2022;@tumajer_limitation_2022]. 
 These stem-growth milestones were compared to canopy foliage phenology (measured at ecosystem level via remote sensing).
 
 ![**Figure 1 | Summary of temperate deciduous tree growth responses to warmer spring temperatures.** (a) Schematic illustrating parameters of interest and summarizing predominant responses of each to warmer maximum temperatures during a 'critical temperature window', defined as the period with the strongest control over *DOY~25~*; (b) Variable definitions and summary of responses to warmer spring temperatures at two temperate forests -- Smithsonian Conservation Biology Institute (SCBI) and Harvard Forest -- and for two groups of broadleaf deciduous species (RP=ring porous; DP=diffuse porous), where up and down arrows indicate increases and decreases that are significant both statistically (p<0.05) and biologically (effect size >3%$^\circ$C^-1^), '-' indicates no significant correlation, and 'mixed' indicates a mix of significant and non-significant correlations, often in different directions.](tables_figures/schematic_summary_with_table.png){ width=70% }
@@ -216,16 +216,16 @@ $\Delta DBH$ displayed a weak positive relationship (+0.0029-0.008 cm/ $^\circ$C
 
 To understand how annual growth increments have responded to spring temperatures at the centennial scale, we analyzed tree-ring chronologies of `r n_chronologies_SCBI` species at SCBI[@helcoski_growing_2019] and `r n_chronologies_HF` species at Harvard Forest (`r EDT_species`), plus an additional `r n_chronologies-n_chronologies_SCBI-n_chronologies_HF` chronologies from `r n_cores_sites-2` sites (Fig. `r tree_rings`; `r EDF_map`; `r EDT_tree_ring_summary`)[@dorangeville_drought_2018].
 In total, our analysis included `r n_chronologies` chronologies representing `r n_cores_species` broadleaf species at `r n_cores_sites` sites distributed from Alabama (34.35$^\circ$N latitude) to Michigan (45.56$^\circ$N latitude) and spanning a 15 $^\circ$C range in April *T~max~*.
-Across all chronologies, the standardized ring-width index (RWI) was significantly (at p $\le$ 0.05) positively correlated with April *T~max~* for only 2% of chronologies: 1 of 142 ring porous and 4 of 66 diffuse porous species-site combinations (`r EDT_tree_ring_summary`). 
+Across all chronologies, the standardized ring-width index (RWI) was significantly (p $\le$ 0.05) positively correlated with April *T~max~* for only 2% of chronologies: 1 of 142 ring porous and 4 of 66 diffuse porous species-site combinations (`r EDT_tree_ring_summary`). 
 There were even fewer significant positive correlations with March and May *T~max~*: 0% and `r round(2/(142+66),2)*100`%, respectively (`r EDT_tree_ring_summary`).
-In contrast, RWI was frequently negatively correlated with *T~max~* during peak growing season months (May-August), with significant correlations for 52% (May: 45/141, Jun: 107/141, Jul: 91/141, Aug: 53/141) and 46% (May: 10/66, Jun: 52/66, Jul: 36/66, Aug: 23/66) of species-site-month combinations for ring porous and diffuse porous species, respectively.
+In contrast, RWI was frequently negatively correlated with *T~max~* during peak growing season months (May-August), with significant correlations for 52% (May: 45/141, Jun: 107/141, Jul: 91/141, Aug: 53/141) and 46% (May: 10/66, Jun: 52/66, Jul: 36/66, Aug: 23/66) of species-site-month combinations for ring- and diffuse-porous species, respectively.
 *T~min~* generally exhibited weaker relationships to annual growth than *T~max~*, with few significant correlations between spring *T~min~* and RWI (`r EDF_tree_rings_TMIN`).
 
 To test whether warm springs might result in storage of non-structural carbohydrates (NSC) that would augment growth the following year[@richardson_seasonal_2013], we extended the analysis to examine correlations between RWI and *T~max~* in the previous year (`r EDF_tree_rings_TMAX_extended`).
 This revealed little effect of previous spring temperatures on annual growth, with significant positive correlations of RWI to previous March or April *T~max~* for 5/142 ring porous chronologies and to previous April or May *T~max~* for 7/66 diffuse porous chronologies.
 
 To test whether the negative effect of summer temperatures might offset an enhancement of growth by warmer spring temperatures, we tested for the joint effects of April and June-July *T~max~* on RWI.
-Results were qualitatively similar to the univariate correlations (Fig. `r tree_rings`), with significant (at p = 0.05) positive correlations to April *T~max~* for only 4% of chronologies and significant negative correlations with June-July *T~max~* for 77% of chronologies (`r EDT_tree_ring_summary`).
+Results were qualitatively similar to the univariate correlations (Fig. `r tree_rings`), with significant (p $\le$0.05) positive correlations to April *T~max~* for only 4% of chronologies and significant negative correlations with June-July *T~max~* for 77% of chronologies (`r EDT_tree_ring_summary`).
 
 ![**Figure 3 | Sensitivity of annual growth, as derived from tree-rings, to monthly mean maximum temperatures (*T~max~*), for `r n_chronologies` chronologies from `r n_cores_sites` sites across eastern North America** (`r EDF_map `). Colors indicate the correlation between monthly *T~max~* and a dimensionless ring width index (RWI) derived from the multiple trees that form each chronology and emphasizing interannual variability associated with climate. Chronologies are grouped by xylem porosity and ordered by mean April *T~max~*. Plots are annotated to highlight records from our two focal sites, the Smithsonian Conservation Biology Institute (SCBI) and Harvard Forest (HF) (`r EDT_species`). Species analyzed and numbers of significant correlations to *T~max~* are summarized in `r EDT_tree_ring_summary`, and chronology details are given in `r chron_table`.](tables_figures/tree_rings_tmax.png){ width=100% }
 
@@ -245,7 +245,8 @@ Combined with widespread observations that warming springs tend to lengthen the 
 It remains theoretically possible that warm springs could augment ANPP~woody~, which, although routinely calculated based on stem growth, can be partially decoupled from it through differences in wood density or C content[@delpierre_wood_2016].
 Extra C fixed in years with warm springs could potentially be allocated to formation of more C-dense wood, either through enhanced cell wall thickening (a process that lags behind stem expansion[@cuny_woody_2015]) or to a higher ratio of high-density latewood to lower-density earlywood.
 However, existing evidence indicates that vessel features are most strongly controlled by summer drought stress in the previous (earlywood) or current (latewood) year, while warm springs have a neutral or negative effect on latewood width[@tardif_influence_2006;@roibu_climatic_2020;@kern_multiple_2013]<!--tardif is essential here-->.
-Thus, it is unlikely that warm springs have a positive effect on total C content of annual rings or ANPP~woody~. 
+Thus, it is unlikely that warm springs have a positive effect on total C content of annual rings or ANPP~woody~.
+
 The fate of any additional C fixed during years with warm springs remains unresolved, but possible destinations -- including respiration, NSC storage, and production of foliage, reproductive structures, roots[@zohner_how_2021], or root exudates -- generally have shorter residence times than woody growth.
 Indeed, when GPP of a mature forest was increased through experimental CO~2~ enrichment, ANPP~woody~ remained unchanged, while additional C was released back to the atmosphere on relatively short time scales through enhanced respiration[@jiang_fate_2020].
 Consistent with this, it has been observed that C gains from an earlier spring can be offset through fall or winter respiration[@oishi_warmer_2018], although even the C in shorter-lived pools would often be carried over into the following year[@trumbore_quantifying_2002].
@@ -322,7 +323,7 @@ Second, when measurements remained essentially unchanged for several readings, f
 In these cases, the full annual record for the tree was removed.
 Third, data points that deviated substantially from normal growth patterns, but for unknown causes, were removed. 
 If a majority of the data points fell into this class within a tree-year, the entire year was removed from the analysis.
-We also removed tree-years with small or negligible total growth ($\Delta DBH$ $\le 0.005$ cm; SCBI = 26, Harvard Forest = 253), and tree-years where first intraannual measurement was later than the first spring survey (trees that were missed in the initial census; SCBI = 22, Harvard Forest = 8).
+We also removed tree-years with small or negligible total growth ($\Delta DBH$ $\le 0.005$ cm; SCBI = 26, Harvard Forest = 253), and tree-years where the first intra-annual measurement was later than the first spring survey (trees that were missed in the initial census; SCBI = 22, Harvard Forest = 8).
 These were removed because they reduce the reliability of predicted growth in the modeled curves. 
 
 We fit a five-parameter logistic growth model[@mcmahon_general_2015] to dendrometer band data from each tree-year to define stem growth milestones and growth rates (Fig. `r schematic_summary`). 
@@ -356,7 +357,7 @@ This process was repeated using 2 and 3 standard deviations as the cutoff for de
 <!-- Leaf phenology -->
 
 Canopy foliage phenology data for the years 2001-2018 were extracted for SCBI and Harvard Forest from the MCD12Q2 V6 Land Cover Dynamics product (a.k.a. MODIS Global Vegetation Phenology product)[@friedl_mcd12q2_2019] via Google Earth Engine. 
-For each year at each site, we extracted data from the pixel containing the center of each forest plot (resolution of 500m). 
+For each year at each site, we extracted data from the pixel (500m resolution) containing the center of each forest plot. 
 Using the daily MODIS 2-band Enhanced Vegetation Index data (EVI2), the product yields the timing of phenometrics (vegetation phenology) over each year, including timing of greenup, midgreenup, peak, and senescence as used in this study. 
 Data points were included in the analysis if they were flagged as "good" or "best" quality.
 
@@ -395,7 +396,7 @@ More information on rstanarm's default weakly informative priors:
 https://cran.r-project.org/web/packages/rstanarm/vignettes/priors.html#default-weakly-informative-prior-distributions
 -->
 
-To rule out the possibility that observed patterns were strongly influenced by summer drought, we examined the relationship between spring temperatures and summer SPEI indeces. 
+To rule out the possibility that observed patterns were strongly influenced by summer drought, we examined the relationship between spring temperatures and summer SPEI indices. 
 Linear models were run with 4-, 6-, and 12-month SPEI values of June, July, and August vs April *T~max~* to determine if warm spring temperatures were associated with greater summer drought stress in our data set. 
 No significant correlations were found (all p>0.05).
 
@@ -407,22 +408,22 @@ Dominant tree species were cored at both SCBI[@helcoski_growing_2019;@bourg_init
 We analyzed records for the ring- and diffuse- porous species at each site (`r  EDT_species`), but excluded semi-ring porous species (e.g., *Juglans nigra* L. at SCBI) and conifers (e.g., *Tsuga canadensis* at Harvard Forest).
 We studied a total of `r n_cores_focal_sites` cores which included `r n_chronologies_SCBI` species at SCBI and `r n_chronologies_HF` species at Harvard Forest (`r  EDT_species`).
 
-The tree-ring records from our focal sites were complemented with a much larger collection spanning `r n_cores_sites-2` deciduous and mixed forest sites in Eastern North America[@maxwell_sampling_2020;@dorangeville_drought_2018].
+The tree-ring records from our focal sites were complemented with a much larger collection spanning `r n_cores_sites-2` deciduous and mixed forest sites in eastern North America[@maxwell_sampling_2020;@dorangeville_drought_2018].
 Again, records were limited to broadleaf deciduous species with clearly defined xylem porosity (*i.e.*, excluding semi-ring porous). 
 
 For each species-site combination, we converted tree-ring records into the dimensionless RWI to emphasize interannual variability associated with climate[@cook_methods_1990].
 A 2/3rds _n_ spline was applied to each core using ARSTAN to produce standardized ring-width series; _n_ is the number of years in each series[@cook_time_1985;@cook_methods_1990].
-An adaptive power transformation, a process that also stabilises the variance over time[@cook_calculating_1997], was used to minimize the influence of outliers in all series. 
+An adaptive power transformation, a process that also stabilizes the variance over time[@cook_calculating_1997], was used to minimize the influence of outliers in all series. 
 Low series replication, often in the earliest portions of a chronology collection, can also inflate the variance of tree-ring records[@jones_estimating_1997].
-The 1/3rds spline method was chosen when replication in the inner portion of each chronology (ca. inner 30–50 yr of each record depending on full chronology length) was less than three trees. 
+The 1/3rds spline method was chosen when replication in the inner portion of each chronology (the earliest ca. 30–50 yr of each record depending on full chronology length) was less than three trees. 
 When replication was greater than n = 3 trees, we used the average correlation between raw ring-width series (rbar) method.
-The robust biweight mean chronology (RWI) for each species-site combination was calculated from the ring-width indices following variance stabilisation[@cook_time_1985].
+The robust biweight mean chronology (RWI) for each species-site combination was calculated from the ring-width indices following variance stabilization[@cook_time_1985].
 We defined chronology start year (`r EDT_species`) as the year where subsample signal strength (SSS) passed a threshold of SSS = 0.8, or where $\ge$ 80% of the population signal was captured in the chronology.
 
 <!--QUILT PLOT METHODS-->
 For the analysis of correlation between RWI and climate variables, we obtained monthly *T~max~* and *T~min~* data for 1901-2019 from CRU v.4.04 [@harris_version_2020].
-Correlations between monthly climate and RWI were assessed in R v 4.0[@rcoreteam_language_2020] using the packages *dplR*[@bunn_dendrochronology_2008] and *bootRes*[@zang_dendroclimatic_2013] to assess correlations, provide bootstrapped confidence intervals for these relationships, and create summary figures (Fig. `r tree_rings`, Extended Data Figures 6-7) following the methods of Ref.[@biondi_dendroclim2002_2004]. 
-Our analysis focused on assessing correlations of RWI to months spanning from January through September of the current year (presented in Fig. `r tree_rings`, `r EDF_tree_rings_TMIN`).
+Correlations between monthly climate and RWI were assessed in R v 4.0[@rcoreteam_language_2020] using the packages *dplR*[@bunn_dendrochronology_2008] and *bootRes*[@zang_dendroclimatic_2013] to assess correlations and create summary figures (Fig. `r tree_rings`, Extended Data Figures 6-7). 
+Our analysis focused on assessing correlations of RWI to months spanning January through September of the current year (presented in Fig. `r tree_rings`, `r EDF_tree_rings_TMIN`).
 To test for potential lag effects of spring temperatures on growth the following year, we also ran a version of the analysis extending back to include climate of every month of the previous year (`r EDF_tree_rings_TMAX_extended`).
 Correlations and significance levels for months March-August are given in `r chron_table`.
 
