@@ -1,4 +1,4 @@
-﻿xylem porosity,species,n,Marcch pos,March neg,April pos,April neg,May pos,May neg,June pos,June neg,July pos,July neg,Aug pos,August neg,April pos,April neg,June-July pos,June-July neg
+﻿xylem porosity,species,n,March pos,March neg,April pos,April neg,May pos,May neg,June pos,June neg,July pos,July neg,Aug pos,August neg,April pos,April neg,June-July pos,June-July neg
 ring,$Carya$ $cordifomis$,1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,1
 ,$Carya$ $glabra$,7,0,0,0,0,0,3,0,5,0,5,0,0,0,0,0,5
 ,$Carya$ $ovalis$,1,0,0,1,0,0,1,0,0,0,0,0,1,0,0,0,0
@@ -6,12 +6,14 @@ ring,$Carya$ $cordifomis$,1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,1
 ,$Carya$ $tomentosa$,2,0,1,0,0,0,1,0,2,0,0,0,2,0,0,0,1
 ,$Fraxinus$ $americana$,5,0,1,0,0,0,4,0,3,0,2,1,0,0,0,0,3
 ,$Fraxinus$ $nigra$,2,0,0,0,0,0,0,0,1,0,1,0,1,0,0,0,1
-,$Quercus$ $alba$,36,0,2,0,4,0,18,0,31,0,30,0,24,0,2,0,33
+,$Quercus$ $alba$,35,0,2,0,4,0,18,0,31,0,29,0,23,0,2,0,33
+,$Quercus$ $bicolor$,1,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0
 ,$Quercus$ $macrocarpa$,1,0,0,0,0,0,0,0,1,0,1,0,1,0,0,0,1
 ,$Quercus$ $montana$,17,0,1,0,2,1,4,0,10,0,9,0,3,1,2,0,11
 ,$Quercus$ $pagoda$,1,0,0,0,0,0,1,0,1,0,1,0,1,0,0,0,1
 ,$Quercus$ $rubra$,37,0,3,0,2,1,4,0,25,0,18,1,5,1,1,0,22
-,$Quercus$ $stellata$,3,0,0,0,0,0,1,0,2,0,1,0,0,0,0,0,2
+,$Quercus$ $sp$ (white oak group),1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1
+,$Quercus$ $stellata$,2,0,0,0,0,0,1,0,1,0,1,0,0,0,0,0,1
 ,$Quercus$ $velutina$,7,0,0,0,0,0,2,0,5,0,6,0,3,0,0,0,7
 ,TOTAL,141,0,10,1,8,2,45,0,107,0,91,2,53,4,5,0,108
 diffuse,$Acer$ $rubrum$,4,0,0,0,1,0,0,0,1,0,1,0,0,0,1,0,3
