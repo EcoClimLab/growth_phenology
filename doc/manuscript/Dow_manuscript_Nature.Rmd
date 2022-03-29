@@ -402,14 +402,15 @@ No significant correlations were found (all p>0.05).
 
 ## Tree-ring analysis {-#Tree} 
 We analyzed tree-ring records for `r n_cores_sites` sites, including our focal sites.
-All cores had been previously collected, cross-dated, and measured using standard collection and processing methodologies[@stokes_introduction_1968]. 
+All cores had been previously collected, cross-dated, and measured using standard collection and processing methodologies[@stokes_introduction_1968;@speer_fundamentals_2010]. 
 
 Dominant tree species were cored at both SCBI[@helcoski_growing_2019;@bourg_initial_2013] and Harvard Forest[@alexander_potential_2019;@dye_comparing_2016;@finzi_carbon_2020] following sampling designs that covered a broad range of DBH.
 We analyzed records for the ring- and diffuse- porous species at each site (`r  EDT_species`), but excluded semi-ring porous species (e.g., *Juglans nigra* L. at SCBI) and conifers (e.g., *Tsuga canadensis* at Harvard Forest).
 We studied a total of `r n_cores_focal_sites` cores which included `r n_chronologies_SCBI` species at SCBI and `r n_chronologies_HF` species at Harvard Forest (`r  EDT_species`).
 
-The tree-ring records from our focal sites were complemented with a much larger collection spanning `r n_cores_sites-2` deciduous and mixed forest sites in eastern North America[@pederson_climatic_2005; @maxwell_sampling_2020;@dorangeville_drought_2018].
-Again, records were limited to broadleaf deciduous species with clearly defined xylem porosity (*i.e.*, excluding semi-ring porous). 
+The tree-ring records from our focal sites were complemented with a much larger collection spanning `r n_cores_sites-2` deciduous and mixed forest sites in eastern North America[@pederson_climatic_2005;@maxwell_sampling_2020;@dorangeville_drought_2018].
+For the majority of sampled populations (i.e., site-species combinations), sampling focused on canopy trees (typically >20 trees per population)[@pederson_climatic_2005;@maxwell_sampling_2020;@dorangeville_drought_2018], while ~15% of the total 207 chronologies came from plot-level collections where trees above a certain diameter (typically 10 cm DBH) were censused and cored[@dye_comparing_2016;@helcoski_growing_2019].
+Again, analyses were limited to broadleaf deciduous species with clearly defined xylem porosity (*i.e.*, excluding semi-ring porous).
 
 For each species-site combination, we converted tree-ring records into the dimensionless RWI to emphasize interannual variability associated with climate[@cook_methods_1990].
 A 2/3rds _n_ spline was applied to each core using ARSTAN to produce standardized ring-width series; _n_ is the number of years in each series[@cook_time_1985;@cook_methods_1990].
