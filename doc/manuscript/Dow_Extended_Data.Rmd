@@ -103,9 +103,9 @@ add_header_above(c(" " = 2,  "March" =2 , "April" = 2, "May" = 2,"June" = 2,"Jul
 add_header_above(c(" " = 2,  "univariate analysis" = 12,"multivariate analysis" = 4)) %>%
 add_header_above(c(" " = 2,  "n. correlations to monthly mean max. T significant at p=0.05" = 16)) %>%
     column_spec(3:18, width = ".4cm") %>%
-pack_rows("Ring-porous", 1, 15, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
-pack_rows("Diffuse-porous", 16, 25, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
-row_spec(26, bold = T) %>%
+pack_rows("Ring-porous", 1, 17, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
+pack_rows("Diffuse-porous", 18, 27, latex_gap_space = "1em", colnum = 4, hline_before = FALSE) %>%
+row_spec(28, bold = T) %>%
 kable_styling(latex_options = c("scale_down", "hold_position"), protect_latex = T) 
 ```
 
