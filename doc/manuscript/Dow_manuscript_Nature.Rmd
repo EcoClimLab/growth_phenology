@@ -125,7 +125,7 @@ n_cores_focal_sites <- sum(na.omit(species_table[, "n.cores"]))
 chronology_table <- read.csv(file = "tables_figures/chronology_table.csv")
 n_chronologies <- nrow(chronology_table)  
 n_cores_sites <- length(unique(chronology_table[, "Location"]))
-n_cores_species <- length(unique(chronology_table[, "Species"]))
+n_cores_species <- length(unique(chronology_table[, "Species"])) - 1 #the -1 accounts for the Quercus spp. record (combination of white oak group)
 n_chronologies_SCBI <- 12
 n_chronologies_HF <- 4
 ```
@@ -185,7 +185,7 @@ Using dendrometer band measurements taken throughout multiple growing seasons at
 This analysis was performed separately for ring- <!--(67 trees at SCBI and 138 trees at Harvard Forest)-->and diffuse porous <!--(52 trees at SCBI and 183 trees at Harvard Forest)-->species (`r EDT_species`), which differ in the seasonal timing of growth (`r  EDT_phenology_parameters`)[@dorangeville_peak_2022;@tumajer_limitation_2022]. 
 These stem-growth milestones were compared to canopy foliage phenology (measured at ecosystem level via remote sensing).
 
-![**Figure 1 | Summary of temperate deciduous tree growth responses to warmer spring temperatures.** (a) Schematic illustrating parameters of interest and summarizing predominant responses of each to warmer maximum temperatures during a 'critical temperature window', defined as the period with the strongest temperature control over *DOY~25~*; (b) Variable definitions and summary of responses to warmer spring temperatures at two temperate forests -- Smithsonian Conservation Biology Institute (SCBI) and Harvard Forest -- and for two groups of broadleaf deciduous species (RP=ring porous; DP=diffuse porous), where up and down arrows indicate increases and decreases that are significant both statistically (p<0.05) and biologically (effect size >3%$^\circ$C^-1^), '-' indicates no significant correlation, and 'mixed' indicates a mix of significant and non-significant correlations, often in different directions.](tables_figures/schematic_summary_with_table.png){ width=70% }
+![**Figure 1 | Summary of temperate deciduous tree growth responses to warmer spring temperatures.** (a) Schematic illustrating parameters of interest and summarizing predominant responses of each to warmer maximum temperatures during a 'critical temperature window', defined as the period with the strongest temperature control over *DOY~25~*; (b) Variable definitions and summary of responses to warmer spring temperatures at two temperate forests -- Smithsonian Conservation Biology Institute (SCBI) and Harvard Forest -- and for two groups of broadleaf deciduous species (RP=ring porous; DP=diffuse porous), where up and down arrows indicate increases and decreases that are significant both statistically (p<0.05) and biologically (effect size >3%/ $^\circ$C), '-' indicates no significant correlation, and 'mixed' indicates a mix of significant and non-significant correlations, often in different directions.](tables_figures/schematic_summary_with_table.png){ width=70% }
 
 
 
@@ -195,14 +195,14 @@ These stem-growth milestones were compared to canopy foliage phenology (measured
  
 Both canopy foliage phenology and the timing of stem growth shifted earlier as spring temperatures increased (Fig. `r DOY_timing`, `r EDF_pheno_all`). 
 We found a consistent effect of temperature (*T~max~* or *T~min~*) throughout the spring, but the strongest effects on stem growth timing were found using *T~max~* during a critical temperature window (CTW). 
-CTW was identified by measuring the correlation between weekly *T~max~* and *DOY~25~* for all combinations of consecutive weeks from January 1 to mean *DOY~25~* for each xylem architecture-site combination (`r EDF_climwin`).
+CTW was identified by assessing the correlation between weekly *T~max~* and *DOY~25~* for all combinations of consecutive weeks from January 1 to mean *DOY~25~* for each xylem architecture-site combination (`r EDF_climwin`).
 The CTW was defined as the weeks for which this correlation was strongest, and mean *T~max~* during this period (CTW *T~max~*) used as our independent variable.   
 
 ![**Figure 2 | Responses of foliage phenology (a,b) and stem growth timing (c,d) to spring temperatures at the Smithsonian Conservation Biology Institute (a,c) and Harvard Forest (b,d).** Panels (a-b) show ecosystem-level canopy foliage phenology from 2001-2018, obtained from the MODIS Global Vegetation Phenology product (MCD12Q2.006) for a single pixel at the center of each ForestGEO plot, where G = Greenup, M=Mid-greenup, P=peak, and S=Senescence (i.e., beginning of green-down). Panels (c-d) show the dates at which stem growth milestones were achieved, on average, for sampled populations of ring porous and diffuse porous trees at SCBI (2011-2020) and Harvard Forest (1999-2003). Mean *DOY~25~*, *DOY~50~*, and *DOY~75~* were estimated using the Bayesian model visualized, with confidence intervals, in `r EDF_pheno_Tmax_climwin`. Mean maximum temperature (*T~max~*) was calculated for each xylem architecture/site combination over the respective critical temperature window (CTW), then turned into a ratio and assigned a color on a gradient where the coldest year in the sample is blue and the warmest is red. Leaf phenology years are colored according to the CTW *T~max~* of the porosity group containing the dominant canopy species at each site (diffuse porous at SCBI, ring porous at Harvard Forest).](tables_figures/DOYtiming_allyears.png){ width=25% }
 
 
 For ring- and diffuse- porous species at both sites, warmer CTW *T~max~* resulted in earlier achievement of seasonal milestones.
-Consistent with findings from previous studies<!--[@parmesan_globally_2003;--><!--@ibanez_forecasting_2010;--><!--@friedl_tale_2014]-->, leaf phenological milestones advanced at both sites (Fig. `r DOY_timing`a-b, `r EDT_phenology_parameters`), with greenup (DOY when EVI2 first crossed 15% of the segment EVI2 amplitude) advancing 3.45 days/$^\circ$C at SCBI (p=0.016) and 2.4 days/ $^\circ$C at Harvard Forest (p=0.1).
+Consistent with findings from previous studies<!--[@parmesan_globally_2003;--><!--@ibanez_forecasting_2010;--><!--@friedl_tale_2014]-->, leaf phenological milestones advanced at both sites (Fig. `r DOY_timing`a-b, `r EDT_phenology_parameters`), with greenup (DOY when EVI2 first crossed 15% of the segment EVI2 amplitude) advancing 3.5 days/$^\circ$C at SCBI (p=0.016) and 2.4 days/ $^\circ$C at Harvard Forest (p=0.1).
 Similarly, with the exception of ring porous *DOY~75~* at SCBI, the stem growth milestones *DOY~25~*, *DOY~50~*, and *DOY~75~* decreased with CTW *T~max~* (Figs. `r schematic_summary`, `r DOY_timing`c-d; `r EDF_pheno_all`).
 Specifically, *DOY~25~*, *DOY~50~*, and *DOY~75~* advanced 0-1.7 days/ $^\circ$C for ring porous species and 2.8-2.9 days/ $^\circ$C for diffuse porous species at SCBI, and 10.3-12.3 days/ $^\circ$C for ring porous species and 0.9-4.2 days/ $^\circ$C for diffuse porous species at Harvard Forest (`r EDT_phenology_parameters`).
 
@@ -210,7 +210,7 @@ Whereas the length of time between canopy greenup and senescence (*i.e.,* the da
 
 In contrast to the pronounced effects of CTW *T~max~* on the timing of growth, its effects on *g~max~* and $\Delta DBH$ were usually weak and inconsistent (Fig. `r schematic_summary`, `r EDF_pheno_all`). 
 Specifically, *g~max~*, which occurred on average within 5 days of *DOY~50~*, displayed extremely small negative changes (Harvard Forest) or changes in opposite directions (SCBI) in relationship to CTW *T~max~* for ring- and diffuse- porous species.
-$\Delta DBH$ displayed a weak positive relationship (+0.0029-0.008 cm/ $^\circ$C) with CTW *T~max~* at SCBI and a weak negative relationship (-0.02-0.003 cm/ $^\circ$C) at Harvard Forest (`r EDF_pheno_Tmax_climwin`). 
+$\Delta DBH$ displayed a weak positive relationship (+0.003-0.008 cm/ $^\circ$C) with CTW *T~max~* at SCBI and a weak negative relationship (-0.02-0.003 cm/ $^\circ$C) at Harvard Forest (`r EDF_pheno_Tmax_climwin`). 
 
 ## Tree-ring analysis {-#Tree} 
 
@@ -227,7 +227,7 @@ This revealed little effect of previous spring temperatures on annual growth, wi
 To test whether the negative effect of summer temperatures might offset an enhancement of growth by warmer spring temperatures, we tested for the joint effects of April and June-July *T~max~* on RWI.
 Results were qualitatively similar to the univariate correlations (Fig. `r tree_rings`), with significant (p $\le$ 0.05) positive correlations to April *T~max~* for only 4% of chronologies and significant negative correlations with June-July *T~max~* for 77% of chronologies (`r EDT_tree_ring_summary`).
 
-![**Figure 3 | Sensitivity of annual growth, as derived from tree-rings, to monthly mean maximum temperatures (*T~max~*), for `r n_chronologies` chronologies from `r n_cores_sites` sites across eastern North America** (`r EDF_map `). Colors indicate the correlation between monthly *T~max~* and a dimensionless ring width index (RWI) derived from the multiple trees that form each chronology and emphasizing interannual variability associated with climate. Chronologies are grouped by xylem porosity and ordered by mean April *T~max~*. Plots are annotated to highlight records from our two focal sites, the Smithsonian Conservation Biology Institute (SCBI) and Harvard Forest (HF) (`r EDT_species`). Species analyzed and numbers of significant correlations to *T~max~* are summarized in `r EDT_tree_ring_summary`, and chronology details are given in `r chron_table`.](tables_figures/tree_rings_tmax.png){ width=100% }
+![**Figure 3 | Sensitivity of annual growth, as derived from tree-rings, to monthly mean maximum temperatures (*T~max~*), for `r n_chronologies` chronologies from `r n_cores_sites` sites across eastern North America**. Colors indicate the correlation between monthly *T~max~* and a dimensionless ring width index (RWI) derived from the multiple trees that form each chronology and emphasizing interannual variability associated with climate. Chronologies are grouped by xylem porosity and ordered by mean April *T~max~*. Plots are annotated to highlight records from our two focal sites, the Smithsonian Conservation Biology Institute (SCBI) and Harvard Forest (HF; `r EDT_species`). Sites included are mapped in `r EDF_map `, species analyzed and numbers of significant correlations to *T~max~* are summarized in `r EDT_tree_ring_summary`, and chronology details are given in `r chron_table`.](tables_figures/tree_rings_tmax.png){ width=100% }
 
 
 
@@ -446,7 +446,7 @@ Collection of tree-ring samples was funded by a USDA Agriculture and Food Resear
 
 Cameron Dow and Kristina J. Anderson-Teixeira conceived the ideas and designed the study; 
 Cameron Dow, Loïc D’Orangeville, Erika B. Gonzalez-Akre, Ryan Helcoski, Grant L. Harley, Justin T. Maxwell, Ian R. McGregor, William McShea, Neil Pederson, Alan J. Tepley, and Kristina J. Anderson-Teixeira collected or oversaw collection of data; 
-Cameron Dow, Albert Y. Kim, Valentine Herrmann, Justin T. Maxwell, Ian R. McGregor, Sean McMahon analyzed the data or provided analytical tools; 
+Cameron Dow, Albert Y. Kim, Valentine Herrmann, Justin T. Maxwell, Ian R. McGregor, Sean M. McMahon analyzed the data or provided analytical tools; 
 Cameron Dow and Kristina J. Anderson-Teixeira led the writing of the manuscript. 
 All authors contributed critically to the drafts and gave final approval for publication.
 
