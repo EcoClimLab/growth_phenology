@@ -250,7 +250,7 @@ schematic_v2_HF <-
     )
   ) +
   scale_y_continuous(
-    name = "Seasonal Stem Diameter Growth",
+    name = "Stem Diameter",
     breaks = NULL,
     labels = NULL,
   ) +
