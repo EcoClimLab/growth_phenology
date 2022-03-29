@@ -1,0 +1,35 @@
+---
+title: ""
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+March 29, 2022
+\newline
+\newline
+
+Dear Editor:
+
+We are pleased to submit our manuscript "Warmer spring temperatures in temperate deciduous forests advance the timing of tree growth but have little effect on annual woody productivity", by Cameron Dow and co-authors, for consideration for publication in *Nature*. The manuscript demonstrates that although warm spring temperatures shift the timing of temperate deciduous tree growth earlier, they do not augment annual growth. The implication is that, contrary to the expectations imbued in most climate models, warming spring temperatures are unlikely to increase woody productivity enough to strengthen the long-term carbon sink of temperate deciduous forests.
+
+We have received and responded to the comments of four reviewers. The largest changes changes included the following:
+
+- We redid dendrometer band analyses to provide more stable parameter estimates, a refined data cleaning process, and a more conservative approach to discarding outliers. This did not substantively alter the results (although there were some modest changes) or affect the conclusions.
+
+- We reworked the introduction and discussion to incorporate content and citation suggestions of the reviewers, as well as discussion of relevant papers that have been published since our initial submission. This includes discussion of the literature on wood formation and reworking of the discussion on C cycling.
+
+We believe that the revised manuscript is significantly improved and thank the reviewers for their constructive feedback.
+
+
+We believe our manuscript to be an appropriate length for *Nature*, with 2,687 words, 3 display items, and 51 references in the main article. The article is accompanied by an Extended Data file (3 tables, 7 figures) and a supplementary table.
+
+Thank you for considering our submission for *Nature*.  
+
+Sincerely,
+\newline
+\newline
+    
+Kristina Anderson-Teixeira, on behalf of all co-authors.
