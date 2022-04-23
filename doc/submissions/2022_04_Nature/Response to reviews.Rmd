@@ -1,0 +1,93 @@
+---
+title: "Response to reviews"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Referees' comments:
+
+## Referee #1 (Remarks to the Author):
+
+GENERAL COMMENTS
+
+The revised manuscript entitled: “Warmer spring temperatures in temperate deciduous forests advance the timing of tree growth but have little effect on annual woody productivity” by Cameron Dow, Albert Y. Kim, Loïc D’Orangeville, Erika B. Gonzalez-Akre, Ryan Helcoski, Valentine Herrmann, Grant L. Harley, Justin T. Maxwell, Ian R. McGregor, William J. McShea, Sean McMahon, Neil Pederson, Alan J. Tepley, Kristina J. Anderson-Teixeira, is well written, well-structured and easy to read. The main message is clear, important and timely.
+
+**Thank you.**
+
+A. Summary of the key results
+Using dendrometer band measurements from about 500 trees, over 10 years and across two forest plots, plus remote sensing leaf phenology, the authors wanted to show that warmer spring temperatures shifted the stem growth of deciduous trees earlier but had little effect on peak growing season length, maximum growth rates, or annual radial growth. Using tree-ring data from more than 200 chronologies from 100 forest plots across eastern North America, the authors wanted to confirm that, in this region, tree-ring width from angiosperm trees is not sensitive to spring but to summer temperatures. The authors point out that these findings imply that extra CO2 uptake in years with warmer springs is not sequestered in long-lived woody biomass as expected by vegetation models.
+
+**We agree with this summary.**
+
+B. Originality and significance
+I like the manuscript and the approach presented here. I found the revised manuscript even more consistent in showing that despite increasing spring temperature resulting in advance leaf phenology and stem growth timings, the length and rate of peak growing season are not changing much and had little effect on wood production. The revised manuscript is also more cautious when discussing the fate of the captured carbon.
+
+**Thank you.**
+
+C. Data & methodology:
+I appreciate the effort made by the authors to clarify their text about phenology. For me this point is fine now.
+
+**Okay.**
+
+I have a minor concern about the use of the word “sequestration” now. I believe this word as to be checked all along the manuscript, starting with the first sentence (L36-37). The authors want to show that despite earlier carbon capture, enhanced sequestration in the stem is not insured, so better to be crystal clear on the use of “sequestration” and “capture”. Also, I find strange “CO2 sequestration”, to my point of view, C only is sequestered in trees, not CO2.
+
+*Response needed.*
+
+D. Appropriate use of statistics and treatment of uncertainties
+Statistics are generally fine to me.
+I just wanted to point out that CTW is fitted to be related to DOY25, therefore it is rather expected to find a significant relationship between CWT Tmax and DOY25, and unfair to compare it with the relationship between CWT Tmax and ∆DBH.
+I appreciated the clarifications done concerning the data cleaning process. However, I didn’t find in the manuscript the quantity of data that have been removed at it stages. I believe it is worth mentioning it.
+
+*Response needed.*
+
+E. Conclusions
+I found the revised version very coherent and the discussion section true to the result section.
+
+**Thank you.**
+
+F. Suggested improvements
+No more suggestions from my side…
+
+**Okay.**
+
+G. References:
+I really appreciate the effort made by the authors to complete the reference with the elements provided by the referees and to improve the discussion with the new information.
+
+**Thank you.**
+
+H. Clarity and context
+The abstract is excellent in presenting Author’s ideas, which I fully support now.
+
+**Thank you.**
+
+
+## Referee #2 (Remarks to the Author):
+
+This is an important paper, as noted by a number of the other reviewers. It has been substantially improved in response to the first round review comments (I note in particular the Discussion paragraph beginning L232 on the “fate” of “additional” C taken up in years with warm springs). The presentation is clear and crisp, and the paper is easy to read and follow. 
+
+**Thank you.**
+
+I have only one minor suggestion. Despite the assertion that, “in the 2nd sentence of the summary paragraph… it is clear that we are talking about stem growth” I have lingering concerns about what is meant by “growth”. I harp on this because it is something that I often discuss with my students (because they are not always clear exactly what they mean, either!). My take is that growth can be characterized in terms of wood volume (from diameter increment) or mass, and they don’t always mean the same thing or indicate the same amount of “growth”, because of the variation in density that I mentioned in my initial review, as well as changes in diameter related to water relations. I’m asking that the authors state explicitly (in the abstract as well as the main body) that they are focusing on diameter, just so that this is clear for the reader. 
+
+
+*Response needed.*
+
+## Referee #3 (Remarks to the Author):
+
+I feel the reviewers have adequately addressed all of my concerns and clarified the their use of the MODIS phenology data. I therefore recommend that the manuscript be accepted.
+
+**Thank you.**
+
+
+## Referee #4 (Remarks to the Author):
+
+The authors have very carefully taken all my comments and criticisms and incorporated them into the manuscript. From my point of view, there are no further points of criticism.
+The results of this work contribute an important new piece of knowledge to the understanding of deciduous forests and their response to climate change.
+
+With kind Regards
+Roman Zweifel
+
+**Thank you.**
