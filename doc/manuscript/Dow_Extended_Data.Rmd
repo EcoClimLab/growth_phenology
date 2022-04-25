@@ -115,7 +115,7 @@ kable_styling(latex_options = c("scale_down", "hold_position"), protect_latex = 
 \newpage
 
 
-![**Extended Data Figure 1 | Map of sampling locations of tree-ring chronologies analyzed in this study.** Sites are colored by the xylem porosity type of species sampled: ring poroous (RP), diffuse porous (DP), or both. Sampling details are provided in `r chron_table`.](tables_figures/chronology_map.png)
+![**Extended Data Figure 1 | Map of sampling locations of tree-ring chronologies analyzed in this study.** Sites are colored by the xylem porosity type of species sampled: ring poroous (RP), diffuse porous (DP), or both. Sampling details are provided in `r chron_table`. Base map source is ggplot2.](tables_figures/chronology_map.png)
 
 
 \newpage
