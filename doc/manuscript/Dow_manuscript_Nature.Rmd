@@ -274,6 +274,7 @@ As spring temperatures become increasingly warmer, growing seasons will start ea
 However, barring rapid acclimation of temperate deciduous forests to the warming conditions, advancement in the timing of stem growth (Fig. `r schematic_summary`) is unlikely to provide a sustained augmentation of CO~2~ sequestration in woody biomass and ensuant negative climate change feedback that is anticipated in most climate forecasting models[@richardson_terrestrial_2012;@keenan_net_2014;@buermann_widespread_2018].
 Rather, the dominant effect of rising temperatures on temperate deciduous forest woody productivity will be a negative effect of high summer temperatures (Fig. `r tree_rings`)[@ahlstrom_robustness_2012], which constitutes a positive feedback to climate change.
 
+# References {-#References}
 
 # Methods {-#Methods} 
 <!--Nature guidelines: Full methods, typically not exceeding 3000 words. May be subdivided by bold headings.-->
@@ -436,6 +437,8 @@ Having determined that, among these, June-July explained the most variation, we 
 Slopes and p-values for each chronology are given in `r chron_table`. 
 Although some models may have benefited from data transformations, we determined that assumptions of normality and homoscedasticity were sufficiently met for the purposes of this analysis.  
 
+## Methods References {-#Methods} 
+
 # Acknowledgements {-#Acknowledgements} 
 We gratefully acknowledge all researchers who assisted with data collection in the field and laboratory, particularly Tsun Fung Au, Joshua Bregy, James Dickens, Karen Heeter, Anna Hennage, Daniel King, James McGee, Benjamin Lockwood, Jennifer McGarvey, Victoria Meakem, Josh Oliver, Jessica Shue, Karly Schmidt-Simard, Brandon Strange, Alyssa Terrell, Brynn Taylor, Michael Thornton, Senna Robeson, Matt Wenzel, and Luke Wylie. 
 Thanks to David A. Orwig, members of the ForestGEO Ecosystems & Climate Lab at SCBI, and four anonymous reviewers for helpful feedback.
@@ -478,4 +481,4 @@ Correspondence and requests for materials should be addressed to Kristina Anders
 
 
 
-# References {-#References} 
+
