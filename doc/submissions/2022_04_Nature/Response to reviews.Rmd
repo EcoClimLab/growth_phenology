@@ -30,11 +30,11 @@ I like the manuscript and the approach presented here. I found the revised manus
 C. Data & methodology:
 I appreciate the effort made by the authors to clarify their text about phenology. For me this point is fine now.
 
-**Okay.**
+**Thank you.**
 
 I have a minor concern about the use of the word “sequestration” now. I believe this word as to be checked all along the manuscript, starting with the first sentence (L36-37). The authors want to show that despite earlier carbon capture, enhanced sequestration in the stem is not insured, so better to be crystal clear on the use of “sequestration” and “capture”. Also, I find strange “CO2 sequestration”, to my point of view, C only is sequestered in trees, not CO2.
 
-*Response needed.*
+**We have replaced "CO~2~ sequestration" or "C sequestration" with "CO~2~ uptake" when referring to ecosystem-atmosphere exchange of CO~2~ and use "sequestration" only to refer to woody growth. Further, we have removed all use of “CO2 sequestration” and now use only  “C sequestration”.**
 
 D. Appropriate use of statistics and treatment of uncertainties
 Statistics are generally fine to me.
@@ -51,7 +51,7 @@ I found the revised version very coherent and the discussion section true to the
 F. Suggested improvements
 No more suggestions from my side…
 
-**Okay.**
+**Thank you.**
 
 G. References:
 I really appreciate the effort made by the authors to complete the reference with the elements provided by the referees and to improve the discussion with the new information.
