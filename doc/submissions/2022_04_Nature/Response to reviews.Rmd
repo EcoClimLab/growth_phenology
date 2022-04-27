@@ -77,8 +77,14 @@ This is an important paper, as noted by a number of the other reviewers. It has 
 
 I have only one minor suggestion. Despite the assertion that, “in the 2nd sentence of the summary paragraph… it is clear that we are talking about stem growth” I have lingering concerns about what is meant by “growth”. I harp on this because it is something that I often discuss with my students (because they are not always clear exactly what they mean, either!). My take is that growth can be characterized in terms of wood volume (from diameter increment) or mass, and they don’t always mean the same thing or indicate the same amount of “growth”, because of the variation in density that I mentioned in my initial review, as well as changes in diameter related to water relations. I’m asking that the authors state explicitly (in the abstract as well as the main body) that they are focusing on diameter, just so that this is clear for the reader. 
 
+**We have clarified this in the abstract as follows: "Using dendrometer band measurements from 440 trees across two forests, we show that warmer spring temperatures shifted stem *diameter* growth of deciduous trees earlier but had no consistent effect on peak growing season length, maximum growth rates, or annual growth. The latter finding was confirmed on the centennial scale by 207 tree-ring chronologies from 108 forests across eastern North America, where annual *ring width* was far more sensitive to temperatures during the peak growing season than in the spring.**
 
-*Response needed.*
+**We have clarified this in several key places throughout the main body, including the following:**
+
+- **last paragraph of intro: Here, we evaluate how spring temperatures affect *the timing, rates, and annual increments of stem diameter growth* of temperate deciduous trees across eastern North America. To test whether warmer springs advance the timing and extend the duration of stem *diameter* growth, we used dendrometer band measurements on 440 trees across two mid-latitude forests. To test whether spring temperatures consistently increased *annual radial increments*, we analyzed 207 tree-ring chronologies from 108 forests."**
+- **first sentence of "Dendrometer Bands" section: "we fit a logistic growth model35 to determine the days of year (DOY) when 25, 50, and 75% annual *diameter* growth were achieved (DOY25, DOY50, DOY75), ..."**
+- **first sentence of "Tree-ring analysis" section: "To understand how annual *radial stem* growth increments have responded to spring temperatures at the centennial scale, we analyzed tree-ring chronologies ..."**
+- **first sentence of discussion: "Together, our results demonstrate that warmer spring temperatures in the temperate deciduous forests of eastern North America advance the timing of stem *diameter* growth but have little effect on annual *increments*"**
 
 ## Referee #3 (Remarks to the Author):
 
