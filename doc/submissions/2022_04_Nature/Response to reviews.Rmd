@@ -39,9 +39,14 @@ I have a minor concern about the use of the word “sequestration” now. I beli
 D. Appropriate use of statistics and treatment of uncertainties
 Statistics are generally fine to me.
 I just wanted to point out that CTW is fitted to be related to DOY25, therefore it is rather expected to find a significant relationship between CWT Tmax and DOY25, and unfair to compare it with the relationship between CWT Tmax and ∆DBH.
+
+**We agree with this comment and specify our motivation in the methods section: "We defined CTW for *DOY~25~*, as opposed to other parameters describing the timing of growth, because spring temperatures should have the most direct influence on this variable."**
+
+**We also repeat the analyses using a definition of CTW that is independent of *DOY~25~* and all other response variables. As explained in the methods, "To ensure that patterns were robust under an alternative definition of CTW, and to parallel the monthly time windows used in our tree-ring analysis (detailed below; Fig. 3, Extended Data Figure 6-7), we also ran analyses where we fixed the CTW identified by climwin to be the month with the most days in the CTW (Extended Data Table 2) each critical window."** 
+
 I appreciated the clarifications done concerning the data cleaning process. However, I didn’t find in the manuscript the quantity of data that have been removed at it stages. I believe it is worth mentioning it.
 
-*Response needed.*
+*Response needed: [https://github.com/EcoClimLab/growth_phenology/issues/141](https://github.com/EcoClimLab/growth_phenology/issues/141)*
 
 E. Conclusions
 I found the revised version very coherent and the discussion section true to the result section.
