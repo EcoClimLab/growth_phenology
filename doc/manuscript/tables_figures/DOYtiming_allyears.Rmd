@@ -1,0 +1,18 @@
+---
+title: ""
+author:
+output: 
+  pdf_document:
+    fig_caption: yes
+    #toc: true # table of content true
+    #toc_depth: 2  
+header-includes:  \usepackage{float}
+                  \usepackage{caption}
+                  \captionsetup[figure]{labelformat=empty}
+                  \captionsetup[table]{labelformat=empty}
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+![**Figure 2 | Responses of foliage phenology (a,b) and stem growth timing (c,d) to spring temperatures at the Smithsonian Conservation Biology Institute (a,c) and Harvard Forest (b,d).** Panels (a-b) show ecosystem-level canopy foliage phenology from 2001-2018, obtained from the MODIS Global Vegetation Phenology product (MCD12Q2.006) for a single pixel at the center of each ForestGEO plot, where G = Greenup, M=Mid-greenup, P=peak, and S=Senescence (i.e., beginning of green-down). Panels (c-d) show the dates at which stem growth milestones were achieved, on average, for sampled populations of ring porous and diffuse porous trees at SCBI (2011-2020) and Harvard Forest (1999-2003). Mean *DOY~25~*, *DOY~50~*, and *DOY~75~* were estimated using the Bayesian model visualized, with confidence intervals, in Extended Data Figure 4. Mean maximum temperature (*T~max~*) was calculated for each xylem architecture/site combination over the respective critical temperature window (CTW), then turned into a ratio and assigned a color on a gradient where the coldest year in the sample is blue and the warmest is red. Leaf phenology years are colored according to the CTW *T~max~* of the porosity group containing the dominant canopy species at each site (diffuse porous at SCBI, ring porous at Harvard Forest).](DOYtiming_allyears.png){ width=100% }
