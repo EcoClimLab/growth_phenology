@@ -316,14 +316,7 @@ Among the remaining years,the median start date was April 21 and median end date
 The latest end date was November 11, 2002.
 In our analysis, each band-year was treated independently, with no data overlap from one year to the next.
 
-The raw dendrometer band data were screened before analysis to remove records or entire tree-years that were either unreliable or inappropriate for our analysis. 
-First, we manually screened the data for three classes of errors. 
-First, when a measurement was drastically different from previous and following measurements, it was assumed to be a human error and removed.
-Second, when measurements remained essentially unchanged for several readings, followed by a sudden jump then return to a normal growth pattern, this was assumed to be a case where the band was stuck on the tree bark and then released. 
-In these cases, the full annual record for the tree was removed.
-Third, data points that deviated substantially from normal growth patterns, but for unknown causes, were removed. 
-If a majority of the data points fell into this class within a tree-year, the entire year was removed from the analysis.
-We also removed tree-years with small or negligible total growth ($\Delta DBH$ $\le 0.005$ cm; SCBI = 26, Harvard Forest = 253), and tree-years where the first intra-annual measurement was later than the first spring survey (trees that were missed in the initial census; SCBI = 22, Harvard Forest = 8).
+We removed tree-years with small or negligible total growth ($\Delta DBH$ $\le 0.005$ cm; SCBI = 26, Harvard Forest = 253), and tree-years where the first intra-annual measurement was later than the first spring survey (trees that were missed in the initial census; SCBI = 22, Harvard Forest = 8).
 These were removed because they reduce the reliability of predicted growth in the modeled curves. 
 
 We fit a five-parameter logistic growth model[@mcmahon_general_2015] to dendrometer band data from each tree-year to define stem growth milestones and growth rates (Fig. `r schematic_summary`). 
