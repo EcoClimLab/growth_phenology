@@ -305,7 +305,6 @@ While we do not estimate the ages of trees in our sample, bands at both sites we
 Bands were measured with a digital caliper approximately every 1-2 weeks within the growing season from 2011-2020 at SCBI and 1998-2003 at Harvard Forest. 
 The number of bands measured at each site fluctuated slightly as trees were added or dropped from the census (e.g., because of tree mortality). 
 Across years, the number of bands sampled averaged 129 (range: 91-138) at SCBI and 717 (range: 700-755) at Harvard Forest. <!--verified - these are the pre-cleaning numbers-->
-In total, our analysis included `r n_tree_years` tree-years (`r  EDT_species`).
 
 Measurements were timed to begin before the beginning of spring growth and to continue through the cessation of growth in the fall. 
 At SCBI, the median start date was April 14, which was adjusted forward when early leaf-out of understory vegetation was observed, with the earliest start date being March 30 (in 2020). 
@@ -318,7 +317,7 @@ In our analysis, each band-year was treated independently, with no data overlap 
 
 The raw dendrometer band data were screened to remove records or entire tree-years that were inappropriate for our analysis because of reduced reliability of predicted growth in the modeled curves.
 Specifically, we removed tree-years with small or negligible total growth ($\Delta DBH$ $\le 0.005$ cm; SCBI = 26, Harvard Forest = 253) and tree-years where the first intra-annual measurement was later than the first spring survey (trees that were missed in the initial census; SCBI = 22, Harvard Forest = 8).
-In total, this process removed `r 26+253+22+8` of the `r n_tree_years` available records for 2011-2020 at SCBI and 1999-2003 at Harvard Forest.
+In total, this process removed `r 26+253+22+8` of the `r n_tree_years + (3+11+74+101) + (26+253+22+8)`<!--first set is n removed for poor model fit, 2nd set is n removed here--> available tree-year records for 2011-2020 at SCBI and 1999-2003 at Harvard Forest.
 
 We fit a five-parameter logistic growth model[@mcmahon_general_2015] to dendrometer band data from each tree-year to define stem growth milestones and growth rates (Fig. `r schematic_summary`). 
 In particular, we model the observed diameter at breast height (DBH) on a given day of the year (DOY; *i.e.*, julian days) as: 
@@ -345,7 +344,7 @@ Models were judged to be poorly fit if modeled growth parameters were outliers, 
 Modeled fits for tree-years were removed under two conditions:
 (1) *g~max~* was $\ge 2.5$ standard deviations away from the mean for each site-xylem architecture group combination (SCBI = 3, Harvard Forest = 11);
 (2) timing variables (*DOY~ip~*, *DOY~25~*, *DOY~50~*, *DOY~75~*) were $\ge 2.5$ standard deviations away from the means for their site, xylem architecture group, and year (SCBI = 74, Harvard Forest = 101).
-In total, this process removed `r 3+11+74+101` of the `r n_tree_years - 26+253+22+8` records deemed appropriate for analysis.
+In total, this process removed `r 3+11+74+101` of the `r n_tree_years + (3+11+74+101)` tree-year records deemed appropriate for analysis, leaving a total of `r n_tree_years` tree-years included in the final analysis (`r  EDT_species`).
 At both sites the tree-years removed through this method were proportional to the original sample size, indicating that no species or size class was disproportionately removed compared to others.
 This process was repeated using 2 and 3 standard deviations as the cutoff for defining outliers, yielding qualitatively similar results. 
 

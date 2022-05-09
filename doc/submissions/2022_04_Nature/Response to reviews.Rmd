@@ -48,9 +48,8 @@ I appreciated the clarifications done concerning the data cleaning process. Howe
 
 **We simplified the presentation of our data cleaning methods, ensuring that these numbers are clearly presented for both stagges of cleaning:**
 
-- **Paragraph describing screening of raw dendrometer band data: "In total, this process removed 309 of the 2210 available records for 2011-2020 at SCBI and 1999-2003 at Harvard Forest."**
-- **Paragraph describing removal of poorly fit records: "In total, this process removed 189 of the 2467 records deemed appropriate for analysis."**
-
+- **Paragraph describing screening of raw dendrometer band data: "In total, this process removed 309 of the 2708 available tree-year records for 2011-2020 at SCBI and 1999-2003 at Harvard Forest."**
+- **Paragraph describing removal of poorly fit records: "In total, this process removed 189 of the 2399 tree-year records deemed appropriate for analysis, leaving a total of 2210 tree-years included in the final analysis (Extended Data Table 1)."**
 
 
 E. Conclusions
