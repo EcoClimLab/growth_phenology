@@ -46,7 +46,7 @@ I just wanted to point out that CTW is fitted to be related to DOY25, therefore 
 
 I appreciated the clarifications done concerning the data cleaning process. However, I didn’t find in the manuscript the quantity of data that have been removed at it stages. I believe it is worth mentioning it.
 
-**We simplified the presentation of our data cleaning methods, ensuring that these numbers are clearly presented for both stagges of cleaning:**
+**We simplified the presentation of our data cleaning methods and ensured that these numbers are clearly presented for both stages of cleaning:**
 
 - **Paragraph describing screening of raw dendrometer band data: "In total, this process removed 309 of the 2708 available tree-year records for 2011-2020 at SCBI and 1999-2003 at Harvard Forest."**
 - **Paragraph describing removal of poorly fit records: "In total, this process removed 189 of the 2399 tree-year records deemed appropriate for analysis, leaving a total of 2210 tree-years included in the final analysis (Extended Data Table 1)."**
