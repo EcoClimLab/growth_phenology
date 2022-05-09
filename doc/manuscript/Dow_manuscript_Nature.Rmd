@@ -316,8 +316,9 @@ Among the remaining years,the median start date was April 21 and median end date
 The latest end date was November 11, 2002.
 In our analysis, each band-year was treated independently, with no data overlap from one year to the next.
 
-We removed tree-years with small or negligible total growth ($\Delta DBH$ $\le 0.005$ cm; SCBI = 26, Harvard Forest = 253), and tree-years where the first intra-annual measurement was later than the first spring survey (trees that were missed in the initial census; SCBI = 22, Harvard Forest = 8).
-These were removed because they reduce the reliability of predicted growth in the modeled curves. 
+The raw dendrometer band data were screened to remove records or entire tree-years that were inappropriate for our analysis because of reduced reliability of predicted growth in the modeled curves.
+Specifically, we removed tree-years with small or negligible total growth ($\Delta DBH$ $\le 0.005$ cm; SCBI = 26, Harvard Forest = 253) and tree-years where the first intra-annual measurement was later than the first spring survey (trees that were missed in the initial census; SCBI = 22, Harvard Forest = 8).
+In total, this process removed `r 26+253+22+8` of the `r n_tree_years` available records for 2011-2020 at SCBI and 1999-2003 at Harvard Forest.
 
 We fit a five-parameter logistic growth model[@mcmahon_general_2015] to dendrometer band data from each tree-year to define stem growth milestones and growth rates (Fig. `r schematic_summary`). 
 In particular, we model the observed diameter at breast height (DBH) on a given day of the year (DOY; *i.e.*, julian days) as: 
@@ -344,6 +345,7 @@ Models were judged to be poorly fit if modeled growth parameters were outliers, 
 Modeled fits for tree-years were removed under two conditions:
 (1) *g~max~* was $\ge 2.5$ standard deviations away from the mean for each site-xylem architecture group combination (SCBI = 3, Harvard Forest = 11);
 (2) timing variables (*DOY~ip~*, *DOY~25~*, *DOY~50~*, *DOY~75~*) were $\ge 2.5$ standard deviations away from the means for their site, xylem architecture group, and year (SCBI = 74, Harvard Forest = 101).
+In total, this process removed `r 3+11+74+101` of the `r n_tree_years - 26+253+22+8` records deemed appropriate for analysis.
 At both sites the tree-years removed through this method were proportional to the original sample size, indicating that no species or size class was disproportionately removed compared to others.
 This process was repeated using 2 and 3 standard deviations as the cutoff for defining outliers, yielding qualitatively similar results. 
 
