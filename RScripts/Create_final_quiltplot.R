@@ -32,7 +32,7 @@ all_dcc_output_scbi$site <- paste0("SCBI_", all_dcc_output_scbi$Species)
 all.dcc.output_all <- rbind(all_dcc_output_other,all_dcc_output_scbi,all_dcc_output_hf)
 
 #Load in clim means
-clim_means <- read_csv("Results/tree_cores/quiltplots/clim_means_all.csv")#Created in other_quiltplot.R
+clim_means <- read_csv("Results/tree_cores/quiltplots/plot_data/clim_means_all.csv")#Created in other_quiltplot.R
 clim_means$tmx <- ifelse(clim_means$Location == "HF_LyfordPlots", clim_means$tmx+0.01, clim_means$tmx)#added to allow HF_lyford plots to be plotted separately from HF, even though spring means were the same. Does not affect analyses
 #Create porosity lists
 RP <- c("CAGL","CAOV","CATO","CACO","QURU", "QUST", "QUAL","QUPR","QUMO", "FRAM", "QUVE", "FRNI","QUMA", "QUPA")
@@ -137,7 +137,7 @@ X <- X[X$wood_type != "SP",]
 # write.csv(SI_table, file = paste0("doc/manuscript/tables_figures/", "chronology_table.csv"), row.names = FALSE)
   # X$entry_number <- seq(1, nrow(X)/8, 1)
   #
-  write.csv(X, file = paste0("results/tree_cores/quiltlplots/all/", v, "_quilt_plot_data.csv"), row.names = FALSE)
+  write.csv(X, file = paste0("results/tree_cores/quiltplots/plot_data/all/", v, "_quilt_plot_data.csv"), row.names = FALSE)
 }
 
 #TMAX LOOP
@@ -200,7 +200,7 @@ for(v in climate_variables) {
   # write.csv(SI_table, file = paste0("doc/manuscript/tables_figures/", "chronology_table.csv"), row.names = FALSE)
   # X$entry_number <- seq(1, nrow(X)/8, 1)
   #
-  write.csv(X, file = paste0("results/tree_cores/quiltlplots/all/", v, "_quilt_plot_data.csv"), row.names = FALSE)
+  write.csv(X, file = paste0("results/tree_cores/quiltplots/plot_data/all/", v, "_quilt_plot_data.csv"), row.names = FALSE)
 }
 #}
 
@@ -212,7 +212,7 @@ originals <- rbind(originals, c(38.8935,-78.14540, "SCBI")) #Lat for scbi = 38.8
 names(originals) <- c("Latitude","Longitude", "Location")
 TRW_coord <- rbind(TRW_coord, originals)
 
-tmx_data <- read.csv("results/tree_cores/quiltlplots/all/tmx_quilt_plot_data.csv")
+tmx_data <- read.csv("results/tree_cores/quiltplots/plot_data/all/tmx_quilt_plot_data.csv")
 tmx_data
 tmx_data_table <- tmx_data[,c(19,15,1,14,17,18)]
 tmx_data_table <- tmx_data_table[!(duplicated(tmx_data_table$group)),]
@@ -225,7 +225,7 @@ tmx_data_table <- left_join(tmx_data_table, TRW_coord, by = "Location")
 tmx_data_table <- tmx_data_table[!duplicated(tmx_data_table$group),]
 #write.csv(tmx_data_table, "doc/manuscript/tables_figures/chronology_table.csv", row.names = FALSE)
 
-tmn_data <- read.csv("results/tree_cores/quiltlplots/all/tmn_quilt_plot_data.csv")
+tmn_data <- read.csv("results/tree_cores/quiltplots/plot_data/all/tmn_quilt_plot_data.csv")
 tmn_data <- tmn_data[!(tmn_data$site %in% "MO_Flu_CAOV"), ]
 tmn_data_table <- tmn_data[,c(19,15,1,14,17,18)]
 tmn_data_table <- tmn_data_table[!(duplicated(tmn_data_table$group)),]
@@ -342,7 +342,7 @@ tmn_data_table <- tmn_data_table[!(duplicated(tmn_data_table$group)),]
     #x <- x[,c(2,1,3)]
     #x.sig <- x.sig[,c(2,1,3)]
     #x.sig2 <- x.sig2[,c(2,1,3)]
-    png(paste0("results/tree_cores/quiltplots/plot_images/", "monthly_", "correlation", "other", v,WT, ".png"), res = 150, width = 169, height = 2*169, units = "mm", pointsize = 10)
+    png(paste0("results/tree_cores/quiltplots/plot_images/", "monthly_", "correlation", "other", v,WT, ".png"), res = 150, width = 18, height = 17, units = "cm", pointsize = 10)
 
     my.dccplot(x = as.data.frame(t(x)), sig = as.data.frame(t(x.sig)), sig2 = as.data.frame(t(x.sig2)),  main = ifelse(v %in% "PETminusPRE", "PET-PRE", v), method = "correlation")
 
@@ -403,7 +403,7 @@ x.sig2 <- x.sig2[, -1]
 v <-  toupper(v)
 v <- gsub("PDSI_PREWHITEN" , "PDSI", v)
 
-png(paste0("results/tree_cores/quiltplots/plot_images/", "monthly_", "correlation", "other", v,WT, ".png"), res = 150, width = 169, height = 2*169, units = "mm", pointsize = 10)
+png(paste0("results/tree_cores/quiltplots/plot_images/", "monthly_", "correlation", "other", v,WT, ".png"), res = 150, width = 8.45, height = 2*8.45, units = "cm", pointsize = 10)
 
 my.dccplot(x = as.data.frame(t(x)), sig = as.data.frame(t(x.sig)), sig2 = as.data.frame(t(x.sig2)),  main = ifelse(v %in% "PETminusPRE", "PET-PRE", v), method = "correlation")
 
@@ -466,7 +466,7 @@ x.sig2 <- x.sig2[, -1]
 v <-  toupper(v)
 v <- gsub("PDSI_PREWHITEN" , "PDSI", v)
 
-png(paste0("results/tree_cores/quiltplots/plot_images/", "monthly_", "correlation", "other", v,WT, ".png"), res = 150, width = 169, height = 2*169, units = "mm", pointsize = 10)
+png(paste0("results/tree_cores/quiltplots/plot_images/", "monthly_", "correlation", "other", v,WT, ".png"), res = 150, width = 8.45, height = 2*8.45, units = "cm", pointsize = 10)
 
 my.dccplot(x = as.data.frame(t(x)), sig = as.data.frame(t(x.sig)), sig2 = as.data.frame(t(x.sig2)),  main = ifelse(v %in% "PETminusPRE", "PET-PRE", v), method = "correlation")
 
@@ -526,7 +526,7 @@ x.sig2 <- x.sig2[, -1]
 v <-  toupper(v)
 v <- gsub("PDSI_PREWHITEN" , "PDSI", v)
 
-png(paste0("results/tree_cores/quiltplots/plot_images/", "monthly_", "correlation", "other", v,WT, ".png"), res = 150, width = 169, height = 2*169, units = "mm", pointsize = 10)
+png(paste0("results/tree_cores/quiltplots/plot_images/", "monthly_", "correlation", "other", v,WT, ".png"), res = 150, width = 8.45, height = 2*8.45, units = "cm", pointsize = 10)
 
 my.dccplot(x = as.data.frame(t(x)), sig = as.data.frame(t(x.sig)), sig2 = as.data.frame(t(x.sig2)),  main = ifelse(v %in% "PETminusPRE", "PET-PRE", v), method = "correlation")
 
