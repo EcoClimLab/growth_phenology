@@ -39,7 +39,7 @@ chron_table= "SI Table 1"
 ## table captions
 species_table_caption <-"Extended Data Table 1 | Dominant ring- and diffuse-porous species at the Smithsonian Conservation Biology Institute (SCBI) and Harvard Forest, along with sample sizes included in our final analysis."
 mean_growth_parameters_caption = "Extended Data Table 2 | Summary of parameters describing the seasonality and temperature senisitivity of ring- and diffuse- porous species groups at the Smithsonian Conservation Biology Institute (SCBI) and Harvard Forest."
-tree_ring_summary_caption =  "Extended Data Table 3 | Summary of tree-ring chronologies analyzed and number of significant (at p=0.05) positive or negative correlations of ring width index to monthly $T_{max}$ in univariate and multivariate analyses." 
+tree_ring_summary_caption =  "Extended Data Table 3 | Summary of tree-ring chronologies analyzed and number of significant (at significance level = 0.05) positive or negative correlations of ring width index to monthly $T_{max}$ in univariate and multivariate analyses." 
 
 
 ###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
