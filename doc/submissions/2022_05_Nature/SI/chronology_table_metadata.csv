@@ -1,0 +1,33 @@
+﻿Column name,Definition ,Units
+Number,The chronology number as seen on Figure 3 and  Extended Data Figures 6-7. Each number corresponds to a unique site/species combo.,-
+Location,The geographical location that the cores were collected from to create the chronology.,-
+Species,The species used to create the chronology,-
+Wood Type,The porosity of the species used to generate the chronology. Either ring-porous (RP) or diffuse-porous (DP).,-
+Archive Location,Database in which data are archived (DEN= The DendroEcological Network; ITRDB= International Tree-Ring Data Bank; HF = Harvard Forest Data Archive). Note that all chronologies are available in the GitHub repository for this study (https://github.com/EcoClimLab/growth_phenology).,-
+Accession Code,"Accession code. For DEN database, this is the project ID.",-
+Archive URL,URL of archived data (corresponding to Archive Location).,-
+DOI,Data DOI. May refer to a different archive location than the database listed in previous fields.,-
+Latitude,The latitude of the location where the cores used to generate the chronology were collected.,°
+Longitude,The longitude of the location where the cores used to generate the chronology were collected.,°
+April Tmin,The average minimum temperature in April,°C
+April Tmax,The average maximum temperature in April,°C
+January,The bootstrapped correlation value between January maximum temperature and yearly ring-width across all study years. Represented by color in Figure 3.,-
+January Sig,"The significance of the correlation value between January maximum temperature and yearly ring-width across all study years. 0.05 if 95%, or 0.002 if 99.8%, confidence interval did not include 0.",-
+February,The bootstrapped correlation value between February maximum temperature and yearly ring-width across all study years. Represented by color in Figure 3.,-
+February Sig,"The significance of the correlation value between February maximum temperature and yearly ring-width across all study years. 0.05 if 95%, or 0.002 if 99.8%, confidence interval did not include 0.",-
+March,The bootstrapped correlation value between March maximum temperature and yearly ring-width across all study years. Represented by color in Figure 3.,-
+March Sig,"The significance of the correlation value between March maximum temperature and yearly ring-width across all study years. 0.05 if 95%, or 0.002 if 99.8%, confidence interval did not include 0.",-
+April,The bootstrapped correlation value between April maximum temperature and yearly ring-width across all study years. Represented by color in Figure 3.,-
+April Sig,"The significance of the correlation value between April maximum temperature and yearly ring-width across all study years. 0.05 if 95%, or 0.002 if 99.8%, confidence interval did not include 0.",-
+May,The bootstrapped correlation value between May maximum temperature and yearly ring-width across all study years. Represented by color in Figure 3.,-
+May Sig,"The significance of the correlation value between May maximum temperature and yearly ring-width across all study years. 0.05 if 95%, or 0.002 if 99.8%, confidence interval did not include 0.",-
+June,The bootstrapped correlation value between June maximum temperature and yearly ring-width across all study years. Represented by color in Figure 3.,-
+June Sig,"The significance of the correlation value between June maximum temperature and yearly ring-width across all study years. 0.05 if 95%, or 0.002 if 99.8%, confidence interval did not include 0.",-
+July,The bootstrapped correlation value between July maximum temperature and yearly ring-width across all study years. Represented by color in Figure 3.,-
+July Sig,"The significance of the correlation value between July maximum temperature and yearly ring-width across all study years. 0.05 if 95%, or 0.002 if 99.8%, confidence interval did not include 0.",-
+August,The bootstrapped correlation value between August maximum temperature and yearly ring-width across all study years. Represented by color in Figure 3.,-
+August Sig,"The significance of the correlation value between August maximum temperature and yearly ring-width across all study years. 0.05 if 95%, or 0.002 if 99.8%, confidence interval did not include 0.",-
+Slope April Tmax,The slope of the April factor in the linear model run to determine the interacting effect between spring and summer temperatures on yearly ring-widths ,°C ^-1
+P-value April Tmax,The p-value of the April factor in the linear model run to determine the interacting effect between spring and summer temperatures on yearly ring-widths,-
+Slope June-July Tmax,The slope of the June-July factor in the linear model run to determine the interacting effect between spring and summer temperatures on yearly ring-widths,°C ^-1
+P-value June-July Tmax,The p-value of the June-July factor in the linear model run to determine the interacting effect between spring and summer temperatures on yearly ring-widths,-
