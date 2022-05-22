@@ -3,7 +3,7 @@ Number,The chronology number as seen on Figure 3 and  Extended Data Figures 6-7.
 Location,The geographical location that the cores were collected from to create the chronology.,-
 Species,The species used to create the chronology,-
 Wood Type,The porosity of the species used to generate the chronology. Either ring-porous (RP) or diffuse-porous (DP).,-
-Archive Location,Database in which data are archived (DEN= The DendroEcological Network; ITRDB= International Tree-Ring Data Bank; HF = Harvard Forest Data Archive). Note that all chronologies are available in the GitHub (https://github.com/EcoClimLab/growth_phenology).,-
+Archive Location,Database in which data are archived (DEN= The DendroEcological Network; ITRDB= International Tree-Ring Data Bank; HF = Harvard Forest Data Archive). Note that all chronologies are available in the GitHub repository for this study (https://github.com/EcoClimLab/growth_phenology).,-
 Accession Code,"Accession code. For DEN database, this is the project ID.",-
 Archive URL,URL of archived data (corresponding to Archive Location).,-
 DOI,Data DOI. May refer to a different archive location than the database listed in previous fields.,-
