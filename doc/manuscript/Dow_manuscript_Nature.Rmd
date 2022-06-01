@@ -379,7 +379,7 @@ Correlation between the dendrometer band-derived growth parameters (*DOY~25~*, *
 Analyses were run for both *T~max~* and *T~min~*, with qualitatively similar results, but we present only results for *T~max~*, which had overall stronger correlation with growth parameters. 
 Mixed effects models were used to test the response of growth parameters to fixed effects of xylem porosity and mean *T~max~* (or *T~min~*) during the _CTW_, along with random effects of species and of individual tree. 
 We ran separate models for each site, and for the response of all growth parameters to *T~max~* (or *T~min~*). 
-This mixed-effect model was run within a hierarchical Bayesian framework and fit using the `rstanarm` R interface to the Stan programming language[@gabry_rstanarm_2020;@standevelopmentteam_stan_2019]. 
+This mixed-effect model was run within a hierarchical Bayesian framework and fit using the `rstanarm` version 2.21.3 R interface to the Stan programming language (source code available at https://github.com/EcoClimLab/growth_phenology#steps-to-replicate-the-analysis)[@gabry_rstanarm_2020;@standevelopmentteam_stan_2019]. 
 In all cases unless otherwise specified, all prior distributions are set to be the weakly informative defaults. 
 <!--
 More information on rstanarm's default weakly informative priors:
