@@ -403,7 +403,7 @@ For the majority of sampled populations (i.e., site-species combinations), sampl
 Again, analyses were limited to broadleaf deciduous species with clearly defined xylem porosity (*i.e.*, excluding semi-ring porous).
 
 For each species-site combination, we converted tree-ring records into the dimensionless _RWI_ to emphasize interannual variability associated with climate[@cook_methods_1990].
-A 2/3rds _n_ spline was applied to each core using ARSTAN **v.###** to produce standardized ring-width series; _n_ is the number of years in each series[@cook_time_1985;@cook_methods_1990].
+A 2/3rds _n_ spline was applied to each core using ARSTAN V49_1b to produce standardized ring-width series; _n_ is the number of years in each series[@cook_time_1985;@cook_methods_1990].
 An adaptive power transformation, a process that also stabilizes the variance over time[@cook_calculating_1997], was used to minimize the influence of outliers in all series. 
 Low series replication, often in the earliest portions of a chronology collection, can also inflate the variance of tree-ring records[@jones_estimating_1997].
 The 1/3rds spline method was chosen when replication in the inner portion of each chronology (the earliest ca. 30–50 yr of each record depending on full chronology length) was less than three trees. 
@@ -474,7 +474,7 @@ Data were analysed in the open source statistical software R (version 4.0).
 We used packages *climwin* v.1.2.3 (https://cran.r-project.org/web/packages/climwin/index.html),  *dplR* v.1.0.2, and *bootRes* v1.2.4, *rstanarm* v.2.21.1, and functions from *Rdendrom* v.0.1.0 (https://github.com/seanmcm/RDendrom/).
 We used *climpact* software v.1.2.8 (see www.climpact-sci.org).
 Mixed effects models were run with mixed-effect model was run within a hierarchical Bayesian framework and fit using the `rstanarm` version 2.21.3 R interface to the Stan programming language (source code available at https://github.com/EcoClimLab/growth_phenology#steps-to-replicate-the-analysis). 
-Tree-ring chronologies were developed using the program ARSTAN **v.###** (https://www.geog.cam.ac.uk/research/projects/dendrosoftware/).
+Tree-ring chronologies were developed using the program ARSTAN V49_1b (https://www.geog.cam.ac.uk/research/projects/dendrosoftware/).
 All custom code is available through the EcoClimlab GitHub repository (https://github.com/EcoClimLab/growth_phenology) and archived in Zenodo (DOI: *[TBD]*).
 
 
