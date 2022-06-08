@@ -20,4 +20,4 @@ Raw data for Harvard Forest *Fraxinus americana* are archived here (HarvardFores
 
 ## Other sites
 
-Files for other sites were provided (most proximally) by co-authors Justin Maxwell. 
+Files for other sites were provided (most proximally) by co-author Justin Maxwell. 
