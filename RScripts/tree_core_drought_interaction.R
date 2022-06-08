@@ -13,7 +13,7 @@ library(reshape2)
 library(readxl)
 
 #Create crns_long ----
-crns <- read_csv("data/tree_rings/Other/all_crns_res_1901.csv") %>%
+crns <- read_csv("data/tree_rings/chronologies/all_crns_res_1901.csv") %>%
   # clean up
   select(-c(BearIs, OH_Gol_QUAL_1, PineMt_QUMO)) %>%
   rename(IL_Fer_LITU = IL_Fer_LTU,
@@ -28,7 +28,7 @@ crns_long <- crns %>%
 crns_long$Location <- substr(crns_long$site_sp, 1,nchar(crns_long$site_sp)-5)
 
 #Add lat / lon
-TRW_coord <- read_excel("data/tree_rings/Other/TRW_coord2.xlsx")
+TRW_coord <- read_excel("data/tree_rings/chronologies/TRW_coord2.xlsx")
 TRW_coord <- TRW_coord[,c(1,2,3)]
 #Add original two locations to include in final quilt plot
 originals <- data.frame(42.5388, -72.18, "HF") #Lat for HF = 42.5388
@@ -51,11 +51,11 @@ crns_long_try[crns_long_try$Location %in% "Fiddler<U+393C><U+3E32>s_Green,_VA_LI
 crns_long_try[crns_long_try$Location %in% "Fiddler<U+393C><U+3E32>s_Green,_VA_MAAC", "Latitude"] <- "37.7686833"
 crns_long_try[crns_long_try$Location %in% "Fiddler<U+393C><U+3E32>s_Green,_VA_MAAC", "Longitude"] <- "-79.2423833"
 
-write.csv(crns_long_try, file = "data/tree_rings/crns_long.csv", row.names = FALSE)
+write.csv(crns_long_try, file = "data/tree_rings/chronologies/crns_long.csv", row.names = FALSE)
 # crns_long_try$Latitude <- ifelse(is.na(crns_long_try$Latitude), "37.7", crns_long_try$Latitude)
 # is.na(crns_long_try$Latitude) <- "37.7"
 # Create tree_core_drought data ####
-crns_long <- read.csv("data/tree_rings/crns_long.csv")
+crns_long <- read.csv("data/tree_rings/chronologies/crns_long.csv")
 
 ## needs to be in different format: column for Date, year and then one column per climate variable
 climate_variables <- c("tmn", "tmx")
