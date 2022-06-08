@@ -25,11 +25,11 @@ originals <- rbind(originals, c(38.8935, "SCBI"))
 names(originals) <- c("Latitude", "Location")
 TRW_coord <- rbind(TRW_coord, originals)
 #Prepare csv's
-crns <- read.csv("data/tree_rings/Other/all_crns_res_1901.csv")
+crns <- read.csv("data/tree_rings/chronologies/all_crns_res_1901.csv")
 #TRW_coord <- read_excel("Data/tree_rings/Other/TRW_coord.xlsx")
 
 # Bert approach
-crns <- read_csv("data/tree_rings/Other/all_crns_res_1901.csv") %>%
+crns <- read_csv("data/tree_rings/chronologies/all_crns_res_1901.csv") %>%
   # clean up
   select(-c(BearIs, OH_Gol_QUAL_1,`Greenbrook_Sanctuary,_NJ_LITU_LITU`)) %>%
   rename(IL_Fer_LITU = IL_Fer_LTU)

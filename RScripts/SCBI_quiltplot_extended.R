@@ -56,7 +56,7 @@ end.frs <- 5 # may of current year (for freeze days variable only)
 
 # Load and prepare core data ####
 
-filenames <- list.dirs("data/tree_rings/SCBI/cores/", full.names = F, recursive = F  )
+filenames <- list.dirs("data/tree_rings/chronologies/SCBI/cores/", full.names = F, recursive = F  )
 filenames <- filenames[!grepl("[a-z]", filenames)] # keep only all caps names
 
 all_sss <- NULL
@@ -67,11 +67,11 @@ mean_core_raw_per_species <- NULL # will store the mean radisu increment per ind
 
 for(f in filenames) {
   # get the raw data
-  core_raw <- read.rwl(paste0("data/tree_rings/SCBI/cores/", f,"/", tolower(f), "_drop.rwl"))
+  core_raw <- read.rwl(paste0("data/tree_rings/chronologies/SCBI/cores/", f,"/", tolower(f), "_drop.rwl"))
   mean_core_raw_per_species <- c(mean_core_raw_per_species, mean(apply(core_raw, 2, mean, na.rm = T)))
 
   # get the detrended data
-  core <- read.table(paste0("data/tree_rings/SCBI/cores/", f,"/ARSTANfiles/", tolower(f), "_drop.rwl_tabs.txt"), sep = "\t", h = T)
+  core <- read.table(paste0("data/tree_rings/chronologies/SCBI/cores/", f,"/ARSTANfiles/", tolower(f), "_drop.rwl_tabs.txt"), sep = "\t", h = T)
   core <- data.frame(res = core$res,  samp.depth = core$num, row.names = core$year)
 
   # output the SD of the detrended chronologies (see issue # 63 on GitHub)
@@ -79,7 +79,7 @@ for(f in filenames) {
 
   # get the Subsample Signal Strength (sss as function of the number of trees in sample, the last one appearing in the "xxx_drop.rxl_out.txt files)
 
-  sss <- readLines(paste0("data/tree_rings/SCBI/cores/", f,"/ARSTANfiles/", tolower(f), "_drop.rwl_out.txt"))
+  sss <- readLines(paste0("data/tree_rings/chronologies/SCBI/cores/", f,"/ARSTANfiles/", tolower(f), "_drop.rwl_out.txt"))
   sss <- sss[grep("sss", sss)]
 
   sss <- sss[grep("  sss:   ", sss)[c(rep(FALSE, 3*length(seq(grep("  sss:   ", sss)))/4), rep(TRUE, 1*length(seq(grep("  sss:   ", sss)))/4))]] # keep only last rows that have sss: in them

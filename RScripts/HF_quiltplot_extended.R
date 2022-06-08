@@ -13,7 +13,7 @@ library(climwin)
 #Manually rearrange x to put in desired plotting order right before plotting
 #source("https://raw.githubusercontent.com/SCBI-ForestGEO/climate_sensitivity_cores/master/scripts/0-My_dplR_functions.R")
 source("Rscripts/0-My_dplR_functions.R")
-path_to_sp_res_chrons <- "C:/Users/world/Documents/GitHub/growth_phenology/data/tree_rings/Harvard/" # replace to the path where Neil's chronlogies are
+path_to_sp_res_chrons <- "C:/Users/world/Documents/GitHub/growth_phenology/data/tree_rings/chronologies/Harvard/" # replace to the path where Neil's chronlogies are
 
 
 #species <-  c("vector_species_you_have", "as they are names in Neils files")
@@ -90,7 +90,7 @@ for(ssp in species) {
 # Run analyses ####
 
 # output the SD of the detrended chronologies and mean_core_raw_per_species (if you want)
-sd_cores <- NULL # will store SD of the detrended chronologie
+sd_cores <- NULL # will store SD of the detrended chronologies
 # par(mfrow = c(1,4))
 for(ssp in species) {
   core <- get(ssp)
