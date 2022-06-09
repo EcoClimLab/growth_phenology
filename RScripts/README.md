@@ -1,6 +1,6 @@
 # R Scripts
 
-All R code used for analysis is here:
+All R code used for analysis is here.
 
 ## Main analysis
 
@@ -24,6 +24,6 @@ HEY CAM I SPLIT OFF THE 4 POINTS BELOW INTO A NEW "OTHER ANALYSES" SECTION. PLEA
 
 ## Code for figures
 
-1. **Figure 1: Summary of temperate deciduous tree growth responses to warmer spring temperatures**. Run `additional_figures.R` lines 1-368  
-1. **Figure 2: Responses of foliage phenology (a,b) and stem growth timing (c,d) to spring temperatures at the Smithsonian Conservation Biology Institute (a,c) and Harvard Forest (b,d)**. Run `DOY_timing_all_years.R`
-1. **Figure 3: Sensitivity of annual growth, as derived from tree-rings, to monthly mean maximum temperatures (*T~max~*), for `r n_chronologies` chronologies from `r n_cores_sites` sites across eastern North America**. HEY CAM COULD YOU FILL IN INSTRUCTIONS ON HOW TO CREATE THESE
+1. Figure 1 - Summary of temperate deciduous tree growth responses to warmer spring temperatures: Run `additional_figures.R` lines 1-368  
+1. Figure 2 - Responses of foliage phenology (a,b) and stem growth timing (c,d) to spring temperatures at the Smithsonian Conservation Biology Institute (a,c) and Harvard Forest (b,d): Run `DOY_timing_all_years.R`
+1. Figure 3 - Sensitivity of annual growth, as derived from tree-rings, to monthly mean maximum temperatures (*T~max~*), for `r n_chronologies` chronologies from `r n_cores_sites` sites across eastern North America: HEY CAM COULD YOU FILL IN INSTRUCTIONS ON HOW TO CREATE THESE
