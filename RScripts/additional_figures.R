@@ -1,4 +1,3 @@
-# Figure numbers from: https://github.com/SCBI-ForestGEO/growth_phenology/issues/13
 library(tidyverse)
 library(scales)
 library(ggrepel)
@@ -9,7 +8,8 @@ library(lubridate)
 library(gridExtra)
 
 
-# Figure 1 v2: Schematic illustrating parameters and general sense of results ----
+
+# Figure 1: Summary of temperate deciduous tree growth responses to warmer spring temperatures ----
 ## Setup ----
 # DOY:
 start_doy <- 1
@@ -241,7 +241,7 @@ schematic_v2_HF <-
       NA,
       NA,
       "Critical Temperature Window"
-      ),
+    ),
     # Top hot
     sec.axis = sec_axis(
       ~ . * 1,
@@ -279,16 +279,16 @@ schematic_v2_HF <-
   #   linetype = "dashed", show.legend = FALSE, alpha = 0.5
   # ) +
   # Cold/blue Primary Growing Season:
-  geom_segment(
-    aes(
-      x = HF_doy_diameter_quartile_cold$doy[2],
-      y = 0 + 0.05,
-      xend = HF_doy_diameter_quartile_cold$doy[4],
-      yend = 0 + 0.05
-    ),
-    arrow = arrow(length = unit(0.25, "cm"), ends = "both"),
-    col = cold_color
-  ) +
+geom_segment(
+  aes(
+    x = HF_doy_diameter_quartile_cold$doy[2],
+    y = 0 + 0.05,
+    xend = HF_doy_diameter_quartile_cold$doy[4],
+    yend = 0 + 0.05
+  ),
+  arrow = arrow(length = unit(0.25, "cm"), ends = "both"),
+  col = cold_color
+) +
   annotate(
     "text",
     x = mean(c(HF_doy_diameter_quartile_cold$doy[2], HF_doy_diameter_quartile_cold$doy[3])),
@@ -329,16 +329,16 @@ schematic_v2_HF <-
   #   hjust = 0.5,
   #   vjust = 1,
   #   size = geom.text.size
-  # ) +
-  geom_segment(
-    aes(
-      x = window_open,
-      xend = window_close,
-      y = -0.025,
-      yend = -0.025
-    ),
-    arrow = arrow(length = unit(0.25, "cm"), ends = "both")
-  ) +
+# ) +
+geom_segment(
+  aes(
+    x = window_open,
+    xend = window_close,
+    y = -0.025,
+    yend = -0.025
+  ),
+  arrow = arrow(length = unit(0.25, "cm"), ends = "both")
+) +
   geom_segment(
     aes(x = c(window_open, window_close), xend = c(window_open, window_close), y = c(0.25, 0.25), yend = c(-0.25, - 0.25)),
     linetype = "dashed", alpha = 0.5
@@ -503,12 +503,6 @@ year_ags_scbi <- left_join(year_ags_scbi,postseason, by = c("year","wood_type"))
 #   geom_line(data =year_ags_scbi[year_ags_scbi$doy > year_ags_scbi$max,], aes(x = doy, y =perc,col = wood_type, group = interaction(year,wood_type)), linetype = "dashed") +
 #   geom_line(data =year_ags_scbi[year_ags_scbi$doy > year_ags_scbi$min & year_ags_scbi$doy < year_ags_scbi$max,], aes(x = doy, y =perc,col = wood_type, group = interaction(year,wood_type)), linetype = "solid", size = 1.2) +
 #   scale_colour_viridis_d("", end = 2/3)
-#----
-
-
-
-
-#----
 # percent_try <- percent_try %>%
 #   group_by(tag_year) %>%
 #   mutate(
@@ -570,13 +564,13 @@ dotted_markers <- data.frame(NULL)
 #for loop to identify which DOY's are marked as outside of a:b
 for (j in c("ring-porous", "diffuse-porous")) {
 
-for (i in c(1999:2003)) {
-  try_sub <- subset(percent_growth_hf, percent_growth_hf$year == i & percent_growth_hf$wood_type == j)
-  bad_doys <- try_sub[try_sub$dotted %in% "yes",]
-  temp <- data.frame(i,j,unique(bad_doys$doy))
-  #assign(paste0("dotted_",i,"_",j),temp)
-  dotted_markers <- rbind(dotted_markers, temp)
-}
+  for (i in c(1999:2003)) {
+    try_sub <- subset(percent_growth_hf, percent_growth_hf$year == i & percent_growth_hf$wood_type == j)
+    bad_doys <- try_sub[try_sub$dotted %in% "yes",]
+    temp <- data.frame(i,j,unique(bad_doys$doy))
+    #assign(paste0("dotted_",i,"_",j),temp)
+    dotted_markers <- rbind(dotted_markers, temp)
+  }
 }
 dotted_markers$dot <- "yes"
 names(dotted_markers) <- c("year","wood_type","doy","dot")
@@ -619,7 +613,6 @@ year_ags_hf <- left_join(year_ags_hf,postseason, by = c("year","wood_type"))
 #   geom_line(data =year_ags_hf[year_ags_hf$doy > year_ags_hf$min & year_ags_hf$doy < year_ags_hf$max,], aes(x = doy, y =perc,col = wood_type, group = interaction(year,wood_type)), linetype = "solid", size = 1.2) +
 #   scale_colour_viridis_d("", end = 2/3)
 
-# #----
 #EVI2 plots
 scbiEVI2 <- read_csv("Data/Leaf phenology/scbiEVI2Filtered.csv")
 scbiEVI2$year <- year(scbiEVI2$date)
@@ -633,7 +626,7 @@ hfEVI <- scbiEVI2[scbiEVI2$pointid %in% "HARV",]
 
 #cumulative plots
 #SCBI
-#Calc averages SCBI ----
+# Calc averages SCBI ----
 percent_try <- percent_growth_scbi
 percent_try$dbh <- ifelse(percent_try$dbh < percent_try$a,percent_try$a ,percent_try$dbh)
 percent_try$dbh <- ifelse(percent_try$dbh > percent_try$b, percent_try$b,percent_try$dbh)
@@ -667,7 +660,7 @@ names(perc_growth) <- c("wood_type", "doy","year", "perc")
 perc_growth <- perc_growth[!(perc_growth$perc < 0),]
 
 #HF
-#calc averages HF ----
+# Calc averages HF ----
 percent_try_hf <- percent_growth_hf
 percent_try_hf$dbh <- ifelse(percent_try_hf$dbh < percent_try_hf$a,percent_try_hf$a ,percent_try_hf$dbh)
 percent_try_hf$dbh <- ifelse(percent_try_hf$dbh > percent_try_hf$b, percent_try_hf$b,percent_try_hf$dbh)
@@ -877,7 +870,7 @@ grid.arrange(
 
 dev.off()
 
-#####Climwin figure ------
+# Climwin figure ------
 library(climwin)
 #Edit the plotbetas function in climwin
 #In the function, change scale_fill_gradientn(colours = c("red", "yellow", "blue"), name = "") to scale_fill_gradient2(high = "blue", mid = "yellow", low = "red")
@@ -923,8 +916,6 @@ grid.arrange(
   plotbetas(SCBI_dp, arrow = TRUE),
   plotbetas(HF_rp, arrow = TRUE),
   plotbetas(HF_dp, arrow = TRUE),
-
-
   as.table = TRUE, nrow=2, ncol=2) ###as.table specifies order if multiple rows
 
 dev.off()
