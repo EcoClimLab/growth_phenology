@@ -6,14 +6,15 @@ All R code used for analysis is here.
 
 Run in the following order:
 
-1. Using McMahon & Parker [LG5 logistic dendroband growth model](https://github.com/seanmcm/RDendrom) (functions in `dendroband_functions.R`), for all tree-years compute: (1) fitted (DOY25, DOY50, DOY75) values and (2) all fitted LG5 parameters and related values (max rate, max rate DOY).
-    a) Run both `(HF/SCBI)_wood_phenology.R` to create `Data/Wood_pheno_table_(HF/SCBI)_RAW.csv`and `LG5_parameter_values_(HarvardForest/SCBI)_RAW`
+1. Using McMahon & Parker [LG5 logistic dendroband growth model](https://github.com/seanmcm/RDendrom) compute: (1) fitted (DOY25, DOY50, DOY75) values and (2) all fitted LG5 parameters and related values (max rate, max rate DOY).
+    1. Run both `(HF/SCBI)_wood_phenology.R` to create `Data/Wood_pheno_table_(HF/SCBI)_RAW.csv`and `LG5_parameter_values_(HarvardForest/SCBI)_RAW`
+    1. Note LG5 functions are found in `dendroband_functions.R`
 1. Remove poorly fit models from `Data/Wood_pheno_table_(HF/SCBI)_RAW.csv`and `LG5_parameter_values_(HarvardForest/SCBI)_RAW`
-    a) Run `data_cleaning.R` to create `Data/Wood_pheno_table_(HF/SCBI)_CLEAN.csv` and `LG5_parameter_values_(HarvardForest/SCBI)_CLEAN`
+    1. Run `data_cleaning.R` to create `Data/Wood_pheno_table_(HF/SCBI)_CLEAN.csv` and `LG5_parameter_values_(HarvardForest/SCBI)_CLEAN`
 1. Determine all [`climwin`](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0167980) critical temperature windows for tmax and tmin
-    a) Run both `(HF/SCBI)_climwin_Cameron.R`: Run the climwin analysis to determine critical temperature windows for tmax and tmin
+    1. Run both `(HF/SCBI)_climwin_Cameron.R`: Run the climwin analysis to determine critical temperature windows for tmax and tmin
 1. Run Bayesian analysis of cleaned dendroband models using [`rstanarm`](https://mc-stan.org/users/interfaces/rstanarm)
-    a) Run both `Pheno_tsensitivity_figure_tmax.R` and `Pheno_tsensitivity_figure_april_april_tmax.R` to create outputs found in `results/bayesian_outputs` and `doc/manuscript/tables_figures/pheno_Tsensitivity_combo_patchwork_(AIC/april).png`
+    1. Run both `Pheno_tsensitivity_figure_tmax.R` and `Pheno_tsensitivity_figure_april_april_tmax.R` to create outputs found in `results/bayesian_outputs` and `doc/manuscript/tables_figures/pheno_Tsensitivity_combo_patchwork_(AIC/april).png`
     
 
 ## Other analyses
