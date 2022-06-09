@@ -6,11 +6,15 @@ All R code used for analysis is here.
 
 Run in the following order:
 
-1. Run both `(HF/SCBI)_wood_phenology.R`: Fit logistic growth model to raw dendroband measurements to create  `Data/Wood_pheno_table_(HF/SCBI)_RAW.csv`and `LG5_parameter_values_(HarvardForest/SCBI)_RAW`
-1. Run `data_cleaning.R`: Remove poorly fit models from `Data/Wood_pheno_table_(HF/SCBI)_RAW.csv`and `LG5_parameter_values_(HarvardForest/SCBI)_RAW` to create `Data/Wood_pheno_table_(HF/SCBI)_CLEAN.csv` and `LG5_parameter_values_(HarvardForest/SCBI)_CLEAN`
-1. Run both `(HF/SCBI)_climwin_Cameron.R`: Run the climwin analysis to determine critical temperature windows for tmax and tmin
-1. Run both `Pheno_tsensitivity_figure_tmax.R` and `Pheno_tsensitivity_figure_april_april_tmax.R`: Run Bayesian analysis of cleaned dendroband models to create outputs found in `results/bayesian_outputs`and `doc/manuscript/tables_figures/pheno_Tsensitivity_combo_patchwork_(AIC/april).png`
-
+1. Using McMahon & Parker [LG5 logistic dendroband growth model](https://github.com/seanmcm/RDendrom) (functions in `dendroband_functions.R`), for all tree-years compute: (1) fitted (DOY25, DOY50, DOY75) values and (2) all fitted LG5 parameters and related values (max rate, max rate DOY).
+    a) Run both `(HF/SCBI)_wood_phenology.R` to create `Data/Wood_pheno_table_(HF/SCBI)_RAW.csv`and `LG5_parameter_values_(HarvardForest/SCBI)_RAW`
+1. Remove poorly fit models from `Data/Wood_pheno_table_(HF/SCBI)_RAW.csv`and `LG5_parameter_values_(HarvardForest/SCBI)_RAW`
+    a) Run `data_cleaning.R` to create `Data/Wood_pheno_table_(HF/SCBI)_CLEAN.csv` and `LG5_parameter_values_(HarvardForest/SCBI)_CLEAN`
+1. Determine all [`climwin`](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0167980) critical temperature windows for tmax and tmin
+    a) Run both `(HF/SCBI)_climwin_Cameron.R`: Run the climwin analysis to determine critical temperature windows for tmax and tmin
+1. Run Bayesian analysis of cleaned dendroband models using [`rstanarm`](https://mc-stan.org/users/interfaces/rstanarm)
+    a) Run both `Pheno_tsensitivity_figure_tmax.R` and `Pheno_tsensitivity_figure_april_april_tmax.R` to create outputs found in `results/bayesian_outputs` and `doc/manuscript/tables_figures/pheno_Tsensitivity_combo_patchwork_(AIC/april).png`
+    
 
 ## Other analyses
 
@@ -27,3 +31,10 @@ HEY CAM I SPLIT OFF THE 4 POINTS BELOW INTO A NEW "OTHER ANALYSES" SECTION. PLEA
 1. Figure 1 - Summary of temperate deciduous tree growth responses to warmer spring temperatures: Run `additional_figures.R` lines 1-368  
 1. Figure 2 - Responses of foliage phenology (a,b) and stem growth timing (c,d) to spring temperatures at the Smithsonian Conservation Biology Institute (a,c) and Harvard Forest (b,d): Run `DOY_timing_all_years.R`
 1. Figure 3 - Sensitivity of annual growth, as derived from tree-rings, to monthly mean maximum temperatures (*T~max~*), for `r n_chronologies` chronologies from `r n_cores_sites` sites across eastern North America: HEY CAM COULD YOU FILL IN INSTRUCTIONS ON HOW TO CREATE THESE
+
+
+
+
+
+
+
