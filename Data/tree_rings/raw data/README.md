@@ -4,7 +4,7 @@ This file contains raw tree-ring data for the chronologies analyzed in this stud
 
 Format: Files are in [Tuscon format](http://www.cybis.se/wiki/index.php/Tucson_format) (.rwl files).
 
-File names: Files are named as the site name appended with the species name (usually a 4-letter species code: first 2 letters of genus, first 2 letters of species) and sometimes an additional designation distinguishing among file versions.
+File names: Files are named as the site name appended with the species name (usually a 4-letter species code; see [Species.csv](https://github.com/EcoClimLab/growth_phenology/blob/master/Data/tree_rings/Species.csv)) and sometimes an additional designation distinguishing among file versions.
 
 ## SCBI
 
