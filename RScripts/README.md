@@ -31,7 +31,7 @@ Run in the following order:
 5. Extended Data Figure 2 - Landscapes of relationships between the day of year on which 25% of annual growth is achieved (DOY25) and temperature in prior weeks for ring- and diffuse-porous trees at the Smithsonian Conservation Biology Institute (SCBI) and Harvard Forest.
     1. Run `(HF/SCBI)_climwin.R` making sure to edit the plotbetas function in climwin: in the function, change `scale_fill_gradientn(colours = c("red",        "yellow", "blue"), name = "")` to `scale_fill_gradient2(high = "blue", mid = "yellow", low = "red")` and add `text = element_text(size = 20)` to theme        call
     2. Run `additional_figrues.R` lines 874-921
-6. Extended Data FIgure 3/4 - Response of stem growth timing and rates to mean maximum temperatures (Tmax) during the spring critial temperature window (CTW) for ring- and diffuseporous species at the Smithsonian Conservation Biology Institute (SCBI) and Harvard Forest
+6. Extended Data FIgure 3/4 - Response of stem growth timing and rates to mean maximum temperatures (Tmax) during the spring critial temperature window (CTW) for ring- and diffuse-porous species at the Smithsonian Conservation Biology Institute (SCBI) and Harvard Forest
     1. Run both `Pheno_tsensitivity_figure_tmax.R` and `Pheno_tsensitivity_figure_april_april_tmax.R` to create outputs found in `results/bayesian_outputs`        and `doc/manuscript/tables_figures/pheno_Tsensitivity_combo_patchwork_(AIC/april).png`
 7. Extended Data Figure 5 - Map of sampling locations of tree-ring chronologies analyzed in this study.
     1. Run `chronology_map.R`
