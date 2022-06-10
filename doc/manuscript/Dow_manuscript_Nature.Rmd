@@ -457,7 +457,7 @@ The authors declare no competing interests.
 
 
 # Data Availability Statement {-} 
-The datasets generated and analysed during the current study are available via GitHub in the *growth_phenology* repository of the ForestGEO Ecosystems & Climate Lab @ SCBI, (https://github.com/EcoClimLab/growth_phenology) and archived in Zenodo (DOI *[TBD]*).
+The datasets generated and analysed during the current study are available via GitHub in the *growth_phenology* repository of the ForestGEO Ecosystems & Climate Lab @ SCBI, (https://github.com/EcoClimLab/growth_phenology) and archived in Zenodo (DOI: 10.5281/zenodo.6632090).
 Master versions of the dendrometer band data are available for SCBI via GitHub in the *Dendrobands* repository of the Smithsonian Conservation Biology Institute ForestGEO plot (https://github.com/SCBI-ForestGEO/Dendrobands), which is archived in Zenodo (DOI 10.5281/zenodo.5551143), and for Harvard Forest via the Harvard Forest Data Archive (https://harvardforest1.fas.harvard.edu/exist/apps/datasets/showData.html?id=HF149). 
 Weather data for SCBI were obtained from the ForestGEO Climate Data Portal v1.0 (https://github.com/forestgeo/Climate/tree/master/Climate_Data/Met_Stations/SCBI), which is archived in Zenodo (DOI: 10.5281/zenodo.3958215), and the National Center for Environmental Information (NCEI) weather station located in Front Royal, Virginia (https://www.ncdc.noaa.gov/cdo-web/datasets/GHCND/stations/GHCND:USC00443229/detail).
 Weather data for Harvard Forest are available through the Harvard Forest Data Archive (https://harvardforest1.fas.harvard.edu/exist/apps/datasets/showData.html?id=HF001 AND https://harvardforest1.fas.harvard.edu/exist/apps/datasets/showData.html?id=HF000).
@@ -475,7 +475,7 @@ We used packages *climwin* v.1.2.3 (https://cran.r-project.org/web/packages/clim
 We used *climpact* software v.1.2.8 (see www.climpact-sci.org).
 Mixed effects models were run with mixed-effect model was run within a hierarchical Bayesian framework and fit using the `rstanarm` version 2.21.3 R interface to the Stan programming language (source code available at https://github.com/EcoClimLab/growth_phenology#steps-to-replicate-the-analysis). 
 Tree-ring chronologies were developed using the program ARSTAN V49_1b (https://www.geog.cam.ac.uk/research/projects/dendrosoftware/).
-All custom code is available through the EcoClimlab GitHub repository (https://github.com/EcoClimLab/growth_phenology) and archived in Zenodo (DOI: *[TBD]*).
+All custom code is available through the EcoClimlab GitHub repository (https://github.com/EcoClimLab/growth_phenology) and archived in Zenodo (DOI: 10.5281/zenodo.6632090).
 
 
 
