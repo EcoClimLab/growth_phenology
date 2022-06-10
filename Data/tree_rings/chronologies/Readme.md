@@ -8,7 +8,7 @@ For each species-site combination, we converted tree-ring records into the dimen
 
 ## Explanation of files
 Chronologies are organized into folders by site name. 
-Within each folder, each species is represented by a separate .csv file named with a 4-letter species code (first 2 letters of genus, first 2 of species) appended to the site name.
+Within each folder, each species is represented by a separate .csv file named with a 4-letter species code (see [Species.csv](https://github.com/EcoClimLab/growth_phenology/blob/master/Data/tree_rings/Species.csv)) appended to the site name.
 
 all_crns_res_1901.csv contains all chronologies in the "wide" format. 
 
