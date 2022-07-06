@@ -706,6 +706,8 @@ p4 <- ggplot(aggregates_hf, aes(x=x, y = Group.2, group = interaction(Group.1, y
 plotall <- p1 + p2 + p3 + p4 +
   plot_layout(heights = c(1.5,2))
 
+dev.copy2pdf(file="doc/manuscript/tables_figures/DOYtiming_allyears.pdf", useDingbats=FALSE, family="serif", width = 12, height = 10) # adding this for Nature submission
+
 png(filename = "doc/manuscript/tables_figures/DOYtiming_allyears.png", width=12, height=10,
     pointsize=12, bg="transparent", units="in", res=600,
     restoreConsole=FALSE)
