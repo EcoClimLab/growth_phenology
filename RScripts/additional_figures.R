@@ -361,6 +361,8 @@ schematic_v2_HF
 
 
 fig_width <- 8
+dev.copy2pdf(file="doc/manuscript/tables_figures/schematic_summary.pdf", useDingbats=FALSE, family="serif", width = fig_width, height = fig_width * 9 / 16) # adding this for Nature submission
+
 ggsave(
   filename = "doc/manuscript/tables_figures/schematic_summary.png",
   plot = schematic_v2_HF,
