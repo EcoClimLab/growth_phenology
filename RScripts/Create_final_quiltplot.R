@@ -342,9 +342,10 @@ tmn_data_table <- tmn_data_table[!(duplicated(tmn_data_table$group)),]
     #x <- x[,c(2,1,3)]
     #x.sig <- x.sig[,c(2,1,3)]
     #x.sig2 <- x.sig2[,c(2,1,3)]
-    png(paste0("results/tree_cores/quiltplots/plot_images/", "monthly_", "correlation", "other", v,WT, ".png"), res = 150, width = 18, height = 17, units = "cm", pointsize = 10)
+    #png(paste0("results/tree_cores/quiltplots/plot_images/", "monthly_", "correlation", "other", v,WT, ".png"), res = 150, width = 18, height = 17, units = "cm", pointsize = 10)
 
     my.dccplot(x = as.data.frame(t(x)), sig = as.data.frame(t(x.sig)), sig2 = as.data.frame(t(x.sig2)),  main = ifelse(v %in% "PETminusPRE", "PET-PRE", v), method = "correlation")
+    dev.copy2pdf(file="results/tree_cores/quiltplots/plot_images/monthly_correlation_other_TMXRP.pdf", useDingbats=FALSE, family="serif", width = 8.45, height = 2*8.45, pointsize = 10) # adding this for Nature submission
 
     if(save.plots) dev.off()
 #  }
@@ -403,9 +404,10 @@ x.sig2 <- x.sig2[, -1]
 v <-  toupper(v)
 v <- gsub("PDSI_PREWHITEN" , "PDSI", v)
 
-png(paste0("results/tree_cores/quiltplots/plot_images/", "monthly_", "correlation", "other", v,WT, ".png"), res = 150, width = 8.45, height = 2*8.45, units = "cm", pointsize = 10)
+#png(paste0("results/tree_cores/quiltplots/plot_images/", "monthly_", "correlation", "other", v,WT, ".png"), res = 150, width = 8.45, height = 2*8.45, units = "cm", pointsize = 10)
 
 my.dccplot(x = as.data.frame(t(x)), sig = as.data.frame(t(x.sig)), sig2 = as.data.frame(t(x.sig2)),  main = ifelse(v %in% "PETminusPRE", "PET-PRE", v), method = "correlation")
+dev.copy2pdf(file="results/tree_cores/quiltplots/plot_images/monthly_correlation_other_TMXDP.pdf", useDingbats=FALSE, family="serif", width = 8.45, height = 2*8.45, pointsize = 10) # adding this for Nature submission
 
 if(save.plots) dev.off()
 
