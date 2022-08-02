@@ -321,7 +321,7 @@ In total, this process removed `r 26+253+22+8` of the `r n_tree_years + (3+11+74
 
 We fit a five-parameter logistic growth model[@mcmahon_general_2015] to dendrometer band data from each tree-year to define stem growth milestones and growth rates (Fig. `r schematic_summary`). 
 In particular, we model the observed diameter at breast height (DBH) on a given day of the year (DOY; *i.e.*, julian days) as: 
-$$ DBH = L + \frac{K - L} { 1 + 1/\theta \cdot exp[-r(DOY - DOY_{ip}) / \theta)] ^ \theta}$$ 
+$$ DBH = L + \frac{K - L} { 1 + 1/\theta \cdot exp[-r(DOY - DOY_{ip}) / \theta] ^ \theta}$$ 
 Here, _L_ and _K_ are lower and upper asymptotes of the model. 
 *DOY~ip~* is the day of year where the inflection point in growth rate occurs,
 _r_ shapes the slope of the curve at the inflection point,
