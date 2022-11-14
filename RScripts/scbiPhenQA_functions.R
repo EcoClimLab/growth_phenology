@@ -40,11 +40,17 @@ checkQAdetailed <- function(row, colName="", targetCols="", dt=phen){
   ## in bit 12 (13), dormancy is bad
   
   # go through each of the bits and see if we want to filter out
-  qaValBit <- intToBits(qaVal) # convert the integer to bits
-  out <- sapply(c(seq(1,13,by=2)), function(bitN, bitVec=qaValBit){
-    keepObs <- ifelse(as.numeric(bitVec[bitN])==1, FALSE, TRUE)
-    return(keepObs)
-  })
+  ## this function comes from the MCD12Q2 user guide pg 8
+  ## https://modis-land.gsfc.nasa.gov/pdf/MCD12Q2_Collection6_UserGuide.pdf
+  unpackedDetailedQA <- function(X){
+    bits <- as.integer(intToBits(X))
+    quals <- sapply(seq(1,16,by=2), function(i) sum(bits[i:(i+1)] * 2^c(0,1)))[1:7]
+    return(quals)
+  }
+  
+  ## we only want to keep best (0) or good (1) quality
+  qa <- unpackedDetailedQA(qaVal)
+  out <- ifelse(qa < 2, TRUE, FALSE)
   
   # replace the false values with NA (i.e. this is our way of filtering)
   if(any(which(out==FALSE))){
